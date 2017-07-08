@@ -23,11 +23,6 @@
         <?php _e('Detail product design', 'web-to-print-online-designer'); ?>
         <a class="button-primary nbdesigner-right" href="<?php echo admin_url('post.php?post=' . absint($order_id) . '&action=edit'); ?>"><?php _e('Back to order', 'web-to-print-online-designer'); ?></a>
     </h2>
-    <?php if(!isset($_GET['product_id'])): ?>
-            <p><?php echo __('Go to order detail and choose product design you want to view detail!', 'web-to-print-online-designer'); ?></p>
-    <?php else: 
-
-        ?>
         <ul class="nbd-nav-tab">
             <li><a href="#customer-design"><?php _e('Customer design', 'web-to-print-online-designer') ?></a></li>
             <li><a href="#save-to-pdf"><?php _e('Create PDF', 'web-to-print-online-designer') ?></a></li>
@@ -44,11 +39,10 @@
             <div class="owl-carousel">
             <?php if(is_array($datas)){
                 foreach($datas as $key => $data):
-                $pdfData = $data; 
                 $contentImage = '';
                 if(isset($list_design[$key])) $contentImage = $list_design[$key];                
-                $proWidth = $pdfData['product_width'];
-                $proHeight = $pdfData['product_height'];
+                $proWidth = $data->product_width;
+                $proHeight = $data->product_height;
                 $bgTop = 0;
                 $bgLeft = 0;
                 if($proWidth > $proHeight){
@@ -66,10 +60,10 @@
                     $offsetLeft = round((500 - $bgWidth) / 2);  
                     $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
                 }
-                $cdWidth = $pdfData['area_design_width'];
-                $cdHeight = $pdfData['area_design_height'];
-                $cdLeft = $pdfData['area_design_left'];
-                $cdTop = $pdfData['area_design_top'];               
+                $cdWidth = $data->area_design_width;
+                $cdHeight = $data->area_design_height;
+                $cdLeft = $data->area_design_left;
+                $cdTop = $data->area_design_top;       
             ?>
                 <div class="item nbdesigner_item">
                     <div class="large" 
@@ -77,15 +71,15 @@
                         style="position: absolute; <?php echo 'top: '.(1/4*$offsetTop).'px; left: '.(1/4*$offsetLeft).'px; width: '.(1/4*$bgWidth).'px; height: '.(1/4*$bgHeight).'px;'; ?>"
                         data-design="position: absolute; <?php echo 'top: '.$cdTop.'px; left: '.$cdLeft.'px; width: '.$cdWidth.'px; height: '.$cdHeight.'px;'; ?>"
                         data-design-src="<?php if(isset($list_design[$key])) echo $list_design[$key]; else echo '1'; ?>" data-index="<?php echo $key; ?>"
-                        data-overlay="<?php if($pdfData['show_overlay']) echo $pdfData['img_overlay']; else echo '1'; ?>"
-                        data-bg-tyle="<?php echo $pdfData['bg_type']; ?>"
-                        data-bg-color="<?php echo $pdfData['bg_color_value']; ?>"
-                        data-bg="<?php echo $data['img_src'] ?>"
+                        data-overlay="<?php if($data->show_overlay) echo $data->img_overlay; else echo '1'; ?>"
+                        data-bg-tyle="<?php echo $data->bg_type; ?>"
+                        data-bg-color="<?php echo $data->bg_color_value; ?>"
+                        data-bg="<?php echo $data->img_src ?>"
                     >
-                        <?php if($pdfData['bg_type'] == 'image'): ?>
-                        <img class="nbdesigner_detail_order" src="<?php echo $data['img_src'] ?>" />
-                        <?php elseif($pdfData['bg_type'] == 'color'): ?>
-                        <div style="width: 100%; height: 100%; background: <?php echo $pdfData['bg_color_value']; ?>"></div>
+                        <?php if($data->bg_type == 'image'): ?>
+                        <img class="nbdesigner_detail_order" src="<?php echo $data->img_src ?>" />
+                        <?php elseif($data->bg_type == 'color'): ?>
+                        <div style="width: 100%; height: 100%; background: <?php echo $data->bg_color_value; ?>"></div>
                         <?php endif; ?>
                     </div>
                     <?php if(isset($list_design[$key])): ?>
@@ -93,11 +87,11 @@
                         style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>" 
                     />
                     <?php endif; ?>
-                    <?php if($pdfData['show_overlay']): ?>
+                    <?php if($data->show_overlay): ?>
                     <div
                         style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>"
                     >
-                        <img src="<?php echo $pdfData['img_overlay'] ?>" />
+                        <img src="<?php echo $data->img_overlay; ?>" />
                     </div>
                     <?php endif; ?>                    
                 </div>         
@@ -108,7 +102,7 @@
                 <span class="pro-medal">PRO</span>
                 <ul class="nbd-nav-tab">
                 <?php foreach($datas as $key => $data): ?>
-                    <li><a href="#side-<?php echo $key; ?>"><?php echo $data['orientation_name']; ?></a></li>
+                    <li><a href="#side-<?php echo $key; ?>"><?php echo $data->orientation_name; ?></a></li>
                 <?php endforeach; ?>
                 </ul> 
             <div style="clear: both; padding: 0 15px 15px 15px;">
@@ -122,7 +116,7 @@
                                 <input name="force_same_format" type="hidden" value="0">
                                 <input name="force_same_format" type="checkbox" value="1">                             
                                 <input name="order_id" type="hidden" value="<?php echo $_GET['order_id']; ?>">                             
-                                <input name="order_item_id" type="hidden" value="<?php echo $_GET['order_item_id']; ?>">                             
+                                <input name="nbd_item_key" type="hidden" value="<?php echo $_GET['nbd_item_key']; ?>">                             
                                 <br /><small><?php _e('Create a PDF file contain all page in the same page size. By default, each page correspond a PDF file.', 'web-to-print-online-designer'); ?></small>
                             </td>
                         </tr>                       
@@ -132,11 +126,10 @@
             </div>
         <?php    
             foreach($datas as $key => $data):
-                $pdfData = $data; 
                 $contentImage = '';
                 if(isset($list_design[$key])) $contentImage = $list_design[$key];                
-                $proWidth = $pdfData['product_width'];
-                $proHeight = $pdfData['product_height'];
+                $proWidth = $data->product_width;
+                $proHeight = $data->product_height;
                 $bgTop = 0;
                 $bgLeft = 0;
                 if($proWidth > $proHeight){
@@ -153,10 +146,10 @@
                     $offsetTop = 0;
                     $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
                 }
-                $cdWidth = round($bgRatio * $pdfData['real_width']);
-                $cdHeight = round($bgRatio * $pdfData['real_height']);
-                $cdLeft = round($bgRatio * $pdfData['real_left']);
-                $cdTop = round($bgRatio * $pdfData['real_top']);   
+                $cdWidth = round($bgRatio * $data->real_width);
+                $cdHeight = round($bgRatio * $data->real_height);
+                $cdLeft = round($bgRatio * $data->real_left);
+                $cdTop = round($bgRatio * $data->real_top);   
         ?>
         <div class="inner side" id="side-<?php echo $key; ?>">
             <table class="form-table">
@@ -166,7 +159,7 @@
                             <label><?php _e('Name', 'web-to-print-online-designer'); ?></label>
                         </th>
                         <td class="forminp forminp-text">
-                            <input name="pdf[<?php echo $key; ?>][name]" class="regular-text" type="text" value="<?php echo $pdfData['orientation_name'] ?>">
+                            <input name="pdf[<?php echo $key; ?>][name]" class="regular-text" type="text" value="<?php echo $data->orientation_name ?>">
                         </td>
                     </tr>                      
                     <tr valign="top">
@@ -175,7 +168,7 @@
                         </th>
                         <td class="forminp forminp-text">
                         <select name="pdf[<?php echo $key; ?>][format]" id="format" style="width: 25em;">    
-                            <option value="-1"><?php printf(__('As product size %s x %s (exclude margin)', 'web-to-print-online-designer'), round($pdfData['product_width'] * $unitRatio, 2),  round($pdfData['product_height'] * $unitRatio, 2)); ?></option>
+                            <option value="-1"><?php printf(__('As product size %s x %s (exclude margin)', 'web-to-print-online-designer'), round($data->product_width * $unitRatio, 2),  round($data->product_height * $unitRatio, 2)); ?></option>
                     <?php
                     foreach ($output_format as $group=>$group_values) {
                         ?><optgroup label="<?php echo $group;?>"><?php
@@ -253,13 +246,13 @@
                             <label><?php _e('Background', 'web-to-print-online-designer'); ?></label>
                         </th>
                         <td class="forminp forminp-text">                            
-                            <?php if($pdfData['bg_type'] == 'image'): ?>
+                            <?php if($data->bg_type == 'image'): ?>
                             <a class="button" onclick="changeBackground(this)"><?php _e('Change image', 'web-to-print-online-designer'); ?></a>
-                            <img class="bg_src" src="<?php echo $pdfData['img_src']; ?>"  style="width: 30px; height: 30px; display: inline-block; vertical-align: top;"/><br />
+                            <img class="bg_src" src="<?php echo $data->img_src; ?>"  style="width: 30px; height: 30px; display: inline-block; vertical-align: top;"/><br />
                             <small><?php _e('Change image with heigh resolution if you want. Support: jpeg, jpg, png, svg', 'web-to-print-online-designer'); ?></small>
-                            <?php elseif($pdfData['bg_type'] == 'color'): ?>
+                            <?php elseif($data->bg_type == 'color'): ?>
                             <span 
-                                 style="width: 30px; height: 30px; vertical-align: top; display: inline-block; background: <?php echo $pdfData['bg_color_value']; ?>"></span>
+                                 style="width: 30px; height: 30px; vertical-align: top; display: inline-block; background: <?php echo $data->bg_color_value; ?>"></span>
                             <?php else: ?>
                             <span class="background-transparent" style="width: 30px; height: 30px; vertical-align: top; display: inline-block; border: 1px solid #ddd;"></span>
                             <?php _e('Transparent', 'web-to-print-online-designer'); ?>
@@ -327,10 +320,10 @@
                                                       height: <?php  echo $bgHeight.'px';?>;
                                                       left: <?php  echo $bgLeft.'px';?>;
                                                       top: <?php  echo $bgTop.'px';?>;">
-                            <?php if($pdfData['bg_type'] == 'image'): ?>
-                            <img src="<?php echo $pdfData['img_src'] ?>"/>
-                            <?php elseif($pdfData['bg_type'] == 'color'): ?>
-                            <div style="width: 100%; height: 100%; background: <?php echo $pdfData['bg_color_value']; ?>"></div>
+                            <?php if($data->bg_type == 'image'): ?>
+                            <img src="<?php echo $data->img_src ?>"/>
+                            <?php elseif($data->bg_type == 'color'): ?>
+                            <div style="width: 100%; height: 100%; background: <?php echo $data->bg_color_value; ?>"></div>
                             <?php else: ?>
                             <div class="background-transparent"></div>
                             <?php endif; ?>
@@ -347,19 +340,19 @@
                 </div>  
             </div>
             <div>                
-                <input type="hidden" value="<?php echo $pdfData['img_src'] ?>" name="pdf[<?php echo $key; ?>][background]" class="bg_src_hidden">
-                <input type="hidden" value="<?php echo $pdfData['bg_type'] ?>" name="pdf[<?php echo $key; ?>][bg_type]">
-                <input type="hidden" value="<?php echo $pdfData['bg_color_value'] ?>" name="pdf[<?php echo $key; ?>][bg_color_value]">
+                <input type="hidden" value="<?php echo $data->img_src ?>" name="pdf[<?php echo $key; ?>][background]" class="bg_src_hidden">
+                <input type="hidden" value="<?php echo $data->bg_type ?>" name="pdf[<?php echo $key; ?>][bg_type]">
+                <input type="hidden" value="<?php echo $data->bg_color_value ?>" name="pdf[<?php echo $key; ?>][bg_color_value]">
                 <input type="hidden" value="<?php echo $bgTop; ?>" class="bg-top">
                 <input type="hidden" value="<?php echo $bgLeft; ?>" class="bg-left">
                 <input type="hidden" value="<?php echo $bgWidth; ?>" class="bg-width">
                 <input type="hidden" value="<?php echo $bgHeight; ?>" class="bg-height">
                 <input type="hidden" value="<?php echo $cdTop ?>" class="cd-top" name="cd-top">
                 <input type="hidden" value="<?php echo $cdLeft ?>" class="cd-left" name="cd-left">
-                <input type="hidden" value="<?php echo $pdfData['real_top'] * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-top]">
-                <input type="hidden" value="<?php echo $pdfData['real_left'] * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-left]">                
-                <input type="hidden" value="<?php echo $pdfData['real_width'] * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-width]">
-                <input type="hidden" value="<?php echo $pdfData['real_height'] * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-height]">
+                <input type="hidden" value="<?php echo $data->real_top * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-top]">
+                <input type="hidden" value="<?php echo $data->real_left * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-left]">                
+                <input type="hidden" value="<?php echo $data->real_width * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-width]">
+                <input type="hidden" value="<?php echo $data->real_height * $unitRatio; ?>" name="pdf[<?php echo $key; ?>][cd-height]">
                 <input type="hidden" value="<?php echo $contentImage; ?>" name="pdf[<?php echo $key; ?>][customer-design]">
             </div>            
         </div>  
@@ -733,5 +726,4 @@
                 upload.open();
             };
         </script>   
-    <?php endif; ?>
 </div>  

@@ -1,15 +1,15 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<?php if(isset($has_design) && ($has_design == 'has_design')) : 
+<?php if($has_design) : 
     $count_img_design = 0;
 ?>
 <div id="nbdesigner_order_info">
 	<?php foreach($products AS $order_item_id => $product): ?>
 		<?php 
-                    $has_design = wc_get_order_item_meta($order_item_id, '_nbdesigner_has_design');
-                    if($has_design == 'has_design'): 
-                    $index_accept = 'nbds_'.$order_item_id;
-                    $folder = wc_get_order_item_meta($order_item_id, '_nbdesigner_folder_design');
+                    $nbd_item_key = wc_get_order_item_meta($order_item_id, '_nbd');
                     $item_meta = new WC_Order_Item_Meta( $product );
+                    if($nbd_item_key): 
+                    //$nbd_item_key = $item_meta['_nbd'];    
+                    $index_accept = 'nbds_'.$order_item_id;
                     $variation = '';
                     if(!is_woo_v3()){
                         $variation = $item_meta->display($flat=true,$return=true);    
@@ -18,32 +18,23 @@
                     <div>
                         <h4 class="nbdesigner_order_product_name">
                             <?php echo $product['name']; ?>
-                            <?php echo (!empty($variation))?'<span class="nbt-umf-ou-upload-product-variation"> - '.$variation.'</span>':''; ?>
+                            <?php echo (!empty($variation))?'<span> - '.$variation.'</span>':''; ?>
                         </h4>
                         <div class="nbdesigner_container_item_order <?php if(isset($data_designs[$index_accept])) { $status = ($data_designs[$index_accept] == 'accept') ? 'approved' : 'declined'; echo $status;}; ?>">
                         <?php 
-                            if($folder != ''){
-                                $path = $this->plugin_path_data . 'designs/' . $user_id . '/' . $order_id .'/' . $folder .'/thumbs';
-                            }else{
-                                $path = $this->plugin_path_data . 'designs/' . $user_id . '/' . $order_id .'/' .$product["product_id"] .'/thumbs';
-                            }
-                            $list_images = $this->nbdesigner_list_thumb($path, 1);											
+                            $list_images = Nbdesigner_IO::get_list_thumbs(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/preview', 1);  											
                             if(count($list_images) > 0):					
                         ?>
                             <input type="checkbox" name="_nbdesigner_design_file[]" class="nbdesigner_design_file" value="<?php echo $order_item_id; ?>" />
                             <?php foreach($list_images as $key => $image): 
                                 $count_img_design++;
-                                $src = $this->nbdesigner_create_secret_image_url($image);						
+                                $src = Nbdesigner_IO::convert_path_to_url($image); 						
                             ?>						
                                     <img class="nbdesigner_order_image_design" src="<?php echo $src; ?>" />
                             <?php endforeach; ?>
                             <?php 
-                                if($folder != ''){
-                                    $arr = array('product_id' => $product["product_id"], 'order_id' => $order_id, 'order_item_id' => $order_item_id, 'vid' => $product['variation_id']);
-                                    $link_view_detail = add_query_arg($arr, admin_url('admin.php?page=nbdesigner_detail_order'));
-                                }else{
-                                    $link_view_detail = add_query_arg(array('product_id' => $product["product_id"], 'order_id' => $order_id), admin_url('admin.php?page=nbdesigner_detail_order'));
-                                }
+                                $arr = array('nbd_item_key' => $nbd_item_key, 'order_id'    =>  $order_id);
+                                $link_view_detail = add_query_arg($arr, admin_url('admin.php?page=nbdesigner_detail_order'));
                             ?>
                             <a class="nbdesigner-right button button-small button-secondary"  href="<?php echo $link_view_detail; ?>"><?php _e('View detail', 'web-to-print-online-designer'); ?></a>
                         <?php  endif; ?>

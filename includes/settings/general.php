@@ -51,14 +51,13 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
-                    ),                                        
+                    ),                      
                     array(
-                        'title' => __( 'Thumbnail quality', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_thumbnail_quality',
-                        'description' 	=> __('Quality of the generated thumbnails between 0 - 100', 'web-to-print-online-designer'),
+                        'title' => __( 'Preview thumbnail width', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_thumbnail_width',
                         'css'         => 'width: 65px',
-                        'default'	=> '60',
-                        'subfix'        => ' %',
+                        'default'	=> '300',
+                        'subfix'        => ' px',
                         'type' 		=> 'number'
                     ),
                     array(
@@ -202,7 +201,18 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'class'         => 'regular-text',
                         'default'	=> '',
                         'type' 		=> 'text'
-                    )                    
+                    ),
+                    array(
+                        'title' => __( 'Enable log mode', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Enable log mode for debug.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_log',
+                        'default' => 'no',
+                        'type' => 'radio',
+                        'options' => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer'),
+                        )
+                    )                     
                 )
             ));
         }

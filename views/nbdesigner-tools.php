@@ -92,3 +92,15 @@
         <p><small><?php _e('Make sure backup data before update avoid lost data!') ?></small></p>
     </div>
 </div>
+<hr />
+<div>
+    <h2><?php _e('Logs', 'web-to-print-online-designer'); ?><a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'remove_log' ), admin_url( 'admin.php?page=nbdesigner_tools' ) ), 'remove_log' ) ); ?>" class="button-primary" style="float: right; margin-right: 15px;"><?php _e('Delete log', 'web-to-print-online-designer'); ?></a></h2>
+    <form action="<?php echo admin_url( 'admin.php?page=wc-status&tab=logs' ); ?>" method="post">
+        
+    </form>
+    <div style="background: #fff; clear: both;max-height: 400px;overflow: scroll;">
+        <?php if(file_exists(NBDESIGNER_LOG_DIR . '/debug.log')): ?>
+        <pre><?php echo esc_html( file_get_contents( NBDESIGNER_LOG_DIR . '/debug.log' ) ); ?></pre>
+        <?php endif; ?>
+    </div>
+</div>

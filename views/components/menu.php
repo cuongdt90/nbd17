@@ -12,12 +12,12 @@
             </a>
         </li>
         <li ng-show="settings['enable_image'] == 'yes'">
-            <a class="add_image shadow nbd-tooltip-i18n" data-toggle="modal" data-target="#dg-myclipart" ng-click="loadLocalStorageImage()" data-lang="FREE_DRAW" data-placement="right">
+            <a class="add_image shadow nbd-tooltip-i18n" data-toggle="modal" data-target="#dg-myclipart" ng-click="loadLocalStorageImage()" data-lang="ADD_IMAGE" data-placement="right">
                 <i class="fa fa-camera-retro" aria-hidden="true"></i>
             </a>
         </li>
         <li ng-show="settings['enable_draw'] == 'yes'">
-            <a class="draw_free shadow nbd-tooltip-i18n" ng-click="showDrawConfig()" data-lang="ADD_CLIPART" data-placement="right">
+            <a class="draw_free shadow nbd-tooltip-i18n" ng-click="showDrawConfig()" data-lang="FREE_DRAW" data-placement="right">
                 <i class="fa fa-paint-brush" aria-hidden="true"></i>
             </a>
         </li>
@@ -34,13 +34,12 @@
             <span></span>
         </div>
     </div>
-    <div id="layer" class="shadow hover-shadow">
+    <div id="layer" class="shadow hover-shadow nbd-tooltip-i18n" data-lang="LAYERS" data-placement="top">
         <div class="nav_layer">
             <span></span>
             <span></span>
             <span></span>		
         </div>
-        <span class="layer_after">{{(langs['LAYERS']) ? langs['LAYERS'] : "Layers"}}</span>
     </div>
     <div id="gesture" class="hover-shadow">
         <div class="menu_gesture shadow">
@@ -60,7 +59,7 @@
         </div>
         <span class="gesture_after">{{(langs['TOOL']) ? langs['TOOL'] : "Tool"}}</span>
     </div>	
-    <div id="info" class="shadow hover-shadow <?php echo 'ui-mode-'.$ui_mode; ?>">
+    <div id="info" class="shadow hover-shadow <?php echo 'ui-mode-'.$ui_mode; ?> <?php if($ui_mode == 1) echo ' nbd-tooltip-i18n'; ?>" <?php if($ui_mode == 1) echo 'data-lang="SAVE" data-placement="top"'; ?>>
         <div class="container_info">
             <?php if($ui_mode == 1): ?>
             <span class="fa fa-floppy-o menu_cart" ng-click="storeDesign()"></span>
@@ -68,8 +67,5 @@
             <p ng-click="storeDesign()"><span class="fa fa-shopping-cart add-to-cart"></span>{{(langs['ADD_TO_CART']) ? langs['ADD_TO_CART'] : "Add to cart"}}</p>
             <?php endif; ?>
         </div>
-        <?php if($ui_mode == 1): ?>
-        <span class="info_after">{{(langs['SAVE']) ? langs['SAVE'] : "Save"}}</span>
-        <?php endif; ?>
     </div>
 </div>

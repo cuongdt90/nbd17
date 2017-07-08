@@ -89,7 +89,19 @@ class Nbdesigner_IO {
                 if ($file != "." && $file != "..") self::copy_dir("$src/$file", "$dst/$file");
             }
         } else if (file_exists($src)) copy($src, $dst);
-    }        
+    } 
+    public static function mkdir( $dir ){
+        if (!file_exists($dir)) {
+            wp_mkdir_p($dir);
+        }        
+    }
+    public static function clear_file($path){
+        $f = @fopen($path, "r+");
+        if ($f !== false) {
+            ftruncate($f, 0);
+            fclose($f);
+        }        
+    }
     public static function create_file_path($upload_path, $filename, $ext=''){
 	$date_path = '';
         if (!file_exists($upload_path))
@@ -125,6 +137,12 @@ class Nbdesigner_IO {
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);   
         return $base64;        
     }   
+    /**
+     * @deprecated 1.7.0 <br />
+     * From 1.7.0 alternate by function wp_convert_path_to_url( $path )
+     * @param type $path
+     * @return string url
+     */
     public static function convert_path_to_url($path){
         $upload_dir = wp_upload_dir();
         $basedir = $upload_dir['basedir'];
@@ -133,6 +151,12 @@ class Nbdesigner_IO {
         if(is_multisite() && !is_main_site()) $upload = $arr[count($arr) - 3].'/'.$arr[count($arr) - 2].'/'.$arr[count($arr) - 1];
         return content_url( substr($path, strrpos($path, '/' . $upload . '/nbdesigner')) );
     }
+    /**
+     * @deprecated 1.7.0
+     * From 1.7.0 alternate by WP function wp_make_link_relative( $url )
+     * @param type $url
+     * @return path
+     */
     public static function convert_url_to_path($url){
         $upload_dir = wp_upload_dir();
         $basedir = $upload_dir['basedir'];
@@ -188,6 +212,16 @@ class NBD_Image {
        imagedestroy($src);
        return $dst;
     }      
+    public static function convert_png_to_jpg($input_file){
+        $output_file = pathinfo($input_file) . '/'. basename($filename, '.png') . ".jpeg";
+        $input = imagecreatefrompng($input_file);
+        list($width, $height) = getimagesize($input_file);
+        $output = imagecreatetruecolor($width, $height);
+        $white = imagecolorallocate($output,  255, 255, 255);
+        imagefilledrectangle($output, 0, 0, $width, $height, $white);
+        imagecopy($output, $input, 0, 0, 0, 0, $width, $height);
+        imagejpeg($output, $output_file);        
+    }
 }
 function nbd_file_get_contents($url){
     if(ini_get('allow_url_fopen')){
@@ -252,7 +286,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_button_label' => __('Start Design', 'web-to-print-online-designer'),
         'nbdesigner_position_button_in_catalog' => 1,
         'nbdesigner_position_button_product_detail' => 1,
-        'nbdesigner_thumbnail_width' => 100,
+        'nbdesigner_thumbnail_width' => 300,
         'nbdesigner_thumbnail_height' => 100,
         'nbdesigner_thumbnail_quality' => 60,
         'nbdesigner_default_dpi' => 150,
@@ -292,6 +326,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_printful_key' => '',
         'nbdesigner_mindpi_upload' => 0,
         'allow_customer_redesign_after_order' => 'yes',
+        'nbdesigner_enable_log' => 'no',
         'nbdesigner_page_design_tool' => 1
     ), $frontend));
     if(!$key) return $nbd_setting;

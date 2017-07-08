@@ -64,8 +64,9 @@ var NBDESIGNERPRODUCT = {
             jQuery('#triggerDesign').text('Edit Template');
         }
         var html = '';
+        var d = new Date();
         jQuery.each(arr, function (key, val) {
-            html += '<div class="img-con"><img src="' + val + '" /></div>'
+            html += '<div class="img-con"><img src="' + val + '?t=' + d.getTime() +'" /></div>'
         });
         jQuery('#nbdesigner_frontend_area').html('');
         jQuery('#nbdesigner_frontend_area').append(html);

@@ -23,125 +23,52 @@ $upload_dir = wp_upload_dir();
 $basedir = $upload_dir['basedir'];
 $baseurl = $upload_dir['baseurl'];
 
-if (!defined('NBDESIGNER_VERSION')) {
-    define('NBDESIGNER_VERSION', '1.7.0');
-}
-if (!defined('NBDESIGNER_NUMBER_VERSION')) {
-    define('NBDESIGNER_NUMBER_VERSION', 170);
-}
-if (!defined('NBDESIGNER_MINIMUM_WP_VERSION')) {
-    define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
-}
-if (!defined('NBDESIGNER_MINIMUM_PHP_VERSION')) {
-    define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
-}
-if (!defined('NBDESIGNER_PLUGIN_URL')) {
-    define('NBDESIGNER_PLUGIN_URL', plugin_dir_url(__FILE__));
-}
-if (!defined('NBDESIGNER_PLUGIN_DIR')) {
-    define('NBDESIGNER_PLUGIN_DIR', plugin_dir_path(__FILE__));
-}
-if (!defined('NBDESIGNER_PLUGIN_BASENAME')) {
-    define('NBDESIGNER_PLUGIN_BASENAME', plugin_basename(__FILE__));
-}
-if (!defined('NBDESIGNER_MODE_DEV')) {
-    define('NBDESIGNER_MODE_DEV', TRUE);
-}
-if (!defined('NBDESIGNER_MODE_DEBUG')) {
-    define('NBDESIGNER_MODE_DEBUG', TRUE);
-}
-if (!defined('NBDESIGNER_DATA_DIR')) {   
-    define('NBDESIGNER_DATA_DIR', $basedir . '/nbdesigner');
-}
-if (!defined('NBDESIGNER_DATA_URL')) {   
-    define('NBDESIGNER_DATA_URL', $baseurl . '/nbdesigner');
-}
-if (!defined('NBDESIGNER_FONT_DIR')) {   
-    define('NBDESIGNER_FONT_DIR', NBDESIGNER_DATA_DIR . '/fonts');
-}
-if (!defined('NBDESIGNER_FONT_URL')) {   
-    define('NBDESIGNER_FONT_URL', NBDESIGNER_DATA_URL . '/fonts');
-}
-if (!defined('NBDESIGNER_ART_DIR')) {   
-    define('NBDESIGNER_ART_DIR', NBDESIGNER_DATA_DIR . '/cliparts');
-}
-if (!defined('NBDESIGNER_ART_URL')) {   
-    define('NBDESIGNER_ART_URL', NBDESIGNER_DATA_URL . '/cliparts');
-}
-if (!defined('NBDESIGNER_DOWNLOAD_DIR')) {   
-    define('NBDESIGNER_DOWNLOAD_DIR', NBDESIGNER_DATA_DIR . '/download');
-}
-if (!defined('NBDESIGNER_DOWNLOAD_URL')) {   
-    define('NBDESIGNER_DOWNLOAD_URL', NBDESIGNER_DATA_URL . '/download');
-}
-if (!defined('NBDESIGNER_TEMP_DIR')) {   
-    define('NBDESIGNER_TEMP_DIR', NBDESIGNER_DATA_DIR . '/temp');
-}
-if (!defined('NBDESIGNER_TEMP_URL')) {   
-    define('NBDESIGNER_TEMP_URL', NBDESIGNER_DATA_URL . '/temp');
-}
-if (!defined('NBDESIGNER_ADMINDESIGN_DIR')) {   
-    define('NBDESIGNER_ADMINDESIGN_DIR', NBDESIGNER_DATA_DIR . '/admindesign');
-}
-if (!defined('NBDESIGNER_ADMINDESIGN_URL')) {   
-    define('NBDESIGNER_ADMINDESIGN_URL', NBDESIGNER_DATA_URL . '/admindesign');
-}
-if (!defined('NBDESIGNER_PDF_DIR')) {   
-    define('NBDESIGNER_PDF_DIR', NBDESIGNER_DATA_DIR . '/pdfs');
-}
-if (!defined('NBDESIGNER_PDF_URL')) {   
-    define('NBDESIGNER_PDF_URL', NBDESIGNER_DATA_URL . '/pdfs');
-}
-if (!defined('NBDESIGNER_CUSTOMER_DIR')) {   
-    define('NBDESIGNER_CUSTOMER_DIR', NBDESIGNER_DATA_DIR . '/designs');
-}
-if (!defined('NBDESIGNER_CUSTOMER_URL')) {   
-    define('NBDESIGNER_CUSTOMER_URL', NBDESIGNER_DATA_URL . '/designs');
-}
-if (!defined('NBDESIGNER_SUGGEST_DESIGN_DIR')) {   
-    define('NBDESIGNER_SUGGEST_DESIGN_DIR', NBDESIGNER_DATA_DIR . '/suggest_designs');
-}
-if (!defined('NBDESIGNER_SUGGEST_DESIGN_URL')) {   
-    define('NBDESIGNER_SUGGEST_DESIGN_URL', NBDESIGNER_DATA_URL . '/suggest_designs');
-}
-if (!defined('NBDESIGNER_DATA_CONFIG_DIR')) {   
-    define('NBDESIGNER_DATA_CONFIG_DIR', NBDESIGNER_DATA_DIR . '/data');
-}
-if (!defined('NBDESIGNER_DATA_CONFIG_URL')) {   
-    define('NBDESIGNER_DATA_CONFIG_URL', NBDESIGNER_DATA_URL . '/data');
-}
-if (!defined('NBDESIGNER_ASSETS_URL')) {   
-    define('NBDESIGNER_ASSETS_URL', NBDESIGNER_PLUGIN_URL . 'assets/');
-}
-if (!defined('NBDESIGNER_JS_URL')) {   
-    define('NBDESIGNER_JS_URL', NBDESIGNER_PLUGIN_URL . 'assets/js/');
-}
-if (!defined('NBDESIGNER_CSS_URL')) {   
-    define('NBDESIGNER_CSS_URL', NBDESIGNER_PLUGIN_URL . 'assets/css/');
-}
-if (!defined('NBDESIGNER_PRODUCT_TEMPLATES')) {   
-    define('NBDESIGNER_TEMPLATES', 'nbdesigner_templates');
-}
-if (!defined('NBDESIGNER_CATEGORY_TEMPLATES')) {   
-    define('NBDESIGNER_CATEGORY_TEMPLATES', 'nbdesigner_category_templates');
-}
-if (!defined('NBDESIGNER_AUTHOR_SITE')) {   
-    define('NBDESIGNER_AUTHOR_SITE', 'https://cmsmart.net/');
-}
-if (!defined('NBDESIGNER_SKU')) {   
-    define('NBDESIGNER_SKU', 'WPP1074');
-}
-if (!defined('NBDESIGNER_PAGE_REDESIGN')) {   
-    define('NBDESIGNER_PAGE_REDESIGN', 'customer-redesign');
-}
-if (!defined('NBDESIGNER_PAGE_CREATE_TEMPLATE')) {   
-    define('NBDESIGNER_PAGE_CREATE_TEMPLATE', 'designer-create-template');
-}
-if (!defined('NBDESIGNER_PAGE_STUDIO')) {   
-    define('NBDESIGNER_PAGE_STUDIO', 'designer-studio');
-}
-if (!defined('NBDESIGNER_PAGE_CREATE_YOUR_OWN')) {   
-    define('NBDESIGNER_PAGE_CREATE_YOUR_OWN', 'create-your-own');
+nbd_define('NBDESIGNER_VERSION', '1.7.0');
+nbd_define('NBDESIGNER_NUMBER_VERSION', 170);
+nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
+nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
+nbd_define('NBDESIGNER_PLUGIN_URL', plugin_dir_url(__FILE__));
+nbd_define('NBDESIGNER_PLUGIN_DIR', plugin_dir_path(__FILE__));
+nbd_define('NBDESIGNER_PLUGIN_BASENAME', plugin_basename(__FILE__));
+nbd_define('NBDESIGNER_MODE_DEV', TRUE);
+nbd_define('NBDESIGNER_MODE_DEBUG', TRUE);
+nbd_define('NBDESIGNER_DATA_DIR', $basedir . '/nbdesigner');
+nbd_define('NBDESIGNER_DATA_URL', $baseurl . '/nbdesigner');
+nbd_define('NBDESIGNER_FONT_DIR', NBDESIGNER_DATA_DIR . '/fonts');
+nbd_define('NBDESIGNER_FONT_URL', NBDESIGNER_DATA_URL . '/fonts');
+nbd_define('NBDESIGNER_ART_DIR', NBDESIGNER_DATA_DIR . '/cliparts');
+nbd_define('NBDESIGNER_ART_URL', NBDESIGNER_DATA_URL . '/cliparts');
+nbd_define('NBDESIGNER_DOWNLOAD_DIR', NBDESIGNER_DATA_DIR . '/download');
+nbd_define('NBDESIGNER_DOWNLOAD_URL', NBDESIGNER_DATA_URL . '/download');
+nbd_define('NBDESIGNER_TEMP_DIR', NBDESIGNER_DATA_DIR . '/temp');
+nbd_define('NBDESIGNER_LOG_DIR', NBDESIGNER_DATA_DIR . '/logs');
+nbd_define('NBDESIGNER_TEMP_URL', NBDESIGNER_DATA_URL . '/temp');
+nbd_define('NBDESIGNER_ADMINDESIGN_DIR', NBDESIGNER_DATA_DIR . '/admindesign');
+nbd_define('NBDESIGNER_ADMINDESIGN_URL', NBDESIGNER_DATA_URL . '/admindesign');
+nbd_define('NBDESIGNER_PDF_DIR', NBDESIGNER_DATA_DIR . '/pdfs');
+nbd_define('NBDESIGNER_PDF_URL', NBDESIGNER_DATA_URL . '/pdfs');
+nbd_define('NBDESIGNER_CUSTOMER_DIR', NBDESIGNER_DATA_DIR . '/designs');
+nbd_define('NBDESIGNER_CUSTOMER_URL', NBDESIGNER_DATA_URL . '/designs');
+nbd_define('NBDESIGNER_SUGGEST_DESIGN_DIR', NBDESIGNER_DATA_DIR . '/suggest_designs');
+nbd_define('NBDESIGNER_SUGGEST_DESIGN_URL', NBDESIGNER_DATA_URL . '/suggest_designs');
+nbd_define('NBDESIGNER_DATA_CONFIG_DIR', NBDESIGNER_DATA_DIR . '/data');
+nbd_define('NBDESIGNER_DATA_CONFIG_URL', NBDESIGNER_DATA_URL . '/data');
+nbd_define('NBDESIGNER_ASSETS_URL', NBDESIGNER_PLUGIN_URL . 'assets/');
+nbd_define('NBDESIGNER_JS_URL', NBDESIGNER_PLUGIN_URL . 'assets/js/');
+nbd_define('NBDESIGNER_CSS_URL', NBDESIGNER_PLUGIN_URL . 'assets/css/');
+nbd_define('NBDESIGNER_TEMPLATES', 'nbdesigner_templates');
+nbd_define('NBDESIGNER_CATEGORY_TEMPLATES', 'nbdesigner_category_templates');
+nbd_define('NBDESIGNER_AUTHOR_SITE', 'https://cmsmart.net/');
+nbd_define('NBDESIGNER_SKU', 'WPP1074');
+nbd_define('NBDESIGNER_PAGE_REDESIGN', 'customer-redesign');
+nbd_define('NBDESIGNER_PAGE_CREATE_TEMPLATE', 'designer-create-template');
+nbd_define('NBDESIGNER_PAGE_STUDIO', 'designer-studio');
+nbd_define('NBDESIGNER_PAGE_CREATE_YOUR_OWN', 'create-your-own');
+
+function nbd_define( $name, $value ) {
+    if ( ! defined( $name ) ) {
+        define( $name, $value );
+    }
 }
 
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-util.php');
@@ -153,8 +80,6 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
 
-
-register_activation_hook( __FILE__, array( 'My_Design_Endpoint', 'install' ) );
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );
 $prefix = is_network_admin() ? 'network_admin_' : '';       

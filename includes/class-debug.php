@@ -6,7 +6,7 @@ class Nbdesigner_DebugTool {
      * If can't modified wp-config.php use function wirite_log() or manual_write_debug()
      * @param type $data
      */
-    static private $_path = NBDESIGNER_PLUGIN_DIR;
+    static private $_path = NBDESIGNER_LOG_DIR;
     public function __construct($path = ''){
         if($path != ''){
             self::$_path = $path;
@@ -23,22 +23,22 @@ class Nbdesigner_DebugTool {
             return FALSE;
         }
     }
-    public static function wirite_log($data){
-        if(NBDESIGNER_MODE_DEBUG){
+    public static function wirite_log($data, $title){
+        if(nbdesigner_get_option('nbdesigner_enable_log' == 'yes')){
             error_reporting( E_ALL );
             ini_set('log_errors', 1);
-            ini_set('error_log', self::$_path . 'debug.log');           
-            error_log(basename(__FILE__) . ': Start debug.');
+            ini_set('error_log', self::$_path . '/debug.log');           
+            error_log('Start debug - '. $title);
             ob_start();
             var_dump($data);
             error_log(ob_get_clean());            
-            error_log(basename(__FILE__) . ': End debug.');
+            error_log('End debug - '. $title);
         }else{
             return FALSE;
         }        
     }
     public static function manual_write_debug($data){
-        $path = self::$_path . 'debug.txt';
+        $path = self::$_path . 'debug.log';
         $data = print_r($data, true);
         if (NBDESIGNER_MODE_DEBUG) {
             if (!$fp = fopen($path, 'w')) {
