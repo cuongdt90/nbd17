@@ -22,7 +22,7 @@
                         </h4>
                         <div class="nbdesigner_container_item_order <?php if(isset($data_designs[$index_accept])) { $status = ($data_designs[$index_accept] == 'accept') ? 'approved' : 'declined'; echo $status;}; ?>">
                         <?php 
-                            $list_images = Nbdesigner_IO::get_list_thumbs(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/preview', 1);  											
+                            $list_images = Nbdesigner_IO::get_list_images(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/preview', 1);  											
                             if(count($list_images) > 0):					
                         ?>
                             <input type="checkbox" name="_nbdesigner_design_file[]" class="nbdesigner_design_file" value="<?php echo $order_item_id; ?>" />

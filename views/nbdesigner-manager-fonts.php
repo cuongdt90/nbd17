@@ -19,7 +19,7 @@
 						<tr valign="top">
 							<th scope="row" class="titledesc"><?php echo __("Font file", 'web-to-print-online-designer'); ?> </th>
 							<td class="forminp-text">
-								<input type="file" name="woff" value="" /><br />
+								<input type="file" name="woff" value="" accept=".woff,.ttf" /><br />
 								<div style="font-size: 11px; font-style: italic;"><?php _e('Allow extensions: woff, ttf', 'web-to-print-online-designer'); ?></div>
 							</td>
 						</tr>				

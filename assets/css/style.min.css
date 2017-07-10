@@ -139,7 +139,7 @@ body {
 /*    background-image: url(../images/pattern.jpg);*/
     background-color: #f1f1f1;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 300
 }
 
@@ -157,9 +157,9 @@ h6,
 .h6,
 span,
 p,
-i,
+i,legend, textarea,
 a {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 300
 }
 
@@ -734,7 +734,6 @@ input.form-control:focus {
     border: 1px solid #394264;
     border-radius: 8px;
     top: 9px;
-    font-family: Roboto, sans-serif;
     opacity: 0;
     visibility: hidden;
     -webkit-transition: all .4s;
@@ -781,7 +780,6 @@ input.form-control:focus {
 #info .info_after {
     position: absolute;
     display: block;
-    font-family: 'Roboto', sans-serif;
     font-size: 14px;
     top: -25px;
     left: 0;
@@ -1754,7 +1752,6 @@ img.layer_thumb {
     margin: 0;
     padding: 15px 10px;
     font-size: 15px;
-    font-family: 'Roboto', sans-serif;
     margin-bottom: 15px;
     border-bottom: 1px solid #ddd;
     color: #394264
@@ -1773,7 +1770,6 @@ img.layer_thumb {
 
 #helpdesk .inner-help ul li {
     display: inline-block;
-/*    font-family: 'Roboto', sans-serif;*/
     margin: 0;
     padding: 0;
     border-radius: 0;
@@ -1787,7 +1783,6 @@ img.layer_thumb {
     padding: 5px;
     cursor: pointer;
     text-transform: uppercase;
-/*    font-family: 'Roboto', sans-serif;*/
     font-size: 11px;
     text-align: center;
     width: 100%
@@ -2166,7 +2161,6 @@ img.layer_thumb {
     margin-top: 10px;
     margin-left: 50px;
     font-weight: 700;
-    font-family: 'Roboto', sans-serif;
     font-size: 20px;
     line-height: 30px
 }
@@ -2578,11 +2572,10 @@ img.pattern_img {
     background: #fff;
     border-radius: 3px;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 11px;
     color: #394264;
     box-shadow: 0 6px 13px 0 rgba(0, 0, 0, .23);
     line-height: 15px;
-    font-family: 'Roboto', sans-serif;
     cursor: pointer;
     -webkit-animation: first_message 1.5s infinite ease-in-out;
     -moz-animation: first_message 1.5s infinite ease-in-out;
@@ -2601,7 +2594,6 @@ img.pattern_img {
     -o-transition: all 0.3s; 
     transition: all 0.3s; 
     z-index: 100;
-    font-family: 'Roboto', sans-serif;
     font-size: 10px;
     color: #394264;
     visibility: hidden;
@@ -2746,7 +2738,6 @@ img.pattern_img {
 }
 
 #container_layer h3 {
-    font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 14px;
     padding-left: 5px;
@@ -2962,7 +2953,6 @@ img.pattern_img {
 }
 .nbdesigner-list-template h3{
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
     color: #394264;
     margin: 0;
 }
@@ -3021,7 +3011,6 @@ img.pattern_img {
     opacity: 0.5;
 }
 #config-style h3 {
-    font-family: 'Roboto', sans-serif;
     font-size: 13px;
     border-bottom: 1px solid #ddd;
     padding-bottom: 15px;

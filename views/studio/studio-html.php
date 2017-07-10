@@ -9,7 +9,7 @@
         <meta content="Online Designer - HTML5 Designer - Online Print Solution" name="description" />
         <meta content="Online Designer" name="keywords" />
         <meta content="Netbaseteam" name="author"> 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700,400italic">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Aclonica">
         <link type="text/css" href="<?php echo NBDESIGNER_ASSETS_URL .'libs/css/angular-material.css'; ?>" rel="stylesheet" media="all">
         <link type="text/css" href="<?php echo NBDESIGNER_CSS_URL .'nbdstuido-bundle.css'; ?>" rel="stylesheet" media="all">

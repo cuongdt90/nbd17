@@ -79,7 +79,7 @@
         <meta content="Netbaseteam" name="author">
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/jquery-ui.min.css'; ?>" rel="stylesheet" media="all" />
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/font-awesome.min.css'; ?>" rel="stylesheet" media="all" />
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300italic,300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Poppins:400,100,300italic,300' rel='stylesheet' type='text/css'>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bootstrap.min.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bundle.css'; ?>" rel="stylesheet" media="all"/>
         <!-- <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/owl.carousel.css'; ?>" rel="stylesheet" media="all"/> -->
@@ -101,8 +101,14 @@
         <![endif]-->	
         <?php 
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : '';
-            $order_id = (isset($_GET['orderid']) &&  $_GET['orderid'] != '') ? absint($_GET['orderid']) : '';
+            $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
+            $cart_item_key = (isset($_GET['cart_item_key']) &&  $_GET['cart_item_key'] != '') ? $_GET['cart_item_key'] : '';
             $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : '';
+            $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : '';
+            $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id );
+  
+            
+            $order_id = (isset($_GET['orderid']) &&  $_GET['orderid'] != '') ? absint($_GET['orderid']) : '';
             $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : 0;
             $template_folder = (isset($_GET['template_folder']) &&  $_GET['template_folder'] != '') ? $_GET['template_folder'] : '';
             $reference_product = (isset($_GET['reference_product']) &&  $_GET['reference_product'] != '') ? $_GET['reference_product'] : '';
@@ -113,28 +119,7 @@
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: div popup, 3: studio*/
             $product = wc_get_product($product_id);
             $vid = 0;
-            if($task == 'edit_design' || $task == 'redesign' || $task == 'design'){
-                $vid = $variation_id;
-            }else if( $product->is_type( 'variable' ) ) { 
-                $available_variations = $product->get_available_variations();   
-                if(is_woo_v3()){
-                    $default_attributes = $product->get_default_attributes();  
-                }else{
-                    $default_attributes = $product->get_variation_default_attributes();  
-                } 
-                foreach ( $available_variations as $variation ){
-                    if(count($default_attributes) == count($variation['attributes'])){
-                        $vid = $variation['variation_id'];
-                        foreach ($default_attributes as $key => $attribute){
-                            if($variation['attributes']['attribute_'.$key] != $attribute){
-                                $vid = 0;
-                                break;
-                            }
-                        }
-                    }
-                    if($vid > 0)  break;
-                }     
-            }       
+            //#10
             if($task == 'edit_template'){
                 $origin_folder = $template_folder;                 
             }else if($task == 'create_template' && $template_priority == 'primary'){
@@ -200,7 +185,9 @@
                 instagram_redirect_uri    : "<?php echo NBDESIGNER_PLUGIN_URL.'includes/auth-instagram.php'; ?>",
                 dropbox_redirect_uri    : "<?php echo NBDESIGNER_PLUGIN_URL.'includes/auth-dropbox.php'; ?>",
                 cart_url    :   "<?php echo esc_url( wc_get_cart_url() ); ?>",
-                product_data  :   <?php echo json_encode(nbd_get_product_info($user_id, $product_id, $vid, $task, $reference_product, $template_folder, $order_id, $order_item_folder, $edit_item)); ?>
+                redirect_url    :   "<?php echo $redirect_url; ?>",
+                nbd_item_key    :   "<?php echo $nbd_item_key; ?>",
+                product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task )); ?>
             };      
             var _colors = NBDESIGNCONFIG['_palette'].split(','),
             colorPalette = [], row = [];

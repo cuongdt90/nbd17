@@ -17,7 +17,7 @@ class Nbdesigner_IO {
      * @param int $level level scan dir
      * @return array Array path images in folder
      */
-    public static function get_list_thumbs($path, $level = 100){
+    public static function get_list_images($path, $level = 100){
         $list = array();
         $_list = self::get_list_files($path, $level);
         $list = preg_grep('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $_list);
@@ -430,54 +430,32 @@ function getUrlPageNBD($page){
             break;           
     }
     $post = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name='".$post_name."'"); 
-    if($post) return get_page_link($post);
-    return '#';
+    return ($post) ? get_page_link($post) : '#';
 }
-function nbd_get_product_info($user_id, $product_id, $variation_id = 0, $task = '', $reference_product = '', $template_folder = '', $order_id = '', $order_item_folder = '', $edit_item = '' ){
-    $path = '';
+function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task ){
     $data = array();
-    $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true));
-    $data['dpi'] = (get_post_meta($product_id, '_nbdesigner_dpi', true) != '') ?  get_post_meta($product_id, '_nbdesigner_dpi', true) : 96;
-    if($variation_id > 0){
-        $variation_enable = get_post_meta($variation_id, '_nbdesigner_enable'.$variation_id, true);
-        if($variation_enable){
-            $data['product'] = unserialize(get_post_meta($variation_id, '_designer_setting'.$variation_id, true));
-        }
-    }
-    if($task == 'redesign'){
-        $path = NBDESIGNER_CUSTOMER_DIR . '/' .$user_id. '/' .$order_id. '/' .$order_item_folder ;
-    }
-    else if($task == 'create_template' || $task == 'edit_template'){
-        if($template_folder != ''){
-            $path = NBDESIGNER_ADMINDESIGN_DIR . '/' . $product_id . '/' . $template_folder;
-        }    
-    }else if($task == 'edit_design'){
-        $path = NBDESIGNER_CUSTOMER_DIR . '/' .$user_id. '/nb_order/' .$edit_item ;
-    } else{
-        if($reference_product != ''){
-            $path = NBDESIGNER_CUSTOMER_DIR. '/' .$user_id. '/nb_order/' .$reference_product;
-            $data['ref'] = unserialize(get_post_meta($reference_product, '_designer_setting', true));
-        }else{
-            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));   
-            if(isset($option['admindesign']) && $option['admindesign']){
-                if($template_folder != ''){
-                    $path = NBDESIGNER_ADMINDESIGN_DIR . '/' . $product_id . '/' . $template_folder;
-                }else {
-                    $path = NBDESIGNER_ADMINDESIGN_DIR . '/' . $product_id . '/primary';
-                }              
+    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+    if( $nbd_item_key == '' ){
+        if($variation_id > 0){         
+            $data['product'] = unserialize(get_post_meta($variation_id, '_designer_setting'.$variation_id, true)); 
+            if (!isset($data['product'][0])){
+                $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
             }            
-        }
-    }  
-    $data['design'] = nbd_get_data_from_json($path . '/design.json');
-    $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
-    $data['config'] = nbd_get_data_from_json($path . '/config.json');
-    return $data;
+        }else {
+            $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
+        }  
+        $data['config']['dpi'] = (get_post_meta($product_id, '_nbdesigner_dpi', true) != '') ?  get_post_meta($product_id, '_nbdesigner_dpi', true) : 96;
+    }else {
+        $data['product'] = unserialize(file_get_contents($path . '/product.json'));
+        $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
+        $data['config'] = nbd_get_data_from_json($path . '/config.json');
+        $data['design'] = nbd_get_data_from_json($path . '/design.json');
+    }
+    return $data;        
 }
 function nbd_get_data_from_json($path = ''){
-    if ($path != '' && file_exists($path)) {
-        return json_decode(file_get_contents($path));           
-    }    
-    return '';
+    $content = file_exists($path) ? file_get_contents($path) : '';
+    return json_decode($content) ;
 }
 function nbd_update_config_product_160($settings){
     return $settings;
@@ -635,4 +613,30 @@ function nbd_get_language($code){
         $data['mes'] = 'error';
     }    
     return $data;
+}
+function nbd_get_default_variation_id( $product_id ){
+    $variation_id = 0;
+    if( !$product_id ) return $variation_id;
+    $product = wc_get_product($product_id);
+    if($product->is_type( 'variable' )){
+        $available_variations = $product->get_available_variations();   
+        if(is_woo_v3()){
+            $default_attributes = $product->get_default_attributes();  
+        }else{
+            $default_attributes = $product->get_variation_default_attributes();  
+        } 
+        foreach ( $available_variations as $variation ){
+            if(count($default_attributes) == count($variation['attributes'])){
+                $variation_id = $variation['variation_id'];
+                foreach ($default_attributes as $key => $attribute){
+                    if($variation['attributes']['attribute_'.$key] != $attribute){
+                        $variation_id = 0;
+                        break;
+                    }
+                }
+            }
+            if($variation_id > 0)  break;
+        }          
+    }
+    return $variation_id;
 }

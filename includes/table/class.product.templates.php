@@ -147,7 +147,7 @@ class Product_Template_List_Table extends WP_List_Table {
         $html = '';
         $list_design = array(); 
         $mid_path = $item['product_id']. '/' .$item['folder']. '/preview/'; 
-        $listThumb = Nbdesigner_IO::get_list_thumbs(NBDESIGNER_ADMINDESIGN_DIR. '/' .$item['product_id']. '/' .$item['folder']. '/preview/', 1);
+        $listThumb = Nbdesigner_IO::get_list_images(NBDESIGNER_ADMINDESIGN_DIR. '/' .$item['product_id']. '/' .$item['folder']. '/preview/', 1);
         if(count($listThumb)){
             foreach ($listThumb as $img){
                 $name = basename($img);

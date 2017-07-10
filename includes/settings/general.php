@@ -68,9 +68,9 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'type' 		=> 'number'
                     ),                    
                     array(
-                        'title' => __( 'Show customer design in cart', 'web-to-print-online-designer'),
+                        'title' => __( 'Show customer design in cart, checkout page', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_show_in_cart',
-                        'description' 	=> __('Show the thumbnail of the customized product in the cart.', 'web-to-print-online-designer'),
+                        'description' 	=> __('Show the thumbnail of the customized product in the cart, checkout page.', 'web-to-print-online-designer'),
                         'default'	=> 'yes',
                         'type' 		=> 'radio',
                         'options'   => array(
