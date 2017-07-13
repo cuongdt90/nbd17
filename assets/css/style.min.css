@@ -884,16 +884,12 @@ input.form-control:focus {
     -webkit-transition: all .4s;
     -moz-transition: all .4s;
     -o-transition: all .4s;
-    transition: all .4s
+    transition: all .4s;
+    line-height: 40px;
+    text-align: center;
+    font-size: 20px; 
+    cursor: pointer;
 }
-
-#gesture.open {
-    top: -60px;
-    background: #cc324b;
-    border-color: #cc324b;
-    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #F17
-}
-
 .menu_gesture {
     width: 100%;
     height: 100%;
@@ -1225,7 +1221,7 @@ img.layer_thumb {
     top: 3px
 }
 
-#info {
+/*#info {
     position: absolute;
     right: 20px;
     z-index: 5;
@@ -1234,8 +1230,12 @@ img.layer_thumb {
     border-radius: 50%;
     background: #fff;
     cursor: pointer
-}
-#info.ui-mode-2 {
+}*/
+#info {
+    position: absolute;
+    right: 20px;
+    z-index: 5;    
+    height: 40px;
     border-radius: 22px;
     width: initial;
     padding: 0 15px;
@@ -1243,15 +1243,17 @@ img.layer_thumb {
     border: 2px solid #394264;
     font-weight: bold;
     box-sizing: content-box;
+    background: #fff;
+    cursor: pointer    
 }
-#info.ui-mode-2 p {
+#info p {
     font-weight: bold;
     margin: 0;    
     display: inline-block;
     color: #394264;
     text-transform: uppercase;
 }
-#info.ui-mode-2 p span {
+#info p span {
     position: initial;
     visibility: visible;
     background: transparent;    
@@ -1866,7 +1868,10 @@ img.layer_thumb {
     position: relative;
     left: 50%;
     width: 40px;
-    height: 40px
+    height: 40px;
+    top: 50%;
+    margin-top: -40px;
+    margin-left: -20px;    
 }
 
 #nbdesigner_preloader span {
@@ -2148,23 +2153,15 @@ img.layer_thumb {
     -o-transition: all .4s;
     transition: all .4s
 }
-
-#nbdesigner_preloader {
-    top: 50%;
-    margin-top: -40px
-}
-
 .od_processing p {
     top: 50%;
     position: relative;
     text-align: center;
     margin-top: 10px;
-    margin-left: 50px;
     font-weight: 700;
     font-size: 20px;
     line-height: 30px
 }
-
 .nbdesigner_upload {
     background: #394264;
     border: none;
@@ -2485,9 +2482,8 @@ img.layer_thumb {
     overflow: hidden;
     font-size: 0
 }
-
 .nbdesigner_font {
-    height: 50px;
+    height: 30px;
     display: inline-block;
     position: relative;
     margin-bottom: 10px;
@@ -2496,7 +2492,7 @@ img.layer_thumb {
     opacity: .3;
     text-align: center;
     padding: 3px;
-    font-size: 14px
+    font-size: 16px
 }
 
 .nbdesigner_font .spinner {
@@ -2572,7 +2568,7 @@ img.pattern_img {
     background: #fff;
     border-radius: 3px;
     padding: 5px 10px;
-    font-size: 11px;
+    font-size: 10px;
     color: #394264;
     box-shadow: 0 6px 13px 0 rgba(0, 0, 0, .23);
     line-height: 15px;
@@ -2581,7 +2577,6 @@ img.pattern_img {
     -moz-animation: first_message 1.5s infinite ease-in-out;
     -o-animation: first_message 1.5s infinite ease-in-out;
     animation: first_message 1.5s infinite ease-in-out;
-    font-weight: bold;
     z-index: 99
 }
 .translate-switch {
@@ -2741,11 +2736,12 @@ img.pattern_img {
     font-weight: bold;
     font-size: 14px;
     padding-left: 5px;
-    margin-top: 13px;
+    margin-top: 10px;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
+    line-height: 30px;
     padding-right: 5px;
-    position: relative
+    position: relative;
+    padding-bottom: 10px;
 }
 
 #container_layer h3:after {
@@ -2753,19 +2749,14 @@ img.pattern_img {
 }
 
 #container_layer h3 span {
-    visibility: hidden;
-    -webkit-transition: all .4s;
-    -moz-transition: all .4s;
-    -o-transition: all .4s;
-    transition: all .4s;
-    opacity: 0
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 26px;
+    border-radius: 50%;
+    border: 2px solid #394264;
 }
-
-#container_layer:hover h3 span {
-    visibility: visible;
-    opacity: 1
-}
-
 #container_layer h3 span span {
     cursor: pointer
 }
@@ -2948,7 +2939,6 @@ img.pattern_img {
     margin-right: 7px;
     margin-top: 10px;
     border: 1px solid #ddd;
-    border-radius: 3px;
     cursor: pointer;
 }
 .nbdesigner-list-template h3{
@@ -3092,7 +3082,6 @@ img.pattern_img {
     height: 30px;
     display: inline-block;
     background: #fff;
-    border: 1px solid #394264;
     line-height: 30px;
     text-align: center;
     cursor: pointer;
@@ -3260,4 +3249,65 @@ img.pattern_img {
     top: 10px;
     left: 10px;    
     padding: 5px 10px;
+}
+.nbd-mode-1 .side-name {
+    left: 40px; 
+    top: 5px;
+}
+.pop-tools {
+    position: fixed;
+    top: 50px;
+    left: 250px;
+    width: 80px;
+    background: #fff;
+    z-index: 99;
+    transform: scale(0);
+    opacity: 0;
+}
+.pop-tools.active {
+    transform: scale(1);
+    opacity: 1;    
+}
+.pop-tools h2{
+    font-size: 14px;
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    line-height: 30px;
+    cursor: move;
+    border-bottom: 1px solid #ddd;
+    padding-left: 5px;
+    color: #394264;
+}
+.pop-tools h2 i {
+    opacity: 0.7;
+}
+.pop-tools h2 span{
+    padding-left: 5px;
+}
+.pop-tools .tools-con {
+    width: 100%;
+}
+.pop-tools .tools-con span {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin: 0;
+    box-shadow: none;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+    float: left;
+    box-sizing: border-box;
+    color: #394264;
+}
+.pop-tools .tools-con span span {
+    width: 20px; 
+    height: 20px; 
+    padding: 10px; 
+    color: #394264;
+    box-sizing: content-box;
+}
+.pop-tools .tools-con > span span svg {
+    fill: #394264;
 }

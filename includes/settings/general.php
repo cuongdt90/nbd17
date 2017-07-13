@@ -186,22 +186,22 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'default'	=> '',
                         'type' 		=> 'text'
                     ), 
-                    array(
-                        'title' => __( 'Dropbox App-ID', 'web-to-print-online-designer'),
-                        'description' 		=> __( 'Enter a Dropbox App-ID to allow customer use Dropbox photos.', 'web-to-print-online-designer') . '<br /> <b>Redirect URI: '.NBDESIGNER_PLUGIN_URL.'includes/auth-dropbox.php</b>',
-                        'id' 		=> 'nbdesigner_dropbox_app_id',
-                        'class'         => 'regular-text',
-                        'default'	=> '',
-                        'type' 		=> 'text'
-                    ),                     
-                    array(
-                        'title' => __( 'Printful key', 'web-to-print-online-designer'),
-                        'description' 		=> __( 'Enter a Printful key to sync with Printful service.', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_printful_key',
-                        'class'         => 'regular-text',
-                        'default'	=> '',
-                        'type' 		=> 'text'
-                    ),
+//                    array(
+//                        'title' => __( 'Dropbox App-ID', 'web-to-print-online-designer'),
+//                        'description' 		=> __( 'Enter a Dropbox App-ID to allow customer use Dropbox photos.', 'web-to-print-online-designer') . '<br /> <b>Redirect URI: '.NBDESIGNER_PLUGIN_URL.'includes/auth-dropbox.php</b>',
+//                        'id' 		=> 'nbdesigner_dropbox_app_id',
+//                        'class'         => 'regular-text',
+//                        'default'	=> '',
+//                        'type' 		=> 'text'
+//                    ),                     
+//                    array(
+//                        'title' => __( 'Printful key', 'web-to-print-online-designer'),
+//                        'description' 		=> __( 'Enter a Printful key to sync with Printful service.', 'web-to-print-online-designer'),
+//                        'id' 		=> 'nbdesigner_printful_key',
+//                        'class'         => 'regular-text',
+//                        'default'	=> '',
+//                        'type' 		=> 'text'
+//                    ),
                     array(
                         'title' => __( 'Enable log mode', 'web-to-print-online-designer'),
                         'description' 		=> __( 'Enable log mode for debug.', 'web-to-print-online-designer'),

@@ -34,19 +34,17 @@
         </div>        
     </div>
 </div>
-<?php if($ui_mode == 2): ?>
 <span class="side-name">{{currentVariant.designArea.orientation_name}}</span>
-<?php endif; ?>
 <div class="top-center-menu" ng-style="{'width': designerWidth, 'left': offset}">   
-    <i class="toolbar-menu undo-redo nbd-icon-undo2 nbd-tooltip-i18n" data-placement="bottom" data-lang="UNDO" ng-click="undoDesign()" ng-class="orientationActiveUndoStatus ? 'ready' : ''"></i>
-    <i class="toolbar-menu undo-redo nbd-icon-redo2 nbd-tooltip-i18n" data-placement="bottom" data-lang="REDO" ng-click="redoDesign()" ng-class="orientationActiveRedoStatus ? 'ready' : ''"></i>
+    <i class="toolbar-menu undo-redo nbd-icon-undo2 nbd-tooltip-i18n shadow" data-placement="bottom" data-lang="UNDO" ng-click="undoDesign()" ng-class="orientationActiveUndoStatus ? 'ready' : ''"></i>
+    <i class="toolbar-menu undo-redo nbd-icon-redo2 nbd-tooltip-i18n shadow" data-placement="bottom" data-lang="REDO" ng-click="redoDesign()" ng-class="orientationActiveRedoStatus ? 'ready' : ''"></i>
     
-    <span class="toolbar-menu fa fa-arrows nbd-tooltip nbd-tooltip-i18n" aria-hidden="true" data-tooltip-content="#tooltip_group_align" data-lang="ALIGN" data-placement="bottom" ng-show="showAlignToolbar"></span>
-    <span class="toolbar-menu fa fa-cloud-download nbd-tooltip nbd-tooltip-i18n" aria-hidden="true" data-tooltip-content="#tooltip_download_preview" data-lang="DOWNLOAD" data-placement="bottom" ng-show="state == 'dev'"></span>
-    <span class="toolbar-menu fa fa-th nbd-tooltip-i18n" aria-hidden="true"  data-lang="SNAP_GRID" data-placement="bottom" ng-click="snapGrid()"></span>
-    <span class="fa fa-mouse-pointer toolbar-menu nbd-tooltip-i18n" aria-hidden="true" data-lang="DESELECT_ALL" data-placement="bottom"  ng-click="deselectAll()"></span>	
-    <span class="toolbar-menu fa fa-lock nbd-tooltip nbd-tooltip-i18n" aria-hidden="true" data-tooltip-content="#tooltip_lock_param"  data-lang="LOCK" data-placement="bottom" ng-click="getStatusItem()" ng-show="canvas.getActiveObject() && (task === 'create_template' || task === 'edit_template')"></span>
-    <span class="toolbar-menu fa fa-cloud-upload nbd-tooltip-i18n" aria-hidden="true"  data-lang="ELEMENT_UPLOAD" data-placement="bottom" ng-show="editableItem !== null && (editable.type === 'image' || editable.type === 'custom-image') && (task === 'create_template' || task === 'edit_template')" ng-click="setElementUpload()"></span>
+    <span class="toolbar-menu fa fa-arrows nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_group_align" data-lang="ALIGN" data-placement="bottom" ng-show="showAlignToolbar"></span>
+    <span class="toolbar-menu fa fa-cloud-download nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_download_preview" data-lang="DOWNLOAD" data-placement="bottom" ng-show="state == 'dev'"></span>
+    <span class="toolbar-menu fa fa-th nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="SNAP_GRID" data-placement="bottom" ng-click="snapGrid()"></span>
+    <span class="fa fa-mouse-pointer toolbar-menu nbd-tooltip-i18n shadow" aria-hidden="true" data-lang="DESELECT_ALL" data-placement="bottom"  ng-click="deselectAll()"></span>	
+    <span class="toolbar-menu fa fa-lock nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_lock_param"  data-lang="LOCK" data-placement="bottom" ng-click="getStatusItem()" ng-show="canvas.getActiveObject() && (task === 'create_template' || task === 'edit_template')"></span>
+    <span class="toolbar-menu fa fa-cloud-upload nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="ELEMENT_UPLOAD" data-placement="bottom" ng-show="editableItem !== null && (editable.type === 'image' || editable.type === 'custom-image') && (task === 'create_template' || task === 'edit_template')" ng-click="setElementUpload()"></span>
     
     <div style="display: none;">
         <div id="tooltip_group_align">

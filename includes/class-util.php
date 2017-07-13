@@ -640,3 +640,32 @@ function nbd_get_default_variation_id( $product_id ){
     }
     return $variation_id;
 }
+function nbd_check_permission(){
+    if( isset($_GET['cik']) ){
+        if( !WC()->session->get($_GET['cik'] . '_nbd') ) return false;
+    }
+    if( isset($_GET['oid']) ){
+        
+    }
+    if( isset($_GET['task']) && $_GET['task'] == "create" ){
+        if( !current_user_can('edit_nbd_template') ) return false;
+    }    
+    return true;
+}
+function get_nbd_variations( $product_id ){
+    $product = wc_get_product($product_id);
+    $variations = array();
+    if( $product->is_type( 'variable' ) ) {
+        $available_variations = $product->get_available_variations();   
+        foreach ($available_variations as $variation){
+            $enable = get_post_meta($variation['id'], '_nbdesigner_enable'.$variation['id'], true);
+            if($enable){
+                $variations[] = array(
+                    'id'    =>  $variation['id'],
+                    'name'  =>  $variation['name']
+                );                               
+            }
+        }   
+    }
+    return $variations;
+}

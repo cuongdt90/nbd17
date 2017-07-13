@@ -19,21 +19,6 @@ if(typeof(tinymce) !== 'undefined'){
                             plugin_url : url // Plugin absolute URL
                     });
                 }
-            },{
-                text : 'NBDesigner Button',  
-                onclick: function () {
-                    editor.windowManager.open({
-                        title	 : 'Shortcode Creator',
-                        body: [{
-                            type: 'textbox',
-                            name: 'pid',
-                            label: 'Product ID',
-                            value: ''
-                        }],onsubmit: function( e ) {
-                            editor.insertContent( '[nbdesigner_button  id="' +e.data.pid+ '"][/nbdesigner_button]');
-                        }
-                    });
-                }                
             }]
         });
         nbds_open_editor = editor;

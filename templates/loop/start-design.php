@@ -3,7 +3,6 @@ if (!defined('ABSPATH')) exit;
 $url = esc_url( get_permalink($product->get_id()) );
 if($type = 'simple'){ 
     $url =  add_query_arg(array(
-            'task'  => 'design',
             'product_id'    =>  $product->get_id()
             ),  getUrlPageNBD('create'));
 }

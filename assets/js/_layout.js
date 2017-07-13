@@ -4,7 +4,6 @@ var toggleShowTool = function(){
     if($('#addition_tool .menu_right').hasClass('open')) $('.menu_right').triggerHandler('click');
     if($('#menu').hasClass('open')) $('#menu').triggerHandler('click');
     if($('#layer').hasClass('open')) $('#layer').triggerHandler('click');
-    if($('.m-center').hasClass('open')) $('.m-center').triggerHandler('click');
     if($('.menu_cart').hasClass('open')) $('.menu_cart').triggerHandler('click');
     if($('#od_config').hasClass('open')){
         $(' #gesture, .container_menu, #layer, #info, #addition_tool').fadeOut();
@@ -37,14 +36,14 @@ $(document).ready(function(){
 	w2 = w/2 -20;	
 	if(w < 768) mobile = true;
 	$('#menu').on('click',function(){
-		$(this).toggleClass('open');
-		$('.tool_draw').toggleClass('open');
-		$('.tool_draw li a').each(function(i, val){
-			var seft = this;
-			setTimeout(function(){
-				$(seft).toggleClass('menuUp');
-			},200+ i*100);
-		});
+            $(this).toggleClass('open');
+            $('.tool_draw').toggleClass('open');
+            $('.tool_draw li a').each(function(i, val){
+                    var seft = this;
+                    setTimeout(function(){
+                            $(seft).toggleClass('menuUp');
+                    },200+ i*100);
+            });
 	});
 	$('.menu_right').on('click',function(){
             $(this).toggleClass('open');
@@ -52,20 +51,20 @@ $(document).ready(function(){
             $('#addition_tool').toggleClass('open');
             $('#info').toggle();
             if($(this).hasClass('fa-cog')){
-                    $(this).removeClass('fa-cog');
-                    $(this).addClass('fa-times');
+                $(this).removeClass('fa-cog');
+                $(this).addClass('fa-times');
             }else{
-                    $(this).removeClass('fa-times');
-                    $(this).addClass('fa-cog');			
+                $(this).removeClass('fa-times');
+                $(this).addClass('fa-cog');			
             };
             if(mobile){
                 $('#gesture').fadeToggle(100);
             };                
 	});	
 	$('#layer').on('click', function(){
-		$(this).toggleClass('open');
-		$('#container_layer').toggleClass('open');
-                $('#config-style').removeClass('open');
+            $(this).toggleClass('open');
+            $('#container_layer').toggleClass('open');
+            $('#config-style').removeClass('open');
 	});
 	$('#close_layer').on('click', function(){
             $('#layer, #container_layer').removeClass('open');
@@ -73,37 +72,9 @@ $(document).ready(function(){
         $('#container_layer h3 #_close_popover').on('click', function(){
             $('#layer, #container_layer').removeClass('open');
 	});
-	$('.m-center').on('click', function(){
-		$(this).toggleClass('open');
-                if($(this).hasClass('open')){
-                    $('#frame').css('opacity', 0.3);
-                }else{
-                    $('#frame').css('opacity', 1);
-                };
-		if(mobile){
-			if($('#addition_tool .menu_right').hasClass('open')) $('.menu_right').triggerHandler('click');
-			if($('#menu').hasClass('open')) $('#menu').triggerHandler('click');
-			if($('#layer').hasClass('open')) $('#layer').triggerHandler('click');
-			if($('.menu_cart').hasClass('open')) $('.menu_cart').triggerHandler('click');
-			$('.container_menu, #layer, #info, #addition_tool').fadeToggle();
-		}
-			
-		if($(this).hasClass('fa-hand-o-up')){
-			$(this).removeClass('fa-hand-o-up');
-			$(this).addClass('fa-times');
-		}else{
-			$(this).removeClass('fa-times');
-			$(this).addClass('fa-hand-o-up');			
-		};
-		$('#gesture').toggleClass('open');
-		setTimeout(function(){
-			$('#gesture .menu_gesture').toggleClass('open');
-		},300);			
-		if($('#gesture').hasClass('open'))
-			{$('#gesture').css({'left': w2 + 'px'});}
-		else
-			{$('#gesture').css({'left': '140px'});};
-		$('#od_config').fadeToggle(200);
+	$('#gesture').on('click', function(){
+            $(this).toggleClass('open');
+            $('.pop-tools').toggleClass('active');
 	});
 	$('#mobile').on('click', function(){
 		if($(this).hasClass('fa-eye')){
@@ -192,7 +163,7 @@ $(document).ready(function(){
 		pop.toggleClass('open');
 	});
 	showLayer = function(){
-		$('#layer, #container_layer').addClass('open');
+            $('#layer, #container_layer').addClass('open');
 	};
 	$('.hide-config').on('click', function(){
             hideConfig();
@@ -206,8 +177,7 @@ $(document).ready(function(){
             });
         });
     $('#dag-files-images, #uploaded-facebook, #nbdesigner_art_container, #nbdesigner_font_container, #nbdesigner_instagram, .nbdesigner_config_svg, #pattern-boddy, #tool-help, #design-help, #general-help, .nbdesigner-list-template').perfectScrollbar();   
-    
-		/* megnify */
+    /* megnify */
     if ($(".magniflier").length) {
         var native_width = 0;
         var native_height = 0;
@@ -331,6 +301,9 @@ $(document).ready(function(){
     });
     $('.nbd-tooltip').on('click', function(){
         $(this).tooltip('hide');
+    });
+    $( ".pop-tools" ).draggable({
+        handle: "h2"
     });
 });
 $(window).on('resize' , function(){

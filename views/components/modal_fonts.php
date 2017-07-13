@@ -22,8 +22,7 @@
             <div class="modal-body">
                 <div id="nbdesigner_font_container">
                     <span class="nbdesigner_font" width="100" ng-repeat="font in AllFonts | filterCat : curentCatFont | filter : fontName| limitTo : fontPageSize" font-on-load>
-                        <a ng-click="changeFont(font)"><span class="nbdesigner_font_name" ng-style="{'font-family': (font.alias) ? font.alias : font.name}" ng-attr-data-font="{{(font.alias) ? font.alias : font.name}}"><b>ABC xyz</b></span><br />
-                        <span>{{font.name}}</span></a>
+                        <a ng-click="changeFont(font)"><span class="nbdesigner_font_name" ng-style="{'font-family': font.alias}" ng-attr-data-font="{{font.name}}">{{font.name}}</span></a>
                     </span>
                 </div>
                 <div>

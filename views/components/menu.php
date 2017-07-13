@@ -41,31 +41,17 @@
             <span></span>		
         </div>
     </div>
-    <div id="gesture" class="hover-shadow">
-        <div class="menu_gesture shadow">
-            <span class="fa fa-hand-o-up m-center" aria-hidden="true"></span>
-            <span class="fa fa-chevron-left shadow left" ng-click="ShiftLeft()"></span>
-            <span class="fa fa-chevron-right shadow right" ng-click="ShiftRight()"></span>
-            <span class="fa fa-chevron-up shadow up" ng-click="ShiftUp()"></span>
-            <span class="fa fa-chevron-down shadow down" ng-click="ShiftDown()"></span>
-            <span class="fa fa-exchange flip-ver"  ng-click="flipVertical()"></span>
-            <span class="fa fa-exchange rotate90 flip-hoz"  ng-click="flipHorizontal()"></span>
-            <span class="glyphicon glyphicon-object-align-vertical set-ver shadow" ng-click="setHorizontalCenter()"></span>
-            <span class="glyphicon glyphicon-object-align-horizontal set-hoz shadow" ng-click="setVerticalCenter()"></span>
-            <span class="fa fa-trash-o delete shadow"  onclick="deleteObject()"></span>
-            <span class="fa fa-files-o refresh shadow"  ng-click="duplicateItem()"></span>
-            <span class="fa fa fa-plus zoom-out shadow" ng-click="scaleItem('+')"></span>
-            <span class="fa fa fa-minus zoom-in shadow" ng-click="scaleItem('-')"></span>
-        </div>
-        <span class="gesture_after">{{(langs['TOOL']) ? langs['TOOL'] : "Tool"}}</span>
-    </div>	
-    <div id="info" class="shadow hover-shadow <?php echo 'ui-mode-'.$ui_mode; ?> <?php if($ui_mode == 1) echo ' nbd-tooltip-i18n'; ?>" <?php if($ui_mode == 1) echo 'data-lang="SAVE" data-placement="top"'; ?>>
+    <div id="gesture" class="fa fa-hand-o-up hover-shadow nbd-tooltip-i18n shadow" data-lang="TOOL" data-placement="top" ng-show="currentLayers.length > 0"></div>	
+    <div id="info"  ng-click="storeDesign()" class="shadow hover-shadow">
         <div class="container_info">
-            <?php if($ui_mode == 1): ?>
-            <span class="fa fa-floppy-o menu_cart" ng-click="storeDesign()"></span>
-            <?php elseif($ui_mode == 2): ?>
-            <p ng-click="storeDesign()"><span class="fa fa-shopping-cart add-to-cart"></span>{{(langs['ADD_TO_CART']) ? langs['ADD_TO_CART'] : "Add to cart"}}</p>
-            <?php endif; ?>
+            <p>
+                <span class="fa fa-<?php if($task != 'new') echo 'floppy-o'; else echo 'shopping-cart';  ?> add-to-cart"></span>
+                <?php if($task == ''): ?>
+                {{(langs['ADD_TO_CART']) ? langs['ADD_TO_CART'] : "Add to cart"}}
+                <?php else: ?>
+                {{(langs['SAVE']) ? langs['SAVE'] : "Save"}}
+                <?php endif; ?>
+            </p>
         </div>
     </div>
 </div>

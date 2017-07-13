@@ -454,42 +454,6 @@
                         jQuery('.hPos, .vPos').css({"display" : "none"});
                     };
                 });
-//                jQuery(".pdf-layer").on('click', function(){
-//                    var position = jQuery(this).position(),
-//                    left = _round(position.left),
-//                    top = _round(position.top),
-//                    height = _round(jQuery(this).height()),
-//                    width = _round(jQuery(this).width());
-//                    updatePosition(top, left, height, width);
-//                    jQuery(".pdf-layer.selected").resizable("destroy").draggable("destroy");
-//                    jQuery(".pdf-layer").removeClass('selected');
-//                    jQuery(this).addClass('selected');
-//                    jQuery(this).resizable({
-//                        handles: "ne, se, sw, nw",
-//                        aspectRatio: true,
-//                        resize: function (event, ui) {
-//                            var width = _round(ui.size.width),
-//                            top = _round(ui.position.top),
-//                            left = _round(ui.position.left),
-//                            height = _round(ui.size.height);
-//                            updatePosition(top, left, height, width);
-//                        },
-//                        start: function (event, ui) {
-//                            /*TODO*/
-//                        }
-//                    }).draggable({containment: "parent",
-//                        drag: function (event, ui) {                            
-//                            var top = _round(ui.position.top),
-//                            left = _round(ui.position.left),
-//                            height = _round(jQuery(this).height()),
-//                            width = _round(jQuery(this).width());                            
-//                            updatePosition(top, left, height, width);
-//                        },
-//                        start: function (event, ui) {
-//                            /*TODO*/
-//                        }
-//                    });                     
-//                });
                 var updatePosition = function(top, left, height, width){
                     jQuery('#x-width').text(width);
                     jQuery('#y-height').text(height);  

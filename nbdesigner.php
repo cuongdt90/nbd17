@@ -60,8 +60,6 @@ nbd_define('NBDESIGNER_TEMPLATES', 'nbdesigner_templates');
 nbd_define('NBDESIGNER_CATEGORY_TEMPLATES', 'nbdesigner_category_templates');
 nbd_define('NBDESIGNER_AUTHOR_SITE', 'https://cmsmart.net/');
 nbd_define('NBDESIGNER_SKU', 'WPP1074');
-nbd_define('NBDESIGNER_PAGE_REDESIGN', 'customer-redesign');
-nbd_define('NBDESIGNER_PAGE_CREATE_TEMPLATE', 'designer-create-template');
 nbd_define('NBDESIGNER_PAGE_STUDIO', 'designer-studio');
 nbd_define('NBDESIGNER_PAGE_CREATE_YOUR_OWN', 'create-your-own');
 

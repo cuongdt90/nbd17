@@ -68,6 +68,17 @@
     </body>
 </html>
 <?php else: ?>
+<?php 
+    if( !nbd_check_permission() ):
+?>      
+<div style="font-size: 40px;text-align: center;">
+    <p><img src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/dinosaur.png'; ?>" /></p>
+    <p><?php _e('You do not have permission to access this page!', 'web-to-print-online-designer'); ?> </p>
+    <p><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php _e('Back', 'web-to-print-online-designer') ?></a></p>
+</div>
+<?php        
+    else:  
+?>
 <html lang="<?php echo str_replace('-', '_', get_bloginfo('language')); ?>">
     <head>
         <meta charset="utf-8" />
@@ -82,7 +93,6 @@
         <link href='https://fonts.googleapis.com/css?family=Poppins:400,100,300italic,300' rel='stylesheet' type='text/css'>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bootstrap.min.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bundle.css'; ?>" rel="stylesheet" media="all"/>
-        <!-- <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/owl.carousel.css'; ?>" rel="stylesheet" media="all"/> -->
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/tooltipster.bundle.min.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/style.min.css'; ?>" rel="stylesheet" media="all">
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/custom.css'; ?>" rel="stylesheet" media="all">
@@ -103,7 +113,7 @@
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : '';
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
             $cart_item_key = (isset($_GET['cart_item_key']) &&  $_GET['cart_item_key'] != '') ? $_GET['cart_item_key'] : '';
-            $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : '';
+            $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
             $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : '';
             $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id );
   
@@ -159,7 +169,7 @@
                 enable_all_color    :   "<?php echo nbdesigner_get_option('nbdesigner_show_all_color'); ?>",
                 _palette    :   "<?php echo nbdesigner_get_option('nbdesigner_hex_names'); ?>",
                 nbdesigner_default_color    :   "<?php echo nbdesigner_get_option('nbdesigner_default_color'); ?>",
-                font_url    :   "<?php echo NBDESIGNER_FONT_URL .'/'; ?>",
+                font_url    :   "<?php echo NBDESIGNER_FONT_URL; ?>",
                 art_url    :   "<?php echo NBDESIGNER_ART_URL .'/'; ?>",
                 is_designer :  <?php if(current_user_can('edit_nbd_template')) echo 1; else echo 0; ?>,
                 origin_folder_template   :   "<?php echo $origin_folder  ?>",
@@ -225,7 +235,7 @@
             var NBDESIGNLANG = <?php echo json_encode(nbd_get_language(str_replace('-', '_', get_bloginfo('language'))));  ?>  
         </script>
     </head>
-    <body ng-app="app">      
+    <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
         <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
         <div class="od_loading"></div>
         <div class="container-fluid" id="designer-controller">
@@ -265,6 +275,7 @@
             include_once('components/config_style.php');           
         }
         include_once('components/popover_layer.php');
+        include_once('components/popover_tools.php');
         include_once('components/tool_top.php');
         include_once('components/helpdesk.php');
         ?>
@@ -313,4 +324,4 @@
         </div>
     </body>
 </html>
-<?php endif; ?>
+<?php endif; endif;?>

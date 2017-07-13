@@ -1,13 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div class=" shadow popup" id="container_layer">
     <h3>{{(langs['LAYERS']) ? langs['LAYERS'] : "Layers"}}
-        <span class="pull-right">
-            <span class="fa fa-angle-up close-popover shadow" ng-click="setStackPosition('bringForward')"></span>
-            <span class="fa fa-angle-double-up close-popover shadow" ng-click="setStackPosition('bringToFront')"></span>
-            <span class="fa fa-angle-double-down close-popover shadow" ng-click="setStackPosition('sendToBack')"></span>
-            <span class="fa fa-angle-down close-popover shadow" ng-click="setStackPosition('sendBackwards')"></span>
-            <span class="fa fa-trash close-popover shadow delete-all" ng-click="deleteAllItem()"></span>
-        </span>
+        <span class="fa fa-refresh pull-right  nbd-tooltip-i18n" data-placement="top" data-lang="DELETE_ALL_LAYERS" ng-click="deleteAllItem()"></span>
         <span id="_close_popover" class="fa fa-backward"></span>
     </h3>
     <div id="dg-layers" class="has-croll">
@@ -18,10 +12,7 @@
                 <span>{{layer.name}}</span>
                 <span class="pull-right">
                     <a style="margin-right: 10px;" class="nbdesigner_visible_layer" href="javascript:void(0)" ng-click="toggleVisibleLayer(layer)" title="Toggle visible"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-eye-slash' : 'fa-eye'"></i></a>
-                    <a style="margin-right: 10px;" class="nbdesigner_lock_layer" href="javascript:void(0)" ng-click="toggleLockLayer(layer)" title="Toggle lock"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-lock' : 'fa-unlock-alt'"></i></a>
-                    <a ng-click="deleteLayer(layer)" href="javascript:void(0)" title="Delete">
-                        <i class="fa fa-trash-o delete"></i>
-                    </a>       
+                    <a style="margin-right: 10px;" class="nbdesigner_lock_layer" href="javascript:void(0)" ng-click="toggleLockLayer(layer)" title="Toggle lock"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-lock' : 'fa-unlock-alt'"></i></a> 
                 </span>
             </li>                                               
         </ul>

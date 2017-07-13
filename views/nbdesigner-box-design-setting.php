@@ -241,33 +241,28 @@ endforeach; ?>
     </div>
     <div id="nbdesigner-option" class="nbdesigner-option <?php if (!$enable) echo 'nbdesigner-disable'; ?>">
         <div class="nbdesigner-opt-inner">
-            <label for="_nbdesigner_admindesign" class="nbdesigner-setting-box-label"><?php echo _e('Admin design template', 'web-to-print-online-designer'); ?></label>
+            <label for="_nbdesigner_admindesign" class="nbdesigner-setting-box-label"><?php echo _e('Use templates', 'web-to-print-online-designer'); ?></label>
             <input type="checkbox" value="1" name="_nbdesigner_option[admindesign]" id="_nbdesigner_admindesign" <?php checked(isset($option['admindesign']) ? $option['admindesign'] : false); ?> class="short"/>
-            <?php if($enable && isset($option['admindesign'])): ?>
-                <?php if($priority):?>
-                <a class="button nbd-admin-tem-link" href="<?php echo $link_admindesign.'&priority=primary&task=edit_template'; ?>" target="_blank">
-                    <span class="dashicons dashicons-admin-network"></span> 
-                    <?php echo _e('Edit Primary Template', 'web-to-print-online-designer'); ?>
-                </a>
-                <a class="button nbd-admin-tem-link" href="<?php echo $link_admindesign.'&priority=extra&task=create_template'; ?>" target="_blank">
-                    <span class="dashicons dashicons-plus"></span> 
-                    <?php echo _e('Add Template', 'web-to-print-online-designer'); ?>
-                </a>
-                <?php else:?>
-                <a class="button nbd-admin-tem-link" href="<?php echo $link_admindesign.'&priority=primary&task=create_template'; ?>" target="_blank">
+            <?php if($enable && isset($option['admindesign'])): 
+                $link_manager_template = add_query_arg(array(
+                    'pid' => $post_id, 
+                    'view' => 'templates'), 
+                     admin_url('admin.php?page=nbdesigner_manager_product'));                 
+                $link_create_template = add_query_arg(array(
+                        'product_id' => $post_id,
+                        'task'  =>  'create',
+                        'rd'    => urlencode($link_manager_template)
+                    ), getUrlPageNBD('create'));    
+           
+            ?>
+                <a class="button nbd-admin-tem-link" href="<?php echo $link_create_template; ?>">
                     <span class="dashicons dashicons-art"></span>
                     <?php echo _e('Create Template', 'web-to-print-online-designer'); ?>
                 </a>
-                <?php 
-                    endif;
-                    $link_manager_template = add_query_arg(array('pid' => $post_id, 'view' => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'));
-                ?>
                 <a href="<?php echo $link_manager_template; ?>" class="button nbd-admin-tem-link">
                     <span class="dashicons dashicons-images-alt"></span>
                     <?php echo _e('Manager Templates', 'web-to-print-online-designer'); ?>
-                </a>
-            <?php else: ?>
-            <small><?php echo _e('After save product, you\'ll see link to start design templates', 'web-to-print-online-designer'); ?></small>
+                </a>            
             <?php endif; ?>
         </div>  
         <div class="nbdesigner-opt-inner" style="display: none;">
