@@ -283,57 +283,31 @@ function nbdesigner_get_all_frontend_setting(){
 function nbdesigner_get_default_setting($key = false){
     $frontend = default_frontend_setting();
     $nbd_setting = apply_filters('nbdesigner_default_settings', array_merge(array(
-        'nbdesigner_button_label' => __('Start Design', 'web-to-print-online-designer'),
         'nbdesigner_position_button_in_catalog' => 1,
         'nbdesigner_position_button_product_detail' => 1,
         'nbdesigner_thumbnail_width' => 300,
-        'nbdesigner_thumbnail_height' => 100,
-        'nbdesigner_thumbnail_quality' => 60,
         'nbdesigner_default_dpi' => 150,
         'nbdesigner_show_in_cart' => 'yes',
-        'nbdesigner_show_in_order' => 'yes',
-        'nbdesigner_dimensions_unit' => 'cm',
-        'nbdesigner_disable_on_smartphones' => 'no',
-        'nbdesigner_upload_designs_php_logged_in' => 'no',
+        'nbdesigner_show_in_order' => 'yes',  
+        'nbdesigner_disable_on_smartphones' => 'no',        
         'nbdesigner_notifications' => 'yes',
         'nbdesigner_notifications_recurrence' => 'hourly',
         'nbdesigner_notifications_emails' => '',
-        'nbdesigner_facebook_app_id' => '',
-        'nbdesigner_enable_text' => 'yes',
-        'nbdesigner_default_text' => __('Text here', 'web-to-print-online-designer'),
-        'nbdesigner_enable_curvedtext' => 'yes',
-        'nbdesigner_enable_textpattern' => 'yes',
-        'nbdesigner_enable_clipart' => 'yes',
-        'nbdesigner_enable_image' => 'yes',
-        'nbdesigner_enable_upload_image' => 'yes',
-        'nbdesigner_enable_image_webcam' => 'yes',
-        'nbdesigner_enable_facebook_photo' => 'yes',
-        'nbdesigner_enable_instagram_photo' => 'yes',
-        'nbdesigner_enable_dropbox_photo' => 'yes',
-        'nbdesigner_upload_show_term' => 'no',
-        'nbdesigner_enable_image_url' => 'yes',
-        'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
-        'nbdesigner_enable_draw' => 'yes',
-        'nbdesigner_enable_qrcode' => 'yes',
-        'nbdesigner_default_qrcode' => __('example.com', 'web-to-print-online-designer'),
-        'nbdesigner_show_all_color' => 'yes',
-        'nbdesigner_maxsize_upload' => 5,
-        'nbdesigner_minsize_upload' => 0,    
-        'nbdesigner_default_color' => '#cc324b',
-        'nbdesigner_hex_names' => '',
-        'nbdesigner_instagram_app_id' => '',
-        'nbdesigner_dropbox_app_id' => '',
-        'nbdesigner_printful_key' => '',
-        'nbdesigner_mindpi_upload' => 0,
         'allow_customer_redesign_after_order' => 'yes',
+        'nbdesigner_mindpi_upload' => 0,
+        'nbdesigner_hide_button_cart_in_detail_page'    =>  'no',
+        'nbdesigner_printful_key' => '',   
         'nbdesigner_enable_log' => 'no',
-        'nbdesigner_page_design_tool' => 1
+        'nbdesigner_page_design_tool' => 1,
+        'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
+        'nbdesigner_mindpi_upload_file' => 0
     ), $frontend));
     if(!$key) return $nbd_setting;
     return $nbd_setting[$key];
 }
 function default_frontend_setting(){
     $default = array(
+        'nbdesigner_enable_text' => 'yes',
         'nbdesigner_text_change_font' => 1,
         'nbdesigner_text_italic' => 1,
         'nbdesigner_text_bold' => 1,
@@ -352,9 +326,16 @@ function default_frontend_setting(){
         'nbdesigner_text_outline' => 1,
         'nbdesigner_text_proportion' => 1,
         'nbdesigner_text_rotate' => 1,
+        'nbdesigner_default_text' => __('Text here', 'web-to-print-online-designer'),
+        'nbdesigner_enable_curvedtext' => 'yes',
+        'nbdesigner_enable_textpattern' => 'yes',
+        
+        'nbdesigner_enable_clipart' => 'yes',
         'nbdesigner_clipart_change_path_color' => 1,           
         'nbdesigner_clipart_rotate' => 1,           
-        'nbdesigner_clipart_opacity' => 1,           
+        'nbdesigner_clipart_opacity' => 1,   
+
+        'nbdesigner_enable_image' => 'yes',
         'nbdesigner_image_unlock_proportion' => 1,           
         'nbdesigner_image_shadow' => 1,           
         'nbdesigner_image_opacity' => 1,           
@@ -376,13 +357,53 @@ function default_frontend_setting(){
         'nbdesigner_image_edge_enhance' => 1,          
         'nbdesigner_image_rotate' => 1,          
         'nbdesigner_image_crop' => 1,          
-        'nbdesigner_image_shapecrop' => 1,          
+        'nbdesigner_image_shapecrop' => 1,  
+        'nbdesigner_facebook_app_id' => '',
+        'nbdesigner_instagram_app_id' => '',
+        'nbdesigner_dropbox_app_id' => '', 
+        'nbdesigner_enable_upload_image' => 'yes',
+        'nbdesigner_upload_designs_php_logged_in' => 'no',
+        'nbdesigner_maxsize_upload' => nbd_get_max_upload_default(),
+        'nbdesigner_minsize_upload' => 0,           
+        'nbdesigner_enable_image_url' => 'yes',
+        'nbdesigner_enable_image_webcam' => 'yes',
+        'nbdesigner_enable_facebook_photo' => 'yes',
+        'nbdesigner_enable_instagram_photo' => 'yes',
+        'nbdesigner_enable_dropbox_photo' => 'yes',
+        'nbdesigner_upload_show_term' => 'no',                
+        
+        'nbdesigner_enable_draw' => 'yes',
         'nbdesigner_draw_brush' => 1,          
-        'nbdesigner_draw_shape' => 1,
+        'nbdesigner_draw_shape' => 1, 
+        
+        'nbdesigner_enable_qrcode' => 'yes',
+        'nbdesigner_default_qrcode' => __('example.com', 'web-to-print-online-designer'),
+        
+        'nbdesigner_dimensions_unit' => 'cm',
+        'nbdesigner_show_all_color' => 'yes',
+        'nbdesigner_default_color' => '#cc324b',
+        'nbdesigner_hex_names' => '',        
         'nbdesigner_save_latest_design'  => 'yes',
-        'nbdesigner_hide_button_cart_in_detail_page'    =>  'no'
+        
+        'nbdesigner_upload_file_php_logged_in' => 'no',
+        'nbdesigner_allow_upload_file_type' => '',
+        'nbdesigner_disallow_upload_file_type' => '',
+        'nbdesigner_number_file_upload' => 1,
+        'nbdesigner_maxsize_upload_file' => nbd_get_max_upload_default(),
+        'nbdesigner_minsize_upload_file' => 0,        
+        'nbdesigner_max_res_upload_file' => '',
+        'nbdesigner_min_res_upload_file' => '',    
+        'nbdesigner_mindpi_upload_file' => 0,    
+        'nbdesigner_allow_download_file_upload' => 'yes'
     );
     return $default;
+}
+function nbd_get_value_from_serialize_data( $str, $key ){
+    $arr = array();
+    $value = 0;
+    parse_str($str, $arr);   
+    if( isset($arr[$key]) ) $value = $arr[$key];
+    return $value;
 }
 function nbd_not_empty($value) {
     return $value == '0' || !empty($value);
@@ -413,15 +434,37 @@ function nbd_default_product_setting(){
                 'version' => NBDESIGNER_NUMBER_VERSION
             )); 
 }
+function nbd_get_default_product_option(){
+    return apply_filters('nbdesigner_default_product_option', array(
+        'admindesign'   => 0,
+        'dpi'   => nbdesigner_get_option('nbdesigner_default_dpi'),
+        'request_quote' =>  1,
+        'allow_specify_dimension'   =>  0,
+        'min_width'   =>  0,
+        'max_width'   =>  0,
+        'min_height'   =>  0,
+        'max_height'   =>  0,
+        'extra_price'   => 0,
+        'type_price'   => 1
+    ));
+}
+function nbd_get_default_upload_setting(){
+    return apply_filters('nbdesigner_default_product_upload', array(
+        'number'   => nbdesigner_get_option('nbdesigner_number_file_upload'),
+        'allow_type'   => nbdesigner_get_option('nbdesigner_allow_upload_file_type'),
+        'disallow_type'   => nbdesigner_get_option('nbdesigner_disallow_upload_file_type'),
+        'maxsize'   => nbdesigner_get_option('nbdesigner_maxsize_upload_file'),
+        'minsize'   => nbdesigner_get_option('nbdesigner_minsize_upload_file'),
+        'maxpx_width'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_max_res_upload_file'), 'width' ),
+        'maxpx_height'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_max_res_upload_file'), 'height' ),
+        'minpx_width'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_min_res_upload_file'), 'width' ),
+        'minpx_height'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_min_res_upload_file'), 'height' ),
+        'mindpi'   => nbdesigner_get_option('nbdesigner_mindpi_upload_file')
+    ));    
+}
 function getUrlPageNBD($page){
     global $wpdb;
     switch ($page) {
-        case 'template':
-            $post_name = NBDESIGNER_PAGE_CREATE_TEMPLATE; 
-            break;     
-        case 'redesign':
-            $post_name = NBDESIGNER_PAGE_REDESIGN; 
-            break; 
         case 'studio':
             $post_name = NBDESIGNER_PAGE_STUDIO; 
             break;       
@@ -653,19 +696,35 @@ function nbd_check_permission(){
     return true;
 }
 function get_nbd_variations( $product_id ){
-    $product = wc_get_product($product_id);
+    $product = wc_get_product( $product_id );
     $variations = array();
     if( $product->is_type( 'variable' ) ) {
         $available_variations = $product->get_available_variations();   
         foreach ($available_variations as $variation){
             $enable = get_post_meta($variation['id'], '_nbdesigner_enable'.$variation['id'], true);
             if($enable){
+                if( is_array( $variation['attributes'] ) && count($variation['attributes'] ) > 2 ){
+                    $new_name = '';
+                    foreach ( $variation['attributes'] AS $name => $value ) {
+                        if ( !empty( $value ) ) $new_name .= ucfirst($value).', ';
+                    }                    
+                    $new_name = substr($new_name, 0, -2);
+                } else {
+                    $new_name = $variation['name'];
+                }          
                 $variations[] = array(
                     'id'    =>  $variation['id'],
-                    'name'  =>  $variation['name']
-                );                               
+                    'name'  =>  $new_name
+                );                    
             }
         }   
     }
     return $variations;
+}
+function nbd_get_max_upload_default(){
+    if( function_exists ( 'wp_max_upload_size' ) ){
+        return round(wp_max_upload_size() / 1024 / 1024);
+    }else{
+        return abs( intval( ini_get( 'post_max_size' ) ) );
+    }
 }

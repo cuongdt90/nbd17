@@ -65,7 +65,7 @@
             <?php endif; ?>            
             <span class="shadow hover-shadow item-config fa fa-recycle e-shadow" ng-click="setBackground('remove')" data-toggle="tooltip" data-original-title="{{(langs['REMOVE_BACKGROUND']) ? langs['REMOVE_BACKGROUND'] : 'Remove background'}}"></span>
         </div>			
-        <div class="nb-col-2 has-popover-option" ng-show="settings['pattern_text'] == 'yes'">
+        <div class="nb-col-2 has-popover-option" ng-show="settings['nbdesigner_enable_textpattern'] == 'yes'">
             <p class="label-config">{{(langs['PATTERN']) ? langs['PATTERN'] : "Pattern"}}</p>
             <span class="pattern item-config hover-shadow e-shadow" data-target="#dg-pattern" data-toggle="modal" ng-click="loadPattern()"></span>
             <span class="toggle-popup-option fa fa-chevron-down hover-shadow e-shadow c-option" ng-show="editable.pattern"></span>
@@ -179,7 +179,7 @@
             <p class="label-config label-rotate">{{(langs['ROTATE']) ? langs['ROTATE'] : "Rotate"}}</p>
             <div class="rotation-text"><input type="text" id="rotation-text" data-min="0" data-max="359"></div>
         </div>
-        <div class="nb-col-40" ng-show="settings['curved_text'] == 'yes'">
+        <div class="nb-col-40" ng-show="settings['nbdesigner_enable_curvedtext'] == 'yes'">
             <p class="label-config">{{(langs['CURVED_TEXT']) ? langs['CURVED_TEXT'] : "Curved text"}}</p>
             <div class="container-dg-slider"><div class="dg-slider" id="text-arc"></div></div>
             <p ng-if="langMode == 'rtl'" class="label-config">{{(langs['RTL']) ? langs['RTL'] : "RTL"}}</p>
@@ -188,7 +188,7 @@
                 <label for="rtl_lang"></label>                
             </div>
         </div>		
-        <div class="nb-col-30 has-popover-option" ng-show="settings['curved_text'] == 'yes'">
+        <div class="nb-col-30 has-popover-option" ng-show="settings['nbdesigner_enable_curvedtext'] == 'yes'">
             <p class="label-config">{{(langs['REVERSE']) ? langs['REVERSE'] : "Reverse"}}</p>
             <div class="switch nb-col-6">
                 <input id="curve_reverse" class="cmn-toggle cmn-toggle-round" type="checkbox"  ng-click="reverseCurve()">

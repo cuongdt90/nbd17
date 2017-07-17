@@ -26,7 +26,7 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             '1' => __('Before add to cart button and after variantions option', 'web-to-print-online-designer'),
                             '2' => __('Before variantions option', 'web-to-print-online-designer'),
                             '3' => __('After add to cart button', 'web-to-print-online-designer'),
-                            '4' => __('Custom Hook, <code>echo do_shortcode( \'[nbdesigner_button id="Product ID"]\' );</code>', 'web-to-print-online-designer')
+                            '4' => __('Custom Hook, <code>echo do_shortcode( \'[nbdesigner_button]\' );</code> in product page', 'web-to-print-online-designer')
                         )
                     ),  
                     array(
@@ -40,7 +40,7 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             '2' => __('End of catalog item', 'web-to-print-online-designer'),
                             '3' => __('Do not show', 'web-to-print-online-designer')
                         )
-                    ),  
+                    ),                    
                     array(
                         'title' => __('Hide button Add to cart before complete design', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_hide_button_cart_in_detail_page',

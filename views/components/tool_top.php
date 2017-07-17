@@ -22,3 +22,4 @@
         <li ng-repeat="cat in langCategories" ng-click="loadLanguage(cat.code)" ng-class="{open : currentCatLang === cat.code}">{{cat.name}}</li>
     </ul>
 </div>
+<p ng-show="settings.is_mobile != '1'" class="toggle-upload shadow"  ng-click="changeDesignMode('upload')">{{(langs['OR_UPLOAD_DESIGN']) ? langs['OR_UPLOAD_DESIGN'] : "Or upload design"}}</p>

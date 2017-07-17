@@ -12,11 +12,12 @@ jQuery(document).ready(function ($) {
         $('.nbdesigner-right.add_more').show();
     };
     NBDESIGNADMIN.collapseAll('com');
-    $('#_nbdesigner_enable').change(function () {
-        $('#nbdesigner-boxes').toggleClass('nbdesigner-disable');     
-        $('#nbdesigner_dpi_con').toggleClass('nbdesigner-disable');     
-        $('#nbdesigner-option').toggleClass('nbdesigner-disable');     
-        $('.nbdesigner-right.add_more').toggle();
+    $('#_nbdesigner_enable').change(function() {
+        $('#nbd-setting-container').toggleClass('nbdesigner-disable');      
+    });
+    $('.nbd-dependence').change(function() {
+        var t = $(this),
+        target = $(t.data('target')).toggleClass('nbdesigner-disable');    
     });
     $('#nbdesigner_add_font_cat').on('click', function () {
         var html = '<input class="form-required nbdesigner_font_name" type="text" id="nbdesigner_name_font_newcat"><br /><br />';
@@ -273,6 +274,7 @@ jQuery(document).ready(function ($) {
             }, 10);
         }
     });  
+    /* Values Group */
     $('.nbdesigner-values-group-add').on('click', function(e){
         e.preventDefault();
         var $this = $(this),
@@ -348,6 +350,32 @@ jQuery(document).ready(function ($) {
             $('#color-setting > tbody tr:nth-child(2)').hide()
         }
     });
+    /* Multi Values */
+    $('.nbdesigner-multi-values input[type="hidden"]').each(function() {
+        var $this = $(this),
+            $container = $this.parents('.nbdesigner-multi-values'),
+            unserializedFields = serializedStringToObject($this.val());
+        $container.find('input[type="number"]').each(function(i, item) {
+            $(item).val(unserializedFields[item.name]);
+        });
+    }); 
+    $('.nbdesigner-multi-values input[type="number"]').on('change keyup', function() {
+        var $container = $(this).parents('.nbdesigner-multi-values');
+        console.log($container.find('input[type="number"]').serialize());
+        $container.find('input[type="hidden"]').val($container.find('input[type="number"]').serialize());
+        console.log($container.find('input[type="hidden"]').val());
+    });    
+    function serializedStringToObject( str ){
+	var obj = new Object();
+	var fields = str.split('&');
+	for(var i=0; i < fields.length; ++i) {
+            var field = fields[i].split('=');
+            if(field[1] !== undefined) {
+                    obj[field[0]] = field[1];
+            }
+	}
+	return obj;        
+    }   
 });
 var NBDESIGNADMIN = {
     add_font_cat: function (e) {
@@ -905,22 +933,10 @@ var NBDESIGNADMIN = {
         overlay.css(att, value + 'px');
         sefl.val(value);
     },
-    updateSolutionImage: function(){
-        var dpi = jQuery('#nbdesigner_dpi').val();
-        if(dpi < 1) dpi = 1;
-        jQuery.each(jQuery('#nbdesigner-boxes .nbdesigner-box-container, .nbdesigner-variation-setting .nbdesigner-box-container'), function (key, val) {
-            var width = jQuery(this).find('.real_width_hidden').html(),
-            height = jQuery(this).find('.real_height_hidden').html();
-            jQuery(this).find('.real_width_px').html(parseInt(width * dpi / 2.54));
-            jQuery(this).find('.real_height_px').html(parseInt(height * dpi / 2.54));
-        });
-        jQuery('#nbdesigner_dpi').val(dpi);
-    },
     updateDimensionRealOutputImage: function(e, command){
         var parent = jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-info-box'),
         width = parent.find('.area_design_width'),
         height = parent.find('.area_design_height'),
-        dpi = jQuery('#nbdesigner_dpi').val(),
         sefl = jQuery(e);
         switch (command) {
             case 'width':
@@ -929,10 +945,6 @@ var NBDESIGNADMIN = {
                 h = parent.find('.real_height').val(),
                 _h = parseInt(h * w / original_val);
                 parent.find('.real_height').val(_h);
-                parent.find('.real_width_hidden').html(w);
-                parent.find('.real_height_hidden').html(_h);
-                parent.find('.real_width_px').html(parseInt(w * dpi / 2.54));
-                parent.find('.real_height_px').html(parseInt(_h * dpi / 2.54));
                 break;
             case 'height':
                 var h = sefl.val(),
@@ -940,10 +952,6 @@ var NBDESIGNADMIN = {
                 w = parent.find('.real_width').val(),
                 _w = parseInt(w * h / original_val);
                 parent.find('.real_width').val(_w);  
-                parent.find('.real_width_hidden').html(_w);
-                parent.find('.real_height_hidden').html(h);   
-                parent.find('.real_width_px').html(parseInt(_w * dpi / 2.54));
-                parent.find('.real_height_px').html(parseInt(h * dpi / 2.54));
                 break;
         }
     },

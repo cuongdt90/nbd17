@@ -176,7 +176,7 @@ $(document).ready(function(){
                 };                
             });
         });
-    $('#dag-files-images, #uploaded-facebook, #nbdesigner_art_container, #nbdesigner_font_container, #nbdesigner_instagram, .nbdesigner_config_svg, #pattern-boddy, #tool-help, #design-help, #general-help, .nbdesigner-list-template').perfectScrollbar();   
+    $('#dag-files-images, #uploaded-facebook, #nbdesigner_art_container, #nbdesigner_font_container, #nbdesigner_instagram, .nbdesigner_config_svg, #pattern-boddy, #tool-help, #design-help, #general-help, .nbdesigner-list-template, #upload-design-preview').perfectScrollbar();   
     /* megnify */
     if ($(".magniflier").length) {
         var native_width = 0;

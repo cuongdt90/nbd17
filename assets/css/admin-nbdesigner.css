@@ -80,6 +80,7 @@
     border: 1px solid #eee;
     margin-top: 10px;
     padding: 5px;
+    background: #fff;
 }
 .nbdesigner-area-design {	
     border: 1px dashed #000;
@@ -359,7 +360,7 @@ h4.nbdesigner_order_product_name {
     text-align: center;
 }
 .nbdesigner-option {
-    padding-top: 15px;
+    padding: 15px 10px 10px;
 }
 .nbdesigner-opt-inner {
     margin-top: 15px;
@@ -647,4 +648,9 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
 }
 .nbdesigner-product-link a:focus {
     outline: none;
+}
+.nbdesigner-option-label {
+    width: 200px;
+    font-weight: bold;
+    display: inline-block;
 }

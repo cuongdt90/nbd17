@@ -70,6 +70,7 @@ var NBDESIGNERPRODUCT = {
         });
         jQuery('#nbdesigner_frontend_area').html('');
         jQuery('#nbdesigner_frontend_area').append(html);
+        hideDesignFrame();
     },
     nbdesigner_ready: function(){ 
         if(jQuery('input[name="variation_id"]').length > 0){

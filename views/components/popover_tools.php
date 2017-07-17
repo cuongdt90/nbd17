@@ -6,19 +6,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="pop-tools shadow active" ng-show="currentLayers.length > 0">
     <h2><i class="fa fa-arrows" aria-hidden="true"></i><span>{{(langs['TOOL']) ? langs['TOOL'] : "Tools"}}</span></h2>
     <div class="tools-con">
-        <span class="fa fa-chevron-left" ng-click="ShiftLeft()"></span>      
-        <span class="fa fa-chevron-right" ng-click="ShiftRight()"></span>  
-        <span class="fa fa-chevron-up" ng-click="ShiftUp()"></span>
-        <span class="fa fa-chevron-down" ng-click="ShiftDown()"></span>      
-        <span class="fa fa-exchange" ng-click="flipVertical()"></span>      
-        <span class="fa fa-exchange rotate90" ng-click="flipHorizontal()"></span>      
-        <span class="glyphicon glyphicon-object-align-vertical" ng-click="setHorizontalCenter()"></span>      
-        <span class="glyphicon glyphicon-object-align-horizontal" ng-click="setVerticalCenter()"></span>   
-        <span class="fa fa-trash-o" onclick="deleteObject()"></span>      
-        <span class="fa fa-files-o" ng-click="duplicateItem()"></span>      
-        <span class="fa fa fa-plus" ng-click="scaleItem('+')"></span>      
-        <span class="fa fa fa-minus" ng-click="scaleItem('-')"></span>   
-        <span ng-click="setStackPosition('bringToFront')">
+        <span class="fa fa-chevron-left" ng-click="ShiftLeft()" title="Move left"></span>      
+        <span class="fa fa-chevron-right" ng-click="ShiftRight()" title="Move right"></span>  
+        <span class="fa fa-chevron-up" ng-click="ShiftUp()" title="Move up"></span>
+        <span class="fa fa-chevron-down" ng-click="ShiftDown()" title="Move down"></span>      
+        <span class="fa fa-exchange" ng-click="flipVertical()" title="Flip Horizontal"></span>      
+        <span class="fa fa-exchange rotate90" ng-click="flipHorizontal()" title="Flip Vertical"></span>      
+        <span class="glyphicon glyphicon-object-align-vertical" ng-click="setHorizontalCenter()" title="Center Horizontal"></span>      
+        <span class="glyphicon glyphicon-object-align-horizontal" ng-click="setVerticalCenter()" title="Center Vertical"></span>   
+        <span class="fa fa-trash-o" onclick="deleteObject()" title="Delete"></span>      
+        <span class="fa fa-files-o" ng-click="duplicateItem()" title="Copy"></span>      
+        <span class="fa fa fa-plus" ng-click="scaleItem('+')" title="Zoom In"></span>      
+        <span class="fa fa fa-minus" ng-click="scaleItem('-')" title="Zoom Out"></span>   
+        <span ng-click="setStackPosition('bringToFront')" title="Bring To Front">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false">
                     <g id="bring-front">
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </svg>  
             </span>   
         </span>
-        <span ng-click="setStackPosition('bringForward')">
+        <span ng-click="setStackPosition('bringForward')" title="Bring Forward">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false">
                     <g id="bring-forward">
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </svg>                
             </span>
         </span>
-        <span ng-click="setStackPosition('sendBackwards')">
+        <span ng-click="setStackPosition('sendBackwards')" title="Send Backward">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false">
                     <g id="send-backward">
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </svg> 
             </span>    
         </span>
-        <span ng-click="setStackPosition('sendToBack')">
+        <span ng-click="setStackPosition('sendToBack')" title="Send To Back">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"
                     <g id="send-back">

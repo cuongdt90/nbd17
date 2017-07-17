@@ -34,7 +34,11 @@
         </div>        
     </div>
 </div>
-<span class="side-name">{{currentVariant.designArea.orientation_name}}</span>
+<div class="side-navigator" ng-show="settings.is_mobile != '1'">
+    <span class="fa fa-chevron-left side-nav" ng-click="previousOrientation(currentSide.id)" ng-class="currentSide.id > 0 ? 'ready' : '' "></span>
+    <span class="side-name">{{currentVariant.designArea.orientation_name}}</span>
+    <span class="fa fa-chevron-right side-nav" ng-click="nextOrientation(currentSide.id)" ng-class="currentSide.id < (currentVariant.numberFrame - 1 ) ? 'ready' : '' "></span>
+</div>
 <div class="top-center-menu" ng-style="{'width': designerWidth, 'left': offset}">   
     <i class="toolbar-menu undo-redo nbd-icon-undo2 nbd-tooltip-i18n shadow" data-placement="bottom" data-lang="UNDO" ng-click="undoDesign()" ng-class="orientationActiveUndoStatus ? 'ready' : ''"></i>
     <i class="toolbar-menu undo-redo nbd-icon-redo2 nbd-tooltip-i18n shadow" data-placement="bottom" data-lang="REDO" ng-click="redoDesign()" ng-class="orientationActiveRedoStatus ? 'ready' : ''"></i>

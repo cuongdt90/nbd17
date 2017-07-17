@@ -5,7 +5,6 @@
     <div>
 	<?php 
             global $wpdb;
-            $link_create_template_page = getUrlPageNBD('template');
             foreach($pro as $key => $val): 
             $id = $val["id"];    
             $priority = 'extra';

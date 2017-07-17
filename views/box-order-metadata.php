@@ -8,7 +8,6 @@
                     $nbd_item_key = wc_get_order_item_meta($order_item_id, '_nbd');
                     $item_meta = new WC_Order_Item_Meta( $product );
                     if($nbd_item_key): 
-                    //$nbd_item_key = $item_meta['_nbd'];    
                     $index_accept = 'nbds_'.$order_item_id;
                     $variation = '';
                     if(!is_woo_v3()){

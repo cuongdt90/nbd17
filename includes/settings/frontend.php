@@ -135,15 +135,15 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'type' => 'checkbox'
                     ),                    
                     array(
-                        'title' => __( 'Max size upload', 'web-to-print-online-designer'),
+                        'title' => __( 'Max upload size', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_maxsize_upload',
                         'css'         => 'width: 65px',
-                        'default'	=> '5',
+                        'default'	=> nbd_get_max_upload_default(),
                         'subfix'        => ' MB',
                         'type' 		=> 'number'
                     ),    
                     array(
-                        'title' => __( 'Min size upload', 'web-to-print-online-designer'),
+                        'title' => __( 'Min upload size', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_minsize_upload',
                         'css'         => 'width: 65px',
                         'default'	=> '0',
@@ -198,16 +198,16 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
                     ),  
-                    array(
-                        'title' => __( 'Enable Dropbox photos', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_enable_dropbox_photo',
-                        'default'	=> 'yes',
-                        'type' 		=> 'radio',
-                        'options'   => array(
-                            'yes' => __('Yes', 'web-to-print-online-designer'),
-                            'no' => __('No', 'web-to-print-online-designer')
-                        ) 
-                    ),                      
+//                    array(
+//                        'title' => __( 'Enable Dropbox photos', 'web-to-print-online-designer'),
+//                        'id' 		=> 'nbdesigner_enable_dropbox_photo',
+//                        'default'	=> 'yes',
+//                        'type' 		=> 'radio',
+//                        'options'   => array(
+//                            'yes' => __('Yes', 'web-to-print-online-designer'),
+//                            'no' => __('No', 'web-to-print-online-designer')
+//                        ) 
+//                    ),                      
                     array(
                         'title' => __('Show terms and conditions', 'web-to-print-online-designer'),
                         'description' => __('Show term and conditions upload image.', 'web-to-print-online-designer'),
@@ -222,10 +222,10 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                     array(
                         'title' => __( 'Terms and conditions upload image', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_upload_term',
-                        'default'	=> 'example.com',
+                        'default'	=> 'Your term',
                         'type' 		=> 'textarea',
                         'description'      => __('HTML Tags Supported', 'web-to-print-online-designer'),
-                        'css'         => 'width: 25em; height: 5em;'
+                        'css'         => 'width: 50em; height: 15em;'
                     ),  
                     array(
                         'title' => __( 'Show/hide features', 'web-to-print-online-designer'),

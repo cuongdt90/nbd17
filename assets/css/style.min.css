@@ -2146,7 +2146,7 @@ img.layer_thumb {
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background: rgba(255, 255, 255, 0.95);
+    background: #fff;
     opacity: 0;
     -webkit-transition: all .4s;
     -moz-transition: all .4s;
@@ -2161,6 +2161,55 @@ img.layer_thumb {
     font-weight: 700;
     font-size: 20px;
     line-height: 30px
+}
+.design-options, #upload-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    background-color: #f1f1f1;
+}
+.design-options .inner, .upload-container .inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.design-options .option {
+    padding: 30px;
+    display: inline-block;
+    text-transform: uppercase;
+    background-color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+}
+.design-mode {
+    opacity: 0;
+    pointer-events: none;
+}
+.design-mode.active {
+    opacity: 1;
+    pointer-events: all;
+}
+.design-options .option:not(:last-child) {
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+.design-options .option i {
+    font-size: 20px;
+    margin-right: 15px;    
+}
+.design-options .option:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.design-options .option:active {
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
 }
 .nbdesigner_upload {
     background: #394264;
@@ -2743,12 +2792,10 @@ img.pattern_img {
     position: relative;
     padding-bottom: 10px;
 }
-
 #container_layer h3:after {
     display: none
 }
-
-#container_layer h3 span {
+#container_layer h3 .fa-refresh {
     cursor: pointer;
     width: 30px;
     height: 30px;
@@ -2770,79 +2817,21 @@ img.pattern_img {
     padding: 5px 20px 5px 15px;
     border-top: 1px solid #ddd
 }
-
-@media (max-width: 767px) {
-    #upload-tabs li {
-        display: inline-block;
-        margin-bottom: 3px;
-        min-width: 45px
-    }
-    .nbdesigner_upload_image {
-        height: 50px
-    }
-    #dag-files-images,
-    #nbdesigner_art_container,
-    #nbdesigner_font_container,
-    #pattern-boddy {
-        max-height: 300px
-    }
-    #uploaded-facebook {
-        max-height: 250px
-    }
-    .nbdesigner_art_modal_header input {
-        margin-bottom: 10px
-    }
-    .nbdesigner_art_modal_header .btn-group {
-        vertical-align: top
-    }
-    .modal.in .modal-dialog {
-        margin-top: 40px
-    }
-    #tool-top {
-        right: 5px
-    }
-    .first_message {
-        display: none
-    }
-    .nbdesigner_crop_footer {
-        text-align: left;
-        height: 95px
-    }
-    #dg-config-art .modal-dialog {
-        margin-left: calc(10px - 50%)
-    }
-    #helpdesk .inner-help > div {
-        max-height: 400px
-    }
-    .nbdesigner_image_url {
-        max-width: 100%;
-        margin-left: 0
-    }
-    #container_layer h3 #_close_popover {
-        display: block;
-        position: absolute;
-        top: -10px;
-        right: -30px;
-        height: 37px;
-        width: 30px;
-        background: #fff;
-        text-align: center;
-        line-height: 37px;
-        cursor: pointer
-    }
-    .tool_draw li {
-        display: inline-block;
-        margin-right: 15px;        
-    }
-    .tool_draw {
-        bottom: 50px;
-    }
-    .tool_draw li a:hover .after {
-        top: -35px;
-        left: -20px;
-    }
+.toggle-upload {
+    position: fixed;
+    top: 5px;
+    right: 65px;
+    height: 34px;
+    line-height: 34px;
+    font-weight: bold;
+    background: #fff;
+    padding: 0 15px;
+    cursor: pointer;
+    color: #394264;
 }
-
+.toggle-upload:hover {
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);    
+}
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
     #nbdesigner_art_container .nbdesigner_thumb {
@@ -3244,13 +3233,28 @@ img.pattern_img {
     font-weight: bold;
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
     border: 1px solid #394264;
-    color: #394264;
-    position: fixed;
-    top: 10px;
-    left: 10px;    
+    color: #394264;   
     padding: 5px 10px;
 }
-.nbd-mode-1 .side-name {
+.side-navigator {
+    position: fixed;
+    top: 10px;
+    left: 10px;     
+}
+.side-navigator .side-nav {
+    height: 32px;
+    line-height: 32px;
+    width: 20px;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.3;
+    pointer-events: none;
+}
+.side-navigator .side-nav.ready {
+    opacity: 1;
+    pointer-events: all;    
+}
+.nbd-mode-1 .side-navigator {
     left: 40px; 
     top: 5px;
 }
@@ -3310,4 +3314,184 @@ img.pattern_img {
 }
 .pop-tools .tools-con > span span svg {
     fill: #394264;
+}
+.nbd-upload-items {
+    width: 150px;
+    height: 150px;
+    display: inline-block;
+    max-width: 500px;
+    max-height: 350px;
+    margin: 15px;
+}
+.nbd-upload-item {
+    max-width: 100%;
+    max-height: 100%;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;    
+}
+.inputfile + label {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #394264;
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    margin-right: 0.25em;
+}
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: rgba(57,66,100,0.7);
+}
+.nbd-upload-items-inner {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;    
+}
+.nbd-upload-items-inner span {
+    position: absolute;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: #fff;
+    line-height: 30px;
+    -webkit-transform: translateY(30px);    
+    -moz-transform: translateY(30px);    
+    transform: translateY(30px); 
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+    border-radius: 50%; 
+    font-size: 20px;
+    color: #394264;    
+}
+.nbd-upload-items-inner:hover span {
+    -webkit-transform: translateY(-10px);    
+    -moz-transform: translateY(-10px);    
+    transform: translateY(-10px);     
+}
+.upload-design-preview {
+    margin: 15px;
+    max-height: 300px;
+    max-width: 720px;
+    position: relative;
+    overflow: hidden;    
+}
+.file-upload-name {
+    width: 300px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin: 15px auto;
+}
+.upload-container h2 {
+    margin-bottom: 20px;
+}
+.submit-upload-design {
+    height: 40px;
+    border-radius: 20px;
+    border: 2px solid #394264;
+    background: #fff;
+    padding: 0 15px;
+    color: #394264;
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 36px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 15px;  
+}
+@media (max-width: 767px) {
+    #upload-tabs li {
+        display: inline-block;
+        margin-bottom: 3px;
+        min-width: 45px
+    }
+    .nbdesigner_upload_image {
+        height: 50px
+    }
+    #dag-files-images,
+    #nbdesigner_art_container,
+    #nbdesigner_font_container,
+    #pattern-boddy {
+        max-height: 300px
+    }
+    #uploaded-facebook {
+        max-height: 250px
+    }
+    .nbdesigner_art_modal_header input {
+        margin-bottom: 10px
+    }
+    .nbdesigner_art_modal_header .btn-group {
+        vertical-align: top
+    }
+    .modal.in .modal-dialog {
+        margin-top: 40px
+    }
+    #tool-top {
+        right: 5px
+    }
+    .first_message {
+        display: none
+    }
+    .nbdesigner_crop_footer {
+        text-align: left;
+        height: 95px
+    }
+    #dg-config-art .modal-dialog {
+        margin-left: calc(10px - 50%)
+    }
+    #helpdesk .inner-help > div {
+        max-height: 400px
+    }
+    .nbdesigner_image_url {
+        max-width: 100%;
+        margin-left: 0
+    }
+    #container_layer h3 #_close_popover {
+        display: block;
+        position: absolute;
+        top: -10px;
+        right: -30px;
+        height: 37px;
+        width: 30px;
+        background: #fff;
+        text-align: center;
+        line-height: 37px;
+        cursor: pointer
+    }
+    .tool_draw li {
+        display: inline-block;
+        margin-right: 15px;        
+    }
+    .tool_draw {
+        bottom: 50px;
+    }
+    .tool_draw li a:hover .after {
+        top: -35px;
+        left: -20px;
+    }
+    .design-options .option {
+        display: block;
+        margin-right: 0 !important;
+    }
 }

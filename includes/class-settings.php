@@ -258,11 +258,11 @@ if( !class_exists('Nbdesigner_Settings') ) {
             }
             //multivalues
             else if ($type == 'multivalues') {
-                $input_html = '<div id="' . esc_attr($id) . '" style="' . esc_attr($css) . '" class="nbdesigner-multi-values ' . esc_attr($class) . '"><input type="hidden" name="' . esc_attr($id) . '" value="' . esc_attr($current_value) . '" />';
+                $input_html = '<div id="' . esc_attr($id) . '" class="nbdesigner-multi-values ' . esc_attr($class) . '"><input type="hidden" name="' . esc_attr($id) . '" value="' . esc_attr($current_value) . '" />';
                 foreach ($options as $key => $value) {
                     $input_id = sanitize_key($key);
                     $value = $value;
-                    $input_html .= '<label for="' . $input_id . '">' . esc_attr($key) . ': <input type="number" name="' . $input_id . '" value="' . esc_attr($value) . '" placeholder="' . esc_attr($value) . '" ' . $custom_attributes_html . ' /></label>';
+                    $input_html .= '<label for="' . $input_id . '">' . ucfirst(esc_attr($key)) . ': <input style="'. esc_attr($css) .'" type="number" name="' . $input_id . '" value="' . esc_attr($value) . '" placeholder="' . esc_attr($value) . '" ' . $custom_attributes_html . ' /></label>&nbsp;';
                 }
                 $input_html .= '</div>';
             }else if($type == 'multicheckbox'){

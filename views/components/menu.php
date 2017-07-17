@@ -1,27 +1,27 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div id="main_menu">	
     <ul class="tool_draw">
-        <li ng-show="settings['enable_text'] == 'yes'">
+        <li ng-show="settings['nbdesigner_enable_text'] == 'yes'">
             <a class="add_text shadow nbd-tooltip-i18n" ng-click="addText()" data-lang="ADD_TEXT" data-placement="right">
                 <i class="fa fa-font" aria-hidden="true"></i>
             </a>
         </li>
-        <li ng-show="settings['enable_clipart'] == 'yes'">
+        <li ng-show="settings['nbdesigner_enable_clipart'] == 'yes'">
             <a class="add_art shadow nbd-tooltip-i18n" data-toggle="modal" data-target="#dg-cliparts" ng-click="loadArt()" data-lang="ADD_CLIPART" data-placement="right">
                 <i class="fa fa-picture-o" aria-hidden="true"></i>
             </a>
         </li>
-        <li ng-show="settings['enable_image'] == 'yes'">
+        <li ng-show="settings['nbdesigner_enable_image'] == 'yes'">
             <a class="add_image shadow nbd-tooltip-i18n" data-toggle="modal" data-target="#dg-myclipart" ng-click="loadLocalStorageImage()" data-lang="ADD_IMAGE" data-placement="right">
                 <i class="fa fa-camera-retro" aria-hidden="true"></i>
             </a>
         </li>
-        <li ng-show="settings['enable_draw'] == 'yes'">
+        <li ng-show="settings['nbdesigner_enable_draw'] == 'yes'">
             <a class="draw_free shadow nbd-tooltip-i18n" ng-click="showDrawConfig()" data-lang="FREE_DRAW" data-placement="right">
                 <i class="fa fa-paint-brush" aria-hidden="true"></i>
             </a>
         </li>
-        <li ng-show="settings['enable_qrcode'] == 'yes'">
+        <li ng-show="settings['nbdesigner_enable_qrcode'] == 'yes'">
             <a class="add_code shadow nbd-tooltip-i18n" data-toggle="modal" data-target="#dg-qrcode" data-lang="ADD_QRCODE" data-placement="right">
                 <i class="fa fa-qrcode" aria-hidden="true"></i>
             </a>
@@ -45,8 +45,8 @@
     <div id="info"  ng-click="storeDesign()" class="shadow hover-shadow">
         <div class="container_info">
             <p>
-                <span class="fa fa-<?php if($task != 'new') echo 'floppy-o'; else echo 'shopping-cart';  ?> add-to-cart"></span>
-                <?php if($task == ''): ?>
+                <span class="fa fa-<?php if( $task == 'new' && $ui_mode == 2 ) echo 'shopping-cart'; else echo 'floppy-o';  ?> add-to-cart"></span>
+                <?php if( $task == 'new' && $ui_mode == 2 ): ?>
                 {{(langs['ADD_TO_CART']) ? langs['ADD_TO_CART'] : "Add to cart"}}
                 <?php else: ?>
                 {{(langs['SAVE']) ? langs['SAVE'] : "Save"}}

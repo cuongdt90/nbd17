@@ -32,7 +32,7 @@
                                     <input type="file" id="files-upload" autocomplete="off" ng-file-select="onFileSelect($files)" accept="image/*"/><br />
                                     <p>
                                         <small>{{(langs['ACCEPT_FILE_TYPES']) ? langs['ACCEPT_FILE_TYPES'] : "Accept file types"}}: <strong>png, jpg, gif</strong>
-                                        <br />{{(langs['MAX_FILE_SIZE']) ? langs['MAX_FILE_SIZE'] : "Max file size"}}: <strong><span id="nbdesigner_maxsize">{{settings.max_size_upload}}</span> MB</strong><br /> {{(langs['MIN_FILE_SIZE']) ? langs['MIN_FILE_SIZE'] : "Min file size"}}: <strong>{{settings.min_size_upload}} MB</strong></small>
+                                        <br />{{(langs['MAX_FILE_SIZE']) ? langs['MAX_FILE_SIZE'] : "Max file size"}}: <strong>{{settings.nbdesigner_maxsize_upload}} MB</strong><br /> {{(langs['MIN_FILE_SIZE']) ? langs['MIN_FILE_SIZE'] : "Min file size"}}: <strong>{{settings.nbdesigner_minsize_upload}} MB</strong></small>
                                     </p>
                                     <?php 
                                         $show_term = nbdesigner_get_option('nbdesigner_upload_show_term');
