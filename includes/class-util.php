@@ -300,7 +300,17 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_enable_log' => 'no',
         'nbdesigner_page_design_tool' => 1,
         'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
-        'nbdesigner_mindpi_upload_file' => 0
+        
+        'nbdesigner_mindpi_upload_file' => 0,
+        'nbdesigner_allow_upload_file_type' => '',
+        'nbdesigner_disallow_upload_file_type' => '',
+        'nbdesigner_number_file_upload' => 1,
+        'nbdesigner_maxsize_upload_file' => nbd_get_max_upload_default(),
+        'nbdesigner_minsize_upload_file' => 0,        
+        'nbdesigner_max_res_upload_file' => '',
+        'nbdesigner_min_res_upload_file' => '',    
+        'nbdesigner_mindpi_upload_file' => 0,    
+        'nbdesigner_allow_download_file_upload' => 'no'       
     ), $frontend));
     if(!$key) return $nbd_setting;
     return $nbd_setting[$key];
@@ -385,16 +395,7 @@ function default_frontend_setting(){
         'nbdesigner_hex_names' => '',        
         'nbdesigner_save_latest_design'  => 'yes',
         
-        'nbdesigner_upload_file_php_logged_in' => 'no',
-        'nbdesigner_allow_upload_file_type' => '',
-        'nbdesigner_disallow_upload_file_type' => '',
-        'nbdesigner_number_file_upload' => 1,
-        'nbdesigner_maxsize_upload_file' => nbd_get_max_upload_default(),
-        'nbdesigner_minsize_upload_file' => 0,        
-        'nbdesigner_max_res_upload_file' => '',
-        'nbdesigner_min_res_upload_file' => '',    
-        'nbdesigner_mindpi_upload_file' => 0,    
-        'nbdesigner_allow_download_file_upload' => 'yes'
+        'nbdesigner_upload_file_php_logged_in' => 'no'
     );
     return $default;
 }
@@ -479,6 +480,8 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
     $data = array();
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     if( $nbd_item_key == '' ){
+        $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
+        $data['option'] = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));  
         if($variation_id > 0){         
             $data['product'] = unserialize(get_post_meta($variation_id, '_designer_setting'.$variation_id, true)); 
             if (!isset($data['product'][0])){
@@ -487,9 +490,10 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         }else {
             $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
         }  
-        $data['config']['dpi'] = (get_post_meta($product_id, '_nbdesigner_dpi', true) != '') ?  get_post_meta($product_id, '_nbdesigner_dpi', true) : 96;
     }else {
         $data['product'] = unserialize(file_get_contents($path . '/product.json'));
+        $data['option'] = unserialize(file_get_contents($path . '/option.json'));
+        $data['upload'] = unserialize(file_get_contents($path . '/upload.json'));
         $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
         $data['config'] = nbd_get_data_from_json($path . '/config.json');
         $data['design'] = nbd_get_data_from_json($path . '/design.json');

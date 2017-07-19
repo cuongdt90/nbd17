@@ -15,6 +15,12 @@ jQuery(document).ready(function ($) {
     $('#_nbdesigner_enable').change(function() {
         $('#nbd-setting-container').toggleClass('nbdesigner-disable');      
     });
+    $('#_nbdesigner_enable_upload').change(function() {
+        $('.nbd-tabber.nbd-upload').toggleClass('nbdesigner-disable');   
+        if( $('.nbd-tabber.nbd-upload').hasClass( 'selected' ) ){
+            $('.nbd-tabber.nbd-design').triggerHandler( 'click' );
+        }
+    });    
     $('.nbd-dependence').change(function() {
         var t = $(this),
         target = $(t.data('target')).toggleClass('nbdesigner-disable');    

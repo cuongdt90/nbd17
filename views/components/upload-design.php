@@ -12,7 +12,16 @@
             </svg>
             <span>{{(langs['CHOOSE_FILE']) ? langs['CHOOSE_FILE'] : "Choose a file to upload"}}</span>
         </label>
+        <span style="cursor: pointer;" class="fa fa-info-circle nbd-tooltip-right" data-tooltip-content="#tooltip_upload_rule"></span>
     </p>
+    <div style="display: none;">
+        <div id="tooltip_upload_rule" style="color: #394264; font-size: 12px;">
+            <p ng-if="undefined !== uploadSetting.allow_type && uploadSetting.allow_type != ''">Allow extensions: <b>{{uploadSetting.allow_type}}</b></p>
+            <p ng-if="undefined !== uploadSetting.disallow_type && uploadSetting.disallow_type != ''">Disallow extensions: <b>{{uploadSetting.disallow_type}}</b></p>
+            <p>Min size: <b>{{uploadSetting.minsize}} MB</b></p>
+            <p>Max size: <b>{{uploadSetting.maxsize}} MB</b></p>
+        </div>
+    </div>
     <p ng-if="fileUpload.length > 0" class="file-upload-name">{{fileUpload[0]['name']}}</p>
     <p ng-show="fileUpload.length > 0">
         <button class="btn btn-primary shadow nbdesigner_upload" ng-click="startUploadDesign()">{{(langs['UPLOAD']) ? langs['UPLOAD'] : "Upload"}}</button>
@@ -25,7 +34,7 @@
         <!-- show preview design -->
         <div ng-repeat="file in listFileUpload" class="nbd-upload-items">
             <div class="nbd-upload-items-inner">
-                <img ng-src="{{file}}" class="shadow nbd-upload-item"/>
+                <img ng-src="{{file.src}}" class="shadow nbd-upload-item"/>
                 <span ng-click="deleteUploadfile($index)" class="shadow"><i class="fa fa-times" aria-hidden="true"></i></span>
             </div>
         </div>
@@ -33,6 +42,6 @@
     <div ng-show="listFileUpload.length > 0">
         <span class="submit-upload-design shadow" ng-click="completeUpload()">{{(langs['COMPLETE']) ? langs['COMPLETE'] : "Complete"}}</span>
     </div>
-    <p style="margin: 10px;"><a ng-click="changeDesignMode('custom')">{{(langs['OR_DESIGN_YOUR_OWN']) ? langs['OR_DESIGN_YOUR_OWN'] : "Or design your own"}}</a></p>
+    <p style="margin: 15px;" ng-hide="settings.task == 'reup'"><a ng-click="changeDesignMode('custom')">{{(langs['OR_DESIGN_YOUR_OWN']) ? langs['OR_DESIGN_YOUR_OWN'] : "Or design your own"}}</a></p>
 </div>
 

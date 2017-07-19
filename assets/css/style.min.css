@@ -2180,11 +2180,11 @@ img.layer_thumb {
     text-align: center;
 }
 .design-options .option {
-    padding: 30px;
+    padding: 20px;
     display: inline-block;
     text-transform: uppercase;
     background-color: #fff;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 16px;
     cursor: pointer;
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
@@ -2203,7 +2203,12 @@ img.layer_thumb {
 }
 .design-options .option i {
     font-size: 20px;
-    margin-right: 15px;    
+    margin-right: 15px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    border: 1px solid #aaa;   
 }
 .design-options .option:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -2832,6 +2837,9 @@ img.pattern_img {
 .toggle-upload:hover {
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);    
 }
+.tooltip {
+    z-index: 99999999;
+}
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
     #nbdesigner_art_container .nbdesigner_thumb {
@@ -3108,7 +3116,6 @@ img.pattern_img {
 /* Tooltipster */
 .tooltipster-base {
     pointer-events: all !important;
-    z-index: 999 !important; 
 }
 .tooltipster-sidetip.tooltipster-borderless .tooltipster-box {
     border: none;
@@ -3419,6 +3426,13 @@ img.pattern_img {
     cursor: pointer;
     display: inline-block;
     margin-top: 15px;  
+}
+.tooltipster-right .tooltipster-box, .tooltipster-top .tooltipster-box {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    background: #fff !important;
+}
+.tooltipster-right .tooltipster-arrow, .tooltipster-top .tooltipster-arrow {
+    display: none;
 }
 @media (max-width: 767px) {
     #upload-tabs li {

@@ -152,7 +152,7 @@
     outline: none;
 }
 .nbdesigner-disable {
-    display: none;
+    display: none !important;
 }
 .nbdesigner-manager-product {
     padding: 10px;

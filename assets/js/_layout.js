@@ -299,6 +299,12 @@ $(document).ready(function(){
         side: "bottom",
         theme: 'tooltipster-borderless'
     });
+    $('.nbd-tooltip-right').tooltipster({
+        animation: 'grow',
+        trigger: "click",
+        side: "right",
+        theme: 'tooltipster-borderless'
+    });    
     $('.nbd-tooltip').on('click', function(){
         $(this).tooltip('hide');
     });

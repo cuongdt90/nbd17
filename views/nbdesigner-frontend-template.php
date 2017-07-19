@@ -113,11 +113,14 @@
         <?php 
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
+            $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
             $cart_item_key = (isset($_GET['cart_item_key']) &&  $_GET['cart_item_key'] != '') ? $_GET['cart_item_key'] : '';
             $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
             $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : '';
             $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: new page, 3: studio*/
+            $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);  
+            $enable_upload = $_enable_upload ? 2 : 1;
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
@@ -125,6 +128,7 @@
                 lang_rtl    :   "<?php if(is_rtl()){ echo 'rtl'; } else {  echo 'ltr';  } ?>",
                 is_mobile   :   "<?php echo wp_is_mobile(); ?>",
                 ui_mode   :   "<?php echo $ui_mode; ?>",
+                enable_upload   :   "<?php echo $enable_upload; ?>",
                 stage_dimension :   {'width' : 500, 'height' : 500},
                 font_url    :   "<?php echo NBDESIGNER_FONT_URL; ?>",
                 art_url    :   "<?php echo NBDESIGNER_ART_URL .'/'; ?>",
@@ -141,9 +145,10 @@
                 variation_id  :   "<?php echo $variation_id; ?>",                
                 redirect_url    :   "<?php echo $redirect_url; ?>",
                 nbd_item_key    :   "<?php echo $nbd_item_key; ?>",
+                nbu_item_key    :   "<?php echo $nbu_item_key; ?>",
                 cart_item_key    :   "<?php echo $cart_item_key; ?>",
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task )); ?>
-            };    
+            };  
             <?php 
                 $settings = nbdesigner_get_all_frontend_setting();
                 foreach ($settings as $key => $val):
@@ -233,7 +238,7 @@
                 </div>	
                 <p id="first_message">{{(langs['NBDESIGNER_PROCESSING']) ? langs['NBDESIGNER_PROCESSING'] : "NBDESIGNER PROCESSING"}}...</p>
             </div>
-            <div class="design-options" id="design-options" >
+            <div class="design-options" id="design-options" ng-show="settings['enable_upload'] == '2' && settings['task'] == 'new'">
                 <div class="inner">
                     <div>
                         <div class="option shasow" ng-click="changeDesignMode('upload')"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Upload Design</div>

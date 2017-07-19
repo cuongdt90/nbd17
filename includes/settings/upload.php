@@ -14,21 +14,21 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                     ),                      
                     array(
                         'title' => __( 'Allowed file types', 'web-to-print-online-designer'),
-                        'description' 		=> __( 'Extensions seperated by a comma. Don not use dots or spaces. Example: <code>jpg, bmp, pdf, ps, ai, iddd</code>... Set empty input to allow all extensions except disallowed extensions.', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Extensions seperated by a comma. Don not use dots or spaces. Example: <code>jpg,bmp,pdf,ps,ai,iddd</code>... Set empty input to allow all extensions except disallowed extensions.', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_allow_upload_file_type',
                         'class'         => 'regular-text',
                         'default'	=> '',
                         'type' 		=> 'text',
-                        'placeholder'   => 'jpg, bmp, pdf, ps'
+                        'placeholder'   => 'jpg,bmp,pdf,ps'
                     ),  
                     array(
                         'title' => __( 'Disallowed file types', 'web-to-print-online-designer'),
-                        'description' 		=> __( 'Extensions seperated by a comma. Don not use dots or spaces. Example: <code>png, gif,... </code>', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Extensions seperated by a comma. Don not use dots or spaces. Example: <code>png,gif,... </code>', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_disallow_upload_file_type',
                         'class'         => 'regular-text',
                         'default'	=> '',
                         'type' 		=> 'text',
-                        'placeholder'   => 'png, gif'
+                        'placeholder'   => 'png,gif'
                     ),                     
                     array(
                         'title' => __('Number of uploads', 'web-to-print-online-designer'),
@@ -57,7 +57,7 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                     array(
                         'title' => __('Customer download', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_allow_download_file_upload',
-                        'default'	=> 'yes',
+                        'default'	=> 'no',
                         'description' => __( 'Let customers download their own files.', 'web-to-print-online-designer'),
                         'type' 		=> 'radio',
                         'options'   => array(
