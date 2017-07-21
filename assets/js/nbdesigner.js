@@ -33,6 +33,15 @@ jQuery(document).ready(function () {
             }, 700);
         }
     };
+    show_upload_thumb = function( arr ){
+        jQuery('#nbdesigner-upload-title').show();
+        var html = '';
+        var d = new Date();
+        jQuery.each(arr, function (key, val) {
+            html += '<div class="img-con" style=\"display: inline-block; margin-right: 15px;\"><img src="' + val.src + '?t=' + d.getTime() +'" style=\"width: 100px;\"/></div>'
+        });
+        jQuery('#nbdesigner_upload_preview').html('').append(html);         
+    }
     jQuery('#nbdesign-new-template').on('click', function(){
         showDesignFrame();
     });

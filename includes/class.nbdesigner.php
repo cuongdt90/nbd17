@@ -127,7 +127,9 @@ class Nbdesigner_Plugin {
         add_action( 'woocommerce_product_after_variable_attributes', array($this,'nbdesigner_variation_settings_fields'), 10, 3 );
         add_action( 'woocommerce_save_product_variation', array($this,'nbdesigner_save_variation_settings_fields'), 10, 2 );
         add_filter( 'woocommerce_add_cart_item_data', array($this, 'nbdesigner_force_individual_cart_items'), 10, 3 );      
-        add_filter( 'woocommerce_add_cart_item', array($this, 'nbd_add_cart_item'), 30, 2 );      
+        add_filter( 'woocommerce_add_cart_item', array($this, 'nbd_add_cart_item'), 10, 1 ); 
+        add_filter( 'woocommerce_cart_item_price', array(&$this, 'change_cart_item_prices_text'), 10, 3 );
+        add_filter( 'woocommerce_cart_item_subtotal', array(&$this, 'change_cart_item_prices_text'), 10, 3 );
         $page_design = nbdesigner_get_option('nbdesigner_page_design_tool');
         if($page_design == 2){
             add_action('woocommerce_before_single_product', array($this, 'check_has_design'));   
@@ -201,6 +203,48 @@ class Nbdesigner_Plugin {
         }
         return $url;
     }
+    public function change_cart_item_prices_text( $price, $cart_item, $cart_item_key ){
+        $nbd_session = WC()->session->get($cart_item_key . '_nbd');   
+        $nbu_session = WC()->session->get($cart_item_key . '_nbu');   
+        if( isset($nbd_session) || isset($nbu_session) ){
+            $option = unserialize(get_post_meta($cart_item['product_id'], '_nbdesigner_option', true));
+            if( $option['request_quote'] ){
+                return '-';
+            }else if( $option['extra_price'] ){
+                if( $option['type_price'] == 1 ){
+                    
+                }else{
+                    
+                }
+            }
+        }
+        return $price;
+    }
+    public function nbd_add_cart_item( $cart_item_data ){
+        $product_id = $cart_item_data['product_id'];
+        $variation_id = $cart_item_data['variation_id'];      
+        $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
+        $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
+        $nbu_item_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);
+        if( isset($nbd_item_session) || isset($nbu_item_session) ){
+            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true)); 
+            if( $option['request_quote'] ){
+                $cart_item_data['data']->set_price( 0 );                
+            } else if( $option['extra_price'] ){
+                $decimals = wc_get_price_decimals();
+                if( $option['type_price'] == 1 ){
+                    $price = $cart_item_data['data']->get_price();
+                    $new_price = round($price + $option['extra_price'], $decimals);	
+                    $cart_item_data['data']->set_price( $new_price ); 
+                }else{
+                    $price = $cart_item_data['data']->get_price();
+                    $new_price = round($price + $price * $option['extra_price'] / 100, $decimals);	
+                    $cart_item_data['data']->set_price( $new_price ); 
+                }                    
+            } 		    
+        }              
+        return $cart_item_data;
+    }    
     public function nbdesigner_admin_enqueue_scripts($hook){   
         wp_register_style('nbd-general', NBDESIGNER_CSS_URL . 'nbd-general.css', array('dashicons'), NBDESIGNER_VERSION);
         wp_enqueue_style(array('nbd-general'));     
@@ -2354,6 +2398,18 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                     $html .= '<br /><a href="'.$link_reup_design.'">'. __('Reupload design', 'web-to-print-online-designer') .'</a>';
                     $html .= '</div>';
                 }
+                $option = unserialize(get_post_meta($cart_item['product_id'], '_nbdesigner_option', true)); 
+                if( $option['extra_price'] && ! $option['request_quote'] ){
+                    $decimals = wc_get_price_decimals();
+                    $product = $cart_item['data'];
+                    if( $option['type_price'] == 1 ){
+                        $extra_price =  $option['extra_price'];
+                    }else{
+                        $price = $product->get_price();
+                        $extra_price = round($price * $option['extra_price'] / 100, $decimals);	
+                    }
+                    $html .= '<p>'. __('Extra price for design','web-to-print-online-designer').' + '.wc_price($extra_price).'</p>';
+                }
                 echo $html;
             } else {
                 echo $title;
@@ -2361,24 +2417,6 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
         }else{
             echo $title;
         }
-    }
-    public function nbd_add_cart_item( $cart_item_data, $cart_item_key ){
-        $product_id = $cart_item_data['product_id'];
-        $variation_id = $cart_item_data['variation_id'];
-        $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
-        $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
-        $nbu_item_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);
-        if( isset($nbd_item_session) || isset($nbu_item_session) ){
-            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true)); 
-            if( $option['request_quote'] ){
-                $product = $cart_item_data['data'];            
-                $product->set_price(0);
-            }            
-        }
- ob_start();
-var_dump($product);
-error_log(ob_get_clean());           
-        return $cart_item_data;
     }
     /**
      * Declare item cart has design
@@ -2607,6 +2645,14 @@ error_log(ob_get_clean());
                 $html .= '<div>';
                 $notice = '';
             }
+            $option = unserialize(get_post_meta($item['product_id'], '_nbdesigner_option', true));
+            if( $option['extra_price'] && ! $option['request_quote'] ){
+                if( $option['type_price'] == 1 ){
+                    $html .= '<p>'. __('Extra price for design','web-to-print-online-designer').' + '.wc_price($option['extra_price']).'</p>';
+                }else{
+                    $html .= '<p>'. __('Extra price for design','web-to-print-online-designer').' + '.$option['extra_price'].' %</p>';
+                }               
+            }            
             $link = get_permalink( $item['product_id']);   
             $item_name = sprintf( '<a href="%s">%s</a>&times;<strong class="product-quantity">%s</strong>%s<br />%s', $link, $item['name'], $item['qty'], $html, $notice );
         }

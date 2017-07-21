@@ -31,7 +31,7 @@
     cursor: pointer;
 }
 .nbdesigner-disable {
-    opacity: 0.2;
+    opacity: 0.7;
     pointer-events: none;
 }
 @-webkit-keyframes rotating /* Safari and Chrome */ {

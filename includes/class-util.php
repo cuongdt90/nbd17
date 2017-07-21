@@ -483,8 +483,9 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
         $data['option'] = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));  
         if($variation_id > 0){         
+            $enable_variation = get_post_meta($variation_id, '_nbdesigner_enable'.$variation_id, true);
             $data['product'] = unserialize(get_post_meta($variation_id, '_designer_setting'.$variation_id, true)); 
-            if (!isset($data['product'][0])){
+            if ( !($enable_variation && isset($data['product'][0]))){
                 $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
             }            
         }else {
