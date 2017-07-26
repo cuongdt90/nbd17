@@ -96,21 +96,22 @@ var NBDESIGNERPRODUCT = {
         jQuery('.nbdesign-button').addClass('nbdesigner-disable');
         jQuery('.nbdesigner-img-loading').show();
     },
-    get_sugget_design: function(pid){
+    get_sugget_design: function(product_id, variation_id){
         if(!jQuery('.nbdesigner-related-product-image').length) return;
         var products = [];
         jQuery.each(jQuery('.nbdesigner-related-product-image'), function(){
             products.push(jQuery(this).attr('data-id'));
             jQuery(this).parent('.nbdesigner-related-product-item').find('.nbdesigner-overlay').addClass('open');
         });
+        if( !products.length ) return;
         jQuery.ajax({
             url: nbds_frontend.url,
             method: "POST",
             data: {
                 "action": "nbdesigner_get_suggest_design",
                 "products": products,
-                "ref" : pid,
-                "sid": nbds_frontend.sid,
+                "product_id" : product_id,
+                "variation_id" : variation_id,
                 "nonce": nbds_frontend.nonce
             }            
         }).done(function(data){
@@ -119,8 +120,8 @@ var NBDESIGNERPRODUCT = {
                 if(data['flag']){
                     var href = jQuery(this).attr('href'),
                     data_id = jQuery(this).attr('data-id');
-                    jQuery(this).attr('href', addParameter(href, 'nbds-ref', pid, false));       
-                    jQuery(this).find('img').attr({'src' : data['images'][data_id][0], 'srcset' : ''});
+                    jQuery(this).attr('href', addParameter(href, 'nbds-ref', data['nbd_item_key'], false));       
+                    jQuery(this).find('img').attr({'src' : data['images'][data_id], 'srcset' : ''});
                 }
                 jQuery(this).parent('.nbdesigner-related-product-item').find('.nbdesigner-overlay').removeClass('open');
             });
@@ -132,6 +133,43 @@ var NBDESIGNERPRODUCT = {
             files += key == 0 ? val.name : '|' + val.name;
         });
         jQuery('input[name="nbd-upload-files"]').val( files );
+    },
+    remove_design: function(type, cart_item_key){
+        jQuery('form.woocommerce-cart-form').addClass( 'processing' ).block( {
+            message: null,
+            overlayCSS: {
+                background: '#fff',
+                opacity: 0.6
+            }
+        } );
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                "action": "nbd_remove_cart_design",
+                "type": type,
+                "cart_item_key": cart_item_key,
+                "nonce": nbds_frontend.nonce
+            }            
+        }).done(function(data){
+            jQuery('form.woocommerce-cart-form').removeClass( 'processing' ).unblock();
+            if(data == 'success'){
+                var designSection = jQuery('#nbd' + cart_item_key),
+                    uploadSection = jQuery('#nbu' + cart_item_key),
+                    extraPrice = jQuery('#nbx' + cart_item_key);
+                var sections =  designSection.length + uploadSection.length;
+                if( type == 'custom' ) {
+                    designSection.remove();
+                }else {
+                    uploadSection.remove();
+                }
+                if( sections < 2 ) {
+                    extraPrice.remove();
+                    /* Update cart after remove design and upload files */
+                    jQuery( '.woocommerce-cart-form input[name="update_cart"]' ).prop( 'disabled', false ).trigger( 'click' );
+                }
+            }
+        });
     }
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {

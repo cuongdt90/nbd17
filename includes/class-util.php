@@ -509,13 +509,36 @@ function getUrlPageNBD($page){
     $post = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name='".$post_name."'"); 
     return ($post) ? get_page_link($post) : '#';
 }
-function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task ){
+function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false ){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nbdesigner_templates';
+    if( $template_id != '' ){
+        $sql = "SELECT * FROM $table_name WHERE id = $template_id";
+    }else {
+        if($priority) {
+            $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND variation_id = '$variation_id' AND priority = 1";
+        }else {
+            if( $limit ){
+                $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND variation_id = '$variation_id' ORDER BY created_date DESC LIMIT $limit";
+            }else{
+                $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND variation_id = '$variation_id' ORDER BY created_date DESC";                
+            }           
+        }
+    }
+    $results = $wpdb->get_results($sql, 'ARRAY_A');
+    if( $priority && count( $results ) == 0 ) {
+        $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND variation_id = '$variation_id' ORDER BY created_date DESC LIMIT 1";
+        $results = $wpdb->get_results($sql, ARRAY_A);
+    }
+    return $results;
+}
+function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '' ){
     $data = array();
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
     $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
-    if( $_nbd_item_key ) $nbd_item_key = $_nbd_item_key;
+    if( $_nbd_item_key && $task2 == '') $nbd_item_key = $_nbd_item_key;
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
-    if( $nbd_item_key == '' ){
+    if( $nbd_item_key == '' || !file_exists($path) ){
         $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
         $data['option'] = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));  
         if($variation_id > 0){         
@@ -526,7 +549,7 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
             }    
         }else {
             $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
-        }  
+        }
     }else {
         $data['product'] = unserialize(file_get_contents($path . '/product.json'));
         $data['option'] = unserialize(file_get_contents($path . '/option.json'));
@@ -534,6 +557,18 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
         $data['config'] = nbd_get_data_from_json($path . '/config.json');
         $data['design'] = nbd_get_data_from_json($path . '/design.json');
+    }
+    if( $data['option']['admindesign'] && $task == 'new' ) {
+        $template = nbd_get_templates( $product_id, $variation_id, '', 1 );
+        $template_path = NBDESIGNER_CUSTOMER_DIR . '/' . $template[0]['folder'];
+        $data['fonts'] = nbd_get_data_from_json($template_path . '/used_font.json');
+        $data['design'] = nbd_get_data_from_json($template_path . '/design.json');            
+    }    
+    if(  $reference != '' ){
+        $ref_path = NBDESIGNER_CUSTOMER_DIR . '/' . $reference;
+        $data['design'] = nbd_get_data_from_json($ref_path . '/design.json');
+        $data['fonts'] = nbd_get_data_from_json($ref_path . '/used_font.json');
+        $data['ref'] = unserialize(file_get_contents($ref_path . '/product.json'));
     }
     return $data;        
 }
@@ -747,7 +782,7 @@ function nbd_get_default_variation_id( $product_id ){
 }
 function nbd_check_permission(){
     if( isset($_GET['cik']) ){
-        if( !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
+        if( !(isset($_GET['task2']) && $_GET['task2'] != '') && !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
     }
     if( isset($_GET['oid']) ){
         $order = wc_get_order(absint($_GET['oid']) ); 

@@ -46,10 +46,11 @@
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
             $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
             $cart_item_key = (isset($_GET['cik']) &&  $_GET['cik'] != '') ? $_GET['cik'] : '';
+            $reference = (isset($_GET['reference']) &&  $_GET['reference'] != '') ? $_GET['reference'] : '';
             $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
             $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
-            $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : ($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '';
+            $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : (($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '');
             $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);  
             $enable_upload = $_enable_upload ? 2 : 1;
             if( $task == 'reup' ){
@@ -77,6 +78,7 @@
                 dropbox_redirect_uri    : "<?php echo NBDESIGNER_PLUGIN_URL.'includes/auth-dropbox.php'; ?>",
                 cart_url    :   "<?php echo esc_url( wc_get_cart_url() ); ?>",
                 task    :   "<?php echo $task; ?>",
+                task2    :   "<?php echo $task2; ?>",
                 product_id  :   "<?php echo $product_id; ?>",
                 variation_id  :   "<?php echo $variation_id; ?>",                
                 redirect_url    :   "<?php echo $redirect_url; ?>",
@@ -84,8 +86,9 @@
                 nbu_item_key    :   "<?php echo $nbu_item_key; ?>",
                 cart_item_key    :   "<?php echo $cart_item_key; ?>",
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
-                product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task )); ?>
-            };  
+                product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>
+            }; 
+            NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
             <?php 
                 $settings = nbdesigner_get_all_frontend_setting();
                 foreach ($settings as $key => $val):

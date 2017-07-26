@@ -134,7 +134,7 @@ $(document).ready(function(){
 	});
 	$('#tool-top .help, .close-helpdesk').on('click', function(){
             $('.first_message').hide();
-            $('#tool-top .help').removeClass('first_visitor');
+            $('#tool-top .help').removeClass('first_visitor');   
             $('#helpdesk').toggleClass('open');
 	});
         $('.first_message').on('click', function(){
@@ -306,6 +306,9 @@ $(document).ready(function(){
         side: "right",
         theme: 'tooltipster-borderless'
     });    
+    $('#nbd-upload-note').on('click', function(){
+        $('#nbd-upload-note').removeClass('first_time_in_hour');
+    });
     $('.nbd-tooltip-top').tooltipster({
         animation: 'grow',
         trigger: "click",

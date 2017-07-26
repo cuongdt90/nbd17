@@ -12,6 +12,9 @@ if (!defined('ABSPATH')) exit;
     <div id="nbdesigner_frontend_area"></div>
     <h4 id="nbdesigner-upload-title" style="display: none;"><?php _e('Upload file', 'web-to-print-online-designer'); ?></h4>
     <div id="nbdesigner_upload_preview" style="margin-bottom: 15px;"></div>
+    <?php if($extra_price != ''): ?>
+    <p><?php _e('Extra price for design', 'web-to-print-online-designer'); ?> + <?php echo $extra_price; ?></p>
+    <?php endif; ?>
 </div>
 <div style="position: fixed; top: 0; left: 0; z-index: 999999; opacity: 0; width: 100%; height: 100%;" id="container-online-designer">
     <iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="<?php echo $src; ?>"></iframe>
