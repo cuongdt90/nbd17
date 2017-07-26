@@ -1,8 +1,15 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div class="form-group">
     <h2>{{(langs['UPLOAD_DESIGN']) ? langs['UPLOAD_DESIGN'] : "Upload design"}}</h2>
-    <p>
-        <!-- check number upload files -->
+    <?php 
+        $login_required = (nbdesigner_get_option('nbdesigner_upload_file_php_logged_in') !== 'no' && !is_user_logged_in()) ? 1 : 0;
+        if($login_required):
+        $redirect = get_permalink( $product_id );
+    ?>    
+    <p>{{(langs['MES_LOGIN_TO_UPLOAD']) ? langs['MES_LOGIN_TO_UPLOAD'] : "You need to be logged in to upload images!"}}</p> 
+    <a class="btn btn-primary shadow nbdesigner_upload ng-binding" href="<?php echo wp_login_url( $redirect ); ?>">{{(langs['LOGIN']) ? langs['LOGIN'] : "Login"}}</a>
+    <?php else: ?>
+    <p>      
         <input type="file" id="nbd-file-upload" autocomplete="off" ng-file-select="onFileUploadSelect($files)" class="inputfile"/> 
         <label for="nbd-file-upload">
             <span></span>
@@ -12,12 +19,12 @@
             </svg>
             <span>{{(langs['CHOOSE_FILE']) ? langs['CHOOSE_FILE'] : "Choose a file to upload"}}</span>
         </label>
-        <span style="cursor: pointer;" class="fa fa-info-circle nbd-tooltip-right" data-tooltip-content="#tooltip_upload_rule"></span>
-    </p>
+        <span id="nbd-upload-note" style="cursor: pointer;color: #cc324b;" class="first_time_in_hour fa fa-info-circle nbd-tooltip-<?php if( wp_is_mobile() ) echo 'top'; else echo 'right'; ?>" data-tooltip-content="#tooltip_upload_rule"></span>
+    </p>      
     <div style="display: none;">
         <div id="tooltip_upload_rule" style="color: #394264; font-size: 12px;">
-            <p ng-if="undefined !== uploadSetting.allow_type && uploadSetting.allow_type != ''">Allow extensions: <b>{{uploadSetting.allow_type}}</b></p>
-            <p ng-if="undefined !== uploadSetting.disallow_type && uploadSetting.disallow_type != ''">Disallow extensions: <b>{{uploadSetting.disallow_type}}</b></p>
+            <p ng-if="undefined !== uploadSetting.allow_type && uploadSetting.allow_type != ''">Allow extensions: <b>{{formatListString( uploadSetting.allow_type )}}</b></p>
+            <p ng-if="undefined !== uploadSetting.disallow_type && uploadSetting.disallow_type != ''">Disallow extensions: <b>{{formatListString( uploadSetting.disallow_type )}}</b></p>
             <p>Min size: <b>{{uploadSetting.minsize}} MB</b></p>
             <p>Max size: <b>{{uploadSetting.maxsize}} MB</b></p>
         </div>
@@ -35,13 +42,15 @@
         <div ng-repeat="file in listFileUpload" class="nbd-upload-items">
             <div class="nbd-upload-items-inner">
                 <img ng-src="{{file.src}}" class="shadow nbd-upload-item"/>
+                <p class="nbd-upload-item-title">{{file.name}}</p>
                 <span ng-click="deleteUploadfile($index)" class="shadow"><i class="fa fa-times" aria-hidden="true"></i></span>
             </div>
         </div>
     </div>
     <div ng-show="listFileUpload.length > 0">
-        <span class="submit-upload-design shadow" ng-click="completeUpload()">{{(langs['COMPLETE']) ? langs['COMPLETE'] : "Complete"}}</span>
+        <span class="submit-upload-design" ng-click="completeUpload()">{{(langs['COMPLETE']) ? langs['COMPLETE'] : "Complete"}}</span>
     </div>
     <p style="margin: 15px;" ng-hide="settings.task == 'reup'"><a ng-click="changeDesignMode('custom')">{{(langs['OR_DESIGN_YOUR_OWN']) ? langs['OR_DESIGN_YOUR_OWN'] : "Or design your own"}}</a></p>
+    <?php endif; ?> 
 </div>
 

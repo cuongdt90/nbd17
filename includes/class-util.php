@@ -190,6 +190,40 @@ class Nbdesigner_IO {
         $file_exten = $filetype[count($filetype) - 1];
         if (in_array(strtolower($file_exten), $arr_mime)) $check = true;
         return $check;
+    }   
+    public static function get_thumb_file( $ext, $path = '' ){
+        $thumb = '';
+        switch ( $ext ) {
+            case 'jpg': 
+            case 'jpeg': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/jpg.png';
+                break;
+            case 'png': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/png.png';
+                break;             
+            case 'psd': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/psd.png';
+                break;       
+            case 'pdf': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/pdf.png';
+                break;
+            case 'ai': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/ai.png';
+                break;       
+            case 'eps': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/eps.png';
+                break;     
+            case 'zip': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/zip.png';
+                break; 
+            case 'svg': 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/svg.png';
+                break;             
+            default: 
+                $thumb = NBDESIGNER_ASSETS_URL . 'images/file_type/file.png';
+                break;             
+        }
+        return $thumb;
     }    
 }
 class NBD_Image {
@@ -301,15 +335,14 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_page_design_tool' => 1,
         'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
         
-        'nbdesigner_mindpi_upload_file' => 0,
+        'nbdesigner_mindpi_upload_file' => 0,  
         'nbdesigner_allow_upload_file_type' => '',
         'nbdesigner_disallow_upload_file_type' => '',
         'nbdesigner_number_file_upload' => 1,
         'nbdesigner_maxsize_upload_file' => nbd_get_max_upload_default(),
         'nbdesigner_minsize_upload_file' => 0,        
         'nbdesigner_max_res_upload_file' => '',
-        'nbdesigner_min_res_upload_file' => '',    
-        'nbdesigner_mindpi_upload_file' => 0,    
+        'nbdesigner_min_res_upload_file' => '',            
         'nbdesigner_allow_download_file_upload' => 'no'       
     ), $frontend));
     if(!$key) return $nbd_setting;
@@ -478,6 +511,9 @@ function getUrlPageNBD($page){
 }
 function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task ){
     $data = array();
+    $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
+    $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
+    if( $_nbd_item_key ) $nbd_item_key = $_nbd_item_key;
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     if( $nbd_item_key == '' ){
         $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
@@ -487,7 +523,7 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
             $data['product'] = unserialize(get_post_meta($variation_id, '_designer_setting'.$variation_id, true)); 
             if ( !($enable_variation && isset($data['product'][0]))){
                 $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
-            }            
+            }    
         }else {
             $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
         }  
@@ -500,6 +536,27 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['design'] = nbd_get_data_from_json($path . '/design.json');
     }
     return $data;        
+}
+function nbd_get_upload_files_from_session( $nbu_item_key ){
+    $path = NBDESIGNER_UPLOAD_DIR . '/' . $nbu_item_key;
+    $list_files = Nbdesigner_IO::get_list_files($path);
+    $list_files = nbd_get_array_name_from_arry_path($list_files); 
+    $files = array();
+    foreach ($list_files as $file ){
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $files[] = array(
+            'src' => Nbdesigner_IO::get_thumb_file($ext, '' ),
+            'name'  =>  $file
+        );
+    }
+    return $files;
+}
+function nbd_get_array_name_from_arry_path( $arr_path ){
+    $arr_names = array();
+    foreach ($arr_path as $path ){
+        $arr_names[] = basename($path);
+    }
+    return $arr_names;
 }
 function nbd_get_data_from_json($path = ''){
     $content = file_exists($path) ? file_get_contents($path) : '';
@@ -690,10 +747,12 @@ function nbd_get_default_variation_id( $product_id ){
 }
 function nbd_check_permission(){
     if( isset($_GET['cik']) ){
-        if( !WC()->session->get($_GET['cik'] . '_nbd') ) return false;
+        if( !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
     }
     if( isset($_GET['oid']) ){
-        
+        $order = wc_get_order(absint($_GET['oid']) ); 
+        $uid = get_current_user_id();
+        if ($order->user_id != $uid) return false;
     }
     if( isset($_GET['task']) && $_GET['task'] == "create" ){
         if( !current_user_can('edit_nbd_template') ) return false;

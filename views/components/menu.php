@@ -41,12 +41,12 @@
             <span></span>		
         </div>
     </div>
-    <div id="gesture" class="fa fa-hand-o-up hover-shadow nbd-tooltip-i18n shadow" data-lang="TOOL" data-placement="top" ng-show="currentLayers.length > 0"></div>	
-    <div id="info"  ng-click="storeDesign()" class="shadow hover-shadow">
+    <div id="gesture" class="fa fa-hand-o-up nbd-tooltip-i18n" data-lang="TOOL" data-placement="top" ng-show="currentLayers.length > 0"></div>	
+    <div id="info"  ng-click="<?php if( $task == 'new' && $ui_mode == 2 ) echo 'saveCart()'; else echo 'storeDesign()'; ?>" class="shadow hover-shadow">
         <div class="container_info">
             <p>
                 <span class="fa fa-<?php if( $task == 'new' && $ui_mode == 2 ) echo 'shopping-cart'; else echo 'floppy-o';  ?> add-to-cart"></span>
-                <?php if( $task == 'new' && $ui_mode == 2 ): ?>
+                <?php if( $task == 'new' && $ui_mode == 2 && $task2 == ''): ?>
                 {{(langs['ADD_TO_CART']) ? langs['ADD_TO_CART'] : "Add to cart"}}
                 <?php else: ?>
                 {{(langs['SAVE']) ? langs['SAVE'] : "Save"}}

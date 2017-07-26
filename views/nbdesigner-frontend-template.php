@@ -4,80 +4,10 @@
     $hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
     $lang_code = str_replace('-', '_', get_bloginfo('language'));
     if(wp_is_mobile() && $hide_on_mobile == 'yes'):      
-?>
-<html lang="<?php echo $lang_code; ?>">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Online Designer</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1, minimum-scale=0.5, maximum-scale=1.0"/>
-        <meta content="Online Designer - HTML5 Designer - Online Print Solution" name="description" />
-        <meta content="Online Designer" name="keywords" />
-        <meta content="Netbaseteam" name="author"> 
-        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300italic,300' rel='stylesheet' type='text/css'>
-        <style type="text/css">
-            html {
-                width: 100%;
-                height: 100%;
-            }
-            body {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                background-color: #f4f4f4;
-            }
-            p {
-                margin: 0;
-                text-align: center;
-                font-family: 'Roboto', sans-serif;
-            }
-            p.announce {
-                padding-left: 15px;
-                padding-right: 15px;                
-                font-size: 17px;
-                margin-top: 15px;
-                color: #999;
-            }
-            p img {
-                max-width: 100%;
-            }
-            a {
-                display: inline-block;
-                color: #fff;
-                background: #f98332;
-                margin-top: 15px;
-                padding: 10px;
-                text-transform: uppercase;
-                font-size: 14px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);      
-                text-decoration: none;
-            }
-        </style>
-        <?php if(isset($_GET['task']) &&  $_GET['task'] != 'design'): ?>
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function() {
-                window.parent.NBDESIGNERPRODUCT.nbdesigner_ready();                           
-            });           
-        </script>
-        <?php endif; ?>
-    </head>
-    <body>
-        <p><img src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/mobile.png'; ?>" /></p>
-        <p class="announce"><?php _e('Sorry, our design tool is not currently supported on mobile devices.', 'web-to-print-online-designer'); ?></p>
-        <p class="recommend"><a href="javascript:void(0)" onclick="window.parent.hideDesignFrame();"><?php _e('Back to product', 'web-to-print-online-designer'); ?></a></p>
-    </body>
-</html>
-<?php else: ?>
-<?php 
+    nbdesigner_get_template('mobile.php', array('lang_code' => $lang_code));    
+    else: 
     if( !nbd_check_permission() ):
-?>      
-<div style="font-size: 40px;text-align: center;">
-    <p><img src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/dinosaur.png'; ?>" /></p>
-    <p><?php _e('You do not have permission to access this page!', 'web-to-print-online-designer'); ?> </p>
-    <p><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php _e('Back', 'web-to-print-online-designer') ?></a></p>
-</div>
-<?php        
+    nbdesigner_get_template('permission.php');    
     else:     
 ?>
 <html lang="<?php echo $lang_code; ?>">
@@ -112,15 +42,21 @@
         <![endif]-->	
         <?php 
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
+            $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
             $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
-            $cart_item_key = (isset($_GET['cart_item_key']) &&  $_GET['cart_item_key'] != '') ? $_GET['cart_item_key'] : '';
+            $cart_item_key = (isset($_GET['cik']) &&  $_GET['cik'] != '') ? $_GET['cik'] : '';
             $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
-            $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : '';
             $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
-            $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: new page, 3: studio*/
+            $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
+            $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : ($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '';
             $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);  
             $enable_upload = $_enable_upload ? 2 : 1;
+            if( $task == 'reup' ){
+                $list_file_upload = nbd_get_upload_files_from_session( $nbu_item_key );
+            }else {
+                $list_file_upload = '';
+            }
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
@@ -147,6 +83,7 @@
                 nbd_item_key    :   "<?php echo $nbd_item_key; ?>",
                 nbu_item_key    :   "<?php echo $nbu_item_key; ?>",
                 cart_item_key    :   "<?php echo $cart_item_key; ?>",
+                list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task )); ?>
             };  
             <?php 

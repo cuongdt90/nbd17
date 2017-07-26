@@ -332,8 +332,8 @@
                 <div class="nbdesigner-opt-inner">
                     <label for="_nbdesigner_customprice" class="nbdesigner-option-label"><?php echo _e('Extra price', 'web-to-print-online-designer'); ?></label>
                     <input type="number" step="any" class="short nbdesigner-short-input wc_input_price" id="_nbdesigner_customprice" name="_nbdesigner_option[extra_price]" value="<?php echo $option['extra_price']; ?>"/>
-                    &nbsp;<input name="_nbdesigner_option[type_price]" value="1" type="radio" <?php checked( $option['type_price'], 1); ?> /><?php _e('Fixed amount', 'web-to-print-online-designer'); ?>   
-                    &nbsp;<input name="_nbdesigner_option[type_price]" value="2" type="radio" <?php checked( $option['type_price'], 2); ?> /><?php _e('Percent of the price', 'web-to-print-online-designer'); ?>                   
+                    &nbsp;<input name="_nbdesigner_option[type_price]" value="1" type="radio" <?php checked( $option['type_price'], 1); ?> /><?php _e('Fixed discount', 'web-to-print-online-designer'); ?>   
+                    &nbsp;<input name="_nbdesigner_option[type_price]" value="2" type="radio" <?php checked( $option['type_price'], 2); ?> /><?php _e('Percentage discount', 'web-to-print-online-designer'); ?>                   
                 </div>
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[request_quote]"/>

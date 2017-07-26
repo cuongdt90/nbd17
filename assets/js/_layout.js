@@ -273,7 +273,8 @@ $(document).ready(function(){
     var first_visitor = getCookie("nbdesigner_user");
     if (first_visitor != "") {
         $('.first_message').hide();
-        $('#tool-top .help').removeClass('first_visitor');       
+        $('#tool-top .help').removeClass('first_visitor');  
+        $('#nbd-upload-note').removeClass('first_time_in_hour');          
     }else{
         setCookie("nbdesigner_user", 'Hello World', 0.05);
     }
@@ -303,6 +304,12 @@ $(document).ready(function(){
         animation: 'grow',
         trigger: "click",
         side: "right",
+        theme: 'tooltipster-borderless'
+    });    
+    $('.nbd-tooltip-top').tooltipster({
+        animation: 'grow',
+        trigger: "click",
+        side: "top",
         theme: 'tooltipster-borderless'
     });    
     $('.nbd-tooltip').on('click', function(){

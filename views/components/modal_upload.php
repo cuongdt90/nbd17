@@ -20,7 +20,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="upload-computer" ng-show="settings['nbdesigner_enable_upload_image'] == 'yes'">
                         <?php 
-                            $login_required = nbdesigner_get_option('nbdesigner_upload_designs_php_logged_in') !== 0 && !is_user_logged_in() ? 1 : 0;
+                            $login_required = (nbdesigner_get_option('nbdesigner_upload_designs_php_logged_in') !== 'no' && !is_user_logged_in()) ? 1 : 0;
                             if($login_required):
                         ?>
                         <p>{{(langs['MES_LOGIN_TO_UPLOAD']) ? langs['MES_LOGIN_TO_UPLOAD'] : "You need to be logged in to upload images!"}}</p>

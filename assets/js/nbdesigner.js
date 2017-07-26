@@ -125,6 +125,13 @@ var NBDESIGNERPRODUCT = {
                 jQuery(this).parent('.nbdesigner-related-product-item').find('.nbdesigner-overlay').removeClass('open');
             });
         });
+    },
+    update_nbu_value: function( arr ){
+        var files = '';
+        jQuery.each(arr, function (key, val) {
+            files += key == 0 ? val.name : '|' + val.name;
+        });
+        jQuery('input[name="nbd-upload-files"]').val( files );
     }
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {
