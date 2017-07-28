@@ -142,6 +142,7 @@
                     include_once('components/modal_share.php');		
                     include_once('components/modal_expand_feature.php');		
                     include_once('components/modal_products.php');		
+                    include_once('components/modal-custom-dimension.php');		
                     ?>
                 </div>
                 <div id="od_config" ng-class="modeMobile ? 'mobile' : 'modepc'">	
@@ -178,6 +179,7 @@
                 </div>	
                 <p id="first_message">{{(langs['NBDESIGNER_PROCESSING']) ? langs['NBDESIGNER_PROCESSING'] : "NBDESIGNER PROCESSING"}}...</p>
             </div>
+            <?php if( $reference == '' ): ?>
             <div class="design-options" id="design-options" ng-show="settings['enable_upload'] == '2' && settings['task'] == 'new'">
                 <div class="inner">
                     <div>
@@ -185,7 +187,8 @@
                         <div class="option shasow" ng-click="changeDesignMode('custom')"><i class="fa fa-paint-brush" aria-hidden="true"></i>Custom Design</div>
                     </div>
                 </div>
-            </div>            
+            </div> 
+            <?php endif; ?>
             <?php if(!NBDESIGNER_MODE_DEV): ?>
             <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
             <?php else: ?>

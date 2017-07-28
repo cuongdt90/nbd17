@@ -289,7 +289,7 @@
 .nbdesigner-related-product-item {
     position: relative;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+/*    border: 1px solid #ddd;*/
 }
 .nbdesigner-related-product-image {
     display: block;

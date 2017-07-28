@@ -472,7 +472,7 @@ function nbd_get_default_product_option(){
     return apply_filters('nbdesigner_default_product_option', array(
         'admindesign'   => 0,
         'dpi'   => nbdesigner_get_option('nbdesigner_default_dpi'),
-        'request_quote' =>  1,
+        'request_quote' =>  0,
         'allow_specify_dimension'   =>  0,
         'min_width'   =>  0,
         'max_width'   =>  0,
@@ -536,8 +536,9 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
     $data = array();
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
     $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
-    if( $_nbd_item_key && $task2 == '') $nbd_item_key = $_nbd_item_key;
+    if( $_nbd_item_key && $task2 == '' && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+    /* Path not exist in case add to cart before design, session has been init */
     if( $nbd_item_key == '' || !file_exists($path) ){
         $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
         $data['option'] = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));  
@@ -559,12 +560,16 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['design'] = nbd_get_data_from_json($path . '/design.json');
     }
     if( $data['option']['admindesign'] && $task == 'new' ) {
+        /* Get primary template or latest template for new design */
         $template = nbd_get_templates( $product_id, $variation_id, '', 1 );
-        $template_path = NBDESIGNER_CUSTOMER_DIR . '/' . $template[0]['folder'];
-        $data['fonts'] = nbd_get_data_from_json($template_path . '/used_font.json');
-        $data['design'] = nbd_get_data_from_json($template_path . '/design.json');            
+        if( isset($template[0]) ){
+            $template_path = NBDESIGNER_CUSTOMER_DIR . '/' . $template[0]['folder'];
+            $data['fonts'] = nbd_get_data_from_json($template_path . '/used_font.json');
+            $data['design'] = nbd_get_data_from_json($template_path . '/design.json');              
+        }       
     }    
     if(  $reference != '' ){
+        /* Get reference design, font and reference product setting */
         $ref_path = NBDESIGNER_CUSTOMER_DIR . '/' . $reference;
         $data['design'] = nbd_get_data_from_json($ref_path . '/design.json');
         $data['fonts'] = nbd_get_data_from_json($ref_path . '/used_font.json');
@@ -787,7 +792,7 @@ function nbd_check_permission(){
     if( isset($_GET['oid']) ){
         $order = wc_get_order(absint($_GET['oid']) ); 
         $uid = get_current_user_id();
-        if ($order->user_id != $uid) return false;
+        if ($order->get_user_id() != $uid) return false;
     }
     if( isset($_GET['task']) && $_GET['task'] == "create" ){
         if( !current_user_can('edit_nbd_template') ) return false;
@@ -826,4 +831,16 @@ function nbd_get_max_upload_default(){
     }else{
         return abs( intval( ini_get( 'post_max_size' ) ) );
     }
+}
+function nbd_check_cart_item_exist( $cart_item_key ){
+    global $woocommerce;
+    $check = false;
+    foreach($woocommerce->cart->get_cart() as $key => $val ) {
+        if( $cart_item_key ==  $key) return true;
+    }
+    return $check;
+}
+function nbd_die( $result ){
+    echo json_encode($result);
+    wp_die();
 }

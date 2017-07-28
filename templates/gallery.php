@@ -4,7 +4,13 @@ $k = 0;
 echo "<p>".$des."</p>";
 if(count($templates)):
     echo '<ul class="nbdesigner-gallery">';
-    foreach ($templates as $temp): ?>
+    foreach ($templates as $temp): 
+    $link_template = add_query_arg(array(
+            'product_id' => $temp['product_id'],
+            'variation_id' => $temp['variation_id'],
+            'reference'  =>  $temp['folder']
+        ), getUrlPageNBD('create'));         
+?>
     <?php if($k % $per_row == 0) echo '<li class="nbdesigner-container">';?>
     <div class="nbdesigner-item">
         <div class="nbdesigner-con">
@@ -13,7 +19,7 @@ if(count($templates)):
             </div>
             <div class="nbdesigner-hover">
                 <div class="nbdesigner-inner">
-                    <a href="<?php echo add_query_arg(array('nbds-adid' => $temp['adid']), get_permalink( $temp['id'] )); ?>" class="nbdesigner-link" >View design<span>→</span></a>
+                    <a href="<?php echo $link_template; ?>" class="nbdesigner-link" >View design<span>→</span></a>
                 </div>
             </div>            
         </div>

@@ -34,6 +34,7 @@
         </div>        
     </div>
 </div>
+<a ng-hide="settings['ui_mode'] == 1" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="shadow hover-shadow back-to-main-site nbd-tooltip-i18n"  data-placement="right" data-lang="RETURN_TO_SHOP"><i class="fa fa-home"></i></a>
 <div class="side-navigator" ng-show="settings.is_mobile != '1'">
     <span class="fa fa-chevron-left side-nav" ng-click="previousOrientation(currentSide.id)" ng-class="currentSide.id > 0 ? 'ready' : '' " title="Previous"></span>
     <span class="side-name shadow">{{currentVariant.designArea.orientation_name}}</span>

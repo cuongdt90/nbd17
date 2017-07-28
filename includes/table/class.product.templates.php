@@ -67,7 +67,9 @@ class Product_Template_List_Table extends WP_List_Table {
         $item = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}nbdesigner_templates WHERE id = $id");
         $item_primary = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}nbdesigner_templates WHERE product_id = $pid AND priority = 1");   
         self::update_template($id, array('priority' => 1));
-        self::update_template($item_primary->id, array('priority' => 0));
+        if($item_primary){
+            self::update_template($item_primary->id, array('priority' => 0));
+        }
     }
     public static function update_template($id, $arr){
         global $wpdb;
@@ -105,7 +107,20 @@ class Product_Template_List_Table extends WP_List_Table {
      * @return string
      */
     function column_product_id($item) {
-        $variation = ($item['variation_id'] > 0) ? get_post($item['variation_id']) : get_post($item['product_id']);
+        $variation_name = '';
+        if( $item['variation_id'] > 0 ){
+            
+            $variations = get_nbd_variations( $item['product_id'] );
+            foreach ( $variations as $var ) {
+                if( $var['id'] == $item['variation_id'] ) {
+                    $variation_name = $var['name'];
+                    break;
+                }
+            }
+        }else {
+            $product = get_post($item['product_id']);
+            $variation_name = $product->post_title;
+        }
         $priority = $item['folder'] == 'primary' ? 'primary' : 'extra';
         $link_manager_template = add_query_arg(array(
             'pid' => $item['product_id'], 
@@ -121,7 +136,7 @@ class Product_Template_List_Table extends WP_List_Table {
             $link_edit_template .= '&variation_id=' . $item['variation_id'];
         }
         $_nonce = wp_create_nonce('nbdesigner_template_nonce');
-        $title = '<strong>' . $variation->post_title . '</strong>';     
+        $title = '<strong>' . $variation_name . '</strong>';     
         $actions = array(
             'delete' => sprintf('<a href="?page=%s&action=%s&template=%s&_wpnonce=%s&pid=%s&paged=%s&view=templates">'.__('Delete', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'delete', absint($item['id']), $_nonce, esc_attr($_REQUEST['pid']), $this->get_pagenum()),
             'primary' => sprintf('<a href="?page=%s&action=%s&template=%s&pid=%s&_wpnonce=%s&paged=%s&view=templates">'.__('Primary', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'primary', absint($item['id']), esc_attr($_REQUEST['pid']), $_nonce, $this->get_pagenum()),
@@ -204,17 +219,7 @@ class Product_Template_List_Table extends WP_List_Table {
         <?php 
             $product = wc_get_product($_GET['pid']);
             if( $product->is_type( 'variable' ) ):
-            $available_variations = $product->get_available_variations();   
-            $variations = array();
-            foreach ($available_variations as $variation){
-                $enable = get_post_meta($variation['id'], '_nbdesigner_enable'.$variation['id'], true);
-                if($enable){
-                    $variations[] = array(
-                        'id'    =>  $variation['id'],
-                        'name'  =>  $variation['name']
-                    );                               
-                }
-            }                
+            $variations = get_nbd_variations( $_GET['pid'] );               
         ?>
             <select name="nbd_variation_filter">
                 <option value="-1"><?php _e('Show all variation', 'web-to-print-online-designer'); ?></option>
