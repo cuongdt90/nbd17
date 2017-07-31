@@ -258,26 +258,35 @@ class Nbdesigner_Plugin {
             $nbu_session = WC()->session->get($key . '_nbu');    
             if( isset($nbd_session) || isset($nbu_session) ){
                 $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true)); 
-                if( $option['request_quote'] || $option['extra_price'] ){
+                if( isset($nbd_session) ) {
+                    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session . '/config.json';
+                    $config = nbd_get_data_from_json($path);
+                    if( isset( $config->custom_dimension ) && isset( $config->custom_dimension->price ) ){
+                        $nbd_variation_price = $config->custom_dimension->price;
+                    }
+                }
+                if( $option['request_quote'] || $option['extra_price'] || isset($nbd_variation_price) ){
                     $initial_price = WC()->session->get($key . '_nbd_initial_price');
                     if( $initial_price ){
                         $price = $initial_price;
                     }else {
                         $price = $cart_item_data['data']->get_price();
                         WC()->session->set($key . '_nbd_initial_price', $price);
-                    }                    
+                    }  
                 }
                 if( $option['request_quote'] ){
                     $cart_item_data['data']->set_price( 0 );                       
-                } else if( $option['extra_price'] ){
-                    $decimals = wc_get_price_decimals();      
+                } else if( $option['extra_price'] || isset($nbd_variation_price) ){
+                    $decimals = wc_get_price_decimals();  
+                    $new_price = $price;
                     if( $option['type_price'] == 1 ){
-                        $new_price = round($price + $option['extra_price'], $decimals);	
-                        $cart_item_data['data']->set_price( $new_price ); 
+                        $new_price += $option['extra_price'];	
                     }else{
-                        $new_price = round($price + $price * $option['extra_price'] / 100, $decimals);	
-                        $cart_item_data['data']->set_price( $new_price ); 
-                    }                    
+                        $new_price += $price * $option['extra_price'] / 100;	   
+                    }
+                    if( isset($nbd_variation_price) ) $new_price += $nbd_variation_price;
+                    $new_price = round($new_price, $decimals);	 
+                    $cart_item_data['data']->set_price( $new_price ); 
                 } 	             
             } else {
                 /* Destroy get a quote or extra price when remove design */
@@ -2038,6 +2047,7 @@ class Nbdesigner_Plugin {
         $save_status = $this->store_design_data($nbd_item_key, $_FILES, $product_config, $product_option, $product_upload);     
         $width = absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) ? absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) : 300;
         if(false != $save_status){
+            /* todo edit $product_config if has custom dimension */
             $this->create_preview_design($path, $path.'/preview', $product_config, $width, $width);
             WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_item_key);      
         } else {
@@ -2124,6 +2134,15 @@ class Nbdesigner_Plugin {
         $save_status = $this->store_design_data($nbd_item_key, $_FILES, $product_config, $product_option, $product_upload);     
         $width = absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) ? absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) : 300;
         if(false != $save_status){
+            /* todo edit $product_config if has custom dimension */
+            $path_config = $path . '/config.json';
+            $config = nbd_get_data_from_json($path_config);
+            if( isset( $config->custom_dimension ) ){
+                $custom_side = absint( $config->custom_dimension->side );
+                $custom_width = $config->custom_dimension->width;
+                $custom_height = $config->custom_dimension->height;
+                $product_config = $this->merge_product_config( $product_config, $custom_width, $custom_height, $custom_side );
+            }            
             $this->create_preview_design($path, $path.'/preview', $product_config, $width, $width);
             $result['image'] = array();
             $images = Nbdesigner_IO::get_list_images($path.'/preview', 1);
@@ -2142,6 +2161,34 @@ class Nbdesigner_Plugin {
         do_action('after_nbd_save_customer_design', $result);
         echo json_encode($result);
         wp_die();   
+    }
+    public function merge_product_config( $product_config, $width, $height, $number_side ){
+        foreach ( $product_config as $key => $side ) {
+            $product_config[$key]["real_width"] = $product_config[$key]["product_width"] = $width;
+            $product_config[$key]["real_height"] = $product_config[$key]["product_height"] = $height;            
+            if( $width >= $height ) {
+                $ratio = 500 / $width;
+                $product_config[$key]["img_src_width"] = $product_config[$key]["area_design_width"] = 500;               
+                $product_config[$key]["img_src_left"] = $product_config[$key]["area_design_left"] = 0;
+                $product_config[$key]["area_design_height"] = $product_config[$key]["img_src_height"] = round( $ratio * $height );
+                $product_config[$key]["img_src_top"] = $product_config[$key]["area_design_top"] = round( 250 - $product_config[$key]["area_design_height"] / 2 );
+            }else {
+                $ratio = 500 / $height;
+                $product_config[$key]["img_src_height"] = $product_config[$key]["area_design_height"] = 500;
+                $product_config[$key]["img_src_top"] = $product_config[$key]["area_design_top"] = 0;
+                $product_config[$key]["area_design_width"] = $product_config[$key]["img_src_width"] = round( $ratio * $width );                
+                $product_config[$key]["img_src_left"] = $product_config[$key]["area_design_left"] = round( 250 - $product_config[$key]["area_design_width"] / 2 );
+            }
+        }
+        $len = count($product_config);
+        if( $len >= $number_side ){
+            array_splice($product_config, $number_side, $len - $number_side);
+        }else {
+            for( $i = $len; $i < $number_side; $i++ ){
+                $product_config[$i] = $product_config[0];
+            }
+        } 
+        return $product_config;
     }
     /**
      * Create table manager template
@@ -2563,16 +2610,20 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                     $html .= '</div>';
                 }
                 $option = unserialize(get_post_meta($cart_item['product_id'], '_nbdesigner_option', true)); 
-                if( $option['extra_price'] && ! $option['request_quote'] ){
-                    $decimals = wc_get_price_decimals();
-                    $product = $cart_item['data'];
-                    if( $option['type_price'] == 1 ){
-                        $extra_price =  $option['extra_price'];
-                    }else{
-                        $price = $product->get_price();
-                        $extra_price = round($price * $option['extra_price'] / 100, $decimals);	
+                if( isset($nbd_session) ) {
+                    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session . '/config.json';
+                    $config = nbd_get_data_from_json($path);
+                    if( isset( $config->custom_dimension ) && isset( $config->custom_dimension->price ) ){
+                        $nbd_variation_price = $config->custom_dimension->price;
                     }
-                    $html .= '<p id="nbx'.$cart_item_key.'">'. __('Extra price for design','web-to-print-online-designer').' + '.wc_price($extra_price).'</p>';
+                }                
+                if( (isset($nbd_variation_price) || $option['extra_price']) && ! $option['request_quote'] ){
+                    $decimals = wc_get_price_decimals();
+                    $extra_price = $option['extra_price'] ? $option['extra_price'] : 0;
+                    if( isset($nbd_variation_price) ) {
+                        $extra_price = $option['type_price'] == 1 ? wc_price($extra_price + $nbd_variation_price) : $extra_price . ' % + ' . wc_price($nbd_variation_price);
+                    }
+                    $html .= '<p id="nbx'.$cart_item_key.'">'. __('Extra price for design','web-to-print-online-designer').' + '. $extra_price .'</p>';
                 }
                 echo $html;
             } else {
@@ -2643,8 +2694,18 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             if( WC()->session->__isset($item->legacy_cart_item_key . '_nbd_initial_price') ){
                 $product_id = $item->legacy_values['product_id'];
                 $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
-                if( $option['extra_price'] && ! $option['request_quote'] ){
-                    $extra_price = $option['type_price'] == 1 ? wc_price($option['extra_price']) : $option['extra_price'].' %';
+                if( isset($nbd_session) ) {
+                    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session . '/config.json';
+                    $config = nbd_get_data_from_json($path);
+                    if( isset( $config->custom_dimension ) && isset( $config->custom_dimension->price ) ){
+                        $nbd_variation_price = $config->custom_dimension->price;
+                    }
+                }                 
+                if( (isset($nbd_variation_price) || $option['extra_price']) && ! $option['request_quote'] ){
+                    $extra_price = $option['extra_price'] ? $option['extra_price'] : 0;
+                    if( isset($nbd_variation_price) ) {
+                        $extra_price = $option['type_price'] == 1 ? wc_price($extra_price + $nbd_variation_price) : $extra_price . '% + ' . wc_price($nbd_variation_price);
+                    }
                     wc_add_order_item_meta($item_id, "_nbd_extra_price", $extra_price);
                 }
             }

@@ -1500,6 +1500,7 @@ var NBDESIGNADMIN = {
         jQuery.each( jQuery('#nbd-custom-size-defined').find('.nbd-defined-size'), function(key, val){
             jQuery(this).find('.nbd-defined-width').attr('name', '_nbdesigner_option[defined_dimension][' + key + '][width]');
             jQuery(this).find('.nbd-defined-height').attr('name', '_nbdesigner_option[defined_dimension][' + key + '][height]');
+            jQuery(this).find('.nbd-defined-price').attr('name', '_nbdesigner_option[defined_dimension][' + key + '][price]');
         });
     },
     initParameter: function(e){

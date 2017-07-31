@@ -3509,6 +3509,26 @@ img.pattern_img {
 .sp-container button:focus {
     outline: none !important;
 }
+.nbd-dropdown-option button{
+    border-radius: 0;
+    background: #394264!important;    
+    border: none;
+}
+.nbd-dropdown-option ul {
+    background: #fff!important;
+    border-radius: 0!important;
+    border: none!important;    
+}
+.nbd-dropdown-option ul li a {
+    text-shadow: none;    
+}
+.nbd-dropdown-option ul li a:hover {
+    color: #fff;
+    background: #394264;    
+    outline: none;
+    color: #fff;
+    text-shadow: 2px 2px 3px rgba(204, 50, 75, 0.5);
+}
 @media (max-width: 767px) {
     #upload-tabs li {
         display: inline-block;

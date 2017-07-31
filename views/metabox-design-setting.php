@@ -358,11 +358,11 @@
                     ?>
                         <a class="button nbd-admin-tem-link" href="<?php echo $link_create_template; ?>">
                             <span class="dashicons dashicons-art"></span>
-                            <?php echo _e('Create Template', 'web-to-print-online-designer'); ?>
+                            <?php _e('Create Template', 'web-to-print-online-designer'); ?>
                         </a>
                         <a href="<?php echo $link_manager_template; ?>" class="button nbd-admin-tem-link">
                             <span class="dashicons dashicons-images-alt"></span>
-                            <?php echo _e('Manager Templates', 'web-to-print-online-designer'); ?>
+                            <?php _e('Manager Templates', 'web-to-print-online-designer'); ?>
                         </a>            
                     <?php endif; ?>
                 </div> 
@@ -381,11 +381,12 @@
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[request_quote]"/>
                     <label for="_nbd_request_quote" class="nbdesigner-option-label"><?php echo _e('Get a quote', 'web-to-print-online-designer'); ?></label>
-                    <input type="checkbox" value="1" name="_nbdesigner_option[request_quote]" id="_nbd_request_quote" <?php checked( $option['request_quote'] ); ?> class="short"/>                    
+                    <input type="checkbox" value="1" name="_nbdesigner_option[request_quote]" id="_nbd_request_quote" <?php checked( $option['request_quote'] ); ?> class="short"/> 
+                    <?php echo __('Set product price to ', 'web-to-print-online-designer') . wc_price(0); ?>
                 </div>
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[allow_specify_dimension]"/>
-                    <label for="_nbd_allow_specify_dimension" class="nbdesigner-option-label"><?php echo _e('Allow user specify demension', 'web-to-print-online-designer'); ?></label>
+                    <label for="_nbd_allow_specify_dimension" class="nbdesigner-option-label"><?php echo _e('Allow user define demension', 'web-to-print-online-designer'); ?></label>
                     <input type="checkbox" value="1" name="_nbdesigner_option[allow_specify_dimension]" id="_nbd_allow_specify_dimension" <?php checked( $option['allow_specify_dimension'] ); ?> class="short nbd-dependence" data-target="#nbd-custom-size"/>                    
                 </div> 
                 <div id="nbd-custom-size" class="<?php if (!$option['allow_specify_dimension']) echo 'nbdesigner-disable'; ?> nbd-independence nbdesigner-opt-inner">
@@ -395,27 +396,25 @@
                     <div id="nbd-custom-size-free" class="<?php if ($option['type_dimension'] != 1) echo 'nbdesigner-disable'; ?> nbd-untarget">
                         <div class="nbdesigner-opt-inner">
                             <label class="nbdesigner-option-label"><?php echo _e('Min', 'web-to-print-online-designer'); ?> (<?php echo $unit; ?>)</label>
-                            <?php echo _e('Width', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[min_width]" value="<?php echo $option['min_width']; ?>"/>
-                            <?php echo _e('Height', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[min_height]" value="<?php echo $option['min_height']; ?>"/>
+                            <?php _e('Width', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[min_width]" value="<?php echo $option['min_width']; ?>"/>
+                            <?php _e('Height', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[min_height]" value="<?php echo $option['min_height']; ?>"/>
                         </div>       
                         <div class="nbdesigner-opt-inner">
                             <label class="nbdesigner-option-label"><?php echo _e('Max', 'web-to-print-online-designer'); ?> (<?php echo $unit; ?>)</label>
-                            <?php echo _e('Width', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[max_width]" value="<?php echo $option['max_width']; ?>"/>
-                            <?php echo _e('Height', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[max_height]" value="<?php echo $option['max_height']; ?>"/>
+                            <?php _e('Width', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[max_width]" value="<?php echo $option['max_width']; ?>"/>
+                            <?php  _e('Height', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input" name="_nbdesigner_option[max_height]" value="<?php echo $option['max_height']; ?>"/>
                         </div>  
                     </div>
                     <div id="nbd-custom-size-defined" class="<?php if ($option['type_dimension'] != 2) echo 'nbdesigner-disable'; ?> nbd-untarget">
-                        <?php 
-ob_start();
-var_dump($option['defined_dimension']);
-error_log(ob_get_clean());
-                        foreach ($option['defined_dimension'] as $key => $dim): ?>
+                        <?php foreach ($option['defined_dimension'] as $key => $dim): ?>
                             <div class="nbdesigner-opt-inner nbd-defined-size">
-                                <?php echo _e('Width', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input nbd-defined-width" name="_nbdesigner_option[defined_dimension][<?php echo $key; ?>][width]" value="<?php echo $dim['width']; ?>"/>
-                                <?php echo _e('Height', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input nbd-defined-height" name="_nbdesigner_option[defined_dimension][<?php echo $key; ?>][height]" value="<?php echo $dim['height']; ?>"/>
+                                <?php _e('Width', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input nbd-defined-width" name="_nbdesigner_option[defined_dimension][<?php echo $key; ?>][width]" value="<?php echo $dim['width']; ?>"/>
+                                <?php _e('Height', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input nbd-defined-height" name="_nbdesigner_option[defined_dimension][<?php echo $key; ?>][height]" value="<?php echo $dim['height']; ?>"/>
+                                <?php _e('Extra price', 'web-to-print-online-designer'); ?>: <input type="number" step="any" class="short nbdesigner-short-input nbd-defined-price" name="_nbdesigner_option[defined_dimension][<?php echo $key; ?>][price]" value="<?php echo $dim['price']; ?>"/>
                                 <a class="button nbdesigner-delete" onclick="NBDESIGNADMIN.deleteDefinedDimension(this)">&times;</a>
                             </div>             
                         <?php endforeach; ?>
+                        <p><small>(<?php _e('Extra price for each variation, ex: + 5 or - 5', 'web-to-print-online-designer'); ?>)</small></p>
                         <div style="margin-top: 15px;" id="nbd-duplicate-size-con"><a class="button button-primary" onclick="NBDESIGNADMIN.duplicateDefinedDimension(this)"><?php _e('Add', 'web-to-print-online-designer'); ?></a></div>
                     </div>
                 </div>    
