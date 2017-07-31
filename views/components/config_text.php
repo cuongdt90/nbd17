@@ -44,6 +44,7 @@
                     showPaletteOnly: true, 
                     togglePaletteOnly: false, 
                     hideAfterPaletteSelect:true,
+                    showInput: true,
                     palette: colorPalette}">
             </spectrum-colorpicker>
             <?php endif; ?>

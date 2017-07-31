@@ -1395,6 +1395,9 @@ class Nbdesigner_Plugin {
         $enable_upload = get_post_meta($post_id, '_nbdesigner_enable_upload', true);  
         $unit = nbdesigner_get_option('nbdesigner_dimensions_unit');
         if (isset($_designer_setting[0])){
+            foreach ($_designer_setting as $set ){
+                $set = array_merge($set, nbd_default_product_setting());
+            }
             $designer_setting = $_designer_setting;
             if(! isset($designer_setting[0]['version']) || $_designer_setting[0]['version'] < 160) {
                 $designer_setting = $this->update_config_product_160($designer_setting);              
@@ -3228,6 +3231,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
         $lang = json_decode(file_get_contents($path_lang)); 
         if(is_array($lang)){
             $langs = (array)$lang[0];
+            asort($langs);
         }
         require(NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-translate.php');
     }

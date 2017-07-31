@@ -62,7 +62,7 @@
     display: inline-block;
     float: right;
 }
-.nbdesigner-info-box-inner div input {
+.nbdesigner-info-box-inner div input[type="number"] {
     width: 90px;
 }
 .nbdesigner-image-inner {
@@ -86,6 +86,7 @@
     border: 1px dashed #000;
     cursor: move;
     position: absolute !important;
+    box-sizing: border-box;
 }
 .nbdesigner-area-design.selected {
     background: rgba(0,0,0,0.3);

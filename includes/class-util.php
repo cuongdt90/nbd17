@@ -461,6 +461,12 @@ function nbd_default_product_setting(){
                 'img_src_height' => 400,
                 'product_width' => 10,    
                 'product_height' => 8,
+                'show_bleed' => 0,
+                'bleed_top_bottom' => 0.3,
+                'bleed_left_right' => 0.3,
+                'show_safe_zone' => 0,
+                'margin_top_bottom' => 0.3,
+                'margin_left_right' => 0.3,
                 'bg_type'   => 'image',
                 'bg_color_value' => "#ffffff",
                 'show_overlay' => 0,
@@ -479,7 +485,9 @@ function nbd_get_default_product_option(){
         'min_height'   =>  0,
         'max_height'   =>  0,
         'extra_price'   => 0,
-        'type_price'   => 1
+        'type_price'   => 1,
+        'type_dimension'   => 1,
+        'defined_dimension' => array(array('width' => 10, 'height' => 8))
     ));
 }
 function nbd_get_default_upload_setting(){

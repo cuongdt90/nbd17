@@ -22,8 +22,12 @@ jQuery(document).ready(function ($) {
         }
     });    
     $('.nbd-dependence').change(function() {
-        var t = $(this),
-        target = $(t.data('target')).toggleClass('nbdesigner-disable');    
+        var t = $(this);
+        $(t.data('target')).toggleClass('nbdesigner-disable');   
+        $.each(t.parent().find('.nbd-untarget'), function(index, el){
+            var untarget = '#' + $(el).attr('id');
+            if(untarget != t.data('target')) $(el).toggleClass('nbdesigner-disable');   
+        });
     });
     $('#nbdesigner_add_font_cat').on('click', function () {
         var html = '<input class="form-required nbdesigner_font_name" type="text" id="nbdesigner_name_font_newcat"><br /><br />';
@@ -1378,6 +1382,12 @@ var NBDESIGNADMIN = {
         jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-image-overlay').toggle();
         jQuery(e).parents('.nbdesigner-box-collapse').find('.overlay-toggle').toggle();
     },
+    toggleBleed: function(e){
+        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-bleed').toggle();
+    },
+    toggleSafeZone: function(e){
+        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-safe-zone').toggle();
+    },    
     change_background_type : function(e){
         var value = jQuery(e).val();
         if(value == 'image'){
@@ -1475,6 +1485,22 @@ var NBDESIGNADMIN = {
         config.iRealTop.val(vRealTop) ;   
         config.updateRealSizeButton.removeClass('active');
         var config = this.initParameter(e);
+    },
+    duplicateDefinedDimension: function(e){
+        var new_size = jQuery('#nbd-custom-size-defined .nbd-defined-size').last().clone();
+        new_size.insertBefore('#nbd-duplicate-size-con');
+        this.resetDefinedDimension();
+    },
+    deleteDefinedDimension: function(e){
+        if(jQuery(e).parents('#nbd-custom-size-defined').find('.nbd-defined-size').length == 1) return;
+        jQuery(e).parent('.nbd-defined-size').remove();
+        this.resetDefinedDimension();
+    },    
+    resetDefinedDimension: function(e){
+        jQuery.each( jQuery('#nbd-custom-size-defined').find('.nbd-defined-size'), function(key, val){
+            jQuery(this).find('.nbd-defined-width').attr('name', '_nbdesigner_option[defined_dimension][' + key + '][width]');
+            jQuery(this).find('.nbd-defined-height').attr('name', '_nbdesigner_option[defined_dimension][' + key + '][height]');
+        });
     },
     initParameter: function(e){
         var parent = jQuery(e).parents('.nbdesigner-box-collapse'),

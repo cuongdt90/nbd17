@@ -3469,10 +3469,45 @@ img.pattern_img {
     text-align: center;
     font-size: 20px;    
 }
+.custom-dimension {
+    border: 2px solid #fff;
+}
 .custom-dimension svg {
     width: 16px;
     height: 16px;
-    margin-top: 9px;
+    margin-top: 7px;
+    fill: #394264
+}
+.custom-dimension.active {
+    border: 2px solid #cc324b;
+    box-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #FF1177, 0 0 35px #FF1177, 0 0 40px #FF1177, 0 0 50px #FF1177, 0 0 75px #F17;
+}
+.custom-dimension.active svg {
+    fill: #cc324b;
+}
+.sp-replacer, .sp-container, .sp-container button {
+    border: none !important;
+    background: #fff !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.sp-container input {
+    border-radius: 0 !important;
+    border: 1px solid #ddd !important;  
+}
+.sp-container input:focus{
+    border-color: #394264;
+    outline: none;
+}
+.sp-container button {
+    border-radius: 0 !important;
+}
+.sp-container button:hover {
+    background: #394264 !important;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !important;
+    color: #fff !important;
+}
+.sp-container button:focus {
+    outline: none !important;
 }
 @media (max-width: 767px) {
     #upload-tabs li {
