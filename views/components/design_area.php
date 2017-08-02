@@ -28,7 +28,23 @@
 				}"
              >
             <canvas id="designer-canvas" width="500" height="500"></canvas> 
-        </div>	
+        </div>
+        <div class="nbd-bleed" ng-show="currentVariant.info[currentSide.id].source.show_bleed == 1"
+             ng-style="{'width': ( currentVariant.designArea['area_design_width']  - 2 * currentVariant.designArea['bleed_left_right'] * currentVariant.designArea['ratio']  ) * zoom * designScale,
+                        'height' : ( currentVariant.designArea['area_design_height']  - 2 * currentVariant.designArea['bleed_top_bottom'] * currentVariant.designArea['ratio']  ) * zoom * designScale,
+                        'top' : calcBleedSize('top', currentVariant.designArea['area_design_top'], currentVariant.designArea['bleed_top_bottom'], currentVariant.designArea['ratio']),
+                        'left' : calcBleedSize('left', currentVariant.designArea['area_design_left'], currentVariant.designArea['bleed_left_right'], currentVariant.designArea['ratio'])
+			}">
+            
+        </div>
+        <div class="nbd-safe-zone" ng-show="currentVariant.info[currentSide.id].source.show_safe_zone == 1"
+             ng-style="{'width': calcSafeZone('width', currentVariant.designArea['area_design_width'], currentVariant.designArea['bleed_left_right'], currentVariant.designArea['margin_left_right'], currentVariant.designArea['ratio']),
+                        'height' : calcSafeZone('height', currentVariant.designArea['area_design_height'], currentVariant.designArea['bleed_top_bottom'], currentVariant.designArea['margin_top_bottom'], currentVariant.designArea['ratio']),
+                        'top' : calcSafeZone('top', currentVariant.designArea['area_design_top'], currentVariant.designArea['bleed_top_bottom'], currentVariant.designArea['margin_top_bottom'], currentVariant.designArea['ratio']),
+                        'left' : calcSafeZone('left', currentVariant.designArea['area_design_left'], currentVariant.designArea['bleed_left_right'], currentVariant.designArea['margin_left_right'], currentVariant.designArea['ratio'])
+			}">
+            
+        </div>        
         <div id="replace-element-upload">
             <i class="fa fa-share-square-o nbd-tooltip-i18n" aria-hidden="true" data-lang="REPLACE_IMAGE" ng-click="preReplaceImage()"></i>
         </div>        
@@ -48,6 +64,7 @@
     <span class="toolbar-menu fa fa-cloud-download nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_download_preview" data-lang="DOWNLOAD" data-placement="bottom" ng-show="state == 'dev'"></span>
     <span class="toolbar-menu fa fa-th nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="SNAP_GRID" data-placement="bottom" ng-click="snapGrid()"></span>
     <span class="fa fa-mouse-pointer toolbar-menu nbd-tooltip-i18n shadow" aria-hidden="true" data-lang="DESELECT_ALL" data-placement="bottom"  ng-click="deselectAll()"></span>	
+    <span ng-show="currentVariant.info[currentSide.id].source.show_bleed == 1 || currentVariant.info[currentSide.id].source.show_safe_zone == 1" class="fa fa-bars toolbar-menu nbd-tooltip-i18n shadow" aria-hidden="true" data-lang="SHOW_BLEED" data-placement="bottom"  ng-click="showBleed()"></span>	
     <span class="toolbar-menu fa fa-lock nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_lock_param"  data-lang="LOCK" data-placement="bottom" ng-click="getStatusItem()" ng-show="canvas.getActiveObject() && task === 'create'"></span>
     <span class="toolbar-menu fa fa-cloud-upload nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="ELEMENT_UPLOAD" data-placement="bottom" ng-show="editableItem !== null && (editable.type === 'image' || editable.type === 'custom-image') && task === 'create'" ng-click="setElementUpload()"></span>
     

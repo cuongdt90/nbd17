@@ -101,12 +101,16 @@
                                             $style_height = round($v['product_height'] * $ratio);
                                             $style_left = 0;
                                             $style_top = round((500 - $style_height) / 2);
+                                            $left = 0;
+                                            $top = ( $v['product_width'] - $v['product_height']) / 2;
                                         } else {
                                             $ratio = 500 / $v['product_height'];
                                             $style_height = 500;
                                             $style_width = round($v['product_width'] * $ratio);
                                             $style_top = 0;
-                                            $style_left = round((500 - $style_width) / 2);                                    
+                                            $style_left = round((500 - $style_width) / 2); 
+                                            $top = 0;
+                                            $left = ( $v['product_height'] - $v['product_width']) / 2;                                            
                                         }
                                     ?>
                                     <div class="nbdesigner-image-original <?php if($v['bg_type'] == 'tran') echo "background-transparent"; ?>"
@@ -131,6 +135,18 @@
                                     >
                                         <img src="<?php echo $v['img_overlay']; ?>" class="img_overlay"/>
                                     </div>
+                                    <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?>"
+                                        style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right']))  ?>px;
+                                                height: <?php echo round( $ratio * ($v['real_height'] - 2 * $v['bleed_top_bottom']))  ?>px;
+                                                top: <?php echo round( $ratio * ($top + $v['real_top'] + $v['bleed_top_bottom']))  ?>px;
+                                                left: <?php echo round( $ratio * ($left + $v['real_left'] + $v['bleed_left_right']))  ?>px;"> 
+                                    </div>
+                                    <div class="nbd-safe-zone <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?>"
+                                        style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right'] - 2 * $v['margin_left_right']))  ?>px;
+                                                height: <?php echo round( $ratio * ($v['real_height'] - 2 * $v['bleed_top_bottom'] - 2 * $v['margin_top_bottom']))  ?>px;
+                                                top: <?php echo round( $ratio * ($top + $v['real_top'] + $v['bleed_top_bottom'] + $v['margin_top_bottom']))  ?>px;
+                                                left: <?php echo round( $ratio * ($left + $v['real_left'] + $v['bleed_left_right'] + $v['margin_left_right']))  ?>px;">                                         
+                                    </div>
                                     <div class="nbdesigner-area-design" id="nbdesigner-area-design-<?php echo $k; ?>" 
                                          style="width: <?php echo $v['area_design_width'] . 'px'; ?>; 
                                                 height: <?php echo $v['area_design_height'] . 'px'; ?>; 
@@ -144,6 +160,7 @@
                                 <input type="hidden" class="hidden_img_src_height" name="_designer_setting[<?php echo $k; ?>][img_src_height]" value="<?php echo $v['img_src_height']; ?>">
                                 <input type="hidden" class="hidden_overlay_src" name="_designer_setting[<?php echo $k; ?>][img_overlay]" value="<?php echo $v['img_overlay']; ?>">
                                 <input type="hidden" class="hidden_nbd_version" name="_designer_setting[<?php echo $k; ?>][version]" value="<?php echo $v['version']; ?>">
+                                <input type="hidden" class="hidden_nbd_ratio" name="_designer_setting[<?php echo $k; ?>][ratio]" value="<?php echo $ratio; ?>">
                                 <div>	
                                     <a class="button nbdesigner_move nbdesigner_move_left" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'left')">&larr;</a>
                                     <a class="button nbdesigner_move nbdesigner_move_right" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'right')">&rarr;</a>
@@ -291,34 +308,34 @@
                                 </div>  
                                 <p class="nbd-setting-section-title"><?php _e('For paper/card', 'web-to-print-online-designer'); ?></p>
                                 <div class="nbdesigner-info-box-inner">
-                                    <label class="nbdesigner-setting-box-label"><?php echo __('Show bleed', 'web-to-print-online-designer'); ?></label>
+                                    <label class="nbdesigner-setting-box-label"><?php echo __('Show bleed', 'web-to-print-online-designer'); ?> <span class="nbd-bleed-notation"></span></label>
                                     <div>
-                                        <input type="hidden" value="0" name="_designer_setting[<?php echo $k; ?>][show_bleed]"/>
-                                        <input type="checkbox" value="1" name="_designer_setting[<?php echo $k; ?>][show_bleed]" id="_nbd_allow_specify_dimension" <?php checked( $v['show_bleed'] ); ?> class="short nbd-dependence" data-target="#nbd-bleed<?php echo $k ?>" onchange="NBDESIGNADMIN.toggleBleed(this)"/> 
+                                        <input type="hidden" value="0" class="show_bleed" name="_designer_setting[<?php echo $k; ?>][show_bleed]"/>
+                                        <input type="checkbox" value="1" class="show_bleed" name="_designer_setting[<?php echo $k; ?>][show_bleed]" <?php checked( $v['show_bleed'] ); ?> class="short nbd-dependence" data-target="#nbd-bleed<?php echo $k ?>" onchange="NBDESIGNADMIN.toggleBleed(this)"/> 
                                     </div>                                    
                                 </div> 
-                                <div id="nbd-bleed<?php echo $k ?>" class="<?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?> nbd-independence">
+                                <div id="nbd-bleed<?php echo $k ?>" class="nbd-bleed-con <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?> nbd-independence">
                                     <div class="nbdesigner-info-box-inner">
                                         <label class="nbdesigner-setting-box-label"><?php echo __('Bleed top-bottom', 'web-to-print-online-designer'); ?></label>
                                         <div>
-                                            <input type="number" step="any"  min="0" name="_designer_setting[<?php echo $k; ?>][bleed_top_bottom]" value="<?php echo $v['bleed_top_bottom']; ?>" class="short  bleed_top_bottom" onchange="NBDESIGNADMIN.updateBleed(this)">
+                                            <input type="number" step="any" min="0" name="_designer_setting[<?php echo $k; ?>][bleed_top_bottom]" value="<?php echo $v['bleed_top_bottom']; ?>" class="short bleed_top_bottom" onchange="NBDESIGNADMIN.updateBleed(this)">
                                         </div>
                                     </div>     
                                     <div class="nbdesigner-info-box-inner">
                                         <label class="nbdesigner-setting-box-label"><?php echo __('Bleed left-right', 'web-to-print-online-designer'); ?></label>
                                         <div>
-                                            <input type="number" step="any"  min="0" name="_designer_setting[<?php echo $k; ?>][bleed_left_right]" value="<?php echo $v['bleed_left_right']; ?>" class="short  bleed_left_right" onchange="NBDESIGNADMIN.updateBleed(this)">
+                                            <input type="number" step="any"  min="0" name="_designer_setting[<?php echo $k; ?>][bleed_left_right]" value="<?php echo $v['bleed_left_right']; ?>" class="short bleed_left_right" onchange="NBDESIGNADMIN.updateBleed(this)">
                                         </div>
                                     </div>
                                 </div>    
                                 <div class="nbdesigner-info-box-inner">
-                                    <label class="nbdesigner-setting-box-label"><?php echo __('Show safe zone', 'web-to-print-online-designer'); ?></label>
+                                    <label class="nbdesigner-setting-box-label"><?php echo __('Show safe zone', 'web-to-print-online-designer'); ?> <span class="nbd-safe-zone-notation"></span></label>
                                     <div>
-                                        <input type="hidden" value="0" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]"/>
-                                        <input type="checkbox" value="1" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]" id="_nbd_allow_specify_dimension" <?php checked( $v['show_safe_zone'] ); ?> class="short nbd-dependence" data-target="#nbd-safe-zone<?php echo $k ?>" onchange="NBDESIGNADMIN.toggleSafeZone(this)"/> 
+                                        <input type="hidden" value="0" class="show_safe_zone" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]"/>
+                                        <input type="checkbox" value="1" class="show_safe_zone" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]" id="_nbd_allow_specify_dimension" <?php checked( $v['show_safe_zone'] ); ?> class="short nbd-dependence" data-target="#nbd-safe-zone<?php echo $k ?>" onchange="NBDESIGNADMIN.toggleSafeZone(this)"/> 
                                     </div>                                    
                                 </div>    
-                                <div id="nbd-safe-zone<?php echo $k ?>" class="<?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?> nbd-independence">
+                                <div id="nbd-safe-zone<?php echo $k ?>" class="nbd-safe-zone-con <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?> nbd-independence">
                                     <div class="nbdesigner-info-box-inner">
                                         <label class="nbdesigner-setting-box-label"><?php echo __('Magin top-bottom', 'web-to-print-online-designer'); ?></label>
                                         <div>

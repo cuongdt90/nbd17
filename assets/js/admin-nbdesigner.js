@@ -755,6 +755,16 @@ var NBDESIGNADMIN = {
             jQuery(this).find('.show_overlay').attr('name', name + '[' + key + '][show_overlay]');
             jQuery(this).find('.include_overlay').attr('name', name + '[' + key + '][include_overlay]');
             jQuery(this).find('.hidden_nbd_version').attr('name', name + '[' + key + '][version]');
+            jQuery(this).find('.hidden_nbd_ratio').attr('name', name + '[' + key + '][ratio]');
+            jQuery(this).find('.margin_left_right').attr('name', name + '[' + key + '][margin_left_right]');
+            jQuery(this).find('.margin_top_bottom').attr('name', name + '[' + key + '][margin_top_bottom]');
+            jQuery(this).find('.bleed_top_bottom').attr('name', name + '[' + key + '][bleed_top_bottom]');
+            jQuery(this).find('.bleed_left_right').attr('name', name + '[' + key + '][bleed_left_right]');
+            jQuery(this).find('.show_bleed').attr('name', name + '[' + key + '][show_bleed]');
+            jQuery(this).find('.show_safe_zone').attr('name', name + '[' + key + '][show_safe_zone]');
+            jQuery(this).find('.show_safe_zone').attr('name', name + '[' + key + '][show_safe_zone]');
+            jQuery(this).find('.nbd-safe-zone-con').attr('id', 'nbd-safe-zone' + key );
+            jQuery(this).find('.nbd-bleed-con').attr('id', 'nbd-bleed' + key );
         });
         this.loopConfigAreaDesign();
     },
@@ -942,6 +952,8 @@ var NBDESIGNADMIN = {
         area.css(att, value + 'px');
         overlay.css(att, value + 'px');
         sefl.val(value);
+        this.updateBleed(e);
+        this.updateSafeZone(e);
     },
     updateDimensionRealOutputImage: function(e, command){
         var parent = jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-info-box'),
@@ -964,6 +976,24 @@ var NBDESIGNADMIN = {
                 parent.find('.real_width').val(_w);  
                 break;
         }
+    },
+    updateBleed: function(e){
+        var bleedEl = jQuery(e).parents('.nbdesigner-box-container').find('.nbd-bleed'),
+            config = this.initParameter(e);
+        bleedEl.css({width: config.bleedSize.width + 'px',
+                    height: config.bleedSize.height + 'px',
+                    top: config.bleedSize.top + 'px',
+                    left: config.bleedSize.left + 'px'
+                });
+    },
+    updateSafeZone: function(e){
+        var zoneEl = jQuery(e).parents('.nbdesigner-box-container').find('.nbd-safe-zone'),
+            config = this.initParameter(e);
+        zoneEl.css({width: config.safeZone.width + 'px',
+                    height: config.safeZone.height + 'px',
+                    top: config.safeZone.top + 'px',
+                    left: config.safeZone.left + 'px'
+                });        
     },
     addOrientation: function (command) {
         var _command = command;
@@ -1383,10 +1413,12 @@ var NBDESIGNADMIN = {
         jQuery(e).parents('.nbdesigner-box-collapse').find('.overlay-toggle').toggle();
     },
     toggleBleed: function(e){
-        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-bleed').toggle();
+        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbd-bleed-con').toggleClass('nbdesigner-disable');
+        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbd-bleed').toggleClass('nbdesigner-disable');
     },
     toggleSafeZone: function(e){
-        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbdesigner-safe-zone').toggle();
+        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbd-safe-zone-con').toggleClass('nbdesigner-disable');
+        jQuery(e).parents('.nbdesigner-box-collapse').find('.nbd-safe-zone').toggleClass('nbdesigner-disable');
     },    
     change_background_type : function(e){
         var value = jQuery(e).val();
@@ -1415,12 +1447,14 @@ var NBDESIGNADMIN = {
         ip_left = parent.find('.hidden_img_src_left'),
         ip_top = parent.find('.hidden_img_src_top'),
         ip_width = parent.find('.hidden_img_src_width'),
-        ip_height = parent.find('.hidden_img_src_height');
+        ip_height = parent.find('.hidden_img_src_height'),
+        ip_ratio = parent.find('.hidden_nbd_ratio');
         var config = this.initParameter(e);
         ip_left.val(config.proSize.left);
         ip_top.val(config.proSize.top);
         ip_width.val(config.proSize.width);
         ip_height.val(config.proSize.height);
+        ip_ratio.val(config.ratio);
         parent.find('.nbdesigner-image-original').css({
             'width' : config.proSize.width,
             'height' : config.proSize.height,
@@ -1459,6 +1493,8 @@ var NBDESIGNADMIN = {
         config.overlay_area.css(command, new_value);
         if((config.vRealWidth + config.vRealLeft) > config.vProWidth) parent.find('.notice-width').addClass('nbd-notice');
         if((config.vRealHeight + config.vRealTop) > config.vProHeight) parent.find('.notice-height').addClass('nbd-notice');
+        this.updateBleed(e);
+        this.updateSafeZone(e);        
     },
     collapseAll : function(command){
         if(command == 'com') command = '';
@@ -1524,7 +1560,15 @@ var NBDESIGNADMIN = {
             vRelWidth = parseFloat(iRelWidth.val()),
             vRelHeight = parseFloat(iRelHeight.val()),
             vRelLeft = parseFloat(iRelLeft.val()),
-            vRelTop = parseFloat(iRelTop.val()),         
+            vRelTop = parseFloat(iRelTop.val()),   
+            iBleedTopBottom = parent.find('.bleed_top_bottom'),
+            vBleedTopBottom = parseFloat(iBleedTopBottom.val()),  
+            iBleedLeftRight = parent.find('.bleed_left_right'),
+            vBleedLeftRight = parseFloat(iBleedLeftRight.val()),
+            iMarginTopBottom = parent.find('.margin_top_bottom'),
+            vMarginTopBottom = parseFloat(iMarginTopBottom.val()),
+            iMarginLeftRight = parent.find('.margin_left_right'),
+            vMarginLeftRight = parseFloat(iMarginLeftRight.val()),            
             design_area = parent.find('.nbdesigner-area-design'),
             overlay_area = parent.find('.nbdesigner-image-overlay'),
             updateRealSizeButton = parent.find('.nbdesiger-update-area-design'),
@@ -1545,7 +1589,19 @@ var NBDESIGNADMIN = {
                     'top'   : round((NBD_STAGE.height - vProHeight * ratio) / 2),
                     'left'    : 0
                 };                
-            }            
+            };
+        var bleedSize = {
+            width :  vRelWidth - 2 *  vBleedLeftRight * ratio,
+            height :  vRelHeight - 2 *  vBleedTopBottom * ratio,
+            left: vRelLeft + vBleedLeftRight * ratio,
+            top: vRelTop + vBleedTopBottom * ratio
+        };
+        var safeZone = {
+            width :  vRelWidth - 2 *  vBleedLeftRight * ratio  - 2 *  vMarginLeftRight * ratio,
+            height :  vRelHeight - 2 *  vBleedTopBottom * ratio  - 2 *  vMarginTopBottom * ratio,
+            left: vRelLeft + vBleedLeftRight * ratio + vMarginLeftRight * ratio,
+            top: vRelTop + vBleedTopBottom * ratio + vMarginTopBottom * ratio            
+        };
         return {
             iProWidth : iProWidth,
             iProHeight : iProHeight,
@@ -1572,7 +1628,9 @@ var NBDESIGNADMIN = {
             ratio : ratio,
             offset : offset,
             updateRealSizeButton : updateRealSizeButton,
-            proSize : proSize
+            proSize : proSize,
+            bleedSize : bleedSize,
+            safeZone : safeZone
         };
     }
 };

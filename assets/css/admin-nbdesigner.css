@@ -655,3 +655,29 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
     font-weight: bold;
     display: inline-block;
 }
+.nbd-bleed {
+    box-sizing: border-box;
+    border: 1px solid #ff0000;
+    position: absolute;
+}
+.nbd-safe-zone {
+    box-sizing: border-box;
+    border: 1px dashed #00ff00;
+    position: absolute;
+}
+.nbd-bleed-notation {
+    width: 20px;
+    height: 0px;
+    border-bottom: 2px solid #ff0000;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;   
+}
+.nbd-safe-zone-notation {
+    width: 20px;
+    height: 0px;
+    border-bottom: 2px dashed #00ff00;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;   
+}

@@ -3665,7 +3665,23 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                         }                   
                     }else {
                         $product_config = unserialize(get_post_meta($tg_product_id, '_designer_setting', true)); 
-                    }        
+                    } 
+                    $ref_product_config = unserialize(file_get_contents($path_src . '/product.json'));
+                    foreach ($product_config as $key => $_config){
+                        if( isset($ref_product_config[$key]) ){
+                            $ref_width = $ref_product_config[$key]['area_design_width'];
+                            $ref_height = $ref_product_config[$key]['area_design_height'];
+                            $_width = $product_config[$key]['area_design_width'];
+                            $_height = $product_config[$key]['area_design_height'];
+                            if($ref_width/$ref_height > $_width/$_height){
+                                $product_config[$key]['area_design_height'] = round( $_width * $ref_height / $ref_width );
+                                $product_config[$key]['area_design_top'] = round( 250 - $product_config[$key]['area_design_height'] / 2 );
+                            }else {
+                                $product_config[$key]['area_design_width'] = round( $_height * $ref_width / $ref_height );
+                                $product_config[$key]['area_design_left'] = round( 250 - $product_config[$key]['area_design_width'] / 2 );                                
+                            }
+                        }
+                    }
                     $path_dst = NBDESIGNER_SUGGEST_DESIGN_DIR . '/' . substr(md5(uniqid()),0,10);
                     $this->create_preview_design($path_src, $path_dst, $product_config, 300, 300, 1);
                     $list = Nbdesigner_IO::get_list_images( $path_dst, $level = 1 );

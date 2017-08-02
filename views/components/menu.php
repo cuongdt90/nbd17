@@ -41,7 +41,7 @@
             <span></span>		
         </div>
     </div>
-    <div id="gesture" class="fa fa-hand-o-up nbd-tooltip-i18n" data-lang="TOOL" data-placement="top" ng-show="currentLayers.length > 0"></div>	
+    <div id="gesture" class="fa fa-hand-o-up nbd-tooltip-i18n shadow hover-shadow" data-lang="TOOL" data-placement="top" ng-show="currentLayers.length > 0"></div>	
     <div id="info"  ng-click="<?php if( $task == 'new' && $ui_mode == 2 ) echo 'saveCart()'; else echo 'storeDesign()'; ?>" class="shadow hover-shadow">
         <div class="container_info">
             <p>
