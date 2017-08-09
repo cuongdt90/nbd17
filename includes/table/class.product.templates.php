@@ -130,6 +130,7 @@ class Product_Template_List_Table extends WP_List_Table {
                 'product_id' => $item['product_id'],
                 'nbd_item_key'  =>  $item['folder'],
                 'rd'    => urlencode($link_manager_template),
+                'design_type'  =>  'template',
                 'task'  =>  'edit'
             ), getUrlPageNBD('create')); 
         if( $item['variation_id'] > 0 ){

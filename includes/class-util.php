@@ -487,6 +487,7 @@ function nbd_get_default_product_option(){
         'extra_price'   => 0,
         'type_price'   => 1,
         'type_dimension'   => 1,
+        'dynamic_side'   => 0,
         'defined_dimension' => array(array('width' => 10, 'height' => 8, 'price' => 0))
     ));
 }
@@ -497,10 +498,6 @@ function nbd_get_default_upload_setting(){
         'disallow_type'   => nbdesigner_get_option('nbdesigner_disallow_upload_file_type'),
         'maxsize'   => nbdesigner_get_option('nbdesigner_maxsize_upload_file'),
         'minsize'   => nbdesigner_get_option('nbdesigner_minsize_upload_file'),
-        'maxpx_width'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_max_res_upload_file'), 'width' ),
-        'maxpx_height'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_max_res_upload_file'), 'height' ),
-        'minpx_width'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_min_res_upload_file'), 'width' ),
-        'minpx_height'   => nbd_get_value_from_serialize_data( nbdesigner_get_option('nbdesigner_min_res_upload_file'), 'height' ),
         'mindpi'   => nbdesigner_get_option('nbdesigner_mindpi_upload_file')
     ));    
 }
@@ -573,7 +570,8 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         if( isset($template[0]) ){
             $template_path = NBDESIGNER_CUSTOMER_DIR . '/' . $template[0]['folder'];
             $data['fonts'] = nbd_get_data_from_json($template_path . '/used_font.json');
-            $data['design'] = nbd_get_data_from_json($template_path . '/design.json');              
+            $data['design'] = nbd_get_data_from_json($template_path . '/design.json'); 
+            $data['config'] = nbd_get_data_from_json($template_path . '/config.json');
         }       
     }    
     if(  $reference != '' ){

@@ -332,7 +332,7 @@
                                     <label class="nbdesigner-setting-box-label"><?php echo __('Show safe zone', 'web-to-print-online-designer'); ?> <span class="nbd-safe-zone-notation"></span></label>
                                     <div>
                                         <input type="hidden" value="0" class="show_safe_zone" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]"/>
-                                        <input type="checkbox" value="1" class="show_safe_zone" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]" id="_nbd_allow_specify_dimension" <?php checked( $v['show_safe_zone'] ); ?> class="short nbd-dependence" data-target="#nbd-safe-zone<?php echo $k ?>" onchange="NBDESIGNADMIN.toggleSafeZone(this)"/> 
+                                        <input type="checkbox" value="1" class="show_safe_zone" name="_designer_setting[<?php echo $k; ?>][show_safe_zone]" <?php checked( $v['show_safe_zone'] ); ?> class="short nbd-dependence" data-target="#nbd-safe-zone<?php echo $k ?>" onchange="NBDESIGNADMIN.toggleSafeZone(this)"/> 
                                     </div>                                    
                                 </div>    
                                 <div id="nbd-safe-zone<?php echo $k ?>" class="nbd-safe-zone-con <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?> nbd-independence">
@@ -408,7 +408,7 @@
                 </div> 
                 <div id="nbd-custom-size" class="<?php if (!$option['allow_specify_dimension']) echo 'nbdesigner-disable'; ?> nbd-independence nbdesigner-opt-inner">
                     <label for="_nbdesigner_customprice" class="nbdesigner-option-label"><?php echo _e('Allow', 'web-to-print-online-designer'); ?></label>
-                    &nbsp;<input name="_nbdesigner_option[type_dimension]" value="1" type="radio" <?php checked( $option['type_dimension'], 1); ?> class="nbd-dependence" data-target="#nbd-custom-size-free" /><?php _e('All dimensions', 'web-to-print-online-designer'); ?>   
+                    <input name="_nbdesigner_option[type_dimension]" value="1" type="radio" <?php checked( $option['type_dimension'], 1); ?> class="nbd-dependence" data-target="#nbd-custom-size-free" /><?php _e('All dimensions', 'web-to-print-online-designer'); ?>   
                     &nbsp;<input name="_nbdesigner_option[type_dimension]" value="2" type="radio" <?php checked( $option['type_dimension'], 2); ?> class="nbd-dependence" data-target="#nbd-custom-size-defined" /><?php _e('Predefined dimensions', 'web-to-print-online-designer'); ?>                     
                     <div id="nbd-custom-size-free" class="<?php if ($option['type_dimension'] != 1) echo 'nbdesigner-disable'; ?> nbd-untarget">
                         <div class="nbdesigner-opt-inner">
@@ -431,9 +431,16 @@
                                 <a class="button nbdesigner-delete" onclick="NBDESIGNADMIN.deleteDefinedDimension(this)">&times;</a>
                             </div>             
                         <?php endforeach; ?>
-                        <p><small>(<?php _e('Extra price for each variation, ex: + 5 or - 5', 'web-to-print-online-designer'); ?>)</small></p>
-                        <div style="margin-top: 15px;" id="nbd-duplicate-size-con"><a class="button button-primary" onclick="NBDESIGNADMIN.duplicateDefinedDimension(this)"><?php _e('Add', 'web-to-print-online-designer'); ?></a></div>
+                        <div style="margin-top: 15px;" id="nbd-duplicate-size-con">
+                            <p><small>(<?php _e('Extra price for each variation, ex: + 5 or - 5', 'web-to-print-online-designer'); ?>)</small></p>
+                            <a class="button button-primary" onclick="NBDESIGNADMIN.duplicateDefinedDimension(this)"><?php _e('Add', 'web-to-print-online-designer'); ?></a>
+                        </div>
                     </div>
+                    <div class="nbdesigner-opt-inner">
+                        <label class="nbdesigner-option-label"><?php echo _e('Dynamic page / side', 'web-to-print-online-designer'); ?></label>
+                        <input name="_nbdesigner_option[dynamic_side]" value="1" type="radio" <?php checked( $option['dynamic_side'], 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>   
+                        &nbsp;<input name="_nbdesigner_option[dynamic_side]" value="0" type="radio" <?php checked( $option['dynamic_side'],0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>  
+                    </div>                      
                 </div>    
             </div>   
         </div>
@@ -460,23 +467,10 @@
                 <label for="_nbdesigner_max_size_upload" class="nbdesigner-option-label"><?php echo _e('Max size', 'web-to-print-online-designer'); ?></label>
                 <input type="number" step="any" class="short nbdesigner-short-input" id="_nbdesigner_max_size_upload" name="_designer_upload[maxsize]" value="<?php echo $upload_setting['maxsize']; ?>"/>&nbsp;MB
             </div> 
-            <p style="font-weight: bold;"><?php _e('For image files', 'web-to-print-online-designer'); ?></p>
-            <div class="nbd-independence">
-                <div class="nbdesigner-opt-inner">
-                    <label class="nbdesigner-option-label"><?php echo _e('Min. resolution (px)', 'web-to-print-online-designer'); ?></label>
-                    <?php _e('Width', 'web-to-print-online-designer'); ?><input type="number" step="any" class="short nbdesigner-short-input" name="_designer_upload[minpx_width]" value="<?php echo $upload_setting['minpx_width']; ?>"/>
-                    <?php _e('Height', 'web-to-print-online-designer'); ?><input type="number" step="any" class="short nbdesigner-short-input" name="_designer_upload[minpx_height]" value="<?php echo $upload_setting['minpx_height']; ?>"/>
-                </div> 
-                <div class="nbdesigner-opt-inner">
-                    <label class="nbdesigner-option-label"><?php echo _e('Max. resolution (px)', 'web-to-print-online-designer'); ?></label>
-                    <?php _e('Width', 'web-to-print-online-designer'); ?><input type="number" step="any" class="short nbdesigner-short-input" name="_designer_upload[maxpx_width]" value="<?php echo $upload_setting['maxpx_width']; ?>"/>
-                    <?php _e('Height', 'web-to-print-online-designer'); ?><input type="number" step="any" class="short nbdesigner-short-input" name="_designer_upload[maxpx_height]" value="<?php echo $upload_setting['maxpx_height']; ?>"/>
-                </div>    
-                <div class="nbdesigner-opt-inner">
-                    <label for="_nbd_mindpi_upload" class="nbdesigner-option-label"><?php echo _e('Min. resolution DPI', 'web-to-print-online-designer'); ?></label>
-                    <input type="number" step="any" class="short nbdesigner-short-input" id="_nbd_mindpi_upload" name="_designer_upload[mindpi]" value="<?php echo $upload_setting['mindpi']; ?>"/>
-                </div>    
-            </div>    
+            <div class="nbdesigner-opt-inner">
+                <label for="_nbd_mindpi_upload" class="nbdesigner-option-label"><?php echo _e('Min. resolution DPI for JPG image', 'web-to-print-online-designer'); ?></label>
+                <input type="number" step="any" class="short nbdesigner-short-input" id="_nbd_mindpi_upload" name="_designer_upload[mindpi]" value="<?php echo $upload_setting['mindpi']; ?>"/>
+            </div>   
         </div>
     </div>    
 </div>

@@ -43,6 +43,7 @@
         <?php 
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
             $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
+            $design_type = (isset($_GET['design_type']) &&  $_GET['design_type'] != '') ? $_GET['design_type'] : '';
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
             $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
             $cart_item_key = (isset($_GET['cik']) &&  $_GET['cik'] != '') ? $_GET['cik'] : '';
@@ -79,6 +80,7 @@
                 cart_url    :   "<?php echo esc_url( wc_get_cart_url() ); ?>",
                 task    :   "<?php echo $task; ?>",
                 task2    :   "<?php echo $task2; ?>",
+                design_type    :   "<?php echo $design_type; ?>",
                 product_id  :   "<?php echo $product_id; ?>",
                 variation_id  :   "<?php echo $variation_id; ?>",                
                 redirect_url    :   "<?php echo $redirect_url; ?>",
@@ -143,6 +145,7 @@
                     include_once('components/modal_expand_feature.php');		
                     include_once('components/modal_products.php');		
                     include_once('components/modal-custom-dimension.php');		
+                    include_once('components/modal_bleed_tip.php');		
                     ?>
                 </div>
                 <div id="od_config" ng-class="modeMobile ? 'mobile' : 'modepc'">	
@@ -156,7 +159,7 @@
                     <span class="hide-tool-config fa fa-chevron-down e-shadow e-hover-shadow item-config" ng-hide="modeMobile" ng-style="{'display' : (pop.text == 'block' || pop.art == 'block' || pop.qrcode == 'block' || pop.clipArt == 'block' || pop.draw == 'block') ? 'block' : 'none'}"></span>
                 </div>
                 <?php
-                if(!NBDESIGNER_MODE_DEV){
+                if(NBDESIGNER_MODE_DEV){
                     include_once('components/config_style.php');           
                 }
                 include_once('components/popover_layer.php');
@@ -215,7 +218,7 @@
             <?php else: ?>
             <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/lodash.js'; ?>"></script>
             <?php endif; ?>
-            <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/_bundle.min.js'; ?>"></script>
+            <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle.min.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.curvedText.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.removeColor.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/_layout.js'; ?>"></script>

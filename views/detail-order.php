@@ -54,6 +54,8 @@
                 if(isset($list_design[$key])) $contentImage = $list_design[$key];                
                 $proWidth = $data['product_width'];
                 $proHeight = $data['product_height'];
+                $bleed_top_bottom = $unitRatio * $data['bleed_top_bottom'];
+                $bleed_left_right = $unitRatio * $data['bleed_left_right'];
                 $bgTop = 0;
                 $bgLeft = 0;
                 if($proWidth > $proHeight){
@@ -245,10 +247,10 @@
                             <label><?php _e('Margin bleed', 'web-to-print-online-designer'); ?></label>
                         </th>
                         <td class="forminp forminp-text">
-                            <input name="pdf[<?php echo $key; ?>][bleed-top]" type="number" min="0" style="width: 60px;" value="3" onchange="changeBleed(this, 'top');">
-                            <input name="pdf[<?php echo $key; ?>][bleed-right]" type="number" min="0" style="width: 60px;" value="3" onchange="changeBleed(this, 'right');">
-                            <input name="pdf[<?php echo $key; ?>][bleed-bottom]" type="number" min="0" style="width: 60px;" value="3" onchange="changeBleed(this, 'bottom');">
-                            <input name="pdf[<?php echo $key; ?>][bleed-left]" type="number" min="0" style="width: 60px;" value="3" onchange="changeBleed(this, 'left');">
+                            <input name="pdf[<?php echo $key; ?>][bleed-top]" type="number" min="0" style="width: 60px;" value="<?php echo $bleed_top_bottom; ?>" onchange="changeBleed(this, 'top');">
+                            <input name="pdf[<?php echo $key; ?>][bleed-right]" type="number" min="0" style="width: 60px;" value="<?php echo $bleed_left_right; ?>" onchange="changeBleed(this, 'right');">
+                            <input name="pdf[<?php echo $key; ?>][bleed-bottom]" type="number" min="0" style="width: 60px;" value="<?php echo $bleed_top_bottom; ?>" onchange="changeBleed(this, 'bottom');">
+                            <input name="pdf[<?php echo $key; ?>][bleed-left]" type="number" min="0" style="width: 60px;" value="<?php echo $bleed_left_right; ?>" onchange="changeBleed(this, 'left');">
                             <p><small><?php _e('Margin bleed top, right, bottom, left in mm', 'web-to-print-online-designer'); ?></small></p>
                         </td>
                     </tr>     

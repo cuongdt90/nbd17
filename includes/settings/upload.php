@@ -64,7 +64,14 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
-                    ),                     
+                    ),   
+                    array(
+                        'title' => __( 'Min. resolution DPI for JPG/JPEG image', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_mindpi_upload_file',
+                        'css'         => 'width: 65px',
+                        'default'	=> '0',
+                        'type' 		=> 'number'
+                    )                      
                 ),
                 'images-settings' => array(    
                     array(
@@ -89,14 +96,7 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                             'width' => 0,
                             'height' => 0
                         )                         
-                    ),     
-                    array(
-                        'title' => __( 'Min. resolution DPI', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_mindpi_upload_file',
-                        'css'         => 'width: 65px',
-                        'default'	=> '0',
-                        'type' 		=> 'number'
-                    )                    
+                    )                   
                 )
             ));
         }

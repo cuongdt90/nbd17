@@ -763,8 +763,10 @@ var NBDESIGNADMIN = {
             jQuery(this).find('.show_bleed').attr('name', name + '[' + key + '][show_bleed]');
             jQuery(this).find('.show_safe_zone').attr('name', name + '[' + key + '][show_safe_zone]');
             jQuery(this).find('.show_safe_zone').attr('name', name + '[' + key + '][show_safe_zone]');
-            jQuery(this).find('.nbd-safe-zone-con').attr('id', 'nbd-safe-zone' + key );
-            jQuery(this).find('.nbd-bleed-con').attr('id', 'nbd-bleed' + key );
+            jQuery(this).find('.nbd-safe-zone-con').attr('id', 'nbd-safe-zone' + command + key );
+            jQuery(this).find('.nbd-bleed-con').attr('id', 'nbd-bleed' + command + key );
+            jQuery(this).find('.show_safe_zone').attr('data-target', '#nbd-safe-zone' + command + key );
+            jQuery(this).find('.show_bleed').attr('data-target', '#nbd-bleed' + command + key );
         });
         this.loopConfigAreaDesign();
     },
@@ -886,6 +888,8 @@ var NBDESIGNADMIN = {
                 break;
         }
         parent.find('.nbdesiger-update-area-design').addClass('active');
+        this.updateBleed(e);
+        this.updateSafeZone(e);        
     },
     ajustImage: function () {
         var self = this;   
@@ -915,6 +919,8 @@ var NBDESIGNADMIN = {
                 'left': area.css('left'),           
                 'top': area.css('top')           
             });
+        this.updateBleed(e);
+        this.updateSafeZone(e);            
     },
     updatePositionDesignArea: function (e) {
         var att = jQuery(e).data('index'),
@@ -1521,6 +1527,8 @@ var NBDESIGNADMIN = {
         config.iRealTop.val(vRealTop) ;   
         config.updateRealSizeButton.removeClass('active');
         var config = this.initParameter(e);
+        this.updateBleed(e);
+        this.updateSafeZone(e);          
     },
     duplicateDefinedDimension: function(e){
         var new_size = jQuery('#nbd-custom-size-defined .nbd-defined-size').last().clone();

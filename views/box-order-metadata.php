@@ -1,13 +1,14 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<?php if($has_design) : 
+<?php if( $has_design || $has_upload ) : 
     $count_img_design = 0;
 ?>
 <div id="nbdesigner_order_info">
 	<?php foreach($products AS $order_item_id => $product): ?>
 		<?php 
                     $nbd_item_key = wc_get_order_item_meta($order_item_id, '_nbd');
+                    $nbu_item_key = wc_get_order_item_meta($order_item_id, '_nbu');
                     $item_meta = new WC_Order_Item_Meta( $product );
-                    if($nbd_item_key): 
+                    if($nbd_item_key || $nbu_item_key): 
                     $index_accept = 'nbds_'.$order_item_id;
                     $variation = '';
                     if(!is_woo_v3()){
@@ -19,6 +20,8 @@
                             <?php echo $product['name']; ?>
                             <?php echo (!empty($variation))?'<span> - '.$variation.'</span>':''; ?>
                         </h4>
+                        <?php if($nbd_item_key): ?>
+                        <p><b><?php _e('Custom design','web-to-print-online-designer') ?></b></p>
                         <div class="nbdesigner_container_item_order <?php if(isset($data_designs[$index_accept])) { $status = ($data_designs[$index_accept] == 'accept') ? 'approved' : 'declined'; echo $status;}; ?>">
                         <?php 
                             $list_images = Nbdesigner_IO::get_list_images(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/preview', 1);  											
@@ -38,6 +41,19 @@
                             <a class="nbdesigner-right button button-small button-secondary"  href="<?php echo $link_view_detail; ?>"><?php _e('View detail', 'web-to-print-online-designer'); ?></a>
                         <?php  endif; ?>
                         </div>
+                        <?php  endif; ?>
+                        <?php 
+                            if($nbu_item_key):
+                            $files = Nbdesigner_IO::get_list_files( NBDESIGNER_UPLOAD_DIR .'/'. $nbu_item_key ); 
+                        ?>
+                        <p><b><?php _e('Upload design','web-to-print-online-designer') ?></b></p>
+                        <div class="nbdesigner_container_item_order <?php if(isset($data_uploads[$index_accept])) { $status = ($data_uploads[$index_accept] == 'accept') ? 'approved' : 'declined'; echo $status;}; ?>">
+                            <input type="checkbox" name="_nbdesigner_upload_file[]" class="nbdesigner_design_file" value="<?php echo $order_item_id; ?>" />
+                            <?php foreach($files as $key => $file): $count_img_design++; ?>
+                            <?php if($key > 0) echo ' | '; ?><span><?php echo basename($file); ?></span>
+                            <?php endforeach; ?>
+                        </div> 
+                        <?php  endif; ?>
                     </div>
 		<?php endif; ?>
 	<?php endforeach;?>
@@ -90,5 +106,5 @@
 	<div class="nbdesigner-clearfix"></div>
 </div>
 <?php else: ?>
-<p><?php _e('No design in this order', 'web-to-print-online-designer'); ?></p>
+<p><?php _e('No design or uplod file in this order', 'web-to-print-online-designer'); ?></p>
 <?php endif; ?>
