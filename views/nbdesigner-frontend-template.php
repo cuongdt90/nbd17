@@ -32,7 +32,8 @@
         <?php endif; ?>
         <?php 
             $enableColor = nbdesigner_get_option('nbdesigner_show_all_color'); 
-            if($enableColor == 'no'):
+//            if($enableColor == 'no'):
+            if( 1 ):
         ?>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php endif; ?>

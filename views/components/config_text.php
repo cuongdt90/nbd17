@@ -35,7 +35,15 @@
         <div class="nb-col-2" ng-show="settings['nbdesigner_text_color'] == 1">
             <p class="label-config">{{(langs['TEXT_COLOR']) ? langs['TEXT_COLOR'] : "Text color"}}</p>
             <?php  if($enableColor == 'yes'): ?>
-            <input readonly="true" disabled class="jscolor shadow hover-shadow" value="cc324b" ng-model="colorOptional" ng-change="changeColor(colorOptional)">
+            <spectrum-colorpicker
+                ng-model="colorOptional" 
+                ng-change="changeColor(colorOptional)" 
+                options="{
+                    showPaletteOnly: false, 
+                    togglePaletteOnly: false, 
+                    showPalette: false, 
+                    showInput: true}">
+            </spectrum-colorpicker>
              <?php else: ?>
             <spectrum-colorpicker
                 ng-model="colorOptional" 
@@ -52,7 +60,15 @@
         <div class="nb-col-30" ng-show="settings['nbdesigner_text_background'] == 1">
             <p class="label-config">{{(langs['BACKGROUND']) ? langs['BACKGROUND'] : "Background"}}</p>
             <?php  if($enableColor == 'yes'): ?>
-            <input readonly="true" disabled class="jscolor shadow hover-shadow" value="f98332" ng-model="background" ng-change="setBackground()">
+            <spectrum-colorpicker
+                ng-model="background" 
+                ng-change="setBackground()" 
+                options="{
+                    showPaletteOnly: false, 
+                    togglePaletteOnly: false, 
+                    showPalette: false, 
+                    showInput: true}">
+            </spectrum-colorpicker>
             <?php else: ?>
             <spectrum-colorpicker
                 ng-model="background" 
@@ -83,7 +99,15 @@
         <div class="nb-col-30 has-popover-option" ng-show="settings['nbdesigner_text_shadow'] == 1">
             <p class="label-config">{{(langs['SHADOW']) ? langs['SHADOW'] : "Shadow"}}</p>
             <?php  if($enableColor == 'yes'): ?>
-            <input readonly="true" disabled class="jscolor shadow hover-shadow" value="394264" ng-model="shadow.color" ng-change="changeShadow()">
+            <spectrum-colorpicker
+                ng-model="shadow.color" 
+                ng-change="changeShadow()" 
+                options="{
+                    showPaletteOnly: false, 
+                    togglePaletteOnly: false, 
+                    showPalette: false, 
+                    showInput: true}">
+            </spectrum-colorpicker>
             <?php else: ?>
             <spectrum-colorpicker
                 ng-model="shadow.color" 
@@ -137,7 +161,15 @@
         <div class="nb-col-30 has-popover-option" ng-show="settings['nbdesigner_text_outline'] == 1">
             <p class="label-config">{{(langs['OUTLINE']) ? langs['OUTLINE'] : "Outline"}}</p>
             <?php  if($enableColor == 'yes'): ?>
-            <input readonly="true" disabled class="jscolor shadow hover-shadow" value="394264" ng-model="colorStrokeOptional" ng-change="changeStroke(colorStrokeOptional, null)">
+            <spectrum-colorpicker
+                ng-model="colorStrokeOptional" 
+                ng-change="changeStroke(colorStrokeOptional, null)" 
+                options="{
+                    showPaletteOnly: false, 
+                    togglePaletteOnly: false, 
+                    showPalette: false, 
+                    showInput: true}">
+            </spectrum-colorpicker>
             <?php else: ?>
             <spectrum-colorpicker
                 ng-model="colorStrokeOptional" 

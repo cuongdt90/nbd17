@@ -471,6 +471,7 @@ function nbd_default_product_setting(){
                 'bg_color_value' => "#ffffff",
                 'show_overlay' => 0,
                 'include_overlay' => 1,
+                'area_design_type' => 1,
                 'version' => NBDESIGNER_NUMBER_VERSION
             )); 
 }
@@ -534,6 +535,11 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
     if( $priority && count( $results ) == 0 ) {
         $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND variation_id = '$variation_id' ORDER BY created_date DESC LIMIT 1";
         $results = $wpdb->get_results($sql, ARRAY_A);
+    }
+    /* Case variation no template */
+    if( $variation_id != 0 && count( $results ) == 0 ) {
+        $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id'  ORDER BY created_date DESC LIMIT 1";
+        $results = $wpdb->get_results($sql, ARRAY_A);        
     }
     return $results;
 }
@@ -654,6 +660,11 @@ function nbd_get_woo_version(){
 function is_woo_v3(){
     $woo_ver = nbd_get_woo_version(); 
     if( version_compare( $woo_ver, "3.0", "<" )) return false;
+    return true;
+}
+function is_woo_v31(){
+    $woo_ver = nbd_get_woo_version(); 
+    if( version_compare( $woo_ver, "3.1", "<" )) return false;
     return true;
 }
 function nbd_get_dpi($filename){
@@ -811,19 +822,17 @@ function get_nbd_variations( $product_id ){
     if( $product->is_type( 'variable' ) ) {
         $available_variations = $product->get_available_variations();   
         foreach ($available_variations as $variation){
-            $enable = get_post_meta($variation['id'], '_nbdesigner_enable'.$variation['id'], true);
+            $enable = get_post_meta($variation['variation_id'], '_nbdesigner_enable'.$variation['variation_id'], true);
             if($enable){
-                if( is_array( $variation['attributes'] ) && count($variation['attributes'] ) > 2 ){
+                if( is_array( $variation['attributes'] ) ){
                     $new_name = '';
                     foreach ( $variation['attributes'] AS $name => $value ) {
                         if ( !empty( $value ) ) $new_name .= ucfirst($value).', ';
                     }                    
                     $new_name = substr($new_name, 0, -2);
-                } else {
-                    $new_name = $variation['name'];
                 }          
                 $variations[] = array(
-                    'id'    =>  $variation['id'],
+                    'id'    =>  $variation['variation_id'],
                     'name'  =>  $new_name
                 );                    
             }

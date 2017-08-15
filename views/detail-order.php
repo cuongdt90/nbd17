@@ -27,6 +27,7 @@
                 array(
                     'task'  =>  'edit',
                     'nbd_item_key'  =>  $_GET['nbd_item_key'],
+                    'design_type'  =>  'edit_order',
                     'rd'    =>  urlencode($redirect_link)), 
                 getUrlPageNBD('create'));          
             _e('Detail product design', 'web-to-print-online-designer'); 

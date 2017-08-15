@@ -45,3 +45,7 @@
 .nbdesigner-list-template h3 {
     margin-right: 15px;
 }
+.nbdesigner_bg_image, .nbdesigner_bg_color, .overlay-toggle {
+    padding-left: 0px;
+    padding-right: 0px;
+}

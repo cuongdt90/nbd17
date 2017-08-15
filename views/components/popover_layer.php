@@ -7,7 +7,7 @@
     <div id="dg-layers" class="has-croll">
         <ul id="layers">
             <li class="shadow layer" id="layer-{{layer.index}}" ng-repeat="layer in currentLayers| reverse" ng-class="{active: currentLayerActive === layer.index, 'lock' : layer.class === 'lock'}" ng-click="activeLayer(layer)">
-                <i class="fa fa-font" aria-hidden="true" ng-show="layer.type === 'text'"></i>  		
+                <i class="fa fa-text-width" aria-hidden="true" ng-show="layer.type === 'text'"></i>  		
                 <img alt="image uploaded" ng-src="{{layer.src}}" ng-hide="layer.type === 'text'" width="20" height="20" class="layer_thumb"/>
                 <span>{{layer.name}}</span>
                 <span class="pull-right">

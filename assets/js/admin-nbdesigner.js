@@ -13,7 +13,10 @@ jQuery(document).ready(function ($) {
     };
     NBDESIGNADMIN.collapseAll('com');
     $('#_nbdesigner_enable').change(function() {
-        $('#nbd-setting-container').toggleClass('nbdesigner-disable');      
+        $('#nbd-setting-container').toggleClass('nbdesigner-disable');    
+        if($('#_nbdesigner_enable').prop("checked")){
+            $('.nbdesigner-right.add_more').show();
+        };        
     });
     $('#_nbdesigner_enable_upload').change(function() {
         $('.nbd-tabber.nbd-upload').toggleClass('nbdesigner-disable');   
@@ -1640,6 +1643,26 @@ var NBDESIGNADMIN = {
             bleedSize : bleedSize,
             safeZone : safeZone
         };
+    },
+    changeAreaDesignShape: function( e, type ){
+        var parent = jQuery(e).parents('.nbdesigner-box-collapse'),
+            design_area = parent.find('.nbdesigner-area-design'),
+            overlay_area = parent.find('.nbdesigner-image-overlay'),
+            bleed_area = parent.find('.nbd-bleed'),
+            safe_zone = parent.find('.nbd-safe-zone');
+        switch( type ){
+            case 2:
+                design_area.addClass('nbd-rounded');
+                overlay_area.addClass('nbd-rounded');
+                bleed_area.addClass('nbd-rounded');
+                safe_zone.addClass('nbd-rounded');
+                break;
+            default: 
+                design_area.removeClass('nbd-rounded');
+                overlay_area.removeClass('nbd-rounded');
+                bleed_area.removeClass('nbd-rounded');
+                safe_zone.removeClass('nbd-rounded');
+        }
     }
 };
 function base64Encode(str) {

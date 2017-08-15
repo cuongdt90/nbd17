@@ -135,19 +135,19 @@
                                     >
                                         <img src="<?php echo $v['img_overlay']; ?>" class="img_overlay"/>
                                     </div>
-                                    <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?>"
+                                    <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?> <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>"
                                         style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right']))  ?>px;
                                                 height: <?php echo round( $ratio * ($v['real_height'] - 2 * $v['bleed_top_bottom']))  ?>px;
                                                 top: <?php echo round( $ratio * ($top + $v['real_top'] + $v['bleed_top_bottom']))  ?>px;
                                                 left: <?php echo round( $ratio * ($left + $v['real_left'] + $v['bleed_left_right']))  ?>px;"> 
                                     </div>
-                                    <div class="nbd-safe-zone <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?>"
+                                    <div class="nbd-safe-zone <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?> <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>"
                                         style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right'] - 2 * $v['margin_left_right']))  ?>px;
                                                 height: <?php echo round( $ratio * ($v['real_height'] - 2 * $v['bleed_top_bottom'] - 2 * $v['margin_top_bottom']))  ?>px;
                                                 top: <?php echo round( $ratio * ($top + $v['real_top'] + $v['bleed_top_bottom'] + $v['margin_top_bottom']))  ?>px;
                                                 left: <?php echo round( $ratio * ($left + $v['real_left'] + $v['bleed_left_right'] + $v['margin_left_right']))  ?>px;">                                         
                                     </div>
-                                    <div class="nbdesigner-area-design" id="nbdesigner-area-design-<?php echo $k; ?>" 
+                                    <div class="nbdesigner-area-design <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>" id="nbdesigner-area-design-<?php echo $k; ?>" 
                                          style="width: <?php echo $v['area_design_width'] . 'px'; ?>; 
                                                 height: <?php echo $v['area_design_height'] . 'px'; ?>; 
                                                 left: <?php echo $v['area_design_left'] . 'px'; ?>; 
@@ -169,28 +169,30 @@
                                     <a class="button nbdesigner_move nbdesigner_move_center" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'center')">&frac12;</a>
                                     <a class="button nbdesigner_move nbdesigner_move_center" style="padding-left: 7px; padding-right: 7px;" data-index="<?php echo $k; ?>" onclick="NBDESIGNADMIN.nbdesigner_move(this, 'fit')"><i class="mce-ico mce-i-dfw" style="margin: 4px 0px 0px 0px !important; padding: 0 !important;"></i></a>
                                 </div>
-                                <div>
-                                    <p>
-                                        <label for="nbdesigner_bg_type" class="nbdesigner-setting-box-label"><?php _e('Background type'); ?></label>
-                                        <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="image" 
-                                            <?php checked($v['bg_type'], 'image', true); ?> class="bg_type"
-                                            onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Image', 'web-to-print-online-designer'); ?></label>
-                                        <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="color" 
-                                            <?php checked($v['bg_type'], 'color', true); ?> class="bg_type"
-                                            onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Color', 'web-to-print-online-designer'); ?></label>
-                                        <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="tran" 
-                                            <?php checked($v['bg_type'], 'tran', true); ?> class="bg_type"
-                                            onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Transparent', 'web-to-print-online-designer'); ?></label>
-                                    </p>
-                                </div> 
-                                <div class="nbdesigner_bg_image" <?php if($v['bg_type'] != 'image') echo ' style="display: none;"' ?>>
-                                    <a class="button nbdesigner-button nbdesigner-add-image" onclick="NBDESIGNADMIN.loadImage(this)" data-index="<?php echo $k; ?>"><?php echo __('Set image', 'web-to-print-online-designer'); ?></a>     
-                                </div>
-                                <div class="nbdesigner_bg_color" <?php if($v['bg_type'] != 'color') echo ' style="display: none;"' ?>>
-                                    <input type="text" name="_designer_setting[<?php echo $k; ?>][bg_color_value]" value="<?php echo $v['bg_color_value'] ?>" class="nbd-color-picker" />
-                                </div>
-                                <div class="nbdesigner_overlay_box">
-                                    <label class="nbdesigner-setting-box-label"><?php  _e('Overlay', 'web-to-print-online-designer'); ?></label>
+                                <div class="nbb-background-group">
+                                    <div>
+                                        <p>
+                                            <label for="nbdesigner_bg_type" class="nbd-label nbdesigner-setting-box-label"><?php _e('Background type'); ?></label>
+                                            <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="image" 
+                                                <?php checked($v['bg_type'], 'image', true); ?> class="bg_type"
+                                                onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Image', 'web-to-print-online-designer'); ?></label>
+                                            <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="color" 
+                                                <?php checked($v['bg_type'], 'color', true); ?> class="bg_type"
+                                                onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Color', 'web-to-print-online-designer'); ?></label>
+                                            <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="tran" 
+                                                <?php checked($v['bg_type'], 'tran', true); ?> class="bg_type"
+                                                onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Transparent', 'web-to-print-online-designer'); ?></label>
+                                        </p>
+                                    </div> 
+                                    <div class="nbdesigner_bg_image" <?php if($v['bg_type'] != 'image') echo ' style="display: none;"' ?>>
+                                        <a class="button nbdesigner-button nbdesigner-add-image" onclick="NBDESIGNADMIN.loadImage(this)" data-index="<?php echo $k; ?>"><?php echo __('Set image', 'web-to-print-online-designer'); ?></a>     
+                                    </div>
+                                    <div class="nbdesigner_bg_color" <?php if($v['bg_type'] != 'color') echo ' style="display: none;"' ?>>
+                                        <input type="text" name="_designer_setting[<?php echo $k; ?>][bg_color_value]" value="<?php echo $v['bg_color_value'] ?>" class="nbd-color-picker" />
+                                    </div>
+                                </div>    
+                                <div class="nbdesigner_overlay_box" style="text-align: left;">
+                                    <label class="nbd-label nbdesigner-setting-box-label"><?php  _e('Overlay', 'web-to-print-online-designer'); ?></label>
                                     <input type="hidden" value="0" name="_designer_setting[<?php echo $k; ?>][show_overlay]" class="show_overlay"/>                   
                                     <input type="checkbox" value="1" 
                                         name="_designer_setting[<?php echo $k; ?>][show_overlay]" id="_designer_setting[<?php echo $k; ?>][bg_type]" <?php checked($v['show_overlay']); ?> 
@@ -207,6 +209,15 @@
                                             />
                                         <span><?php  _e('Include in final design', 'web-to-print-online-designer'); ?></span>
                                     </p>
+                                </div>
+                                <div class="nbd_area_design_type" style="margin-top: 15px; clear: both; text-align: left;">
+                                    <label class="nbd-label nbdesigner-setting-box-label"><?php  _e('Area design shape', 'web-to-print-online-designer'); ?></label>
+                                    <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="1" 
+                                        <?php checked($v['area_design_type'], 1, true); ?> class="bg_type"
+                                        onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 1)"   /><?php _e('Rectangle', 'web-to-print-online-designer'); ?> </label>
+                                    <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="2" 
+                                        <?php checked($v['area_design_type'], 2, true); ?> class="bg_type"
+                                        onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 2)"   /><?php _e('Circle/Ellipse', 'web-to-print-online-designer'); ?></label>                                    
                                 </div>
                             </div>
                             <div class="nbdesigner-info-box">

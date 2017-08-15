@@ -604,6 +604,7 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
 }
 .nbdesigner-lbl-setting {
     display: inline-block;
+    margin-right: 15px;
 }
 .nbd-helper {
     cursor: pointer;
@@ -680,4 +681,17 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
     display: inline-block;
     vertical-align: middle;
     margin-left: 10px;   
+}
+.nbd-rounded {
+    border-radius: 50%;
+}
+.nbb-background-group {
+    text-align: left;
+}
+.nbd-label {
+    width: 150px;
+    margin: 0;
+}
+.nbdesigner_bg_image, .nbdesigner_bg_color, .overlay-toggle {
+    padding-left: 150px;
 }

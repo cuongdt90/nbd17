@@ -3174,6 +3174,9 @@ img.pattern_img {
 .toolbar-menu.undo-redo:before {
     opacity: 0.3;    
 }
+.toolbar-menu.undo-redo.ready:before {
+    opacity: 1;    
+}
 .toolbar-menu.undo-redo.ready {
     pointer-events: all;
     opacity: 1;    
@@ -3598,6 +3601,15 @@ img.pattern_img {
     outline: none;
     color: #fff;
     text-shadow: 2px 2px 3px rgba(204, 50, 75, 0.5);
+}
+.nbd-rounded {
+    border-radius: 50%;
+}
+.nbdesigner_svg_code {
+    width: 500px;
+    border-radius: 0;
+    display: inline-block;
+    margin-left: 15px;    
 }
 @media (max-width: 767px) {
     #upload-tabs li {

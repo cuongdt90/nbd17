@@ -133,6 +133,14 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
+                                    <label>{{(langs['SVG_CODE']) ? langs['SVG_CODE'] : "SVG Code"}}</label>
+                                    <textarea class="form-control hover-shadow nbdesigner_svg_code" rows="10" ng-model="svgCode"  placeholder="{{(langs['ENTER_SVG_CODE']) ? langs['ENTER_SVG_CODE'] : 'Enter svg code'}}"/></textarea>
+                                </div>
+                            </div>    
+                        </div>                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
                                     <button type="button" class="btn btn-primary shadow nbdesigner_upload"  ng-click="addImageFromUrl()">{{(langs['INSERT']) ? langs['INSERT'] : "Insert"}}</button>
                                 </div>
                             </div>                            

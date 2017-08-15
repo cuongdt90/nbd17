@@ -20,7 +20,7 @@
             <canvas id="grid"></canvas>
         </div>	
 
-        <div class="design-aria" 
+        <div class="design-aria" ng-class="currentVariant.designArea['area_design_type'] == '2' ? 'nbd-rounded' : ''"
              ng-style="{'width': currentVariant.designArea['area_design_width'] * zoom * designScale,
 					   'height' : currentVariant.designArea['area_design_height'] * zoom * designScale,
 					   'top' : calcLeft(currentVariant.designArea['area_design_top']),
@@ -29,7 +29,7 @@
              >
             <canvas id="designer-canvas" width="500" height="500"></canvas> 
         </div>
-        <div class="nbd-bleed" ng-if="currentVariant.info[currentSide.id].source.show_bleed == 1"
+        <div class="nbd-bleed" ng-if="currentVariant.info[currentSide.id].source.show_bleed == 1" ng-class="currentVariant.designArea['area_design_type'] == '2' ? 'nbd-rounded' : ''"
              ng-style="{'width': ( currentVariant.designArea['area_design_width']  - 2 * currentVariant.designArea['bleed_left_right'] * currentVariant.designArea['ratio']  ) * zoom * designScale,
                         'height' : ( currentVariant.designArea['area_design_height']  - 2 * currentVariant.designArea['bleed_top_bottom'] * currentVariant.designArea['ratio']  ) * zoom * designScale,
                         'top' : calcBleedSize('top', currentVariant.designArea['area_design_top'], currentVariant.designArea['bleed_top_bottom'], currentVariant.designArea['ratio']),
@@ -37,7 +37,7 @@
 			}">
             
         </div>
-        <div class="nbd-safe-zone" ng-if="currentVariant.info[currentSide.id].source.show_safe_zone == 1"
+        <div class="nbd-safe-zone" ng-if="currentVariant.info[currentSide.id].source.show_safe_zone == 1" ng-class="currentVariant.designArea['area_design_type'] == '2' ? 'nbd-rounded' : ''"
              ng-style="{'width': calcSafeZone('width', currentVariant.designArea['area_design_width'], currentVariant.designArea['bleed_left_right'], currentVariant.designArea['margin_left_right'], currentVariant.designArea['ratio']),
                         'height' : calcSafeZone('height', currentVariant.designArea['area_design_height'], currentVariant.designArea['bleed_top_bottom'], currentVariant.designArea['margin_top_bottom'], currentVariant.designArea['ratio']),
                         'top' : calcSafeZone('top', currentVariant.designArea['area_design_top'], currentVariant.designArea['bleed_top_bottom'], currentVariant.designArea['margin_top_bottom'], currentVariant.designArea['ratio']),

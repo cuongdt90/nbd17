@@ -7,7 +7,11 @@
 		<?php 
                     $nbd_item_key = wc_get_order_item_meta($order_item_id, '_nbd');
                     $nbu_item_key = wc_get_order_item_meta($order_item_id, '_nbu');
-                    $item_meta = new WC_Order_Item_Meta( $product );
+                    if( is_woo_v31() ){
+                        $item_meta = new WC_Order_Item_Product( $product );
+                    }else {
+                        $item_meta = new WC_Order_Item_Meta( $product );
+                    }
                     if($nbd_item_key || $nbu_item_key): 
                     $index_accept = 'nbds_'.$order_item_id;
                     $variation = '';
