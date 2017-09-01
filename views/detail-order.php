@@ -21,13 +21,15 @@
 <div id="nbdesign-order-tabs">
     <h2>
         <?php 
-            $arr = array('nbd_item_key' => $_GET['nbd_item_key'], 'order_id'    =>  $_GET['order_id']);
+            $arr = array('nbd_item_key' => $_GET['nbd_item_key'], 'order_id'    =>  $_GET['order_id'], 'product_id'  =>  $_GET['product_id'], 'variation_id'  =>  $_GET['variation_id']);
             $redirect_link = add_query_arg($arr, admin_url('admin.php?page=nbdesigner_detail_order'));        
             $edit_design_link = add_query_arg(
                 array(
                     'task'  =>  'edit',
                     'nbd_item_key'  =>  $_GET['nbd_item_key'],
                     'design_type'  =>  'edit_order',
+                    'product_id'  =>  $_GET['product_id'],
+                    'variation_id'  =>  $_GET['variation_id'],
                     'rd'    =>  urlencode($redirect_link)), 
                 getUrlPageNBD('create'));          
             _e('Detail product design', 'web-to-print-online-designer'); 
@@ -130,7 +132,8 @@
                                 <input name="force_same_format" type="hidden" value="0">
                                 <input name="force_same_format" type="checkbox" value="1">                             
                                 <input name="order_id" type="hidden" value="<?php echo $_GET['order_id']; ?>">                             
-                                <input name="nbd_item_key" type="hidden" value="<?php echo $_GET['nbd_item_key']; ?>">                             
+                                <input name="nbd_item_key" type="hidden" value="<?php echo $_GET['nbd_item_key']; ?>">      
+                                <input type="hidden" value="<?php echo $option['dpi']; ?>" name="dpi">
                                 <br /><small><?php _e('Create a PDF file contain all page in the same page size. By default, each page correspond a PDF file.', 'web-to-print-online-designer'); ?></small>
                             </td>
                         </tr>                       

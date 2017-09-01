@@ -321,6 +321,9 @@ $(document).ready(function(){
     $( ".pop-tools" ).draggable({
         handle: "h2"
     });
+    $( ".top-center-menu" ).draggable({
+        handle: '#toolbar-menu-handle'
+    });    
 });
 $(window).on('resize' , function(){
     var w = $(window).width();	

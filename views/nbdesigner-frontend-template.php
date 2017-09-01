@@ -60,6 +60,12 @@
             }else {
                 $list_file_upload = '';
             }
+            $home_url = $icl_home_url = untrailingslashit(get_option('home'));
+            $is_wpml = 0;
+            if ( function_exists( 'icl_get_home_url' ) ) {
+                $icl_home_url = untrailingslashit(icl_get_home_url());
+                $is_wpml = 1;
+            }            
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
@@ -88,6 +94,9 @@
                 nbd_item_key    :   "<?php echo $nbd_item_key; ?>",
                 nbu_item_key    :   "<?php echo $nbu_item_key; ?>",
                 cart_item_key    :   "<?php echo $cart_item_key; ?>",
+                home_url    :   "<?php echo $home_url; ?>",
+                icl_home_url    :   "<?php echo $icl_home_url; ?>",
+		is_wpml	:	<?php echo $is_wpml; ?>,                
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>
             }; 

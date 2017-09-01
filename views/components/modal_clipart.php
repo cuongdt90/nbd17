@@ -19,7 +19,7 @@
             </div>
             <div class="modal-body">
                 <div id="nbdesigner_art_container">
-                    <span class="view-thumb nbdesigner_thumb" width="100" ng-repeat="art in arts | filterCat : curentCatArt | filter : artName| limitTo : artPageSize">
+                    <span class="view-thumb nbdesigner_thumb" width="100" ng-repeat="art in arts | filterCat : curentCatArt | filterName : artName| limitTo : artPageSize">
                         <img style="max-width: 100px; max-height: 100px;" class="img-responsive img-thumbnail nbdesigner_upload_image shadow hover-shadow" ng-src="{{art.url}}" ng-click="addArt(art)"  spinner-on-load/>
                     </span>
                 </div>

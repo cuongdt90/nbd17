@@ -256,6 +256,113 @@ class NBD_Image {
         imagecopy($output, $input, 0, 0, 0, 0, $width, $height);
         imagejpeg($output, $output_file);        
     }
+    public function resample($image, $height, $width, $format = 'jpeg', $dpi = 300){
+        if (!$image) {
+            throw new \Exception('Attempting to resample an empty image');
+        }
+        if (gettype($image) !== 'resource') {
+            throw new \Exception('Attempting to resample something which is not a resource');
+        }
+        //Use truecolour image to avoid any issues with colours changing
+        $tmp_img = imagecreatetruecolor($width, $height);
+        //Resample the image to be ready for print
+        if (!imagecopyresampled($tmp_img, $image, 0, 0, 0, 0, $width, $height, imagesx($image), imagesy($image))) {
+            throw new \Exception("Unable to resample image");
+        }
+        //Massive hack to get the image as a jpeg string but there is no php function which converts
+        //a GD image resource to a JPEG string
+        ob_start();
+        imagejpeg($tmp_img, null, 100);
+        $image = ob_get_contents();
+        ob_end_clean();
+        //change the JPEG header to 300 pixels per inch
+        $image = substr_replace($image, pack("Cnn", 0x01, $dpi, $dpi), 13, 5);
+        return $image;
+    } 
+    public static function gd_resample( $input_file, $ouput_file, $dpi ){
+        $source = imagecreatefromjpeg($input_file);
+        list($width, $height) = getimagesize($filename);
+        $image = self::resample( $source, $height, $width, $dpi );
+        file_put_contents( $ouput_file, $image );
+    }
+    public static function imagick_add_white_bg( $input_file, $ouput_file ){
+        try {
+            $image = new Imagick( $input_file );
+            $bg = new IMagick();
+            $bg->newImage($image->getImageWidth(), $image->getImageHeight(), new ImagickPixel("white"));
+            $bg->setImageBackgroundColor('#FFFFFF');
+            $bg->compositeImage($image, IMagick::COMPOSITE_DEFAULT, 0, 0);     
+            $bg->writeImage( $ouput_file );  
+            $image->destroy(); 
+            $bg->destroy(); 
+        } catch (Exception $e) {
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }
+    }
+    public static function imagick_convert_png_to_jpg( $input_file, $ouput_file ){
+        try {
+            $image = new Imagick( $input_file );
+            $flattened = new IMagick();
+            $flattened->newImage($image->getImageWidth(), $image->getImageHeight(), new ImagickPixel("white"));
+            $flattened->compositeImage($image, IMagick::COMPOSITE_OVER, 0, 0);
+            $flattened->setImageFormat("jpg");
+            $flattened->writeImage( $ouput_file );  
+            $image->destroy(); 
+            $flattened->destroy(); 
+        } catch( Exception $e ){
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }  
+    }    
+    public static function imagick_convert_png2jpg_without_bg( $input_file, $ouput_file ){
+        try {
+            $image = new Imagick( $input_file );
+            $image->setImageFormat("jpg");
+            $image->writeImage( $ouput_file );  
+            $image->destroy();             
+        } catch (Exception $e) {
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }
+    }
+    public static function imagick_convert_rgb_to_cymk( $input_file, $ouput_file ){
+        try {
+            $image = new Imagick( $input_file );
+            $image->stripImage();
+            $image->transformimagecolorspace(\Imagick::COLORSPACE_CMYK);
+            $image->writeImage( $ouput_file );
+            $image->destroy(); 
+        } catch( Exception $e ){
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }        
+    }
+    public static function imagick_resample( $input_file, $ouput_file, $dpi ){
+        try {
+            $image = new Imagick();
+            $image->setResolution($dpi,$dpi);
+            $image->readImage($input_file);
+            $image->setImageUnits(imagick::RESOLUTION_PIXELSPERINCH);
+            $image->writeImage($ouput_file);
+            $image->destroy(); 
+        } catch( Exception $e ){
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }
+    }
+    public static function imagick_change_icc_profile( $input_file, $ouput_file, $icc  ){
+        try {
+            $image = new Imagick( $input_file );
+            $image->stripImage ();
+            $icc_profile = file_get_contents( $icc ); 
+            $image->profileImage('icc', $icc_profile); 
+            unset($icc_profile); 
+            $image->writeImage( $ouput_file );
+            $image->destroy();
+        } catch( Exception $e ){
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }            
+    }   
+}
+function is_available_imagick(){
+    if(!class_exists("Imagick")) return false;
+    return true;
 }
 function nbd_file_get_contents($url){
     if(ini_get('allow_url_fopen')){
@@ -513,7 +620,11 @@ function getUrlPageNBD($page){
             break;           
     }
     $post = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name='".$post_name."'"); 
-    return ($post) ? get_page_link($post) : '#';
+    if ( function_exists('icl_object_id') ) {
+        return ($post) ? get_page_link(icl_object_id($post,'page',false)) : '#';
+    }else{
+        return ($post) ? get_page_link($post) : '#';
+    }     
 }
 function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false ){
     global $wpdb;
@@ -538,7 +649,7 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
     }
     /* Case variation no template */
     if( $variation_id != 0 && count( $results ) == 0 ) {
-        $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id'  ORDER BY created_date DESC LIMIT 1";
+        $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id'  ORDER BY created_date DESC";
         $results = $wpdb->get_results($sql, ARRAY_A);        
     }
     return $results;
@@ -568,6 +679,9 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['upload'] = unserialize(file_get_contents($path . '/upload.json'));
         $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
         $data['config'] = nbd_get_data_from_json($path . '/config.json');
+        if(isset($data['config']->product)){
+            $data['product'] = $data['config']->product;
+        }
         $data['design'] = nbd_get_data_from_json($path . '/design.json');
     }
     if( $data['option']['admindesign'] && $task == 'new' ) {
@@ -643,6 +757,9 @@ if ( ! function_exists( 'is_nbd_design_page' ) ) {
 if( !function_exists('nbd_get_page_id')){
     function nbd_get_page_id($page){
         $page = apply_filters( 'nbdesigner_' . $page . '_page_id', get_option('nbdesigner_' . $page . '_page_id' ) );
+        if ( function_exists('icl_object_id') ) {
+            $page = icl_object_id($page,'page',false);
+        }  
         return $page ? absint( $page ) : -1;
     }
 }
@@ -858,4 +975,9 @@ function nbd_check_cart_item_exist( $cart_item_key ){
 function nbd_die( $result ){
     echo json_encode($result);
     wp_die();
+}
+function nbd_exec($cmd) {
+    $output = array();
+    exec("$cmd 2>&1", $output);
+    return $output;
 }

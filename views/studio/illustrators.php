@@ -24,7 +24,7 @@
                     <md-button class="md-icon-button nbd-mag-0" aria-label="Back" ng-click="showIllustratorCat()">
                         <md-icon md-svg-icon="nbd:back" style="color: #fff;"></md-icon>
                     </md-button>                  
-                    {{_cat.name}}
+                &nbsp;<span style="vertical-align: middle; color: #fff;">{{_cat.name}}</span>
                 </p>
                 <div ng-repeat="art in _cat.arts | filter : illustratorName | limitTo: illustratorLimit" class="panel-item" md-whiteframe="{{height}}" ng-init="height = -1" ng-mouseenter="height = 3" ng-mouseleave="height = -1"
                     ng-class="$index % 3 == 2 ? 'no-margin-right' : ''">

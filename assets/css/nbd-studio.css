@@ -292,6 +292,9 @@ md-icon.bold {
     z-index: 1;
     box-sizing: border-box;
 }
+.stage:focus {
+    outline: none;
+}
 .stage.hidden {
     opacity: 0;
     z-index: 0;
@@ -481,27 +484,33 @@ md-color-picker .md-color-picker-input-container .md-color-picker-preview {
     background: rgba(255,255,255,0.85);
 }
 .nbd-on-process.ng-hide-add {
-    -webkit-animationanimation:1s zoomOut ease;
+    -webkit-animation:1s zoomOut ease;
+    -moz-animation:1s zoomOut ease;
     animation:1s zoomOut ease;
 }
 .nbd-on-process.ng-hide-remove {
-    -webkit-animationanimation:0.5s zoomIn ease;
+    -webkit-animation:0.5s zoomIn ease;
+    -moz-animation:0.5s zoomIn ease;
     animation:0.5s zoomIn ease;
 }
 .panel-list-item.ng-hide-add {
-    -webkit-animationanimation:0.5s fadeOutLeft ease;
+    -webkit-animation:0.5s fadeOutLeft ease;
+    -moz-animation:0.5s fadeOutLeft ease;
     animation:0.5s fadeOutLeft ease;
 }
 .panel-list-item.ng-hide-remove{
-    -webkit-animationanimation:0.5s fadeInLeft ease;
+    -webkit-animation:0.5s fadeInLeft ease;
+    -moz-animation:0.5s fadeInLeft ease;
     animation:0.5s fadeInLeft ease;  
 }
 .panel-list-cat1.ng-hide-add {
-    -webkit-animationanimation:0.5s fadeOutRight ease;
+    -webkit-animation:0.5s fadeOutRight ease;
+    -moz-animation:0.5s fadeOutRight ease;
     animation:0.5s fadeOutRight ease;
 }
 .panel-list-cat.ng-hide-remove{
-    -webkit-animationanimation:0.5s fadeInRight ease;
+    -webkit-animation:0.5s fadeInRight ease;
+    -moz-animation:0.5s fadeInRight ease;
     animation:0.5s fadeInRight ease;  
 }
 .nbd-on-process.active {
@@ -634,7 +643,8 @@ md-toast svg path {
     outline: none;
 }
 .typo-item.ng-enter{
-    -webkit-animationanimation:1s fadeInDown ease;
+    -webkit-animation:1s fadeInDown ease;
+    -moz-animation:1s fadeInDown ease;
     animation:1s fadeInDown ease;    
 }
 .list-layers {
@@ -886,7 +896,7 @@ md-toast svg path {
     color: #fff;
 }
 .panel-item.ng-enter{
-    -webkit-animationanimation:1s fadeInDown ease;
+    -webkit-animation:1s fadeInDown ease;
     animation:1s fadeInDown ease;    
 }
 .panel-container {

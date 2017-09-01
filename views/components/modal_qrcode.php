@@ -7,7 +7,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>			
                 <div class="modal-body">
                     <div>
-                        <textarea class="form-control nbdesigner_textarea" id="qrcode-content" ng-model="qrCodeContent"></textarea>
+                        <textarea class="form-control nbdesigner_textarea" id="qrcode-content" ng-model="qrCodeContent" placeholder="{{qrCodeContentHolder}}"></textarea>
                     </div>
                     <div class="text-center">
                         <button class="nbdesigner_button shadow hover-shadow" ng-click="getQrCode()">{{(langs['CREATE_QRCODE']) ? langs['CREATE_QRCODE'] : "Create QRCode"}}</button>

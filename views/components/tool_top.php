@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div id="tool-top">
     <span class="fa fa-book shadow help first_visitor nbd-tooltip-i18n" data-lang="HELPDESK" data-placement="left"></span>
-    <span class="fa fa-globe shadow translate nbd-tooltip-i18n" data-lang="LANGUAGE" data-placement="left" style="font-size: 20px;"></span>
+    <span ng-show="langCategories.length > 1" class="fa fa-globe shadow translate nbd-tooltip-i18n" data-lang="LANGUAGE" data-placement="left" style="font-size: 20px;"></span>
 <!--    <span id="show_grid" ng-hide="modeMobile" class="fa fa-th shadow hover-shadow" ng-click="showGrid()"></span>-->    
 <!--    <span id="mobile" ng-show="modeMobile" class="fa fa-eye shadow hover-shadow"></span>-->
     <span id="debug" ng-show="state == 'dev'" class="fa fa-magic shadow hover-shadow" ng-click="debug()"></span>
@@ -19,6 +19,19 @@
             </g>
         </svg>      
     </span>
+    <span class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true">
+        <spectrum-colorpicker
+            ng-model="backgroundColor" 
+            ng-change="changeBackground(backgroundColor)" 
+            options="{
+                showPaletteOnly: false, 
+                togglePaletteOnly: false, 
+                showPalette: false, 
+                showInitial: true,
+                chooseText: 'OK',
+                showInput: true}">
+        </spectrum-colorpicker>  
+    </span>    
 </div>
 <div class="first_message hover-shadow">
     {{(langs['HI_THERE']) ? langs['HI_THERE'] : "Hi there"}}, <br />

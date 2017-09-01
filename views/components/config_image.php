@@ -20,7 +20,15 @@
         <div class="nb-col-40 has-popover-option" style="padding-left: 15px;" ng-show="settings['nbdesigner_image_shadow'] == 1">
             <p class="label-config">{{(langs['SHADOW']) ? langs['SHADOW'] : "Shadow"}}</p>
                 <?php  if($enableColor == 'yes'): ?>
-                <input readonly="true" disabled class="jscolor shadow hover-shadow" ng-model="shadow.color" ng-change="changeShadow()">
+                <spectrum-colorpicker
+                    ng-model="shadow.color" 
+                    ng-change="changeShadow()" 
+                    options="{
+                        showPaletteOnly: false, 
+                        togglePaletteOnly: false, 
+                        showPalette: false, 
+                        showInput: true}">
+                </spectrum-colorpicker>
                 <?php else: ?>
                 <spectrum-colorpicker
                     ng-model="shadow.color" 

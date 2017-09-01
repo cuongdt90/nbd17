@@ -23,7 +23,15 @@
         <div class="nb-col-30" style="padding-left: 15px;">
             <p class="label-config">{{(langs['COLOR']) ? langs['COLOR'] : "Color"}}</p>
             <?php  if($enableColor == 'yes'): ?>
-            <input readonly="true" disabled class="jscolor shadow hover-shadow" value="{{colorShape}}" ng-model="colorShape" ng-change="setShapeColor(colorShape)">
+            <spectrum-colorpicker
+                ng-model="colorShape" 
+                ng-change="setShapeColor(colorShape)" 
+                options="{
+                    showPaletteOnly: false, 
+                    togglePaletteOnly: false, 
+                    showPalette: false, 
+                    showInput: true}">
+            </spectrum-colorpicker>  
             <?php else: ?>
             <spectrum-colorpicker
                 ng-model="colorShape" 
@@ -67,7 +75,15 @@
         <div class="nb-col-2">
             <p class="label-config">{{(langs['COLOR']) ? langs['COLOR'] : "Color"}}</p>
             <?php  if($enableColor == 'yes'): ?>
-            <input readonly="true" disabled class="jscolor shadow hover-shadow" value="{{colorBrush}}" ng-model="colorBrush" ng-change="setDrawingLineColor(colorBrush)">
+            <spectrum-colorpicker
+                ng-model="colorBrush" 
+                ng-change="setDrawingLineColor(colorBrush)" 
+                options="{
+                    showPaletteOnly: false, 
+                    togglePaletteOnly: false, 
+                    showPalette: false, 
+                    showInput: true}">
+            </spectrum-colorpicker> 
             <?php else: ?>
             <spectrum-colorpicker
                 ng-model="colorBrush" 

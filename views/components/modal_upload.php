@@ -108,7 +108,7 @@
                         <?php endif; ?>
                         <div id="instagram_images"></div>
                     </div>
-                    <!-- <div id="nbdesigner_dropbox" class="tab-pane">
+                    <div id="nbdesigner_dropbox" class="tab-pane">
                         <?php 
                             $dbID = nbdesigner_get_option('nbdesigner_dropbox_app_id');
                             if($dbID == ''): ?>
@@ -120,7 +120,7 @@
                         </button>
                         <?php endif; ?>
                         <div id="dropbox_images"></div>
-                    </div> -->                    
+                    </div>                   
                     <div class="tab-pane" id="nbdesigner_url" ng-show="settings['nbdesigner_enable_image_url'] == 'yes'">
                         <div class="row">
                             <div class="col-xs-12">

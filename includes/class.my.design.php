@@ -8,11 +8,16 @@ class My_Design_Endpoint {
      * @var string
      */
     public static $endpoint = 'my-designs';
-
     /**
      * Plugin actions.
      */
     public function __construct() {
+        //Declare query vars
+        $this->query_vars = array(
+            'my_designs' => 'my-designs',
+            'view_design' => 'view-design'
+        );
+        
         // Actions used to insert a new endpoint in the WordPress.
         add_action('init', array($this, 'add_endpoints'));
         add_filter('query_vars', array($this, 'add_query_vars'), 0);
@@ -22,7 +27,9 @@ class My_Design_Endpoint {
 
         // Inserting your new tab/page into the My Account page.
         add_filter('woocommerce_account_menu_items', array($this, 'new_menu_items'));
-        add_action('woocommerce_account_' . self::$endpoint . '_endpoint', array($this, 'endpoint_content'));
+        foreach ( $this->query_vars as $key => $var ){
+            add_action('woocommerce_account_' . $var . '_endpoint', array($this, 'endpoint_content_'.$key), 10, 1);
+        }
         
         //Inserting user info
         add_action( 'show_user_profile', array( $this, 'user_profile' ) );
@@ -42,7 +49,9 @@ class My_Design_Endpoint {
      * @see https://developer.wordpress.org/reference/functions/add_rewrite_endpoint/
      */
     public function add_endpoints() {
-        add_rewrite_endpoint(self::$endpoint, EP_ROOT | EP_PAGES);
+        foreach ( $this->query_vars as $var ){
+            add_rewrite_endpoint($var, EP_ROOT | EP_PAGES);
+        }
     }
 
     /**
@@ -52,8 +61,9 @@ class My_Design_Endpoint {
      * @return array
      */
     public function add_query_vars($vars) {
-        $vars[] = self::$endpoint;
-
+        foreach ( $this->query_vars as $var ){
+            $vars[] = $var;
+        }
         return $vars;
     }
 
@@ -65,16 +75,20 @@ class My_Design_Endpoint {
      */
     public function endpoint_title($title) {
         global $wp_query;
-
-        $is_endpoint = isset($wp_query->query_vars[self::$endpoint]);
-
-        if ($is_endpoint && !is_admin() && is_main_query() && in_the_loop() && is_account_page()) {
-            // New page title.
-            $title = __('My designs', 'web-to-print-online-designer');
-
-            remove_filter('the_title', array($this, 'endpoint_title'));
+        foreach ( $this->query_vars as $var ){
+            $is_endpoint = isset($wp_query->query_vars[$var]);
+            if ($is_endpoint && !is_admin() && is_main_query() && in_the_loop() && is_account_page()) {
+                switch ( $var ) {
+                    case 'my-designs': 
+                        $title = __('My designs', 'web-to-print-online-designer');
+                        break;
+                    case 'view-design': 
+                        $title = __('View design', 'web-to-print-online-designer');
+                        break;                    
+                }
+                remove_filter('the_title', array($this, 'endpoint_title'));
+            }
         }
-
         return $title;
     }
 
@@ -101,18 +115,27 @@ class My_Design_Endpoint {
     /**
      * Endpoint HTML content.
      */
-    public function endpoint_content($param) {
+    public function endpoint_content_my_designs() {
+        global $wp;
+        $pid = absint($wp->query_vars['my-designs']);
         $user = wp_get_current_user();
-        $designs = $this->get_my_designs();
+        $designs = $this->get_my_designs($pid);
         ob_start();
-        nbdesigner_get_template('my-designs.php', array('user' => $user, 'designs'  =>  $designs));
+        nbdesigner_get_template('mydesign/my-designs.php', array('user' => $user, 'designs'  =>  $designs));
         $content = ob_get_clean();
-        echo $content;
+        echo $content;            
+
+    }
+    public function endpoint_content_view_design() {
+        global $wp;
+        $pid = absint($wp->query_vars['view-design']);
+        ob_start();
+        nbdesigner_get_template('mydesign/detail-design.php', array());
+        $content = ob_get_clean();
+        echo $content;        
     }
     public function user_profile( $user ) {
-
             wp_nonce_field( 'nbd_user_profile_update', 'nbd_nonce' );
-
             require_once NBDESIGNER_PLUGIN_DIR . 'views/user-profile.php';
     }
     /**
@@ -171,10 +194,13 @@ class My_Design_Endpoint {
         ));
         return true;
     } 
-    public function get_my_designs(){
+    public function get_my_designs($pid){
         global $wpdb;
         $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns ORDER BY created_date LIMIT 10" );
         return $designs;
+    }
+    public function get_design( $id ){
+        
     }
     /**
      * Plugin install action.

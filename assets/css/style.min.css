@@ -1408,12 +1408,12 @@ img.layer_thumb {
     display: block
 }
 
-.design-aria {
+/*.design-aria {
     border: 1px dashed transparent
-}
+}*/
 
 .design-aria:hover {
-    border: 1px dashed #555
+    box-shadow: 0 7px 8px -4px rgba(0,0,0,.2), 0 12px 17px 2px rgba(0,0,0,.14), 0 5px 22px 4px rgba(0,0,0,.12);
 }
 /*MD checkbox*/
 .md-checkbox {
@@ -1458,6 +1458,67 @@ img.layer_thumb {
     border-right-style: none;
 }
 /*End. MD checkbox*/
+
+/*MD raido */
+@keyframes ripple {
+  0% {
+    box-shadow: 0px 0px 0px 1px transparent;
+  }
+  50% {
+    box-shadow: 0px 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    box-shadow: 0px 0px 0px 15px transparent;
+  }
+}
+.md-radio {
+  margin: 16px 0;
+}
+.md-radio.md-radio-inline {
+  display: inline-block;
+}
+.md-radio input[type="radio"] {
+  display: none;
+}
+.md-radio input[type="radio"]:checked + label:before {
+  border-color: #394264;
+  animation: ripple 0.2s linear forwards;
+}
+.md-radio input[type="radio"]:checked + label:after {
+  transform: scale(1);
+}
+.md-radio label {
+  display: inline-block;
+  height: 20px;
+  position: relative;
+  padding: 0 30px;
+  margin-bottom: 0;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.md-radio label:before, .md-radio label:after {
+  position: absolute;
+  content: '';
+  border-radius: 50%;
+  transition: all .3s ease;
+  transition-property: transform, border-color;
+}
+.md-radio label:before {
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 0, 0, 0.54);
+}
+.md-radio label:after {
+  top: 5px;
+  left: 5px;
+  width: 10px;
+  height: 10px;
+  transform: scale(0);
+  background: #394264;
+}
+/*End. MD raido */
 .nbd-bleed-notation {
     width: 20px;
     height: 0px;
@@ -1481,13 +1542,11 @@ img.layer_thumb {
     margin-left: -95px;
     height: 40px
 }
-
 .container_frame {
     position: relative;
     width: 100%;
     height: 100%
 }
-
 .container_frame span {
     position: absolute;
     top: 50%;
@@ -1503,7 +1562,6 @@ img.layer_thumb {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.5)
 }
-
 .container_frame span:hover {
     background: rgba(204, 50, 75, 0.3);
     color: #cc324b
@@ -3582,6 +3640,9 @@ img.pattern_img {
 .sp-container button:focus {
     outline: none !important;
 }
+.sp-color, .sp-hue, .sp-clear {
+    border: none !important;
+}
 .nbd-dropdown-option button{
     border-radius: 0;
     background: #394264!important;    
@@ -3602,14 +3663,42 @@ img.pattern_img {
     color: #fff;
     text-shadow: 2px 2px 3px rgba(204, 50, 75, 0.5);
 }
+#dg-custom-dimension .nbd-dropdown-option ul li a:hover {
+    text-shadow: none;
+}
 .nbd-rounded {
-    border-radius: 50%;
+/*    border-radius: 50%;*/
+}
+#toolbar-menu-handle {
+    cursor: move;
+    background: #fff;
+    color: #ddd;
+    display: none;
+}
+.top-center-menu:hover #toolbar-menu-handle {
+    display: inline-block;
 }
 .nbdesigner_svg_code {
     width: 500px;
     border-radius: 0;
     display: inline-block;
     margin-left: 15px;    
+}
+.background-opt .sp-replacer {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 50%;
+    text-align: center;    
+}
+.background-opt .sp-preview {
+    margin: 0;
+    border: none;
+    width: 100%;
+    height: 100%;    
+}
+.background-opt .sp-dd {
+    display: none;
 }
 @media (max-width: 767px) {
     #upload-tabs li {
@@ -3687,5 +3776,15 @@ img.pattern_img {
     .design-options .option {
         display: block;
         margin-right: 0 !important;
+    }
+    .nbd-dropdown-option {
+        margin-left: 0 !important;
+    }
+    .nbd-insert-page-type {
+        display: block;
+        margin-left: 15px !important;
+    }
+    .nbd-insert-page-position {
+        margin-left: 15px !important;
     }
 }

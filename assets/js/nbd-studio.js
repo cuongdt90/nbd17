@@ -582,6 +582,11 @@ var MATERIALCOLORTEMPLATE = ["Red", "Pink", "Purple", "Deep Purple", "Indigo", "
                 //todo with clipto shape...
             });
         };
+        $scope.onClickStage = function( $event ){
+            if(angular.element($event.target).hasClass('stage')){
+                nbdPlg.deactiveAllLayer();
+            }
+        };
         /** Adjust stage **/
         $scope.saveCart = function(){
             //todo
@@ -837,7 +842,7 @@ var MATERIALCOLORTEMPLATE = ["Red", "Pink", "Purple", "Deep Purple", "Indigo", "
             });            
         };  
         $scope.showGrid = false;
-        $scope.snapMode = false;
+        $scope.snapMode = true;
         $scope.selectMode = false;
         $scope.changeSnapMode = function(type) {
             $scope.snapType = type;
@@ -1106,11 +1111,12 @@ var nbdPlg = {
         //_canvas.selection = false;
         
         _canvas.setDimensions({'width' : currentWidth, 'height' : currentHeight});
+        _canvas.controlsAboveOverlay = true;
         /* Configuration background, overlay and clipTo */
 //        _canvas.clipTo = function(ctx) {
 //            ctx.arc(_canvas.width/2, _canvas.height/2, _canvas.width/2, 0, Math.PI * 2, true);
 //        };
-        _canvas.backgroundColor = "#ddd";
+        //_canvas.backgroundColor = "#ddd";
         /* End configuration */    
         _canvas.calcOffset().renderAll();
         _canvas.on("mouse:down", function(options){
@@ -1527,14 +1533,13 @@ var nbdPlg = {
     updateWarningStatus : function(){       
         var _stage = this.stages[this.currentStage],
             _canvas = _stage.canvas;
-        if(_canvas.dragState){
-            var item = _canvas.getActiveObject(),
-                bound = item.getBoundingRect();
-
+        var item = _canvas.getActiveObject();
+        if(item){
+            var bound = item.getBoundingRect();
             if(bound.left < _stage.bleedLeft[_stage.currentScale]){
                 console.log(111);
-            }             
-        }    
+            }                 
+        }     
     },
     Ungroup: function(){
         this.stages[this.currentStage].canvas.deactivateAll().renderAll();
@@ -2143,6 +2148,7 @@ var nbdPlg = {
     },    
     deactiveAllLayer : function(){
         this.stages[this.currentStage]['canvas'].deactivateAll();
+        this.renderStage();
     },
     log : function(){
         var stage = this.stages[this.currentStage],

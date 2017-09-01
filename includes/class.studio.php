@@ -48,7 +48,7 @@ class Nbdesigner_Studio {
     }
     public function hook(){
         add_shortcode( 'nbdesigner_stuido', array(&$this,'studio_func') );
-        add_filter( 'show_admin_bar', array(&$this,'hide_admin_bar_from_front_end') );
+        //add_filter( 'show_admin_bar', array(&$this,'hide_admin_bar_from_front_end') );
         add_action( 'template_redirect', array( $this, 'studio_html' ) );    
     }
     public function admin_enqueue_scripts(){

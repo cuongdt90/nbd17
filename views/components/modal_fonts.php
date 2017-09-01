@@ -6,7 +6,7 @@
                 <button style="margin-top: 0;" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>	
                 <div class="nbdesigner_art_modal_header">
                     <span>{{(langs['FONTS']) ? langs['FONTS'] : "Fonts"}}</span>
-                    <input type="search" class="form-control hover-shadow" placeholder="Search Font" ng-model="fontName"/>
+                    <input type="search" class="form-control hover-shadow" placeholder="{{(langs['SEARCH_FONT']) ? langs['SEARCH_FONT'] : 'Search Font'}}" ng-model="fontName"/>
                     <div class="btn-group">
                         <button class="btn btn-primary dropdown-toggle shadow hover-shadow" type="button" data-toggle="dropdown">{{currentCatFontName}}&nbsp;<span class="caret"></span></button>
                         <ul class="dropdown-menu dropup  shadow hover-shadow">
@@ -22,7 +22,7 @@
             <div class="modal-body">
                 <div id="nbdesigner_font_container">
                     <span class="nbdesigner_font" width="100" ng-repeat="font in AllFonts | filterCat : curentCatFont | filter : fontName| limitTo : fontPageSize" font-on-load>
-                        <a ng-click="changeFont(font)"><span class="nbdesigner_font_name" ng-style="{'font-family': font.alias}" ng-attr-data-font="{{font.name}}">{{font.name}}</span></a>
+                        <a ng-click="changeFont(font)"><span class="nbdesigner_font_name" ng-style="{'font-family': font.alias}" ng-attr-data-font="{{font.alias}}">{{font.name}}</span></a>
                     </span>
                 </div>
                 <div>

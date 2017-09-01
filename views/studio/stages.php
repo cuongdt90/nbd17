@@ -18,7 +18,7 @@
             <p>Keep layer inside the safety line<br />to make sure it doesn't get cut off.</p>
         </div>
         <div class="stage" ng-repeat="stage in stages" ng-repeat="stage in stages" on-finish-render-canvas="stageRepeatFinished" 
-             ng-class="{'hidden':$index > 0}" id="stage-container-{{stage.id}}">
+             ng-class="{'hidden':$index > 0}" id="stage-container-{{stage.id}}" ng-click="onClickStage($event)">
             <div class="stage-inner">
                 <div class="stage-content md-whiteframe-5dp" ng-contextmenu action="showContextMenu"
                      ng-style="{'width' : stage.widthRange[stage.currentScale] + 'px', 'height' : stage.heightRange[stage.currentScale] + 'px'}"> 

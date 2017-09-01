@@ -14,6 +14,7 @@ jQuery(document).ready(function ($) {
     NBDESIGNADMIN.collapseAll('com');
     $('#_nbdesigner_enable').change(function() {
         $('#nbd-setting-container').toggleClass('nbdesigner-disable');    
+        $('#nbd_upload_status').toggleClass('nbdesigner-disable');    
         if($('#_nbdesigner_enable').prop("checked")){
             $('.nbdesigner-right.add_more').show();
         };        
@@ -1372,9 +1373,10 @@ var NBDESIGNADMIN = {
     show_variation_config : function(e){
         var self = this;
         var parent = jQuery(e).parents('.nbdesigner-setting-variation');
+        parent.find('.nbdesigner-variation-setting').toggleClass('nbdesigner-disable');    
         if(jQuery(e).prop("checked")){
-            parent.find('.nbdesigner-right.add_more').show();
-            parent.find('.nbdesigner-variation-setting').show();
+            parent.find('.nbdesigner-right.add_more').show();     
+            parent.find('.nbdesigner-variation-setting').show();     
             jQuery.each(parent.find('.nbdesigner-area-design'), function (key, val) {
                 var _this = this;
                 jQuery(this).resizable({

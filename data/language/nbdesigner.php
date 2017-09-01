@@ -6,7 +6,7 @@
 Plugin Name: Nbdesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
 Description: Allow customer design product before purchase.
-Version: 1.7.1
+Version: 1.7.0
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
 License: GPLv2 or later
@@ -18,18 +18,11 @@ if ( !function_exists( 'add_action' ) ) {
     echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
     exit;
 }
-
 $upload_dir = wp_upload_dir();
 $basedir = $upload_dir['basedir'];
-$baseurl = $upload_dir['baseurl'];
-
-$nbd_plugin_dir_url = plugin_dir_url(__FILE__);
-if ( function_exists( 'icl_get_home_url' ) ) {
-    $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);
-}
-
-nbd_define('NBDESIGNER_VERSION', '1.7.1');
-nbd_define('NBDESIGNER_NUMBER_VERSION', 171);
+$baseurl = $upload_dir['baseurl'];$nbd_plugin_dir_url = plugin_dir_url(__FILE__);if ( function_exists( 'icl_get_home_url' ) ) {	$nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);}
+nbd_define('NBDESIGNER_VERSION', '1.7.0');
+nbd_define('NBDESIGNER_NUMBER_VERSION', 170);
 nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
 nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
 nbd_define('NBDESIGNER_PLUGIN_URL', $nbd_plugin_dir_url);
@@ -82,10 +75,6 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-debug.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-helper.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/table/class.product.templates.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
-
-new My_Design_Endpoint();
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );
@@ -97,8 +86,6 @@ if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 }
 $nb_designer = new Nbdesigner_Plugin();
 $nb_designer->init();
-$nbd_studio = new Nbdesigner_Studio();
-$nbd_studio->init();
 
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-widget.php');
 

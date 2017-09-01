@@ -50,7 +50,7 @@
             <label for="_nbdesigner_enable"><?php _e('Enable Design', 'web-to-print-online-designer'); ?></label>
             <input type="checkbox" value="1" name="_nbdesigner_enable" id="_nbdesigner_enable" <?php checked($enable); ?> class="short" />
         </p>
-        <p class="nbd-option-top">
+        <p class="nbd-option-top <?php if (!$enable) echo 'nbdesigner-disable'; ?>" id="nbd_upload_status">
             <input type="hidden" value="0" name="_nbdesigner_enable_upload"/>
             <label for="_nbdesigner_enable_upload"><?php _e('Enable Upload Design', 'web-to-print-online-designer'); ?></label>
             <input type="checkbox" value="1" name="_nbdesigner_enable_upload" id="_nbdesigner_enable_upload" <?php checked($enable_upload); ?> class="short" /> 
@@ -382,12 +382,45 @@
                                 'task'  =>  'create',
                                 'rd'    => urlencode($link_manager_template)
                             ), getUrlPageNBD('create'));    
-
+                        $variations = get_nbd_variations( $post_id );   
                     ?>
-                        <a class="button nbd-admin-tem-link" href="<?php echo $link_create_template; ?>">
-                            <span class="dashicons dashicons-art"></span>
-                            <?php _e('Create Template', 'web-to-print-online-designer'); ?>
-                        </a>
+                        <?php 
+                            if( count($variations) > 0 ): 
+                        ?>
+                            <a class="button nbd-admin-tem-link thickbox" href="#TB_inline?width=300&height=160&inlineId=nbd-thickbox-setting">
+                                <span class="dashicons dashicons-art"></span>
+                                <?php _e('Create Template', 'web-to-print-online-designer'); ?>
+                            </a>   
+                            <div id="nbd-thickbox-setting" style="display:none;">
+                                <table class="form-table">
+                                    <tr valign="top">
+                                        <th scope="row" class="titledesc"><?php echo __("Choose variation", 'web-to-print-online-designer'); ?></th>
+                                        <td class="forminp-text">
+                                            <select onchange="changeLink(this)">
+                                            <?php foreach ($variations as $variation): ?>
+                                                <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
+                                            <?php endforeach; ?>
+                                            </select>    
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p style="text-align: center;"><a class="button button-primary nbd-create" href="<?php echo $link_create_template; ?><?php echo '&variation_id='.$variations[0]['id'];  ?>" data-href="<?php echo $link_create_template; ?>"><?php echo __("Create template", 'web-to-print-online-designer'); ?></a></p>
+                            </div>  
+                            <script>
+                                changeLink = function(e){
+                                    var vid = jQuery(e).val(),
+                                    btn = jQuery(e).parents('table').siblings('p').find('a.nbd-create'),
+                                    origin_fref = btn.data('href'),
+                                    new_href = origin_fref + '&variation_id=' + vid;
+                                    btn.attr('href', new_href);
+                                }
+                            </script>                   
+                        <?php else: ?>
+                            <a class="button nbd-admin-tem-link" href="<?php echo $link_create_template; ?>">
+                                <span class="dashicons dashicons-art"></span>
+                                <?php _e('Create Template', 'web-to-print-online-designer'); ?>
+                            </a>                    
+                        <?php endif; ?>
                         <a href="<?php echo $link_manager_template; ?>" class="button nbd-admin-tem-link">
                             <span class="dashicons dashicons-images-alt"></span>
                             <?php _e('Manager Templates', 'web-to-print-online-designer'); ?>

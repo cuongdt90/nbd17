@@ -8,7 +8,16 @@
             </div>   
             <div class="modal-body nbdesigner_config_svg">
                 <?php  if($enableColor == 'yes'): ?>
-               <input readonly="true"  data-jscolor="{zIndex: 9999}" disabled class="jscolor shadow hover-shadow" ng-repeat="color in editable.paths " ng-model="pathColor[color.key]" ng-change="updatePathColor(color)" ng-style="{'background-color': getColorCode(color.fill)}" path-art-directive>                                  
+                <spectrum-colorpicker
+                    ng-repeat="color in editable.paths"
+                    ng-model="pathColor[color.key]" 
+                    ng-change="updatePathColor(color)"                     
+                    options="{
+                        showPaletteOnly: false, 
+                        togglePaletteOnly: false, 
+                        showPalette: false, 
+                        showInput: true}">
+                </spectrum-colorpicker>                                     
                <?php else: ?>
                 <spectrum-colorpicker
                     ng-repeat="color in editable.paths"

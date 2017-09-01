@@ -65,9 +65,9 @@
     <span class="toolbar-menu fa fa-th nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="SNAP_GRID" data-placement="bottom" ng-click="snapGrid()"></span>
     <span class="fa fa-mouse-pointer toolbar-menu nbd-tooltip-i18n shadow" aria-hidden="true" data-lang="DESELECT_ALL" data-placement="bottom"  ng-click="deselectAll()"></span>	
     <span ng-show="currentVariant.info[currentSide.id].source.show_bleed == 1 || currentVariant.info[currentSide.id].source.show_safe_zone == 1" class="fa fa-bars toolbar-menu nbd-tooltip-i18n shadow" aria-hidden="true" data-lang="SHOW_BLEED" data-placement="bottom"  ng-click="showBleed()"></span>	
-    <span class="toolbar-menu fa fa-lock nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_lock_param"  data-lang="LOCK" data-placement="bottom" ng-click="getStatusItem()" ng-show="canvas.getActiveObject() && task === 'create'"></span>
-    <span class="toolbar-menu fa fa-cloud-upload nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="ELEMENT_UPLOAD" data-placement="bottom" ng-show="editableItem !== null && (editable.type === 'image' || editable.type === 'custom-image') && task === 'create'" ng-click="setElementUpload()"></span>
-    
+    <span class="toolbar-menu fa fa-lock nbd-tooltip nbd-tooltip-i18n shadow" aria-hidden="true" data-tooltip-content="#tooltip_lock_param"  data-lang="LOCK" data-placement="bottom" ng-click="getStatusItem()" ng-show="canvas.getActiveObject() && (task === 'create' || (task == 'edit' && design_type == 'template' ))"></span>
+    <span class="toolbar-menu fa fa-cloud-upload nbd-tooltip-i18n shadow" aria-hidden="true"  data-lang="ELEMENT_UPLOAD" data-placement="bottom" ng-show="editableItem !== null && (editable.type === 'image' || editable.type === 'custom-image') && (task === 'create' || (task == 'edit' && design_type == 'template' ))" ng-click="setElementUpload()"></span>
+    <span class="toolbar-menu toolbar-menu-handle fa fa-arrows nbd-tooltip-i18n shadow" aria-hidden="true" id="toolbar-menu-handle"></span>    
     <div style="display: none;">
         <div id="tooltip_group_align">
             <i class="toolbar-menu align-group nbd-icon-align-left nbd-tooltip-i18n" data-lang="ALIGN_LEFT" data-placement="top" ng-click="alignGroupLeft()"></i>
