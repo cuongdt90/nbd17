@@ -981,3 +981,11 @@ function nbd_exec($cmd) {
     exec("$cmd 2>&1", $output);
     return $output;
 }
+function get_wpml_original_id( $id, $type = 'post' ){
+    if (function_exists('icl_object_id')) {
+        global $sitepress;
+        $langcode = $sitepress->get_default_language();
+        $id = icl_object_id($id, $type, true, $langcode);
+    }
+    return $id;
+}

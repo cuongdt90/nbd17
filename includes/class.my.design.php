@@ -40,9 +40,21 @@ class My_Design_Endpoint {
         add_action( 'edit_user_profile_update', array( $this, 'process_user_option_update' ) );  
         
         //User update artist name
-        add_action('wp_ajax_nbd_update_artist_name', array($this, 'update_artist_name'));
+        $this->ajax();
     }
-
+    public function ajax(){
+        $ajax_events = array(
+                'nbd_update_artist_name' => true,
+                'nbd_update_art' => true
+            );
+	foreach ($ajax_events as $ajax_event => $nopriv) {
+            add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
+            if ($nopriv) {
+                // NBDesigner AJAX can be used for frontend ajax requests
+                add_action('wp_ajax_nopriv_' . $ajax_event, array($this, $ajax_event));
+            }
+        }        
+    }
     /**
      * Register new endpoint to use inside My Account page.
      *
@@ -117,20 +129,33 @@ class My_Design_Endpoint {
      */
     public function endpoint_content_my_designs() {
         global $wp;
-        $pid = absint($wp->query_vars['my-designs']);
+        $current_page = absint($wp->query_vars['my-designs']);
+        if( !$current_page ) $current_page = 1;
         $user = wp_get_current_user();
-        $designs = $this->get_my_designs($pid);
+        $user_id = $user->ID;
+        $item_per_page = 1;
+        $item_per_page = apply_filters('nbd_number_design_per_page', $item_per_page);        
+        $designs = $this->get_my_designs($user_id, $current_page, $item_per_page);
+        $number_design = $this->count_designs($user_id);
         ob_start();
-        nbdesigner_get_template('mydesign/my-designs.php', array('user' => $user, 'designs'  =>  $designs));
+        nbdesigner_get_template('mydesign/my-designs.php', array(
+            'user' => $user, 
+            'designs'  =>  $designs, 
+            'total' => $number_design, 
+            'item_per_page' =>  $item_per_page,
+            'current_page' => $current_page ));
         $content = ob_get_clean();
         echo $content;            
 
     }
     public function endpoint_content_view_design() {
         global $wp;
-        $pid = absint($wp->query_vars['view-design']);
+        $did = absint($wp->query_vars['view-design']);
+        $user = wp_get_current_user();
+        $user_id = $user->ID;        
+        $design = $this->get_design($user_id, $did);
         ob_start();
-        nbdesigner_get_template('mydesign/detail-design.php', array());
+        nbdesigner_get_template('mydesign/detail-design.php', array( 'design'  =>  $design ));
         $content = ob_get_clean();
         echo $content;        
     }
@@ -181,6 +206,23 @@ class My_Design_Endpoint {
         }
         echo json_encode($result); wp_die();
     }
+    public function nbd_update_art(){
+        if (!wp_verify_nonce($_POST['nbd_nonce'], 'nbd_artist_update')) {
+            die('Security error');
+        }       
+        $result = array('flag' => 0);
+        $price = $_POST['nbd-design-price'];
+        $status = $_POST['nbd-design-status'];
+        $id = $_POST['nbd-design-id'];
+        global $wpdb;
+        $table_name =  $wpdb->prefix . 'nbdesigner_mydesigns';
+        $re = $wpdb->update($table_name, array(
+            'price' => $price,
+            'publish' => $status
+        ), array( 'id' => $id));   
+        if($re) $result = array('flag' => 1);
+        echo json_encode($result); wp_die();
+    }
     public static function insert_my_designs($folder){
         global $wpdb;
         $created_date = new DateTime();
@@ -194,13 +236,21 @@ class My_Design_Endpoint {
         ));
         return true;
     } 
-    public function get_my_designs($pid){
+    public function get_my_designs( $user_id, $current_page, $item_per_page ){
         global $wpdb;
-        $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns ORDER BY created_date LIMIT 10" );
+        $offset = ($current_page - 1) * $item_per_page;
+        $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id} ORDER BY created_date LIMIT {$item_per_page} OFFSET {$offset}" );
         return $designs;
     }
-    public function get_design( $id ){
-        
+    public function get_design( $user_id, $did ){
+        global $wpdb;
+        $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id} AND id = {$did}" );
+        return $designs[0];        
+    }
+    public function count_designs( $user_id ){
+        global $wpdb;
+        $designs = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id}" );
+        return $designs;           
     }
     /**
      * Plugin install action.
@@ -209,5 +259,4 @@ class My_Design_Endpoint {
     public static function install() {
         flush_rewrite_rules();
     }
-
 }

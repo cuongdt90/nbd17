@@ -1834,6 +1834,7 @@ class Nbdesigner_Plugin {
     public function nbdesigner_button() {
         if(isset($_POST['action'])) return ''; /*Hidden button Start Design on third-party plugin as Quick view*/
         $pid = get_the_ID();   
+        $pid = get_wpml_original_id($pid);       
         $is_nbdesign = get_post_meta($pid, '_nbdesigner_enable', true);
         if ($is_nbdesign) {
             /* Multi language with WPML */
@@ -2325,12 +2326,12 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
   folder varchar(255) NOT NULL,
   product_id BIGINT(20) UNSIGNED NOT NULL,
   variation_id BIGINT(20) NULL,   
-  price varchar(255) NULL,
-  vote INT(10) NULL, 
+  price varchar(255) NOT NULL default '0',
+  vote INT(10) NOT NULL default 0,
   publish TINYINT(1) NOT NULL default 1,
   created_date DATETIME NOT NULL default '0000-00-00 00:00:00',
-  hit INT(10) NULL, 
-  sales INT(10) NULL, 
+  hit INT(10) NOT NULL default 0,
+  sales INT(10) NOT NULL default 0,
   PRIMARY KEY  (id)
 ) $collate;    
             ";
@@ -2658,7 +2659,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
     }
     public function nbdesigner_render_cart($title = null, $cart_item = null, $cart_item_key = null) {
         if ($cart_item_key && ( is_cart() || is_checkout() )) {
-            $nbd_session = WC()->session->get($cart_item_key . '_nbd');   
+            $nbd_session = WC()->session->get($cart_item_key . '_nbd'); 
             $nbu_session = WC()->session->get($cart_item_key . '_nbu');   
             $_show_design = nbdesigner_get_option('nbdesigner_show_in_cart');
             if ($_show_design == 'yes' && ( isset($nbd_session) || isset($nbu_session) )) {
@@ -2749,7 +2750,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
      * @param int $quantity
      * @param int $variation_id
      */
-    public function set_nbd_session_cart($cart_item_key, $product_id, $quantity, $variation_id) {      
+    public function set_nbd_session_cart($cart_item_key, $product_id, $quantity, $variation_id) { 
+        $product_id = get_wpml_original_id($product_id);
+        $variation_id = get_wpml_original_id($variation_id);
         $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
         /* add to cart in custom design page */
         if(is_nbdesigner_product($product_id)){
@@ -2799,6 +2802,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             }    
             if( WC()->session->__isset($item->legacy_cart_item_key . '_nbd_initial_price') ){
                 $product_id = $item->legacy_values['product_id'];
+                $product_id = get_wpml_original_id( $product_id );      
                 $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
                 if( isset($nbd_session) ) {
                     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session . '/config.json';
@@ -2972,10 +2976,12 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 $notice = '';
                 $id = 'nbd' . $item->get_id();
                 $redirect_url = wc_get_endpoint_url( 'view-order', $item['order_id'], wc_get_page_permalink( 'myaccount' ) ) . '#' . $id;
+                $product_id = $item['product_id'];
+                $product_id = get_wpml_original_id( $product_id ); 
                 $redesign_link = add_query_arg(
                     array(
                         'task'  =>  'edit',
-                        'product_id'    =>  $item['product_id'],
+                        'product_id'    =>  $product_id,
                         'oid'   =>  $item['order_id'],
                         'rd'    => urlencode( $redirect_url ),
                         'nbd_item_key'  =>  $nbd_item_key), 
@@ -3008,10 +3014,12 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 $approve_status = unserialize(get_post_meta($item['order_id'], '_nbdesigner_upload_file', true));
                 $index = 'nbds_'.$item->get_id();                
                 $redirect_url = wc_get_endpoint_url( 'view-order', $item['order_id'], wc_get_page_permalink( 'myaccount' ) ) . '#' . $id;
+                $product_id = $item['product_id'];
+                $product_id = get_wpml_original_id( $product_id );                 
                 $reup_link = add_query_arg(
                     array(
                         'task'  =>  'reup',
-                        'product_id'    =>  $item['product_id'],
+                        'product_id'    =>  $product_id,
                         'rd'    => urlencode( $redirect_url ),
                         'nbu_item_key'  =>  $nbu_item_key), 
                     getUrlPageNBD('create'));  

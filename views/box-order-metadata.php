@@ -1,5 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<?php if( $has_design || $has_upload ) : 
+<?php if( $has_design || $has_upload ) :  
     $count_img_design = 0;
 ?>
 <div id="nbdesigner_order_info">
@@ -39,7 +39,9 @@
                                     <img class="nbdesigner_order_image_design" src="<?php echo $src; ?>" />
                             <?php endforeach; ?>
                             <?php 
-                                $arr = array('nbd_item_key' => $nbd_item_key, 'order_id'    =>  $order_id, 'product_id' => $item_meta->get_product_id(), 'variation_id' => $item_meta->get_variation_id());
+                                $product_id = $item_meta->get_product_id();
+                                $product_id = get_wpml_original_id( $product_id );                            
+                                $arr = array('nbd_item_key' => $nbd_item_key, 'order_id'    =>  $order_id, 'product_id' => $product_id, 'variation_id' => $item_meta->get_variation_id());
                                 $link_view_detail = add_query_arg($arr, admin_url('admin.php?page=nbdesigner_detail_order'));
                             ?>
                             <a class="nbdesigner-right button button-small button-secondary"  href="<?php echo $link_view_detail; ?>"><?php _e('View detail', 'web-to-print-online-designer'); ?></a>

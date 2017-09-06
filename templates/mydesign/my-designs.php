@@ -12,6 +12,7 @@
     <?php wp_nonce_field( 'nbd_artist_update', 'nbd_nonce' ); ?>
     <a id="nbd-submit-name" href="javascript:void(0)" onclick="submitArtistName()" style="display: none;"><?php _e('OK ', 'web-to-print-online-designer'); ?></a>
 </p>
+<?php if( count($designs) ): ?>
 <div class="container-design">
     <table class="shop_table shop_table_responsive my_account_orders">
         <thead>
@@ -43,7 +44,25 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php 
+        $max_page = ceil($total/$item_per_page);
+        if( $max_page > 1 ): 
+    ?>
+    <div class="nbd-">
+        <?php if ( 1 !== $current_page ) : ?>
+        <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button" href="<?php echo wc_get_endpoint_url( 'my-designs', $current_page - 1, wc_get_page_permalink( 'myaccount' ) ); ?>" ><?php _e( 'Previous', 'web-to-print-online-designer' ); ?></a>
+        <?php endif;?>
+        <?php if( $max_page != $current_page ): ?>
+        <a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button" href="<?php echo wc_get_endpoint_url( 'my-designs', $current_page + 1, wc_get_page_permalink( 'myaccount' ) ); ?>"><?php _e( 'Next', 'web-to-print-online-designer' ); ?></a>
+        <?php endif;?>
+    </div>
+    <?php endif;?>
 </div>
+<?php else: ?>
+<div class="woocommerce-message woocommerce-message--info woocommerce-Message woocommerce-Message--info woocommerce-info">
+    <?php _e( 'No design has been made yet.', 'web-to-print-online-designer' ); ?>
+</div>
+<?php endif;?>
 <script>
 var nbd_ajax = "<?php echo admin_url('admin-ajax.php'); ?>";   
 function editArtistName(){
