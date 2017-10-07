@@ -3,6 +3,14 @@
 <?php
     $hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
     $lang_code = str_replace('-', '_', get_bloginfo('language'));
+    $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
+    if( !nbd_is_product($product_id) ){
+        echo sprintf('<p>%s, <a href="%s">%s</a></p>', 
+                __('No product has been selected', 'web-to-print-online-designer'),
+                esc_url( home_url( '/' ) ),
+                __('Back', 'web-to-print-online-designer') );
+        die();
+    }
     if(wp_is_mobile() && $hide_on_mobile == 'yes'):      
     nbdesigner_get_template('mobile.php', array('lang_code' => $lang_code));    
     else: 
@@ -27,29 +35,23 @@
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/tooltipster.bundle.min.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/style.min.css'; ?>" rel="stylesheet" media="all">
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/custom.css'; ?>" rel="stylesheet" media="all">
+        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php if(is_rtl()): ?>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/nbdesigner-rtl.css'; ?>" rel="stylesheet" media="all">
-        <?php endif; ?>
-        <?php 
-            $enableColor = nbdesigner_get_option('nbdesigner_show_all_color'); 
-//            if($enableColor == 'no'):
-            if( 1 ):
-        ?>
-        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php endif; ?>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->	
         <?php 
+            $enableColor = nbdesigner_get_option('nbdesigner_show_all_color'); 
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
             $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
             $design_type = (isset($_GET['design_type']) &&  $_GET['design_type'] != '') ? $_GET['design_type'] : '';
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
             $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
             $cart_item_key = (isset($_GET['cik']) &&  $_GET['cik'] != '') ? $_GET['cik'] : '';
-            $reference = (isset($_GET['reference']) &&  $_GET['reference'] != '') ? $_GET['reference'] : '';
-            $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
+            $reference = (isset($_GET['reference']) &&  $_GET['reference'] != '') ? $_GET['reference'] : ''; 
             $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
             $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : (($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '');
@@ -62,9 +64,11 @@
             }
             $home_url = $icl_home_url = untrailingslashit(get_option('home'));
             $is_wpml = 0;
+            $font_url = NBDESIGNER_FONT_URL;
             if ( function_exists( 'icl_get_home_url' ) ) {
                 $icl_home_url = untrailingslashit(icl_get_home_url());
                 $is_wpml = 1;
+                $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
             }            
         ?>
         <script type="text/javascript">           
@@ -75,7 +79,7 @@
                 ui_mode   :   "<?php echo $ui_mode; ?>",
                 enable_upload   :   "<?php echo $enable_upload; ?>",
                 stage_dimension :   {'width' : 500, 'height' : 500},
-                font_url    :   "<?php echo NBDESIGNER_FONT_URL; ?>",
+                font_url    :   "<?php echo $font_url; ?>",
                 art_url    :   "<?php echo NBDESIGNER_ART_URL .'/'; ?>",
                 is_designer :  <?php if(current_user_can('edit_nbd_template')) echo 1; else echo 0; ?>,
                 assets_url  :   "<?php echo NBDESIGNER_PLUGIN_URL . 'assets/'; ?>",
@@ -96,7 +100,9 @@
                 cart_item_key    :   "<?php echo $cart_item_key; ?>",
                 home_url    :   "<?php echo $home_url; ?>",
                 icl_home_url    :   "<?php echo $icl_home_url; ?>",
-		is_wpml	:	<?php echo $is_wpml; ?>,                
+                is_logged    :   <?php echo nbd_user_logged_in(); ?>,
+		is_wpml	:	<?php echo $is_wpml; ?>,   
+                login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",  
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>
             }; 
@@ -196,8 +202,8 @@
             <div class="design-options" id="design-options" ng-show="settings['enable_upload'] == '2' && settings['task'] == 'new'">
                 <div class="inner">
                     <div>
-                        <div class="option shasow" ng-click="changeDesignMode('upload')"><i class="fa fa-cloud-upload" aria-hidden="true"></i>Upload Design</div>
-                        <div class="option shasow" ng-click="changeDesignMode('custom')"><i class="fa fa-paint-brush" aria-hidden="true"></i>Custom Design</div>
+                        <div class="option shasow" ng-click="changeDesignMode('upload')"><i class="fa fa-cloud-upload" aria-hidden="true"></i>{{(langs['UPLOAD__DESIGN']) ? langs['UPLOAD__DESIGN'] : "Upload Design"}}</div>
+                        <div class="option shasow" ng-click="changeDesignMode('custom')"><i class="fa fa-paint-brush" aria-hidden="true"></i>{{(langs['CUSTOM_DESIGN']) ? langs['CUSTOM_DESIGN'] : "Custom Design"}}</div>
                     </div>
                 </div>
             </div> 

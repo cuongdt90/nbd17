@@ -1,6 +1,8 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly 
+if( count($products) ){
 echo '<ul class="nbdesigner_list_widget">';
 foreach ($products as $p){
+    if( $current_id != $p->ID ):
     $pro = wc_get_product($p->ID);
 ?>
     <li class="nbdesigner-related-product">
@@ -15,6 +17,10 @@ foreach ($products as $p){
         </div>    
     </li>
 <?php
+    endif;
 }
 echo '</ul>';
+}else{
+    echo __('No related product design', 'web-to-print-online-designer');
+}
 ?>

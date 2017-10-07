@@ -446,7 +446,8 @@ button.cancel:hover {
     font-weight: 700
 }
 
-#dg-myclipart .nbdesigner_modal_tab li span {
+#dg-myclipart .nbdesigner_modal_tab li span,
+#dg-expand-feature .nbdesigner_modal_tab li span {
     font-weight: 700
 }
 
@@ -2996,6 +2997,11 @@ img.pattern_img {
 
 #dg-expand-feature .modal-body {
     padding: 15px;
+}
+.nbd-list-cart-design, .nbd-list-my-design {
+    max-height: 300px;
+    overflow: hidden;
+    position: relative; 
 }
 .design-editor-container, .nbdesigner-list-template{   
     max-height: 350px;

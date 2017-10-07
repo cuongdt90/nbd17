@@ -87,7 +87,8 @@
     <h2><?php echo __('Update product design setting data', 'web-to-print-online-designer'); ?></h2>
     <div>
         <?php wp_nonce_field('nbdesigner-update-product', '_nbdesigner_cupdate_product'); ?>
-        <button class="button nbdesigner-delete" id="nbdesigner_update_product" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php echo __("Update", 'web-to-print-online-designer'); ?></button>
+        <button class="button nbdesigner-delete" id="nbdesigner_update_product" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php echo __("Update v170", 'web-to-print-online-designer'); ?></button>
+        <button class="button nbdesigner-delete" id="nbdesigner_update_variation_v180" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php echo __("Update v180", 'web-to-print-online-designer'); ?></button>
         <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" class="nbdesigner_loaded" id="nbdesigner_update_product_loading" style="margin-left: 15px;"/>        
         <p><small><?php _e('Make sure backup data before update avoid lost data!') ?></small></p>
     </div>

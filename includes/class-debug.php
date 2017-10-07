@@ -38,7 +38,7 @@ class Nbdesigner_DebugTool {
         }        
     }
     public static function manual_write_debug($data){
-        $path = self::$_path . 'debug.log';
+        $path = self::$_path . '/debug.log';
         $data = print_r($data, true);
         if (NBDESIGNER_MODE_DEBUG) {
             if (!$fp = fopen($path, 'w')) {
@@ -55,7 +55,7 @@ class Nbdesigner_DebugTool {
     }
     public static function manual_write_debug2($data){
         $data = print_r($data, true);
-        $path = self::$_path . 'debug.txt';    
+        $path = self::$_path . '/debug.txt';    
         file_put_contents($path, $data);
     }
     public static function console_log($data){
@@ -220,4 +220,11 @@ class Nbdesigner_DebugTool {
         }
         return $custom_css;
     }   
+    public static function nbd_var_dump($param, $force_die = false){
+        echo __FILE__;
+        echo '<pre>';
+        var_dump($param);
+        echo '</pre>';
+        if( $force_die ) die('~End~');
+    }    
 }

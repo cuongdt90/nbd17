@@ -1,5 +1,10 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <h2><?php _e('Designs store', 'web-to-print-online-designer'); ?></h2>
+<?php
+    $is_artist = current_user_can('edit_nbd_template') ? 1 : 0;
+    $create_permission = get_the_author_meta( 'nbd_create_design', $user->ID );
+    if($is_artist):
+?>
 <p id="nbd-artist-form"><span><?php _e('Artist ', 'web-to-print-online-designer'); ?></span> 
     <b>  <span id="nbd-artist-name"><?php 
         $artist_name = esc_attr( get_the_author_meta( 'nbd_artist_name', $user->ID ) );
@@ -12,6 +17,7 @@
     <?php wp_nonce_field( 'nbd_artist_update', 'nbd_nonce' ); ?>
     <a id="nbd-submit-name" href="javascript:void(0)" onclick="submitArtistName()" style="display: none;"><?php _e('OK ', 'web-to-print-online-designer'); ?></a>
 </p>
+<?php endif; ?>
 <?php if( count($designs) ): ?>
 <div class="container-design">
     <table class="shop_table shop_table_responsive my_account_orders">
@@ -19,7 +25,7 @@
             <tr>
                 <th><?php _e('Preview', 'web-to-print-online-designer'); ?></th>
                 <th><?php _e('Price', 'web-to-print-online-designer'); ?></th>
-                <th><?php _e('Date', 'web-to-print-online-designer'); ?></th>
+                <th><?php _e('Created', 'web-to-print-online-designer'); ?></th>
                 <th><?php _e('Status ', 'web-to-print-online-designer'); ?></th>
             </tr>
         </thead>
@@ -31,7 +37,7 @@
             <tr class="order">
                 <td data-title="<?php _e('Preview', 'web-to-print-online-designer'); ?>">
                     <?php foreach ($listThumb as $image ): ?>
-                    <img style="max-width: 100px; display: inline-block;" src="<?php echo Nbdesigner_IO::convert_path_to_url($image); ?>" />
+                    <img style="max-width: 100px; display: inline-block; border: 1px solid #ddd;" src="<?php echo Nbdesigner_IO::convert_path_to_url($image); ?>" />
                     <?php endforeach; ?>
                 </td>
                 <td data-title="<?php _e('Price', 'web-to-print-online-designer'); ?>"><?php echo wc_price($design->price) ?></td>

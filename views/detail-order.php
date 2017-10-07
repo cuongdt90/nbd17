@@ -18,6 +18,80 @@
             break;
     }    
 ?>
+<style>
+    .nbd-unavailable {
+        pointer-events: none;
+        opacity: 0.3;
+    }
+    .nbd-unavailable-note {
+        font-size: 30px;
+        color: red;
+        top: 15px;
+        right: 15px;
+        position: absolute;
+    }
+    .nbd-convert img, .nbd-convert a.button-primary, .nbd-convert a.button-primary:active {
+        vertical-align: middle;
+        margin-right: 15px;
+    }
+    .nbd-convert a.button-primary span {
+        margin-top: 3px;
+    }
+    .nbd-convert-con {
+        vertical-align: top;
+        display: inline-block;
+        padding: 0 15px 15px 15px;
+        border: 1px solid #ddd;
+        margin-top: 15px;   
+        position: relative;
+    }
+    .nbd-disabled {
+        display: none;
+    }
+    @-webkit-keyframes rotating /* Safari and Chrome */ {
+        from {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        to {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes rotating {
+        from {
+            -ms-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -o-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        to {
+            -ms-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    .rotating {
+        -webkit-animation: rotating 2s linear infinite;
+        -moz-animation: rotating 2s linear infinite;
+        -ms-animation: rotating 2s linear infinite;
+        -o-animation: rotating 2s linear infinite;
+        animation: rotating 2s linear infinite;
+        opacity: 0.3;
+    }  
+    .nbd-prevent {
+        pointer-events: none;
+    }
+</style>
 <div id="nbdesign-order-tabs">
     <h2>
         <?php 
@@ -41,87 +115,143 @@
             <li><a href="#customer-design"><?php _e('Customer design', 'web-to-print-online-designer') ?></a></li>
             <li><a href="#save-to-pdf"><?php _e('Create PDF', 'web-to-print-online-designer') ?></a></li>
         </ul>   
-        <div class="nbdesigner_detail_order_container" id="customer-design">
-            <div class="nbdesigner_preview">
-                <div id="nbdesigner_large_image">
+        <div id="customer-design">
+            <div class="nbdesigner_detail_order_container">
+                <div class="nbdesigner_preview">
+                    <div id="nbdesigner_large_image">
+                    </div>
+                    <div id="nbdesigner_large_design">
+                    </div>
+                    <div id="nbdesigner_large_overlay">
+                    </div>                
                 </div>
-                <div id="nbdesigner_large_design">
-                </div>
-                <div id="nbdesigner_large_overlay">
-                </div>                
-            </div>
-            <div class="owl-carousel">
-            <?php if(is_array($datas)){
-                foreach($datas as $key => $data):
-                $contentImage = '';
-                if(isset($list_design[$key])) $contentImage = $list_design[$key];                
-                $proWidth = $data['product_width'];
-                $proHeight = $data['product_height'];
-                $bleed_top_bottom = $unitRatio * $data['bleed_top_bottom'];
-                $bleed_left_right = $unitRatio * $data['bleed_left_right'];
-                $bgTop = 0;
-                $bgLeft = 0;
-                if($proWidth > $proHeight){
-                    $bgRatio = 500 / $proWidth;
-                    $bgWidth = 500;
-                    $bgHeight = round($proHeight * $bgRatio);
-                    $offsetLeft = 0;
-                    $offsetTop = round((500 - $bgHeight) / 2);  
-                    $scale = round(500 / ($unitRatio * $proWidth * $mm2Px), 2);
-                }else{
-                    $bgRatio = 500 / $proHeight;
-                    $bgHeight = 500;
-                    $bgWidth = round($proWidth * $bgRatio);
-                    $offsetTop = 0;
-                    $offsetLeft = round((500 - $bgWidth) / 2);  
-                    $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
-                }
-                $cdWidth = $data['area_design_width'];
-                $cdHeight = $data['area_design_height'];
-                $cdLeft = $data['area_design_left'];
-                $cdTop = $data['area_design_top'];       
-            ?>
-                <div class="item nbdesigner_item">
-                    <div class="large" 
-                        data-style="position: absolute; <?php echo 'top: '.$offsetTop.'px; left: '.$offsetLeft.'px; width: '.$bgWidth.'px; height: '.$bgHeight.'px;'; ?>"
-                        style="position: absolute; <?php echo 'top: '.(1/4*$offsetTop).'px; left: '.(1/4*$offsetLeft).'px; width: '.(1/4*$bgWidth).'px; height: '.(1/4*$bgHeight).'px;'; ?>"
-                        data-design="position: absolute; <?php echo 'top: '.$cdTop.'px; left: '.$cdLeft.'px; width: '.$cdWidth.'px; height: '.$cdHeight.'px;'; ?>"
-                        data-design-src="<?php if(isset($list_design[$key])) echo $list_design[$key]; else echo '1'; ?>" data-index="<?php echo $key; ?>"
-                        data-overlay="<?php if($data['show_overlay']) echo $data['img_overlay']; else echo '1'; ?>"
-                        data-bg-tyle="<?php echo $data['bg_type']; ?>"
-                        data-bg-color="<?php echo $data['bg_color_value']; ?>"
-                        data-bg="<?php echo $data['img_src'] ?>"
-                    >
-                        <?php if($data['bg_type'] == 'image'): ?>
-                        <img class="nbdesigner_detail_order" src="<?php echo $data['img_src'] ?>" />
-                        <?php elseif($data['bg_type'] == 'color'): ?>
-                        <div style="width: 100%; height: 100%; background: <?php echo $data['bg_color_value']; ?>"></div>
+                <div class="owl-carousel">
+                <?php if(is_array($datas)){
+                    foreach($datas as $key => $data):
+                    $contentImage = '';
+                    if(isset($list_design[$key])) $contentImage = $list_design[$key];                
+                    $proWidth = $data['product_width'];
+                    $proHeight = $data['product_height'];
+                    $bleed_top_bottom = $unitRatio * $data['bleed_top_bottom'];
+                    $bleed_left_right = $unitRatio * $data['bleed_left_right'];
+                    $bgTop = 0;
+                    $bgLeft = 0;
+                    if($proWidth > $proHeight){
+                        $bgRatio = 500 / $proWidth;
+                        $bgWidth = 500;
+                        $bgHeight = round($proHeight * $bgRatio);
+                        $offsetLeft = 0;
+                        $offsetTop = round((500 - $bgHeight) / 2);  
+                        $scale = round(500 / ($unitRatio * $proWidth * $mm2Px), 2);
+                    }else{
+                        $bgRatio = 500 / $proHeight;
+                        $bgHeight = 500;
+                        $bgWidth = round($proWidth * $bgRatio);
+                        $offsetTop = 0;
+                        $offsetLeft = round((500 - $bgWidth) / 2);  
+                        $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
+                    }
+                    $cdWidth = $data['area_design_width'];
+                    $cdHeight = $data['area_design_height'];
+                    $cdLeft = $data['area_design_left'];
+                    $cdTop = $data['area_design_top'];       
+                ?>
+                    <div class="item nbdesigner_item">
+                        <div class="large" 
+                            data-style="position: absolute; <?php echo 'top: '.$offsetTop.'px; left: '.$offsetLeft.'px; width: '.$bgWidth.'px; height: '.$bgHeight.'px;'; ?>"
+                            style="position: absolute; <?php echo 'top: '.(1/4*$offsetTop).'px; left: '.(1/4*$offsetLeft).'px; width: '.(1/4*$bgWidth).'px; height: '.(1/4*$bgHeight).'px;'; ?>"
+                            data-design="position: absolute; <?php echo 'top: '.$cdTop.'px; left: '.$cdLeft.'px; width: '.$cdWidth.'px; height: '.$cdHeight.'px;'; ?>"
+                            data-design-src="<?php if(isset($list_design[$key])) echo $list_design[$key]; else echo '1'; ?>" data-index="<?php echo $key; ?>"
+                            data-overlay="<?php if($data['show_overlay']) echo $data['img_overlay']; else echo '1'; ?>"
+                            data-bg-tyle="<?php echo $data['bg_type']; ?>"
+                            data-bg-color="<?php echo $data['bg_color_value']; ?>"
+                            data-bg="<?php echo $data['img_src'] ?>"
+                        >
+                            <?php if($data['bg_type'] == 'image'): ?>
+                            <img class="nbdesigner_detail_order" src="<?php echo $data['img_src'] ?>" />
+                            <?php elseif($data['bg_type'] == 'color'): ?>
+                            <div style="width: 100%; height: 100%; background: <?php echo $data['bg_color_value']; ?>"></div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if(isset($list_design[$key])): ?>
+                        <img src="<?php echo $list_design[$key]; ?>" 
+                            style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>" 
+                        />
                         <?php endif; ?>
+                        <?php if($data['show_overlay']): ?>
+                        <div
+                            style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>"
+                        >
+                            <img src="<?php echo $data['img_overlay']; ?>" />
+                        </div>
+                        <?php endif; ?>                    
+                    </div>         
+                <?php endforeach;} ?>    
+                </div> 
+            </div>
+            <hr />
+            <div id="nbd-convert-section">
+                <h3><?php _e('Convert', 'web-to-print-online-designer'); ?></h3>
+                <div class="nbd-convert-con" style="padding-top: 15px;">
+                    <a href="<?php echo add_query_arg(array('download-type' => 'png', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" class="button-primary" id="download-png"><?php _e('Download PNG', 'web-to-print-online-designer'); ?></a>
+                </div>
+                <div class="nbd-convert-con">
+                    <div class="<?php  if( !is_available_imagick() ) echo 'nbd-unavailable'; ?>"  id="conver-png-to-jpg" >
+                        <p><b><?php _e('PNG to JPG', 'web-to-print-online-designer'); ?></b></p>
+                        <p class="nbd-convert">
+                            <?php wp_nonce_field( 'nbd_jpg_nonce'); ?>
+                            <input type="hidden" value="<?php echo $_GET['nbd_item_key']; ?>" name="nbd_item" />
+                            <input style="width: 60px;" value="<?php echo $option['dpi']; ?>" name="jpg_dpi" type="hidden"/>
+                            <img style="width: 50px;" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/file_type/png.png'; ?>" />
+                            <a class="button-primary" title="<?php _e('Convert', 'web-to-print-online-designer'); ?>" onclick="convertPng2Jpg(this)"><span class="dashicons dashicons-update"></span></a>
+                            <img style="width: 50px;" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/file_type/jpg.png'; ?>" />
+                        </p>
+                        <div style="margin-top: 15px;">
+                            <?php 
+                                $path = NBDESIGNER_CUSTOMER_DIR .'/'. $_GET['nbd_item_key'].'/jpg';
+                                $jpgs = Nbdesigner_IO::get_list_images($path, 1);
+                            ?>
+                            <a  class="button-primary download-jpg <?php if( !count($jpgs) ) echo 'nbd-unavailable'; ?>" href="<?php echo add_query_arg(array('download-type' => 'jpg', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" id="download-jpg"><?php _e('Download JPG', 'web-to-print-online-designer'); ?></a>
+                        </div>
                     </div>
-                    <?php if(isset($list_design[$key])): ?>
-                    <img src="<?php echo $list_design[$key]; ?>" 
-                        style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>" 
-                    />
-                    <?php endif; ?>
-                    <?php if($data['show_overlay']): ?>
-                    <div
-                        style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>"
-                    >
-                        <img src="<?php echo $data['img_overlay']; ?>" />
-                    </div>
-                    <?php endif; ?>                    
-                </div>         
-            <?php endforeach;} ?>    
-            </div>        
-        </div>
+                </div>
+                <div class="nbd-convert-con" >
+                    <span class="nbd-unavailable-note <?php  if( is_available_imagick() ) echo 'nbd-disabled'; ?>">*</span>
+                    <div class="<?php  if( !is_available_imagick() ) echo 'nbd-unavailable'; ?>" id="convert-rgb-to-cmyk">
+                        <p><b><?php _e('JPG RGB to JPG CMYK', 'web-to-print-online-designer'); ?></b></p>
+                        <p class="nbd-convert">
+                            <?php wp_nonce_field( 'nbd_cmyk_nonce'); ?>
+                            <input type="hidden" value="<?php echo $_GET['nbd_item_key']; ?>" name="nbd_item" />
+                            <img style="width: 50px;" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/file_type/jpg.png'; ?>" />
+                            <a class="button-primary convert-cmyk-btn <?php if( !count($jpgs) ) echo 'nbd-unavailable'; ?>" title="<?php _e('Convert', 'web-to-print-online-designer'); ?>" onclick="convertRgb2Cmyk(this)"><span class="dashicons dashicons-update"></span></a>
+                            <img style="width: 50px;" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/file_type/cmyk.png'; ?>" />
+                        </p>
+                        <div>
+                            <p style="font-weight: bold;"><?php _e('Color Profile', 'web-to-print-online-designer'); ?></p>
+                            <select name="icc">
+                            <?php $iccs = nbd_get_icc_cmyk_list();
+                                foreach( $iccs as $key => $icc ):
+                            ?>
+                                <option value="<?php echo $key; ?>"><?php echo $icc; ?></option>
+                                <?php endforeach; ?>
+                            </select>   
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <?php 
+                                $path = NBDESIGNER_CUSTOMER_DIR .'/'. $_GET['nbd_item_key'].'/cmyk';
+                                $cmyks = Nbdesigner_IO::get_list_images($path, 1);
+                            ?>
+                            <a class="button-primary download-cmyk <?php if( !count($cmyks) ) echo 'nbd-unavailable'; ?>" href="<?php echo add_query_arg(array('download-type' => 'cmyk', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" id="download-jpg"><?php _e('Download JPG CMYK', 'web-to-print-online-designer'); ?></a>
+                        </div>
+                    </div>    
+                </div>  
+                <?php  if( !is_available_imagick() ): ?>
+                <p><span style="color: red; font-size: 20px; margin-right: 5px;">*</span><?php _e('Required PHP imagick API', 'web-to-print-online-designer'); ?></p>
+                <?php endif; ?>
+            </div>            
+        </div>    
         <div id="save-to-pdf">
-                <span class="pro-medal">PRO</span>
-                <ul class="nbd-nav-tab">
-                <?php foreach($datas as $key => $data): ?>
-                    <li><a href="#side-<?php echo $key; ?>"><?php echo $data['orientation_name']; ?></a></li>
-                <?php endforeach; ?>
-                </ul> 
-            <div style="clear: both; padding: 0 15px 15px 15px;">
+            <div style="clear: both; padding: 0 15px ;">
                 <table class="form-table">
                     <tbody>
                         <tr valign="top">
@@ -136,11 +266,33 @@
                                 <input type="hidden" value="<?php echo $option['dpi']; ?>" name="dpi">
                                 <br /><small><?php _e('Create a PDF file contain all page in the same page size. By default, each page correspond a PDF file.', 'web-to-print-online-designer'); ?></small>
                             </td>
-                        </tr>                       
+                        </tr>   
+                        <tr valign="top">
+                            <th scope="row" class="titledesc">
+                                <label><?php _e('Create PDF from', 'web-to-print-online-designer'); ?></label>
+                            </th>
+                            <td class="forminp forminp-text">
+                                <select name="from_type">
+                                    <option value="0">PNG</option>
+                                    <option value="1" <?php if( !count($jpgs) ) echo 'disabled'; ?> >JPEG RGB</option>
+                                    <option value="2" <?php if( !count($cmyks) ) echo 'disabled'; ?>>JPEG CMYK</option>
+                                    <option value="3">SVG</option>
+                                </select>
+                                <span style="cursor: pointer; text-decoration: underline; margin-left: 15px;" onclick="gotoConvert()" class="<?php if(count($jpgs) && count($cmyks)) echo 'nbd-disabled'; ?>"><?php _e('Convert file', 'web-to-print-online-designer'); ?></span>
+                            </td>
+                        </tr>
                     </tbody>     
                 </table>    
                 <hr />
-            </div>
+            </div>     
+            <div>
+                <span class="pro-medal">PRO</span>
+                <ul class="nbd-nav-tab">
+                <?php foreach($datas as $key => $data): ?>
+                    <li><a href="#side-<?php echo $key; ?>"><?php echo $data['orientation_name']; ?></a></li>
+                <?php endforeach; ?>
+                </ul> 
+            </div>    
         <?php    
             foreach($datas as $key => $data):
                 $contentImage = '';
@@ -705,6 +857,42 @@
                     _input.val(attachment.url);
                 });
                 upload.open();
+            };
+            var convertPng2Jpg = function(e){
+                jQuery(e).addClass('nbd-prevent');
+                jQuery(e).find('span').addClass('rotating');
+                var formdata = jQuery('#conver-png-to-jpg').find('input, select').serialize();
+                formdata += '&action=nbd_convert_files&type=jpg';
+                jQuery.post(ajaxurl, formdata, function(data) {
+                    var data = JSON.parse(data);
+                    if(data['flag'] == 1){
+                        jQuery(e).removeClass('nbd-prevent');
+                        jQuery(e).find('span').removeClass('rotating');                        
+                        jQuery('.download-jpg, .convert-cmyk-btn').removeClass('nbd-unavailable');    
+                        jQuery("select[name='from_type'] option[value='1']").removeAttr("disabled");
+                    }
+                });
+            };
+            var convertRgb2Cmyk = function(e){
+                jQuery(e).addClass('nbd-prevent');
+                jQuery(e).find('span').addClass('rotating');
+                var formdata = jQuery('#convert-rgb-to-cmyk').find('input, select').serialize();
+                formdata += '&action=nbd_convert_files&type=cmyk';
+                jQuery.post(ajaxurl, formdata, function(data) {
+                    var data = JSON.parse(data);
+                    if(data['flag'] == 1){
+                        jQuery(e).removeClass('nbd-prevent');
+                        jQuery(e).find('span').removeClass('rotating');                        
+                        jQuery('.download-cmyk').removeClass('nbd-unavailable');    
+                        jQuery("select[name='from_type'] option[value='2']").removeAttr("disabled");
+                    }
+                });
+            };
+            var gotoConvert = function(){
+                jQuery('a[href="#customer-design"]').click();
+                jQuery('html, body').animate({
+                    scrollTop: jQuery("#nbd-convert-section").offset().top
+                }, 1000);                
             };
         </script>   
 </div>  

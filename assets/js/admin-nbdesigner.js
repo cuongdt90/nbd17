@@ -274,6 +274,21 @@ jQuery(document).ready(function ($) {
             }              
         });         
     });
+    $('#nbdesigner_update_variation_v180').on('click', function(e){
+        e.preventDefault();
+        var formdata = jQuery('.update-setting-data').find('textarea, select, input').serialize();
+        formdata = formdata + '&action=nbdesigner_update_variation_v180';
+        jQuery('#nbdesigner_update_product_loading').removeClass('nbdesigner_loaded');
+        jQuery.post(admin_nbds.url, formdata, function(data){
+            jQuery('#nbdesigner_update_product_loading').addClass('nbdesigner_loaded');
+            data = JSON.parse(data);
+            if(parseInt(data.flag) == 1){
+                alert('Update success!');
+            }else {
+                alert('Oops! Try again!');
+            }              
+        });         
+    });    
     $('#woocommerce-product-data').on('woocommerce_variations_loaded', function(event) {
         NBDESIGNADMIN.loopConfigAreaDesign();
     });  
@@ -390,6 +405,25 @@ jQuery(document).ready(function ($) {
 	}
 	return obj;        
     }   
+    var nbd_lang_search = $('#nbd-lang-search');
+    nbd_lang_search.on("keyup", search_lang);
+    nbd_lang_search.on("change", search_lang);
+    nbd_lang_search.on("focus", search_lang);    
+    function search_lang(){
+        var search = nbd_lang_search.val();
+        $('.nbdesigner-translate li').removeClass('highlight');
+        $('.nbdesigner-translate li').removeClass('unhighlight');
+        if( search == '' ) return;
+        var a = new RegExp(nbd_lang_search.val(), "i");
+        $( ".nbdesigner-translate li" ).each(function( ) {
+            var phrase = $( this ).find('p').text();
+            if(a.test(phrase)){
+                $( this ).addClass('highlight');
+            }else{
+                $( this ).addClass('unhighlight');
+            }
+        });        
+    };
 });
 var NBDESIGNADMIN = {
     add_font_cat: function (e) {
@@ -1042,6 +1076,7 @@ var NBDESIGNADMIN = {
     },
     changeLang: function(){
         var code = jQuery("#nbdesigner-translate-code").val();
+        jQuery('.nbdesigner-translate').addClass('nbd-loading');
         jQuery("#nbdesigner-trans-code").attr('data-code', code);
         jQuery.ajax({
             url: admin_nbds.url,
@@ -1055,6 +1090,7 @@ var NBDESIGNADMIN = {
             }
         }).done(function (result) { 
             var data = JSON.parse(result);
+            jQuery('.nbdesigner-translate').removeClass('nbd-loading');
             if(data.mes == "success"){
                 var html = "";
                 jQuery.each(data.langs, function(key, value ){

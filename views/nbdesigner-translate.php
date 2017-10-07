@@ -38,6 +38,7 @@
         </div>        
         <a name="<?php _e('Create new language', 'web-to-print-online-designer'); ?>" href="#TB_inline?width=300&height=160&inlineId=nbdesigner-new-lang" class="thickbox button button-primary" onclick=""><?php echo __('Add New Language', 'web-to-print-online-designer'); ?></a>   
         <img class="nbdesigner_loaded" id="nbdesigner_translate_loading" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/loading.gif' ?>" />
+        <input id="nbd-lang-search" class="nbd-input" placeholder="<?php _e('Search', 'web-to-print-online-designer'); ?>" />
     </div>
     <div>
         <?php if(isset($langs) && is_array($langs) && count($langs) > 0): ?>

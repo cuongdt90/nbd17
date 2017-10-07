@@ -1,11 +1,13 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<h2 class="woocommerce-order-details__title">Design details</h2>
+<h2 class="woocommerce-order-details__title">Design detail</h2>
 <?php
-    $pid = $design->product_id;
-    $vid = $design->variation_id;
+    $pid = get_wpml_original_id( $design->product_id );
+    $vid = get_wpml_original_id( $design->variation_id );
     $product = wc_get_product( $pid );
     $variations = get_nbd_variations( $pid );
     $is_artist = current_user_can('edit_nbd_template') ? 1 : 0;
+    $create_permission = get_the_author_meta( 'nbd_create_design', $user_id );
+    if($create_permission) $is_artist = 1;
     $product_name = $product->get_name();
     $link_add_design = add_query_arg(array(
             'product_id' => $pid,
@@ -35,14 +37,18 @@
         $product_name = $var['name'];
     }
 ?>
-<p class="nbd-section">
-    <span><?php _e('Product', 'web-to-print-online-designer') ?></span>&nbsp;
-    <a href="<?php echo get_permalink( $pid ); ?>"><?php echo $product_name; ?></a>
-    <a class="nbd-add-design" href="<?php echo $link_edit_design; ?>"><?php _e('Edit design', 'web-to-print-online-designer'); ?></a>
-    <?php if($is_artist): ?>
-    <a class="nbd-add-design" href="<?php echo $link_add_design; ?>"><?php _e('Add design', 'web-to-print-online-designer'); ?></a>
-    <?php endif; ?>
-</p>
+<div class="nbd-section">
+    <span>
+        <span><?php _e('Product', 'web-to-print-online-designer') ?></span>&nbsp;
+        <a href="<?php echo get_permalink( $pid ); ?>"><?php echo $product_name; ?></a>
+    </span>
+    <span class="nbd-design-action">
+        <a class="button" href="<?php echo $link_edit_design; ?>"><?php _e('Edit design', 'web-to-print-online-designer'); ?></a>
+        <?php if($is_artist): ?>
+        <a class="button" href="<?php echo $link_add_design; ?>"><?php _e('Add design', 'web-to-print-online-designer'); ?></a>
+        <?php endif; ?>
+    </span>   
+</div>
 <div class="nbd-section">
     <div id="nbd-form-template">
         <p class="form-row form-row-first" id="billing_first_name_field">
@@ -51,7 +57,7 @@
         </p>
         <p class="form-row form-row-last" id="billing_first_name_field">
             <label for="nbd-design-status" class=""><?php _e('Status', 'web-to-print-online-designer'); ?></label>
-            <select name="nbd-design-status">
+            <select name="nbd-design-status" class="nbd-design-status">
                 <option value="1" <?php selected( $design->publish, 1 ); ?>><?php _e('Publish', 'web-to-print-online-designer'); ?></option>
                 <option value="0" <?php selected( $design->publish, 0 ); ?>><?php _e('Unpublish', 'web-to-print-online-designer'); ?></option>
             </select>     
@@ -70,8 +76,9 @@
     </p>    
 </div>
 <div class="nbd-section">
+    <p style="font-weight: bold;"><?php _e('Preview', 'web-to-print-online-designer'); ?></p>
     <?php foreach ($listThumb as $image ): ?>
-    <img style="display: inline-block;" src="<?php echo Nbdesigner_IO::convert_path_to_url($image); ?>" />
+    <img style="display: inline-block; border: 1px solid #ddd;" src="<?php echo Nbdesigner_IO::convert_path_to_url($image); ?>?t=<?php echo time(); ?>" />
     <?php endforeach; ?>
 </div>
 <?php
@@ -90,15 +97,23 @@
     }
     .nbd-section {
         clear: both;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+    .nbd-design-action {
+        float: right;  
     }
     .nbd-add-design {
         padding: 5px;
-        border: 1px solid #ddd;
-        float: right;        
+        border: 1px solid #ddd;  
     }
     .nbd-add-design:hover {
         color: #fff;
         background: #1e73be;
+    }
+    .nbd-design-status {
+        width: auto !important;
+        height: 45px;
     }
 </style>
 <script>

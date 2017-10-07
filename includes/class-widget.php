@@ -10,6 +10,9 @@ class NBDesigner_Widget extends WP_Widget {
         );        
     }
     public function widget($args, $instance) {
+        if( !is_product() ) return;
+        $current_id = get_the_ID();
+        $cats = get_the_terms($current_id, 'product_cat');
         echo $args['before_widget'];
         if (!empty($instance['title'])) {
             echo $args['before_title'] . apply_filters('widget_title', $instance['title']) . $args['after_title'];
@@ -33,10 +36,23 @@ class NBDesigner_Widget extends WP_Widget {
                 )
             )
         ); 
+        if(is_array($cats) ){
+            $cat_ids = array();
+            foreach( $cats as $cat ){
+                $cat_ids[] = $cat->term_id;
+            }
+            $args_query['tax_query'] = array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field' => 'id',
+                    'terms' => $cat_ids,
+                    'operator' => 'IN'                
+            ));
+        }
         $posts = get_posts($args_query);  
         if(is_array($posts)){    
             ob_start();            
-            nbdesigner_get_template('widget-suggest-design.php', array('products' => $posts));
+            nbdesigner_get_template('widget-suggest-design.php', array('products' => $posts, 'current_id' => $current_id));
             $content = ob_get_clean();
             echo $content;
         }

@@ -1,18 +1,19 @@
-<?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  
+<?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
+<?php 
 $limit = $row * $per_row;
 $k = 0;
-echo "<p>".$des."</p>";
+if($des != '') echo "<p>".$des."</p>";
 if(count($templates)):
     echo '<ul class="nbdesigner-gallery">';
     foreach ($templates as $temp): 
     $link_template = add_query_arg(array(
-            'product_id' => $temp['product_id'],
-            'variation_id' => $temp['variation_id'],
-            'reference'  =>  $temp['folder']
-        ), getUrlPageNBD('create'));         
+        'product_id' => $temp['product_id'],
+        'variation_id' => $temp['variation_id'],
+        'reference'  =>  $temp['folder']
+    ), getUrlPageNBD('create'));         
 ?>
     <?php if($k % $per_row == 0) echo '<li class="nbdesigner-container">';?>
-    <div class="nbdesigner-item">
+    <div class="nbdesigner-item nbd-col-<?php echo $per_row; ?>">
         <div class="nbdesigner-con">
             <div class="nbdesigner-top">
                 <img src="<?php echo $temp['image']; ?>" class="nbdesigner-img"/>
@@ -36,14 +37,13 @@ if(count($templates)):
 <?php  
     require_once NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.pagination.php';
     $paging = new Nbdesigner_Pagination();
-    $url = '';
     $config = array(
         'current_page'  => isset($page) ? $page : 1, 
         'total_record'  => $total,
         'limit'         => $limit,
         'link_full'     => $url.'?paged={p}',
         'link_first'    => $url              
-    );	        
+    );	
     $paging->init($config); 
 ?>
     <div class="tablenav top nbdesigner-pagination-con">

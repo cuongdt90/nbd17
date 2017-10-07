@@ -40,7 +40,10 @@
                         ?>
                         <a href="#TB_inline?width=300&height=160&inlineId=nbd-<?php echo $id; ?>" class="thickbox"><span class="dashicons dashicons-admin-customizer"></span></a>
                         <?php endif; ?>
-                        <a href="<?php echo $link_manager_template; ?>" title="<?php _e('Manager template', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-images-alt"></span></a>
+                        <a href="<?php echo $link_manager_template; ?>" title="<?php _e('Manager template', 'web-to-print-online-designer'); ?>">
+                            <span class="dashicons dashicons-images-alt"></span>
+                            <span class="count"><?php echo $val['number_template']; ?></span>
+                        </a>
                     </p> 
                     <?php 
                         if( count($variations) > 0 ):

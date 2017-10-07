@@ -6,7 +6,7 @@
 Plugin Name: Nbdesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
 Description: Allow customer design product before purchase.
-Version: 1.7.1
+Version: 1.8.0
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
 License: GPLv2 or later
@@ -28,8 +28,8 @@ if ( function_exists( 'icl_get_home_url' ) ) {
     $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);
 }
 
-nbd_define('NBDESIGNER_VERSION', '1.7.1');
-nbd_define('NBDESIGNER_NUMBER_VERSION', 171);
+nbd_define('NBDESIGNER_VERSION', '1.8.0');
+nbd_define('NBDESIGNER_NUMBER_VERSION', 180);
 nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
 nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
 nbd_define('NBDESIGNER_PLUGIN_URL', $nbd_plugin_dir_url);
@@ -77,9 +77,12 @@ function nbd_define( $name, $value ) {
 }
 
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-util.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-template-loader.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-settings.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-debug.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-helper.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-update-data.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.category.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/table/class.product.templates.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');

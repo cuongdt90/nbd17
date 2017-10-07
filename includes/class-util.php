@@ -364,6 +364,44 @@ function is_available_imagick(){
     if(!class_exists("Imagick")) return false;
     return true;
 }
+function nbd_get_icc_cmyk_list(){
+    return array(
+        0   =>  'Don\'t Color Manage',
+        1   =>  'Coated FOGRA27',
+        2   =>  'Coated FOGRA39',
+        3   =>  'Coated GRACoL 2006',
+        4   =>  'Japan Color 2001 Coated',
+        5   =>  'Japan Color 2001 Uncoated',
+        6   =>  'Japan Color 2002 Newspaper',
+        7   =>  'Japan Color 2003 Web Coated',
+        8   =>  'Japan Web Coated',
+        9   =>  'Uncoated FOGRA29',
+        10   =>  'US Web Coated SWOP',
+        11   =>  'US Web Uncoated',
+        12   =>  'Web Coated FOGRA28',
+        13   =>  'Web Coated SWOP 2006 Grade 3',
+        14   =>  'Web Coated SWOP 2006 Grade 5'
+    );
+}
+function nbd_get_icc_cmyk_list_file(){
+    return array(
+        0   =>  '',
+        1   =>  'CoatedFOGRA27.icc',
+        2   =>  'CoatedFOGRA39.icc',
+        3   =>  'CoatedGRACoL2006.icc',
+        4   =>  'JapanColor2001Coated.icc',
+        5   =>  'JapanColor2001Uncoated.icc',
+        6   =>  'JapanColor2002Newspaper.icc',
+        7   =>  'JapanColor2003WebCoated.icc',
+        8   =>  'JapanWebCoated.icc',
+        9   =>  'UncoatedFOGRA29.icc',
+        10   =>  'USWebCoatedSWOP.icc',
+        11   =>  'USWebUncoated.icc',
+        12   =>  'WebCoatedFOGRA28.icc',
+        13   =>  'WebCoatedSWOP2006Grade3.icc',
+        14   =>  'WebCoatedSWOP2006Grade5.icc'
+    );
+}
 function nbd_file_get_contents($url){
     if(ini_get('allow_url_fopen')){
         $checkPHP = version_compare(PHP_VERSION, '5.6.0', '>=');
@@ -398,6 +436,7 @@ function hex_code_to_rgb($code){
     return $rgb;
 }
 function is_nbdesigner_product($id){
+    $id = get_wpml_original_id($id);    
     $check = get_post_meta($id, '_nbdesigner_enable', true);
     if($check) return true;
     return false;
@@ -617,7 +656,13 @@ function getUrlPageNBD($page){
             break;       
         case 'create':
             $post_name = NBDESIGNER_PAGE_CREATE_YOUR_OWN; 
-            break;           
+            break;   
+        case 'redirect':
+            $post_name = 'nbd-logged'; 
+            break;   
+        case 'designer':
+            $post_name = 'designer'; 
+            break;         
     }
     $post = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name='".$post_name."'"); 
     if ( function_exists('icl_object_id') ) {
@@ -654,6 +699,14 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
     }
     return $results;
 }
+function nbd_get_template_by_folder( $folder ){
+    $data = array();
+    $path = NBDESIGNER_CUSTOMER_DIR .'/'.$folder;
+    $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
+    $data['design'] = nbd_get_data_from_json($path . '/design.json'); 
+    $data['config'] = nbd_get_data_from_json($path . '/config.json');
+    return $data;
+}
 function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '' ){
     $data = array();
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
@@ -665,8 +718,8 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
         $data['option'] = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));  
         if($variation_id > 0){         
-            $enable_variation = get_post_meta($variation_id, '_nbdesigner_enable'.$variation_id, true);
-            $data['product'] = unserialize(get_post_meta($variation_id, '_designer_setting'.$variation_id, true)); 
+            $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);
+            $data['product'] = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true)); 
             if ( !($enable_variation && isset($data['product'][0]))){
                 $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
             }    
@@ -701,6 +754,8 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['fonts'] = nbd_get_data_from_json($ref_path . '/used_font.json');
         $data['ref'] = unserialize(file_get_contents($ref_path . '/product.json'));
     }
+    if( $data['upload']['allow_type'] == '' ) $data['upload']['allow_type'] = nbdesigner_get_option('nbdesigner_allow_upload_file_type');
+    if( $data['upload']['disallow_type'] == '' ) $data['upload']['disallow_type'] = nbdesigner_get_option('nbdesigner_disallow_upload_file_type');
     return $data;        
 }
 function nbd_get_upload_files_from_session( $nbu_item_key ){
@@ -752,6 +807,16 @@ if ( ! function_exists( 'is_nbd_studio' ) ) {
 if ( ! function_exists( 'is_nbd_design_page' ) ) {
     function is_nbd_design_page(){
         return is_page( nbd_get_page_id( 'create_your_own' ) );
+    }    
+}
+if ( ! function_exists( 'is_nbd_gallery_page' ) ) {
+    function is_nbd_gallery_page(){
+        return is_page( nbd_get_page_id( 'gallery' ) );
+    }    
+}
+if ( ! function_exists( 'is_nbd_designer_page' ) ) {
+    function is_nbd_designer_page(){
+        return is_page( nbd_get_page_id( 'designer' ) );
     }    
 }
 if( !function_exists('nbd_get_page_id')){
@@ -893,6 +958,11 @@ function nbd_get_language($code){
     }    
     return $data;
 }
+function nbd_is_product( $id ){
+    $product = wc_get_product($id);
+    if( $product ) return true;
+    return false;
+}
 function nbd_get_default_variation_id( $product_id ){
     $variation_id = 0;
     if( !$product_id ) return $variation_id;
@@ -939,7 +1009,7 @@ function get_nbd_variations( $product_id ){
     if( $product->is_type( 'variable' ) ) {
         $available_variations = $product->get_available_variations();   
         foreach ($available_variations as $variation){
-            $enable = get_post_meta($variation['variation_id'], '_nbdesigner_enable'.$variation['variation_id'], true);
+            $enable = get_post_meta($variation['variation_id'], '_nbdesigner_variation_enable', true);
             if($enable){
                 if( is_array( $variation['attributes'] ) ){
                     $new_name = '';
@@ -988,4 +1058,32 @@ function get_wpml_original_id( $id, $type = 'post' ){
         $id = icl_object_id($id, $type, true, $langcode);
     }
     return $id;
+}
+function get_wpml_current_id( $id, $type = 'post' ){
+    if ( function_exists('icl_object_id') ) {
+        return icl_object_id($id,'post',false);
+    } 
+    return $id;
+}
+function nbd_get_artist_info( $user_id ){
+    $infos = array();
+    $infos['nbd_artist_name'] = get_the_author_meta( 'nbd_artist_name', $user_id );
+    $infos['nbd_artist_phone'] = get_the_author_meta( 'nbd_artist_phone', $user_id );
+    $infos['nbd_sell_design'] = get_the_author_meta( 'nbd_sell_design', $user_id );
+    $infos['nbd_create_design'] = get_the_author_meta( 'nbd_create_design', $user_id );
+    $infos['nbd_artist_banner'] = get_the_author_meta( 'nbd_artist_banner', $user_id );
+    $infos['nbd_artist_address'] = get_the_author_meta( 'nbd_artist_address', $user_id );
+    $infos['nbd_artist_facebook'] = get_the_author_meta( 'nbd_artist_facebook', $user_id );
+    $infos['nbd_artist_google'] = get_the_author_meta( 'nbd_artist_google', $user_id );
+    $infos['nbd_artist_twitter'] = get_the_author_meta( 'nbd_artist_twitter', $user_id );
+    $infos['nbd_artist_linkedin'] = get_the_author_meta( 'nbd_artist_linkedin', $user_id );
+    $infos['nbd_artist_youtube'] = get_the_author_meta( 'nbd_artist_youtube', $user_id );
+    $infos['nbd_artist_instagram'] = get_the_author_meta( 'nbd_artist_instagram', $user_id );
+    $infos['nbd_artist_flickr'] = get_the_author_meta( 'nbd_artist_flickr', $user_id );
+    $infos['nbd_artist_commission'] = get_the_author_meta( 'nbd_artist_commission', $user_id );
+    $infos['nbd_artist_description'] = get_the_author_meta( 'nbd_artist_description', $user_id );
+    return $infos;
+}
+function nbd_user_logged_in(){
+    return is_user_logged_in() ? 1 : 0; 
 }

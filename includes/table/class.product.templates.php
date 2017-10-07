@@ -95,6 +95,12 @@ class Product_Template_List_Table extends WP_List_Table {
         }         
         return $wpdb->get_var($sql);
     }
+    public static function count_product_template( $pid ){
+        global $wpdb;
+        $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}nbdesigner_templates";
+        $sql .= " WHERE product_id = " . $pid;          
+        return $wpdb->get_var($sql);        
+    }
     /** Text displayed when no template data is available */
     public function no_items() {
         _e( 'No templates avaliable.', 'web-to-print-online-designer');

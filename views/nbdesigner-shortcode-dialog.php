@@ -2,7 +2,7 @@
 <div id="nbdesiger-tiny-mce-dialog" tabindex="-1" action="" title="" style="display: none; ">
     <div class="nbdesign-shortcode-row">
         <label for="nbdesigner-shortcode-number"><?php echo _e('Number of templates per row', 'web-to-print-online-designer'); ?></label>
-        <input class="short" id="nbdesigner-shortcode-number" type="number" min="1" step="1" value="3">
+        <input class="short" id="nbdesigner-shortcode-number" type="number" min="1"  max="6" step="1" value="3">
     </div>
     <div class="nbdesign-shortcode-row">
         <label for="nbdesigner-pagination"><?php echo _e('Pagination', 'web-to-print-online-designer'); ?></label>
