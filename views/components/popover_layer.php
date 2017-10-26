@@ -6,11 +6,11 @@
     </h3>
     <div id="dg-layers" class="has-croll">
         <ul id="layers">
-            <li class="shadow layer" id="layer-{{layer.index}}" ng-repeat="layer in currentLayers| reverse" ng-class="{active: currentLayerActive === layer.index, 'lock' : layer.class === 'lock'}" ng-click="activeLayer(layer)">
+            <li class="shadow layer" id="layer-{{layer.index}}" ng-repeat="layer in currentLayers| reverse" ng-class="{active: currentLayerActive === layer.index, 'lock' : layer.class === 'lock', 'static': layer.isBg}" ng-click="activeLayer(layer)">
                 <i class="fa fa-text-width" aria-hidden="true" ng-show="layer.type === 'text'"></i>  		
                 <img alt="image uploaded" ng-src="{{layer.src}}" ng-hide="layer.type === 'text'" width="20" height="20" class="layer_thumb"/>
                 <span>{{layer.name}}</span>
-                <span class="pull-right">
+                <span class="pull-right" ng-hide="layer.isBg != undefined">
                     <a style="margin-right: 10px;" class="nbdesigner_visible_layer" href="javascript:void(0)" ng-click="toggleVisibleLayer(layer)" title="Toggle visible"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-eye-slash' : 'fa-eye'"></i></a>
                     <a style="margin-right: 10px;" class="nbdesigner_lock_layer" href="javascript:void(0)" ng-click="toggleLockLayer(layer)" title="Toggle lock"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-lock' : 'fa-unlock-alt'"></i></a> 
                 </span>

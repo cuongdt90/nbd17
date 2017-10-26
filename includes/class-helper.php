@@ -48,5 +48,32 @@ if(!class_exists('Nbdesigner_Helper')){
         public static function setting_product_helper(){
             //TODO
         }
+        public static function clear_transients(){
+            if (!wp_verify_nonce($_POST['_nbdesigner_cupdate_product'], 'nbd-clear-transients') || !current_user_can('administrator')) {
+                die('Security error');
+            } 
+            global $wpdb;
+            $result = array(
+                'flag'    =>  1
+            );           
+            delete_transient( 'nbd_list_products' );
+            delete_transient( 'nbd_number_of_products' );       
+            //delete_transient( 'nbd_design_category' );       
+            //delete_transient( 'nbd_designers' );       
+            $sql = "DELETE a, b FROM $wpdb->options a, $wpdb->options b
+                    WHERE a.option_name LIKE %s
+                    AND a.option_name NOT LIKE %s
+                    AND b.option_name = CONCAT( '_transient_timeout_nbd_', SUBSTRING( a.option_name, 16 ) )
+                    AND b.option_value < %d";
+            $rows = $wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_transient_nbd_' ) . '%', $wpdb->esc_like( '_transient_timeout_nbd_' ) . '%', time() ) );
+            $sql = "DELETE a, b FROM $wpdb->options a, $wpdb->options b
+                    WHERE a.option_name LIKE %s
+                    AND a.option_name NOT LIKE %s
+                    AND b.option_name = CONCAT( '_site_transient_timeout_nbd_', SUBSTRING( a.option_name, 21 ) )
+                    AND b.option_value < %d";
+            $rows2 = $wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( '_site_transient_nbd_' ) . '%', $wpdb->esc_like( '_site_transient_timeout_nbd_' ) . '%', time() ) );            
+            echo json_encode($result);
+            wp_die();            
+        }  
     }
 }

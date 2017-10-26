@@ -319,8 +319,13 @@ $(document).ready(function(){
         $(this).tooltip('hide');
     });
     $( ".pop-tools" ).draggable({
-        handle: "h2"
-    });
+        handle: "h2",
+        containment: "window"
+    }); 
+    $( ".pop-bg-color" ).draggable({
+        handle: "h2",
+        containment: "window"
+    });    
     $( ".top-center-menu" ).draggable({
         handle: '#toolbar-menu-handle'
     });    

@@ -66,8 +66,11 @@
 		<div class="nbdesigner-list-fonts inside">				
                     <div class="nbdesigner-list-arts-container">
                             <?php if(is_array($_list) && (sizeof($_list) > 0)): ?>
-                                    <?php foreach($_list as $val): ?>
-                                            <span class="nbdesigner_art_link "><img src="<?php echo $val->url; ?>" /><span class="nbdesigner_action_delete_art" data-index="<?php echo $val->id; ?>" onclick="NBDESIGNADMIN.delete_art(this)">&times;</span></span>
+                                    <?php 
+                                        foreach($_list as $val): 
+                                        $art_url = ( strpos($val->url, 'http') > -1 ) ? $val->url : NBDESIGNER_ART_URL.$val->url;
+                                    ?>
+                                            <span class="nbdesigner_art_link "><img src="<?php echo $art_url; ?>" /><span class="nbdesigner_action_delete_art" data-index="<?php echo $val->id; ?>" onclick="NBDESIGNADMIN.delete_art(this)">&times;</span></span>
                                     <?php endforeach; ?>
                             <?php else: ?>
                                     <?php _e('You don\'t have any art.', 'web-to-print-online-designer');?>

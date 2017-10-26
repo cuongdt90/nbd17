@@ -305,33 +305,41 @@ class Product_Template_List_Table extends WP_List_Table {
             exit;
         }          
         if (( isset($_POST['action']) && $_POST['action'] == 'bulk-delete' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-delete' )) {
-            $delete_ids = esc_sql($_POST['bulk-delete']);
-            foreach ($delete_ids as $id) {
-                self::delete_template($id);
+            if( isset( $_POST['bulk-delete'] ) ){
+                $delete_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($delete_ids as $id) {
+                    self::delete_template($id);
+                }
             }
             wp_redirect(esc_url_raw(add_query_arg('','')));
             exit;
         }
         if (( isset($_POST['action']) && $_POST['action'] == 'bulk-publish' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-publish' )) {
-            $delete_ids = esc_sql($_POST['bulk-delete']);
-            foreach ($delete_ids as $id) {
-                self::update_template($id, array('publish' => 1));
+            if( isset( $_POST['bulk-delete'] ) ){
+                $delete_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($delete_ids as $id) {
+                    self::update_template($id, array('publish' => 1));
+                }
             }
             wp_redirect(esc_url_raw(add_query_arg('','')));
             exit;
         }        
         if (( isset($_POST['action']) && $_POST['action'] == 'bulk-unpublish' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-unpublish' )) {
-            $delete_ids = esc_sql($_POST['bulk-delete']);
-            foreach ($delete_ids as $id) {
-                self::update_template($id, array('publish' => 0));
+            if( isset( $_POST['bulk-delete'] ) ){
+                $delete_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($delete_ids as $id) {
+                    self::update_template($id, array('publish' => 0));
+                }
             }
             wp_redirect(esc_url_raw(add_query_arg('','')));
             exit;
         } 
         if (( isset($_POST['action']) && $_POST['action'] == 'bulk-private' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-private' )) {
-            $delete_ids = esc_sql($_POST['bulk-delete']);
-            foreach ($delete_ids as $id) {
-                self::update_template($id, array('private' => 1, 'publish' => 0));
+            if( isset( $_POST['bulk-delete'] ) ){
+                $delete_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($delete_ids as $id) {
+                    self::update_template($id, array('private' => 1, 'publish' => 0));
+                }
             }
             wp_redirect(esc_url_raw(add_query_arg('','')));
             exit;

@@ -35,7 +35,7 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                         'id' => 'nbdesigner_number_file_upload',
                         'css'         => 'width: 65px',
                         'default'	=> '1',
-                        'description' => __( 'Let customers download their own files.', 'web-to-print-online-designer'),
+                        'description' => __( 'Number of files allow user upload.', 'web-to-print-online-designer'),
                         'type' 		=> 'number'
                     ),
                     array(

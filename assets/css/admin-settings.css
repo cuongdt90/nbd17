@@ -30,3 +30,28 @@
 .nbdesigner-multi-values .nbd-select {
     cursor: pointer;
 }
+input[data-depend] {
+    margin-left: 25px;
+}
+.nbd-hide {
+    display: none;
+}
+.nbd-footer {
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.nbd-footer.fixed {
+    position: fixed;
+    bottom: 0;
+    background: #fff;
+    width: 100%;
+    left: 0;
+    padding: 15px 0 15px 180px;
+    z-index: 9;
+    margin: 0;
+    box-shadow: 0px -3px 15px rgba(0,0,0,0.1);  
+}
+#nbdesigner-options-form-nbdesigner select {
+    padding: 0;
+}

@@ -23,6 +23,12 @@ class Nbdesigner_IO {
         $list = preg_grep('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $_list);
         return $list;        
     }
+    public static function get_list_svgs($path, $level = 100){
+        $list = array();
+        $_list = self::get_list_files($path, $level);
+        $list = preg_grep('/\.(svg)(?:[\?\#].*)?$/i', $_list);
+        return $list;        
+    }    
     public static function get_list_files($folder = '', $levels = 100) {
         if (empty($folder))
             return false;
@@ -285,7 +291,7 @@ class NBD_Image {
         $image = self::resample( $source, $height, $width, $dpi );
         file_put_contents( $ouput_file, $image );
     }
-    public static function imagick_add_white_bg( $input_file, $ouput_file ){
+    public static function imagick_add_white_bg( $input_file, $ouput_file ){       
         try {
             $image = new Imagick( $input_file );
             $bg = new IMagick();
@@ -563,7 +569,22 @@ function default_frontend_setting(){
         
         'nbdesigner_enable_draw' => 'yes',
         'nbdesigner_draw_brush' => 1,          
+        'nbdesigner_draw_brush_pencil' => 1,          
+        'nbdesigner_draw_brush_circle' => 1,          
+        'nbdesigner_draw_brush_spray' => 1,          
+        'nbdesigner_draw_brush_pattern' => 1,          
+        'nbdesigner_draw_brush_hline' => 1,          
+        'nbdesigner_draw_brush_vline' => 1,          
+        'nbdesigner_draw_brush_square' => 1,          
+        'nbdesigner_draw_brush_diamond' => 1,          
+        'nbdesigner_draw_brush_texture' => 1,          
         'nbdesigner_draw_shape' => 1, 
+        'nbdesigner_draw_shape_rectangle' => 1, 
+        'nbdesigner_draw_shape_circle' => 1, 
+        'nbdesigner_draw_shape_triangle' => 1, 
+        'nbdesigner_draw_shape_line' => 1, 
+        'nbdesigner_draw_shape_polygon' => 1, 
+        'nbdesigner_draw_shape_hexagon' => 1, 
         
         'nbdesigner_enable_qrcode' => 'yes',
         'nbdesigner_default_qrcode' => __('example.com', 'web-to-print-online-designer'),
@@ -573,6 +594,7 @@ function default_frontend_setting(){
         'nbdesigner_default_color' => '#cc324b',
         'nbdesigner_hex_names' => '',        
         'nbdesigner_save_latest_design'  => 'yes',
+        'nbdesigner_cache_uploaded_image'  => 'yes',
         
         'nbdesigner_upload_file_php_logged_in' => 'no'
     );
@@ -665,7 +687,7 @@ function getUrlPageNBD($page){
             break;         
     }
     $post = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name='".$post_name."'"); 
-    if ( function_exists('icl_object_id') ) {
+    if ( class_exists('SitePress') ) {
         return ($post) ? get_page_link(icl_object_id($post,'page',false)) : '#';
     }else{
         return ($post) ? get_page_link($post) : '#';
@@ -822,7 +844,7 @@ if ( ! function_exists( 'is_nbd_designer_page' ) ) {
 if( !function_exists('nbd_get_page_id')){
     function nbd_get_page_id($page){
         $page = apply_filters( 'nbdesigner_' . $page . '_page_id', get_option('nbdesigner_' . $page . '_page_id' ) );
-        if ( function_exists('icl_object_id') ) {
+        if ( class_exists('SitePress') ) {
             $page = icl_object_id($page,'page',false);
         }  
         return $page ? absint( $page ) : -1;
@@ -947,6 +969,9 @@ function nbd_get_language($code){
             $data_langs = array_merge($data_langs_origin, $data_langs);
         }
         $data['langs'] = $data_langs;
+        if(is_array( $data['langs'] )){
+            asort($data['langs']);
+        }
         $data['code'] = $code;
     }else{
         $data['mes'] = 'error';
@@ -1052,7 +1077,7 @@ function nbd_exec($cmd) {
     return $output;
 }
 function get_wpml_original_id( $id, $type = 'post' ){
-    if (function_exists('icl_object_id')) {
+    if (class_exists('SitePress')) {
         global $sitepress;
         $langcode = $sitepress->get_default_language();
         $id = icl_object_id($id, $type, true, $langcode);
@@ -1060,7 +1085,7 @@ function get_wpml_original_id( $id, $type = 'post' ){
     return $id;
 }
 function get_wpml_current_id( $id, $type = 'post' ){
-    if ( function_exists('icl_object_id') ) {
+    if ( class_exists('SitePress') ) {
         return icl_object_id($id,'post',false);
     } 
     return $id;

@@ -124,6 +124,17 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         )
                     ),
                     array(
+                        'title' => __('Cache customer uploaded image', 'web-to-print-online-designer'),
+                        'description' => __('Cache customer uploaded image links on browser.', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_cache_uploaded_image',
+                        'default' => 'yes',
+                        'type' => 'radio',
+                        'options' => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer'),
+                        )
+                    ),                    
+                    array(
                         'title' => __('Allow customer re-design after order', 'web-to-print-online-designer'),
                         'description' => __('After order, customer can edit they design before it is approved or rejected.', 'web-to-print-online-designer'),
                         'id' => 'allow_customer_redesign_after_order',

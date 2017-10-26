@@ -55,6 +55,11 @@
             <label for="_nbdesigner_enable_upload"><?php _e('Enable Upload Design', 'web-to-print-online-designer'); ?></label>
             <input type="checkbox" value="1" name="_nbdesigner_enable_upload" id="_nbdesigner_enable_upload" <?php checked($enable_upload); ?> class="short" /> 
         </p>
+        <p class="nbd-option-top <?php if (! ($enable && $enable_upload ) ) echo 'nbdesigner-disable'; ?>" id="nbd_upload_without_design_status">
+            <input type="hidden" value="0" name="_nbdesigner_enable_upload_without_design"/>
+            <label for="_nbdesigner_upload_without_design"><?php _e('Enable Upload Without Design', 'web-to-print-online-designer'); ?></label>
+            <input type="checkbox" value="1" name="_nbdesigner_enable_upload_without_design" id="_nbdesigner_upload_without_design" <?php checked($upload_without_design); ?> class="short" /> 
+        </p>        
     </div>
     <div id="nbd-setting-container" class="<?php if (!$enable) echo 'nbdesigner-disable'; ?>">
         <ul class="nbd-tabs">

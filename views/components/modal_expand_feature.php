@@ -13,10 +13,10 @@
             <div class="modal-body" >
                 <div class="tab-content">
                     <div class="tab-pane active" id="template-designs">
-                        <span ng-click="resetAdminDesign()" class="shadow hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['RESET_TEMPLATE']) ? langs['RESET_TEMPLATE'] : 'Reset Template'}}"><i class="fa fa-refresh" aria-hidden="true"></i></span>
-                        <span ng-click="loadAdminListDesign()" class="shadow hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['LOAD_TEMPLATE']) ? langs['LOAD_TEMPLATE'] : 'Load Template'}}"><i class="fa fa-search" aria-hidden="true"></i></span>
-                        <span ng-click="exportDesign()" class="shadow hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['EXPORT_DESIGN_TO_JSON']) ? langs['EXPORT_DESIGN_TO_JSON'] : 'Export design to JSON'}}"><i class="fa fa-cloud-download" aria-hidden="true"></i></span>
-                        <span ng-click="toggleImportArea()" class="shadow hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['IMPORT_DESIGN_FROM_JSON']) ? langs['IMPORT_DESIGN_FROM_JSON'] : 'Import design from JSON'}}"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span>
+                        <span ng-click="resetAdminDesign()" class="nbd-flat-btn hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['RESET_TEMPLATE']) ? langs['RESET_TEMPLATE'] : 'Reset Template'}}"><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                        <span ng-click="loadAdminListDesign()" class="nbd-flat-btn hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['LOAD_TEMPLATE']) ? langs['LOAD_TEMPLATE'] : 'Load Template'}}"><i class="fa fa-search" aria-hidden="true"></i></span>
+                        <span ng-click="exportDesign()" class="nbd-flat-btn hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['EXPORT_DESIGN_TO_JSON']) ? langs['EXPORT_DESIGN_TO_JSON'] : 'Export design to JSON'}}"><i class="fa fa-cloud-download" aria-hidden="true"></i></span>
+                        <span ng-click="toggleImportArea()" class="nbd-flat-btn hover-shadow feature-button" data-toggle="tooltip" data-original-title="{{(langs['IMPORT_DESIGN_FROM_JSON']) ? langs['IMPORT_DESIGN_FROM_JSON'] : 'Import design from JSON'}}"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span>
                         <div class="design-editor-container" id="design-editor-container">
                             <textarea class="design-editor" rows="10" id="design-json-content" placeholder="{{(langs['PASTE_CONTENT_JSON_FILE']) ? langs['PASTE_CONTENT_JSON_FILE'] : 'Paste content in file design.json'}}"></textarea>
                             <button ng-click="importDesign()" class="btn btn-primary shadow nbdesigner_upload btn-dialog">{{(langs['APPLY']) ? langs['APPLY'] : "Apply"}}</button>
@@ -44,7 +44,7 @@
                     </div>
                     <div class="tab-pane" id="my-cart">
                         <p>{{(langs['CHOOSE_DESIGN_FROM_CART']) ? langs['CHOOSE_DESIGN_FROM_CART'] : "Choose designs from cart"}} 
-                            <span ng-click="loadDesignInCart(true)" class="shadow hover-shadow feature-button" data-placement="right" 
+                            <span ng-click="loadDesignInCart(true)" class="nbd-flat-btn hover-shadow feature-button" data-placement="right" 
                                   style="margin-bottom: 0; margin-left: 15px;"
                                   data-toggle="tooltip" data-original-title="{{(langs['RELOAD_CART']) ? langs['RELOAD_CART'] : 'Reload Cart'}}">
                                 <i class="fa fa-refresh" aria-hidden="true"></i>

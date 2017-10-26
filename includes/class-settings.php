@@ -98,7 +98,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             do_action( 'nbdesigner_settings_footer_start', $this->page_id );
             ?>
                 <br class="clear" />
-                <p>
+                <p id="nbd-footer" class="nbd-footer">
                     <button type="submit" class="button-primary" name="nbdesigner_save_options_<?php echo $this->page_id; ?>"><?php _e('Save Options', 'web-to-print-online-designer'); ?></button>
                     <button type="submit" class="button-secondary" name="nbdesigner_reset_options_<?php echo $this->page_id; ?>" ><?php _e('Reset', 'web-to-print-online-designer'); ?></button>
                 </p>
@@ -162,6 +162,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             $subfix = isset($parameters['subfix']) ? $parameters['subfix'] : false;
             $value = get_option($id) !== false ? get_option($id) : '';
             $options = isset($parameters['options']) ? $parameters['options'] : array();
+            $depend = isset($parameters['depend']) ? $parameters['depend'] : array();
             $custom_attributes = isset($parameters['custom_attributes']) ? $parameters['custom_attributes'] : array();
             $relations = isset($parameters['relations']) ? $parameters['relations'] : array();
             $placeholder = isset($parameters['placeholder']) ? 'placeholder="' . esc_attr($parameters['placeholder']) . '"' : '';
@@ -270,8 +271,20 @@ if( !class_exists('Nbdesigner_Settings') ) {
                 $input_html .= '<p>'.__('Select', 'web-to-print-online-designer').': <a class="nbd-select select-all">All</a>&nbsp;&nbsp;<a class="nbd-select select-none">None</a></p>';
                 foreach ($options as $key => $label) {
                     $val = nbdesigner_get_option($key);
-                    $op_checked = $val == 1 ? 'checked="checked"' : '';                    
-                    $input_html .= '<p><input type="hidden" value="0" name="'. esc_attr($key) .'"/><input value="1" type="checkbox" '.$op_checked.' id="'. esc_attr($key) .'" name="'.esc_attr($key).'"/><label for="'. esc_attr($key) .'" style="'. esc_attr($css) .'">' .esc_attr($label). '</label></p>';
+                    $op_checked = $val == 1 ? 'checked="checked"' : ''; 
+                    $_depend = '';
+                    $class = '';
+                    if(isset($depend[$key]) && $depend[$key] != ''){
+                        if( $depend[$key] != $key ){
+                            $_depend = 'data-depend='.$depend[$key];
+                            if( nbdesigner_get_option($depend[$key]) != 1 ){
+                                $class = 'nbd-hide';
+                            }
+                        }else{
+                            $_depend = 'data-undepend=1';
+                        }
+                    }
+                    $input_html .= '<p class='.$class.'><input type="hidden" value="0" name="'. esc_attr($key) .'"/><input '.$_depend.' value="1" type="checkbox" '.$op_checked.' id="'. esc_attr($key) .'" name="'.esc_attr($key).'"/><label for="'. esc_attr($key) .'" style="'. esc_attr($css) .'">' .esc_attr($label). '</label></p>';
                 }
                 $input_html .= '</div>';
             }

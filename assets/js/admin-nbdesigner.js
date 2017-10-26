@@ -24,6 +24,10 @@ jQuery(document).ready(function ($) {
         if( $('.nbd-tabber.nbd-upload').hasClass( 'selected' ) ){
             $('.nbd-tabber.nbd-design').triggerHandler( 'click' );
         }
+        $('#nbd_upload_without_design_status').toggleClass('nbdesigner-disable');   
+        if( !$('#_nbdesigner_enable_upload').prop("checked") && $('#_nbdesigner_upload_without_design').prop("checked") ){
+            $('#_nbdesigner_upload_without_design').prop("checked", false);
+        }
     });    
     $('.nbd-dependence').change(function() {
         var t = $(this);
@@ -288,7 +292,22 @@ jQuery(document).ready(function ($) {
                 alert('Oops! Try again!');
             }              
         });         
-    });    
+    });  
+    $('#nbd-clear-transients').on('click', function(e){
+        e.preventDefault();
+        var formdata = $('#nbd-clear-transients-con').find('textarea, select, input').serialize();
+        formdata = formdata + '&action=nbd_clear_transients';
+        jQuery('#nbdesigner_clear_transients_loading').removeClass('nbdesigner_loaded');
+        jQuery.post(admin_nbds.url, formdata, function(data){
+            jQuery('#nbdesigner_clear_transients_loading').addClass('nbdesigner_loaded');
+            data = JSON.parse(data);
+            if(parseInt(data.flag) == 1){
+                alert('Clear success!');
+            }else {
+                alert('Oops! Try again!');
+            }              
+        });         
+    });     
     $('#woocommerce-product-data').on('woocommerce_variations_loaded', function(event) {
         NBDESIGNADMIN.loopConfigAreaDesign();
     });  
@@ -369,7 +388,11 @@ jQuery(document).ready(function ($) {
     });
     $('.nbdesigner-multi-values .select-none').on('click', function(){
         $(this).parents('.nbdesigner-multi-values').find('input:checkbox').removeAttr('checked');
-    });    
+    });   
+    $('.nbdesigner-multi-values input[data-undepend]').change(function(){
+        var depend = $(this).attr('id');
+        $(this).parents('.nbdesigner-multi-values').find('input[data-depend='+depend+']').parent('p').toggleClass('nbd-hide');
+    });
     if($('input[name="nbdesigner_show_all_color"]:checked').val() == 'yes') $('#color-setting > tbody tr:nth-child(2)').hide();
     $('input[name="nbdesigner_show_all_color"]').on('click', function(){
         var value = $(this).val();
@@ -425,6 +448,22 @@ jQuery(document).ready(function ($) {
         });        
     };
 });
+jQuery(window).on('scroll', function () {
+    nbdScrollEffect();
+});
+var nbdScrollEffect = function(){
+    var scrollTop = jQuery(window).scrollTop();
+    if (scrollTop > 500) {
+        if ((window.innerHeight + scrollTop) >= ( jQuery('#wpwrap').height() - 100 ) ) {
+            jQuery('#nbd-footer').removeClass('fixed');
+            console.log(1);
+        } else{       
+            jQuery('#nbd-footer').addClass('fixed');
+        }
+    } else {
+        jQuery('#nbd-footer').removeClass('fixed');
+    }    
+};
 var NBDESIGNADMIN = {
     add_font_cat: function (e) {
         var cat_name = jQuery(e).parent().find('.nbdesigner_font_name').val(),

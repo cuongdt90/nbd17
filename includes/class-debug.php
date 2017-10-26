@@ -198,7 +198,7 @@ class Nbdesigner_DebugTool {
             wp_die();   
         } 
         $custom_css = '';
-        $path = NBDESIGNER_PLUGIN_DIR . 'assets/css/custom.css';
+        $path = NBDESIGNER_DATA_DIR .'/custom.css';
         if(isset($_POST['content'])){
             $custom_css = $_POST['content'];
             $fp = fopen($path, "w");
@@ -212,7 +212,7 @@ class Nbdesigner_DebugTool {
     }
     public static function get_custom_css(){
         $custom_css = '';
-        $path = NBDESIGNER_PLUGIN_DIR . 'assets/css/custom.css';
+        $path = file_exists( NBDESIGNER_DATA_DIR . '/custom.css' ) ? NBDESIGNER_DATA_DIR .'/custom.css' : NBDESIGNER_PLUGIN_DIR .'assets/css/custom.css';
         if(file_exists($path)){
             $fp = fopen( $path, 'r' );
             $custom_css = fread($fp, filesize($path));

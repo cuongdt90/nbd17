@@ -21,7 +21,7 @@
                     <tr valign="top">
                         <th scope="row" class="titledesc"><?php echo __("Choose language", 'web-to-print-online-designer'); ?></th>
                         <td class="forminp-text">
-                            <select id="nbdesign-language-option" name="nbdesigner_codelang">
+                            <select id="nbdesign-language-option" name="nbdesigner_codelang" style="padding: 0; width: auto;">
                             <?php foreach ($languages as $language): ?>
                                 <option value="<?php echo $language['language']; ?>"><?php echo $language['native_name']; ?></option>
                             <?php endforeach; ?>

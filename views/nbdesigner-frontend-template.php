@@ -34,7 +34,8 @@
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bundle.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/tooltipster.bundle.min.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/style.min.css'; ?>" rel="stylesheet" media="all">
-        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/custom.css'; ?>" rel="stylesheet" media="all">
+        <?php $custom_css_url = file_exists( NBDESIGNER_DATA_DIR . '/custom.css' ) ? NBDESIGNER_DATA_URL .'/custom.css' : NBDESIGNER_PLUGIN_URL .'assets/css/custom.css'; ?>
+        <link type="text/css" href="<?php echo $custom_css_url; ?>" rel="stylesheet" media="all">
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php if(is_rtl()): ?>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/nbdesigner-rtl.css'; ?>" rel="stylesheet" media="all">
@@ -56,7 +57,9 @@
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
             $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : (($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '');
             $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);  
+            $_enable_upload_without_design = get_post_meta($product_id, '_nbdesigner_enable_upload_without_design', true);  
             $enable_upload = $_enable_upload ? 2 : 1;
+            $enable_upload_without_design = $_enable_upload_without_design ? 2 : 1;
             if( $task == 'reup' ){
                 $list_file_upload = nbd_get_upload_files_from_session( $nbu_item_key );
             }else {
@@ -78,9 +81,11 @@
                 is_mobile   :   "<?php echo wp_is_mobile(); ?>",
                 ui_mode   :   "<?php echo $ui_mode; ?>",
                 enable_upload   :   "<?php echo $enable_upload; ?>",
+                enable_upload_without_design   :   "<?php echo $enable_upload_without_design; ?>",
                 stage_dimension :   {'width' : 500, 'height' : 500},
+                nbd_content_url    :   "<?php echo NBDESIGNER_DATA_URL; ?>",
                 font_url    :   "<?php echo $font_url; ?>",
-                art_url    :   "<?php echo NBDESIGNER_ART_URL .'/'; ?>",
+                art_url    :   "<?php echo NBDESIGNER_ART_URL; ?>",
                 is_designer :  <?php if(current_user_can('edit_nbd_template')) echo 1; else echo 0; ?>,
                 assets_url  :   "<?php echo NBDESIGNER_PLUGIN_URL . 'assets/'; ?>",
                 ajax_url    : "<?php echo admin_url('admin-ajax.php'); ?>",
@@ -116,7 +121,7 @@
                 <?php else: ?>
                 NBDESIGNCONFIG['<?php echo $key; ?>'] = "<?php echo $val; ?>";    
                 <?php endif; ?>    
-            <?php endforeach; ?>        
+            <?php endforeach; ?>
             var _colors = NBDESIGNCONFIG['nbdesigner_hex_names'].split(','),
             colorPalette = [], row = [];
             for(var i=0; i < _colors.length; ++i) {
@@ -180,6 +185,7 @@
                 }
                 include_once('components/popover_layer.php');
                 include_once('components/popover_tools.php');
+                include_once('components/popover_color.php');
                 include_once('components/tool_top.php');
                 include_once('components/helpdesk.php');
                 ?>
@@ -199,7 +205,7 @@
                 <p id="first_message">{{(langs['NBDESIGNER_PROCESSING']) ? langs['NBDESIGNER_PROCESSING'] : "NBDESIGNER PROCESSING"}}...</p>
             </div>
             <?php if( $reference == '' ): ?>
-            <div class="design-options" id="design-options" ng-show="settings['enable_upload'] == '2' && settings['task'] == 'new'">
+            <div class="design-options" id="design-options" ng-show="settings['enable_upload'] == '2' && settings['enable_upload_without_design'] == '1' && settings['task'] == 'new'">
                 <div class="inner">
                     <div>
                         <div class="option shasow" ng-click="changeDesignMode('upload')"><i class="fa fa-cloud-upload" aria-hidden="true"></i>{{(langs['UPLOAD__DESIGN']) ? langs['UPLOAD__DESIGN'] : "Upload Design"}}</div>
@@ -238,7 +244,8 @@
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.curvedText.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.removeColor.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/_layout.js'; ?>"></script>
-            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.3.0/js/spectrum.min.js"></script>    
+            <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/spectrum.js'; ?>"></script>
+            <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.3.0/js/spectrum.min.js"></script>    -->
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer.min.js'; ?>"></script>	
         </div>
     </body>

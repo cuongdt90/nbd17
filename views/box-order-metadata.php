@@ -17,7 +17,7 @@
                     $variation = '';
                     if(!is_woo_v3()){
                         $variation = $item_meta->display($flat=true,$return=true);    
-                    }   
+                    }  
 		?>
                     <div>
                         <h4 class="nbdesigner_order_product_name">

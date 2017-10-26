@@ -1,5 +1,11 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<h2 class="nbd-title-page"><?php echo __('Manager NBDesigner Products', 'web-to-print-online-designer'); ?></h2>
+<div class="nbd-header-with-form">
+    <h2 class="nbd-title-page"><?php echo __('Manager NBDesigner Products', 'web-to-print-online-designer'); ?></h2>
+    <form action="#" method="POST" class="nbd-header-form">
+        <input type="search" name="q" value="<?php echo $q; ?>"/>
+        <input type="submit" value="<?php _e('Search products', 'web-to-print-online-designer'); ?>" class="button" />
+    </form>
+</div>
 <?php add_thickbox(); ?>
 <div class="wrap postbox nbdesigner-manager-product">
     <div>
@@ -53,7 +59,7 @@
                             <tr valign="top">
                                 <th scope="row" class="titledesc"><?php echo __("Choose variation", 'web-to-print-online-designer'); ?></th>
                                 <td class="forminp-text">
-                                    <select onchange="changeLink(this)">
+                                    <select onchange="changeLink(this)" style="padding: 0;">
                                     <?php foreach ($variations as $variation): ?>
                                         <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
                                     <?php endforeach; ?>
@@ -83,3 +89,14 @@
         btn.attr('href', new_href);
     }
 </script>
+<style type="text/css">
+    .nbd-header-with-form {
+        position: relative;
+    }
+    .nbd-header-form {
+        position: absolute;
+        display: inline-block;
+        top: 10px;
+        right: 25px;
+    }
+</style>

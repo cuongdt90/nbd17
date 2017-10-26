@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
         var html = '';
         var d = new Date();
         jQuery.each(arr, function (key, val) {
-            html += '<div class="img-con" style=\"display: inline-block; margin-right: 15px;\"><img src="' + val.src + '?t=' + d.getTime() +'" style=\"width: 100px;\"/></div>'
+            html += '<div class="img-con" style=\"display: inline-block; margin-right: 15px;\"><img src="' + val.src + '?t=' + d.getTime() +'" style=\"width: 100px;\"/><p class="nbd-file-title">'+val.name+'</p></div>'
         });
         jQuery('#nbdesigner_upload_preview').html('').append(html);         
     }
@@ -80,6 +80,193 @@ var NBDESIGNERPRODUCT = {
         jQuery('#nbdesigner_frontend_area').html('');
         jQuery('#nbdesigner_frontend_area').append(html);
         hideDesignFrame();
+
+        var flipbook = jQuery("[class*=real3dflipbook]:first");
+        if( flipbook.length > 0 ){
+            var _class = flipbook.attr('class'),
+                obj = 'real3dflipbook_' + _class.substring(_class.length - 1);  
+            var options = window[obj];
+            var json_str = options.replace(/&quot;/g, '"');
+            json_str = json_str.replace(/“/g, '"');
+            json_str = json_str.replace(/”/g, '"');
+            json_str = json_str.replace(/″/g, '"');
+            json_str = json_str.replace(/„/g, '"');
+
+            json_str = json_str.replace(/«&nbsp;/g, '"');
+            json_str = json_str.replace(/&nbsp;»/g, '"');
+
+
+            options = jQuery.parseJSON(json_str);
+            options.assets = {
+                preloader: options.rootFolder + "images/preloader.jpg",
+                left: options.rootFolder + "images/left.png",
+                overlay: options.rootFolder + "images/overlay.jpg",
+                flipMp3: options.rootFolder + "mp3/turnPage.mp3",
+                shadowPng: options.rootFolder + "images/shadow.png"
+            };
+            var pages = [];    
+            jQuery.each(arr, function (key, val) {
+                pages.push({
+                    htmlContent: '',
+                    src: val,
+                    thumb: val,
+                    title: key
+                });
+            });
+            options.pages = pages;
+            options.pdfjsworkerSrc = options.rootFolder + 'js/pdf.worker.min.js'
+            function convertStrings(obj) {
+                jQuery.each(obj, function (key, value) {
+                    if (typeof (value) == 'object' || typeof (value) == 'array') {
+                        convertStrings(value)
+                    } else if (!isNaN(value)) {
+                        if (obj[key] === "")
+                            delete obj[key]
+                        else
+                            obj[key] = Number(value)
+                    } else if (value == "true") {
+                        obj[key] = true
+                    } else if (value == "false") {
+                        obj[key] = false
+                    }
+                });
+
+            }
+            convertStrings(options);
+            for (var i = 0; i < options.pages.length; i++) {
+                if (typeof (options.pages[i].htmlContent) != 'undefined' && options.pages[i].htmlContent != "" && options.pages[i].htmlContent != "undefined")
+                    options.pages[i].htmlContent = unescape(options.pages[i].htmlContent)
+                else
+                    delete options.pages[i].htmlContent
+            }
+            options.social = [];
+            if (options.facebook == "")
+                delete options.facebook
+            if (options.twitter == "")
+                delete options.twitter
+            if (options.google_plus == "")
+                delete options.google_plus
+            if (options.pinterest == "")
+                delete options.pinterest
+            if (options.email == "")
+                delete options.email
+            if (options.pageWidth == "")
+                delete options.pageWidth
+            if (options.pageHeight == "")
+                delete options.pageHeight
+
+            if (typeof (options.btnShare) == 'undefined' || !options.btnShare)
+                options.btnShare = {enabled: false}
+            if (typeof (options.btnNext) == 'undefined' || !options.btnNext)
+                options.btnNext = {enabled: false}
+            if (typeof (options.btnPrev) == 'undefined' || !options.btnPrev)
+                options.btnPrev = {enabled: false}
+            if (typeof (options.btnZoomIn) == 'undefined' || !options.btnZoomIn)
+                options.btnZoomIn = {enabled: false}
+            if (typeof (options.btnZoomOut) == 'undefined' || !options.btnZoomOut)
+                options.btnZoomOut = {enabled: false}
+            if (typeof (options.btnToc) == 'undefined' || !options.btnToc)
+                options.btnToc = {enabled: false}
+            if (typeof (options.btnThumbs) == 'undefined' || !options.btnThumbs)
+                options.btnThumbs = {enabled: false}
+            if (typeof (options.btnDownloadPages) == 'undefined' || !options.btnDownloadPages)
+                options.btnDownloadPages = {enabled: false}
+            if (typeof (options.btnDownloadPdf) == 'undefined' || !options.btnDownloadPdf)
+                options.btnDownloadPdf = {enabled: false}
+            if (typeof (options.btnExpand) == 'undefined' || !options.btnExpand)
+                options.btnExpand = {enabled: false}
+            if (typeof (options.btnExpandLightbox) == 'undefined' || !options.btnExpandLightbox)
+                options.btnExpandLightbox = {enabled: false}
+            if (typeof (options.btnSound) == 'undefined' || !options.btnSound)
+                options.btnSound = {enabled: false}
+            if (typeof (options.btnShare.icon) == 'undefined' || options.btnShare.icon == '')
+                options.btnShare.icon = "fa-share";
+            if (typeof (options.btnShare.title) == 'undefined' || options.btnShare.title == '')
+                options.btnShare.title = "Share";
+
+            if (typeof (options.btnNext.icon) == 'undefined' || options.btnNext.icon == '')
+                options.btnNext.icon = "fa-chevron-right";
+            if (typeof (options.btnNext.title) == 'undefined' || options.btnNext.title == '')
+                options.btnNext.title = "Next page";
+
+            if (typeof (options.btnPrev.icon) == 'undefined' || options.btnPrev.icon == '')
+                options.btnPrev.icon = "fa-chevron-left";
+            if (typeof (options.btnPrev.title) == 'undefined' || options.btnPrev.title == '')
+                options.btnPrev.title = "Previous page";
+
+            if (typeof (options.btnZoomIn.icon) == 'undefined' || options.btnZoomIn.icon == '')
+                options.btnZoomIn.icon = "fa-plus";
+            if (typeof (options.btnZoomIn.title) == 'undefined' || options.btnZoomIn.title == '')
+                options.btnZoomIn.title = "Zoom in";
+
+            if (typeof (options.btnZoomOut.icon) == 'undefined' || options.btnZoomOut.icon == '')
+                options.btnZoomOut.icon = "fa-minus";
+            if (typeof (options.btnZoomOut.title) == 'undefined' || options.btnZoomOut.title == '')
+                options.btnZoomOut.title = "Zoom out";
+
+            if (typeof (options.btnToc.icon) == 'undefined' || options.btnToc.icon == '')
+                options.btnToc.icon = "fa-list-ol";
+            if (typeof (options.btnToc.title) == 'undefined' || options.btnToc.title == '')
+                options.btnToc.title = "Table of content";
+
+            if (typeof (options.btnThumbs.icon) == 'undefined' || options.btnThumbs.icon == '')
+                options.btnThumbs.icon = "fa-th-large";
+            if (typeof (options.btnThumbs.title) == 'undefined' || options.btnThumbs.title == '')
+                options.btnThumbs.title = "Pages";
+
+            if (typeof (options.btnDownloadPages.icon) == 'undefined' || options.btnDownloadPages.icon == '')
+                options.btnDownloadPages.icon = "fa-download";
+            if (typeof (options.btnDownloadPages.title) == 'undefined' || options.btnDownloadPages.title == '')
+                options.btnDownloadPages.title = "Download pages";
+            // if(options.downloadPagesUrl)
+            // options.btnDownloadPages.url = options.downloadPagesUrl;
+
+            if (typeof (options.btnDownloadPdf.icon) == 'undefined' || options.btnDownloadPdf.icon == '')
+                options.btnDownloadPdf.icon = "fa-file";
+            if (typeof (options.btnDownloadPdf.title) == 'undefined' || options.btnDownloadPdf.title == '')
+                options.btnDownloadPdf.title = "Download PDF";
+            // if(options.downloadPdfUrl)
+            // options.btnDownloadPdf.url = options.downloadPdfUrl;
+
+            if (typeof (options.btnExpand.icon) == 'undefined' || options.btnExpand.icon == '')
+                options.btnExpand.icon = "fa-expand";
+            if (typeof (options.btnExpand.iconAlt) == 'undefined' || options.btnExpand.iconAlt == '')
+                options.btnExpand.iconAlt = "fa-compress";
+            if (typeof (options.btnExpand.title) == 'undefined' || options.btnExpand.title == '')
+                options.btnExpand.title = "Toggle fullscreen";
+
+            if (typeof (options.btnExpandLightbox.icon) == 'undefined' || options.btnExpandLightbox.icon == '')
+                options.btnExpandLightbox.icon = "fa-expand";
+            if (typeof (options.btnExpandLightbox.iconAlt) == 'undefined' || options.btnExpandLightbox.iconAlt == '')
+                options.btnExpandLightbox.iconAlt = "fa-compress";
+            if (typeof (options.btnExpandLightbox.title) == 'undefined' || options.btnExpandLightbox.title == '')
+                options.btnExpandLightbox.title = "Toggle fullscreen";
+
+            if (typeof (options.btnSound.icon) == 'undefined' || options.btnSound.icon == '')
+                options.btnSound.icon = "fa-volume-up";
+            if (typeof (options.btnSound.title) == 'undefined' || options.btnSound.title == '')
+                options.btnSound.title = "Sound";
+
+            if (typeof (options.viewMode) == 'undefined')
+                options.viewMode = "webgl"
+
+            if (options.btnDownloadPages.url) {
+                options.btnDownloadPages.url = options.btnDownloadPages.url.replace(/\\/g, '/')
+                options.btnDownloadPages.enabled = true
+            } else
+                options.btnDownloadPages.enabled = false
+
+            if (options.btnDownloadPdf.url) {
+                options.btnDownloadPdf.url = options.btnDownloadPdf.url.replace(/\\/g, '/')
+                options.btnDownloadPdf.enabled = true
+            } else
+                options.btnDownloadPdf.enabled = false;
+
+
+            var flipcon = jQuery('.real3dflipbook-1');
+            flipcon.flipBook(options);
+        }
+        
     },
     nbdesigner_ready: function(){ 
         if(jQuery('input[name="variation_id"]').length > 0){

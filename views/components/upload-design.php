@@ -50,8 +50,8 @@
     <div ng-show="listFileUpload.length > 0">
         <span class="submit-upload-design" ng-click="completeUpload()">{{(langs['COMPLETE']) ? langs['COMPLETE'] : "Complete"}}</span>
     </div>
-    <p style="margin: 15px;" ng-hide="settings.task == 'reup'"><a ng-click="changeDesignMode('custom')">{{(langs['OR_DESIGN_YOUR_OWN']) ? langs['OR_DESIGN_YOUR_OWN'] : "Or design your own"}}</a></p>
-    <p style="font-size: 12px; opacity: 0.5;" ng-hide="settings['ui_mode'] == 1"><a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{(langs['RETURN_TO_SHOP']) ? langs['RETURN_TO_SHOP'] : "Return to shop"}}</a></p>
+    <p style="margin: 15px;" ng-hide="settings.task == 'reup' || settings.enable_upload_without_design == 2"><a ng-click="changeDesignMode('custom')">{{(langs['OR_DESIGN_YOUR_OWN']) ? langs['OR_DESIGN_YOUR_OWN'] : "Or design your own"}}</a></p>
+    <p style="font-size: 12px; opacity: 0.5; margin-top: 15px;" ng-hide="settings['ui_mode'] == 1"><a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {{(langs['RETURN_TO_SHOP']) ? langs['RETURN_TO_SHOP'] : "Return to shop"}}</a></p>
     <?php endif; ?> 
 </div>
 
