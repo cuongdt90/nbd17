@@ -558,6 +558,7 @@ function default_frontend_setting(){
         'nbdesigner_dropbox_app_id' => '', 
         'nbdesigner_enable_upload_image' => 'yes',
         'nbdesigner_upload_designs_php_logged_in' => 'no',
+        'nbdesigner_upload_multiple_images' => 'no',
         'nbdesigner_maxsize_upload' => nbd_get_max_upload_default(),
         'nbdesigner_minsize_upload' => 0,           
         'nbdesigner_enable_image_url' => 'yes',
@@ -594,6 +595,8 @@ function default_frontend_setting(){
         'nbdesigner_default_color' => '#cc324b',
         'nbdesigner_hex_names' => '',        
         'nbdesigner_save_latest_design'  => 'yes',
+        'nbdesigner_save_for_later'  => 'yes',
+        'nbdesigner_share_design'  => 'yes',
         'nbdesigner_cache_uploaded_image'  => 'yes',
         
         'nbdesigner_upload_file_php_logged_in' => 'no'
@@ -732,7 +735,7 @@ function nbd_get_template_by_folder( $folder ){
 function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '' ){
     $data = array();
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
-    $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
+    $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
     if( $_nbd_item_key && $task2 == '' && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     /* Path not exist in case add to cart before design, session has been init */  
@@ -775,9 +778,11 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['design'] = nbd_get_data_from_json($ref_path . '/design.json');
         $data['fonts'] = nbd_get_data_from_json($ref_path . '/used_font.json');
         $data['ref'] = unserialize(file_get_contents($ref_path . '/product.json'));
-    }
+    } 
     if( $data['upload']['allow_type'] == '' ) $data['upload']['allow_type'] = nbdesigner_get_option('nbdesigner_allow_upload_file_type');
     if( $data['upload']['disallow_type'] == '' ) $data['upload']['disallow_type'] = nbdesigner_get_option('nbdesigner_disallow_upload_file_type');
+    $data['upload']['allow_type'] = preg_replace('/\s+/', '', strtolower( $data['upload']['allow_type']) );
+    $data['upload']['disallow_type'] = preg_replace('/\s+/', '', strtolower( $data['upload']['disallow_type']) );
     return $data;        
 }
 function nbd_get_upload_files_from_session( $nbu_item_key ){

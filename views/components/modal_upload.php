@@ -28,8 +28,20 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <label>{{(langs['CHOOSE_FILE']) ? langs['CHOOSE_FILE'] : "Choose a file upload"}}</label>
-                                    <input type="file" id="files-upload" autocomplete="off" ng-file-select="onFileSelect($files)" accept="image/*"/><br />
+                                    <label>{{(langs['CHOOSE_FILE']) ? langs['CHOOSE_FILE'] : "Choose file upload"}}</label>
+<!--                                    <input type="file" id="files-upload" autocomplete="off" ng-file-select="onFileSelect($files)" accept="image/*" multiple/><br />-->
+                                    <p>      
+                                        <input type="file" id="files-upload" autocomplete="off" ng-file-select="onFileSelect($files)" class="inputfile" <?php if( $enable_upload_multiple == 'yes' ) echo 'multiple'; ?> accept="image/*" /> 
+                                        <label for="files-upload" class="hover-shadow shadow">
+                                            <span></span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                                <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"> 
+                                                </path>
+                                            </svg>
+                                            <span>{{(langs['CHOOSE_IMAGE']) ? langs['CHOOSE_IMAGE'] : "Choose image(s)"}}</span>
+                                        </label>
+                                    </p> 
+                                    <p><b>{{listImageBeforeUpload}}</b></p>
                                     <p>
                                         <small>{{(langs['ACCEPT_FILE_TYPES']) ? langs['ACCEPT_FILE_TYPES'] : "Accept file types"}}: <strong>png, jpg, gif</strong>
                                         <br />{{(langs['MAX_FILE_SIZE']) ? langs['MAX_FILE_SIZE'] : "Max file size"}}: <strong>{{settings.nbdesigner_maxsize_upload}} MB</strong><br /> {{(langs['MIN_FILE_SIZE']) ? langs['MIN_FILE_SIZE'] : "Min file size"}}: <strong>{{settings.nbdesigner_minsize_upload}} MB</strong></small>

@@ -27,6 +27,17 @@
         <meta content="Online Designer - HTML5 Designer - Online Print Solution" name="description" />
         <meta content="Online Designer" name="keywords" />
         <meta content="Netbaseteam" name="author">
+        <?php
+            if( isset( $_GET['nbd_share_id'] ) && $_GET['nbd_share_id'] != '' ){
+            $folder = $_GET['nbd_share_id'];
+            $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder ;
+            $images = Nbdesigner_IO::get_list_images($path, 1);
+            if( count($images) ){
+                $image_url = Nbdesigner_IO::wp_convert_path_to_url( reset($images) );
+                echo '<meta property="og:image" content="' . $image_url . '" />';                
+            }
+        }
+        ?>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/jquery-ui.min.css'; ?>" rel="stylesheet" media="all" />
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/font-awesome.min.css'; ?>" rel="stylesheet" media="all" />
         <link href='https://fonts.googleapis.com/css?family=Poppins:400,100,300italic,300' rel='stylesheet' type='text/css'>
@@ -46,6 +57,7 @@
         <![endif]-->	
         <?php 
             $enableColor = nbdesigner_get_option('nbdesigner_show_all_color'); 
+            $enable_upload_multiple = nbdesigner_get_option('nbdesigner_upload_multiple_images'); 
             $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
             $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
             $design_type = (isset($_GET['design_type']) &&  $_GET['design_type'] != '') ? $_GET['design_type'] : '';
@@ -106,7 +118,8 @@
                 home_url    :   "<?php echo $home_url; ?>",
                 icl_home_url    :   "<?php echo $icl_home_url; ?>",
                 is_logged    :   <?php echo nbd_user_logged_in(); ?>,
-		is_wpml	:	<?php echo $is_wpml; ?>,   
+		is_wpml	:	<?php echo $is_wpml; ?>,     
+		enable_upload_multiple	:   "<?php echo $enable_upload_multiple; ?>",   
                 login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",  
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>

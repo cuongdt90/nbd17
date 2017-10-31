@@ -489,7 +489,11 @@
                         <label class="nbdesigner-option-label"><?php echo _e('Dynamic page / side', 'web-to-print-online-designer'); ?></label>
                         <input name="_nbdesigner_option[dynamic_side]" value="1" type="radio" <?php checked( $option['dynamic_side'], 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>   
                         &nbsp;<input name="_nbdesigner_option[dynamic_side]" value="0" type="radio" <?php checked( $option['dynamic_side'],0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>  
-                    </div>                      
+                    </div>      
+                    <div class="nbdesigner-opt-inner nbd-price-per-page <?php if ($option['dynamic_side'] != 1) echo 'nbdesigner-disable'; ?>">
+                        <label class="nbdesigner-option-label"><?php echo _e('Price per page/side', 'web-to-print-online-designer'); ?></label>
+                        <input type="number" step="any" class="short nbdesigner-short-input wc_input_price" name="_nbdesigner_option[price_per_page]" value="<?php if(isset($option['price_per_page'])) echo $option['price_per_page']; else echo '0'; ?>"/>
+                    </div>
                 </div>    
             </div>   
         </div>

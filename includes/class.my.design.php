@@ -52,7 +52,7 @@ class My_Design_Endpoint {
         
         //Gallery
         add_shortcode( 'nbdesigner_gallery', array($this,'nbd_gallery_func') );
-        
+        add_action( 'wp_head', array( &$this, 'set_open_graph_image' ), 1000 );
         add_action( 'delete_post', array($this,'delete_categories_transient') );
         add_action( 'save_post', array($this,'delete_categories_transient') );
         add_action( 'deleted_user', array($this,'delete_designs_transient') );
@@ -64,7 +64,8 @@ class My_Design_Endpoint {
                 'nbd_get_designs_in_cart' => true,
                 'nbd_get_user_designs' => true,
                 'nbd_update_favorite_template' => true,
-                'nbd_update_artist_info' => true
+                'nbd_update_artist_info' => true,
+                'nbd_save_for_later' => true
             );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -288,15 +289,18 @@ class My_Design_Endpoint {
         if($re) $result = array('flag' => 1);
         echo json_encode($result); wp_die();
     }
-    public static function insert_my_designs($folder){
+    private function insert_my_designs($product_id, $variation_id, $folder){
         global $wpdb;
         $created_date = new DateTime();
         $user_id = wp_get_current_user()->ID;
         $table_name =  $wpdb->prefix . 'nbdesigner_mydesigns';
         $wpdb->insert($table_name, array(
+            'product_id' => $product_id,
+            'variation_id' => $variation_id,            
             'price' => 0,
             'folder' => $folder,
             'user_id' => $user_id,
+            'publish'   =>  1,
             'created_date' => $created_date->format('Y-m-d H:i:s')
         ));
         return true;
@@ -475,6 +479,20 @@ class My_Design_Endpoint {
             )
         );
     }
+    public function nbd_save_for_later(){
+        if (!wp_verify_nonce($_POST['nonce'], 'save-design')) {
+            die('Security error');
+        }  
+        $product_id = absint($_POST['product_id']);
+        $variation_id = absint($_POST['variation_id']);
+        $folder = $_POST['folder'];
+        $result = array(
+            'flag'  =>  1
+        );
+        $insert = $this->insert_my_designs($product_id, $variation_id, $folder);
+        if( !$insert ) $result['flag'] = 0;
+        wp_send_json( $result );        
+    }
     public static function get_favourite_templates(){
         $templates = array();
         if( WC()->session->__isset('nbd_favourite_templates') ){
@@ -569,5 +587,16 @@ class My_Design_Endpoint {
     }
     public function delete_designs_transient(){
         delete_transient( 'nbd_designers' );
+    }
+    public function set_open_graph_image(){
+        if( isset( $_GET['nbd_share_id'] ) && $_GET['nbd_share_id'] != '' ){
+            $folder = $_GET['nbd_share_id'];
+            $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder . '/preview';
+            $images = Nbdesigner_IO::get_list_images($path, 1);
+            if( isset( $images[0] ) ){
+                $image_url = Nbdesigner_IO::wp_convert_path_to_url( $images[0] );
+                echo '<meta property="og:image" content="' . $image_url . '" />';                
+            }
+        }
     }
 }

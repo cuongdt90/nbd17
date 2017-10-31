@@ -3540,6 +3540,9 @@ img.pattern_img {
 .inputfile + label:hover {
     background-color: rgba(57,66,100,0.7);
 }
+#upload-computer .inputfile + label:hover {
+    background-color: #394264;
+}
 .nbd-upload-items-inner {
     display: flex;
     align-items: flex-end;

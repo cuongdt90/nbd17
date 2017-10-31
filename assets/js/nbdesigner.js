@@ -52,6 +52,28 @@ jQuery(document).ready(function () {
     });    
 });
 var NBDESIGNERPRODUCT = {
+    save_for_later: function(){
+        jQuery('img.nbd-save-loading').removeClass('hide');
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                action   :    'nbd_save_for_later',
+                product_id :   NBDESIGNERPRODUCT.product_id,
+                variation_id :   NBDESIGNERPRODUCT.variation_id,
+                folder: NBDESIGNERPRODUCT.folder,
+                nonce: nbds_frontend.nonce
+            }            
+        }).done(function(data){
+            if( data.flag == 1 ){
+                jQuery('img.nbd-save-loading').addClass('hide');
+                jQuery('a.nbd-save-for-later').addClass('saved');
+                jQuery('a.nbd-save-for-later svg').show();
+            }else{
+                alert('Opps! Error while save design!');
+            };
+        });        
+    },
     insert_customer_design: function (data) {
 
     },
@@ -63,11 +85,12 @@ var NBDESIGNERPRODUCT = {
             opacity: 0
         }, 500);
     },
-    show_design_thumbnail: function (arr, task) {
+    show_design_thumbnail: function (arr, task, folder) {
         if( jQuery('#triggerDesign').length > 0 ){
             jQuery('button[type="submit"].single_add_to_cart_button').show();
         };
         jQuery('#nbdesigner-preview-title').show();
+        jQuery('#nbd-actions').show();
         jQuery('#nbdesign-new-template').show();
         if(task == 'create_template' || task == 'edit_template'){
             jQuery('#triggerDesign').text('Edit Template');
@@ -77,11 +100,16 @@ var NBDESIGNERPRODUCT = {
         jQuery.each(arr, function (key, val) {
             html += '<div class="img-con"><img src="' + val + '?t=' + d.getTime() +'" /></div>'
         });
+        jQuery.each( jQuery('#nbd-share-group a'), function(){
+            var href = jQuery(this).attr('href');
+            jQuery(this).attr('href', href + encodeURIComponent(nbd_current_url + '?nbd_share_id=' + folder));
+        });
         jQuery('#nbdesigner_frontend_area').html('');
         jQuery('#nbdesigner_frontend_area').append(html);
         hideDesignFrame();
 
         var flipbook = jQuery("[class*=real3dflipbook]:first");
+        /* Integate with real3dflipbook */
         if( flipbook.length > 0 ){
             var _class = flipbook.attr('class'),
                 obj = 'real3dflipbook_' + _class.substring(_class.length - 1);  

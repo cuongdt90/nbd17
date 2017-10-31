@@ -75,6 +75,7 @@ class Nbdesigner_Plugin {
             'nbd_remove_cart_design' => true,
             'nbd_convert_files' => true,
             'nbdesigner_update_variation_v180'  =>  false,
+            'nbdesigner_update_all_template'  =>  false,
             'nbd_clear_transients'  =>  false
         );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
@@ -1923,7 +1924,7 @@ class Nbdesigner_Plugin {
         if(isset($_POST['action'])) return ''; /*Hidden button Start Design on third-party plugin as Quick view*/
         $pid = get_the_ID();   
         $pid = get_wpml_original_id($pid);       
-        $is_nbdesign = get_post_meta($pid, '_nbdesigner_enable', true);
+        $is_nbdesign = get_post_meta($pid, '_nbdesigner_enable', true); 
         if ($is_nbdesign) {
             /* Multi language with WPML */
             $site_url = site_url();
@@ -1943,9 +1944,14 @@ class Nbdesigner_Plugin {
                 $extra_price = $option['type_price'] == 1 ? wc_price($option['extra_price']) : $option['extra_price'] . ' %';
             }
             ob_start();
-            nbdesigner_get_template( 'nbd-section.php', array( 'src' => $src,  'extra_price' => $extra_price ) );
-            $content = ob_get_clean();         
-            echo $content;
+            nbdesigner_get_template( 'nbd-section.php', array( 'src' => $src,  'extra_price' => $extra_price, 'pid' =>  $pid ) );
+            $content = ob_get_clean();  
+            $position = nbdesigner_get_option('nbdesigner_position_button_product_detail');
+            if( $position == 4 ){
+                return $content;
+            }else{
+                echo $content;
+            }
         }
     }
     public function nbd_loggin_redirect_func(){
@@ -2356,6 +2362,7 @@ class Nbdesigner_Plugin {
                 ksort($result['image']);
             }
             $result['flag'] = 'success';   
+            $result['folder'] = $nbd_item_key;   
             if( $task == 'new' ) WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_item_key);  
             if( $task == 'create' ){
                 if(!current_user_can('edit_nbd_template')){
@@ -2425,6 +2432,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_templates (
  private TINYINT(1) NOT NULL default 0,
  priority  TINYINT(1) NOT NULL default 0,
  hit BIGINT(20) NULL, 
+ sales INT(10) NOT NULL default 0,
+ vote INT(10) NOT NULL default 0,
  PRIMARY KEY  (id) 
 ) $collate;
 CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
@@ -3211,8 +3220,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
         $upload_setting = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
         if( $upload_setting['allow_type'] == '' ) $upload_setting['allow_type'] = nbdesigner_get_option('nbdesigner_allow_upload_file_type');
         if( $upload_setting['disallow_type'] == '' ) $upload_setting['disallow_type'] = nbdesigner_get_option('nbdesigner_disallow_upload_file_type');        
-        $allow_ext = explode(',', $upload_setting['allow_type']);      
-        $disallow_ext = explode(',', $upload_setting['disallow_type']);
+        $allow_ext = explode(',', preg_replace('/\s+/', '', strtolower( $upload_setting['allow_type']) ) );      
+        $disallow_ext = explode(',', preg_replace('/\s+/', '', strtolower( $upload_setting['disallow_type']) ) );
         $ext = strtolower( $this->nbdesigner_get_extension( $_FILES['file']["name"] ) );
         $max_size = $upload_setting['maxsize'] * 1024 * 1024;
         $minsize = $upload_setting['minsize'] * 1024 * 1024;
@@ -3221,7 +3230,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             $dpi = nbd_get_dpi($_FILES['file']["tmp_name"]);  
             if($dpi[0]['x'] < $upload_setting['mindpi']) $checkDPI = true;
         }
-        if( (count($allow_ext) && !in_array(strtolower($ext), $allow_ext)) || (count($disallow_ext) && in_array(strtolower($ext), $disallow_ext)) ) {
+        if( (count($allow_ext) && $allow_ext[0] != '' && !in_array(strtolower($ext), $allow_ext)) 
+                || (count($disallow_ext) && $disallow_ext[0] != '' && in_array(strtolower($ext), $disallow_ext)) ) {
             $checkExt = true;
         }
         if( $minsize > $_FILES['file']["size"] || $max_size < $_FILES['file']["size"] ){

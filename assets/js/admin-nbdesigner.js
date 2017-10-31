@@ -278,6 +278,21 @@ jQuery(document).ready(function ($) {
             }              
         });         
     });
+    $('#nbdesigner_update_template').on('click', function(e){
+        e.preventDefault();
+        var formdata = jQuery('.update-setting-data').find('textarea, select, input').serialize();
+        formdata = formdata + '&action=nbdesigner_update_all_template';
+        jQuery('#nbdesigner_update_product_loading').removeClass('nbdesigner_loaded');
+        jQuery.post(admin_nbds.url, formdata, function(data){
+            jQuery('#nbdesigner_update_product_loading').addClass('nbdesigner_loaded');
+            data = JSON.parse(data);
+            if(parseInt(data.flag) == 1){
+                alert('Update success!');
+            }else {
+                alert('Oops! Try again!');
+            }              
+        });         
+    });     
     $('#nbdesigner_update_variation_v180').on('click', function(e){
         e.preventDefault();
         var formdata = jQuery('.update-setting-data').find('textarea, select, input').serialize();
@@ -447,6 +462,13 @@ jQuery(document).ready(function ($) {
             }
         });        
     };
+    jQuery('input[name="_nbdesigner_option[dynamic_side]"]').on('change', function(){
+        jQuery('.nbd-price-per-page').removeClass('nbdesigner-disable');
+        var status = parseInt( jQuery(this).val() );
+        if(!status){
+            jQuery('.nbd-price-per-page').addClass('nbdesigner-disable');
+        };
+    });
 });
 jQuery(window).on('scroll', function () {
     nbdScrollEffect();

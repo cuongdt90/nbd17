@@ -133,7 +133,14 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'id' => 'nbdesigner_upload_designs_php_logged_in',
                         'default' => 'no',
                         'type' => 'checkbox'
-                    ),                    
+                    ), 
+                    array(
+                        'title' => __('Allow upload multiple images', 'web-to-print-online-designer'),
+                        'description' => __('Allow the customer upload multiple images.', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_upload_multiple_images',
+                        'default' => 'no',
+                        'type' => 'checkbox'
+                    ),                     
                     array(
                         'title' => __( 'Max upload size', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_maxsize_upload',

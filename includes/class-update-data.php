@@ -1,6 +1,19 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 class NBD_Update_Data{
+    
+    public function ajax(){
+        $ajax_events = array(
+            'nbd_update_all_template' => false
+        );
+	foreach ($ajax_events as $ajax_event => $nopriv) {
+            add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
+            if ($nopriv) {
+                // NBDesigner AJAX can be used for frontend ajax requests
+                add_action('wp_ajax_nopriv_' . $ajax_event, array($this, $ajax_event));
+            }
+        }        
+    }    
     public static function update_vatiation_config_v180(){
         if (!wp_verify_nonce($_POST['_nbdesigner_cupdate_product'], 'nbdesigner-update-product') || !current_user_can('administrator')) {
             die('Security error');
@@ -45,4 +58,30 @@ class NBD_Update_Data{
         echo json_encode($result);
         wp_die();        
     }
+    /* Fix missing folder templates after update verion 1.6.2 to 1.7 */
+    public function nbd_update_all_template() {
+        if (!wp_verify_nonce($_POST['_nbdesigner_cupdate_product'], 'nbdesigner-update-product') || !current_user_can('administrator')) {
+            die('Security error');
+        } 
+        global $wpdb;
+        $sql = "SELECT * FROM {$wpdb->prefix}nbdesigner_templates";
+        $templates = $wpdb->get_results($sql, 'ARRAY_A');
+        foreach ($templates as $template) {
+            $nb_item_key = substr(md5(uniqid()), 0, 10);
+            $src_path = NBDESIGNER_ADMINDESIGN_DIR . '/' . $template['product_id'] . '/' . $template['folder'];
+            $dist_path = NBDESIGNER_CUSTOMER_DIR . '/' . $nb_item_key;
+            Nbdesigner_IO::copy_dir($src_path, $dist_path);
+            $id = $template['id'];
+            $product_id = $template['product_id'];
+            $product_option = get_post_meta($product_id, '_nbdesigner_option', true);
+            $product_config = get_post_meta($product_id, '_designer_setting', true);
+            file_put_contents($dist_path . '/option.json', $product_option);
+            file_put_contents($dist_path . '/product.json', $product_config);
+            $arr = array('variation_id' => 0, 'folder' => $nb_item_key);
+            $wpdb->update("{$wpdb->prefix}nbdesigner_templates", $arr, array('id' => $id));
+        } 
+        $result = array('flag' => 1);
+        echo json_encode($result);
+        wp_die();
+    }    
 }
