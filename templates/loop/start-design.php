@@ -8,11 +8,12 @@ if($type == 'simple'){
             'product_id'    =>  $product_id
             ),  getUrlPageNBD('create'));
 }
-echo sprintf( '<a rel="nofollow" href="%s" data-quantity="%s" data-product_id="%s" data-product_sku="%s" class="%s">%s</a>',
+echo sprintf( '<a rel="nofollow" href="%s" data-quantity="%s" data-product_id="%s" data-product_sku="%s" class="%s %s">%s</a>',
         $url,
         esc_attr( isset( $quantity ) ? $quantity : 1 ),
         esc_attr( $product->get_id() ),
         esc_attr( $product->get_sku() ),
         esc_attr( isset( $class ) ? $class : 'button' ),
+        nbdesigner_get_option('nbdesigner_class_design_button_catalog'),
         esc_html( $label )
 );

@@ -4,6 +4,7 @@
     $hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
     $lang_code = str_replace('-', '_', get_bloginfo('language'));
     $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
+    $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
     if( !nbd_is_product($product_id) ){
         echo sprintf('<p>%s, <a href="%s">%s</a></p>', 
                 __('No product has been selected', 'web-to-print-online-designer'),
@@ -27,17 +28,38 @@
         <meta content="Online Designer - HTML5 Designer - Online Print Solution" name="description" />
         <meta content="Online Designer" name="keywords" />
         <meta content="Netbaseteam" name="author">
+        
         <?php
-            if( isset( $_GET['nbd_share_id'] ) && $_GET['nbd_share_id'] != '' ){
-            $folder = $_GET['nbd_share_id'];
-            $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder ;
-            $images = Nbdesigner_IO::get_list_images($path, 1);
-            if( count($images) ){
-                $image_url = Nbdesigner_IO::wp_convert_path_to_url( reset($images) );
-                echo '<meta property="og:image" content="' . $image_url . '" />';                
-            }
-        }
+            if( nbdesigner_get_option('nbdesigner_share_design') == 'yes' && isset( $_GET['nbd_share_id'] ) && $_GET['nbd_share_id'] != '' ):
+                $folder = $_GET['nbd_share_id'];
+                $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder ;
+                $images = Nbdesigner_IO::get_list_images($path, 1);
+                $product = wc_get_product( $variation_id ? $variation_id : $product_id );
+                if( count($images) ){
+                    $image_url = Nbdesigner_IO::wp_convert_path_to_url( reset($images) );            
+                }      
+                if( isset( $_GET['nbd_share_id'] ) && $_GET['nbd_share_id'] != '' ){
+                    $url = add_query_arg(
+                        array(
+                            't'    => $_GET['t'], 
+                            'product_id'    =>  $product_id,
+                            'variation_id'   =>  $variation_id,
+                            'reference'   =>  $_GET['nbd_share_id'],
+                            'nbd_share_id'  =>  $_GET['nbd_share_id']),
+                        getUrlPageNBD('create'));  
+                }
         ?>
+        <meta property="og:locale" content="<?php echo $lang_code; ?>">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="<?php echo $product->get_name(); ?>">
+        <meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>">        
+        <meta property="og:url" content="<?php echo $url; ?>">
+        <meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>">
+        <meta property="og:image" content="<?php echo $image_url; ?>" />
+        <meta property="og:image:width" content="500">
+        <meta property="og:image:height" content="400">
+        <?php endif; ?>
+        
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/jquery-ui.min.css'; ?>" rel="stylesheet" media="all" />
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/font-awesome.min.css'; ?>" rel="stylesheet" media="all" />
         <link href='https://fonts.googleapis.com/css?family=Poppins:400,100,300italic,300' rel='stylesheet' type='text/css'>
@@ -65,7 +87,6 @@
             $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
             $cart_item_key = (isset($_GET['cik']) &&  $_GET['cik'] != '') ? $_GET['cik'] : '';
             $reference = (isset($_GET['reference']) &&  $_GET['reference'] != '') ? $_GET['reference'] : ''; 
-            $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
             $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : (($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '');
             $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);  

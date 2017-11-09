@@ -30,6 +30,15 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         )
                     ),  
                     array(
+                        'title' => __( 'Class for "Start design" button in product page', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Enter your class to show "Start design" button with your style.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_class_design_button_detail',
+                        'class'         => 'regular-text',
+                        'default'	=> '',
+                        'type' 		=> 'text',
+                        'placeholder'   => 'nbd-btn'
+                    ),                      
+                    array(
                         'title' => __('Position of button in the catalog', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_position_button_in_catalog',
                         'default' => '1',
@@ -40,7 +49,16 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             '2' => __('End of catalog item', 'web-to-print-online-designer'),
                             '3' => __('Do not show', 'web-to-print-online-designer')
                         )
-                    ),                    
+                    ),  
+                    array(
+                        'title' => __( 'Class for "Start design" button in catalog page', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Enter your class to show "Start design" button with your style.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_class_design_button_catalog',
+                        'class'         => 'regular-text',
+                        'default'	=> '',
+                        'type' 		=> 'text',
+                        'placeholder'   => 'nbd-btn'
+                    ),                      
                     array(
                         'title' => __('Hide button Add to cart before complete design', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_hide_button_cart_in_detail_page',
@@ -219,14 +237,14 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'default'	=> '',
                         'type' 		=> 'text'
                     ), 
-//                    array(
-//                        'title' => __( 'Dropbox App-ID', 'web-to-print-online-designer'),
-//                        'description' 		=> __( 'Enter a Dropbox App-ID to allow customer use Dropbox photos.', 'web-to-print-online-designer') . '<br /> <b>Redirect URI: '.NBDESIGNER_PLUGIN_URL.'includes/auth-dropbox.php</b>',
-//                        'id' 		=> 'nbdesigner_dropbox_app_id',
-//                        'class'         => 'regular-text',
-//                        'default'	=> '',
-//                        'type' 		=> 'text'
-//                    ),                     
+                    array(
+                        'title' => __( 'Dropbox App-ID', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Enter a Dropbox App-ID to allow customer use Dropbox photos.', 'web-to-print-online-designer'). '<br /><a href="https://www.dropbox.com/developers/apps/create" target="_blank" >'. __('Create a new app','web-to-print-online-designer') .'</a><br />'.__('Edit app and set "Chooser/Saver domains" with your domain: <b><code>'.$_SERVER['SERVER_NAME'].'</code></b>','web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_dropbox_app_id',
+                        'class'         => 'regular-text',
+                        'default'	=> '',
+                        'type' 		=> 'text'
+                    ),                     
 //                    array(
 //                        'title' => __( 'Printful key', 'web-to-print-online-designer'),
 //                        'description' 		=> __( 'Enter a Printful key to sync with Printful service.', 'web-to-print-online-designer'),

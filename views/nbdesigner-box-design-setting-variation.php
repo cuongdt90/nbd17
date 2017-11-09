@@ -52,8 +52,11 @@
                                        left: <?php echo $style_left; ?>px;
                                        top: <?php echo $style_top; ?>px;
                                 <?php if($v['bg_type'] == 'color') echo 'background: ' .$v['bg_color_value']?>"       
-                            >     
-                                <img src="<?php if ($v['img_src'] != '') {echo $v['img_src'];} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/default.png';} ?>" 
+                            >    
+                                <?php
+                                    $img_src = is_numeric( $v['img_src'] ) ? wp_get_attachment_url( $v['img_src'] ) : $v['img_src'];
+                                ?>                                
+                                <img src="<?php if ($v['img_src'] != '') {echo $img_src;} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/default.png';} ?>" 
                                     <?php if($v['bg_type'] != 'image') echo ' style="display: none;"' ?>
                                      class="designer_img_src "
                                     />
@@ -66,7 +69,10 @@
                                        top: <?php echo $v['area_design_top']; ?>px;
                                        display: <?php echo $overlay_style; ?>"                                 
                             >
-                                <img src="<?php if ($v['img_overlay'] != '') {echo $v['img_overlay'];} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';} ?>" class="img_overlay"/>
+                                <?php
+                                    $img_overlay = is_numeric( $v['img_overlay'] ) ? wp_get_attachment_url( $v['img_overlay'] ) : $v['img_overlay'];
+                                ?>                                   
+                                <img src="<?php if ($v['img_overlay'] != '') {echo $img_overlay;} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';} ?>" class="img_overlay"/>
                             </div>
                             <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?>"
                                 style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right']))  ?>px;
@@ -132,7 +138,7 @@
                                 <?php echo __('Set image', 'web-to-print-online-designer'); ?>
                             </a>
                             <img style="display: <?php if($v['show_overlay']) {echo 'inline-block';} else {echo 'none';} ?>"
-                                 src="<?php if ($v['img_overlay'] != '') {echo $v['img_overlay'];} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';} ?>" class="img_overlay"/>                            
+                                 src="<?php if ($v['img_overlay'] != '') {echo $img_overlay;} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';} ?>" class="img_overlay"/>                            
                             <p class="overlay-toggle" style="display: <?php if($v['show_overlay']) {echo 'block';} else {echo 'none';} ?>">
                                 <input type="hidden" value="0" name="_designer_setting<?php echo $vid; ?>[<?php echo $k; ?>][include_overlay]" class="include_overlay"/> 
                                 <input type="checkbox" value="1"  class="include_overlay"

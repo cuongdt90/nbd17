@@ -87,9 +87,6 @@
                             <div class="nbdesigner-setting-box-value">
                                 <input name="_designer_setting[<?php echo $k; ?>][orientation_name]" class="short orientation_name" 
                                        value="<?php echo $v['orientation_name']; ?>" type="text" required/>
-                                <?php if($k ==0): ?>
-                                <small class="nbd-helper"><?php _e('(Click', 'web-to-print-online-designer'); ?>  <span class="dashicons dashicons-editor-help"></span><?php _e('to know how to setting product design)', 'web-to-print-online-designer'); ?></small>
-                                <?php endif; ?>
                             </div>
                             <div class="nbdesigner-right">
                                 <a class="button nbdesigner-collapse" onclick="NBDESIGNADMIN.collapseBox(this)"><span class="dashicons dashicons-arrow-up"></span><?php _e('Less setting', 'web-to-print-online-designer'); ?></a>
@@ -125,7 +122,10 @@
                                                top: <?php echo $style_top; ?>px;
                                         <?php if($v['bg_type'] == 'color') echo 'background: ' .$v['bg_color_value']?>"       
                                     >
-                                        <img src="<?php echo $v['img_src']; ?>" 
+                                        <?php
+                                            $img_src = is_numeric( $v['img_src'] ) ? wp_get_attachment_url( $v['img_src'] ) : $v['img_src'];
+                                        ?>
+                                        <img src="<?php echo $img_src; ?>" 
                                             <?php if($v['bg_type'] != 'image') echo ' style="display: none;"' ?>
                                              class="designer_img_src "
                                             />
@@ -138,7 +138,10 @@
                                                top: <?php echo $v['area_design_top']; ?>px;
                                                display: <?php echo $overlay_style; ?>"                                 
                                     >
-                                        <img src="<?php echo $v['img_overlay']; ?>" class="img_overlay"/>
+                                        <?php
+                                            $img_overlay = is_numeric( $v['img_overlay'] ) ? wp_get_attachment_url( $v['img_overlay'] ) : $v['img_overlay'];
+                                        ?>                                        
+                                        <img src="<?php echo $img_overlay; ?>" class="img_overlay"/>
                                     </div>
                                     <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?> <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>"
                                         style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right']))  ?>px;
@@ -206,7 +209,7 @@
                                         <?php echo __('Set image', 'web-to-print-online-designer'); ?>
                                     </a>
                                     <img style="display: <?php if($v['show_overlay']) {echo 'inline-block';} else {echo 'none';} ?>"
-                                         src="<?php if ($v['img_overlay'] != '') {echo $v['img_overlay'];} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';} ?>" class="img_overlay"/>                            
+                                         src="<?php if ($v['img_overlay'] != '') {echo $img_overlay;} else {echo NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';} ?>" class="img_overlay"/>                            
                                     <p class="overlay-toggle" style="display: <?php if($v['show_overlay']) {echo 'block';} else {echo 'none';} ?>">
                                         <input type="hidden" value="0" name="_designer_setting[<?php echo $k; ?>][include_overlay]" class="include_overlay"/> 
                                         <input type="checkbox" value="1"  class="include_overlay"
@@ -225,9 +228,10 @@
                                         onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 2)"   /><?php _e('Circle/Ellipse', 'web-to-print-online-designer'); ?></label>                                    
                                 </div>
                             </div>
-                            <div class="nbdesigner-info-box">
+                            <div class="nbdesigner-info-box">                             
                                 <?php if($k ==0): ?>
-                                <p>
+                                <p style="margin-top: 0;">
+                                    <small class="nbd-helper"><?php _e('(Click', 'web-to-print-online-designer'); ?>  <span class="dashicons dashicons-editor-help"></span><?php _e('to know how to setting product design)', 'web-to-print-online-designer'); ?></small><br />
                                     <span style="background: #b8dce8; width: 15px; height: 15px; display: inline-block;"></span>&nbsp;<?php _e('Product area', 'web-to-print-online-designer'); ?>&nbsp;
                                     <span style="background: #dddacd; width: 15px; height: 15px; display: inline-block;"></span>&nbsp;<?php _e('Design area', 'web-to-print-online-designer'); ?><br />
                                     <span style="border:2px solid #f0c6f6; width: 11px; height: 11px; display: inline-block;"></span>&nbsp;<?php _e('Bounding box', 'web-to-print-online-designer'); ?><small> (<?php _e('product always align vertical/horizontal center bounding box', 'web-to-print-online-designer'); ?>)</small>

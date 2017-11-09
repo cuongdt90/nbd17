@@ -52,7 +52,7 @@ class My_Design_Endpoint {
         
         //Gallery
         add_shortcode( 'nbdesigner_gallery', array($this,'nbd_gallery_func') );
-        add_action( 'wp_head', array( &$this, 'set_open_graph_image' ), 1000 );
+        //add_action( 'wp_head', array( &$this, 'set_open_graph_image' ), 1000 );
         add_action( 'delete_post', array($this,'delete_categories_transient') );
         add_action( 'save_post', array($this,'delete_categories_transient') );
         add_action( 'deleted_user', array($this,'delete_designs_transient') );
@@ -260,10 +260,8 @@ class My_Design_Endpoint {
             'nbd_artist_linkedin', 'nbd_artist_youtube', 'nbd_artist_instagram', 'nbd_artist_flickr', 'nbd_artist_description'
         );
         foreach( $_POST as $key => $value ) {
-            foreach ( $list as $info ){
-                if( isset( $_POST[$info] ) ) {
-                    update_user_meta( $user_id, 'nbd_artist_description', $this->filter_input_post( $info ) );
-                }
+            if( in_array( $key, $list ) ) {
+                update_user_meta( $user_id, $key, $this->filter_input_post( $key ) );              
             }
         }
         wp_send_json(
@@ -316,6 +314,11 @@ class My_Design_Endpoint {
         $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id} AND id = {$did}" );
         return $designs[0];        
     }
+    public static function get_template( $user_id, $tid ){
+        global $wpdb;
+        $templates = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_templates WHERE user_id = {$user_id} AND id = {$tid}" );
+        return $templates[0];        
+    }    
     public function count_designs( $user_id ){
         global $wpdb;
         $designs = $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id}" );
@@ -435,7 +438,7 @@ class My_Design_Endpoint {
     }
     public function nbd_gallery_enqueue_scripts(){
         if( is_nbd_gallery_page() ){
-            wp_enqueue_script('nbd-gallery-js', 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js', array('jquery'));
+            //wp_enqueue_script('nbd-gallery-js', 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js', array('jquery'));
             //wp_enqueue_style('nbd-gallery-css', 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css');
         }
         if( is_nbd_designer_page() ){
@@ -447,6 +450,7 @@ class My_Design_Endpoint {
         $per_row = intval( apply_filters('nbd_gallery_designs_per_row', 3) );
         $row = apply_filters('nbd_gallery_designs_row', 5);
         $favourite_templates = $this->get_favourite_templates();
+        $cat = (get_query_var('cat')) ? get_query_var('cat') : 0; 
         $atts = shortcode_atts(array(
             'row' => $row,
             'per_row' => $per_row,
@@ -458,10 +462,10 @@ class My_Design_Endpoint {
             'templates' => array(),
             'categories'    =>  $this->get_categories_has_design(),
             'designers'    =>  $this->get_designers(),
-            'total' => $this->count_total_template()
+            'total' => $this->count_total_template(false, false, $cat)
         ), $atts);
         if( $atts['per_row'] > 6 ) $atts['per_row'] = 6;        
-        $atts['templates'] = $this->nbdesigner_get_templates_by_page($page, absint($atts['row']), absint($atts['per_row']));
+        $atts['templates'] = $this->nbdesigner_get_templates_by_page($page, absint($atts['row']), absint($atts['per_row']), false, false, false, $cat);
         return nbdesigner_get_template('gallery/main.php', $atts);
     }  
     public function nbd_update_favorite_template(){
@@ -511,39 +515,92 @@ class My_Design_Endpoint {
         $templates = array_unique($templates);
         WC()->session->set('nbd_favourite_templates', serialize($templates));
     }
-    public static function count_total_template($pid = false, $user_id = false){
+    public static function count_total_template($pid = false, $user_id = false, $cat =false){
         global $wpdb;
         $sql = "SELECT COUNT(*) FROM {$wpdb->prefix}nbdesigner_templates AS t";     
         $sql .= " LEFT JOIN {$wpdb->prefix}posts AS p ON t.product_id = p.ID";
         $sql .= " WHERE t.publish = 1 AND p.post_status = 'publish'";     
         if($pid) $sql .= " AND t.product_id = ".$pid; 
         if( $user_id ) $sql .= " AND t.user_id = ".$user_id; 
+        if( $cat ) {
+            $products  = self::get_all_product_design_in_category( $cat );
+            if(is_array($products) ){
+                $list_product = '';
+                foreach ($products as $pro){
+                    $list_product .= ','.$pro->ID;               
+                }
+                $list_product = ltrim($list_product, ',');
+                $sql .= " AND t.product_id IN ($list_product) "; 
+            }
+        }        
         $count = $wpdb->get_var($sql);  
         return $count ? $count : 0;
     } 
-    public static function nbdesigner_get_templates_by_page($page = 1, $row = 5, $per_row = 3, $pid = false, $get_all = false, $user_id = false ){
+    public static function get_all_product_design_in_category( $cat_id ){
+        $list_cat = get_term_children($cat_id, 'product_cat');  
+        $list_cat[] = (int)$cat_id;
+        $products = get_transient( 'nbd_design_products_cat_'.$cat_id );
+        if( false === $products ){
+            $args_query = array(
+                'post_type' => 'product',
+                'post_status' => 'publish',
+                'meta_key' => '_nbdesigner_enable',
+                'orderby' => 'date',
+                'posts_per_page' => -1,
+                'meta_query' => array(
+                    array(
+                        'key' => '_nbdesigner_enable',
+                        'value' => 1,
+                    )
+                ),
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'product_cat',
+                        'field' => 'term_id',
+                        'terms' => $list_cat,
+                        'operator' => 'IN'
+                    )                     
+                )
+            );  
+            $products = get_posts($args_query);   
+            set_transient( 'nbd_design_products_cat_'.$cat_id , $products, DAY_IN_SECONDS );  
+        } 
+        return $products;    
+    }
+    public static function nbdesigner_get_templates_by_page($page = 1, $row = 5, $per_row = 3, $pid = false, $get_all = false, $user_id = false, $cat = false ){
         $listTemplates = array();
         global $wpdb;
         $limit = $row * $per_row;
         $offset = $limit * ($page -1);
-        $sql = "SELECT p.ID, p.post_title, t.id AS tid, t.folder, t.product_id, t.variation_id FROM {$wpdb->prefix}nbdesigner_templates AS t";     
+        $sql = "SELECT p.ID, p.post_title, t.id AS tid, t.folder, t.product_id, t.variation_id, t.user_id FROM {$wpdb->prefix}nbdesigner_templates AS t";     
         $sql .= " LEFT JOIN {$wpdb->prefix}posts AS p ON t.product_id = p.ID";
-        $sql .= " WHERE t.publish = 1 AND p.post_status = 'publish'";     
+        $sql .= " WHERE t.publish = 1 AND p.post_status = 'publish'";  
+        if( $cat ) {
+            $products  = self::get_all_product_design_in_category( $cat );
+            if(is_array($products) ){
+                $list_product = '';
+                foreach ($products as $pro){
+                    $list_product .= ','.$pro->ID;               
+                }
+                $list_product = ltrim($list_product, ',');
+                $sql .= " AND t.product_id IN ($list_product) "; 
+            }
+        }        
         if($pid) $sql .= " AND t.product_id = ".$pid; 
         if( $user_id ) $sql .= " AND t.user_id = ".$user_id; 
         $sql .= " ORDER BY t.created_date DESC";
         if(!$get_all){
             $sql .= " LIMIT ".$limit." OFFSET ".$offset;
-        }       
+        }    
         $posts = $wpdb->get_results($sql, 'ARRAY_A'); 
         foreach ($posts as $p){
             $path_preview = NBDESIGNER_CUSTOMER_DIR .'/'.$p['folder']. '/preview';
             $listThumb = Nbdesigner_IO::get_list_images($path_preview);
             $image = '';
             if(count($listThumb)){
-                $image = Nbdesigner_IO::wp_convert_path_to_url(end($listThumb));
+                $image = Nbdesigner_IO::wp_convert_path_to_url(reset($listThumb));
             }
-            $listTemplates[] = array('tid' => $p['tid'], 'id' => $p['ID'], 'title' => $p['post_title'], 'image' => $image, 'folder' => $p['folder'], 'product_id' => $p['product_id'], 'variation_id' => $p['variation_id']);          
+            $listTemplates[] = array('tid' => $p['tid'], 'id' => $p['ID'], 'title' => $p['post_title'], 'image' => $image, 'folder' => $p['folder'], 'product_id' => $p['product_id'], 'variation_id' => $p['variation_id'], 'user_id' => $p['user_id']);          
         }         
         return $listTemplates;
     }  

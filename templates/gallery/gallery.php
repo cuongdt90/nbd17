@@ -2,6 +2,7 @@
 <?php 
 $limit = $row * $per_row;
 $k = 0;
+$current_user_id = get_current_user_id();
 if($des != '') echo "<p>".$des."</p>";
 if(count($templates)):
     echo '<ul class="nbdesigner-gallery">';
@@ -10,10 +11,11 @@ if(count($templates)):
         'product_id' => $temp['product_id'],
         'variation_id' => $temp['variation_id'],
         'reference'  =>  $temp['folder']
-    ), getUrlPageNBD('create'));         
+    ), getUrlPageNBD('create'));       
+    $gallery_type = 1;
 ?>
     <?php if($k % $per_row == 0) echo '<li class="nbdesigner-container">';?>
-    <?php if( 0 ): ?>
+    <?php if( $gallery_type == 0 ): ?>
     <div class="nbdesigner-item nbd-col-<?php echo $per_row; ?>">
         <div class="nbdesigner-con">
             <div class="nbdesigner-top">
@@ -26,7 +28,7 @@ if(count($templates)):
             </div>            
         </div>
     </div>
-    <?php elseif( 1 ): ?>
+    <?php elseif( $gallery_type == 1 ): ?>
     <div class="nbdesigner-item nbd-col-<?php echo $per_row; ?>">
         <div class="nbd-gallery-item">
             <div class="nbd-gallery-item-inner">
@@ -54,6 +56,17 @@ if(count($templates)):
                     </span>
                 </div>
             </div>
+            <?php 
+                if( $temp['user_id'] == $current_user_id ): 
+                $link_edit_design = add_query_arg(array('id' => $temp['user_id'], 'template_id' => $temp['tid']), getUrlPageNBD('designer'));
+            ?>
+            <a class="nbd-edit-template" href="<?php echo $link_edit_design; ?>" title="<?php _e('Edit template', 'web-to-print-online-designer'); ?>">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                    <title>edit</title>
+                    <path fill="#07a0b7" d="M1.5 32h29c0.827 0 1.5-0.673 1.5-1.5v-29c0-0.827-0.673-1.5-1.5-1.5h-29c-0.827 0-1.5 0.673-1.5 1.5v29c0 0.827 0.673 1.5 1.5 1.5zM1 1.5c0-0.276 0.225-0.5 0.5-0.5h29c0.275 0 0.5 0.224 0.5 0.5v29c0 0.276-0.225 0.5-0.5 0.5h-29c-0.275 0-0.5-0.224-0.5-0.5v-29zM4 28.479c0.048 0 0.096-0.007 0.143-0.021l10-2.979c0.081-0.024 0.154-0.068 0.213-0.127l10.090-10.205c0.023-0.024 0.035-0.053 0.052-0.080l3.658-3.658c0.607-0.607 0.607-1.595 0-2.203l-5.236-5.234c-0.607-0.607-1.595-0.608-2.202 0l-3.739 3.739c-0.024 0.024-0.036 0.054-0.054 0.081l-10.118 10.119c-0.056 0.056-0.098 0.124-0.122 0.199l-3.16 9.715c-0.058 0.177-0.012 0.371 0.117 0.504 0.095 0.097 0.225 0.15 0.358 0.15zM17.359 8.771l1.040 1.040-8.523 8.563-1.727-0.392 9.21-9.211zM10.5 19.165l8.607-8.646 2.434 2.434-8.745 8.547h-2.296v-2.335zM23.385 14.797l-9.246 9.352-0.576-1.999 8.684-8.489 1.138 1.136zM7.493 18.859l2.007 0.456v2.685c0 0.276 0.224 0.5 0.5 0.5h2.624l0.633 2.2-8.487 2.528 2.723-8.369zM21.425 4.679c0.218-0.217 0.572-0.216 0.788 0l5.235 5.235c0.218 0.217 0.218 0.571 0 0.789l-3.372 3.372-6.023-6.023 3.372-3.373z"></path>
+                </svg>            
+            </a>    
+            <?php endif; ?>
         </div>
     </div>
     <?php endif; ?>
@@ -95,6 +108,7 @@ if(count($templates)):
         -moz-transition: all 0.4s;
         -ms-transition: all 0.4s;
         transition: all 0.4s;
+        position: relative;
     }
     .nbd-gallery-item:hover {
         -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
@@ -168,6 +182,19 @@ if(count($templates)):
     }  
     .nbdesigner-gallery {
         margin-bottom: 30px;
+    }
+    .nbd-edit-template {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 34px;
+        height: 34px;
+        display: block;  
+        padding: 1px;
+        background: #fff;           
+    }
+    .nbd-edit-template:focus{
+        outline: none;
     }
     @keyframes heartbeat{
         0% {

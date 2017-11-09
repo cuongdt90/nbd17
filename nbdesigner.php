@@ -84,6 +84,7 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-helper.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-update-data.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.category.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/table/class.product.templates.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-install.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');

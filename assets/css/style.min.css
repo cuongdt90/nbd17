@@ -1993,7 +1993,7 @@ img.layer_thumb {
     border-radius: 0;
     display: inline-block;
     height: 30px;
-    max-width: 200px;
+    max-width: 300px;
     margin-left: 15px
 }
 .nbdesigner_image_url[type="number"] {
@@ -2385,7 +2385,7 @@ img.layer_thumb {
     position: relative
 }
 
-#uploaded-facebook {
+#uploaded-facebook, #dropbox_images {
     margin-top: 15px;
     max-height: 300px;
     overflow: hidden;
@@ -3407,12 +3407,10 @@ img.pattern_img {
     width: 220px;
     background: #fff;
     z-index: 99;
-    transform: scale(0);
-    opacity: 0;
+    display: none;
 }
 .pop-bg-color.active {
-    transform: scale(1);
-    opacity: 1;    
+    display: block;
 }
 .background-options {
     padding: 15px;
@@ -3437,12 +3435,10 @@ img.pattern_img {
     width: 80px;
     background: #fff;
     z-index: 99;
-    transform: scale(0);
-    opacity: 0;
+    display: none;
 }
 .pop-tools.active {
-    transform: scale(1);
-    opacity: 1;     
+    display: block;     
 }
 .pop-tools h2, .pop-bg-color h2{
     font-size: 14px;
@@ -3788,6 +3784,12 @@ img.pattern_img {
     background-color: #394264;
     line-height: 20px;
 }
+.picker-dialog {
+    z-index: 999999 !important;
+}
+#nbdesigner_url label {
+    min-width: 150px;
+}
 @media (max-width: 767px) {
     #upload-tabs li {
         display: inline-block;
@@ -3831,7 +3833,10 @@ img.pattern_img {
     #helpdesk .inner-help > div {
         max-height: 400px
     }
-    .nbdesigner_image_url {
+    button.pick_from_gd {
+        margin-top: 15px;
+    }
+    .nbdesigner_image_url, .nbdesigner_svg_code {
         max-width: 100%;
         margin-left: 0
     }

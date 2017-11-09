@@ -478,7 +478,6 @@ var nbdScrollEffect = function(){
     if (scrollTop > 500) {
         if ((window.innerHeight + scrollTop) >= ( jQuery('#wpwrap').height() - 100 ) ) {
             jQuery('#nbd-footer').removeClass('fixed');
-            console.log(1);
         } else{       
             jQuery('#nbd-footer').addClass('fixed');
         }
@@ -788,7 +787,8 @@ var NBDESIGNADMIN = {
             attachment = upload.state().get('selection').first().toJSON();
             _img.attr('src', attachment.url);
             _img.show();
-            _input.val(attachment.url);
+            //_input.val(attachment.url);
+            _input.val(attachment.id);
         });
         upload.open();
     },
@@ -811,7 +811,8 @@ var NBDESIGNADMIN = {
             attachment = upload.state().get('selection').first().toJSON();
             image.attr('src', attachment.url);
             image.show();
-            ip_image.val(attachment.url);
+            ip_image.val(attachment.id);
+            //ip_image.val(attachment.url);
         });
         upload.open();        
     },

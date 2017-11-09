@@ -84,4 +84,31 @@ class NBD_Update_Data{
         echo json_encode($result);
         wp_die();
     }    
+    public static function insert_default_files(){
+        $default_background = get_option('nbdesigner_default_background' );
+        $default_overlay = get_option('nbdesigner_default_overlay' );
+        if( !$default_background ) {
+            $background_file = NBDESIGNER_PLUGIN_URL . 'assets/images/default.png';
+            $bg_id = nbd_add_attachment( $background_file );
+            update_option('nbdesigner_default_background', $bg_id );
+        }
+        if( !$default_overlay ) {
+            $overlay_file = NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';
+            $ol_id = nbd_add_attachment( $overlay_file );
+            update_option('nbdesigner_default_overlay', $ol_id );
+        }
+    }
+    public static function nbd_update_media_v180( $designer_setting ){
+        $default_background = get_option('nbdesigner_default_background' );
+        $default_overlay = get_option('nbdesigner_default_overlay' );
+        foreach( $designer_setting as $key => $value ){
+            if( $default_background && strpos( $value['img_src'], 'assets/images/default.png' ) !== false ) {
+                $designer_setting[$key]['img_src'] = $default_background;
+            }
+            if( $default_overlay && strpos( $value['img_overlay'], 'assets/images/overlay.png' ) !== false ) {
+                $designer_setting[$key]['img_overlay'] = $default_overlay;
+            }            
+        }
+        return $designer_setting;  
+    }
 }

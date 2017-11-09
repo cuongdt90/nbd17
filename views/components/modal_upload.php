@@ -12,7 +12,7 @@
                     <li ng-show="settings['nbdesigner_enable_image_url'] == 'yes'"><a href="#nbdesigner_url" role="tab" data-toggle="tab"><i class="fa fa-link visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['IMAGE_URL']) ? langs['IMAGE_URL'] : "Image Url"}}</span></a></li>
                     <li ng-show="settings['nbdesigner_enable_facebook_photo'] == 'yes'"><a href="#nbdesigner_facebook" role="tab" data-toggle="tab"><i class="fa fa-facebook-square visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['FACEBOOK']) ? langs['FACEBOOK'] : "Facebook"}}</span></a></li>
                     <li ng-show="settings['nbdesigner_enable_instagram_photo'] == 'yes'"><a href="#nbdesigner_instagram" role="tab" data-toggle="tab"><i class="fa fa-instagram visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['INSTAGRAM']) ? langs['INSTAGRAM'] : "Instagram"}}</span></a></li>
-                    <!-- <li ng-show="settings['nbdesigner_enable_dropbox_photo'] == 'yes'"><a href="#nbdesigner_dropbox" role="tab" data-toggle="tab"><i class="fa fa-dropbox visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['DROPBOX']) ? langs['DROPBOX'] : "Dropbox"}}</span></a></li> -->
+                    <li ng-show="settings['nbdesigner_enable_dropbox_photo'] == 'yes'"><a href="#nbdesigner_dropbox" role="tab" data-toggle="tab"><i class="fa fa-dropbox visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['DROPBOX']) ? langs['DROPBOX'] : "Dropbox"}}</span></a></li> 
                     <li ng-if="hasGetUserMedia && !modeMobile" ng-click="initWebcam()" ng-show="settings['nbdesigner_enable_image_webcam'] == 'yes'"><a href="#nbdesigner_webcam" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['WEBCAM']) ? langs['WEBCAM'] : "Webcam"}}</span></a></li>
                 </ul>
             </div>
@@ -126,22 +126,104 @@
                             if($dbID == ''): ?>
                             <p>{{(langs['MES_DROPBOX']) ? langs['MES_DROPBOX'] : "Please fill Dropbox app ID"}}</p>
                         <?php  else:  ?>
-                        <button class="btn btn-primary shadow nbdesigner_upload" id="dropbox_login">
-                            <i class="fa fa-dropbox" aria-hidden="true"></i>
-                            <span ng-click="authenticateDropbox()">Dropbox</span>
-                        </button>
+                            <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="2eny7knxczzy98x"></script>
+                            <script>
+                                var options = {
+                                    success: function(files) {
+                                        var scope = angular.element(document.getElementById("designer-controller")).scope();
+                                        scope.getDropboxImages(files);
+                                        if (scope.$root.$$phase !== "$apply" && scope.$root.$$phase !== "$digest") scope.$apply()
+                                    },                                    
+                                    linkType: "direct",
+                                    multiselect: true,
+                                    extensions: ['.jpg', '.jpeg', '.png']
+                                };
+                                var button = Dropbox.createChooseButton(options);
+                                document.getElementById("nbdesigner_dropbox").appendChild(button);
+                            </script>    
                         <?php endif; ?>
-                        <div id="dropbox_images"></div>
+                            <div id="dropbox_images"></div>
                     </div>                   
                     <div class="tab-pane" id="nbdesigner_url" ng-show="settings['nbdesigner_enable_image_url'] == 'yes'">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label>{{(langs['IMAGE_URL1']) ? langs['IMAGE_URL1'] : "Image URL"}}</label>
-                                    <input class="form-control hover-shadow nbdesigner_image_url" ng-model="imageFromUrl"  placeholder="{{(langs['ENTER_YOUR_IMAGE_URL']) ? langs['ENTER_YOUR_IMAGE_URL'] : 'Enter your image url'}}"/><br />
+                                    <input style="height: 33px;" id="nbd_image_url" class="form-control hover-shadow nbdesigner_image_url" ng-model="imageFromUrl"  placeholder="{{(langs['ENTER_YOUR_IMAGE_URL']) ? langs['ENTER_YOUR_IMAGE_URL'] : 'Enter your image url, allow: jpg, png, svg'}}"/>
+                                    <script type="text/javascript">
+                                        var developerKey = 'AIzaSyC6fi_2aZyE1Q9L-VDkRyGt_L6xf4H6Avo';
+                                        var clientId = "778317033442-61fj9ac09jr791ldvn5db0ut0a483ca9.apps.googleusercontent.com";
+                                        var _scope = ['https://www.googleapis.com/auth/drive.readonly'];
+                                        var pickerApiLoaded = false;
+                                        var oauthToken;
+                                        function onApiLoad() {
+                                            if( oauthToken ){
+                                                createPicker();
+                                            }else{
+                                                gapi.load('auth', {'callback': onAuthApiLoad});
+                                                gapi.load('picker', {'callback': onPickerApiLoad});                                               
+                                            }
+
+                                        }
+                                        function onAuthApiLoad() {
+                                            window.gapi.auth.authorize({
+                                                  'client_id': clientId,
+                                                  'scope': _scope,
+                                                  'immediate': false
+                                                },
+                                                handleAuthResult
+                                            );
+                                        }
+                                        function onPickerApiLoad() {
+                                            pickerApiLoaded = true;
+                                            createPicker();
+                                        }
+                                        function handleAuthResult(authResult) {
+                                            if (authResult && !authResult.error) {
+                                               oauthToken = authResult.access_token;
+                                               createPicker();
+                                            }
+                                        }
+                                        function createPicker() {
+                                            if (pickerApiLoaded && oauthToken) {
+                                            var picker = new google.picker.PickerBuilder().
+                                                    addViewGroup(
+                                                        new google.picker.ViewGroup(google.picker.ViewId.DOCS_IMAGES).
+                                                        addView(google.picker.ViewId.DOCUMENTS).
+                                                        addView(google.picker.ViewId.PRESENTATIONS)).
+                                                    setOAuthToken(oauthToken).
+                                                    setDeveloperKey(developerKey).
+                                                    setCallback(pickerCallback).
+                                                    build();
+                                            picker.setVisible(true);
+                                            }
+                                        }
+                                        function pickerCallback(data) {
+                                            var url = 'nothing';
+                                            if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
+                                                var doc = data[google.picker.Response.DOCUMENTS][0];
+                                                url = doc[google.picker.Document.URL];
+                                                document.getElementById('nbd_image_url').value = url;  
+                                                var scope = angular.element(document.getElementById("designer-controller")).scope(); 
+                                                scope.imageFromUrl = url;
+                                                scope.gapi = {'fileId': doc.id, 'oAuthToken': oauthToken, 'name': doc.name};
+                                                if (scope.$root.$$phase !== "$apply" && scope.$root.$$phase !== "$digest") scope.$apply()                                               
+                                            }
+                                        }
+                                    </script>                  
+                                    <button onclick="onApiLoad()" class="btn btn-primary shadow nbdesigner_upload pick_from_gd">
+                                        <svg style="vertical-align: middle; margin-right: 15px;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                            <title>drive</title>
+                                            <path fill="#efc75e" d="M14.165 12.423l0.056 0.095h0.111l5.668-0.026-0.166-0.285-6.372-10.969h-0.111l-5.669 0.023 0.166 0.285c0 0 6.317 10.876 6.317 10.876z"></path>
+                                            <path fill="#3db39e" d="M9.508 6.912l-0.056-0.096-2.915-4.985-0.164 0.285-6.373 11.009 0.056 0.095 2.915 4.986 0.165-0.285 6.318-10.914c0 0 0.054-0.095 0.054-0.095z"></path>
+                                            <path fill="#26a6d1" d="M7.111 13.734h-0.11l-0.055 0.094-2.709 4.648-0.164 0.286h12.998l0.055-0.096 2.874-4.931h-12.889z"></path>
+                                        </svg>                          
+                                        {{(langs['PICK_FROM_GOOGLE_DRIVE']) ? langs['PICK_FROM_GOOGLE_DRIVE'] : "Pick From Google Drive"}}
+                                    </button>
+                                    <script type="text/javascript" src="https://apis.google.com/js/api.js" gapi_processed="true"></script>                                
                                 </div>
                             </div>    
-                        </div>
+                        </div>                          
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="form-group">

@@ -1,11 +1,11 @@
 #nbdesigner_frontend_area .img-con {
     margin: 0 5px 5px 0;
     border: 1px solid #ddd;
-    width: 40%;
     display: inline-block;
     text-align: center;
     vertical-align: top;
     background: #ddd;
+    height: 100px;
 }
 #nbdesigner_frontend_area .img-con img{
     max-width: 100%;
@@ -157,6 +157,7 @@
 .nbdesigner-gallery .nbdesigner-container .nbdesigner-item .nbdesigner-img {
     display: block;
     max-width: 100%;
+    border-radius: 0;
 }
 .nbdesigner-gallery .nbdesigner-container .nbdesigner-item .nbdesigner-hover {
     visibility: hidden;

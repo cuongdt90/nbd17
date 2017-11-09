@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
         }
     };
     show_upload_thumb = function( arr ){
-        jQuery('#nbdesigner-upload-title').show();
+        jQuery('#nbdesigner-upload-title').show();     
         var html = '';
         var d = new Date();
         jQuery.each(arr, function (key, val) {
@@ -85,7 +85,7 @@ var NBDESIGNERPRODUCT = {
             opacity: 0
         }, 500);
     },
-    show_design_thumbnail: function (arr, task, folder) {
+    show_design_thumbnail: function (arr, task) {
         if( jQuery('#triggerDesign').length > 0 ){
             jQuery('button[type="submit"].single_add_to_cart_button').show();
         };
@@ -97,12 +97,20 @@ var NBDESIGNERPRODUCT = {
         }
         var html = '';
         var d = new Date();
+        var count = 1, share_image_url = '';
         jQuery.each(arr, function (key, val) {
+            if(count == 1) share_image_url = val;
+            count++;
             html += '<div class="img-con"><img src="' + val + '?t=' + d.getTime() +'" /></div>'
         });
         jQuery.each( jQuery('#nbd-share-group a'), function(){
-            var href = jQuery(this).attr('href');
-            jQuery(this).attr('href', href + encodeURIComponent(nbd_current_url + '?nbd_share_id=' + folder));
+            var d = new Date();
+            var href = jQuery(this).attr('data-href');
+            var share_url =nbd_create_own_page + '?product_id=' + NBDESIGNERPRODUCT.product_id + '&variation_id=' + NBDESIGNERPRODUCT.variation_id + '&reference=' + NBDESIGNERPRODUCT.folder + '&nbd_share_id=' + NBDESIGNERPRODUCT.folder + '&t=' + d.getTime();
+            var _href = href + encodeURIComponent(share_url);
+            if( jQuery(this).attr('id') == 'nbd-pinterest' ) _href += '&media=' + encodeURIComponent(share_image_url) + '&description=' + jQuery(this).attr('data-description');
+            if( jQuery(this).attr('data-text') != undefined ) _href += '&text=' + jQuery(this).attr('data-text');
+            jQuery(this).attr('href', _href);
         });
         jQuery('#nbdesigner_frontend_area').html('');
         jQuery('#nbdesigner_frontend_area').append(html);
@@ -300,15 +308,15 @@ var NBDESIGNERPRODUCT = {
         if(jQuery('input[name="variation_id"]').length > 0){
             var vid = jQuery('input[name="variation_id"]').val();
             if(vid != '' &&  parseInt(vid) > 0) {
-                jQuery('.nbdesign-button').removeClass('nbdesigner-disable');
+                jQuery('#triggerDesign').removeClass('nbdesigner-disable');
             }
         }else{
-            jQuery('.nbdesign-button').removeClass('nbdesigner-disable');
+            jQuery('#triggerDesign').removeClass('nbdesigner-disable');
         }
         jQuery('.nbdesigner-img-loading').hide();
     },
     nbdesigner_unready: function(){
-        jQuery('.nbdesign-button').addClass('nbdesigner-disable');
+        jQuery('#triggerDesign').addClass('nbdesigner-disable');
         jQuery('.nbdesigner-img-loading').show();
     },
     get_sugget_design: function(product_id, variation_id){
@@ -347,6 +355,9 @@ var NBDESIGNERPRODUCT = {
         jQuery.each(arr, function (key, val) {
             files += key == 0 ? val.name : '|' + val.name;
         });
+        if( jQuery('#triggerDesign').length > 0 ){
+            jQuery('button[type="submit"].single_add_to_cart_button').show();
+        };          
         jQuery('input[name="nbd-upload-files"]').val( files );
     },
     remove_design: function(type, cart_item_key){

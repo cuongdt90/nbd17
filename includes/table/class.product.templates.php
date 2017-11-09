@@ -71,6 +71,25 @@ class Product_Template_List_Table extends WP_List_Table {
             self::update_template($item_primary->id, array('priority' => 0));
         }
     }
+    public static function make_duplicate_template( $id ){
+        global $wpdb;
+        $item = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}nbdesigner_templates WHERE id = $id");
+        $folder = substr(md5(uniqid()), 0, 10);
+        $src_path = NBDESIGNER_CUSTOMER_DIR . '/' . $item->folder;
+        $dist_path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder;
+        Nbdesigner_IO::copy_dir($src_path, $dist_path);       
+        $created_date = new DateTime();
+        $wpdb->insert("{$wpdb->prefix}nbdesigner_templates", array(
+            'product_id' => $item->product_id,
+            'variation_id' => $item->variation_id,
+            'folder' => $folder,
+            'user_id' => $item->user_id,
+            'created_date' => $created_date->format('Y-m-d H:i:s'),
+            'publish' => $item->publish,
+            'private' => $item->private,
+            'priority' => 0
+        ));
+    }
     public static function update_template($id, $arr){
         global $wpdb;
         $wpdb->update("{$wpdb->prefix}nbdesigner_templates", $arr, array( 'id' => $id) );
@@ -147,6 +166,7 @@ class Product_Template_List_Table extends WP_List_Table {
         $actions = array(
             'delete' => sprintf('<a href="?page=%s&action=%s&template=%s&_wpnonce=%s&pid=%s&paged=%s&view=templates">'.__('Delete', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'delete', absint($item['id']), $_nonce, esc_attr($_REQUEST['pid']), $this->get_pagenum()),
             'primary' => sprintf('<a href="?page=%s&action=%s&template=%s&pid=%s&_wpnonce=%s&paged=%s&view=templates">'.__('Primary', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'primary', absint($item['id']), esc_attr($_REQUEST['pid']), $_nonce, $this->get_pagenum()),
+            'duplicate' => sprintf('<a href="?page=%s&action=%s&template=%s&pid=%s&_wpnonce=%s&paged=%s&view=templates">'.__('Duplicate', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'duplicate', absint($item['id']), esc_attr($_REQUEST['pid']), $_nonce, $this->get_pagenum()),
             'edit' => sprintf('<a href="%s">'.__('Edit', 'web-to-print-online-designer').'</a>', $link_edit_template)
         );     
         if($item['priority']){
@@ -303,7 +323,16 @@ class Product_Template_List_Table extends WP_List_Table {
             self::make_primary_template(absint($_GET['template']), absint($_GET['pid']));
             wp_redirect(esc_url_raw(add_query_arg(array('pid' => $_REQUEST['pid'], 'paged' => $this->get_pagenum(), 'view'  => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'))));
             exit;
-        }          
+        }     
+        if ('duplicate' === $this->current_action()) {    
+            $nonce = esc_attr($_REQUEST['_wpnonce']);
+            if (!wp_verify_nonce($nonce, 'nbdesigner_template_nonce')) {
+                die('Go get a life script kiddies');
+            }            
+            self::make_duplicate_template(absint($_GET['template']));
+            wp_redirect(esc_url_raw(add_query_arg(array('pid' => $_REQUEST['pid'], 'paged' => 1, 'view'  => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'))));
+            exit;
+        }         
         if (( isset($_POST['action']) && $_POST['action'] == 'bulk-delete' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-delete' )) {
             if( isset( $_POST['bulk-delete'] ) ){
                 $delete_ids = esc_sql($_POST['bulk-delete']);

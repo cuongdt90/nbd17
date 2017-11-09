@@ -114,6 +114,54 @@ get_header(); ?>
     </div>
 </div>
 <div class="nbd-list-designs">
+<?php if( isset($_GET['template_id']) && $_GET['template_id'] != '' ): ?>
+<?php 
+    $template_id = $_GET['template_id'];
+    $design = My_Design_Endpoint::get_template($current_user_id, $template_id);
+    $product = wc_get_product( $design->variation_id ? $design->variation_id : $design->product_id );
+    $link_designer = add_query_arg(array('id' => $current_user_id), getUrlPageNBD('designer'));
+    $thumbnail = $design->thumbnail ? wp_get_attachment_url( $design->thumbnail ) : '';
+    if( $thumbnail == '' ){
+        $path = NBDESIGNER_CUSTOMER_DIR .'/'.$design->folder. '/preview';
+        $list = Nbdesigner_IO::get_list_images($path, 1);
+        $thumbnail = Nbdesigner_IO::wp_convert_path_to_url(reset($list));
+    }
+    wp_enqueue_media();
+?>
+    <div class="nbd-edit-tem-wrap">
+        <p class=""><a href="<?php echo $link_designer; ?>" title="<?php _e('Back to list', 'web-to-print-online-designer'); ?>"><span>&larr;</span></a>&nbsp;&nbsp;&nbsp;<b><?php _e('Product', 'web-to-print-online-designer'); ?> </b><a href="<?php echo get_permalink( $product->get_id() ); ?>"><?php echo $product->get_title(); ?></a></p>
+        <p>
+            <b><?php _e('Vote', 'web-to-print-online-designer'); ?> </b><?php echo $design->vote;  ?> | <b><?php _e('Hits', 'web-to-print-online-designer'); ?> </b><?php echo $design->hit;  ?>
+        </p>
+        <p>
+            <label for="name"><?php _e('Name', 'web-to-print-online-designer'); ?></label>
+            <input value="<?php echo $design->name; ?>" name="name" id="name"/>
+        </p>
+        <p><?php _e('Thumbnail', 'web-to-print-online-designer'); ?></p>
+        <div class="nbd-thumbnail">
+            <div class="image-wrap<?php echo $design->thumbnail ? '' : ' nbd-hide'; ?>">
+                <input type="hidden" class="nbd-file-field" value="<?php echo $design->thumbnail; ?>" name="thumbnail">
+                <img class="nbd-thumbnail-img" src="<?php echo $thumbnail; ?>" alt="<?php echo $design->name; ?>" />
+                <a class="close nbd-remove-banner-image">&times;</a>
+            </div>
+            <div class="button-area<?php echo $design->thumbnail ? ' nbd-hide' : ''; ?>">
+                <a href="#" class="nbd-thumbnail-drag button button-primary"><?php _e( 'Upload thumbnail', 'web-to-print-online-designer' ); ?></a>
+                <p class="description"><?php _e( 'Upload a thumbnail image to show in template page', 'web-to-print-online-designer' ); ?></p>
+            </div>    
+        </div>      
+        <p><?php _e('Preview', 'web-to-print-online-designer'); ?></p>
+        <div>
+            <?php 
+                foreach ( $list as $image ): 
+                $image_url =  Nbdesigner_IO::wp_convert_path_to_url($image);   
+            ?>
+            <div class="nbd-preview-wrap">
+                <img class="nbd-preview" src="<?php echo $image_url; ?>" alt="<?php echo $design->name; ?>" />
+            </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php else: ?>
     <?php 
         $row = apply_filters('nbd_artist_designs_row', 5);
         $per_row = intval( apply_filters('nbd_artist_designs_per_row', 4) );
@@ -126,7 +174,100 @@ get_header(); ?>
         $total = My_Design_Endpoint::count_total_template( false, $user_id );
         include_once('gallery.php');
     ?>
-</div>
+<?php endif; ?>
+</div>    
+<script>
+    var NBDEditTemplate = {
+        init: function() {
+            jQuery('a.nbd-thumbnail-drag').on('click', this.imageUpload);
+            jQuery('a.nbd-remove-banner-image').on('click', this.removeBanner);
+        },
+        imageUpload: function(e) {
+            e.preventDefault();
+
+            var file_frame,
+                self = jQuery(this);
+            if ( file_frame ) {
+                file_frame.open();
+                return;
+            }
+            file_frame = wp.media.frames.file_frame = wp.media({
+                title: jQuery( this ).data( 'uploader_title' ),
+                button: {
+                    text: jQuery( this ).data( 'uploader_button_text' )
+                },
+                multiple: false
+            });
+            file_frame.on( 'select', function() {
+                var attachment = file_frame.state().get('selection').first().toJSON();
+
+                var wrap = self.closest('.nbd-thumbnail');
+                wrap.find('input.nbd-file-field').val(attachment.id);
+                wrap.find('img.nbd-thumbnail-img').attr('src', attachment.url);
+                jQuery('.image-wrap', wrap).removeClass('nbd-hide');
+
+                jQuery('.button-area').addClass('nbd-hide');
+            });
+            file_frame.open();
+        },
+        removeBanner: function(e) {
+            e.preventDefault();
+            var self = $(this);
+            var wrap = self.closest('.image-wrap');
+            var instruction = wrap.siblings('.button-area');
+            wrap.find('input.nbd-file-field').val('0');
+            wrap.addClass('nbd-hide');
+            instruction.removeClass('nbd-hide');
+        }
+    };
+    NBDEditTemplate.init();
+</script>
+<style>
+    .nbd-edit-tem-wrap {
+        border: 1px solid #ddd;
+        padding: 15px;
+    }
+    .nbd-hide { display: none; }
+    .button-area { padding-top: 100px; }
+    .nbd-thumbnail {
+        border: 4px dashed #d8d8d8;
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        max-width:300px;
+        display: inline-block;
+    }
+    .nbd-thumbnail img { max-width:100%; }
+    .nbd-thumbnail .nbd-remove-banner-image {
+        position:absolute;
+        width:100%;
+        height:100%;
+        background:#000;
+        top:0;
+        left:0;
+        opacity:.7;
+        font-size:100px;
+        color:#f00;
+        padding-top:70px;
+        display:none
+    }
+    .nbd-thumbnail:hover .nbd-remove-banner-image {
+        display:block;
+        cursor: pointer;
+    }     
+    .nbd-preview-wrap {
+        display: inline-block !important;
+        
+        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);        
+    }
+    .nbd-preview {
+        border-radius: 0px !important;
+    }
+</style>
 <?php 
     do_action( 'nbd_after_designer_page_content' ); 
     get_footer();

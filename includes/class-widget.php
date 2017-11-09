@@ -5,7 +5,7 @@ class NBDesigner_Widget extends WP_Widget {
     function __construct() {
         parent::__construct(
                 'nbdesigner_widget', 
-                esc_html__('Product design', 'web-to-print-online-designer'),
+                esc_html__('Related product design', 'web-to-print-online-designer'),
                 array('description' => esc_html__('Product design suggest', 'web-to-print-online-designer')) 
         );        
     }
@@ -27,7 +27,6 @@ class NBDesigner_Widget extends WP_Widget {
             'post_status' => 'publish',
             'meta_key' => '_nbdesigner_enable',
             'orderby' => 'date',
-            'orderby' => 'rand',
             'posts_per_page'=>$number,
             'meta_query' => array(
                 array(

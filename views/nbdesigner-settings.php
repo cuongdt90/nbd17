@@ -1,6 +1,9 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div class="nbd-license">
-    <h3><span class="dashicons dashicons-id-alt"></span> <?php echo __("License", 'web-to-print-online-designer'); ?></h3>
+    <h3>
+        <span class="dashicons dashicons-id-alt"></span> <?php echo __("License", 'web-to-print-online-designer'); ?>
+        <a href="https://cmsmart.net/support_ticket" target="_blank" class="nbd_support"><?php _e("Support", 'web-to-print-online-designer'); ?></a>
+    </h3>
     <table class="form-table">
         <tr valign="top" class="" id="nbdesigner_license" <?php if(isset($license['key'])) echo 'style="display: none;"'; ?>>
             <th scope="row" class="titledesc"><?php echo __("Get free license key", 'web-to-print-online-designer'); ?> </th>
