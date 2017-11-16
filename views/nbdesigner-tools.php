@@ -86,7 +86,7 @@
 <div class="update-setting-data">
     <h2><?php echo __('Update product design setting data', 'web-to-print-online-designer'); ?></h2>
     <div>
-        <?php wp_nonce_field('nbdesigner-update-product', '_nbdesigner_cupdate_product'); ?>
+        <?php wp_nonce_field('nbdesigner-update-product', '_nbdesigner_update_product'); ?>
         <button class="button nbdesigner-delete" id="nbdesigner_update_product" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php echo __("Update v1.7.0", 'web-to-print-online-designer'); ?></button>
         <button class="button nbdesigner-delete" id="nbdesigner_update_variation_v180" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php echo __("Update v1.8.0", 'web-to-print-online-designer'); ?></button>
         <!--<button class="button nbdesigner-delete" id="nbdesigner_update_template" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php echo __("Update templates", 'web-to-print-online-designer'); ?></button>-->
@@ -103,6 +103,14 @@
         <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" class="nbdesigner_loaded" id="nbdesigner_clear_transients_loading" style="margin-left: 15px;"/>   
         <p><small><?php _e('This tool will clear the NBD product transients cache!', 'web-to-print-online-designer'); ?></small></p>
     </div>
+</div>
+<hr />
+<div id="nbd-setup-wizard">
+    <h2><?php _e('Create default NBDesigner pages', 'web-to-print-online-designer'); ?></h2>
+    <?php wp_nonce_field('nbd-create-pages', '_nbdesigner_cupdate_product'); ?>
+    <button class="button-primary" id="nbd-create-pages" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php _e('Create pages', 'web-to-print-online-designer'); ?></button>
+    <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" class="nbdesigner_loaded" id="nbdesigner_create_pages_loading" style="margin-left: 15px;"/>   
+    <p><strong style="color: #a00"><?php _e('Note', 'web-to-print-online-designer'); ?>: </strong><?php _e('This tool will install all the missing NBDesigner pages. Pages already defined and set up will not be replaced.', 'web-to-print-online-designer'); ?></p>
 </div>
 <hr />
 <div id="nbd-logs">

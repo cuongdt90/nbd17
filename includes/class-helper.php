@@ -37,8 +37,19 @@ if(!class_exists('Nbdesigner_Helper')){
                     .'<p><b>6. </b>'. __('Go back to the <b>Dashboard</b> page and past the created application credentials (APP ID and Secret) into the boxes above', 'web-to-print-online-designer').'</p>'
                     . '</div><hr /><div><p><b>'. __("And that's it! ", 'web-to-print-online-designer')
                     . __( 'If for some reason you still can\'t manage to create an application for Facebook, first try to <a href="https://www.google.com/search?q=Facebook API create application" target="_blank">Google it</a>, then check it on <a href="http://www.youtube.com/results?search_query=Facebook API create application " target="_blank">Youtube</a>, and if nothing works <a href="https://cmsmart.net/support_ticket">ask for support</a>', 'web-to-print-online-designer')
-                    . '</p></div>'
+                    . '</p></b></div>'
             ));
+            $screen->add_help_tab( array(
+                'id'		=> 'google_drive',
+                'title'		=> __('Google Drive API', 'web-to-print-online-designer'),
+                'content'	=>
+                    '<h2>' . __('How to get Google Drive API', 'web-to-print-online-designer') . '</h2>' .
+                    '<p>'.__('Go to', 'web-to-print-online-designer').': <a href="https://console.developers.google.com" target="_blank" >Google API Console</a></p>'.
+                    '<p><b>'.__('To get API key', 'web-to-print-online-designer').'</b></p>'.
+                    '<p>'.__('Click <b>Create credentials > API key</b>. Next, look for your API key in the <b>API keys</b> section.', 'web-to-print-online-designer') . '</p>'.
+                    '<p><b>'.__('To get Client ID', 'web-to-print-online-designer').'</b></p>'.
+                    '<p>'.__('Click <b>Create credentials > OAuth client ID</b>. After you have created the credentials, you can see your client ID on the <b>Credentials</b> page.', 'web-to-print-online-designer') . '</p>'                
+            ));            
             $screen->set_help_sidebar(
                 '<p><strong>' . __('For more information', 'web-to-print-online-designer') . ':</strong></p>' .
                 '<p>' . __('<a class="button" href="https://cmsmart.net/support_ticket" target="_blank">Support ticket</a>') . '</p>' .

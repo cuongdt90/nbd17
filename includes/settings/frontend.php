@@ -176,6 +176,26 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         ) 
                     ), 
                     array(
+                        'title' => __( 'Enable get images from Google Drive', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_google_drive',
+                        'default'	=> 'yes',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ), 
+                    array(
+                        'title' => __( 'Enable SVG code', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_svg_code',
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),                     
+                    array(
                         'title' => __( 'Enable capture images by webcam', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_enable_image_webcam',
                         'default'	=> 'yes',
@@ -205,16 +225,16 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
                     ),  
-//                    array(
-//                        'title' => __( 'Enable Dropbox photos', 'web-to-print-online-designer'),
-//                        'id' 		=> 'nbdesigner_enable_dropbox_photo',
-//                        'default'	=> 'yes',
-//                        'type' 		=> 'radio',
-//                        'options'   => array(
-//                            'yes' => __('Yes', 'web-to-print-online-designer'),
-//                            'no' => __('No', 'web-to-print-online-designer')
-//                        ) 
-//                    ),                      
+                    array(
+                        'title' => __( 'Enable Dropbox photos', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_dropbox_photo',
+                        'default'	=> 'yes',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),                      
                     array(
                         'title' => __('Show terms and conditions', 'web-to-print-online-designer'),
                         'description' => __('Show term and conditions upload image.', 'web-to-print-online-designer'),

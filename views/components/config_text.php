@@ -27,6 +27,11 @@
         <span class="fa fa-underline shadow item-config hover-shadow" ng-click="toggleTextDecoration('underline')" ng-show="settings['nbdesigner_text_underline'] == 1"></span>
         <span class="fa fa-strikethrough shadow item-config hover-shadow" ng-click="toggleTextDecoration('line-through')" ng-show="settings['nbdesigner_text_through'] == 1"></span>
         <span class="fa fa-font shadow item-config hover-shadow" ng-click="toggleTextDecoration('overline')" style="text-decoration: overline;" ng-show="settings['nbdesigner_text_overline'] == 1"></span>
+        <span class="shadow item-config hover-shadow text-case" ng-click="toggleTextCase()" ng-show="settings['nbdesigner_text_overline'] == 1">
+            <svg aria-hidden="true" class="octicon octicon-text-size" height="16" version="1.1" viewBox="0 0 18 16" width="18">
+                <path fill-rule="evenodd" d="M13.62 9.08L12.1 3.66h-.06l-1.5 5.42h3.08zM5.7 10.13S4.68 6.52 4.53 6.02h-.08l-1.13 4.11H5.7zM17.31 14h-2.25l-.95-3.25h-4.07L9.09 14H6.84l-.69-2.33H2.87L2.17 14H0l3.3-9.59h2.5l2.17 6.34L10.86 2h2.52l3.94 12h-.01z"></path>
+            </svg>            
+        </span>
         <span class="fa fa-align-left shadow item-config hover-shadow" ng-click="align('left')" ng-show="settings['nbdesigner_text_align_left'] == 1"></span>
         <span class="fa fa-align-center shadow item-config hover-shadow" ng-click="align('center')" ng-show="settings['nbdesigner_text_align_right'] == 1"></span>
         <span class="fa fa-align-right shadow item-config hover-shadow" ng-click="align('right')" ng-show="settings['nbdesigner_text_align_center'] == 1"></span>

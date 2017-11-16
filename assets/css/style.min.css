@@ -3790,6 +3790,62 @@ img.pattern_img {
 #nbdesigner_url label {
     min-width: 150px;
 }
+.variations td {
+    padding: 0;
+}
+.variations select {
+    background: #fff url('../images/select-arrows.png') no-repeat 100% 50%;
+    border: 1px solid #ccc;
+    padding: 0.5em 0.75em;
+    padding-right: 2em;
+    -webkit-appearance: button;    
+    -moz-appearance: button;    
+    -ms-appearance: button;  
+    margin-bottom: 15px;
+    height: 36px;
+}
+.variations .label label {
+    text-transform: capitalize;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #000;    
+    min-width: 150px;
+    text-align: left;    
+}
+.variations .reset_variations {
+    display: inline-block;
+    margin-left: 15px;
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+    padding: 0 0.75em;  
+    color: rgba(57, 66, 100, 0.7);
+    font-weight: bold;   
+}
+.variations .reset_variations:hover {
+    color: #cc324b;
+}
+.variations .reset_variations:before {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f021";
+    margin-right: 15px;    
+}
+.text-case svg {
+    margin-top: 5px;
+}
+.text-case svg path {
+    fill: #394264;
+}
+.text-case:hover svg path {
+    fill: #cc324b;
+}
 @media (max-width: 767px) {
     #upload-tabs li {
         display: inline-block;

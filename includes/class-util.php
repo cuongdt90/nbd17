@@ -491,15 +491,22 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_show_in_order' => 'yes',  
         'nbdesigner_disable_on_smartphones' => 'no',        
         'nbdesigner_notifications' => 'yes',
+        'nbdesigner_enable_send_mail_when_approve' => 'no',
         'nbdesigner_notifications_recurrence' => 'hourly',
         'nbdesigner_notifications_emails' => '',
+        'nbdesigner_admin_emails' => '',
         'allow_customer_redesign_after_order' => 'yes',
         'nbdesigner_mindpi_upload' => 0,
         'nbdesigner_hide_button_cart_in_detail_page'    =>  'no',
         'nbdesigner_printful_key' => '',   
+        'nbdesigner_google_api_key' => '',   
+        'nbdesigner_google_client_id' => '',   
         'nbdesigner_enable_log' => 'no',
         'nbdesigner_page_design_tool' => 1,
         'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
+        'nbdesigner_create_your_own_page_id'	=>	nbd_get_page_id( 'create_your_own' ),
+        'nbdesigner_designer_page_id'	=>	nbd_get_page_id( 'designer' ),
+        'nbdesigner_gallery_page_id'	=>	nbd_get_page_id( 'gallery' ),
         
         'nbdesigner_mindpi_upload_file' => 0,  
         'nbdesigner_allow_upload_file_type' => '',
@@ -581,6 +588,8 @@ function default_frontend_setting(){
         'nbdesigner_enable_facebook_photo' => 'yes',
         'nbdesigner_enable_instagram_photo' => 'yes',
         'nbdesigner_enable_dropbox_photo' => 'yes',
+        'nbdesigner_enable_google_drive' => 'yes',
+        'nbdesigner_enable_svg_code' => 'no',
         'nbdesigner_upload_show_term' => 'no',                
         
         'nbdesigner_enable_draw' => 'yes',
@@ -1048,18 +1057,19 @@ function nbd_get_default_variation_id( $product_id ){
         }else{
             $default_attributes = $product->get_variation_default_attributes();  
         } 
-        foreach ( $available_variations as $variation ){
-            if(count($default_attributes) == count($variation['attributes'])){
-                $variation_id = $variation['variation_id'];
-                foreach ($default_attributes as $key => $attribute){
-                    if($variation['attributes']['attribute_'.$key] != $attribute){
-                        $variation_id = 0;
-                        break;
-                    }
-                }
+        foreach ($default_attributes as $key => $value) {
+            if (strpos($key, 'attribute_') === 0) {
+                continue;
             }
-            if($variation_id > 0)  break;
-        }          
+            unset($default_attributes[$key]);
+            $default_attributes[sprintf('attribute_%s', $key)] = $value;
+        }
+        if (class_exists('WC_Data_Store')) {
+            $data_store = WC_Data_Store::load('product');
+            return $data_store->find_matching_product_variation($product, $default_attributes);
+        } else {          
+            return $product->get_matching_variation($default_attributes);
+        }
     }
     return $variation_id;
 }
@@ -1160,4 +1170,15 @@ function nbd_get_artist_info( $user_id ){
 }
 function nbd_user_logged_in(){
     return is_user_logged_in() ? 1 : 0; 
+}
+function nbd_get_pages(){
+    $pages = get_pages();
+    $_pages = array(
+        '0' =>  'Default'
+    );
+    foreach($pages as $page) { 
+        $id = $page->ID;
+        $_pages[$id] = $page->post_title;
+    }
+    return $_pages;
 }

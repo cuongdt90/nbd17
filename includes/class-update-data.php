@@ -60,7 +60,7 @@ class NBD_Update_Data{
     }
     /* Fix missing folder templates after update verion 1.6.2 to 1.7 */
     public function nbd_update_all_template() {
-        if (!wp_verify_nonce($_POST['_nbdesigner_cupdate_product'], 'nbdesigner-update-product') || !current_user_can('administrator')) {
+        if (!wp_verify_nonce($_POST['_nbdesigner_update_product'], 'nbdesigner-update-product') || !current_user_can('administrator')) {
             die('Security error');
         } 
         global $wpdb;

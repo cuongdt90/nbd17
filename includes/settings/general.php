@@ -218,11 +218,57 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'default'	=> '',
                         'type' 		=> 'text',
                         'placeholder'   => 'Enter your email'
-                    ),                      
+                    ),    
+                    array(
+                        'title' => __( 'Send mail to admins when approve designs', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_send_mail_when_approve',
+                        'description' 	=> __('Send mail to admins when approve the customer designs.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                        
+                    ),     
+                    array(
+                        'title' => __( 'Admin emails', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Enter recipients (comma separated) for admin email. Defaults to ', 'web-to-print-online-designer').'<code>'.get_option('admin_email').'</code>',
+                        'id' 		=> 'nbdesigner_admin_emails',
+                        'class'         => 'regular-text',
+                        'default'	=> '',
+                        'type' 		=> 'text',
+                        'placeholder'   => 'Enter admin emails'
+                    )                     
+                ),
+                'nbd-pages'       => array(
+                    array(
+                        'title' => __( 'Create your own page', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Choose Create your own page.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_create_your_own_page_id',
+                        'type' 		=> 'select',
+                        'default'	=> nbd_get_page_id( 'create_your_own' ),
+                        'options'        =>  nbd_get_pages()
+                    ),       
+                    array(
+                        'title' => __( 'Designer page', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Choose designer page.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_designer_page_id',
+                        'type' 		=> 'select',
+                        'default'	=> nbd_get_page_id( 'designer' ),
+                        'options'        =>  nbd_get_pages()
+                    ),    
+                    array(
+                        'title' => __( 'Gallery', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Choose Gallery page.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_gallery_page_id',
+                        'type' 		=> 'select',
+                        'default'	=> nbd_get_page_id( 'gallery' ),
+                        'options'        =>  nbd_get_pages()
+                    )                     
                 ),
                 'application'       => array(
                     array(
-                        'title' => __( 'Facebook App-ID', 'web-to-print-online-designer'),
+                        'title' => __( 'Facebook App ID', 'web-to-print-online-designer'),
                         'description' 		=> __( 'Enter a Facebook App-ID to allow customer use Facebook photos.', 'web-to-print-online-designer').' <a href="#" id="nbdesigner_show_helper">'.__("Where do I get this info?", 'web-to-print-online-designer').'</a>',
                         'id' 		=> 'nbdesigner_facebook_app_id',
                         'class'         => 'regular-text',
@@ -230,7 +276,7 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'type' 		=> 'text'
                     ), 
                     array(
-                        'title' => __( 'Instagram App-ID', 'web-to-print-online-designer'),
+                        'title' => __( 'Instagram App ID', 'web-to-print-online-designer'),
                         'description' 		=> __( 'Enter a Instagram App-ID to allow customer use Instagram photos.', 'web-to-print-online-designer') . '<br /> <b>Redirect URI: '.NBDESIGNER_PLUGIN_URL.'includes/auth-instagram.php</b>',
                         'id' 		=> 'nbdesigner_instagram_app_id',
                         'class'         => 'regular-text',
@@ -238,21 +284,29 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'type' 		=> 'text'
                     ), 
                     array(
-                        'title' => __( 'Dropbox App-ID', 'web-to-print-online-designer'),
+                        'title' => __( 'Dropbox App ID', 'web-to-print-online-designer'),
                         'description' 		=> __( 'Enter a Dropbox App-ID to allow customer use Dropbox photos.', 'web-to-print-online-designer'). '<br /><a href="https://www.dropbox.com/developers/apps/create" target="_blank" >'. __('Create a new app','web-to-print-online-designer') .'</a><br />'.__('Edit app and set "Chooser/Saver domains" with your domain: <b><code>'.$_SERVER['SERVER_NAME'].'</code></b>','web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_dropbox_app_id',
                         'class'         => 'regular-text',
                         'default'	=> '',
                         'type' 		=> 'text'
                     ),                     
-//                    array(
-//                        'title' => __( 'Printful key', 'web-to-print-online-designer'),
-//                        'description' 		=> __( 'Enter a Printful key to sync with Printful service.', 'web-to-print-online-designer'),
-//                        'id' 		=> 'nbdesigner_printful_key',
-//                        'class'         => 'regular-text',
-//                        'default'	=> '',
-//                        'type' 		=> 'text'
-//                    ),
+                    array(
+                        'title' => __( 'Google API key', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'The Browser API key obtained from the Google API Console.', 'web-to-print-online-designer').' <a href="#" id="nbdesigner_google_drive_helper">'.__("Where do I get this info?", 'web-to-print-online-designer').'</a>',
+                        'id' 		=> 'nbdesigner_google_api_key',
+                        'class'         => 'regular-text',
+                        'default'	=> '',
+                        'type' 		=> 'text'
+                    ),
+                    array(
+                        'title' => __( 'Google Client ID', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'The Client ID obtained from the Google API Console.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_google_client_id',
+                        'class'         => 'regular-text',
+                        'default'	=> '',
+                        'type' 		=> 'text'
+                    ),                    
                     array(
                         'title' => __( 'Enable log mode', 'web-to-print-online-designer'),
                         'description'   => sprintf(__( 'Enable log mode for debug. <a href="%s">Logs</a>', 'web-to-print-online-designer'), esc_url(admin_url('admin.php?page=nbdesigner_tools#nbd-logs'))),

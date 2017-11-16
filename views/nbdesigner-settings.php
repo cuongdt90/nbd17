@@ -43,10 +43,21 @@
 jQuery(document).ready(function(){
     jQuery('#nbdesigner_show_helper').on('click', function(e){
         e.preventDefault();
-        jQuery("body").animate({ scrollTop: 0 }, 500, function(){
-            jQuery('#contextual-help-link').trigger("click");
-            jQuery('#tab-link-facebook a').trigger("click");            
+        jQuery("html, body").animate({ scrollTop: jQuery("#contextual-help-wrap").offset().top }, 500, function(){
+            if(!jQuery('#contextual-help-wrap').is(':visible')){
+                jQuery('#contextual-help-link').trigger("click");
+            }
+            jQuery('#tab-link-facebook a').trigger("click");     
         });        
     });
+    jQuery('#nbdesigner_google_drive_helper').on('click', function(e){
+        e.preventDefault();
+        jQuery("html, body").animate({ scrollTop: jQuery("#contextual-help-wrap").offset().top }, 500, function(){
+            if(!jQuery('#contextual-help-wrap').is(':visible')){
+                jQuery('#contextual-help-link').trigger("click");                 
+            }
+            jQuery('#tab-link-google_drive a').trigger("click"); 
+        });        
+    });    
 })
 </script>

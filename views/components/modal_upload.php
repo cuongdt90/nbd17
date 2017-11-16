@@ -150,10 +150,12 @@
                                 <div class="form-group">
                                     <label>{{(langs['IMAGE_URL1']) ? langs['IMAGE_URL1'] : "Image URL"}}</label>
                                     <input style="height: 33px;" id="nbd_image_url" class="form-control hover-shadow nbdesigner_image_url" ng-model="imageFromUrl"  placeholder="{{(langs['ENTER_YOUR_IMAGE_URL']) ? langs['ENTER_YOUR_IMAGE_URL'] : 'Enter your image url, allow: jpg, png, svg'}}"/>
+                                    <?php if( nbdesigner_get_option('nbdesigner_enable_google_drive') == 'yes' ): ?>
                                     <script type="text/javascript">
                                         var developerKey = 'AIzaSyC6fi_2aZyE1Q9L-VDkRyGt_L6xf4H6Avo';
                                         var clientId = "778317033442-61fj9ac09jr791ldvn5db0ut0a483ca9.apps.googleusercontent.com";
                                         var _scope = ['https://www.googleapis.com/auth/drive.readonly'];
+                                        var locale = '<?php echo $locale; ?>';
                                         var pickerApiLoaded = false;
                                         var oauthToken;
                                         function onApiLoad() {
@@ -189,8 +191,8 @@
                                             var picker = new google.picker.PickerBuilder().
                                                     addViewGroup(
                                                         new google.picker.ViewGroup(google.picker.ViewId.DOCS_IMAGES).
-                                                        addView(google.picker.ViewId.DOCUMENTS).
-                                                        addView(google.picker.ViewId.PRESENTATIONS)).
+                                                        addView(google.picker.ViewId.DOCS_IMAGES)).
+                                                    setLocale(locale).    
                                                     setOAuthToken(oauthToken).
                                                     setDeveloperKey(developerKey).
                                                     setCallback(pickerCallback).
@@ -220,11 +222,12 @@
                                         </svg>                          
                                         {{(langs['PICK_FROM_GOOGLE_DRIVE']) ? langs['PICK_FROM_GOOGLE_DRIVE'] : "Pick From Google Drive"}}
                                     </button>
-                                    <script type="text/javascript" src="https://apis.google.com/js/api.js" gapi_processed="true"></script>                                
+                                    <script type="text/javascript" src="https://apis.google.com/js/api.js" gapi_processed="true"></script>  
+                                    <?php endif; ?>
                                 </div>
                             </div>    
                         </div>                          
-                        <div class="row">
+                        <div class="row" ng-show="settings['nbdesigner_enable_svg_code'] == 'yes'">
                             <div class="col-xs-12">
                                 <div class="form-group">
                                     <label>{{(langs['SVG_CODE']) ? langs['SVG_CODE'] : "SVG Code"}}</label>

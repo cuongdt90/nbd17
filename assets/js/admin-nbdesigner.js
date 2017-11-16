@@ -672,7 +672,7 @@ var NBDESIGNADMIN = {
         });
     },
     delete_font: function (type, e) {
-        var index = jQuery(e).data('index');
+        var index = jQuery(e).attr('data-index');
         var total = jQuery('#nbdesigner_current_index_google_font').val();
         swal({
             title: admin_nbds.nbds_lang.are_you_sure,
@@ -699,7 +699,10 @@ var NBDESIGNADMIN = {
                         });
                     } else if (type == 'custom') {
                         jQuery.each(jQuery('.nbdesigner_action_delete_cfont'), function (key, val) {
-                            jQuery(this).attr('data-index', key);
+                            var _index = parseInt( jQuery(this).attr('data-index') );
+                            if( _index > index ){
+                                jQuery(this).attr('data-index', _index - 1);
+                            }                            
                         });
                     }
                 }else{
@@ -713,7 +716,7 @@ var NBDESIGNADMIN = {
         });
     },
     delete_art: function (e) {
-        var index = jQuery(e).data('index');
+        var index = jQuery(e).attr('data-index');
         swal({
             title: admin_nbds.nbds_lang.are_you_sure,
             text: admin_nbds.nbds_lang.warning_mes_delete_file,
@@ -733,8 +736,12 @@ var NBDESIGNADMIN = {
                     swal(admin_nbds.nbds_lang.complete, data.mes, "success");
                     jQuery(e).parent().remove();
                     jQuery.each(jQuery('.nbdesigner_action_delete_art'), function (key, val) {
-                        jQuery(this).attr('data-index', key);
+                        var _index = parseInt( jQuery(this).attr('data-index') );
+                        if( _index > index ){
+                            jQuery(this).attr('data-index', _index - 1);
+                        }
                     });
+                    
                 }else{
                     swal({
                         title: "Oops!",
@@ -1170,7 +1177,7 @@ var NBDESIGNADMIN = {
     },
     saveLang: function(e){        
         var langs = {},
-        code = jQuery(e).data('code');       
+        code = jQuery(e).attr('data-code');  
         jQuery('.click_edit').each(function(){
             var label = jQuery(this).data('label');
             var text = jQuery(this).text();

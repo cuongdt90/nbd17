@@ -20,6 +20,7 @@
         </svg>      
     </span>
     <span class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true" ng-click="showBackgroundOption()"></span>    
+    <span class="fa fa-id-card shadow hover-shadow nbd-tooltip-i18n" data-lang="TEMPLATE" data-placement="left"  data-toggle="modal" data-target="#dg-product-option"></span>
 </div>
 <div class="first_message hover-shadow">
     {{(langs['HI_THERE']) ? langs['HI_THERE'] : "Hi there"}}, <br />
