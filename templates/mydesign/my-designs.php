@@ -19,13 +19,21 @@
                 <th><?php _e('Preview', 'web-to-print-online-designer'); ?></th>
                 <th><?php _e('Price', 'web-to-print-online-designer'); ?></th>
                 <th><?php _e('Created', 'web-to-print-online-designer'); ?></th>
-                <th><?php _e('Status ', 'web-to-print-online-designer'); ?></th>
+                <th><?php _e('Action ', 'web-to-print-online-designer'); ?></th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($designs as $design): 
                 $pathDesign = NBDESIGNER_CUSTOMER_DIR . '/' . $design->folder .'/preview';
                 $listThumb = Nbdesigner_IO::get_list_images($pathDesign);
+                $link_edit_design = add_query_arg(array(
+                        'product_id' => $design->product_id,
+                        'variation_id' => $design->variation_id,
+                        'task'  =>  'edit',
+                        'design_type'  =>  'art',
+                        'nbd_item_key'  =>  $design->folder,
+                        'rd'    => urlencode(wc_get_endpoint_url( 'my-designs', $current_page, wc_get_page_permalink( 'myaccount' ) ))
+                    ), getUrlPageNBD('create'));                  
             ?>
             <tr class="order">
                 <td data-title="<?php _e('Preview', 'web-to-print-online-designer'); ?>">
@@ -35,9 +43,10 @@
                 </td>
                 <td data-title="<?php _e('Price', 'web-to-print-online-designer'); ?>"><?php echo wc_price($design->price) ?></td>
                 <td data-title="<?php _e('Date', 'web-to-print-online-designer'); ?>"><?php echo $design->created_date; ?></td>
-                <td data-title="<?php _e('Status ', 'web-to-print-online-designer'); ?>">
-                    <?php if($design->publish) echo 'Publish'; else echo 'Unpublish'; ?><br />
-                    <a href="<?php echo wc_get_endpoint_url( 'view-design', $design->id, wc_get_page_permalink( 'myaccount' ) ); ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a>
+                <td data-title="<?php _e('Action ', 'web-to-print-online-designer'); ?>">
+                    <!-- <a href="<?php echo wc_get_endpoint_url( 'view-design', $design->id, wc_get_page_permalink( 'myaccount' ) ); ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a> -->
+                    <a href="<?php echo $link_edit_design; ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a><br />
+                    <a href="javascript:void(0)" onclick="NBDESIGNERPRODUCT.delete_my_design(<?php echo $design->id;  ?>)"><?php _e('Delete', 'web-to-print-online-designer'); ?></a>
                 </td>
             </tr>
             <?php endforeach; ?>

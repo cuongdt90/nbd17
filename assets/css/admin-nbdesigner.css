@@ -180,12 +180,17 @@
     width: 100%;
 }
 .nbdesigner-container .postbox {
-    background: transparent;
+    background: #fff;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    border: none;
 }
 .nbdesigner-container .postbox  h3 {
     border-bottom: 1px solid #ddd;
-    padding: 0 12px 12px;
-    margin-bottom: 0;
+    padding: 12px;
+    margin: 0;
 }
 .nbdesigner-container a {
     cursor: pointer;
@@ -273,6 +278,7 @@ img.nbdesigner_loaded {
     position: absolute;
     left: 0;
     top: 0;
+    padding: 12px !important;
 }
 .nbdesigner_google_preview {
     position: absolute;
@@ -284,17 +290,65 @@ img.nbdesigner_loaded {
     position: relative;
     height: 100px;
     width: 100px;
-    border-radius: 4px;
+    border-radius: 2px;
     display: inline-block;
-    margin: 0px 5px 10px 0;	
-    border: 1px solid #ddd;
+    margin: 0px 5px 10px 0;
     overflow: hidden;
+    background: #fff;
+    -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -moz-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    border: none;
+}
+.nbdesigner_art_link.black {
+    background: #000;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.nbd-toggle-art-view {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);  
+    border: 2px solid #000;
+    pointer-events: all;
+    vertical-align: middle;
+}
+.nbd-toggle-art-view:focus, .nbd-toggle-art-view:active {
+    outline: none;
+}
+.nbd-toggle-art-view.active {
+    border-color: #e24949;
+    pointer-events: none;
+}
+.nbd-toggle-art-view.black{
+    background: #000;
 }
 .nbdesigner_art_link img {
     max-height: 100%;
     max-width: 100%;
 }
-
+.nbd-art-cat-name {
+    border: 1px solid #ddd;
+    padding: 0 10px;
+    line-height: 18px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 30px;
+    margin-left: 15px;
+    font-weight: bold;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+    vertical-align: middle; 
+}
 .nbdesigner_container_order_email {
     border: 1px solid #ddd;
     margin-top: 5px;
@@ -333,8 +387,22 @@ h4.nbdesigner_order_product_name {
 .nbdesigner-right .button .dashicons {
     margin-top: 3px;
 }
-.nbdesigner-manager-product .pagination-links span, .nbdesigner-manager-product .pagination-links a {
+.nbdesigner-list-fonts .tablenav-pages span.pagination-links > a, .nbdesigner-list-fonts .tablenav-pages span.pagination-links > span {
     margin-right: 3px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    background: #fff;
+    border: none;
+    border-radius: 2px;
+}
+.nbdesigner-list-fonts .tablenav-pages span.pagination-links > a:hover {
+    -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -moz-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    background: #0073aa;
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .nbdesigner-list-arts-container .nbdesigner_art_link img {
@@ -731,4 +799,20 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
     background-color: #fff;
     color: #32373c;
     outline: none;    
+}
+.nbd-notice-action {
+    border: 1px solid #0073aa;
+    padding: 0 10px;
+    line-height: 28px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 30px;
+    margin-top: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+    text-decoration: none;    
 }

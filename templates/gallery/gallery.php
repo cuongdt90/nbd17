@@ -3,10 +3,10 @@
 $limit = $row * $per_row;
 $k = 0;
 $current_user_id = get_current_user_id();
-if($des != '') echo "<p>".$des."</p>";
-if(count($templates)):
-    echo '<ul class="nbdesigner-gallery">';
-    foreach ($templates as $temp): 
+if(count($templates)):  ?>
+<div class="nbdesigner-gallery nbd-gallery-processing" id="nbdesigner-gallery">
+<?php
+    foreach ($templates as $key => $temp): 
     $link_template = add_query_arg(array(
         'product_id' => $temp['product_id'],
         'variation_id' => $temp['variation_id'],
@@ -14,22 +14,7 @@ if(count($templates)):
     ), getUrlPageNBD('create'));       
     $gallery_type = 1;
 ?>
-    <?php if($k % $per_row == 0) echo '<li class="nbdesigner-container">';?>
-    <?php if( $gallery_type == 0 ): ?>
-    <div class="nbdesigner-item nbd-col-<?php echo $per_row; ?>">
-        <div class="nbdesigner-con">
-            <div class="nbdesigner-top">
-                <img src="<?php echo $temp['image']; ?>" class="nbdesigner-img"/>
-            </div>
-            <div class="nbdesigner-hover">
-                <div class="nbdesigner-inner">
-                    <a href="<?php echo $link_template; ?>" class="nbdesigner-link" >View design<span>→</span></a>
-                </div>
-            </div>            
-        </div>
-    </div>
-    <?php elseif( $gallery_type == 1 ): ?>
-    <div class="nbdesigner-item nbd-col-<?php echo $per_row; ?>">
+    <div class="nbdesigner-item" <?php echo 'data-index='.$key; ?>>
         <div class="nbd-gallery-item">
             <div class="nbd-gallery-item-inner">
                 <a href="<?php echo $link_template; ?>" >
@@ -61,20 +46,18 @@ if(count($templates)):
                 $link_edit_design = add_query_arg(array('id' => $temp['user_id'], 'template_id' => $temp['tid']), getUrlPageNBD('designer'));
             ?>
             <a class="nbd-edit-template" href="<?php echo $link_edit_design; ?>" title="<?php _e('Edit template', 'web-to-print-online-designer'); ?>">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                    <title>edit</title>
-                    <path fill="#07a0b7" d="M1.5 32h29c0.827 0 1.5-0.673 1.5-1.5v-29c0-0.827-0.673-1.5-1.5-1.5h-29c-0.827 0-1.5 0.673-1.5 1.5v29c0 0.827 0.673 1.5 1.5 1.5zM1 1.5c0-0.276 0.225-0.5 0.5-0.5h29c0.275 0 0.5 0.224 0.5 0.5v29c0 0.276-0.225 0.5-0.5 0.5h-29c-0.275 0-0.5-0.224-0.5-0.5v-29zM4 28.479c0.048 0 0.096-0.007 0.143-0.021l10-2.979c0.081-0.024 0.154-0.068 0.213-0.127l10.090-10.205c0.023-0.024 0.035-0.053 0.052-0.080l3.658-3.658c0.607-0.607 0.607-1.595 0-2.203l-5.236-5.234c-0.607-0.607-1.595-0.608-2.202 0l-3.739 3.739c-0.024 0.024-0.036 0.054-0.054 0.081l-10.118 10.119c-0.056 0.056-0.098 0.124-0.122 0.199l-3.16 9.715c-0.058 0.177-0.012 0.371 0.117 0.504 0.095 0.097 0.225 0.15 0.358 0.15zM17.359 8.771l1.040 1.040-8.523 8.563-1.727-0.392 9.21-9.211zM10.5 19.165l8.607-8.646 2.434 2.434-8.745 8.547h-2.296v-2.335zM23.385 14.797l-9.246 9.352-0.576-1.999 8.684-8.489 1.138 1.136zM7.493 18.859l2.007 0.456v2.685c0 0.276 0.224 0.5 0.5 0.5h2.624l0.633 2.2-8.487 2.528 2.723-8.369zM21.425 4.679c0.218-0.217 0.572-0.216 0.788 0l5.235 5.235c0.218 0.217 0.218 0.571 0 0.789l-3.372 3.372-6.023-6.023 3.372-3.373z"></path>
-                </svg>            
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <title>mode_edit</title>
+                    <path fill="#6d6d6d" d="M20.719 7.031l-1.828 1.828-3.75-3.75 1.828-1.828c0.375-0.375 1.031-0.375 1.406 0l2.344 2.344c0.375 0.375 0.375 1.031 0 1.406zM3 17.25l11.063-11.063 3.75 3.75-11.063 11.063h-3.75v-3.75z"></path>
+                </svg>             
             </a>    
             <?php endif; ?>
         </div>
     </div>
-    <?php endif; ?>
-    <?php if($k % $per_row == ($per_row -1)) echo '</li>';?>
     <?php 
     $k ++;
-    endforeach;
-    echo '</ul>'; ?>
+    endforeach; ?>
+</div>   
 <?php else: ?>    
     <?php _e('No template', 'web-to-print-online-designer'); ?>
 <?php endif; ?>
@@ -97,176 +80,7 @@ if(count($templates)):
             <?php echo $paging->html();  ?>
         </div>
     </div>  
-<?php endif; ?>
-<style>
-    .nbd-gallery-item {
-        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
-        -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
-        -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
-        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
-        -webkit-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        -ms-transition: all 0.4s;
-        transition: all 0.4s;
-        position: relative;
-    }
-    .nbd-gallery-item:hover {
-        -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
-        -moz-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
-        -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
-        box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
-    }
-    .nbd-gallery-item-inner {
-/*        background: #ddd;*/
-        overflow: hidden;
-    }
-    .nbd-gallery-item-inner img {
-        -webkit-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        -ms-transition: all 0.4s;
-        transition: all 0.4s;        
-    }
-    .nbd-gallery-item-inner:hover img {
-        transform: scale(1.1);
-    }
-    .nbd-gallery-item-acction {
-        padding: 10px;
-        height: 50px;
-        border-top: 1px solid #ddd; 
-    }
-    .nbd-like-icons {
-        width: 30px; 
-        height: 30px;
-        position: relative;
-        display: inline-block;
-        float: right;
-    }
-    .nbd-like-icon {
-        position: absolute;
-        top: 0;
-        left: 0;
-        cursor: pointer;
-        line-height: 30px;
-        text-align: center;
-        width: 30px; 
-        height: 30px;
-        display: none; 
-        align-items: center;
-        justify-content: center;  
-        opacity: 0.5;
-        -webkit-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        -ms-transition: all 0.4s;
-        transition: all 0.4s;        
-    }
-    .nbd-like-icon:hover {
-        -webkit-nimation: heartbeat 1.2s infinite;
-        -moz-animation: heartbeat 1.2s infinite;
-        animation: heartbeat 1.2s infinite;
-        opacity: 1;
-    }
-    .nbd-gallery-item-name {
-        vertical-align: top;
-        line-height: 30px;
-        width: calc(100% - 50px);
-        display: inline-block;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-    .nbd-like-icon.loading {
-        display: none;
-    }
-    .nbd-like-icon.active {
-        display: flex;
-    }  
-    .nbdesigner-gallery {
-        margin-bottom: 30px;
-    }
-    .nbd-edit-template {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 34px;
-        height: 34px;
-        display: block;  
-        padding: 1px;
-        background: #fff;           
-    }
-    .nbd-edit-template:focus{
-        outline: none;
-    }
-    @keyframes heartbeat{
-        0% {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        }
-        20% {
-            -webkit-transform: scale( 1 );
-            -moz-transform: scale( 1 );
-            transform: scale( 1 );
-        }
-        40% {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        } 
-        60% {
-            -webkit-transform: scale( 1 );
-            -moz-transform: scale( 1 );
-            transform: scale( 1 );
-        } 
-        80% {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        }
-        100%  {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        }
-    } 
-    @-webkit-keyframes heartbeat{
-        0% {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        }
-        20% {
-            -webkit-transform: scale( 1 );
-            -moz-transform: scale( 1 );
-            transform: scale( 1 );
-        }
-        40% {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        } 
-        60% {
-            -webkit-transform: scale( 1 );
-            -moz-transform: scale( 1 );
-            transform: scale( 1 );
-        } 
-        80% {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        }
-        100%  {
-            -webkit-transform: scale( .75 );
-            -moz-transform: scale( .75 );
-            transform: scale( .75 );
-        }
-    }   
-    .pagination-links {
-        float: right;
-    }
-    .pagination-links a:last-child {
-        margin-right: 0;
-    }
-</style>   
+<?php endif; ?>   
 <script>
     var nonce = "<?php echo wp_create_nonce('nbd_update_favourite_template') ?>"; 
     var updateFavouriteTemplate = function(e, type, template_id){
@@ -295,6 +109,18 @@ if(count($templates)):
     };
     jQuery( document ).ready(function(){
         var templates = '<?php echo json_encode($favourite_templates); ?>';
-        localStorage.setItem("nbd_favourite_templates", templates);
-    });
+        localStorage.setItem("nbd_favourite_templates", templates);      
+        jQuery('.nbdesigner-gallery').drystone({
+            gutter: 15,
+            item: '.nbdesigner-item',
+            xs: [576, 1],
+            sm: [768, 2],
+            md: [992, 2],
+            lg: [1200, 3],
+            xl: 4,
+            onComplete: function() {
+                jQuery('#nbdesigner-gallery').removeClass('nbd-gallery-processing');
+            }
+        }); 
+    });  
 </script>

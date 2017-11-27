@@ -407,3 +407,165 @@ h2 {
 .nbdesigner_detail_order_container .nbdesigner_item img {
     height: 100%;
 }
+.nbd-resource-text {
+    width: 100%;
+    outline: none;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);   
+    border-collapse:collapse
+}
+.nbd-resource-text td:first-child {
+    width: 33%;
+}
+.nbd-resource-text td {
+    vertical-align: top;
+    padding: 0.75rem 1.125rem;
+    outline: none;
+    border-bottom: 0.0625rem solid #ddd;
+    text-align: left;
+    font-weight: normal;
+    background-color: transparent; 
+    vertical-align: middle;
+    min-width: 200px;
+}
+.nbd-resource-text th {
+    vertical-align: top;
+    padding: 0.75rem 1.125rem;
+    outline: none;
+    border-bottom: 0.0625rem solid #ddd;
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 1.2em;
+    line-height: 1.5;
+    font-size: 1rem;   
+}
+.nbd-color-wrap {
+    display: inline-block;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    background: #fff;
+    border-radius: 30px;    
+}
+.nbd-color {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;    
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);    
+}
+.nbd-color-value {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    padding: 0 15px;   
+    text-transform: uppercase;
+}
+.nbd-unavailable {
+    pointer-events: none;
+    opacity: 0.3;
+}
+.nbd-unavailable-note {
+    font-size: 30px;
+    color: red;
+    top: 15px;
+    right: 15px;
+    position: absolute;
+}
+.nbd-convert img, .nbd-convert a.button-primary, .nbd-convert a.button-primary:active {
+    vertical-align: middle;
+    margin-right: 15px;
+}
+.nbd-convert a.button-primary span {
+    margin-top: 3px;
+}
+.nbd-convert-con {
+    vertical-align: top;
+    display: inline-block;
+    padding: 0 15px 15px 15px;
+    border: 1px solid #ddd;
+    margin-top: 15px;   
+    position: relative;
+}
+.nbd-disabled {
+    display: none;
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.rotating {
+    -webkit-animation: rotating 2s linear infinite;
+    -moz-animation: rotating 2s linear infinite;
+    -ms-animation: rotating 2s linear infinite;
+    -o-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+    opacity: 0.3;
+}  
+.nbd-prevent {
+    pointer-events: none;
+}
+#save-to-pdf select {
+    padding: 0 !important;
+}
+.nbd-download-resource-link {
+    text-decoration: none;
+    background: #fff;
+    display: inline-block;
+    line-height: 20px;
+    vertical-align: middle;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    text-align: center;
+    padding: 5px;
+    margin-left: 15px;    
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.nbd-download-resource-link:hover {
+    -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -moz-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);    
+}

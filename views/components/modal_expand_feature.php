@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div id="dg-expand-feature"  class="modal fade nbdesigner_modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button style="margin-top: 0;" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -23,7 +23,9 @@
                         </div>
                         <div class="nbdesigner-list-template" id="nbdesigner-list-template">  
                             <h3>Have {{_.size(adminListTemplate)}} {{(_.size(adminListTemplate) > 1) ? 'templates' : 'template'}}</h3>
-                            <img ng-repeat="tem in adminListTemplate | limitTo : adminTemplatePageSize" ng-src="{{tem['src']}}" class="nbdesigner-template shadow hover-shadow" ng-click="loadExtraAdminDesign(tem['id'])"/>
+                            <div class="nbd-template-wrap" ng-repeat="tem in adminListTemplate | limitTo : adminTemplatePageSize" >
+                                <img ng-src="{{tem['src']}}" class="" ng-click="loadExtraAdminDesign(tem['id'])"/>
+                            </div>
                             <div ng-show="_.size(adminListTemplate) > 8 && _.size(adminListTemplate) > adminTemplatePageSize">
                                 <button class="btn btn-primary shadow nbdesigner_upload btn-dialog" ng-click="adminTemplatePageSize = adminTemplatePageSize + 8">{{(langs['MORE']) ? langs['MORE'] : "More"}}</button>
                                 &nbsp;{{(langs['DISPLAYED']) ? langs['DISPLAYED'] : "Displayed"}} {{(adminTemplatePageSize < _.size(adminListTemplate)) ? adminTemplatePageSize : _.size(adminListTemplate)}}/{{_.size(adminListTemplate)}}
@@ -35,7 +37,9 @@
                         <a class="btn btn-primary shadow nbdesigner_upload" ng-click="login()">Login</a>
                         </div>
                         <div id="nbd-list-my-design" class="nbd-list-my-design" ng-show="settings['is_logged']">
-                            <img ng-repeat="tem in listUserDesigns | limitTo : listUserDesignsPageSize" ng-src="{{tem['src']}}" class="nbdesigner-template shadow hover-shadow" data-placement="right" ng-click="loadMyDesign(tem['id'])"/>                        
+                            <div class="nbd-template-wrap" ng-repeat="tem in listUserDesigns | limitTo : listUserDesignsPageSize" >
+                                <img ng-src="{{tem['src']}}" class="" data-placement="right" ng-click="loadMyDesign(tem['id'])"/>                        
+                            </div>
                         </div>
                         <div ng-show="_.size(listUserDesigns) > 8 && _.size(listUserDesigns) > listUserDesignsPageSize">
                             <button class="btn btn-primary shadow nbdesigner_upload btn-dialog" ng-click="loadMoreUserDesigns()">{{(langs['MORE']) ? langs['MORE'] : "More"}}</button>

@@ -2,14 +2,14 @@
 <div id="tool-top">
     <span class="fa fa-book shadow help first_visitor nbd-tooltip-i18n" data-lang="HELPDESK" data-placement="left"></span>
     <span ng-show="langCategories.length > 1" class="fa fa-language shadow translate nbd-tooltip-i18n" data-lang="LANGUAGE" data-placement="left" style="font-size: 18px;"></span>
-<!--    <span id="show_grid" ng-hide="modeMobile" class="fa fa-th shadow hover-shadow" ng-click="showGrid()"></span>-->    
 <!--    <span id="mobile" ng-show="modeMobile" class="fa fa-eye shadow hover-shadow"></span>-->
     <span id="debug" ng-show="state == 'dev'" class="fa fa-magic shadow hover-shadow" ng-click="debug()"></span>
     <span id="show_grid" ng-hide="modeMobile" class="fa fa-search shadow hover-shadow nbd-tooltip-i18n" data-lang="PREVIEW" data-placement="left"  data-toggle="modal" data-target="#dg-preview" ng-click="preview()"></span>   
     <span class="fa fa-plus shadow hover-shadow nbd-tooltip-i18n" aria-hidden="true" data-lang="ZOOM_IN" data-placement="left"  ng-click="zoomIn()"></span>
     <span class="fa fa-minus shadow hover-shadow nbd-tooltip-i18n" aria-hidden="true" data-lang="ZOOM_OUT" data-placement="left"  ng-click="zoomOut()"></span>	   
     <span id="expand_feature" class="fa fa-id-card shadow hover-shadow nbd-tooltip-i18n" data-lang="TEMPLATE" data-placement="left"  data-toggle="modal" data-target="#dg-expand-feature" ng-click="loadAdminListDesign()"></span>
-    <span ng-show="settings['task'] == 'new' && settings['ui_mode'] == 2" class="fa fa-cube shadow hover-shadow nbd-tooltip-i18n" data-lang="PRODUCTS" data-placement="left"  data-toggle="modal" data-target="#dg-load-product" ng-click="loadListProduct()"></span>
+    <span ng-show="settings.task == 'new' && settings.ui_mode == 2" style="font-size: 18px;" class="fa fa-cube shadow hover-shadow nbd-tooltip-i18n" data-lang="PRODUCTS" data-placement="left"  data-toggle="modal" data-target="#dg-load-product" ng-click="loadListProduct()"></span>
+    <span style="font-size: 18px;" class="fa fa-info-circle shadow hover-shadow nbd-tooltip-i18n" data-lang="INFORMATION" data-placement="left"  data-toggle="modal" data-target="#dg-product-info"></span> 
     <span class="fa fa-paint-brush shadow hover-shadow nbd-tooltip-i18n" aria-hidden="true" data-lang="DISABLE_DRAW_MODE" data-placement="left" ng-click="disableDrawMode()" ng-show="canvas.isDrawingMode" ng-class="canvas.isDrawingMode ? 'disabledraw' : ''"></span>  
     <span class="fa fa-object-group shadow hover-shadow deactive-group nbd-tooltip-i18n" data-lang="DESELECT_GROUP" data-placement="left" aria-hidden="true"  ng-click="deactiveGroup()" ng-show="showAlignToolbar"></span>
     <span class="shadow hover-shadow nbd-tooltip-i18n custom-dimension active" id="custom-dimension-tg" data-toggle="modal" data-target="#dg-custom-dimension" data-lang="DIMENSION" data-placement="left" ng-show="productOptions.allow_specify_dimension == 1 && settings.task != 'create'">
@@ -19,8 +19,7 @@
             </g>
         </svg>      
     </span>
-    <span class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true" ng-click="showBackgroundOption()"></span>    
-    <span class="fa fa-id-card shadow hover-shadow nbd-tooltip-i18n" data-lang="TEMPLATE" data-placement="left"  data-toggle="modal" data-target="#dg-product-option"></span>
+    <span ng-show="state == 'dev'" class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true" ng-click="showBackgroundOption()"></span>    
 </div>
 <div class="first_message hover-shadow">
     {{(langs['HI_THERE']) ? langs['HI_THERE'] : "Hi there"}}, <br />
@@ -31,4 +30,4 @@
         <li ng-repeat="cat in langCategories" ng-click="loadLanguage(cat.code)" ng-class="{open : currentCatLang === cat.code}">{{cat.name}}</li>
     </ul>
 </div>
-<p ng-hide="settings.enable_upload == '1' || settings.is_mobile == '1' || settings.task == 'edit' || settings.task == 'create'" class="toggle-upload shadow"  ng-click="changeDesignMode('upload')">{{(langs['OR_UPLOAD_DESIGN']) ? langs['OR_UPLOAD_DESIGN'] : "Or upload design"}}</p>
+<p ng-hide="settings.enable_upload == '1' || settings.is_mobile == '1' || settings.task == 'edit' || settings.task == 'create'" class="toggle-upload shadow"  ng-click="changeDesignMode('upload')"><i class="fa fa-cloud-upload" aria-hidden="true"></i> {{(langs['UPLOAD_DESIGN']) ? langs['UPLOAD_DESIGN'] : "Upload design"}}</p>

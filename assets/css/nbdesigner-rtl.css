@@ -2,6 +2,9 @@
 .modal-header, .modal-body, textarea, input, li, p {
     text-align: right;
 }
+textarea {
+    direction: rtl;
+}
 .modal-header button.close {
     float: left;
 }

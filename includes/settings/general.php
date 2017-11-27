@@ -238,6 +238,17 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'default'	=> '',
                         'type' 		=> 'text',
                         'placeholder'   => 'Enter admin emails'
+                    ),
+                    array(
+                        'title' => __( 'Attach custom designs', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Attach custom designs in Admin notifications email.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_attachment_admin_email',
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )  
                     )                     
                 ),
                 'nbd-pages'       => array(

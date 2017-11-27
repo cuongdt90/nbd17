@@ -492,6 +492,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_disable_on_smartphones' => 'no',        
         'nbdesigner_notifications' => 'yes',
         'nbdesigner_enable_send_mail_when_approve' => 'no',
+        'nbdesigner_attachment_admin_email' => 'no',
         'nbdesigner_notifications_recurrence' => 'hourly',
         'nbdesigner_notifications_emails' => '',
         'nbdesigner_admin_emails' => '',
@@ -531,6 +532,7 @@ function default_frontend_setting(){
         'nbdesigner_text_underline' => 1,
         'nbdesigner_text_through' => 1,
         'nbdesigner_text_overline' => 1,
+        'nbdesigner_text_case' => 1,
         'nbdesigner_text_align_left' => 1,
         'nbdesigner_text_align_right' => 1,
         'nbdesigner_text_align_center' => 1,
@@ -640,8 +642,8 @@ function nbd_not_empty($value) {
 function nbd_default_product_setting(){
     return apply_filters('nbdesigner_default_product_setting', array(
         'orientation_name' => 'Side 1',
-        'img_src' => NBDESIGNER_PLUGIN_URL . 'assets/images/default.png',
-        'img_overlay' => NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png',
+        'img_src' => get_option('nbdesigner_default_background'),
+        'img_overlay' => get_option('nbdesigner_default_overlay'),
         'real_width' => 8,
         'real_height' => 6,
         'real_left' => 1,
@@ -701,24 +703,22 @@ function getUrlPageNBD($page){
     global $wpdb;
     switch ($page) {
         case 'studio':
-            $post_name = NBDESIGNER_PAGE_STUDIO; 
+            $post = nbd_get_page_id( 'studio' );
             break;       
         case 'create':
-            $post_name = NBDESIGNER_PAGE_CREATE_YOUR_OWN; 
+            $post = nbd_get_page_id( 'create_your_own' );
             break;   
         case 'redirect':
-            $post_name = 'nbd-logged'; 
+            $post = nbd_get_page_id( 'logged' );
             break;   
         case 'designer':
-            $post_name = 'designer'; 
+            $post = nbd_get_page_id( 'designer' );
+            break;   
+        case 'gallery':
+            $post = nbd_get_page_id( 'gallery' );
             break;         
     }
-    $post = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name='".$post_name."'"); 
-    if ( class_exists('SitePress') ) {
-        return ($post) ? get_page_link(icl_object_id($post,'page',false)) : '#';
-    }else{
-        return ($post) ? get_page_link($post) : '#';
-    }     
+    return ($post) ? get_page_link($post) : '#';    
 }
 function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false ){
     global $wpdb;
@@ -1181,4 +1181,62 @@ function nbd_get_pages(){
         $_pages[$id] = $page->post_title;
     }
     return $_pages;
+}
+function is_nbd_designer( $user_id ){
+    $can_edit_template = get_user_meta( $user_id, 'nbd_create_design');
+    return ( $can_edit_template[0] == 'on' ) ? true : false;
+}
+function user_can_edit_template( $user_id, $template_id = 0 ){
+    $current_user_id = get_current_user_id();
+    return ( ($user_id == $current_user_id) && is_nbd_designer($user_id) ) ? true : false;
+}
+function nbd_get_font_by_alias( $alias ){
+    $fonts = (array)json_decode( file_get_contents( NBDESIGNER_DATA_DIR . '/fonts.json' ) );
+    foreach ($fonts as $font) {
+        if ($font->alias == $alias) {
+            return $font;
+        }
+    }
+    return false;
+}
+function nbd_get_products_has_design(){
+    $nbd_products = get_transient('nbd_frontend_products');
+    if( false === $nbd_products ){
+        $products = nbd_get_all_product_has_design();
+        foreach ($products as $pro){
+            $product = wc_get_product($pro->ID);
+            $type = $product->get_type();
+            $image = get_the_post_thumbnail_url($pro->ID, 'post-thumbnail');
+            if( !$image ) $image = wc_placeholder_img_src();            
+            $result[] = array(
+                'product_id'    =>  $pro->ID,
+                'name'  => $pro->post_title,
+                'src'   =>  $image,
+                'type'  =>  $type,
+                'url'   => get_permalink($pro->ID)
+            );
+        }
+        set_transient( 'nbd_frontend_products' , $result ); 
+    }else{
+        $result = $nbd_products;
+    }     
+    return $result;
+}
+function nbd_get_all_product_has_design(){
+    $args_query = array(
+        'post_type' => 'product',
+        'post_status' => 'publish',
+        'meta_key' => '_nbdesigner_enable',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page'=> -1,
+        'meta_query' => array(
+            array(
+                'key' => '_nbdesigner_enable',
+                'value' => 1,
+            )
+        )
+    ); 
+    $posts = get_posts($args_query);  
+    return $posts;    
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <?php
     $hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
-    $lang_code = str_replace('-', '_', get_bloginfo('language'));
+    $lang_code = str_replace('-', '_', get_locale());
     $locale = substr($lang_code, 0, 2);
     $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
     $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
@@ -94,6 +94,9 @@
             $_enable_upload_without_design = get_post_meta($product_id, '_nbdesigner_enable_upload_without_design', true);  
             $enable_upload = $_enable_upload ? 2 : 1;
             $enable_upload_without_design = $_enable_upload_without_design ? 2 : 1;
+            $_product = wc_get_product( $product_id );
+            $product_type = $_product->get_type();
+            $show_variation = ( (!isset($_GET['variation_id']) || $_GET['variation_id'] == '') && $product_type == 'variable' && $ui_mode == 2 && $task == 'new' ) ? 1 : 0;
             if( $task == 'reup' ){
                 $list_file_upload = nbd_get_upload_files_from_session( $nbu_item_key );
             }else {
@@ -114,6 +117,7 @@
                 lang_rtl    :   "<?php if(is_rtl()){ echo 'rtl'; } else {  echo 'ltr';  } ?>",
                 is_mobile   :   "<?php echo wp_is_mobile(); ?>",
                 ui_mode   :   "<?php echo $ui_mode; ?>",
+                show_variation   :   "<?php echo $show_variation; ?>",
                 enable_upload   :   "<?php echo $enable_upload; ?>",
                 enable_upload_without_design   :   "<?php echo $enable_upload_without_design; ?>",
                 stage_dimension :   {'width' : 500, 'height' : 500},
@@ -133,6 +137,7 @@
                 design_type    :   "<?php echo $design_type; ?>",
                 product_id  :   "<?php echo $product_id; ?>",
                 variation_id  :   "<?php echo $variation_id; ?>",                
+                product_type  :   "<?php echo $product_type; ?>",                
                 redirect_url    :   "<?php echo $redirect_url; ?>",
                 nbd_item_key    :   "<?php echo $nbd_item_key; ?>",
                 nbu_item_key    :   "<?php echo $nbu_item_key; ?>",
@@ -179,7 +184,7 @@
     </head>
     <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
         <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
-            <div id="#design-container" class="design-mode" ng-class="designMode == 'custom' ? 'active' : ''">
+            <div id="design-container" class="design-mode" ng-class="designMode == 'custom' ? 'active' : ''">
                 <div class="container-fluid" id="designer-controller">
                     <?php
                     include_once('components/menu.php');
@@ -202,7 +207,8 @@
                     include_once('components/modal_products.php');		
                     include_once('components/modal-custom-dimension.php');		
                     include_once('components/modal_bleed_tip.php');		
-                    include_once('components/modal_product_option.php');		
+                    include_once('components/modal_product_info.php');		
+                    include_once('components/modal_product_info_preview.php');		
                     ?>
                 </div>
                 <div id="od_config" ng-class="modeMobile ? 'mobile' : 'modepc'">	
@@ -232,13 +238,7 @@
                 </div>    
             </div>
             <div class="od_processing">
-                <div id="nbdesigner_preloader">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>	
-                <p id="first_message">{{(langs['NBDESIGNER_PROCESSING']) ? langs['NBDESIGNER_PROCESSING'] : "NBDESIGNER PROCESSING"}}...</p>
+                <?php include_once('components/loading.php'); ?>
             </div>
             <?php if( $reference == '' ): ?>
             <div class="design-options" id="design-options" ng-show="settings['enable_upload'] == '2' && settings['enable_upload_without_design'] == '1' && settings['task'] == 'new'">

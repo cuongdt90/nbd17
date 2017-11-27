@@ -65,7 +65,9 @@ class My_Design_Endpoint {
                 'nbd_get_user_designs' => true,
                 'nbd_update_favorite_template' => true,
                 'nbd_update_artist_info' => true,
-                'nbd_save_for_later' => true
+                'nbd_save_for_later' => true,
+                'nbd_update_my_template' => true,
+                'nbd_delete_my_template' => true
             );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -429,7 +431,7 @@ class My_Design_Endpoint {
     }    
     public function add_body_class( $classes ){
         if( is_nbd_gallery_page() || is_nbd_designer_page() ){
-            $classes[] = 'nbd-no-breadcrumb';
+            $classes[] = 'nbd-no-breadcrumb nbd-gallery';
         }
         if( is_nbd_gallery_page() ){
             $classes[] = 'nbd-gallery';
@@ -460,6 +462,7 @@ class My_Design_Endpoint {
             'page' => $page,
             'favourite_templates'   =>  $favourite_templates,
             'templates' => array(),
+            'products'  =>  nbd_get_products_has_design(),
             'categories'    =>  $this->get_categories_has_design(),
             'designers'    =>  $this->get_designers(),
             'total' => $this->count_total_template(false, false, $cat)
@@ -490,10 +493,14 @@ class My_Design_Endpoint {
         $product_id = absint($_POST['product_id']);
         $variation_id = absint($_POST['variation_id']);
         $folder = $_POST['folder'];
+        $design_folder = substr(md5(uniqid()),0,10);
+        $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder;
+        $design_path = NBDESIGNER_CUSTOMER_DIR . '/' . $design_folder;
+        Nbdesigner_IO::copy_dir( $path, $design_path );
         $result = array(
             'flag'  =>  1
         );
-        $insert = $this->insert_my_designs($product_id, $variation_id, $folder);
+        $insert = $this->insert_my_designs($product_id, $variation_id, $design_folder);
         if( !$insert ) $result['flag'] = 0;
         wp_send_json( $result );        
     }
@@ -655,5 +662,33 @@ class My_Design_Endpoint {
                 echo '<meta property="og:image" content="' . $image_url . '" />';                
             }
         }
+    }
+    public function nbd_update_my_template(){
+        if (!wp_verify_nonce($_POST['_wpnonce'], 'nbd_edit_template_nonce') || !user_can_edit_template( $_POST['user_id'] ) ) {
+            die('Security error');
+        }  
+        global $wpdb;
+        $table_name =  $wpdb->prefix . 'nbdesigner_templates';
+        $re = $wpdb->update($table_name, array(
+            'thumbnail' => $_POST['thumbnail'],
+            'name' => $_POST['name']
+        ), array( 'id' => $_POST['id']));  
+        $result = array('flag' =>  0);
+        if( $re ){
+            $result['flag'] = 1;  
+        }
+        wp_send_json($result);         
+    }
+    public function nbd_delete_my_template(){
+        if (!wp_verify_nonce($_POST['_wpnonce'], 'nbd_edit_template_nonce') || !user_can_edit_template( $_POST['user_id'] ) ) {
+            die('Security error');
+        }  
+        global $wpdb;
+        $re = $wpdb->delete("{$wpdb->prefix}nbdesigner_templates", array('id' => $_POST['id']));
+        $result = array('flag' =>  0);
+        if( $re ){
+            $result['flag'] = 1;  
+        }
+        wp_send_json($result);       
     }
 }

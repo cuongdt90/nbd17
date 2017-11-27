@@ -74,6 +74,26 @@ var NBDESIGNERPRODUCT = {
             };
         });        
     },
+    download_pdf: function(){
+        jQuery('img.nbd-pdf-loading').removeClass('hide');
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                action   :    'nbd_frontend_download_pdf',
+                nbd_item_key :   NBDESIGNERPRODUCT.folder,
+                nonce: nbds_frontend.nonce
+            }            
+        }).done(function(data){
+            jQuery('img.nbd-pdf-loading').addClass('hide');
+            var data = JSON.parse(data);
+            var filename = 'design.pdf',
+            a = document.createElement('a');
+            a.setAttribute('href', data[0].link);
+            a.setAttribute('download', filename);
+            a.click()             
+        });         
+    },
     insert_customer_design: function (data) {
 
     },
@@ -396,7 +416,22 @@ var NBDESIGNERPRODUCT = {
                 }
             }
         });
-    }
+    },
+    delete_my_design: function(  ){
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                action   :    'nbd_save_for_later',
+                product_id :   NBDESIGNERPRODUCT.product_id,
+                variation_id :   NBDESIGNERPRODUCT.variation_id,
+                folder: NBDESIGNERPRODUCT.folder,
+                nonce: nbds_frontend.nonce
+            }            
+        }).done(function(data){
+            console.log(data);
+        });         
+    }  
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {
     var replaceDuplicates = true;
@@ -436,3 +471,110 @@ function addParameter(url, parameterName, parameterValue, atStart/*Add param bef
     }
     return urlParts[0] + newQueryString + urlhash;
 };
+
+(function($, document, window) {
+    var pluginName = "drystone",
+        defaults = {
+            item: '.grid-item',
+            gutter: 10,
+            xs: [576, 1],
+            sm: [768, 2],
+            md: [992, 2],
+            lg: [1200, 3],
+            xl: 3,
+            onComplete: function() {}
+        };
+    function Plugin(element, options) {
+        this.element = element;
+        this.options = $.extend({}, defaults, options);
+        this.init();
+    }
+
+    Plugin.prototype = {
+        init: function() {
+            this.buildCache();
+            this.registerHandlers();
+            this.getValues();
+            this.build();
+            this.options.onComplete();
+        },
+        buildCache: function() {
+            this.$grid = $(this.element);
+            this.$gridItems = this.$grid.children(this.options.item);
+        },
+        getValues: function() {
+            this.gridWidth = this.$grid.width();
+            this.numOfColumns = this.getNumOfColumns();
+            this.columnWidth = this.getColumnWidth();
+        },
+        getNumOfColumns: function() {
+            this.columns = [];
+            var num = 0;
+            var width = $(window).width();
+            if (width < this.options.xs[0]) {
+                num = this.options.xs[1];
+            } else if (width < this.options.sm[0]) {
+                num = this.options.sm;
+            } else if (width < this.options.md[0]) {
+                num = this.options.md[1];
+            } else if (width < this.options.lg[0]) {
+                num = this.options.lg[1];
+            } else {
+                num = this.options.xl;
+            }
+            for (let i = 0; i < num; i++) {
+                this.columns.push([i, 0]);
+            }
+
+            return num;
+        },
+        getColumnWidth: function() {
+            return parseInt((this.gridWidth - this.options.gutter * (this.numOfColumns - 1)) / this.numOfColumns);
+        },
+        registerHandlers: function() {
+            var self = this;
+            $(window).resize(function() {
+                self.getValues();
+                self.build();
+            });
+        },
+        build: function() {
+            var self = this;
+            var currentColumn;
+            self.$gridItems.each(function() {
+                var item = $(this);
+                item.css('position', 'absolute');
+                self.$grid.css('position', 'relative');
+                item.css('width', self.columnWidth);
+                for (let i = 0; i < self.columns.length; i++) {
+                    if (currentColumn == undefined || currentColumn[1] > self.columns[i][1]) {
+                        currentColumn = self.columns[i];
+                    }
+                }
+                if (currentColumn[0] == 0) {
+                    item.css('left', currentColumn[0] * self.columnWidth);
+                } else {
+                    item.css('left', currentColumn[0] * self.columnWidth + self.options.gutter * currentColumn[0]);
+                }
+                item.css('top', currentColumn[1]);
+                currentColumn[1] += item.height() + self.options.gutter;
+            });
+            for (let i = 0; i < self.columns.length; i++) {
+                if (currentColumn[1] < self.columns[i][1]) {
+                    currentColumn = self.columns[i];
+                }
+            }
+            self.$grid.css('height', currentColumn[1] - this.options.gutter);
+            self.$gridItems.css('visibility', 'visible');
+        }
+    };
+    $.fn[pluginName] = function(options) {
+        return this.each(function() {
+            if (!$.data(this, "plugin_" + pluginName)) {
+                $.data(this, "plugin_" + pluginName,
+                    new Plugin(this, options));
+            }
+        });
+    };
+
+})(jQuery, document, window);

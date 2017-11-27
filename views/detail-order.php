@@ -18,83 +18,6 @@
             break;
     }    
 ?>
-<style>
-    .nbd-unavailable {
-        pointer-events: none;
-        opacity: 0.3;
-    }
-    .nbd-unavailable-note {
-        font-size: 30px;
-        color: red;
-        top: 15px;
-        right: 15px;
-        position: absolute;
-    }
-    .nbd-convert img, .nbd-convert a.button-primary, .nbd-convert a.button-primary:active {
-        vertical-align: middle;
-        margin-right: 15px;
-    }
-    .nbd-convert a.button-primary span {
-        margin-top: 3px;
-    }
-    .nbd-convert-con {
-        vertical-align: top;
-        display: inline-block;
-        padding: 0 15px 15px 15px;
-        border: 1px solid #ddd;
-        margin-top: 15px;   
-        position: relative;
-    }
-    .nbd-disabled {
-        display: none;
-    }
-    @-webkit-keyframes rotating /* Safari and Chrome */ {
-        from {
-            -ms-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -webkit-transform: rotate(0deg);
-            -o-transform: rotate(0deg);
-            transform: rotate(0deg);
-        }
-        to {
-            -ms-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -webkit-transform: rotate(360deg);
-            -o-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-    @keyframes rotating {
-        from {
-            -ms-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            -webkit-transform: rotate(0deg);
-            -o-transform: rotate(0deg);
-            transform: rotate(0deg);
-        }
-        to {
-            -ms-transform: rotate(360deg);
-            -moz-transform: rotate(360deg);
-            -webkit-transform: rotate(360deg);
-            -o-transform: rotate(360deg);
-            transform: rotate(360deg);
-        }
-    }
-    .rotating {
-        -webkit-animation: rotating 2s linear infinite;
-        -moz-animation: rotating 2s linear infinite;
-        -ms-animation: rotating 2s linear infinite;
-        -o-animation: rotating 2s linear infinite;
-        animation: rotating 2s linear infinite;
-        opacity: 0.3;
-    }  
-    .nbd-prevent {
-        pointer-events: none;
-    }
-    #save-to-pdf select {
-        padding: 0 !important;
-    }
-</style>
 <div id="nbdesign-order-tabs">
     <h2>
         <?php 
@@ -115,7 +38,8 @@
         <a class="button-primary nbdesigner-right" href="<?php echo admin_url('post.php?post=' . absint($order_id) . '&action=edit'); ?>"><?php _e('Back to order', 'web-to-print-online-designer'); ?></a>
     </h2>
         <ul class="nbd-nav-tab">
-            <li><a href="#customer-design"><?php _e('Customer design', 'web-to-print-online-designer') ?></a></li>
+            <li><a href="#customer-design"><?php _e('Design & Resource', 'web-to-print-online-designer') ?></a></li>
+            <li><a href="#convert-download"><?php _e('Convert & Download', 'web-to-print-online-designer') ?></a></li>     
             <li><a href="#save-to-pdf"><?php _e('Create PDF', 'web-to-print-online-designer') ?></a></li>
         </ul>   
         <div id="customer-design">
@@ -157,7 +81,7 @@
                     $cdWidth = $data['area_design_width'];
                     $cdHeight = $data['area_design_height'];
                     $cdLeft = $data['area_design_left'];
-                    $cdTop = $data['area_design_top'];              
+                    $cdTop = $data['area_design_top'];  
                 ?>
                     <div class="item nbdesigner_item">
                         <div class="large" 
@@ -193,6 +117,81 @@
                 </div> 
             </div>
             <hr />
+            <h3><?php _e('Resource', 'web-to-print-online-designer') ?></h3>
+            <div>
+                <div>  
+                    <p><span class="dashicons dashicons-images-alt2"></span></span><b><?php _e('Images', 'web-to-print-online-designer') ?></b></p>
+                    <table class="nbd-resource-text">
+                        <thead>
+                            <tr>
+                                <th>Link</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>                        
+                <?php foreach( $resources as $resource ): ?>
+                    <?php 
+                        foreach( $resource->objects as $layer ): 
+                        if( $layer->type == 'image' || $layer->type == 'custom-image' ){   
+                            $src = $layer->type == 'image' ? $layer->src : $layer->origin_src;
+                    ?>
+                    <tr>
+                        <td><a href="<?php echo $src; ?>" target="_blank" title="<?php _e('View', 'web-to-print-online-designer') ?>"><?php echo $src; ?></a></td>
+                        <td><a class="nbd-download-resource-link" href="<?php echo $src; ?>" download title="<?php _e('Download', 'web-to-print-online-designer') ?>"><span class="dashicons dashicons-arrow-down-alt"></span><a/></td>
+                    </tr>
+                    <?php } endforeach; ?>
+                <?php endforeach; ?>
+                    </table>   
+                </div>
+                <div class="nbd-tabbe-wrap">
+                    <p><span class="dashicons dashicons-editor-textcolor"></span><b><?php _e('Texts', 'web-to-print-online-designer') ?></b></p>
+                    <table class="nbd-resource-text">
+                        <thead>
+                            <tr>
+                                <th>Content</th>
+                                <th>Color</th>
+                                <th>Font</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach( $resources as $resource ): ?>
+                            <?php 
+                                foreach( $resource->objects as $layer ): 
+                                if( $layer->type == 'text' || $layer->type == 'i-text' || $layer->type == 'curvedText' ){ 
+                                    $alias = $fontname = $layer->fontFamily;
+                                    $fonturl = 'https://fonts.google.com/specimen/'.$fontname;
+                                    $is_google_font = true;
+                                    foreach ( $fonts as $font ){
+                                        if( $font->alias == $fontname ) {
+                                            $fontname = $font->name;
+                                            $fonturl = ( strpos($font->url, 'http') !== false ) ? $font->url : NBDESIGNER_FONT_URL . $font->url;
+                                            $is_google_font = false;
+                                            break;
+                                        }
+                                    }
+                            ?>
+                            <tr>
+                                <style type='text/css'>
+                                    <?php if( !$is_google_font ): ?>
+                                    @font-face {font-family: <?php echo $alias; ?>;src: local('☺'), url('<?php echo $fonturl; ?>')}
+                                    <?php else: ?>
+                                    @import url(https://fonts.googleapis.com/css?family=<?php echo str_replace(' ', '+', $alias) ?>);
+                                    <?php endif; ?>
+                                </style>                                   
+                                <td style="font-family: <?php echo $alias; ?>;"><?php echo $layer->text; ?></td>
+                                <td>
+                                    <span class="nbd-color-wrap"><span class="nbd-color" style="background: <?php echo $layer->fill; ?>"></span><span class="nbd-color-value"><?php echo $layer->fill; ?></span></span>
+                                </td>
+                                <td><a href="<?php echo $fonturl; ?>" <?php if( $is_google_font ) echo 'target="_blank"'; else echo 'download'; ?> title="<?php _e('Download', 'web-to-print-online-designer'); ?>"><?php echo $fontname; ?></a></td>
+                            </tr>
+                            <?php } endforeach; ?>
+                        <?php endforeach; ?> 
+                        </tbody>    
+                    </table>
+                </div>
+            </div>
+        </div> 
+        <div id="convert-download">
             <div id="nbd-convert-section">
                 <h3><?php _e('Convert', 'web-to-print-online-designer'); ?></h3>
                 <div class="nbd-convert-con" style="padding-top: 15px;">
@@ -252,8 +251,8 @@
                 <?php  if( !is_available_imagick() ): ?>
                 <p><span style="color: red; font-size: 20px; margin-right: 5px;">*</span><?php _e('Required PHP imagick API', 'web-to-print-online-designer'); ?></p>
                 <?php endif; ?>
-            </div>            
-        </div>    
+            </div> 
+        </div>     
         <div id="save-to-pdf">
             <div style="clear: both; padding: 0 15px ;">
                 <table class="form-table">
@@ -606,7 +605,7 @@
                     jQuery('#nbdesigner_large_overlay').attr('style', design);   
                 });  
                 jQuery( "#nbdesign-order-tabs" ).tabs({
-                    active: 1
+                    active: 2
                 });  
                 jQuery( "#save-to-pdf" ).tabs({});                
                 jQuery(document).on('click', function(e){
@@ -893,7 +892,7 @@
                 });
             };
             var gotoConvert = function(){
-                jQuery('a[href="#customer-design"]').click();
+                jQuery('a[href="#convert-download"]').click();
                 jQuery('html, body').animate({
                     scrollTop: jQuery("#nbd-convert-section").offset().top
                 }, 1000);                

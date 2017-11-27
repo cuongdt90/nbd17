@@ -127,11 +127,9 @@ if( !class_exists('Nbdesigner_Settings') ) {
                 return $this->get_default_option($key);
             } else {
                 $value = get_option($key);
-                //if option is type of number, it needs to return a value, otherwise its failed
                 if (!$this->not_empty($value) && $this->get_option_type($key) == 'number') {
                     return $this->get_default_option($key);
                 }
-                //if is array, convert it into string
                 else if (is_array($value) || $this->get_option_type($key) == 'multiselect') {
                     return empty($value) || $value == 'no' || !is_array($value) ? "" : '"' . implode('","', $value) . '"';
                 }
@@ -367,7 +365,16 @@ if( !class_exists('Nbdesigner_Settings') ) {
         public function reset_options(){
             $options_in_tab = $this->get_options_by_tab($this->current_tab);
             foreach( $options_in_tab as $key => $value ) {
-                update_option($key, $value);
+                if( $this->get_option_type($key) == 'multicheckbox' ){
+                    $options = (array) json_decode( $this->get_default_option($key) );
+                    if($options){
+                        foreach ( $options as $k => $v  ){
+                            update_option($k, $v);
+                        }                   
+                    }
+                }else{
+                    update_option($key, $value);
+                }
             }
             do_action( 'nbdesigner_reset_options', $this->current_tab );
         }         

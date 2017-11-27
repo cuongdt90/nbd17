@@ -78,7 +78,7 @@
             <div>
                 <span ng-show="settings['nbdesigner_image_crop'] == 1" class="text-update btn btn-default btn-xs fa fa-crop" data-target="#dg-crop-image" data-toggle="modal" title="{{(langs['CROP_IMAGE']) ? langs['CROP_IMAGE'] : 'Crop Image'}}" ng-click="initCropCanvas('crop')">&nbsp;{{(langs['CROP_IMAGE']) ? langs['CROP_IMAGE'] : "Crop Image"}}</span>  
                 <span ng-show="settings['nbdesigner_image_shapecrop'] == 1" class="text-update btn btn-default btn-xs fa fa-star" data-target="#dg-crop-image" data-toggle="modal" title="{{(langs['SHAPE_IMAGE']) ? langs['SHAPE_IMAGE'] : 'Shape Image'}}" ng-click="initCropCanvas('shape')">&nbsp;{{(langs['SHAPE_IMAGE']) ? langs['SHAPE_IMAGE'] : "Shape Image"}}</span>  
-                <span class="text-update btn btn-default btn-xs  fa fa-eraser" data-toggle="tooltip" title="Back to original image" ng-click="resetImage()">&nbsp;{{(langs['RESET_IMAGE']) ? langs['RESET_IMAGE'] : "Reset Image"}}</span>                
+                <span class="text-update btn btn-default btn-xs  fa fa-eraser nbd-tooltip-i18n" data-placement="top" data-lang="BACK_TO_ORIGINAL_IMAGE" ng-click="resetImage()">&nbsp;{{(langs['RESET_IMAGE']) ? langs['RESET_IMAGE'] : "Reset Image"}}</span>                
             </div>
 <!--            <div class="switch">
                 <input id="remove-color-filter" data-filter="Remove color" class="cmn-toggle cmn-toggle-round" type="checkbox">

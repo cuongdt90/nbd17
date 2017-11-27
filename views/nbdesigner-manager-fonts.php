@@ -13,14 +13,20 @@
 						<tr valign="top">
 							<th scope="row" class="titledesc"><?php echo __("Font name", 'web-to-print-online-designer'); ?> </th>
 							<td class="forminp-text">
-								<input type="text" name="nbdesigner_font_name" value="<?php $name = isset($font_data->name) ?  $font_data->name : ''; echo $name; ?>" />						
+								<input type="text" name="nbdesigner_font_name" value="<?php $name = isset($font_data->name) ?  $font_data->name : ''; echo $name; ?>" />
+                                                                <?php if( !isset($font_data->name) ): ?>
+                                                                <div style="font-size: 11px; font-style: italic;"><?php _e('Open font file to view font name, Ex:', 'web-to-print-online-designer'); ?><br />
+                                                                    <img style="border: 7px solid #fff; solid #fff; border-radius: 4px; box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/view_font_name.png'; ?>" />
+                                                                </div>
+                                                                <?php endif; ?>
 							</td>
 						</tr>				
 						<tr valign="top">
 							<th scope="row" class="titledesc"><?php echo __("Font file", 'web-to-print-online-designer'); ?> </th>
 							<td class="forminp-text">
 								<input type="file" name="woff" value="" accept=".woff,.ttf" /><br />
-								<div style="font-size: 11px; font-style: italic;"><?php _e('Allow extensions: woff, ttf', 'web-to-print-online-designer'); ?></div>
+								<div style="font-size: 11px; font-style: italic;"><?php _e('Allow extensions: woff, ttf', 'web-to-print-online-designer'); ?><br />
+								<?php _e('Recommend: ttf', 'web-to-print-online-designer'); ?></div>
 							</td>
 						</tr>				
 					</table>

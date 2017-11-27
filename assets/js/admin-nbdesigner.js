@@ -8,6 +8,7 @@ var _round = function(num, dec){
 jQuery(document).ready(function ($) {
     NBDESIGNADMIN.loopConfigAreaDesign();
     NBDESIGNADMIN.init_color_picker();
+    NBDESIGNADMIN.initModeViewArt();
     if($('#_nbdesigner_enable').prop("checked")){
         $('.nbdesigner-right.add_more').show();
     };
@@ -1770,7 +1771,31 @@ var NBDESIGNADMIN = {
                 bleed_area.removeClass('nbd-rounded');
                 safe_zone.removeClass('nbd-rounded');
         }
-    }
+    },
+    initModeViewArt: function(){        
+        var view_art_mode = localStorage.getItem("nbd_view_art_mode");  
+        if( view_art_mode == 'black' ){
+            jQuery('.nbdesigner_art_link').addClass('black');
+            jQuery('.nbd-toggle-art-view.black').addClass('active');
+        }else{
+            jQuery('.nbd-toggle-art-view').addClass('active');
+            jQuery('.nbd-toggle-art-view.black').removeClass('active');
+        }
+    },     
+    changeModeViewArt: function(){        
+        var view_art_mode = localStorage.getItem("nbd_view_art_mode");  
+        if( view_art_mode == 'black' ){
+            jQuery('.nbd-toggle-art-view').addClass('active');
+            jQuery('.nbd-toggle-art-view.black').removeClass('active');
+            jQuery('.nbdesigner_art_link').removeClass('black');
+            localStorage.setItem("nbd_view_art_mode", ''); 
+        }else{
+            jQuery('.nbd-toggle-art-view').removeClass('active');
+            jQuery('.nbd-toggle-art-view.black').addClass('active');
+            jQuery('.nbdesigner_art_link').addClass('black');
+            localStorage.setItem("nbd_view_art_mode", 'black'); 
+        }
+    }  
 };
 function base64Encode(str) {
   var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

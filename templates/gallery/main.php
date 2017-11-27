@@ -4,13 +4,14 @@
         <?php include_once('sidebar.php'); ?>
     </div>
     <div class="nbd-list-designs">
-        <div class="nbd-design-filter">
-            //show filter
-        </div>
+        <div class="nbd-design-filter"></div>
         <?php include_once('gallery.php'); ?>
     </div>  <!-- End. list designs -->    
 </div>    
 <style>
+    body.nbd-gallery {
+        background: #f1f1f1;
+    }
     .nbd-gallery header.entry-header {
         height: 300px;
         background-color: rgba(118,183,166,0.95);
@@ -18,7 +19,7 @@
     .nbd-gallery header h1{
         height: 100%;
         line-height: 300px;
-        background-image: url('<?php echo NBDESIGNER_ASSETS_URL . 'images/gallery.png' ?>');
+        background-image: url('<?php echo NBDESIGNER_ASSETS_URL . 'images/gallery.jpg' ?>');
         transform: none;
         background-repeat: repeat;          
         text-align: center;
@@ -36,9 +37,13 @@
     }
     .nbd-sidebar-con {
         width: 220px;
-        border: 1px solid #E6E6E6;
-        border-radius: 2px;   
+        border-radius: 4px;   
         margin-bottom: 15px;
+        background: #fff;
+        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);        
     }
     .nbd-list-designs {
         width: calc(100% - 240px);

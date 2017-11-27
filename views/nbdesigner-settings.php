@@ -32,7 +32,7 @@
                 <div>
                     <small id="nbdesigner_license_mes">
                         <?php //if(!isset($license['type'])) _e('Your license is incorrect or expired! ', 'web-to-print-online-designer');?>
-                        <?php if(!isset($license['type']) || (isset($license['type']) && $license['type'] == 'free')) echo '<a href="'.NBDESIGNER_AUTHOR_SITE.'wordpress-plugins/woocommerce-online-product-designer-plugin" target="_blank">Upgrade Pro version!</a>';?>
+                        <?php if(!isset($license['type']) || (isset($license['type']) && $license['type'] == 'free')) echo '<a class="nbd-notice-action" href="'.NBDESIGNER_AUTHOR_SITE.'wordpress-plugins/woocommerce-online-product-designer-plugin" target="_blank">Upgrade Pro version!</a>';?>
                     </small>
                 </div>
             </td>

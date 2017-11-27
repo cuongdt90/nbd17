@@ -432,7 +432,7 @@
                         <?php endif; ?>
                         <a href="<?php echo $link_manager_template; ?>" class="button nbd-admin-tem-link">
                             <span class="dashicons dashicons-images-alt"></span>
-                            <?php _e('Manager Templates', 'web-to-print-online-designer'); ?>
+                            <?php _e('Manage Templates', 'web-to-print-online-designer'); ?>
                         </a>            
                     <?php endif; ?>
                 </div> 

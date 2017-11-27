@@ -23,6 +23,15 @@ $class = nbdesigner_get_option('nbdesigner_class_design_button_detail');
                 <img class="nbd-save-loading hide" src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>"/> 
                 <?php _e('Save for later', 'web-to-print-online-designer'); ?>
             </a>
+            <?php
+                $allow_donwload_pdf = false;
+                if( $allow_donwload_pdf ):
+            ?>
+            <a href="javascript:void(0)" onclick="NBDESIGNERPRODUCT.download_pdf()" class="button alt">
+                <img class="nbd-pdf-loading hide" src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>"/> 
+                <?php _e('Download PDF', 'web-to-print-online-designer'); ?>
+            </a>
+            <?php endif; ?>
         </p>
     <?php endif; ?>
     <?php
@@ -121,12 +130,12 @@ $class = nbdesigner_get_option('nbdesigner_class_design_button_detail');
         background: #fff;
         cursor: pointer;
     }    
-    .nbd-save-loading {
+    .nbd-save-loading, .nbd-pdf-loading {
         display: inline-block;
         margin-right: 10px;
         vertical-align: middle;
     }
-    .nbd-save-loading.hide {
+    .nbd-save-loading.hide, .nbd-pdf-loading.hide {
         display: none;
     }
     #nbdesigner-preview-title {

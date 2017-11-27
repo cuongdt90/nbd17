@@ -494,8 +494,9 @@ var qrcode = function() {
 
     _this.createSvgTag = function(cellSize, margin) {
 
-      cellSize = cellSize || 2;
+      cellSize = cellSize || 4;
       margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+      margin = 0;
       var size = _this.getModuleCount() * cellSize + margin * 2;
       var c, mc, r, mr, qrSvg='', rect;
 
@@ -507,7 +508,7 @@ var qrcode = function() {
       qrSvg += ' height="' + size + 'px"';
       qrSvg += ' viewBox="0 0 ' + size + ' ' + size + '" ';
       qrSvg += ' preserveAspectRatio="xMinYMin meet">';
-      qrSvg += '<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>';
+      //qrSvg += '<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>';
       qrSvg += '<path d="';
 
       for (r = 0; r < _this.getModuleCount(); r += 1) {

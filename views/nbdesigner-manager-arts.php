@@ -62,7 +62,13 @@
 	</div>
 	<div class="clear"></div>
 	<div class="postbox">
-            <h3><?php echo __('List arts ', 'web-to-print-online-designer').$name_current_cat; ?><a class="nbdesigner-right" href="<?php echo admin_url('admin.php?page=nbdesigner_manager_arts'); ?>"><?php _e('All arts', 'web-to-print-online-designer'); ?></a></h3>
+            <h3 style="line-height: 20px;"><?php echo __('List arts ', 'web-to-print-online-designer'); ?><span class="nbd-art-cat-name"><?php echo $name_current_cat; ?></span>
+                <span class="nbdesigner-right">
+                    <a class="nbd-toggle-art-view" title="<?php _e('View mode white', 'web-to-print-online-designer');?>" href="javascript:void(0)" onclick="NBDESIGNADMIN.changeModeViewArt()"></a>
+                    <a class="nbd-toggle-art-view black" title="<?php _e('View mode black', 'web-to-print-online-designer');?>" style="margin-right: 15px;" href="javascript:void(0)" onclick="NBDESIGNADMIN.changeModeViewArt()"></a>
+                    <a href="<?php echo admin_url('admin.php?page=nbdesigner_manager_arts'); ?>"><?php _e('All arts', 'web-to-print-online-designer'); ?></a>
+                </span>
+            </h3>
 		<div class="nbdesigner-list-fonts inside">				
                     <div class="nbdesigner-list-arts-container">
                             <?php if(is_array($_list) && (sizeof($_list) > 0)): ?>

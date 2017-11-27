@@ -13,7 +13,7 @@
     ?>  
     <div class="wrap">
         <h1 class="nbd-title">
-            <?php _e('Templates for', 'web-to-print-online-designer'); ?>: <a href="<?php echo get_edit_post_link($pid); ?>"><?php echo $pro->get_title(); ?></a>
+            <?php _e('Templates for', 'web-to-print-online-designer'); ?>: <a class="nbd-product-url" href="<?php echo get_edit_post_link($pid); ?>"><?php echo $pro->get_title(); ?></a>
             <?php 
                 $variations = get_nbd_variations( $pid );   
                 if( count($variations) > 0 ):
@@ -79,6 +79,22 @@
     }
     .column-priority span.primary {
         color: #0085ba;
+    }
+    .nbd-product-url {
+        border: 1px solid #ddd;
+        padding: 0 10px;
+        line-height: 28px;
+        height: 30px;
+        display: inline-block;
+        border-radius: 30px;
+        margin-left: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        -ms-transition: all 0.4s;
+        transition: all 0.4s;
+        text-decoration: none;        
     }
 </style>
 <script>

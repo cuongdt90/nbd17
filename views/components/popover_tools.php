@@ -6,19 +6,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="pop-tools shadow active" ng-show="currentLayers.length > 0">
     <h2><i class="fa fa-arrows" aria-hidden="true"></i><span>{{(langs['TOOL']) ? langs['TOOL'] : "Tools"}}</span></h2>
     <div class="tools-con">
-        <span class="fa fa-chevron-left" ng-click="ShiftLeft()" title="Move left"></span>      
-        <span class="fa fa-chevron-right" ng-click="ShiftRight()" title="Move right"></span>  
-        <span class="fa fa-chevron-up" ng-click="ShiftUp()" title="Move up"></span>
-        <span class="fa fa-chevron-down" ng-click="ShiftDown()" title="Move down"></span>      
-        <span class="fa fa-exchange" ng-click="flipVertical()" title="Flip Horizontal"></span>      
-        <span class="fa fa-exchange rotate90" ng-click="flipHorizontal()" title="Flip Vertical"></span>      
-        <span class="glyphicon glyphicon-object-align-vertical" ng-click="setHorizontalCenter()" title="Center Horizontal"></span>      
-        <span class="glyphicon glyphicon-object-align-horizontal" ng-click="setVerticalCenter()" title="Center Vertical"></span>   
-        <span class="fa fa-trash-o" onclick="deleteObject()" title="Delete"></span>      
-        <span class="fa fa-files-o" ng-click="duplicateItem()" title="Copy"></span>      
-        <span class="fa fa fa-plus" ng-click="scaleItem('+')" title="Zoom In"></span>      
-        <span class="fa fa fa-minus" ng-click="scaleItem('-')" title="Zoom Out"></span>   
-        <span ng-click="setStackPosition('bringToFront')" title="Bring To Front">
+        <span class="fa fa-chevron-left" ng-click="ShiftLeft()" title="{{(langs['MOVE_LEFT']) ? langs['MOVE_LEFT'] : 'Move left'}}"></span>      
+        <span class="fa fa-chevron-right" ng-click="ShiftRight()" title="{{(langs['MOVE_RIGHT']) ? langs['MOVE_RIGHT'] : 'Move right'}}"></span>  
+        <span class="fa fa-chevron-up" ng-click="ShiftUp()" title="{{(langs['MOVE_UP']) ? langs['MOVE_UP'] : 'Move up'}}"></span>
+        <span class="fa fa-chevron-down" ng-click="ShiftDown()" title="{{(langs['MOVE_DOWN']) ? langs['MOVE_DOWN'] : 'Move down'}}"></span>      
+        <span class="fa fa-exchange" ng-click="flipVertical()" title="{{(langs['FLIP_HORIZONTAL']) ? langs['FLIP_HORIZONTAL'] : 'Flip Horizontal'}}"></span>      
+        <span class="fa fa-exchange rotate90" ng-click="flipHorizontal()" title="{{(langs['FLIP_VERTICAL']) ? langs['FLIP_VERTICAL'] : 'Flip Vertical'}}"></span>      
+        <span class="glyphicon glyphicon-object-align-vertical" ng-click="setHorizontalCenter()" title="{{(langs['CENTER_HORIZONTAL']) ? langs['CENTER_HORIZONTAL'] : 'Center Horizontal'}}"></span>      
+        <span class="glyphicon glyphicon-object-align-horizontal" ng-click="setVerticalCenter()" title="{{(langs['CENTER_VERTICAL']) ? langs['CENTER_VERTICAL'] : 'Center Vertical'}}"></span>   
+        <span class="fa fa-trash-o" onclick="deleteObject()" title="{{(langs['DELETE']) ? langs['DELETE'] : 'Delete'}}"></span>      
+        <span class="fa fa-files-o" ng-click="duplicateItem()" title="{{(langs['COPY']) ? langs['COPY'] : 'Copy'}}"></span>      
+        <span class="fa fa fa-plus" ng-click="scaleItem('+')" title="{{(langs['ZOOM_IN']) ? langs['ZOOM_IN'] : 'Zoom In'}}"></span>      
+        <span class="fa fa fa-minus" ng-click="scaleItem('-')" title="{{(langs['ZOOM_OUT']) ? langs['ZOOM_OUT'] : 'Zoom Out'}}"></span>   
+        <span ng-click="setStackPosition('bringToFront')" title="{{(langs['BRING_TO_FRONT']) ? langs['BRING_TO_FRONT'] : 'Bring To Front'}}">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false">
                     <g id="bring-front">
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </svg>  
             </span>   
         </span>
-        <span ng-click="setStackPosition('bringForward')" title="Bring Forward">
+        <span ng-click="setStackPosition('bringForward')" title="{{(langs['BRING_FORWARD']) ? langs['BRING_FORWARD'] : 'Bring Forward'}}">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false">
                     <g id="bring-forward">
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </svg>                
             </span>
         </span>
-        <span ng-click="setStackPosition('sendBackwards')" title="Send Backward">
+        <span ng-click="setStackPosition('sendBackwards')" title="{{(langs['SEND_BACKWARD']) ? langs['SEND_BACKWARD'] : 'Send Backward'}}">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false">
                     <g id="send-backward">
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </svg> 
             </span>    
         </span>
-        <span ng-click="setStackPosition('sendToBack')" title="Send To Back">
+        <span ng-click="setStackPosition('sendToBack')" title="{{(langs['SEND_TO_BACK']) ? langs['SEND_TO_BACK'] : 'Send To Back'}}">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"
                     <g id="send-back">
