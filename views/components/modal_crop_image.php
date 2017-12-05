@@ -13,7 +13,7 @@
             <div class="modal-footer">
                 <div class="pull-left nbdesigner_crop_footer">
                     <span class="nbdesigner_button  shadow hover-shadow fa fa-crop" ng-click="cropTool()" ng-show="cropToolMode"></span>
-                    <span class="nbdesigner_button  shadow hover-shadow fa fa-pencil" ng-click="lassoTool()" data-toggle="tooltip" title="Lasso Toll" ng-show="cropToolMode"></span>
+                    <span class="nbdesigner_button  shadow hover-shadow fa fa-pencil nbd-tooltip-i18n" ng-click="lassoTool()" data-placement="top" data-lang="LASSO_TOOL" ng-show="cropToolMode"></span>
                     <span class="shap_mark" ng-click="clipPath(1)" ng-show="clipPathMode"><img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/mark/mark_01.svg'; ?>" /></span>
                     <span class="shap_mark" ng-click="clipPath(2)" ng-show="clipPathMode"><img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/mark/mark_02.svg'; ?>" /></span>
                     <span class="shap_mark" ng-click="clipPath(3)" ng-show="clipPathMode"><img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/mark/mark_03.svg'; ?>" /></span>

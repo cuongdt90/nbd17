@@ -124,6 +124,9 @@ body.nbd-gallery {
     position: relative;
     min-height: 100px;
 }
+.nbd-user-banner img {
+    min-height: 100px;
+}
 .nbd-user-banner .nbd-edit-profile {
     position: absolute;
     top: 15px;
@@ -213,6 +216,10 @@ body.nbd-gallery {
 }
 .nbd-template-action-btn.warning {
     background: rgba(221, 51, 51,0.3);
+}
+.nbd-template-action-btn.update {
+    background: #0c8ea7;
+    color: #fff;
 }
 .nbd-template-action-wrap {
     border-top: 1px solid #ddd;
@@ -407,5 +414,44 @@ body.nbd-gallery {
 @media (max-width: 767px) {
     .nbd-tabbe-wrap {
         overflow: scroll;
+    }
+    .nbd-avatar {
+        display: block;
+        margin: 0 auto;        
+    }
+    .nbd-designer-info {
+        width: 100%;
+        max-width: 100%;
+        text-align: center;
+        padding: 0;        
+    }
+    .nbd-user-info {
+        padding: 0;
+    }
+    .nbd-artist-name{
+        color: #0c8ea7;
+    }
+    .nbd-template-title {
+        line-height: initial;
+        padding: 15px;
+        height: unset;        
+    }
+    .nbd-product-template-title {
+        display: block;
+        margin: 15px 0;
+        height: unset;
+        border: none;
+        padding: 0;        
+    }
+    .nbd-template-title span.statistic {
+        float: none;
+        display: block;        
+    }
+    .nbd-template-form label {
+        display: block;
+        margin-bottom: 15px;        
+    }
+    .nbd-template-action-btn {
+        margin: 0 10px 10px 0;
     }
 }

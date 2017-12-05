@@ -720,6 +720,24 @@ function getUrlPageNBD($page){
     }
     return ($post) ? get_page_link($post) : '#';    
 }
+function nbd_update_hit_template( $template_id = false, $folder = '' ){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nbdesigner_templates';
+    if( $template_id ){
+        $tem = $wpdb->get_row( "SELECT * FROM {$table_name} WHERE id = {$template_id}" );
+    }else if($folder != '') {
+        $tem = $wpdb->get_row( "SELECT * FROM {$table_name} WHERE folder = '{$folder}'" );
+        if( $tem ){
+            $template_id = $tem->id;
+        }
+    }
+    if( $template_id ){
+        $hit = $tem->hit ? $tem->hit + 1 : 1;
+        $re = $wpdb->update($table_name, array(
+            'hit' => $hit
+        ), array( 'id' => $template_id));         
+    }
+}
 function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false ){
     global $wpdb;
     $table_name = $wpdb->prefix . 'nbdesigner_templates';
@@ -802,6 +820,8 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['design'] = nbd_get_data_from_json($ref_path . '/design.json');
         $data['fonts'] = nbd_get_data_from_json($ref_path . '/used_font.json');
         $data['ref'] = unserialize(file_get_contents($ref_path . '/product.json'));
+        $data['config_ref'] = nbd_get_data_from_json($ref_path . '/config.json');
+        nbd_update_hit_template( false, $reference );
     } 
     if( $data['upload']['allow_type'] == '' ) $data['upload']['allow_type'] = nbdesigner_get_option('nbdesigner_allow_upload_file_type');
     if( $data['upload']['disallow_type'] == '' ) $data['upload']['disallow_type'] = nbdesigner_get_option('nbdesigner_disallow_upload_file_type');
@@ -1191,7 +1211,10 @@ function user_can_edit_template( $user_id, $template_id = 0 ){
     return ( ($user_id == $current_user_id) && is_nbd_designer($user_id) ) ? true : false;
 }
 function nbd_get_font_by_alias( $alias ){
-    $fonts = (array)json_decode( file_get_contents( NBDESIGNER_DATA_DIR . '/fonts.json' ) );
+    $fonts = array();
+    if(file_exists( NBDESIGNER_DATA_DIR . '/fonts.json') ){
+        $fonts = (array)json_decode( file_get_contents( NBDESIGNER_DATA_DIR . '/fonts.json' ) );        
+    }    
     foreach ($fonts as $font) {
         if ($font->alias == $alias) {
             return $font;

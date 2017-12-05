@@ -26,11 +26,11 @@ var hideConfig = function(){
         toggleShowTool();
     };            
 };
+var menuLoaded = 0;
 $(document).ready(function(){
     setTimeout(function() {
         $('#menu').triggerHandler('click');
-    },10);
-        
+    },10);       
 	var w = $(window).width(),
 	h = $(window).height();
 	w2 = w/2 -20;	

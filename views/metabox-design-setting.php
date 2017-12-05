@@ -218,6 +218,7 @@
                                         <span><?php  _e('Include in final design', 'web-to-print-online-designer'); ?></span>
                                     </p>
                                 </div>
+                                <!-- 
                                 <div class="nbd_area_design_type" style="margin-top: 15px; clear: both; text-align: left;">
                                     <label class="nbd-label nbdesigner-setting-box-label"><?php  _e('Area design shape', 'web-to-print-online-designer'); ?></label>
                                     <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="1" 
@@ -227,6 +228,7 @@
                                         <?php checked($v['area_design_type'], 2, true); ?> class="bg_type"
                                         onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 2)"   /><?php _e('Circle/Ellipse', 'web-to-print-online-designer'); ?></label>                                    
                                 </div>
+                                -->
                             </div>
                             <div class="nbdesigner-info-box">                             
                                 <?php if($k ==0): ?>

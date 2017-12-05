@@ -19,7 +19,7 @@ get_header(); ?>
         <?php if( $current_user_id == $user_id ): ?>
         <a class="nbd-edit-profile" href="<?php echo wc_get_endpoint_url( 'artist-info', $user_id, wc_get_page_permalink( 'myaccount' ) ); ?>" title="<?php _e('Edit profile', 'web-to-print-online-designer'); ?>">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <title>mode_edit</title>
+                <title>Edit profile</title>
                 <path fill="#6d6d6d" d="M20.719 7.031l-1.828 1.828-3.75-3.75 1.828-1.828c0.375-0.375 1.031-0.375 1.406 0l2.344 2.344c0.375 0.375 0.375 1.031 0 1.406zM3 17.25l11.063-11.063 3.75 3.75-11.063 11.063h-3.75v-3.75z"></path>
             </svg>          
         </a>
@@ -114,18 +114,14 @@ get_header(); ?>
         </div>
     </div>
     <div class="nbd-description">
-        <p class="nbd-about-title"><?php _e('About the designer', 'web-to-print-online-designer'); ?></p>
+        <p class="nbd-about-title"><?php _e('About', 'web-to-print-online-designer'); ?> <?php echo $user_infos['nbd_artist_name']; ?></p>
         <p><?php echo $user_infos['nbd_artist_description']; ?></p>
     </div>
 </div>
 <?php if( isset($_GET['template_id']) && $_GET['template_id'] != '' ): ?>
-<?php  if( $current_user_id !=  $user_id ): ?>
-    <div class="nbd-edit-tem-wrap">
-        <p><?php _e('You can not edit this template!', 'web-to-print-online-designer'); ?></p>
-    </div>
-<?php else:    
+<?php    
     $template_id = $_GET['template_id'];
-    $design = My_Design_Endpoint::get_template($current_user_id, $template_id);
+    $design = My_Design_Endpoint::get_template($user_id, $template_id);
     $product = wc_get_product( $design->variation_id ? $design->variation_id : $design->product_id );
     $path = NBDESIGNER_CUSTOMER_DIR .'/'.$design->folder. '/preview';
     $thumbnail = $design->thumbnail ? wp_get_attachment_url( $design->thumbnail ) : '';
@@ -182,8 +178,9 @@ get_header(); ?>
         <div class="nbd-template-form">
             <p class="nbd-form-title">
                 <label for="name"><?php _e('Name', 'web-to-print-online-designer'); ?></label>
-                <input value="<?php echo $design->name; ?>" name="name" id="name" placeholder="<?php echo $product_name; ?>"/>
+                <input value="<?php echo $design->name; ?>" name="name" id="name" placeholder="<?php echo $product_name; ?>" <?php  if( $current_user_id !=  $user_id ) echo 'disabled'; ?> />
             </p>
+            <?php  if( $current_user_id ==  $user_id ): ?>
             <p class="nbd-form-title"><?php _e('Thumbnail', 'web-to-print-online-designer'); ?></p>
             <div class="nbd-thumbnail">
                 <div class="image-wrap<?php echo $design->thumbnail ? '' : ' nbd-hide'; ?>">
@@ -194,8 +191,9 @@ get_header(); ?>
                 <div class="button-area<?php echo $design->thumbnail ? ' nbd-hide' : ''; ?>">
                     <a href="#" class="nbd-thumbnail-drag"><?php _e( 'Upload thumbnail', 'web-to-print-online-designer' ); ?></a>
                     <p class="description"><?php _e( 'Upload a thumbnail image to show in template page. If omit thumbnail image, use a preview design by default.', 'web-to-print-online-designer' ); ?></p>
-                </div>    
-            </div>      
+                </div>  
+            </div>    
+            <?php endif; ?>
             <p class="nbd-form-title" style="margin-top: 15px;"><?php _e('Preview', 'web-to-print-online-designer'); ?></p>
             <div>
                 <?php 
@@ -207,7 +205,7 @@ get_header(); ?>
                 </div>
                 <?php endforeach; ?>
             </div>
-            <p class="nbd-form-title" style="margin-top: 15px;"><?php _e('Resource', 'web-to-print-online-designer'); ?></p>
+            <p class="nbd-form-title" style="margin-top: 15px;"><?php _e('Resource used in this template', 'web-to-print-online-designer'); ?></p>
             <div>
                 <div>
                 <?php foreach( $resources as $resource ): ?>
@@ -285,32 +283,42 @@ get_header(); ?>
                 </div>
             </div>
         </div>
+        <?php  if( $current_user_id ==  $user_id ): ?>
         <div class="nbd-template-action-wrap">
-            <a class="nbd-template-action-btn" href="javascript:void(0)" onclick="NBDEditTemplate.updateTemplate()"><?php _e('Update info', 'web-to-print-online-designer'); ?></a>
+            <a class="nbd-template-action-btn update" href="javascript:void(0)" onclick="NBDEditTemplate.updateTemplate()"><?php _e('Update info', 'web-to-print-online-designer'); ?></a>
             <a class="nbd-template-action-btn" href="<?php echo $link_edit_template; ?>"><?php _e('Edit template', 'web-to-print-online-designer'); ?></a>
             <a class="nbd-template-action-btn" href="<?php echo $link_create_template; ?>"><?php _e('Add template', 'web-to-print-online-designer'); ?></a>
             <a class="nbd-template-action-btn warning" href="javascript:void(0)" onclick="NBDEditTemplate.deleteTemplate()"><?php _e('Delete template', 'web-to-print-online-designer'); ?></a>
-        </div>        
+        </div> 
+        <?php endif; ?>
     </div>
-</div>    
-<?php endif; ?>    
+</div>        
 <?php else: ?>
-    <div class="nbd-list-designs" id="nbd-list-designs">
+    <div class="nbd-list-designer-template" id="nbd-list-designer-template">
+        <span onclick="showPopupCreateTemplate()" class="nbd-add-template-btn">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <title>Add template</title>
+                <path fill="#fff" d="M8 7v2h6v-2h-6zM8 11h9v-1h-9v1zM17 12h-8v1h8v-1zM17 15v-1h-7v1h7zM8 14h-3v3h-3v3h3v3h3v-3h3v-3h-3v-3zM4 2v10h2v-8h13v17h-6.643l-1 2h9.643v-21h-17z"></path>
+            </svg>            
+        </span>        
     <?php 
         $row = apply_filters('nbd_artist_designs_row', 5);
-        $per_row = intval( apply_filters('nbd_artist_designs_per_row', 4) );
+        $per_row = intval( apply_filters('nbd_artist_designs_per_row', 6) );
         $des = '';
         $pagination = true;
         $url = add_query_arg(array('id' => $user_id), getUrlPageNBD('designer'));
         $page = (get_query_var('paged')) ? get_query_var('paged') : 1; 
         $templates = My_Design_Endpoint::nbdesigner_get_templates_by_page($page, $row, $per_row, false, false, $user_id);
         $favourite_templates = My_Design_Endpoint::get_favourite_templates();
-        $total = My_Design_Endpoint::count_total_template( false, $user_id );
-        include_once('gallery.php');
+        $total = My_Design_Endpoint::count_total_template( false, $user_id );        
     ?>
+    <div class="nbd-gallery-processing" id="nbdesigner-gallery">
+        <?php include_once('gallery.php'); ?>
+    </div>  
     </div>    
 <?php endif; ?>   
 <script>
+    var is_nbd_gallery = 0;
     var redirect_url = "<?php  echo  $link_designer;  ?>";
     var NBDEditTemplate = {
         init: function() {

@@ -51,7 +51,7 @@
                             <button style="background: #fff; border-radius: 0;" type="button" class="btn hover-shadow shadow"  ng-click="cancelDimension()"><i class="fa fa-times" aria-hidden="true"></i> {{(langs['CANCEL']) ? langs['CANCEL'] : "Cancel"}}</button>
                         </div>                         
                     </div> 
-                    <div class="form-group" ng-hide="productOptions.dynamic_side == 0">
+                    <div class="form-group" ng-hide="productOptions.dynamic_side == 0 || state != 'dev'">
                         <hr style="border-top: 1px solid #ddd;"/>
                         <div class="form-group">
                             <label style="min-width: 200px; vertical-align: top;">{{(langs['INSERT_PAGE']) ? langs['INSERT_PAGE'] : "Insert page"}} </label>

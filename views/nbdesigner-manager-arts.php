@@ -30,7 +30,7 @@
 				</div>
 			</div>
 			<div class="nbdesigner-content-side">
-				<div class="postbox">
+                            <div class="postbox" style="padding-bottom: 5px;">
                                     <h3><?php _e('Categories', 'web-to-print-online-designer'); ?><img src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/loading.gif'; ?>" class="nbdesigner_editcat_loading nbdesigner_loaded" style="margin-left: 15px;"/></h3>
 					<div class="inside">
 						<ul id="nbdesigner_list_art_cats">

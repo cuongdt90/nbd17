@@ -309,6 +309,20 @@ jQuery(document).ready(function ($) {
             }              
         });         
     });  
+    $('#nbd-create-pages').on('click', function(e){
+        e.preventDefault();
+        var formdata = jQuery('#nbd-setup-wizard').find('textarea, select, input').serialize();
+        formdata = formdata + '&action=nbd_create_pages';
+        jQuery('#nbdesigner_create_pages_loading').removeClass('nbdesigner_loaded');
+        jQuery.post(admin_nbds.url, formdata, function(data){
+            jQuery('#nbdesigner_create_pages_loading').addClass('nbdesigner_loaded');
+            if(parseInt(data.flag) == 1){
+                alert('Create pages success!');
+            }else {
+                alert('Oops! Try again!');
+            }              
+        });          
+    });
     $('#nbd-clear-transients').on('click', function(e){
         e.preventDefault();
         var formdata = $('#nbd-clear-transients-con').find('textarea, select, input').serialize();

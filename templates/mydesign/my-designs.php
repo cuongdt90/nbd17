@@ -1,8 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <h2><?php _e('Designs store', 'web-to-print-online-designer'); ?></h2>
 <?php
-    $is_artist = current_user_can('edit_nbd_template') ? 1 : 0;
-    $create_permission = get_the_author_meta( 'nbd_create_design', $user->ID );
+    $is_artist = is_nbd_designer($user->ID) ? 1 : 0;
     if($is_artist):
 ?>
 <p id="nbd-artist-form">
@@ -17,7 +16,7 @@
         <thead>
             <tr>
                 <th><?php _e('Preview', 'web-to-print-online-designer'); ?></th>
-                <th><?php _e('Price', 'web-to-print-online-designer'); ?></th>
+                <!--<th><?php _e('Price', 'web-to-print-online-designer'); ?></th>-->
                 <th><?php _e('Created', 'web-to-print-online-designer'); ?></th>
                 <th><?php _e('Action ', 'web-to-print-online-designer'); ?></th>
             </tr>
@@ -41,12 +40,13 @@
                     <img style="max-width: 100px; display: inline-block; border: 1px solid #ddd;" src="<?php echo Nbdesigner_IO::convert_path_to_url($image); ?>" />
                     <?php endforeach; ?>
                 </td>
-                <td data-title="<?php _e('Price', 'web-to-print-online-designer'); ?>"><?php echo wc_price($design->price) ?></td>
+                <!--<td data-title="<?php _e('Price', 'web-to-print-online-designer'); ?>"><?php echo wc_price($design->price) ?></td>-->
                 <td data-title="<?php _e('Date', 'web-to-print-online-designer'); ?>"><?php echo $design->created_date; ?></td>
                 <td data-title="<?php _e('Action ', 'web-to-print-online-designer'); ?>">
                     <!-- <a href="<?php echo wc_get_endpoint_url( 'view-design', $design->id, wc_get_page_permalink( 'myaccount' ) ); ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a> -->
                     <a href="<?php echo $link_edit_design; ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a><br />
-                    <a href="javascript:void(0)" onclick="NBDESIGNERPRODUCT.delete_my_design(<?php echo $design->id;  ?>)"><?php _e('Delete', 'web-to-print-online-designer'); ?></a>
+                    <a href="javascript:void(0)" data-design="<?php echo $design->id;  ?>" onclick="NBDESIGNERPRODUCT.delete_my_design( this )"><?php _e('Delete', 'web-to-print-online-designer'); ?></a><br />
+                    <a href="javascript:void(0)" data-design="<?php echo $design->id;  ?>" onclick="NBDESIGNERPRODUCT.add_design_to_cart( this )"><?php _e('Add to cart', 'web-to-print-online-designer'); ?></a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -56,7 +56,7 @@
         $max_page = ceil($total/$item_per_page);
         if( $max_page > 1 ): 
     ?>
-    <div class="nbd-">
+    <div class="nbd-nav">
         <?php if ( 1 !== $current_page ) : ?>
         <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button" href="<?php echo wc_get_endpoint_url( 'my-designs', $current_page - 1, wc_get_page_permalink( 'myaccount' ) ); ?>" ><?php _e( 'Previous', 'web-to-print-online-designer' ); ?></a>
         <?php endif;?>

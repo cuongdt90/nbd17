@@ -150,10 +150,12 @@
                                 <div class="form-group">
                                     <label>{{(langs['IMAGE_URL1']) ? langs['IMAGE_URL1'] : "Image URL"}}</label>
                                     <input style="height: 33px;" id="nbd_image_url" class="form-control hover-shadow nbdesigner_image_url" ng-model="imageFromUrl"  placeholder="{{(langs['ENTER_YOUR_IMAGE_URL']) ? langs['ENTER_YOUR_IMAGE_URL'] : 'Enter your image url, allow: jpg, png, svg'}}"/>
-                                    <?php if( nbdesigner_get_option('nbdesigner_enable_google_drive') == 'yes' ): ?>
+                                    <?php if( nbdesigner_get_option('nbdesigner_enable_google_drive') == 'yes' 
+                                            && nbdesigner_get_option('nbdesigner_google_api_key') != '' 
+                                            && nbdesigner_get_option('nbdesigner_google_client_id') != '' ): ?>
                                     <script type="text/javascript">
-                                        var developerKey = 'AIzaSyC6fi_2aZyE1Q9L-VDkRyGt_L6xf4H6Avo';
-                                        var clientId = "778317033442-61fj9ac09jr791ldvn5db0ut0a483ca9.apps.googleusercontent.com";
+                                        var developerKey = '<?php echo nbdesigner_get_option('nbdesigner_google_api_key'); ?>';
+                                        var clientId = "<?php echo nbdesigner_get_option('nbdesigner_google_client_id'); ?>";
                                         var _scope = ['https://www.googleapis.com/auth/drive.readonly'];
                                         var locale = '<?php echo $locale; ?>';
                                         var pickerApiLoaded = false;

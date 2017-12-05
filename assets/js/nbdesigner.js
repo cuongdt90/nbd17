@@ -51,6 +51,7 @@ jQuery(document).ready(function () {
         jQuery('#container-online-designer').css({'width': width, 'height': height});
     });    
 });
+var share_image_url = '';
 var NBDESIGNERPRODUCT = {
     save_for_later: function(){
         jQuery('img.nbd-save-loading').removeClass('hide');
@@ -69,6 +70,16 @@ var NBDESIGNERPRODUCT = {
                 jQuery('img.nbd-save-loading').addClass('hide');
                 jQuery('a.nbd-save-for-later').addClass('saved');
                 jQuery('a.nbd-save-for-later svg').show();
+                
+                jQuery.each( jQuery('#nbd-share-group a'), function(){
+                    var d = new Date();
+                    var href = jQuery(this).attr('data-href');
+                    var share_url =nbd_create_own_page + '?product_id=' + NBDESIGNERPRODUCT.product_id + '&variation_id=' + NBDESIGNERPRODUCT.variation_id + '&reference=' + data.folder + '&nbd_share_id=' + data.folder + '&t=' + d.getTime();
+                    var _href = href + encodeURIComponent(share_url);
+                    if( jQuery(this).attr('id') == 'nbd-pinterest' ) _href += '&media=' + encodeURIComponent(share_image_url) + '&description=' + jQuery(this).attr('data-description');
+                    if( jQuery(this).attr('data-text') != undefined ) _href += '&text=' + jQuery(this).attr('data-text');
+                    jQuery(this).attr('href', _href);
+                });	                
             }else{
                 alert('Opps! Error while save design!');
             };
@@ -117,7 +128,7 @@ var NBDESIGNERPRODUCT = {
         }
         var html = '';
         var d = new Date();
-        var count = 1, share_image_url = '';
+        var count = 1;
         jQuery.each(arr, function (key, val) {
             if(count == 1) share_image_url = val;
             count++;
@@ -417,21 +428,63 @@ var NBDESIGNERPRODUCT = {
             }
         });
     },
-    delete_my_design: function(  ){
+    delete_my_design: function( e ){
+        var con = confirm('Are you sure you want to delete this design?');
+        if( con ){
+            var sefl = jQuery(e),
+            design_id = sefl.attr('data-design'),
+            tr_con = sefl.parents('tr.order');
+            jQuery('.container-design').addClass( 'processing' ).block( {
+                message: null,
+                overlayCSS: {
+                    background: '#fff',
+                    opacity: 0.6
+                }
+            } );        
+            jQuery.ajax({
+                url: nbds_frontend.url,
+                method: "POST",
+                data: {
+                    action   :    'nbd_delete_my_design',
+                    design_id :   design_id,
+                    nonce: nbds_frontend.nonce
+                }            
+            }).done(function(data){
+                jQuery('.container-design').removeClass( 'processing' ).unblock();
+                if(data.flag == 1){
+                    tr_con.remove();
+                    alert('Delete successfully!')
+                }
+            })   
+        }
+    },
+    add_design_to_cart: function(e){
+        var sefl = jQuery(e),
+        design_id = sefl.attr('data-design');
+        jQuery('.container-design').addClass( 'processing' ).block( {
+            message: null,
+            overlayCSS: {
+                background: '#fff',
+                opacity: 0.6
+            }
+        } );        
         jQuery.ajax({
             url: nbds_frontend.url,
             method: "POST",
             data: {
-                action   :    'nbd_save_for_later',
-                product_id :   NBDESIGNERPRODUCT.product_id,
-                variation_id :   NBDESIGNERPRODUCT.variation_id,
-                folder: NBDESIGNERPRODUCT.folder,
+                action   :    'nbd_add_design_to_cart',
+                design_id :   design_id,
                 nonce: nbds_frontend.nonce
             }            
         }).done(function(data){
-            console.log(data);
-        });         
-    }  
+            jQuery('.container-design').removeClass( 'processing' ).unblock();
+            if(data.flag == 1){
+                window.location = nbds_frontend.cart_url;
+            }else{
+                alert('Opp! Try again later')
+            }
+        })         
+    }
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {
     var replaceDuplicates = true;

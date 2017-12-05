@@ -107,7 +107,7 @@
 <hr />
 <div id="nbd-setup-wizard">
     <h2><?php _e('Create default NBDesigner pages', 'web-to-print-online-designer'); ?></h2>
-    <?php wp_nonce_field('nbd-create-pages', '_nbdesigner_cupdate_product'); ?>
+    <?php wp_nonce_field('nbd-create-pages', '_nbdesigner_update_product'); ?>
     <button class="button-primary" id="nbd-create-pages" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php _e('Create pages', 'web-to-print-online-designer'); ?></button>
     <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" class="nbdesigner_loaded" id="nbdesigner_create_pages_loading" style="margin-left: 15px;"/>   
     <p><strong style="color: #a00"><?php _e('Note', 'web-to-print-online-designer'); ?>: </strong><?php _e('This tool will install all the missing NBDesigner pages. Pages already defined and set up will not be replaced.', 'web-to-print-online-designer'); ?></p>

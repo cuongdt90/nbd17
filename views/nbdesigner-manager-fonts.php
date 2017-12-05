@@ -16,7 +16,7 @@
 								<input type="text" name="nbdesigner_font_name" value="<?php $name = isset($font_data->name) ?  $font_data->name : ''; echo $name; ?>" />
                                                                 <?php if( !isset($font_data->name) ): ?>
                                                                 <div style="font-size: 11px; font-style: italic;"><?php _e('Open font file to view font name, Ex:', 'web-to-print-online-designer'); ?><br />
-                                                                    <img style="border: 7px solid #fff; solid #fff; border-radius: 4px; box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/view_font_name.png'; ?>" />
+                                                                    <img style="border: 7px solid #fff; border-radius: 4px; box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);" src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/view_font_name.png'; ?>" />
                                                                 </div>
                                                                 <?php endif; ?>
 							</td>
@@ -56,7 +56,7 @@
 				<?php endif; ?>
 			</div>
 			<div class="nbdesigner-content-side">
-				<div class="postbox">
+                            <div class="postbox" style="padding-bottom: 5px;">
 					<h3><?php _e('Categories', 'web-to-print-online-designer'); ?><img src="<?php echo NBDESIGNER_PLUGIN_URL . 'assets/images/loading.gif'; ?>" class="nbdesigner_editcat_loading nbdesigner_loaded" style="margin-left: 15px;"/></h3>
 					<div class="inside">
 						<ul id="nbdesigner_list_cats">
@@ -82,7 +82,7 @@
 						<p><a id="nbdesigner_add_font_cat"><?php _e('+ Add new font category', 'web-to-print-online-designer'); ?></a></p>
 						<div id="nbdesigner_font_newcat" class="category-add"></div>
 					</div>
-				</div>
+                            </div>
 			</div>
 		</form>
 	</div>

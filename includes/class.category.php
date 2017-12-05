@@ -26,11 +26,11 @@ class NBD_Category extends Walker {
         $url = '?cat=' . $category->term_id;
 
         if ( $depth == 0 ) {
-            $caret = $args['has_children'] ? ' <span class="caret-icon"><i class="fa fa-angle-right" aria-hidden="true"></i></span>' : '';
+            $caret = $args['has_children'] ? ' ' : '';
             $class_name = $args['has_children'] ? ' class="has-children parent-cat-wrap"' : ' class="parent-cat-wrap"';
             $output .= $indent . '<li' . $class_name . '>' . "\n\t" .'<a href="' . $url . '">' . $category->name . $caret . '</a>' . "\n";
         } else {
-            $caret = $args['has_children'] ? ' <span class="caret-icon"><i class="fa fa-angle-right" aria-hidden="true"></i></span>' : '';
+            $caret = $args['has_children'] ? ' ' : '';
             $class_name = $args['has_children'] ? ' class="has-children"' : '';
             $output .= $indent . '<li' . $class_name . '><a href="' . $url . '">' . $category->name . $caret . '</a>';
         }

@@ -89,7 +89,8 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
 
-new My_Design_Endpoint();
+$nb_design_endpoint = new My_Design_Endpoint();
+$nb_design_endpoint->init();
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );

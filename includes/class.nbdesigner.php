@@ -78,7 +78,8 @@ class Nbdesigner_Plugin {
             'nbd_frontend_download_pdf' => true,
             'nbdesigner_update_variation_v180'  =>  false,
             'nbdesigner_update_all_template'  =>  false,
-            'nbd_clear_transients'  =>  false
+            'nbd_clear_transients'  =>  false,
+            'nbd_create_pages'  =>  false
         );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -433,6 +434,7 @@ class Nbdesigner_Plugin {
             'sid' => session_id(),
             'nonce' => wp_create_nonce('save-design'),
             'nonce_get' => wp_create_nonce('nbdesigner-get-data'),
+            'cart_url'   =>   esc_url( wc_get_cart_url() ),
             'hide_cart_button'  =>  nbdesigner_get_option('nbdesigner_hide_button_cart_in_detail_page')));
         wp_enqueue_script('nbdesigner');
     }
@@ -1512,7 +1514,10 @@ class Nbdesigner_Plugin {
                 $option = unserialize(file_get_contents($path .'/option.json'));
                 $path_config = $path . '/config.json';  
                 $resources = (array)json_decode( file_get_contents( $path. '/design.json' ) );
-                $fonts = (array)json_decode( file_get_contents( NBDESIGNER_DATA_DIR . '/fonts.json' ) );                
+                $fonts = array();
+                if(file_exists( NBDESIGNER_DATA_DIR . '/fonts.json') ){
+                    $fonts = (array)json_decode( file_get_contents( NBDESIGNER_DATA_DIR . '/fonts.json' ) );        
+                }
                 $config = nbd_get_data_from_json($path_config);
                 if( isset( $config->product ) && count( $config->product ) ){
                     $datas = array();
@@ -2107,7 +2112,7 @@ class Nbdesigner_Plugin {
             $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
             $data['design'] = nbd_get_data_from_json($path . '/design.json');
             $data['config'] = nbd_get_data_from_json($path . '/config.json');
-            //todo update template hit
+            nbd_update_hit_template( false, $template_id );
         }else {
             $data = nbd_get_product_info( $product_id, $variation_id, '', 'new' );  
         } 
@@ -3518,7 +3523,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             $res['mes'] = __('Invalid file format!', 'web-to-print-online-designer');
         }   
         if($min_dpi && $min_dpi > 0) {
-            $dpi = nbd_get_dpi($_FILES['file']["tmp_name"]);           
+            $dpi = nbd_get_dpi($_FILES['file']["tmp_name"]);   
+            $dpi[0]['x'] = $dpi[0]['x'] ? $dpi[0]['x'] : 96;
+            $dpi[0]['y'] = $dpi[0]['y'] ? $dpi[0]['y'] : 96;
             if($dpi[0]['x'] < $min_dpi) {
                 $result = false;
                 $res['mes'] = __('Image resolution too low!', 'web-to-print-online-designer');                
@@ -4370,7 +4377,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                     $has_custom_font = true;
                     $path_font = NBDESIGNER_FONT_DIR . '/' . $font->file;
                 }
-                $fontname = TCPDF_FONTS::addTTFfont($path_font, 'TrueType', '', 32);
+                $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);             
             } 
             if($has_custom_font) {
                 //todo something to change font-family
@@ -4716,7 +4723,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 if(strpos($img_src, "data:image")!==FALSE)
                 continue;
                 $type = pathinfo($img_src, PATHINFO_EXTENSION);
-                $data = file_get_contents($img_src);
+                $type = ($type =='svg' ) ? 'svg+xml' : $type;
+                $data = nbd_file_get_contents($img_src);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 $tagName->setAttribute('xlink:href', $base64);
             }
@@ -4811,5 +4819,16 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
     }
     public function nbd_clear_transients(){
         Nbdesigner_Helper::clear_transients();
+    }
+    public function nbd_create_pages(){
+        if (!wp_verify_nonce($_POST['_nbdesigner_update_product'], 'nbd-create-pages') || !current_user_can('administrator')) {
+            die('Security error');
+        }         
+        $this->nbdesigner_add_custom_page();
+        wp_send_json(
+            array(
+                'flag'  =>  1
+            )
+        ); 
     }
 }

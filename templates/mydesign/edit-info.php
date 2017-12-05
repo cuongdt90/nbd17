@@ -217,7 +217,7 @@ do_action( 'nbd_artist_info_before_form', $user_id, $user_info );
             $.post(nbds_frontend.url, formdata, function(res) {
                 jQuery('img.nbd-loading').addClass('loaded');
                 jQuery('#nbd-artist-form').removeClass('loading');
-                console.log(res);
+                if(res['result'] == 1) alert('Update successful!'); else alert('Oop! try again later!');
             }, 'json');            
         });                
     });
