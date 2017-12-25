@@ -49,7 +49,16 @@ jQuery(document).ready(function () {
         var width = jQuery(window).width(),
                 height = jQuery(window).height();
         jQuery('#container-online-designer').css({'width': width, 'height': height});
-    });    
+    });  
+    jQuery('.nbd-order-download-pdf-action').each(function(index) {
+        var download_pdf = jQuery(this),
+            loading_src = download_pdf.attr('data-loading-img'),
+            download_action = download_pdf.attr('data-action');
+        download_pdf.prepend('<span class="nbd-loading"><img class="nbd-pdf-loading hide" src="'+loading_src+'"/></span>');
+        download_pdf.on('click', function(e){
+            download_action == 'download_pdf_in_order' ? NBDESIGNERPRODUCT.download_pdf_in_order(e, jQuery(this)) : NBDESIGNERPRODUCT.nbd_download_final_pdf(e, jQuery(this));
+        });        
+    });
 });
 var share_image_url = '';
 var NBDESIGNERPRODUCT = {
@@ -105,6 +114,58 @@ var NBDESIGNERPRODUCT = {
             a.click()             
         });         
     },
+    download_pdf_in_order: function( e, el ){
+        e.preventDefault();
+        var sefl = el,
+            nbd_item_key = sefl.attr('data-nbd-item'),
+            order_id = sefl.attr('data-order');
+        sefl.find('span').addClass('active');
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                action   :    'nbd_frontend_download_pdf',
+                nbd_item_key :   nbd_item_key,
+                order_id :   order_id,
+                nonce: nbds_frontend.nonce
+            }            
+        }).done(function(data){
+            sefl.find('span').removeClass('active');
+            var data = JSON.parse(data);
+            var filename = 'design.pdf',
+            a = document.createElement('a');
+            a.setAttribute('href', data[0].link);
+            a.setAttribute('download', filename);
+            a.click()             
+        });         
+    },  
+    nbd_download_final_pdf: function( e, el ){
+        e.preventDefault();
+        var sefl = el,
+            nbd_item_key = sefl.attr('data-nbd-item');
+        sefl.find('span').addClass('active');
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                action   :    'nbd_download_final_pdf',
+                nbd_item_key :   nbd_item_key,
+                nonce: nbds_frontend.nonce
+            }            
+        }).done(function(data){
+            sefl.find('span').removeClass('active');
+            var data = JSON.parse(data);
+            if( data.flag == 1 ){
+                data.pdf.forEach(function(item, index){
+                    var filename = 'design_' + index + '.pdf',
+                    a = document.createElement('a');
+                    a.setAttribute('href', item);
+                    a.setAttribute('download', filename);
+                    a.click()                        
+                });     
+            }
+        });         
+    },    
     insert_customer_design: function (data) {
 
     },
@@ -338,7 +399,7 @@ var NBDESIGNERPRODUCT = {
     nbdesigner_ready: function(){ 
         if(jQuery('input[name="variation_id"]').length > 0){
             var vid = jQuery('input[name="variation_id"]').val();
-            if(vid != '' &&  parseInt(vid) > 0) {
+            if( ( "undefined" != typeof is_nbd_bulk_variation) || ( vid != '' &&  parseInt(vid) > 0 ) ) {
                 jQuery('#triggerDesign').removeClass('nbdesigner-disable');
             }
         }else{
@@ -484,6 +545,43 @@ var NBDESIGNERPRODUCT = {
                 alert('Opp! Try again later')
             }
         })         
+    },
+    add_variation_bulk_form: function(){
+        var variation_wrap = jQuery('.nbd-variation-wrap').first(),
+        new_variation_wrap = variation_wrap.clone();
+        new_variation_wrap.appendTo('#nbd-variations-wrap');  
+        jQuery(new_variation_wrap).find('.nbd-variation-quantity').val(1);
+        this.init_nbd_variation_value();
+    },
+    remove_variation_bulk_form: function(e){
+        var self = jQuery(e),
+            wrap =  self.closest('.nbd-variation-wrap');  
+        wrap.remove(); 
+        this.init_nbd_variation_value();
+    },
+    init_nbd_variation_value: function(){
+        var nbd_variation_value = '',
+            has_quantity = false;        
+        jQuery('.nbd-variation-value').val(nbd_variation_value);
+        jQuery('.nbd-variation-wrap').each(function(index){
+            var variation_id = jQuery(this).find('select').val();
+            var quantity = jQuery(this).find('input').val();
+            if( quantity > 0 ) has_quantity = true;
+            nbd_variation_value += index > 0 ? '|' : '';
+            nbd_variation_value += variation_id + '_' + quantity;
+        });
+        jQuery('.nbd-variation-value').val(nbd_variation_value);
+        if( has_quantity ){
+            jQuery('.single_add_to_cart_button').removeClass('disabled wc-variation-selection-needed');
+        }else{
+            jQuery('.single_add_to_cart_button').addClass('disabled wc-variation-selection-needed');
+        }
+    },
+    change_nbd_dokan_format: function( e ){
+        var type = jQuery(e).val(),
+            el_action = jQuery(e).parents('.nbd-dokan-download-wrap').find('a.nbd-dokan-download'),
+            href = el_action.attr('data-href');
+            el_action.attr('href', href + '&type=' + type);
     }
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {

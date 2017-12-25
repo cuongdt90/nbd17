@@ -455,6 +455,9 @@ class My_Design_Endpoint {
         }
     }
     public function nbd_gallery_func($atts, $content = null) {
+        if ( is_null( WC()->session ) ) {
+            return;
+        }        
         $page = (get_query_var('paged')) ? get_query_var('paged') : 1; 
         $per_row = intval( apply_filters('nbd_gallery_designs_per_row', 5) );
         $row = apply_filters('nbd_gallery_designs_row', 5);
@@ -479,7 +482,9 @@ class My_Design_Endpoint {
         ), $atts);
         if( $atts['per_row'] > 6 ) $atts['per_row'] = 6;        
         $atts['templates'] = $this->nbdesigner_get_templates_by_page($page, absint($atts['row']), absint($atts['per_row']), $pid, false, false, $cat);
-        return nbdesigner_get_template('gallery/main.php', $atts);
+        ob_start();
+        nbdesigner_get_template('gallery/main.php', $atts);
+        return ob_get_clean();  
     }  
     public function nbd_update_favorite_template(){
         if (!wp_verify_nonce($_POST['nonce'], 'nbd_update_favourite_template')) {
@@ -617,7 +622,7 @@ class My_Design_Endpoint {
         $offset = $limit * ($page -1);
         $sql = "SELECT p.ID, p.post_title, t.id AS tid, t.name, t.folder, t.product_id, t.variation_id, t.user_id, t.thumbnail FROM {$wpdb->prefix}nbdesigner_templates AS t";     
         $sql .= " LEFT JOIN {$wpdb->prefix}posts AS p ON t.product_id = p.ID";
-        $sql .= " WHERE t.publish = 1 AND p.post_status = 'publish'";  
+        $sql .= " WHERE t.publish = 1 AND p.post_status = 'publish' AND publish = 1";  
         if( $pid ){
             $sql .= " AND t.product_id = ".$pid;
         }else if( $cat ) {

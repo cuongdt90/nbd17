@@ -204,7 +204,7 @@
             <p class="label-config">{{(langs['WIDTH']) ? langs['WIDTH'] : "Width"}}</p>
             <input class="input-config shadow hover-shadow" readonly disabled ng-model="editable.width">
         </div>	
-        <div class="nb-col-4">
+        <div class="nb-col-4" ng-show="settings['nbdesigner_text_proportion'] == 1">
             <p class="label-config">{{(langs['UNLOCK_PROPORTION']) ? langs['UNLOCK_PROPORTION'] : "Unlock proportion"}}</p>
             <div class="switch">
                 <input id="text-lock" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="lockProportion"  ng-change="unlockProportion()">

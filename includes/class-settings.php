@@ -285,6 +285,14 @@ if( !class_exists('Nbdesigner_Settings') ) {
                     $input_html .= '<p class='.$class.'><input type="hidden" value="0" name="'. esc_attr($key) .'"/><input '.$_depend.' value="1" type="checkbox" '.$op_checked.' id="'. esc_attr($key) .'" name="'.esc_attr($key).'"/><label for="'. esc_attr($key) .'" style="'. esc_attr($css) .'">' .esc_attr($label). '</label></p>';
                 }
                 $input_html .= '</div>';
+            }else if($type == 'nbd-media'){
+                $input_html .= '<div class="nbd-media-wrap">';
+                $input_html .= '<input class="nbd-media-value" type="hidden" id="'. esc_attr($id) . '" name="' . esc_attr($id) . '" value="' . esc_attr($current_value) . '"' . ' />';
+                $input_html .= '<img class="nbd-media-img" src="'. wp_get_attachment_url( $current_value ) .'" /><br />';
+                $reset_class = $current_value != '' ? '' : 'nbdesigner-disable';
+                $input_html .= '<a class="button button-primary nbd-select-media" href="javascript: void(0)" onclick="NBDESIGNADMIN.selectSettingMedia( this )">'. __('Select', 'web-to-print-online-designer') .'</a>';
+                $input_html .= '<a class="button nbdesigner-delete nbd-reset-media '. $reset_class .'" href="javascript: void(0)" onclick="NBDESIGNADMIN.resetSettingMedia( this )">'. __('Reset', 'web-to-print-online-designer') .'</a>';
+                $input_html .= '</div>';
             }
             $description_html = '';
             if ($description !== false) {

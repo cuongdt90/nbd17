@@ -78,7 +78,7 @@
                 <a class="button button-primary" onclick="NBDESIGNADMIN.collapseAll('com')"><?php echo __('Collapse All', 'web-to-print-online-designer'); ?></a>
             </div>
             <div class="nbdesigner-clearfix"></div>
-            <div id="nbdesigner-boxes">
+            <div id="nbdesigner-boxes" class="nbdesigner-boxes">
                 <?php $count = 0;
                 foreach ($designer_setting as $k => $v): ?>
                     <div class="nbdesigner-box-container">
@@ -182,13 +182,13 @@
                                         <p>
                                             <label for="nbdesigner_bg_type" class="nbd-label nbdesigner-setting-box-label"><?php _e('Background type'); ?></label>
                                             <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="image" 
-                                                <?php checked($v['bg_type'], 'image', true); ?> class="bg_type"
+                                                <?php checked($v['bg_type'], 'image', true); ?> class="bg_type image"
                                                 onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Image', 'web-to-print-online-designer'); ?></label>
                                             <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="color" 
-                                                <?php checked($v['bg_type'], 'color', true); ?> class="bg_type"
+                                                <?php checked($v['bg_type'], 'color', true); ?> class="bg_type color"
                                                 onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Color', 'web-to-print-online-designer'); ?></label>
                                             <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][bg_type]" value="tran" 
-                                                <?php checked($v['bg_type'], 'tran', true); ?> class="bg_type"
+                                                <?php checked($v['bg_type'], 'tran', true); ?> class="bg_type tran"
                                                 onclick="NBDESIGNADMIN.change_background_type(this)"   /><?php _e('Transparent', 'web-to-print-online-designer'); ?></label>
                                         </p>
                                     </div> 
@@ -218,30 +218,30 @@
                                         <span><?php  _e('Include in final design', 'web-to-print-online-designer'); ?></span>
                                     </p>
                                 </div>
-                                <!-- 
                                 <div class="nbd_area_design_type" style="margin-top: 15px; clear: both; text-align: left;">
                                     <label class="nbd-label nbdesigner-setting-box-label"><?php  _e('Area design shape', 'web-to-print-online-designer'); ?></label>
                                     <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="1" 
-                                        <?php checked($v['area_design_type'], 1, true); ?> class="bg_type"
+                                        <?php checked($v['area_design_type'], 1, true); ?> class="area_design_type"
                                         onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 1)"   /><?php _e('Rectangle', 'web-to-print-online-designer'); ?> </label>
                                     <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="2" 
-                                        <?php checked($v['area_design_type'], 2, true); ?> class="bg_type"
+                                        <?php checked($v['area_design_type'], 2, true); ?> class="area_design_type"
                                         onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 2)"   /><?php _e('Circle/Ellipse', 'web-to-print-online-designer'); ?></label>                                    
                                 </div>
-                                -->
                             </div>
                             <div class="nbdesigner-info-box">                             
                                 <?php if($k ==0): ?>
                                 <p style="margin-top: 0;">
+                                    <?php if(is_admin()): ?>
                                     <small class="nbd-helper"><?php _e('(Click', 'web-to-print-online-designer'); ?>  <span class="dashicons dashicons-editor-help"></span><?php _e('to know how to setting product design)', 'web-to-print-online-designer'); ?></small><br />
+                                    <?php endif; ?>
                                     <span style="background: #b8dce8; width: 15px; height: 15px; display: inline-block;"></span>&nbsp;<?php _e('Product area', 'web-to-print-online-designer'); ?>&nbsp;
                                     <span style="background: #dddacd; width: 15px; height: 15px; display: inline-block;"></span>&nbsp;<?php _e('Design area', 'web-to-print-online-designer'); ?><br />
-                                    <span style="border:2px solid #f0c6f6; width: 11px; height: 11px; display: inline-block;"></span>&nbsp;<?php _e('Bounding box', 'web-to-print-online-designer'); ?><small> (<?php _e('product always align vertical/horizontal center bounding box', 'web-to-print-online-designer'); ?>)</small>
+                                    <span style="border:2px solid #f0c6f6; width: 11px; height: 11px; display: inline-block;box-sizing: content-box;"></span>&nbsp;<?php _e('Bounding box', 'web-to-print-online-designer'); ?><small> (<?php _e('product always align vertical/horizontal center bounding box', 'web-to-print-online-designer'); ?>)</small>
                                 </p>
                                 <?php endif; ?>                        
                                 <p class="nbd-setting-section-title">
                                     <?php echo __('Product size', 'web-to-print-online-designer'); ?>
-                                    <?php if($k ==0): ?>
+                                    <?php if($k ==0 && is_admin()): ?>
                                     <span class="nbdesign-config-size-tooltip dashicons dashicons-editor-help nbd-helper"></span>
                                     <?php endif; ?>
                                 </p>
@@ -263,7 +263,7 @@
                                 </div> 
                                 <p class="nbd-setting-section-title">
                                     <?php echo __('Design area size', 'web-to-print-online-designer'); ?>
-                                    <?php if($k ==0): ?>
+                                    <?php if($k ==0 && is_admin()): ?>
                                     <span class="nbdesign-config-realsize-tooltip dashicons dashicons-editor-help nbd-helper"></span>
                                     <?php endif; ?>                              
                                 </p>
@@ -297,7 +297,7 @@
                                 </div>                         
                                 <p class="nbd-setting-section-title">
                                     <?php echo __('Relative position', 'web-to-print-online-designer'); ?>&nbsp;
-                                    <?php if($k == 0): ?> 
+                                    <?php if($k == 0 && is_admin()): ?> 
                                     <span class="nbdesign-config-tooltip dashicons dashicons-editor-help nbd-helper"></span>
                                     <?php endif; ?>
                                     <span class="dashicons dashicons-update nbdesiger-update-area-design" onclick="NBDESIGNADMIN.updateDesignAreaSize(this)"></span>
@@ -380,14 +380,15 @@
             <div id="nbdesigner-option" class="nbdesigner-option">
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[admindesign]"/>
-                    <label for="_nbdesigner_admindesign" class="nbdesigner-option-label"><?php echo _e('Use templates', 'web-to-print-online-designer'); ?></label>
+                    <label for="_nbdesigner_admindesign" class="nbdesigner-option-label"><?php echo _e('Use primary template', 'web-to-print-online-designer'); ?></label>
                     <input type="checkbox" value="1" name="_nbdesigner_option[admindesign]" id="_nbdesigner_admindesign" <?php checked( $option['admindesign'] ); ?> class="short"/>
                     <?php 
-                    if($enable && $option['admindesign']): 
+                    if( $enable ): 
                         $link_manager_template = add_query_arg(array(
                             'pid' => $post_id, 
                             'view' => 'templates'), 
-                             admin_url('admin.php?page=nbdesigner_manager_product'));                 
+                             admin_url('admin.php?page=nbdesigner_manager_product'));   
+                        if( !is_admin() ) $link_manager_template =  add_query_arg(array('id' => get_current_user_id()), getUrlPageNBD('designer'));   
                         $link_create_template = add_query_arg(array(
                                 'product_id' => $post_id,
                                 'task'  =>  'create',
@@ -395,13 +396,22 @@
                             ), getUrlPageNBD('create'));    
                         $variations = get_nbd_variations( $post_id );   
                     ?>
-                        <?php 
-                            if( count($variations) > 0 ): 
-                        ?>
-                            <a class="button nbd-admin-tem-link thickbox" href="#TB_inline?width=300&height=160&inlineId=nbd-thickbox-setting">
+                        <?php if( count($variations) > 0 ):  ?>
+                        <a class="button nbd-admin-tem-link thickbox" <?php if( !is_admin() ) echo 'onclick="NBDESIGNADMIN.show_option_variation( event )"';  ?>  href="#TB_inline?width=300&height=160&inlineId=nbd-thickbox-setting">
                                 <span class="dashicons dashicons-art"></span>
                                 <?php _e('Create Template', 'web-to-print-online-designer'); ?>
-                            </a>   
+                            </a>                    
+                        <?php else: ?>
+                            <a class="button nbd-admin-tem-link" href="<?php echo $link_create_template; ?>">
+                                <span class="dashicons dashicons-art"></span>
+                                <?php _e('Create Template', 'web-to-print-online-designer'); ?>
+                            </a>                    
+                        <?php endif; ?>
+                        <a href="<?php echo $link_manager_template; ?>" class="button nbd-admin-tem-link">
+                            <span class="dashicons dashicons-images-alt"></span>
+                            <?php _e('Manage Templates', 'web-to-print-online-designer'); ?>
+                        </a>   
+                        <?php if( count($variations) > 0 ):  ?>    
                             <div id="nbd-thickbox-setting" style="display:none;">
                                 <table class="form-table">
                                     <tr valign="top">
@@ -425,17 +435,8 @@
                                     new_href = origin_fref + '&variation_id=' + vid;
                                     btn.attr('href', new_href);
                                 }
-                            </script>                   
-                        <?php else: ?>
-                            <a class="button nbd-admin-tem-link" href="<?php echo $link_create_template; ?>">
-                                <span class="dashicons dashicons-art"></span>
-                                <?php _e('Create Template', 'web-to-print-online-designer'); ?>
-                            </a>                    
-                        <?php endif; ?>
-                        <a href="<?php echo $link_manager_template; ?>" class="button nbd-admin-tem-link">
-                            <span class="dashicons dashicons-images-alt"></span>
-                            <?php _e('Manage Templates', 'web-to-print-online-designer'); ?>
-                        </a>            
+                            </script>                              
+                        <?php endif; ?>    
                     <?php endif; ?>
                 </div> 
                 <div class="nbdesigner-opt-inner">     
@@ -450,6 +451,13 @@
                     &nbsp;<input name="_nbdesigner_option[type_price]" value="1" type="radio" <?php checked( $option['type_price'], 1); ?> /><?php _e('Fixed discount', 'web-to-print-online-designer'); ?>   
                     &nbsp;<input name="_nbdesigner_option[type_price]" value="2" type="radio" <?php checked( $option['type_price'], 2); ?> /><?php _e('Percentage discount', 'web-to-print-online-designer'); ?>                   
                 </div>
+                <div class="nbdesigner-opt-inner">
+                    <input type="hidden" value="0" name="_nbdesigner_option[bulk_variation]"/>
+                    <?php $bulk_variation = isset($option['bulk_variation']) ? $option['bulk_variation'] : 0; ?>
+                    <label for="_nbd_bulk_variation" class="nbdesigner-option-label"><?php echo _e('Bulk variation', 'web-to-print-online-designer'); ?></label>
+                    <input type="checkbox" value="1" name="_nbdesigner_option[bulk_variation]" id="_nbd_bulk_variation" <?php checked( $bulk_variation ); ?> class="short"/> 
+                    <?php echo __('Enable bulk variation form - add to cart multiple variation with same design', 'web-to-print-online-designer'); ?>
+                </div>                
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[request_quote]"/>
                     <label for="_nbd_request_quote" class="nbdesigner-option-label"><?php echo _e('Get a quote', 'web-to-print-online-designer'); ?></label>
@@ -534,7 +542,7 @@
     </div>    
 </div>
 <?php
-function  add_js_code(){
+function  nbd_add_js_code(){
 ?><script>
     jQuery(document).ready( function($) {
         $('.nbd-tabber').click(function() {
@@ -600,5 +608,7 @@ function  add_js_code(){
 </script>
 <?php
 }
-add_action("admin_footer", "add_js_code");
+if(is_admin()) {
+    add_action("admin_footer", "nbd_add_js_code");
+}
 ?>

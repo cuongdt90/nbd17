@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header(); ?>
 <?php 
     do_action( 'nbd_before_designer_page_content' ); 
-    $user_id = intval( $_GET['id'] );
+    $user_id = (isset($_GET['id']) && $_GET['id'] != '' ) ? intval( $_GET['id'] ) : 0;
     $user_infos = nbd_get_artist_info($user_id);
     $banner_url = wp_get_attachment_url( $user_infos['nbd_artist_banner'] );
     $current_user_id = get_current_user_id();
@@ -158,7 +158,9 @@ get_header(); ?>
                         <title>back</title>
                         <path fill="#6d6d6d" d="M21 11.016v1.969h-14.156l3.563 3.609-1.406 1.406-6-6 6-6 1.406 1.406-3.563 3.609h14.156z"></path>
                     </svg>
-                </a>&nbsp;&nbsp;&nbsp;<b style="vertical-align: middle;"><?php _e('Edit template for', 'web-to-print-online-designer'); ?> </b>
+                </a>&nbsp;&nbsp;&nbsp;<b style="vertical-align: middle;">
+                    <?php $title = $current_user_id == $user_id ? __('Edit template for', 'web-to-print-online-designer') : __('Template for', 'web-to-print-online-designer'); ?>
+                    <?php echo $title; ?> </b>
                 <a class="nbd-product-template-title" href="<?php echo get_permalink( $product->get_id() ); ?>"><?php echo $product_name; ?></a>
                 <span class="statistic">
                 <span class="nbd-vote-count" title="<?php _e('Vote', 'web-to-print-online-designer'); ?>" >

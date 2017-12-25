@@ -53,7 +53,8 @@ if(!class_exists('Nbdesigner_Helper')){
             $screen->set_help_sidebar(
                 '<p><strong>' . __('For more information', 'web-to-print-online-designer') . ':</strong></p>' .
                 '<p>' . __('<a class="button" href="https://cmsmart.net/support_ticket" target="_blank">Support ticket</a>') . '</p>' .
-                '<p>' . __('<a class="button" href="https://cmsmart.net/forum/" target="_blank">Forum</a>') . '</p>' 
+                '<p>' . __('<a class="button" href="https://cmsmart.net/forum/" target="_blank">Forum</a>') . '</p>'. 
+                '<p>' . __('<a class="button" href="http://document.netbaseteam.com/guide/wp-online-design/" target="_blank">User guide</a>') . '</p>' 
             );               
         }
         public static function setting_product_helper(){

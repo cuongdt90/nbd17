@@ -196,7 +196,7 @@
                 <h3><?php _e('Convert', 'web-to-print-online-designer'); ?></h3>
                 <div class="nbd-convert-con" style="padding-top: 15px;">
                     <a href="<?php echo add_query_arg(array('download-type' => 'png', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" class="button-primary" id="download-png"><?php _e('Download PNG', 'web-to-print-online-designer'); ?></a>
-                    <a href="<?php echo add_query_arg(array('download-type' => 'svg', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" class="button-primary" id="download-svg"><?php _e('Download SVG', 'web-to-print-online-designer'); ?></a>
+                    <a href="<?php echo add_query_arg(array('download-type' => 'svg', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id'], 'product_id' => $_GET['product_id'], 'variation_id' => $_GET['variation_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" class="button-primary" id="download-svg"><?php _e('Download SVG', 'web-to-print-online-designer'); ?></a>
                 </div>
                 <div class="nbd-convert-con">
                     <div class="<?php  if( !is_available_imagick() ) echo 'nbd-unavailable'; ?>"  id="conver-png-to-jpg" >
@@ -214,7 +214,7 @@
                                 $path = NBDESIGNER_CUSTOMER_DIR .'/'. $_GET['nbd_item_key'].'/jpg';
                                 $jpgs = Nbdesigner_IO::get_list_images($path, 1);
                             ?>
-                            <a  class="button-primary download-jpg <?php if( !count($jpgs) ) echo 'nbd-unavailable'; ?>" href="<?php echo add_query_arg(array('download-type' => 'jpg', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" id="download-jpg"><?php _e('Download JPG', 'web-to-print-online-designer'); ?></a>
+                            <a  class="button-primary download-jpg <?php if( !count($jpgs) ) echo 'nbd-unavailable'; ?>" href="<?php echo add_query_arg(array('download-type' => 'jpg', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id'], 'product_id' => $_GET['product_id'], 'variation_id' => $_GET['variation_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" id="download-jpg"><?php _e('Download JPG', 'web-to-print-online-designer'); ?></a>
                         </div>
                     </div>
                 </div>
@@ -244,7 +244,7 @@
                                 $path = NBDESIGNER_CUSTOMER_DIR .'/'. $_GET['nbd_item_key'].'/cmyk';
                                 $cmyks = Nbdesigner_IO::get_list_images($path, 1);
                             ?>
-                            <a class="button-primary download-cmyk <?php if( !count($cmyks) ) echo 'nbd-unavailable'; ?>" href="<?php echo add_query_arg(array('download-type' => 'cmyk', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" id="download-jpg"><?php _e('Download JPG CMYK', 'web-to-print-online-designer'); ?></a>
+                            <a class="button-primary download-cmyk <?php if( !count($cmyks) ) echo 'nbd-unavailable'; ?>" href="<?php echo add_query_arg(array('download-type' => 'cmyk', 'nbd_item_key' => $_GET['nbd_item_key'], 'order_id' => $_GET['order_id'], 'product_id' => $_GET['product_id'], 'variation_id' => $_GET['variation_id']), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" id="download-jpg"><?php _e('Download JPG CMYK', 'web-to-print-online-designer'); ?></a>
                         </div>
                     </div>    
                 </div>  

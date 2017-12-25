@@ -15,7 +15,7 @@ class NBD_Update_Data{
         }        
     }    
     public static function update_vatiation_config_v180(){
-        if (!wp_verify_nonce($_POST['_nbdesigner_cupdate_product'], 'nbdesigner-update-product') || !current_user_can('administrator')) {
+        if (!wp_verify_nonce($_POST['_nbdesigner_update_product'], 'nbdesigner-update-product') || !current_user_can('administrator')) {
             die('Security error');
         }         
         $args_query = array(
@@ -87,12 +87,12 @@ class NBD_Update_Data{
     public static function insert_default_files(){
         $default_background = get_option('nbdesigner_default_background' );
         $default_overlay = get_option('nbdesigner_default_overlay' );
-        if( !$default_background ) {
+        if( !$default_background || !wp_get_attachment_url($default_background) ) {
             $background_file = NBDESIGNER_PLUGIN_URL . 'assets/images/default.png';
             $bg_id = nbd_add_attachment( $background_file );
             update_option('nbdesigner_default_background', $bg_id );
         }
-        if( !$default_overlay ) {
+        if( !$default_overlay || !wp_get_attachment_url($default_overlay) ) {
             $overlay_file = NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';
             $ol_id = nbd_add_attachment( $overlay_file );
             update_option('nbdesigner_default_overlay', $ol_id );

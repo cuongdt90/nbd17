@@ -109,3 +109,6 @@
         </div>
     </div>
 </div>
+<div ng-show="state=='dev'" style="position: fixed; top: 50px; right: 50px; width: 300px;">
+    <img ng-repeat="design in dataCustomerDesign" ng-src="{{design}}" style="width: 300px; margin-bottom: 15px;"/>
+</div>

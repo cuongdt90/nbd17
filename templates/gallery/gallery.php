@@ -16,7 +16,7 @@ if(count($templates)):  ?>
     <div class="nbdesigner-item" <?php echo 'data-index='.$key; ?>>
         <div class="nbd-gallery-item">
             <div class="nbd-gallery-item-inner">
-                <a href="javacript:void(0)" href="<?php echo $link_template; ?>" onclick="previewTempalte(<?php echo $temp['tid']; ?>)">
+                <a href="<?php echo $link_template; ?>" onclick="previewTempalte(event, <?php echo $temp['tid']; ?>)">
                     <img src="<?php echo $temp['image']; ?>" class="nbdesigner-img"/>
                 </a>
             </div>
@@ -132,7 +132,8 @@ if(count($templates)):  ?>
         });
     };
     var nbd_preview_html = [];
-    var previewTempalte = function(tid){
+    var previewTempalte = function(e, tid){
+        e.preventDefault();
         NBDPopup.initPopup();
         if( nbd_preview_html[tid] != undefined ){
             jQuery('.nbd-popup-content-inner').html(nbd_preview_html[tid]);
@@ -213,18 +214,20 @@ if(count($templates)):  ?>
         var templates = '<?php echo json_encode($favourite_templates); ?>';
         localStorage.setItem("nbd_favourite_templates", templates);  
         var xl = is_nbd_gallery == 1 ? 3 : 4;
-        jQuery('#nbdesigner-gallery').drystone({
-            gutter: 15,
-            item: '.nbdesigner-item',
-            xs: [576, 1],
-            sm: [768, 2],
-            md: [992, 2],
-            lg: [1200, 3],
-            xl: xl,
-            onComplete: function() {
-                jQuery('#nbdesigner-gallery').removeClass('nbd-gallery-processing');
-            }
-        });
+        setTimeout(function(){ 
+            jQuery('#nbdesigner-gallery').drystone({
+                gutter: 15,
+                item: '.nbdesigner-item',
+                xs: [576, 1],
+                sm: [768, 2],
+                md: [992, 2],
+                lg: [1200, 3],
+                xl: xl,
+                onComplete: function() {
+                    jQuery('#nbdesigner-gallery').removeClass('nbd-gallery-processing');
+                }
+            });
+        }, 10);
         NBDPopup.calcWidth();
     }); 
     jQuery("body").click(function(e) {

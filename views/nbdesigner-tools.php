@@ -1,5 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<div class="nbdesign-migrate">
+<div class="nbdesign-migrate nbd-tool-section">
     <h2><?php echo __('Migrate website domain', 'web-to-print-online-designer'); ?></h2>
     <p><?php echo __('Update url, path: cliparts, fonts...', 'web-to-print-online-designer'); ?></p>
     <div>
@@ -31,8 +31,7 @@
         </p>	        
     </div>
 </div>
-<hr />
-<div class="nbdesign-migrate">
+<div class="nbdesign-migrate nbd-tool-section">
     <h2><?php echo __('Theme check', 'web-to-print-online-designer'); ?></h2>
     <div id="nbdesign-theme-check">
         <?php wp_nonce_field('nbdesigner-check-theme-key', '_nbdesigner_check_theme_nonce'); ?>
@@ -42,8 +41,7 @@
     </div>
     <div id="nbdesigner-result-check-theme" style="margin-bottom: 15px;"></div>
 </div>
-<hr />
-<div class="nbdesigner-editor">
+<div class="nbdesigner-editor nbd-tool-section">
     <h2>
         <?php echo __('Edit custom CSS for NBDesigner frontend', 'web-to-print-online-designer'); ?>
         <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" class="nbdesigner_loaded" id="nbdesigner_custom_css_loading" style="margin-left: 15px;"/>
@@ -82,8 +80,7 @@
             
     </script>    
 </div>
-<hr />
-<div class="update-setting-data">
+<div class="update-setting-data nbd-tool-section">
     <h2><?php echo __('Update product design setting data', 'web-to-print-online-designer'); ?></h2>
     <div>
         <?php wp_nonce_field('nbdesigner-update-product', '_nbdesigner_update_product'); ?>
@@ -94,8 +91,7 @@
         <p><small><?php _e('Make sure backup data before update avoid lost data!', 'web-to-print-online-designer') ?></small></p>
     </div>
 </div>
-<hr />
-<div id="nbd-clear-transients-con">
+<div id="nbd-clear-transients-con" class="nbd-tool-section">
     <h2><?php echo __('Clear transients', 'web-to-print-online-designer'); ?></h2>
     <div>
         <?php wp_nonce_field('nbd-clear-transients', '_nbdesigner_cupdate_product'); ?>
@@ -104,17 +100,15 @@
         <p><small><?php _e('This tool will clear the NBD product transients cache!', 'web-to-print-online-designer'); ?></small></p>
     </div>
 </div>
-<hr />
-<div id="nbd-setup-wizard">
+<div id="nbd-setup-wizard" class="nbd-tool-section">
     <h2><?php _e('Create default NBDesigner pages', 'web-to-print-online-designer'); ?></h2>
     <?php wp_nonce_field('nbd-create-pages', '_nbdesigner_update_product'); ?>
     <button class="button-primary" id="nbd-create-pages" <?php if(!current_user_can('update_nbd_data')) echo "disabled"; ?>><?php _e('Create pages', 'web-to-print-online-designer'); ?></button>
     <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" class="nbdesigner_loaded" id="nbdesigner_create_pages_loading" style="margin-left: 15px;"/>   
     <p><strong style="color: #a00"><?php _e('Note', 'web-to-print-online-designer'); ?>: </strong><?php _e('This tool will install all the missing NBDesigner pages. Pages already defined and set up will not be replaced.', 'web-to-print-online-designer'); ?></p>
 </div>
-<hr />
-<div id="nbd-logs">
-    <h2><?php _e('Logs', 'web-to-print-online-designer'); ?><a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'remove_log' ), admin_url( 'admin.php?page=nbdesigner_tools' ) ), 'remove_log' ) ); ?>" class="button-primary" style="float: right; margin-right: 15px;"><?php _e('Delete log', 'web-to-print-online-designer'); ?></a></h2>
+<div id="nbd-logs" class="nbd-tool-section">
+    <h2><?php _e('Logs', 'web-to-print-online-designer'); ?><a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'action' => 'remove_log' ), admin_url( 'admin.php?page=nbdesigner_tools' ) ), 'remove_log' ) ); ?>" class="button-primary" style="float: right;"><?php _e('Delete log', 'web-to-print-online-designer'); ?></a></h2>
     <form action="<?php echo admin_url( 'admin.php?page=wc-status&tab=logs' ); ?>" method="post">
         
     </form>

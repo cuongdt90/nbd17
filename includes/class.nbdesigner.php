@@ -76,6 +76,7 @@ class Nbdesigner_Plugin {
             'nbd_get_product_description' => true,
             'nbd_convert_files' => true,
             'nbd_frontend_download_pdf' => true,
+            'nbd_download_final_pdf' => true,
             'nbdesigner_update_variation_v180'  =>  false,
             'nbdesigner_update_all_template'  =>  false,
             'nbd_clear_transients'  =>  false,
@@ -182,6 +183,12 @@ class Nbdesigner_Plugin {
         if( get_option('nbdesigner_attachment_admin_email', false) == 'yes' ){
             add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email'), 10, 3);
         }
+        /** bulk action **/
+        add_action( 'woocommerce_before_add_to_cart_button', array(&$this, 'bulk_variation_field'), 9999 );
+        if ( isset( $_POST['nbd-variation-value'] ) && $_POST['nbd-variation-value'] ) {
+            add_action( 'wp_loaded', array( $this, 'process_add_bulk_variation' ), 99 );
+        }   
+        add_filter('post_class', array( $this, 'add_post_class' ), 10,3);
     }    
     public function nbd_order_again_cart_item_data( $arr, $item, $order ){
         $order_items = $order->get_items();
@@ -632,12 +639,16 @@ class Nbdesigner_Plugin {
             'general' => '<span class="dashicons dashicons-admin-generic"></span> ' . __('General', 'web-to-print-online-designer'),
             'frontend' => '<span class="dashicons dashicons-admin-customizer"></span> '. __('Design Tool', 'web-to-print-online-designer'),            
             'color' => '<span class="dashicons dashicons-art"></span> '. __('Colors', 'web-to-print-online-designer'),         
-            'upload' => '<span class="dashicons dashicons-upload"></span> '. __('Upload design', 'web-to-print-online-designer')         
+            'upload' => '<span class="dashicons dashicons-upload"></span> '. __('Upload design', 'web-to-print-online-designer'),         
+            'output' => '<span class="dashicons dashicons-download"></span> '. __('Output', 'web-to-print-online-designer'),         
+            'libraries' => '<span class="dashicons dashicons-paperclip"></span> '. __('Libraries', 'web-to-print-online-designer')         
         ));
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/general.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/frontend.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/colors.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/upload.php');
+        require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/output.php');
+        require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/libraries.php');
         $Nbdesigner_Settings = new Nbdesigner_Settings(array(
             'page_id' => $page_id,
             'tabs' => $tabs    
@@ -661,7 +672,14 @@ class Nbdesigner_Plugin {
             ),
             'upload' => array(
                 'upload-settings' =>  __('Upload settings', 'web-to-print-online-designer')
-            )            
+            ),
+            'output' => array(
+                'pdf-settings' =>  __('PDF settings', 'web-to-print-online-designer')
+            ),
+            'libraries' => array(
+                'js-settings' =>  __('Javacript settings', 'web-to-print-online-designer'),
+                'css-settings' =>  __('CSS settings', 'web-to-print-online-designer')
+            )             
         ));  
         $Nbdesigner_Settings->add_blocks($blocks);
         $Nbdesigner_Settings->add_blocks_description(array());
@@ -669,6 +687,8 @@ class Nbdesigner_Plugin {
         $general_options = Nbdesigner_Settings_General::get_options();
         $color_options = Nbdesigner_Settings_Colors::get_options();
         $upload_options = Nbdesigner_Settings_Upload::get_options();
+        $output_options = Nbdesigner_Settings_Output::get_options();
+        $libraries_options = Nbdesigner_Libraries::get_options();
         $options = apply_filters('nbdesigner_settings_options', array(
             'general-settings' => $general_options['general-settings'],
             'admin-notifications' => $general_options['admin-notifications'],
@@ -680,7 +700,10 @@ class Nbdesigner_Plugin {
             'tool-draw' => $frontend_options['tool-draw'],
             'tool-qrcode' => $frontend_options['tool-qrcode'],
             'color-setting' => $color_options['color-setting'],
-            'upload-settings' => $upload_options['upload-settings']
+            'upload-settings' => $upload_options['upload-settings'],
+            'pdf-settings' => $output_options['pdf-settings'],
+            'js-settings' => $libraries_options['js-settings'],
+            'css-settings' => $libraries_options['css-settings']
         ));    
         foreach($options as $key => $option){
             $Nbdesigner_Settings->add_block_options( $key, $option);  
@@ -1452,6 +1475,9 @@ class Nbdesigner_Plugin {
             $zip_files = array();
             if(isset($_GET['download-type']) && ($_GET['download-type'] == 'png' || $_GET['download-type'] == 'jpg' || $_GET['download-type'] == 'cmyk' || $_GET['download-type'] == 'svg')){
                 $type =$_GET['download-type'];
+                $product_id = absint( $_GET['product_id'] );
+                $variation_id = absint( $_GET['variation_id'] );
+                $nbd_item_key = $_GET['nbd_item_key'];                
                 $path = NBDESIGNER_CUSTOMER_DIR .'/'. $_GET['nbd_item_key'];
                 if( $type != 'png' && $type != 'svg' ) $path = $path . '/' .$type;
                 if( $type == 'svg' ){
@@ -1468,11 +1494,14 @@ class Nbdesigner_Plugin {
                         $zip_files[] = $file;
                     }
                 } else{
+                    $arr = array('nbd_item_key' => $nbd_item_key, 'order_id'    =>  $order_id, 'product_id' => $product_id, 'variation_id' => $variation_id);
+                    $url = add_query_arg($arr, admin_url('admin.php?page=nbdesigner_detail_order'));      
+                    wp_redirect( $url );
                     exit();
                 }                 
                 $pathZip = NBDESIGNER_DATA_DIR.'/download/customer-design-'.$_GET['nbd_item_key'].'-'.$type.'.zip';
                 $nameZip = 'customer-design-'.$_GET['nbd_item_key'].'-'.$type.'.zip';
-                $this->zip_files_and_download($zip_files, $pathZip, $nameZip); 
+                nbd_zip_files_and_download($zip_files, $pathZip, $nameZip); 
                 exit();
             }
             if(isset($_GET['download-all']) && ($_GET['download-all'] == 'true')){
@@ -1499,9 +1528,13 @@ class Nbdesigner_Plugin {
                         }
                     }              
                 }
-                $pathZip = NBDESIGNER_DATA_DIR.'/download/customer-design-'.$_GET['order_id'].'.zip';
-                $nameZip = 'customer-design-'.$_GET['order_id'].'.zip';
-                $this->zip_files_and_download($zip_files, $pathZip, $nameZip);
+                if( !count($zip_files) ){
+                    exit();
+                }else{
+                    $pathZip = NBDESIGNER_DATA_DIR.'/download/customer-design-'.$_GET['order_id'].'.zip';
+                    $nameZip = 'customer-design-'.$_GET['order_id'].'.zip';
+                    nbd_zip_files_and_download($zip_files, $pathZip, $nameZip);                    
+                }
             }
             if(isset($_GET['nbd_item_key'])){
                 $license = $this->nbdesigner_check_license();
@@ -1584,15 +1617,8 @@ class Nbdesigner_Plugin {
             $upload_setting = array();
         }   
         $upload_setting = array_merge($_upload_setting, $upload_setting);
-        $designer_setting = $this->update_config_default($designer_setting);
+        $designer_setting = nbd_update_config_default($designer_setting);
         include_once(NBDESIGNER_PLUGIN_DIR . 'views/metabox-design-setting.php');
-    }
-    public function update_config_default($designer_setting) {
-        $default =  nbd_default_product_setting();    
-        foreach ($designer_setting as $key => $setting){
-            $designer_setting[$key] = array_merge($default, $setting);
-        }
-        return $designer_setting;
     }
     public function update_config_product_160($designer_setting){
         $newSetting = array();
@@ -1952,10 +1978,11 @@ class Nbdesigner_Plugin {
         $is_nbdesign = get_post_meta($pid, '_nbdesigner_enable', true); 
         $variation_id = 0;
         if ($is_nbdesign) {
+            $product = wc_get_product($pid);
+            $type = $product->get_type();
             /* Multi language with WPML */
             if( count($_REQUEST) ){
                 $attributes = array();
-                $product = wc_get_product($pid);
                 foreach ($_REQUEST as $key => $value){
                     if (strpos($key, 'attribute_') === 0) {
                         $attributes[$key] = $value;
@@ -1985,6 +2012,9 @@ class Nbdesigner_Plugin {
                 $src .= '&variation_id='. $variation_id;
             }
             $option = unserialize(get_post_meta($pid, '_nbdesigner_option', true));
+            if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
+                $src .= '&variation_id=0';
+            }	
             $extra_price = '';
             if( $option['extra_price'] && ! $option['request_quote'] ){
                 $extra_price = $option['type_price'] == 1 ? wc_price($option['extra_price']) : $option['extra_price'] . ' %';
@@ -2001,6 +2031,7 @@ class Nbdesigner_Plugin {
         }
     }
     public function nbd_loggin_redirect_func(){
+        if(is_admin()) return;
         ob_start();
         nbdesigner_get_template( 'auth-wp.php' );
         $content = ob_get_clean();         
@@ -2257,9 +2288,9 @@ class Nbdesigner_Plugin {
                 $ds_width = $val["area_design_width"] * $scale;
                 $ds_height = $val["area_design_height"] * $scale;
                 if($design_format == 'png'){
-                    $image_design = NBD_Image::nbdesigner_resize_imagepng($p_img, $ds_width, $bg_height);
+                    $image_design = NBD_Image::nbdesigner_resize_imagepng($p_img, $ds_width, $ds_height);
                 }else{
-                    $image_design = NBD_Image::nbdesigner_resize_imagejpg($p_img, $ds_width, $bg_height);
+                    $image_design = NBD_Image::nbdesigner_resize_imagejpg($p_img, $ds_width, $ds_height);
                 }
                 $image_product_ext = pathinfo($val["img_src"]);
                 if($val["bg_type"] == 'image'){
@@ -2400,12 +2431,19 @@ class Nbdesigner_Plugin {
         );
         do_action('before_nbd_save_customer_design');
         /* Get data from $_POST */
-        $product_id = absint($_POST['product_id']);    
+        $product_id = absint($_POST['product_id']);  
+        $product = wc_get_product($product_id);
+        $product_option = get_post_meta($product_id, '_nbdesigner_option', true); 
         $variation_id = (isset($_POST['variation_id']) && $_POST['variation_id'] != '') ? absint($_POST['variation_id']) : 0;  
         $cart_item_key = (isset($_POST['cart_item_key']) && $_POST['cart_item_key'] != '') ? $_POST['cart_item_key'] : '';
         $task = (isset($_POST['task']) && $_POST['task'] != '') ? $_POST['task'] : 'new';
         $design_type = (isset($_POST['design_type']) && $_POST['design_type'] != '') ? $_POST['design_type'] : '';
         $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
+        $type = $product->get_type();
+        $option = unserialize($product_option);
+        if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
+            $nbd_item_cart_key = $product_id . '_0';
+        }
         if(isset($_POST['nbd_item_key']) && $_POST['nbd_item_key'] != ''){
             /* Edit design 
              * In case edit template, $design_type = 'template'
@@ -2437,8 +2475,7 @@ class Nbdesigner_Plugin {
             } 
         }else{
             $product_config = unserialize(file_get_contents($path . '/product.json'));
-        }
-        $product_option = get_post_meta($product_id, '_nbdesigner_option', true); 
+        }   
         $product_upload = get_post_meta($product_id, '_nbdesigner_upload', true); 
         $save_status = $this->store_design_data($nbd_item_key, $_FILES, $product_config, $product_option, $product_upload);     
         $width = absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) ? absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) : 300;
@@ -3199,7 +3236,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             
             //Send mail to admin
             $notifications = get_option('nbdesigner_enable_send_mail_when_approve', false);
-            if( $notifications == 'yes' && $reason == 'Your design accepted' ){                
+            if( $notifications == 'yes' && $reason == 'Your design accepted' ){                   
                 ob_start();
                 wc_get_template('emails/notify-admin-when-approve-design.php', array(
                     'order_number' => $order->get_order_number(),
@@ -3272,13 +3309,13 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
           $template = $_template;
         return $template;
     }
-    public function order_item_name($item_name, $item){   
+    public function order_item_name($item_name, $item){  
         $show_design_in_order = nbdesigner_get_option('nbdesigner_show_in_order');
         if(( isset($item["item_meta"]["_nbd"]) || isset($item["item_meta"]["_nbu"]) ) && $show_design_in_order == 'yes'){
             $html = '';
             if( isset($item["item_meta"]["_nbd"]) ){
                 $nbd_item_key = $item["item_meta"]["_nbd"]; 
-                $images = Nbdesigner_IO::get_list_images(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/preview', 1);    
+                $images = Nbdesigner_IO::get_list_images(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/preview', 1);   
                 $approve_status = unserialize(get_post_meta($item['order_id'], '_nbdesigner_design_file', true));
                 $index = 'nbds_'.$item->get_id();
                 $notice = '';
@@ -3301,7 +3338,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 $html .= '<div id="'.$id.'" class="nbd-order-upload-file">';
                 $html .= '<p>'.__('Custom design', 'web-to-print-online-designer').'</p>';
                 foreach ($images as $img){      
-                    $src = Nbdesigner_IO::convert_path_to_url($img) . '?&t=' . round(microtime(true) * 1000);     
+                    $src = Nbdesigner_IO::convert_path_to_url($img) . '?&t=' . round(microtime(true) * 1000);   
                     $html .= '<img style="max-width: 100%; border: 1px solid #ddd; display: inline-block; margin-right: 15px; margin-bottom: 15px; background: #ddd;" src="'.$src.'" />';
                 }
                 if(isset($approve_status[$index]) && $approve_status[$index] == "decline"){
@@ -3313,7 +3350,22 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 $html .= '<p>'.$notice.'</p>';
                 if(nbdesigner_get_option('allow_customer_redesign_after_order') == 'yes'){
                     $html .= '<p><a class="button" href="'. $redesign_link .'">'. __('Edit design', 'web-to-print-online-designer') .'</a></p>';
-                }            
+                }      
+                if( !is_admin() && (nbdesigner_get_option('nbdesigner_enable_download_pdf_before') == 'yes'
+                        || nbdesigner_get_option('nbdesigner_enable_download_pdf_after') == 'yes')){
+                    $order_id = $item["order_id"];
+                    if( is_checkout() || is_account_page() ){
+                        $order = wc_get_order($order_id);
+                        $action_download = ($order->get_status() == 'completed' && nbdesigner_get_option('nbdesigner_enable_download_pdf_after') == 'yes' ) ? 'nbd_download_final_pdf' : 'download_pdf_in_order';                    
+                        $html .= '<p class="nbd-order-download-pdf">';
+                        $html .=    '<a data-order="'.$order_id.'" data-nbd-item="'.$nbd_item_key.'" href="'.wc_get_endpoint_url( 'view-order', $order_id, wc_get_page_permalink( 'myaccount' ) ).'" data-action="'. $action_download .'" data-loading-img="'.NBDESIGNER_PLUGIN_URL.'assets/images/loading2.gif" class="button alt nbd-order-download-pdf-action">';
+                        $html .=        '<span>'.__('Download PDF', 'web-to-print-online-designer').'</span>';
+                        $html .=    '</a>';
+                        $html .= '</p>';
+                    } else {
+                        $html .= '<a href="'.wc_get_endpoint_url( 'view-order', $order_id, wc_get_page_permalink( 'myaccount' ) ).'">'. __('Download PDF', 'web-to-print-online-designer') .'</a>';
+                    }
+                }
                 $html .= '<div>';
             }
             if( isset($item["item_meta"]["_nbu"]) ){
@@ -3736,7 +3788,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
      */
     public static function nbdesigner_add_custom_page(){
         /* Create Studio page */
-        if ( nbd_get_page_id( 'studio' ) == -1 ){        
+        $studio_page_id = nbd_get_page_id( 'studio' );
+        if ( $studio_page_id == -1 || !get_post($studio_page_id) ){        
             $post = array(
                 'post_name' => NBDESIGNER_PAGE_STUDIO,
                 'post_status' => 'publish',
@@ -3750,8 +3803,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             update_option( 'nbdesigner_studio_page_id', $studio_page_id );
         }      
         
-        /* Create design your own page */            
-        if ( nbd_get_page_id( 'create_your_own' ) == -1 ){        
+        /* Create design your own page */   
+        $create_your_own_page_id = nbd_get_page_id( 'create_your_own' );
+        if ( $create_your_own_page_id == -1|| !get_post($create_your_own_page_id) ){        
             $post = array(
                 'post_name' => NBDESIGNER_PAGE_CREATE_YOUR_OWN,
                 'post_status' => 'publish',
@@ -3766,7 +3820,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
         }      
         
         /* Create redirect login page */  
-        if ( nbd_get_page_id( 'logged' ) == -1 ){        
+        $nbd_redirect_logged_page_id = nbd_get_page_id( 'logged' );
+        if ( $nbd_redirect_logged_page_id == -1 || !get_post($nbd_redirect_logged_page_id) ){        
             $post = array(
                 'post_name' => 'nbd-logged',
                 'post_status' => 'publish',
@@ -3781,15 +3836,16 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             update_option( 'nbdesigner_logged_page_id', $nbd_redirect_logged_page_id ); 
         }  
         
-        /* Create gallery page */    
-        if ( nbd_get_page_id( 'gallery' ) == -1 ){        
+        /* Create gallery page */  
+        $nbd_gallery_page_id = nbd_get_page_id( 'gallery' );
+        if ( $nbd_gallery_page_id == -1 || !get_post($nbd_gallery_page_id) ){        
             $post = array(
                 'post_name' => 'templates',
                 'post_status' => 'publish',
                 'post_title' => __('Gallery', 'web-to-print-online-designer'),
                 'post_type' => 'page',
                 'post_author'    => 1,
-                'post_content'    => '[nbdesigner_gallery row="3" pagination="true" per_row="3" ][/nbdesigner_gallery]',
+                'post_content'    => '[nbdesigner_gallery row="6" pagination="true" per_row="5" ][/nbdesigner_gallery]',
                 'comment_status' => 'closed',                
                 'post_date' => date('Y-m-d H:i:s')
             );      
@@ -3798,7 +3854,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
         }  
         
         /* Create designer page */  
-        if ( nbd_get_page_id( 'designer' ) == -1 ){        
+        $nbd_redirect_designer_page_id = nbd_get_page_id( 'designer' );
+        if ( $nbd_redirect_designer_page_id == -1 || !get_post($nbd_redirect_designer_page_id) ){        
             $post = array(
                 'post_name' => 'designer',
                 'post_status' => 'publish',
@@ -4079,7 +4136,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 $designer_setting = NBD_Update_Data::nbd_update_media_v180($designer_setting);
             }            
         }
-        $designer_setting = $this->update_config_default($designer_setting);
+        $designer_setting = nbd_update_config_default($designer_setting);
         include(NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-box-design-setting-variation.php');
     }
     public function nbdesigner_save_variation_settings_fields($post_id){
@@ -4536,174 +4593,268 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
         echo json_encode($result);
         wp_die();
     }
-    public function nbd_frontend_download_pdf(){
-        if (!wp_verify_nonce($_POST['nonce'], 'save-design')) {
+    public function nbd_frontend_download_pdf( $final = false, $nbd_item_key = '', $return = false ){
+        if (!$final && !wp_verify_nonce($_POST['nonce'], 'save-design')) {
             die('Security error');
         } 
-        require_once(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/tcpdf.php');
-        $nbd_item_key = $_POST['nbd_item_key'];
-        $path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key;
-        $datas = unserialize(file_get_contents($path .'/product.json'));
-        $option = unserialize(file_get_contents($path .'/option.json'));
-        $dpi = $option['dpi'];
-        $pdfs = array();
-        $unit = get_option('nbdesigner_dimensions_unit');
-        if(!$unit) $unit = "cm";   
-        $unitRatio = 10;
-        $cm2Px = 37.795275591;
-        $mm2Px = $cm2Px / 10;
-        switch ($unit) {
-            case 'mm':
-                $unitRatio = 1;
-                break;
-            case 'in':
-                $unitRatio = 25.4;
-                break;
-            default:
-                $unitRatio = 10;
-                break;
-        }   
-        $list_images = Nbdesigner_IO::get_list_images($path, 1);
-        foreach ($list_images as $img){
-            $name = basename($img);
-            $arr = explode('.', $name);
-            $_frame = explode('_', $arr[0]);
-            $frame = $_frame[1];
-            $list_design[$frame] = $img;
+        $order_id = isset($_POST['order_id']) ? absint($_POST['order_id']) : 0;
+        if( $order_id ) {
+            $order = wc_get_order($order_id);
+            if( $order->get_status() == 'completed' ) $final = true;
         }        
-        foreach($datas as $key => $data){
-            $contentImage = '';
-            if(isset($list_design[$key])) $contentImage = $list_design[$key];                
-            $proWidth = $data['product_width'];
-            $proHeight = $data['product_height'];
-            $bgTop = 0;
-            $bgLeft = 0;
-            if($proWidth > $proHeight){
-                $bgRatio = 500 / $proWidth;
-                $bgWidth = 500;
-                $bgHeight = round($proHeight * $bgRatio);
-                $offsetLeft = 0;
-                $offsetTop = round((500 - $bgHeight) / 2);  
-                $scale = round(500 / ($unitRatio * $proWidth * $mm2Px), 2);
-            }else{
-                $bgRatio = 500 / $proHeight;
-                $bgHeight = 500;
-                $bgWidth = round($proWidth * $bgRatio);
-                $offsetTop = 0;
-                $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
-            }
-            
-            $pdfs[$key]['background'] = $data['img_src'];
-            $pdfs[$key]['bg_type'] = $data['bg_type'];
-            $pdfs[$key]['bg_color_value'] = $data['bg_color_value'];
-            $pdfs[$key]['bg-top'] = $bgTop;
-            $pdfs[$key]['bg-left'] = $bgLeft;
-            $pdfs[$key]['bg-height'] = $bgHeight;
-            $pdfs[$key]['bg-width'] = $bgWidth;
-            $pdfs[$key]['cd-top'] = $data['real_top'] * $unitRatio;
-            $pdfs[$key]['cd-left'] = $data['real_left'] * $unitRatio;
-            $pdfs[$key]['cd-width'] = $data['real_width'] * $unitRatio;
-            $pdfs[$key]['cd-height'] = $data['real_height'] * $unitRatio;
-            $pdfs[$key]['customer-design'] = $contentImage;
-            $pdfs[$key]['product-width'] = round($proWidth * $unitRatio, 2);
-            $pdfs[$key]['product-height'] = round($proHeight * $unitRatio, 2);
-            $pdfs[$key]['margin-top'] = $pdfs[$key]['margin-right'] = $pdfs[$key]['margin-bottom'] = $pdfs[$key]['margin-left'] = 0;
-            $pdfs[$key]['bleed-top'] = $pdfs[$key]['bleed-bottom'] = $unitRatio * $data['bleed_top_bottom'];      
-            $pdfs[$key]['bleed-left'] = $pdfs[$key]['bleed-right'] = $unitRatio * $data['bleed_left_right'];      
-        }
-        $mTop = $pdfs[0]["margin-top"];
-        $mBottom = $pdfs[0]["margin-bottom"];
-        $mLeft = $pdfs[0]["margin-left"];
-        $mRight = $pdfs[0]["margin-right"];  
-        $bgWidth = $pdfs[0]['product-width'];        
-        $bgHeight = $pdfs[0]['product-height'];             
-        $pWidth = $bgWidth + $mLeft + $mRight;
-        $pHeight = $bgHeight + $mTop + $mBottom;
-        $pdf_format = array($pWidth, $pHeight);
-        if($pWidth > $pHeight){
-            $orientation = "L";
-        }else {
-            $orientation = "P";
-        }
-        $pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
-        $pdf->SetMargins($mLeft, $mTop, $mRight, true);     
-        $pdf->SetCreator( get_site_url() );
-        $pdf->SetTitle(get_bloginfo( 'name' ));
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);       
-        $pdf->SetAutoPageBreak(TRUE, 0);   
-        
-        foreach($pdfs as $key => $_pdf){         
-            $customer_design = $_pdf['customer-design'];    
-            $bTop = (float)$_pdf['bleed-top'];
-            $bLeft = (float)$_pdf['bleed-left'];
-            $bRight = (float)$_pdf['bleed-right'];
-            $bBottom = (float)$_pdf['bleed-bottom'];    
-            $showBleed = 'yes'; 
-            $cdTop = (float)$_pdf["cd-top"];
-            $cdLeft = (float)$_pdf["cd-left"];
-            $cdWidth = (float)$_pdf["cd-width"];
-            $cdHeight = (float)$_pdf["cd-height"];               
-            $background = $_pdf['background'];     
-            $bg_type = $_pdf['bg_type'];       
-            $bg_color_value = $_pdf['bg_color_value'];     
-            if($bg_type == 'image'){
-                $path_bg = Nbdesigner_IO::convert_url_to_path( $background );
-            }
-            if($customer_design != ''){
-                $path_cd = Nbdesigner_IO::convert_url_to_path( $customer_design );
-            }        
-            $pdf->AddPage();             
-            if($bg_type == 'image'){
-                $img_ext = array('jpg','jpeg','png');
-                $svg_ext = array('svg');
-                $eps_ext = array('eps','ai');
-                $check_img = Nbdesigner_IO::checkFileType(basename($path_bg), $img_ext);
-                $check_svg = Nbdesigner_IO::checkFileType(basename($path_bg), $svg_ext);
-                $check_eps = Nbdesigner_IO::checkFileType(basename($path_bg), $eps_ext);
-                $ext = pathinfo($path_bg);
-                if($check_img){
-                    $pdf->Image($path_bg,$mLeft, $mTop, $bgWidth, $bgHeight, '', '', '', false, '');
-                }
-                if($check_svg){
-                    $pdf->ImageSVG($path_bg, $mLeft,$mTop, $bgWidth, $bgHeight, '', '', '', 0, true);
-                }     
-                if($check_eps){
-                   $pdf->ImageEps($path_bg, $mLeft,$mTop, $bgWidth, $bgHeight, '', true, '', '', 0, true);
-                }                 
-            }elseif($bg_type == 'color') {
-                $pdf->Rect($mLeft, $mTop,  $bgWidth, $bgHeight, 'F', '', hex_code_to_rgb($bg_color_value));
-            }
-            if($customer_design != ''){
-                $_path_cd = $path_cd;
-                //$image_name = pathinfo($path_cd, PATHINFO_FILENAME);
-                //if( $from_type == 1 ) $_path_cd = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/jpg/' . $image_name .'.jpg';
-                //if( $from_type == 2 ) $_path_cd = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/cmyk/' . $image_name .'.jpg';
-                $pdf->Image($_path_cd, $mLeft + $cdLeft, $mTop + $cdTop, $cdWidth,$cdHeight, '', '', '', false, '');  
-            }   
-            if($showBleed == 'yes'){
-                $pdf->Line(0, $mTop + $bTop, $mLeft + $bLeft, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line(0, $mTop + $bgHeight - $bBottom, $mLeft + $bLeft, $mTop + $bgHeight - $bBottom, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line($bgWidth + $mLeft - $bRight, $mTop + $bTop, $bgWidth + $mLeft + $mRight, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line($bgWidth + $mLeft - $bRight, $mTop + $bgHeight - $bBottom, $bgWidth + $mLeft + $mRight, $mTop + $bgHeight - $bBottom, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line($mLeft + $bLeft, 0, $mLeft + $bLeft, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line($mLeft + $bLeft, $mTop + $bgHeight - $bBottom, $mLeft + $bLeft, $mTop + $bgHeight + $mBottom, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line($mLeft + $bgWidth - $bRight, 0, $mLeft + $bgWidth - $bRight, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
-                $pdf->Line($mLeft + $bgWidth - $bRight, $mTop + $bgHeight - $bBottom, $mLeft + $bgWidth - $bRight, $mTop + $bgHeight + $mBottom, array('color' => array(0,0,0), 'width' => 0.05));
-            }            
-        }        
+        $nbd_item_key = $nbd_item_key == '' ? $_POST['nbd_item_key'] : $nbd_item_key;
         $folder = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/customer-pdfs';
-        if(!file_exists($folder)){
-            wp_mkdir_p($folder);
+        $output_file = $final ? $folder .'/'. $nbd_item_key .'_final.pdf' : $folder .'/'. $nbd_item_key .'.pdf';
+        if( !file_exists($output_file)){
+            require_once(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/tcpdf.php');
+            $path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key;
+            $datas = unserialize(file_get_contents($path .'/product.json'));
+            $option = unserialize(file_get_contents($path .'/option.json'));
+            $used_font_path = $path. '/used_font.json';
+            $used_font = json_decode( file_get_contents($used_font_path) );
+            $google_font_path = NBDESIGNER_PLUGIN_DIR . '/data/google-fonts.json';
+            $fonts = json_decode( file_get_contents($google_font_path) );   			
+            foreach( $used_font as $font ){
+                if( $font->type == 'google' ){
+                    $font_name = $font->name;
+                    $variation = $fonts->$font_name->variants->normal;
+                    $path_src = $variation->{'400'}->url->ttf;
+                    $path_dst = NBDESIGNER_FONT_DIR . '/' . $font_name . '.ttf';
+                    copy($path_src, $path_dst);
+                    $path_font = $path_dst;
+                }else{
+                    $has_custom_font = true;
+                    $path_font = NBDESIGNER_FONT_DIR . '/' . $font->file;
+                }
+                $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);             
+            }             
+            $dpi = $option['dpi'];
+            $pdfs = array();
+            $unit = get_option('nbdesigner_dimensions_unit');
+            if(!$unit) $unit = "cm";   
+            $unitRatio = 10;
+            $cm2Px = 37.795275591;
+            $mm2Px = $cm2Px / 10;
+            switch ($unit) {
+                case 'mm':
+                    $unitRatio = 1;
+                    break;
+                case 'in':
+                    $unitRatio = 25.4;
+                    break;
+                default:
+                    $unitRatio = 10;
+                    break;
+            }   
+            $list_images = Nbdesigner_IO::get_list_images($path, 1);
+            foreach ($list_images as $img){
+                $name = basename($img);
+                $arr = explode('.', $name);
+                $_frame = explode('_', $arr[0]);
+                $frame = $_frame[1];
+                $list_design[$frame] = $img;
+            }        
+            foreach($datas as $key => $data){
+                $contentImage = '';
+                if(isset($list_design[$key])) $contentImage = $list_design[$key];                
+                $proWidth = $data['product_width'];
+                $proHeight = $data['product_height'];
+                $bgTop = 0;
+                $bgLeft = 0;
+                if($proWidth > $proHeight){
+                    $bgRatio = 500 / $proWidth;
+                    $bgWidth = 500;
+                    $bgHeight = round($proHeight * $bgRatio);
+                    $offsetLeft = 0;
+                    $offsetTop = round((500 - $bgHeight) / 2);  
+                    $scale = round(500 / ($unitRatio * $proWidth * $mm2Px), 2);
+                }else{
+                    $bgRatio = 500 / $proHeight;
+                    $bgHeight = 500;
+                    $bgWidth = round($proWidth * $bgRatio);
+                    $offsetTop = 0;
+                    $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
+                }
+
+                $pdfs[$key]['background'] = $data['img_src'];
+                $pdfs[$key]['bg_type'] = $data['bg_type'];
+                $pdfs[$key]['bg_color_value'] = $data['bg_color_value'];
+                $pdfs[$key]['bg-top'] = $bgTop;
+                $pdfs[$key]['bg-left'] = $bgLeft;
+                $pdfs[$key]['bg-height'] = $bgHeight;
+                $pdfs[$key]['bg-width'] = $bgWidth;
+                $pdfs[$key]['cd-top'] = $data['real_top'] * $unitRatio;
+                $pdfs[$key]['cd-left'] = $data['real_left'] * $unitRatio;
+                $pdfs[$key]['cd-width'] = $data['real_width'] * $unitRatio;
+                $pdfs[$key]['cd-height'] = $data['real_height'] * $unitRatio;
+                $pdfs[$key]['customer-design'] = $contentImage;
+                $pdfs[$key]['product-width'] = round($proWidth * $unitRatio, 2);
+                $pdfs[$key]['product-height'] = round($proHeight * $unitRatio, 2);
+                $pdfs[$key]['margin-top'] = $pdfs[$key]['margin-right'] = $pdfs[$key]['margin-bottom'] = $pdfs[$key]['margin-left'] = 0;
+                $pdfs[$key]['bleed-top'] = $pdfs[$key]['bleed-bottom'] = $unitRatio * $data['bleed_top_bottom'];      
+                $pdfs[$key]['bleed-left'] = $pdfs[$key]['bleed-right'] = $unitRatio * $data['bleed_left_right'];      
+            }
+            $mTop = $pdfs[0]["margin-top"];
+            $mBottom = $pdfs[0]["margin-bottom"];
+            $mLeft = $pdfs[0]["margin-left"];
+            $mRight = $pdfs[0]["margin-right"];  
+            $bgWidth = $pdfs[0]['product-width'];        
+            $bgHeight = $pdfs[0]['product-height'];             
+            $pWidth = $bgWidth + $mLeft + $mRight;
+            $pHeight = $bgHeight + $mTop + $mBottom;
+            $pdf_format = array($pWidth, $pHeight);
+            if($pWidth > $pHeight){
+                $orientation = "L";
+            }else {
+                $orientation = "P";
+            }
+            $pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
+            $pdf->SetMargins($mLeft, $mTop, $mRight, true);     
+            $pdf->SetCreator( get_site_url() );
+            $pdf->SetTitle(get_bloginfo( 'name' ));
+            $pdf->setPrintHeader(false);
+            $pdf->setPrintFooter(false);       
+            $pdf->SetAutoPageBreak(TRUE, 0);   
+
+            foreach($pdfs as $key => $_pdf){         
+                $customer_design = $_pdf['customer-design'];    
+                $bTop = (float)$_pdf['bleed-top'];
+                $bLeft = (float)$_pdf['bleed-left'];
+                $bRight = (float)$_pdf['bleed-right'];
+                $bBottom = (float)$_pdf['bleed-bottom'];    
+                $showBleed = 'no'; 
+                $cdTop = (float)$_pdf["cd-top"];
+                $cdLeft = (float)$_pdf["cd-left"];
+                $cdWidth = (float)$_pdf["cd-width"];
+                $cdHeight = (float)$_pdf["cd-height"];               
+                $background = $_pdf['background'];     
+                $bg_type = $_pdf['bg_type'];       
+                $bg_color_value = $_pdf['bg_color_value'];  
+                if($bg_type == 'image'){
+                    $path_bg = (absint($background) > 0 ) ? get_attached_file($background) : Nbdesigner_IO::convert_url_to_path( $background );
+                }      
+                $pdf->AddPage();             
+                if($bg_type == 'image' && $path_bg){
+                    $img_ext = array('jpg','jpeg','png');
+                    $svg_ext = array('svg');
+                    $eps_ext = array('eps','ai');
+                    $check_img = Nbdesigner_IO::checkFileType(basename($path_bg), $img_ext);
+                    $check_svg = Nbdesigner_IO::checkFileType(basename($path_bg), $svg_ext);
+                    $check_eps = Nbdesigner_IO::checkFileType(basename($path_bg), $eps_ext);
+                    $ext = pathinfo($path_bg);
+                    if($check_img){
+                        $pdf->Image($path_bg,$mLeft, $mTop, $bgWidth, $bgHeight, '', '', '', false, '');
+                    }
+                    if($check_svg){
+                        $pdf->ImageSVG($path_bg, $mLeft,$mTop, $bgWidth, $bgHeight, '', '', '', 0, true);
+                    }     
+                    if($check_eps){
+                       $pdf->ImageEps($path_bg, $mLeft,$mTop, $bgWidth, $bgHeight, '', true, '', '', 0, true);
+                    }                 
+                }elseif($bg_type == 'color') {
+                    $pdf->Rect($mLeft, $mTop,  $bgWidth, $bgHeight, 'F', '', hex_code_to_rgb($bg_color_value));
+                }
+                if($customer_design != ''){
+                    $svg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/frame_'. $key .'_svg.svg';
+                    require_once(NBDESIGNER_PLUGIN_DIR . 'includes/svg-sanitizer/sanitizer.php');               
+                    $sanitizer = new Sanitizer();       
+                    $sanitizer->minify(true);
+                    $dirtySVG = file_get_contents($svg);
+                    $cleanSVG = $sanitizer->sanitize($dirtySVG);
+                    file_put_contents($svg, $cleanSVG);
+                    $pdf->ImageSVG($svg, $mLeft + $cdLeft, $mTop + $cdTop, $cdWidth,$cdHeight, '', '', '', 0, true);                     
+                }   
+                if($showBleed == 'yes'){
+                    $pdf->Line(0, $mTop + $bTop, $mLeft + $bLeft, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line(0, $mTop + $bgHeight - $bBottom, $mLeft + $bLeft, $mTop + $bgHeight - $bBottom, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line($bgWidth + $mLeft - $bRight, $mTop + $bTop, $bgWidth + $mLeft + $mRight, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line($bgWidth + $mLeft - $bRight, $mTop + $bgHeight - $bBottom, $bgWidth + $mLeft + $mRight, $mTop + $bgHeight - $bBottom, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line($mLeft + $bLeft, 0, $mLeft + $bLeft, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line($mLeft + $bLeft, $mTop + $bgHeight - $bBottom, $mLeft + $bLeft, $mTop + $bgHeight + $mBottom, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line($mLeft + $bgWidth - $bRight, 0, $mLeft + $bgWidth - $bRight, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
+                    $pdf->Line($mLeft + $bgWidth - $bRight, $mTop + $bgHeight - $bBottom, $mLeft + $bgWidth - $bRight, $mTop + $bgHeight + $mBottom, array('color' => array(0,0,0), 'width' => 0.05));
+                }
+                $enable_watermark = nbdesigner_get_option('nbdesigner_enable_pdf_watermark');
+                if($enable_watermark == 'yes' && !$final ){
+                    $watermark_type = nbdesigner_get_option('nbdesigner_pdf_watermark_type');
+                    if($watermark_type == 1){
+                        $watermark_image = nbdesigner_get_option('nbdesigner_pdf_watermark_image');
+                        $watermark_file = get_attached_file($watermark_image);
+                        if( $watermark_file ){
+                            $myPageWidth = $pdf->getPageWidth();
+                            $myPageHeight = $pdf->getPageHeight();                        
+                            list($watermark_width, $watermark_height) = getimagesize($watermark_file);
+                            $watermark_width = $watermark_width/72*25.4;
+                            $watermark_height = $watermark_height/72*25.4;
+                            $myX = ( $myPageWidth - $watermark_width )/2 > 0 ? ( $myPageWidth - $watermark_width )/2 : 0;
+                            $myY = ( $myPageHeight - $watermark_height )/2 > 0 ? ( $myPageHeight - $watermark_height )/2 : 0;
+                            $pdf->SetAlpha(0.2);
+                            $pdf->StartTransform();
+                            $pdf->Rotate(45, $myPageWidth / 2, $myPageHeight / 2);
+                            $pdf->Image($watermark_file, $myX, $myY, '', '', '', '', '', false);
+                            $pdf->StopTransform();
+                            $pdf->SetAlpha(1);
+                        }
+                    }else{
+                        $watermark_text = nbdesigner_get_option('nbdesigner_pdf_watermark_text');
+                        $vfont = "freeserif";
+                        $vfontsize = 20;
+                        $vfontbold = "B";         
+                        $widthtext = $pdf->GetStringWidth(trim($watermark_text), $vfont, $vfontbold, $vfontsize, false );
+                        $widthtextcenter = round(($widthtext * sin(deg2rad(45))) / 2 ,0);
+                        $myPageWidth = $pdf->getPageWidth();
+                        $myPageHeight = $pdf->getPageHeight();
+                        $myX = ( $myPageWidth - $widthtext )/2 > 0 ? ( $myPageWidth - $widthtext )/2 : 0;
+                        $myY = $myPageHeight / 2;                
+                        $pdf->SetAlpha(0.2);
+                        $pdf->StartTransform();
+                        $pdf->Rotate(45, $myPageWidth / 2, $myPageHeight / 2);
+                        $pdf->SetFont($vfont, $vfontbold, $vfontsize);
+                        $pdf->Text($myX, $myY ,trim($watermark_text));
+                        $pdf->StopTransform();
+                        $pdf->SetAlpha(1);
+                    }
+                }
+            }       
+            if(!file_exists($folder)){
+                wp_mkdir_p($folder);
+            }
+            $pdf->Output($output_file, 'F');  
         }
-        $output_file = $folder .'/'. $nbd_item_key .'.pdf';
-        $pdf->Output($output_file, 'F');              
         $result[] = array(
             'link' => Nbdesigner_IO::wp_convert_path_to_url($output_file),
             'title' => $nbd_item_key
         );   
+        if( $return ){
+            return $result;
+        }else{
+            echo json_encode($result);
+            wp_die();             
+        }  
+    }
+    public function nbd_download_final_pdf(){
+        if (!wp_verify_nonce($_POST['nonce'], 'save-design')) {
+            die('Security error');
+        }    
+        $nbd_item_key = $_POST['nbd_item_key'];
+        $folder = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key .'/pdfs';
+        $result = array(
+             'flag'  =>  1
+        );        
+        if( file_exists($folder) ) {
+            $list_file = Nbdesigner_IO::get_list_files($folder);
+            $list = preg_grep('/\.(pdf)(?:[\?\#].*)?$/i', $list_file);
+            foreach ( $list as $pdf ){
+                $result['pdf'][] = Nbdesigner_IO::wp_convert_path_to_url($pdf);
+            }            
+        }else{
+            $pdfs = $this->nbd_frontend_download_pdf( true, $nbd_item_key, true );
+            foreach ($pdfs as $pdf){
+                $result['pdf'][] = $pdf['link'];
+            }
+        }
         echo json_encode($result);
-        wp_die();        
+        wp_die();          
     }
     public function convert_svg_embed( $path ){
         $svgs = Nbdesigner_IO::get_list_svgs($path, 1);
@@ -4805,7 +4956,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
     public function add_nbdesinger_order_actions_button($actions, $the_order){
         $id = is_woo_v3() ?  $the_order->get_id() : $the_order->id ;      
         $has_design = get_post_meta($id, '_nbd', true);
-        if($has_design){
+        if($has_design && is_admin()){
             $actions['view_nbd'] = array(
                 'url'       => admin_url( 'post.php?post='.$id.'&action=edit' ).'#nbdesigner_order',
                 'name'      => __( 'Has Design', 'web-to-print-online-designer'),
@@ -4830,5 +4981,125 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
                 'flag'  =>  1
             )
         ); 
+    }
+    /** bulk action **/
+    public function add_post_class($classes, $class, $post_id){
+        if (is_admin()) { 
+            return $classes;
+        }        
+        $product_id = get_the_ID();
+        $product_id = get_wpml_original_id($product_id);
+        $is_nbdesign = get_post_meta($product_id, '_nbdesigner_enable', true); 
+        if($is_nbdesign){
+            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
+            $product = wc_get_product($product_id);
+            $type = $product->get_type();
+            if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
+                $classes[] = 'nbd_bulk_variation';
+            }
+        }   
+        return $classes;
+    }
+    public function bulk_variation_field(){
+        $product_id = get_the_ID();
+        $product_id = get_wpml_original_id($product_id);
+        $is_nbdesign = get_post_meta($product_id, '_nbdesigner_enable', true); 
+        if(!$is_nbdesign){
+            return;
+        } else {
+            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
+            $product = wc_get_product($product_id);
+            $type = $product->get_type();
+            if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
+                $variations = get_nbd_variations( $product_id, true );
+                if( count($variations) ){
+                    $atts = array(
+                        'variations'    =>  $variations
+                    );
+                    ob_start();
+                    nbdesigner_get_template('single-product/variation-bulk.php', $atts);
+                    $bulk_variation_form = ob_get_clean();                      
+                    echo $bulk_variation_form;
+                }
+            }
+        }       
+    }
+    public function process_add_bulk_variation(){
+        if ( empty( $_REQUEST['nbd-variation-value'] ) && $_REQUEST['nbd-variation-value'] == '' ) {
+            return;
+        }        
+        $product_id     = $_POST['product_id']; 
+        $added_count  = 0;
+        $failed_count = 0;        
+        $success_message = '';
+        $error_message   = '';        
+        $_variations = explode('|', $_REQUEST['nbd-variation-value']);
+        $adding_to_cart = wc_get_product( $product_id );
+        $added_variations = array();
+        $nbd_item_session_key = $product_id . '_0'; 
+        $nbd_session = WC()->session->get('nbd_item_key_'.$nbd_item_session_key);
+        $nbu_session = WC()->session->get('nbu_item_key_'.$nbd_item_session_key);
+        foreach ( $_variations as $_variation ) {
+            $var = explode('_', $_variation);
+            $variation_id = absint( $var[0] );
+            $quantity = absint( $var[1] );
+            $variations         = array();
+            if( $quantity > 0 && $variation_id > 0) {
+                $variation_data = wc_get_product_variation_attributes( $variation_id );
+                $attributes     = $adding_to_cart->get_attributes();
+                foreach ( $attributes as $attribute ) {
+                    if ( ! $attribute['is_variation'] ) {
+                        continue;
+                    }    
+                    $taxonomy = 'attribute_' . sanitize_title( $attribute['name'] );
+                    $valid_value = isset( $variation_data[ $taxonomy ] ) ? $variation_data[ $taxonomy ] : '';
+                    $variations[ $taxonomy ] = $valid_value;                    
+                }
+                $passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id,$quantity, $variation_id, $variations );
+                if ( $passed_validation ) {
+                    $nbd_variation_session_key = $product_id . '_' . $variation_id;
+                    if(isset($nbd_session)){
+                        WC()->session->set('nbd_item_key_'.$nbd_variation_session_key, $nbd_session);                        
+                    }
+                    if(isset($nbu_session)){
+                        WC()->session->set('nbu_item_key_'.$nbd_variation_session_key, $nbu_session);                        
+                    }                    
+                    $added = WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations );
+                }  
+                if ( $added ) {
+                    $added_count ++;
+                    $added_variations[] = $variation_id;
+                } else {
+                    $failed_count ++;
+                }                
+            }else{
+                $failed_count++;
+                continue;
+            }
+        }
+        if(isset($nbd_session)){
+            WC()->session->__unset('nbd_item_key_'.$nbd_item_session_key);                   
+        }    
+        if(isset($nbu_session)){
+            WC()->session->__unset('nbu_item_key_'.$nbd_item_session_key);                   
+        }        
+        if ( $added_count ) {
+            nbd_bulk_variations_add_to_cart_message( $added_count );
+        }
+        if ( $failed_count ) {
+            wc_add_notice( sprintf( __( 'Unable to add %s to the cart.  Please check your quantities and make sure the item is available and in stock', 'web-to-print-online-designer' ), $failed_count ), 'error' );
+        }    
+        if ( ! $added_count && ! $failed_count ) {
+            wc_add_notice( __( 'No product quantities entered.', 'web-to-print-online-designer' ), 'error' );
+        }     
+        if ( $failed_count === 0 && wc_notice_count( 'error' ) === 0 ) {
+            if ( $url = apply_filters( 'woocommerce_add_to_cart_redirect', false ) ) {
+                wp_safe_redirect( $url );
+                exit;
+            } elseif ( get_option( 'woocommerce_cart_redirect_after_add' ) === 'yes' ) {
+                wp_safe_redirect( wc_get_cart_url() );
+                exit;
+            }
+        }        
     }
 }

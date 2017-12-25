@@ -88,9 +88,7 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-install.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
-
-$nb_design_endpoint = new My_Design_Endpoint();
-$nb_design_endpoint->init();
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );
@@ -102,8 +100,12 @@ if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 }
 $nb_designer = new Nbdesigner_Plugin();
 $nb_designer->init();
+$nb_design_endpoint = new My_Design_Endpoint();
+$nb_design_endpoint->init();
 $nbd_studio = new Nbdesigner_Studio();
 $nbd_studio->init();
+$nb_compatibility = new Nbdesigner_Compatibility();
+$nb_compatibility->init();
 
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-widget.php');
 

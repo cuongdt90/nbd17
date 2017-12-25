@@ -840,7 +840,7 @@ var NBDESIGNADMIN = {
     },
     deleteOrientation: function (e) {
         var variantion = jQuery(e).data('variation');
-        if((jQuery('.nbdesigner-box-container').length) > 1){
+        if((jQuery(e).parents('.nbdesigner-boxes').find('.nbdesigner-box-container').length) > 1){
             jQuery(e).parents('.nbdesigner-box-container').remove();
             this.resetBoxes(variantion);            
         }else{
@@ -873,6 +873,7 @@ var NBDESIGNADMIN = {
             jQuery(this).find('.product_height').attr('name', name + '[' + key + '][product_height]');
             jQuery(this).find('.nbd-color-picker').attr('name', name + '[' + key + '][bg_color_value]');
             jQuery(this).find('.bg_type').attr('name', name + '[' + key + '][bg_type]');
+            jQuery(this).find('.area_design_type').attr('name', name + '[' + key + '][area_design_type]');
             jQuery(this).find('.hidden_overlay_src').attr('name', name + '[' + key + '][img_overlay]');
             jQuery(this).find('.show_overlay').attr('name', name + '[' + key + '][show_overlay]');
             jQuery(this).find('.include_overlay').attr('name', name + '[' + key + '][include_overlay]');
@@ -924,7 +925,7 @@ var NBDESIGNADMIN = {
                 start: function (event, ui) {
                     /*TODO*/
                 }
-            }).draggable({containment: "parent",
+            }).draggable({
                 drag: function (event, ui) {
                     parent.updateDimension(self, null, null, ui.position.left, ui.position.top);
                 }
@@ -1809,7 +1810,40 @@ var NBDESIGNADMIN = {
             jQuery('.nbdesigner_art_link').addClass('black');
             localStorage.setItem("nbd_view_art_mode", 'black'); 
         }
-    }  
+    },
+    selectSettingMedia: function(e){
+        var file_frame, 
+            self = jQuery(e);
+        if ( file_frame ) {
+            file_frame.open();
+            return;
+        }      
+        file_frame = wp.media.frames.file_frame = wp.media({
+            title: 'Choose Image',
+            button: {
+                text: 'Choose Image'
+            },
+            library: {
+                    type: [ 'image' ]
+            },
+            multiple: false
+        }); 
+        file_frame.on( 'select', function() {
+            var attachment = file_frame.state().get('selection').first().toJSON();
+            var wrap = self.closest('.nbd-media-wrap');
+            wrap.find('input.nbd-media-value').val(attachment.id);
+            wrap.find('img.nbd-media-img').attr('src', attachment.url);
+            wrap.find('.nbd-reset-media').removeClass('nbdesigner-disable');
+        });
+        file_frame.open();        
+    },
+    resetSettingMedia: function(e){
+        var self = jQuery(e),
+        wrap = self.closest('.nbd-media-wrap');
+        wrap.find('input.nbd-media-value').val('');
+        wrap.find('img.nbd-media-img').attr('src', '');
+        wrap.find('.nbd-reset-media').addClass('nbdesigner-disable');
+    }    
 };
 function base64Encode(str) {
   var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

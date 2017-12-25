@@ -48,7 +48,7 @@
                         <?php endif; ?>
                         <a href="<?php echo $link_manager_template; ?>" title="<?php _e('Manage template', 'web-to-print-online-designer'); ?>">
                             <span class="dashicons dashicons-images-alt"></span>
-                            <span class="count"><?php echo $val['number_template']; ?></span>
+                            <span class="count" title="<?php echo $val['number_template']; ?> <?php _e('templates', 'web-to-print-online-designer'); ?>"><?php echo $val['number_template'] < 100 ? $val['number_template'] : "99+"; ?></span>
                         </a>
                     </p> 
                     <?php 

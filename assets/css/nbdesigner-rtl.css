@@ -3,7 +3,7 @@
     text-align: right;
 }
 textarea {
-    direction: rtl;
+/*    direction: rtl;*/
 }
 .modal-header button.close {
     float: left;

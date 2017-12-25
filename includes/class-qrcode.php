@@ -26,4 +26,3 @@ class Nbdesigner_Qrcode {
         return 'http://chart.apis.google.com/chart?chs=' . $size . 'x' . $size . '&cht=qr&chld=' . $EC_level . '|' . $margin . '&chl=' . $this->data;
     }
 }
-?>

@@ -72,7 +72,7 @@
     position: relative;
     border: 2px solid #f0c6f6;
     margin-bottom: 10px;
-    box-sizing: content-box;
+    box-sizing: content-box !important;
 }
 .nbdesigner-image-original {
     position: absolute;	
@@ -98,6 +98,7 @@
     border: 2px solid #428BCA;
     height: 5px;
     width: 5px;
+    box-sizing: content-box !important;
 }
 .nbdesigner-area-design .ui-resizable-handle.ui-resizable-se {
     bottom: -6px;
@@ -829,4 +830,133 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
     background: #ddd;
     max-width: 300px;
     margin-bottom: 15px;
+}
+/** Compatibility **/
+.iris-picker, .iris-picker * {
+    -moz-box-sizing: content-box !important;
+    -webkit-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+#nbd-custom-design .button, .nbdesigner-setting-variation .button{
+    display: inline-block;
+    text-decoration: none;
+    font-size: 13px;
+    line-height: 26px;
+    height: 28px;
+    margin: 0;
+    padding: 0 10px 1px;
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: #555;
+    border-color: #cccccc;
+    background: #f7f7f7;
+    box-shadow: 0 1px 0 #cccccc;
+    vertical-align: top;    
+}
+#nbd-custom-design .button:hover, .nbdesigner-setting-variation .button:hover{
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;    
+}
+#nbd-custom-design .button.nbdesigner-delete,
+.nbdesigner-setting-variation .button.nbdesigner-delete {
+    background: #AD1A2D;
+    color: #FFF;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 163, 163, .5), 0 1px 0 rgba(0,0,0,.15);
+    box-shadow: inset 0 1px 0 rgba(255, 163, 163, .5), 0 1px 0 rgba(0,0,0,.15);
+}
+#nbd-custom-design .button.nbdesigner-delete:hover,
+.nbdesigner-setting-variation .button.nbdesigner-delete:hover {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;    
+}
+#nbd-custom-design .button.wp-color-result,
+.nbdesigner-setting-variation .button.wp-color-result {
+    height: 24px;
+    margin: 0 6px 6px 0px;
+    padding: 0 0 0 30px;
+    font-size: 11px;
+}
+#nbd-custom-design .nbd-option-top input[type="checkbox"],
+.nbdesigner-setting-variation .nbd-option-top input[type="checkbox"] {
+    vertical-align: middle;
+    margin: 0 5px;    
+}
+.nbd-tabber {
+    margin: 0px 5px 0px 0px !important; 
+    padding: 10px 15px !important; 
+}
+.nbd-tabs {
+    margin: 0;
+}
+#nbd-custom-design .wp-picker-container input[type="text"].wp-color-picker,
+.nbdesigner-setting-variation .wp-picker-container input[type="text"].wp-color-picker {
+    width: 65px;
+    font-size: 12px;
+    font-family: monospace;
+    line-height: 16px;
+    margin: 0;
+    vertical-align: top;
+}
+.nbb-background-group {
+    margin-top: 15px;
+}
+.dokan_pro .nbd-option-top {
+    margin: 15px;
+}
+.dokan_pro .nbdesigner-image-box, .dokan_pro .nbdesigner-info-box {
+    float: none;
+    display: block;
+}
+.dokan_pro .nbdesigner-info-box {
+    width: 100%;
+    padding: 15px 0 0 0;
+    margin-top: 15px;
+    border-top: 2px solid #ddd;    
+}
+.nbdesigner-variation-setting .nbdesigner-setting-box-value {
+    margin-bottom: 15px;
+}
+.dokan-form-container .dokan-product-edit-left, .dokan-form-container .dokan-product-edit-right {
+    -webkit-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -ms-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.dokan-form-container .dokan-product-edit-left.full-width {
+    width: 100% !important;
+    float: none !important;
+    margin-right: 0 !important;
+}
+.dokan-form-container .dokan-product-edit-right.fixed {
+    position: fixed;
+    left: 0; 
+    bottom: 0;
+    background: #fff;
+    padding: 15px;
+    z-index: 2;
+    border: 1px solid #ddd;
+}
+.product-edit-container #product-variations .wc-metabox td.data {
+    padding: 10px !important;
+}
+.product-edit-container #product-variations .wc-metabox table {
+    margin: 10px !important;
+}
+#nbd-thickbox-setting {
+    margin-top: 15px;
+    background: #fff;
+    padding-bottom: 15px;    
+}
+img.nbd-dokan-custom-design {
+    max-width: 100px;
+}
+.dokan-orders-content .dokan-orders-area .dokan-order-left-content {
+    width: 100% !important;
 }

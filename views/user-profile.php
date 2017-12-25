@@ -1,6 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <?php
     $user_info = nbd_get_artist_info($user->ID);
+    wp_enqueue_media();
 ?>
 <div class="nbd-user-settings">
     <h2 id="nbd-user-setting"><?php printf( __( '%1$s settings', 'web-to-print-online-designer' ), 'NBDesigner' ); ?></h2> 
@@ -28,7 +29,7 @@
     </div>  
     <div class="nbd-section">
         <label for="nbd_artist_description"><?php _e( 'About the artist', 'web-to-print-online-designer' ); ?></label>
-        <textarea rows="5" cols="30" id="nbd_artist_name" name="nbd_artist_description" style="width: 500px;" ><?php echo esc_attr( $user_info['nbd_artist_description'] ); ?></textarea>
+        <textarea rows="5" cols="30" id="nbd_artist_description" name="nbd_artist_description" style="width: 500px;" ><?php echo esc_attr( $user_info['nbd_artist_description'] ); ?></textarea>
     </div>     
     <div class="nbd-section">
         <label for="nbd_create_permission"><?php _e( 'Create designs', 'web-to-print-online-designer' ); ?></label>
@@ -52,7 +53,7 @@
     </div>  
     <div class="nbd-section">
         <label for="nbd_artist_address"><?php _e( 'Address', 'web-to-print-online-designer' ); ?></label>
-        <input class="regular-text" type="text" id="nbd_artist_name" name="nbd_artist_address"
+        <input class="regular-text" type="text" id="nbd_artist_address" name="nbd_artist_address"
             value="<?php echo esc_attr( $user_info['nbd_artist_address'] ); ?>"/>
     </div>   
     <div class="nbd-section">

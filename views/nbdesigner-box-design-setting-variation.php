@@ -11,7 +11,7 @@
         <a class="button button-primary" onclick="NBDESIGNADMIN.collapseAll(<?php echo $vid; ?>)"><?php echo __('Collapse All', 'web-to-print-online-designer'); ?></a>
     </div>    
     <div class="nbdesigner-clearfix"></div>
-    <div id="nbdesigner-boxes<?php echo $vid; ?>" class="<?php if (!$enable) echo 'nbdesigner-disable'; ?> nbdesigner-variation-setting">
+    <div id="nbdesigner-boxes<?php echo $vid; ?>" class="<?php if (!$enable) echo 'nbdesigner-disable'; ?> nbdesigner-variation-setting nbdesigner-boxes">
         <?php foreach ($designer_setting as $k => $v): ?>
             <div class="nbdesigner-box-container">
                 <div class="nbdesigner-box">

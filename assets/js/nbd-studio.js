@@ -1656,7 +1656,18 @@ var nbdPlg = {
     },
     /* End Image */
     /* Manipulate layer */
-    addLayer : function(type, data){},
+    updateLayers: function(){
+        var _stage = this.stages[this.currentStage],
+            _canvas = _stage.canvas;
+        _stage.layers = [];
+        _canvas.forEachObject(function(object, index) {
+            
+        });	        
+    },    
+    getLayerInfo : function( object ){
+        var layer = {};
+        
+    },
     adjustLayerAfterAdded : function(effect){
         this.hideLayerPositionLabel();
         var _canvas = this.stages[this.currentStage]['canvas'],
