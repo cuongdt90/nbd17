@@ -1,12 +1,23 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div id="config_image" class="shadow od_tab nbdesigner_config" ng-style="{'display': pop.art}">
     <ul class="config_list" id="image_config_list">
-        <li><a href="#image_dimension"><span class="fa fa-picture-o" aria-hidden="true"></span></a></li>       
-        <li><a href="#image_filter1"><span class="filter1 fa fa-filter" aria-hidden="true"></span></a></li>
-        <li><a href="#image_filter2"><span class="filter2 fa fa-filter" aria-hidden="true"></span></a></li>
-        <li><a href="#image_filter3"><span class="filter3 fa fa-filter" aria-hidden="true"></span></a></li>
-        <li><a href="#image_filter4"><span class="filter4 fa fa-filter" aria-hidden="true"></span></a></li>	
-        <li><a href="#image_general"><span class="fa fa-cog" aria-hidden="true"></span></a></li>
+        <li><a href="#image_dimension"><span class="fa fa-picture-o" aria-hidden="true"></span></a>
+        </li>       
+        <li  ng-show="settings['nbdesigner_image_grayscale'] == 1 || settings['nbdesigner_image_invert'] == 1 || settings['nbdesigner_image_sepia'] == 1 || settings['nbdesigner_image_sepia2'] == 1">
+            <a href="#image_filter1"><span class="filter1 fa fa-filter" aria-hidden="true"></span></a>
+        </li>
+        <li ng-show="settings['nbdesigner_image_blend'] == 1 || settings['nbdesigner_image_remove_white'] == 1 || settings['nbdesigner_image_transparency'] == 1 || settings['nbdesigner_image_tint'] == 1">
+            <a href="#image_filter2"><span class="filter2 fa fa-filter" aria-hidden="true"></span></a>
+        </li>
+        <li ng-show="settings['nbdesigner_image_brightness'] == 1 || settings['nbdesigner_image_noise'] == 1 || settings['nbdesigner_image_pixelate'] == 1 || settings['nbdesigner_image_multiply'] == 1">
+            <a href="#image_filter3"><span class="filter3 fa fa-filter" aria-hidden="true"></span></a>
+        </li>
+        <li ng-show="settings['nbdesigner_image_blur'] == 1 || settings['nbdesigner_image_sharpen'] == 1 || settings['nbdesigner_image_emboss'] == 1 || settings['nbdesigner_image_edge_enhance'] == 1">
+            <a href="#image_filter4"><span class="filter4 fa fa-filter" aria-hidden="true"></span></a>
+        </li>	
+        <li  ng-show="settings['nbdesigner_image_rotate'] == 1 || settings['nbdesigner_image_crop'] == 1 || settings['nbdesigner_image_shapecrop'] == 1">
+            <a href="#image_general"><span class="fa fa-cog" aria-hidden="true"></span></a>
+        </li>
     </ul>    
     <div class="list-indicator"></div>
     <div id="image_dimension" class="nbdesigner_config_content content">

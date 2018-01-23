@@ -413,15 +413,15 @@ jQuery(document).ready(function ($) {
             _appendValuesGroupRow($tbody, values[i].split(':'));
         }
     });    
-    $('.nbdesigner-multi-values .select-all').on('click', function(){
-        $(this).parents('.nbdesigner-multi-values').find('input:checkbox').attr('checked','checked');
+    $('.nbdesigner-multi-checkbox .select-all').on('click', function(){
+        $(this).parents('.nbdesigner-multi-checkbox').find('input:checkbox').attr('checked','checked');
     });
-    $('.nbdesigner-multi-values .select-none').on('click', function(){
-        $(this).parents('.nbdesigner-multi-values').find('input:checkbox').removeAttr('checked');
+    $('.nbdesigner-multi-checkbox .select-none').on('click', function(){
+        $(this).parents('.nbdesigner-multi-checkbox').find('input:checkbox').removeAttr('checked');
     });   
-    $('.nbdesigner-multi-values input[data-undepend]').change(function(){
+    $('.nbdesigner-multi-checkbox input[data-undepend]').change(function(){
         var depend = $(this).attr('id');
-        $(this).parents('.nbdesigner-multi-values').find('input[data-depend='+depend+']').parent('p').toggleClass('nbd-hide');
+        $(this).parents('.nbdesigner-multi-checkbox').find('input[data-depend='+depend+']').parent('p').toggleClass('nbd-hide');
     });
     if($('input[name="nbdesigner_show_all_color"]:checked').val() == 'yes') $('#color-setting > tbody tr:nth-child(2)').hide();
     $('input[name="nbdesigner_show_all_color"]').on('click', function(){

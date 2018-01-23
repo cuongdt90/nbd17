@@ -51,7 +51,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             foreach ($options as $option) {
                 $options_with_keys[$option['id']] = $option;
             }
-            $this->options = array_merge($this->options, $options_with_keys);
+            $this->options = array_merge($this->options, $options_with_keys);           
             return $this->settings;
         } 
         public function output() {
@@ -265,8 +265,11 @@ if( !class_exists('Nbdesigner_Settings') ) {
                 }
                 $input_html .= '</div>';
             }else if($type == 'multicheckbox'){
-                $input_html = '<div id="' . esc_attr($id) . '" class="nbdesigner-multi-values ' . esc_attr($class) . '"><input type="hidden" name="' . esc_attr($id) . '" value="' . esc_attr($current_value) . '" />';
+                $input_html = '<div id="' . esc_attr($id) . '" class="nbdesigner-multi-checkbox ' . esc_attr($class) . '">';
+                $enable_select = isset($parameters['enable_select']) ? $parameters['enable_select'] : 0;
+
                 $input_html .= '<p>'.__('Select', 'web-to-print-online-designer').': <a class="nbd-select select-all">All</a>&nbsp;&nbsp;<a class="nbd-select select-none">None</a></p>';
+
                 foreach ($options as $key => $label) {
                     $val = nbdesigner_get_option($key);
                     $op_checked = $val == 1 ? 'checked="checked"' : ''; 
@@ -326,7 +329,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             return $value == '0' || !empty($value);
         }
         public function save_options(){
-            $options_in_tab = $this->get_options_by_tab($this->current_tab);
+            $options_in_tab = $this->get_options_by_tab($this->current_tab);        
             $latest_recurrence = get_option('nbdesigner_notifications_recurrence', false);   
             foreach ($options_in_tab as $key => $value) {
                 $post_val = '';
@@ -336,7 +339,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
                     $post_val = $_POST[$key];
                 } else if ($this->get_option_type($key) == 'multiselect') {
                     if (isset($_POST[$key])) $post_val = $_POST[$key];
-                } else {
+                } else if( $this->get_option_type($key) != 'multicheckbox' ) {
                     $post_val = $_POST[$key];
                 }
                 update_option($key, $post_val);

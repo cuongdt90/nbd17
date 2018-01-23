@@ -39,7 +39,7 @@
     padding: 15px 10px;
     border-bottom: 2px solid #ddd;    
 }
-.nbdesigner-multi-values .nbd-select {
+.nbdesigner-multi-checkbox .nbd-select {
     cursor: pointer;
 }
 input[data-depend] {

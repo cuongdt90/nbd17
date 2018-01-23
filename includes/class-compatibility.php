@@ -182,14 +182,14 @@ class Nbdesigner_Compatibility {
             $cutom_design_html .= '<div class="nbd-dokan-download-wrap">';
             $cutom_design_html .=   '<p>'.__('Download', 'web-to-print-online-designer').'</p>';
             $cutom_design_html .=   '<p>';
-            $cutom_design_html .=       '<select class="nbd-dokan-format" onchange="NBDESIGNERPRODUCT.change_nbd_dokan_format( this )">';
+            $cutom_design_html .=       '<select style="max-width: 100px;" class="dokan-form-control" onchange="NBDESIGNERPRODUCT.change_nbd_dokan_format( this )">';
             if( $nbd_item_key ){
             $cutom_design_html .=           '<option value="png">'.__('Download designs: PNG', 'web-to-print-online-designer').'</option>';
             $cutom_design_html .=           '<option value="pdf">'.__('Download designs: PDF', 'web-to-print-online-designer').'</option>';
             $cutom_design_html .=           '<option value="svg">'.__('Download designs: SVG', 'web-to-print-online-designer').'</option>';
             if( is_available_imagick() ){
             $cutom_design_html .=           '<option value="jpg">'.__('Download designs: JPG', 'web-to-print-online-designer').'</option>';
-            $cutom_design_html .=           '<option value="jpg-cmyk">'.__('Download designs: CMYK - JPG', 'web-to-print-online-designer').'</option>';
+            $cutom_design_html .=           '<option value="jpg_cmyk">'.__('Download designs: CMYK - JPG', 'web-to-print-online-designer').'</option>';
             }
             }
             if( $nbu_item_key ){
@@ -210,56 +210,8 @@ class Nbdesigner_Compatibility {
         $nbd_item_key = isset($_GET['nbd_item_key']) ? $_GET['nbd_item_key'] : '';
         $nbu_item_key = isset($_GET['nbu_item_key']) ? $_GET['nbu_item_key'] : '';
         $type = isset($_GET['type']) ? $_GET['type'] : 'png';
-        switch ($type) {
-            case 'jpg':
-                $path_jpg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/jpg';
-                if( !file_exists($path_jpg) ){
-                    $option = json_decode( file_get_contents(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/option.json') );
-                    nbd_convert_files($nbd_item_key, 'jpg', $option['dpi']);                    
-                }
-                $files = Nbdesigner_IO::get_list_images( $path_jpg, 1 ); 
-                break;
-            case 'jpg-cmyk':
-                $path_jpg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/jpg';
-                if( !file_exists($path_jpg) ){
-                    $option = json_decode( file_get_contents(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/option.json') );
-                    nbd_convert_files($nbd_item_key, 'jpg', $option['dpi']);                    
-                }
-                $path_cmyk = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/cmyk';
-                if( !file_exists($path_cmyk) ){
-                    nbd_convert_files($nbd_item_key, 'cmyk');                    
-                }                
-                $files = Nbdesigner_IO::get_list_images( $path_cmyk, 1 ); 
-                break;                
-            case 'svg':
-                $path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key;
-                $svg_path = $path . '/svg';               
-                if( !file_exists($svg_path) ){
-                    nbd_convert_svg_embed($path);
-                }
-                $files = Nbdesigner_IO::get_list_svgs($svg_path, 1);                  
-                break;            
-            case 'pdf':
-                $pdf = nbd_export_pdfs( $nbd_item_key ); 
-                $files[] = $pdf;
-                break;
-            case 'files':
-                if( $nbu_item_key != '' ){
-                    $files = Nbdesigner_IO::get_list_files( NBDESIGNER_UPLOAD_DIR .'/'. $nbu_item_key );  
-                }                
-                break;            
-            default:
-                if( $nbd_item_key != '' ){
-                    $files = Nbdesigner_IO::get_list_images(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key, 1);          
-                }     
-        };
-        if(count($files) > 0){
-            foreach($files as $key => $file){
-                $zip_files[] = $file;
-            }
-        }
-        $pathZip = NBDESIGNER_DATA_DIR.'/download/customer-design-'.$order_id.'-'.$order_item_id.'.zip';
-        nbd_zip_files_and_download($zip_files, $pathZip, 'customer-design.zip');  	
-        exit();
+        /*todo check permission */
+        nbd_download_product_designs( $order_id, $order_item_id, $nbd_item_key, $nbu_item_key, $type  );
     }
 }
+/* woocommerce compatibility */

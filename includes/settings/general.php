@@ -4,109 +4,14 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
     class Nbdesigner_Settings_General {
         public static function get_options() {
             return apply_filters('nbdesigner_general_settings', array(
-                'general-settings' => array(      
+                'general-settings' => array(                          
                     array(
-                        'title' => __('Show design tool', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_page_design_tool',
-                        'default' => '1',
-                        'description' => __( 'Show design tool in product detail page or open new page', 'web-to-print-online-designer'),
-                        'type' => 'radio',
-                        'options' => array(
-                            '1' => __('In product detail page', 'web-to-print-online-designer'),
-                            '2' => __('Open new page', 'web-to-print-online-designer')
-                        )
-                    ),                      
-                    array(
-                        'title' => __('Position of button design', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_position_button_product_detail',
-                        'default' => '1',
-                        'description' => __( 'The position of the product button designer in the product page', 'web-to-print-online-designer'),
-                        'type' => 'radio',
-                        'options' => array(
-                            '1' => __('Before add to cart button and after variantions option', 'web-to-print-online-designer'),
-                            '2' => __('Before variantions option', 'web-to-print-online-designer'),
-                            '3' => __('After add to cart button', 'web-to-print-online-designer'),
-                            '4' => __('Custom Hook, <code>echo do_shortcode( \'[nbdesigner_button]\' );</code> in product page', 'web-to-print-online-designer')
-                        )
-                    ),  
-                    array(
-                        'title' => __( 'Class for "Start design" button in product page', 'web-to-print-online-designer'),
-                        'description' 		=> __( 'Enter your class to show "Start design" button with your style.', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_class_design_button_detail',
-                        'class'         => 'regular-text',
-                        'default'	=> '',
-                        'type' 		=> 'text',
-                        'placeholder'   => 'nbd-btn'
-                    ),                      
-                    array(
-                        'title' => __('Position of button in the catalog', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_position_button_in_catalog',
-                        'default' => '1',
-                        'description' => __( 'The position of the button in the catalog listing.', 'web-to-print-online-designer'),
-                        'type' => 'radio',
-                        'options' => array(
-                            '1' => __('Replace Add-to-Cart button', 'web-to-print-online-designer'),
-                            '2' => __('End of catalog item', 'web-to-print-online-designer'),
-                            '3' => __('Do not show', 'web-to-print-online-designer')
-                        )
-                    ),  
-                    array(
-                        'title' => __( 'Class for "Start design" button in catalog page', 'web-to-print-online-designer'),
-                        'description' 		=> __( 'Enter your class to show "Start design" button with your style.', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_class_design_button_catalog',
-                        'class'         => 'regular-text',
-                        'default'	=> '',
-                        'type' 		=> 'text',
-                        'placeholder'   => 'nbd-btn'
-                    ),                      
-                    array(
-                        'title' => __('Hide button Add to cart before complete design', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_hide_button_cart_in_detail_page',
-                        'description' => __( 'Only show button Add to cart after customer complete they design.', 'web-to-print-online-designer'),
-                        'default'	=> 'no',
-                        'type' 		=> 'radio',
-                        'options'   => array(
-                            'yes' => __('Yes', 'web-to-print-online-designer'),
-                            'no' => __('No', 'web-to-print-online-designer')
-                        ) 
-                    ),                      
-                    array(
-                        'title' => __( 'Preview thumbnail width', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_thumbnail_width',
-                        'css'         => 'width: 65px',
-                        'default'	=> '300',
-                        'subfix'        => ' px',
-                        'type' 		=> 'number'
-                    ),
-                    array(
-                        'title' => __( 'Default output DPI', 'web-to-print-online-designer'),
+                        'title' => __( 'Default output resolution - DPI', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_default_dpi',
                         'css'         => 'width: 65px',
                         'default'	=> '150',
                         'type' 		=> 'number'
                     ),                    
-                    array(
-                        'title' => __( 'Show customer design in cart, checkout page', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_show_in_cart',
-                        'description' 	=> __('Show the thumbnail of the customized product in the cart, checkout page.', 'web-to-print-online-designer'),
-                        'default'	=> 'yes',
-                        'type' 		=> 'radio',
-                        'options'   => array(
-                            'yes' => __('Yes', 'web-to-print-online-designer'),
-                            'no' => __('No', 'web-to-print-online-designer')
-                        )                        
-                    ),
-                    array(
-                        'title' => __( 'Show customer design in order', 'web-to-print-online-designer'),
-                        'id' 		=> 'nbdesigner_show_in_order',
-                        'description' 	=> __('Show the thumbnail of the customized product in the order.', 'web-to-print-online-designer'),
-                        'default'	=> 'yes',
-                        'type' 		=> 'radio',
-                        'options'   => array(
-                            'yes' => __('Yes', 'web-to-print-online-designer'),
-                            'no' => __('No', 'web-to-print-online-designer')
-                        )                        
-                    ),
                     array(
                         'title' => __( 'Dimensions Unit', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_dimensions_unit',
@@ -118,7 +23,15 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             'in' => __('in', 'web-to-print-online-designer'),
                             'mm' => __('mm', 'web-to-print-online-designer')
                         )                        
-                    ),         
+                    ),   
+                    array(
+                        'title' => __( 'Preview thumbnail width', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_thumbnail_width',
+                        'css'         => 'width: 65px',
+                        'default'	=> '300',
+                        'subfix'        => ' px',
+                        'type' 		=> 'number'
+                    ),                    
                     array(
                         'title' => __('Hide On Smartphones', 'web-to-print-online-designer'),
                         'description' => __('Hide product designer on smartphones and display an information instead.', 'web-to-print-online-designer'),
@@ -184,7 +97,40 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer'),
                         )
-                    )                        
+                    ),
+                    array(
+                        'title' => __('Allow download design', 'web-to-print-online-designer'),
+                        'description' => __('Allow the customer download design after complete order.', 'web-to-print-online-designer'),
+                        'id' => 'allow_customer_download_after_complete_order',
+                        'default' => 'no',
+                        'type' => 'radio',
+                        'options' => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer'),
+                        )
+                    ),
+                    array(
+                        'title' => __( 'Design file type download', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_option_download_type',
+                        'default'	=> json_encode(array(
+                                'nbdesigner_download_design_png' => 0,                         
+                                'nbdesigner_download_design_pdf' => 0,                         
+                                'nbdesigner_download_design_svg' => 0,                         
+                                'nbdesigner_download_design_jpg' => 0,                         
+                                'nbdesigner_download_design_jpg_cmyk' => 0                        
+                            )),
+                        'description' 	=> __( 'Choose design file type which the customer can download.', 'web-to-print-online-designer'),
+                        'type' 		=> 'multicheckbox',
+                        'class'         => 'regular-text',
+                        'options'   => array(
+                            'nbdesigner_download_design_png' => __('PNG', 'web-to-print-online-designer'),
+                            'nbdesigner_download_design_pdf' => __('PDF', 'web-to-print-online-designer'),
+                            'nbdesigner_download_design_svg' => __('SVG', 'web-to-print-online-designer'),
+                            'nbdesigner_download_design_jpg' => __('JPG', 'web-to-print-online-designer'),
+                            'nbdesigner_download_design_jpg_cmyk' => __('CMYK - JPG', 'web-to-print-online-designer')
+                        ),
+                        'css' => 'margin: 0 15px 10px 5px;'
+                    )                   
                 ),
                 'admin-notifications' => array(
                     array(
@@ -231,7 +177,7 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         )                        
                     ),     
                     array(
-                        'title' => __( 'Admin emails', 'web-to-print-online-designer'),
+                        'title' => __( 'Admin emails who receive notification when designs approved', 'web-to-print-online-designer'),
                         'description' 		=> __( 'Enter recipients (comma separated) for admin email. Defaults to ', 'web-to-print-online-designer').'<code>'.get_option('admin_email').'</code>',
                         'id' 		=> 'nbdesigner_admin_emails',
                         'class'         => 'regular-text',

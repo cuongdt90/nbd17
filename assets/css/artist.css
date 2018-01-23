@@ -215,7 +215,8 @@ body.nbd-gallery {
     outline: none;
 }
 .nbd-template-action-btn.warning {
-    background: rgba(221, 51, 51,0.3);
+    background: rgba(221, 51, 51,0.5);
+    color: #fff;
 }
 .nbd-template-action-btn.update {
     background: #0c8ea7;

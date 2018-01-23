@@ -59,6 +59,24 @@ jQuery(document).ready(function () {
             download_action == 'download_pdf_in_order' ? NBDESIGNERPRODUCT.download_pdf_in_order(e, jQuery(this)) : NBDESIGNERPRODUCT.nbd_download_final_pdf(e, jQuery(this));
         });        
     });
+    jQuery.each(jQuery('.nbd-order-item-download-section'), function( index, value ){
+        var self = jQuery(this),
+            link = self.attr('data-href'),
+            download_title = self.attr('data-title'),
+            type = JSON.parse( self.attr('data-type') ),
+            type_len = 0,
+            op_el = '<select onchange="NBDESIGNERPRODUCT.change_nbd_download_type( this )">';
+        jQuery.each(type, function( index, value ){
+            op_el += '<option value="'+index+'">'+value+'</option>';
+            type_len++;
+        });
+        op_el += '</select>';
+        if( type_len ) {
+            self.append(op_el);
+            self.append('<a class="button nbd-order-download-file" href="'+link+'&type=png">'+download_title+'</a>');
+            self.show()            
+        }
+    });
 });
 var share_image_url = '';
 var NBDESIGNERPRODUCT = {
@@ -582,6 +600,13 @@ var NBDESIGNERPRODUCT = {
             el_action = jQuery(e).parents('.nbd-dokan-download-wrap').find('a.nbd-dokan-download'),
             href = el_action.attr('data-href');
             el_action.attr('href', href + '&type=' + type);
+    },
+    change_nbd_download_type: function( e ){
+        var type = jQuery(e).val(),
+            parent = jQuery(e).parents('.nbd-order-item-download-section'),    
+            el_action = parent.find('a.nbd-order-download-file'),
+            link = parent.attr('data-href');
+            el_action.attr('href', link + '&type=' + type);        
     }
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {

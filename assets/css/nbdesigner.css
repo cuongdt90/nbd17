@@ -1233,7 +1233,48 @@ body.open-nbd-popup {
     display: none;
 }
 /* end. variation-bulk */
+/* table pricing */
+table#nbd-quantity-pricing .nbd_quantity {
+    width: 64px;
+    text-align: right;  
+    float: right;
+}
+.product_price {
+    float: right;
+}
+.nbd-table-pricing-wrap {
+    width: 60%;
+    float: left;
+    display: inline-block;
+}
+.nbd-table-pricing-wrap, .nbd-pricing-description {
+    width: 50%;
+    float: left;
+    display: inline-block;
+}
+.nbd-pricing-description {
+    padding: 0 15px;   
+    text-align: justify;
+}
+/* end. table pricing */
+.nbd-prevent-event {
+    pointer-events: none;
+}
+.nbd-order-item-download-section select {
+    max-width: 100px;
+    height: 35px;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #EDEDED;
+    padding: 4px 6px;
+    border-radius: 0; 
+    margin-right: 15px;
+}
 @media (max-width: 767px) {
+    .nbd-table-pricing-wrap, .nbd-pricing-description {
+        width: 100%;
+        margin-bottom: 15px;
+    }
     .nbd-col-1, .nbd-col-2, .nbd-col-3,  
     .nbd-col-4, .nbd-col-5, .nbd-col-6 {
         width: 100%;

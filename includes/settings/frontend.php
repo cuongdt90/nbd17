@@ -77,6 +77,7 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'description' 	=> __( 'Show/hide features in frontend', 'web-to-print-online-designer'),
                         'type' 		=> 'multicheckbox',
                         'class'         => 'regular-text',
+                        'enable_select'         => 1,
                         'options'   => array(
                             'nbdesigner_text_change_font' => __('Change font', 'web-to-print-online-designer'),
                             'nbdesigner_text_italic' => __('Italic', 'web-to-print-online-designer'),

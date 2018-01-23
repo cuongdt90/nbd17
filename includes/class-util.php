@@ -483,9 +483,12 @@ function nbdesigner_get_default_setting($key = false){
     $nbd_setting = apply_filters('nbdesigner_default_settings', array_merge(array(
         'nbdesigner_position_button_in_catalog' => 1,
         'nbdesigner_position_button_product_detail' => 1,
+        'nbdesigner_position_pricing_in_detail_page' => 1,
+        'nbdesigner_quantity_pricing_description' => '',
         'nbdesigner_thumbnail_width' => 300,
         'nbdesigner_default_dpi' => 150,
         'nbdesigner_show_in_cart' => 'yes',
+        'nbdesigner_auto_add_cart_in_detail_page' => 'no',
         'nbdesigner_class_design_button_catalog' => '',
         'nbdesigner_class_design_button_detail' => '',
         'nbdesigner_show_in_order' => 'yes',  
@@ -635,7 +638,16 @@ function default_frontend_setting(){
         'nbdesigner_share_design'  => 'yes',
         'nbdesigner_cache_uploaded_image'  => 'yes',
         
-        'nbdesigner_upload_file_php_logged_in' => 'no'
+        'nbdesigner_upload_file_php_logged_in' => 'no',
+        
+        'nbdesigner_auto_add_cart_in_detail_page' => 'no',
+        
+        'allow_customer_download_after_complete_order' => 'no',
+        'nbdesigner_download_design_png' => 0,
+        'nbdesigner_download_design_pdf' => 0,
+        'nbdesigner_download_design_svg' => 0,
+        'nbdesigner_download_design_jpg' => 0,
+        'nbdesigner_download_design_jpg_cmyk' => 0
     );
     return $default;
 }
@@ -1306,7 +1318,7 @@ function nbd_bulk_variations_add_to_cart_message( $count ) {
     endif;
     wc_add_notice( $message );
 }
-function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip){
+function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $option_name = array()){
     if(file_exists($archive_file_name)){
         unlink($archive_file_name);
     }        
@@ -1316,8 +1328,19 @@ function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip){
           exit("cannot open <$archive_file_name>\n");
         }
         foreach( $file_names as $file ) {
-            $path_arr = explode('/', $file);
-            $name = $path_arr[count($path_arr) - 2].'_'.$path_arr[count($path_arr) - 1]; 
+//            $path_arr = explode('/', $file);
+//            $name = $path_arr[count($path_arr) - 2].'_'.$path_arr[count($path_arr) - 1]; 
+            
+            if( count( $option_name ) ){
+                $file_name = pathinfo($file, PATHINFO_FILENAME);
+                $file_ext = pathinfo($file, PATHINFO_EXTENSION);  
+                foreach ( $option_name as $key => $val ){
+                    if( is_int( strpos( $file_name, $key ) ) ) $file_name = $val;
+                }
+                $name = $file_name .'.'. $file_ext;
+            }else{
+                $name = basename($file);
+            }
             $zip->addFile($file, $name);
         }
         $zip->close();
@@ -1416,7 +1439,7 @@ function nbd_export_pdfs( $nbd_item_key ){
                 $has_custom_font = true;
                 $path_font = NBDESIGNER_FONT_DIR . '/' . $font->file;
             }
-            $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);             
+            $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);
         }
         $pdfs = array();
         $unit = get_option('nbdesigner_dimensions_unit');
@@ -1619,4 +1642,106 @@ function nbd_convert_files( $nbd_item, $type = 'jpg', $dpi = 300 ){
             }                
         }
     }
+}
+function nbd_add_to_cart( $product_id, $variation_id, $quantity ){
+    if( $variation_id > 0) {
+        $adding_to_cart = wc_get_product( $product_id );
+        $variation_data = wc_get_product_variation_attributes( $variation_id );
+        $attributes     = $adding_to_cart->get_attributes();	
+        foreach ( $attributes as $attribute ) {
+            if ( ! $attribute['is_variation'] ) {
+                continue;
+            }    
+            $taxonomy = 'attribute_' . sanitize_title( $attribute['name'] );
+            $valid_value = isset( $variation_data[ $taxonomy ] ) ? $variation_data[ $taxonomy ] : '';
+            $variations[ $taxonomy ] = $valid_value;                    
+        }
+        $passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id,$quantity, $variation_id, $variations );
+        if ( $passed_validation ) {
+            $added = WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations );
+        }	
+    }else{
+        $added = WC()->cart->add_to_cart( $product_id, $quantity );
+    }
+    return $added;
+}
+function nbd_download_product_designs( $order_id, $order_item_id, $nbd_item_key, $nbu_item_key, $type  ){
+    $option_name = array();
+    if( $type != 'files' ){
+        $product_data = unserialize(file_get_contents(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/product.json'));
+        foreach ($product_data as $key => $side){
+            $option_name['frame_'.$key] = ($key + 1) .'_'. $side['orientation_name'];
+        }
+    }
+    switch ($type) {
+        case 'jpg':
+            $path_jpg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/jpg';
+            if( !file_exists($path_jpg) ){
+                $option = json_decode( file_get_contents(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/option.json') );
+                nbd_convert_files($nbd_item_key, 'jpg', $option['dpi']);                    
+            }
+            $files = Nbdesigner_IO::get_list_images( $path_jpg, 1 ); 
+            break;
+        case 'jpg_cmyk':
+            $path_jpg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/jpg';
+            if( !file_exists($path_jpg) ){
+                $option = json_decode( file_get_contents(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/option.json') );
+                nbd_convert_files($nbd_item_key, 'jpg', $option['dpi']);                    
+            }
+            $path_cmyk = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key . '/cmyk';
+            if( !file_exists($path_cmyk) ){
+                nbd_convert_files($nbd_item_key, 'cmyk');                    
+            }                
+            $files = Nbdesigner_IO::get_list_images( $path_cmyk, 1 ); 
+            break;                
+        case 'svg':
+            $path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key;
+            $svg_path = $path . '/svg';               
+            if( !file_exists($svg_path) ){
+                nbd_convert_svg_embed($path);
+            }
+            $files = Nbdesigner_IO::get_list_svgs($svg_path, 1);                  
+            break;            
+        case 'pdf':
+            $pdf = nbd_export_pdfs( $nbd_item_key ); 
+            $files[] = $pdf;
+            break;
+        case 'files':
+            if( $nbu_item_key != '' ){
+                $files = Nbdesigner_IO::get_list_files( NBDESIGNER_UPLOAD_DIR .'/'. $nbu_item_key );  
+            }                
+            break;            
+        default:
+            if( $nbd_item_key != '' ){
+                $files = Nbdesigner_IO::get_list_images(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key, 1);          
+            }     
+    };
+    if(count($files) > 0){
+        foreach($files as $key => $file){
+            $zip_files[] = $file;
+        }
+        $pathZip = NBDESIGNER_DATA_DIR.'/download/customer-design-'.$order_id.'-'.$order_item_id.'.zip';
+        nbd_zip_files_and_download($zip_files, $pathZip, 'customer-design.zip', $option_name);  	
+        exit();
+    }else{
+        $message = ' <a href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '" class="wc-forward">' . esc_html__( 'Go to shop', 'woocommerce' ) . '</a>';
+        wp_die( $message, __('No file defined', 'web-to-print-online-designer'), array( 'response' => 404 ) );            
+    }
+}
+function nbd_download_google_font( $font_name = ''){
+    $path_dst = NBDESIGNER_FONT_DIR . '/' . $font_name . '.ttf';
+    if( !file_exists($path_dst) ){
+        $google_font_path = NBDESIGNER_PLUGIN_DIR . '/data/google-fonts-ttf.json';
+        $fonts = json_decode( file_get_contents($google_font_path) );         
+        $items = $fonts->items;
+        foreach ( $items as $item ){
+            if( $item->family == $font_name ){
+                $font = $item->files;
+                break;
+            }
+        }
+        $path_src = isset($font->regular) ? $font->regular : reset($font);
+        copy($path_src, $path_dst);
+    }    
+    return $path_dst;
 }

@@ -1,6 +1,6 @@
 <?php
 // TCPDF FONT FILE DESCRIPTION
-$type='TrueType';
+$type='TrueTypeUnicode';
 $name='Roboto-Regular';
 $up=-73;
 $ut=49;

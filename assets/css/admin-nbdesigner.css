@@ -600,6 +600,7 @@ div[aria-describedby="nbdesiger-tiny-mce-dialog"] .ui-dialog-titlebar-close span
 }
 .nbdesigner-image-overlay {
     position: absolute;
+    overflow: hidden;
 }
 .nbdesigner_overlay_box {
     margin-top: 10px;

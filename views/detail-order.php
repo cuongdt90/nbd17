@@ -180,7 +180,13 @@
                                 </style>                                   
                                 <td style="font-family: <?php echo $alias; ?>;"><?php echo $layer->text; ?></td>
                                 <td>
+                                    <?php if( gettype($layer->fill) == 'string' ): ?>
                                     <span class="nbd-color-wrap"><span class="nbd-color" style="background: <?php echo $layer->fill; ?>"></span><span class="nbd-color-value"><?php echo $layer->fill; ?></span></span>
+                                    <?php else: ?>
+                                    <span>
+                                        <img style="width: 30px; height: 30px;" src="<?php echo $layer->fill->source; ?>"  />
+                                    </span>
+                                    <?php endif; ?>
                                 </td>
                                 <td><a href="<?php echo $fonturl; ?>" <?php if( $is_google_font ) echo 'target="_blank"'; else echo 'download'; ?> title="<?php _e('Download', 'web-to-print-online-designer'); ?>"><?php echo $fontname; ?></a></td>
                             </tr>

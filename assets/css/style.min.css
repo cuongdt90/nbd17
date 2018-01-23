@@ -2977,6 +2977,9 @@ img.pattern_img {
 .tooltip {
     z-index: 99999999;
 }
+.nbd-prevent-events {
+    pointer-events: none;
+}
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
     #nbdesigner_art_container .nbdesigner_thumb {

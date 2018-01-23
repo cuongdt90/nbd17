@@ -1,6 +1,6 @@
 <?php
 // TCPDF FONT FILE DESCRIPTION
-$type='TrueType';
+$type='TrueTypeUnicode';
 $name='Oswald-Regular';
 $up=-75;
 $ut=50;

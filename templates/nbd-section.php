@@ -12,7 +12,7 @@ $class = nbdesigner_get_option('nbdesigner_class_design_button_detail');
     <h4 id="nbdesigner-preview-title" style="display: none;"><?php _e('Custom design', 'web-to-print-online-designer'); ?></h4>
     <div id="nbd-actions" style="display: none;">
     <?php
-        if( nbdesigner_get_option('nbdesigner_show_all_color') == 'yes' ):
+        if( nbdesigner_get_option('nbdesigner_save_for_later') == 'yes' ):
     ?>
         <p>
             <a href="javascript:void(0)" onclick="NBDESIGNERPRODUCT.save_for_later()" class="button alt nbd-save-for-later" id="nbd-save-for-later">
@@ -90,6 +90,7 @@ $class = nbdesigner_get_option('nbdesigner_class_design_button_detail');
     <?php if($extra_price != ''): ?>
     <p><?php _e('Extra price for design', 'web-to-print-online-designer'); ?> + <?php echo $extra_price; ?></p>
     <?php endif; ?>
+    <?php do_action('nbd_after_single_product_design_section', $pid, $option); ?>
 </div>
 <div style="position: fixed; top: 0; left: 0; z-index: 999999; opacity: 0; width: 100%; height: 100%;" id="container-online-designer">
     <iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="<?php echo $src; ?>"></iframe>

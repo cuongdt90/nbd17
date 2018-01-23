@@ -49,7 +49,7 @@
                 <?php if( $task == 'new' && $ui_mode == 2 && $task2 == ''): ?>
                 {{(langs['ADD_TO_CART']) ? langs['ADD_TO_CART'] : "Add to cart"}}
                 <?php else: ?>
-                {{(langs['SAVE']) ? langs['SAVE'] : "Save"}}
+                {{(langs['COMPLETE']) ? langs['COMPLETE'] : "Complete"}}
                 <?php endif; ?>
             </p>
         </div>

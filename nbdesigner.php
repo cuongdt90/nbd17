@@ -6,7 +6,7 @@
 Plugin Name: Nbdesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
 Description: Allow customer design product before purchase.
-Version: 1.8.0
+Version: 1.8.1
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
 License: GPLv2 or later
@@ -28,8 +28,8 @@ if ( function_exists( 'icl_get_home_url' ) ) {
     $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);
 }
 
-nbd_define('NBDESIGNER_VERSION', '1.8.0');
-nbd_define('NBDESIGNER_NUMBER_VERSION', 180);
+nbd_define('NBDESIGNER_VERSION', '1.8.1');
+nbd_define('NBDESIGNER_NUMBER_VERSION', 181);
 nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
 nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
 nbd_define('NBDESIGNER_PLUGIN_URL', $nbd_plugin_dir_url);
@@ -69,7 +69,7 @@ nbd_define('NBDESIGNER_AUTHOR_SITE', 'https://cmsmart.net/');
 nbd_define('NBDESIGNER_SKU', 'WPP1074');
 nbd_define('NBDESIGNER_PAGE_STUDIO', 'designer-studio');
 nbd_define('NBDESIGNER_PAGE_CREATE_YOUR_OWN', 'create-your-own');
-
+nbd_define('K_PATH_FONTS', NBDESIGNER_DATA_DIR . '/php-fonts/');
 function nbd_define( $name, $value ) {
     if ( ! defined( $name ) ) {
         define( $name, $value );
@@ -89,6 +89,8 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );

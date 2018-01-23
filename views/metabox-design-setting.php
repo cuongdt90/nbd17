@@ -114,6 +114,7 @@
                                             $top = 0;
                                             $left = ( $v['product_height'] - $v['product_width']) / 2;                                            
                                         }
+                                        $area_design_type = isset($v['area_design_type']) ? $v['area_design_type'] : 1;
                                     ?>
                                     <div class="nbdesigner-image-original <?php if($v['bg_type'] == 'tran') echo "background-transparent"; ?>"
                                         style="width: <?php echo $style_width; ?>px;
@@ -131,7 +132,7 @@
                                             />
                                     </div>
                                     <?php $overlay_style = 'none'; if($v['show_overlay']) $overlay_style = 'block'; ?>
-                                    <div class="nbdesigner-image-overlay"
+                                    <div class="nbdesigner-image-overlay <?php if( $area_design_type == 2 ) echo 'nbd-rounded' ?>"
                                         style="width: <?php echo $v['area_design_width']; ?>px;
                                                height: <?php echo $v['area_design_height']; ?>px;
                                                left: <?php echo $v['area_design_left']; ?>px;
@@ -143,19 +144,19 @@
                                         ?>                                        
                                         <img src="<?php echo $img_overlay; ?>" class="img_overlay"/>
                                     </div>
-                                    <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?> <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>"
+                                    <div class="nbd-bleed <?php if (!$v['show_bleed']) echo 'nbdesigner-disable'; ?> <?php if( $area_design_type == 2 ) echo 'nbd-rounded' ?>"
                                         style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right']))  ?>px;
                                                 height: <?php echo round( $ratio * ($v['real_height'] - 2 * $v['bleed_top_bottom']))  ?>px;
                                                 top: <?php echo round( $ratio * ($top + $v['real_top'] + $v['bleed_top_bottom']))  ?>px;
                                                 left: <?php echo round( $ratio * ($left + $v['real_left'] + $v['bleed_left_right']))  ?>px;"> 
                                     </div>
-                                    <div class="nbd-safe-zone <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?> <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>"
+                                    <div class="nbd-safe-zone <?php if (!$v['show_safe_zone']) echo 'nbdesigner-disable'; ?> <?php if( $area_design_type == 2 ) echo 'nbd-rounded' ?>"
                                         style="width: <?php echo round( $ratio * ($v['real_width'] - 2 * $v['bleed_left_right'] - 2 * $v['margin_left_right']))  ?>px;
                                                 height: <?php echo round( $ratio * ($v['real_height'] - 2 * $v['bleed_top_bottom'] - 2 * $v['margin_top_bottom']))  ?>px;
                                                 top: <?php echo round( $ratio * ($top + $v['real_top'] + $v['bleed_top_bottom'] + $v['margin_top_bottom']))  ?>px;
                                                 left: <?php echo round( $ratio * ($left + $v['real_left'] + $v['bleed_left_right'] + $v['margin_left_right']))  ?>px;">                                         
                                     </div>
-                                    <div class="nbdesigner-area-design <?php if( $v['area_design_type'] == 2 ) echo 'nbd-rounded' ?>" id="nbdesigner-area-design-<?php echo $k; ?>" 
+                                    <div class="nbdesigner-area-design <?php if( $area_design_type == 2 ) echo 'nbd-rounded' ?>" id="nbdesigner-area-design-<?php echo $k; ?>" 
                                          style="width: <?php echo $v['area_design_width'] . 'px'; ?>; 
                                                 height: <?php echo $v['area_design_height'] . 'px'; ?>; 
                                                 left: <?php echo $v['area_design_left'] . 'px'; ?>; 
@@ -221,10 +222,10 @@
                                 <div class="nbd_area_design_type" style="margin-top: 15px; clear: both; text-align: left;">
                                     <label class="nbd-label nbdesigner-setting-box-label"><?php  _e('Area design shape', 'web-to-print-online-designer'); ?></label>
                                     <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="1" 
-                                        <?php checked($v['area_design_type'], 1, true); ?> class="area_design_type"
+                                        <?php checked($area_design_type, 1, true); ?> class="area_design_type"
                                         onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 1)"   /><?php _e('Rectangle', 'web-to-print-online-designer'); ?> </label>
                                     <label class="nbdesigner-lbl-setting"><input type="radio" name="_designer_setting[<?php echo $k; ?>][area_design_type]" value="2" 
-                                        <?php checked($v['area_design_type'], 2, true); ?> class="area_design_type"
+                                        <?php checked($area_design_type, 2, true); ?> class="area_design_type"
                                         onclick="NBDESIGNADMIN.changeAreaDesignShape(this, 2)"   /><?php _e('Circle/Ellipse', 'web-to-print-online-designer'); ?></label>                                    
                                 </div>
                             </div>
@@ -448,8 +449,8 @@
                 <div class="nbdesigner-opt-inner">
                     <label for="_nbdesigner_customprice" class="nbdesigner-option-label"><?php echo _e('Extra price', 'web-to-print-online-designer'); ?></label>
                     <input type="number" step="any" class="short nbdesigner-short-input wc_input_price" id="_nbdesigner_customprice" name="_nbdesigner_option[extra_price]" value="<?php echo $option['extra_price']; ?>"/>
-                    &nbsp;<input name="_nbdesigner_option[type_price]" value="1" type="radio" <?php checked( $option['type_price'], 1); ?> /><?php _e('Fixed discount', 'web-to-print-online-designer'); ?>   
-                    &nbsp;<input name="_nbdesigner_option[type_price]" value="2" type="radio" <?php checked( $option['type_price'], 2); ?> /><?php _e('Percentage discount', 'web-to-print-online-designer'); ?>                   
+                    &nbsp;<input name="_nbdesigner_option[type_price]" value="1" type="radio" <?php checked( $option['type_price'], 1); ?> /><?php _e('Flaten', 'web-to-print-online-designer'); ?>   
+                    &nbsp;<input name="_nbdesigner_option[type_price]" value="2" type="radio" <?php checked( $option['type_price'], 2); ?> /><?php _e('Percentage', 'web-to-print-online-designer'); ?>                   
                 </div>
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[bulk_variation]"/>
@@ -508,7 +509,8 @@
                         <label class="nbdesigner-option-label"><?php echo _e('Price per page/side', 'web-to-print-online-designer'); ?></label>
                         <input type="number" step="any" class="short nbdesigner-short-input wc_input_price" name="_nbdesigner_option[price_per_page]" value="<?php if(isset($option['price_per_page'])) echo $option['price_per_page']; else echo '0'; ?>"/>
                     </div>
-                </div>    
+                </div> 
+                <?php do_action('nbd_after_option_product_design', $post_id, $option); ?>
             </div>   
         </div>
         <div id="nbd-upload-design" class="nbd-options-tab" style="padding: 10px;">
