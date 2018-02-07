@@ -2,6 +2,7 @@
 <div class="nbd-license">
     <h3>
         <span class="dashicons dashicons-id-alt"></span> <?php echo __("License", 'web-to-print-online-designer'); ?>
+        <span> | <?php echo __("Version", 'web-to-print-online-designer'); ?></span> <b><?php echo NBDESIGNER_VERSION; ?></b>
         <a href="https://cmsmart.net/support_ticket" target="_blank" class="nbd_support"><?php _e("Support", 'web-to-print-online-designer'); ?></a>
     </h3>
     <table class="form-table">

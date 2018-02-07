@@ -53,29 +53,27 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                         'default'	=> '0',
                         'subfix'        => ' MB',
                         'type' 		=> 'number'
-                    ),
+                    ), 
                     array(
-                        'title' => __('Customer download', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_allow_download_file_upload',
-                        'default'	=> 'no',
-                        'description' => __( 'Let customers download their own files.', 'web-to-print-online-designer'),
-                        'type' 		=> 'radio',
-                        'options'   => array(
-                            'yes' => __('Yes', 'web-to-print-online-designer'),
-                            'no' => __('No', 'web-to-print-online-designer')
-                        ) 
-                    ),   
-                    array(
-                        'title' => __('Create Preview for image', 'web-to-print-online-designer'),
+                        'title' => __('Create Preview for images', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_create_preview_image_file_upload',
                         'default'	=> 'no',
-                        'description' => __( 'Be careful, it may be slow down your server if uploaded image is very large.', 'web-to-print-online-designer'),
+                        'description' => __( 'Be careful, it may be slow down your server if uploaded images are very large.', 'web-to-print-online-designer'),
                         'type' 		=> 'radio',
                         'options'   => array(
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
-                    ),                      
+                    ),  
+                    array(
+                        'title' => __('Preview image width', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_file_upload_preview_width',
+                        'css'         => 'width: 65px',
+                        'default'	=> '200',
+                        'subfix'        => ' px',
+                        'description' => __( 'Preview image width in pixel.', 'web-to-print-online-designer'),
+                        'type' 		=> 'number'
+                    ),                    
                     array(
                         'title' => __( 'Min. resolution DPI for JPG/JPEG image', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_mindpi_upload_file',

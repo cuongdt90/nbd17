@@ -14,6 +14,7 @@
                     <li ng-show="settings['nbdesigner_enable_instagram_photo'] == 'yes'"><a href="#nbdesigner_instagram" role="tab" data-toggle="tab"><i class="fa fa-instagram visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['INSTAGRAM']) ? langs['INSTAGRAM'] : "Instagram"}}</span></a></li>
                     <li ng-show="settings['nbdesigner_enable_dropbox_photo'] == 'yes'"><a href="#nbdesigner_dropbox" role="tab" data-toggle="tab"><i class="fa fa-dropbox visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['DROPBOX']) ? langs['DROPBOX'] : "Dropbox"}}</span></a></li> 
                     <li ng-if="hasGetUserMedia && !modeMobile" ng-click="initWebcam()" ng-show="settings['nbdesigner_enable_image_webcam'] == 'yes'"><a href="#nbdesigner_webcam" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['WEBCAM']) ? langs['WEBCAM'] : "Webcam"}}</span></a></li>
+                    <li><a href="#nbdesigner_pixabay" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['PIXABAY']) ? langs['PIXABAY'] : "Pixabay"}}</span></a></li>
                 </ul>
             </div>
             <div class="modal-body">
@@ -83,6 +84,18 @@
                         </div>                                                
                         <div class="row col-md-12">
                             <span class="help-block">{{(langs['CLICK_IMAGE_TO_ADD']) ? langs['CLICK_IMAGE_TO_ADD'] : "Click image to add design"}}.</span>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="nbdesigner_pixabay">
+                        <p>
+                            <img style="height: 20px;" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/pixabay.svg'; ?>" />
+                            <input style="height: 32px; vertical-align: top;" ng-model="pixabay_key" class="form-control hover-shadow nbdesigner_image_url"/>
+                            <a ng-click="searchPixabay()" class="btn btn-primary shadow nbdesigner_upload"><i class="fa fa-search"></i></a>
+                        </p>
+                        <div id="pixabay_results">
+                            <span class="view-thumb" ng-repeat="url in pixabayImages | reverse">
+                                <img class="img-responsive img-thumbnail nbdesigner_upload_image shadow hover-shadow" ng-src="{{url}}" ng-click="addImage(url)"  spinner-on-load/>
+                            </span>   
                         </div>
                     </div>
                     <div class="tab-pane" id="nbdesigner_facebook" ng-show="settings['nbdesigner_enable_facebook_photo'] == 'yes'">

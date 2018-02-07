@@ -26,6 +26,13 @@
                     'rd'    => urlencode($link_manager_template)
                 ), getUrlPageNBD('create'));             
             $link_manager_template = add_query_arg(array('pid' => $id, 'view' => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'));
+            $ajax_product = add_query_arg( 
+                array( 
+                    'action' => 'nbd_get_product_config', 
+                    'product_id' => $id
+                ), 
+                admin_url( 'admin-ajax.php' ) 
+            );            
         ?>
 		<div class="nbdesigner-product">
                     <a class="nbdesigner-product-title"><span><?php echo $val['name']; ?></span></a>
@@ -33,7 +40,8 @@
                         <a href="<?php echo $val['url']; ?>" class="nbdesigner-product-link"><?php echo $val['img']; ?></a> 
                     </div>
                     <p class="nbdesigner-product-link">
-                        <a href="<?php echo $val['url'].'#nbdesigner_setting'; ?>" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a>
+                        <!-- <a href="<?php echo $val['url'].'#nbdesigner_setting'; ?>" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a> -->
+                        <a href="javascript: void(0)" onclick="openProductConfig( '<?php _e('Edit product', 'web-to-print-online-designer'); ?>', '<?php echo $ajax_product; ?>' )" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a>
                         <a href="<?php echo get_permalink($val['id']); ?>" title="<?php _e('View product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-visibility"></span></a>
                         <?php 
                             $product = wc_get_product($id);
@@ -50,7 +58,7 @@
                             <span class="dashicons dashicons-images-alt"></span>
                             <span class="count" title="<?php echo $val['number_template']; ?> <?php _e('templates', 'web-to-print-online-designer'); ?>"><?php echo $val['number_template'] < 100 ? $val['number_template'] : "99+"; ?></span>
                         </a>
-                    </p> 
+                    </p>                  
                     <?php 
                         if( count($variations) > 0 ):
                     ?>
@@ -87,6 +95,9 @@
         origin_fref = btn.data('href'),
         new_href = origin_fref + '&variation_id=' + vid;
         btn.attr('href', new_href);
+    }
+    openProductConfig = function( title, url ){
+        tb_show(title, url ); 
     }
 </script>
 <style type="text/css">

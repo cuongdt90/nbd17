@@ -59,6 +59,7 @@ jQuery(document).ready(function () {
             download_action == 'download_pdf_in_order' ? NBDESIGNERPRODUCT.download_pdf_in_order(e, jQuery(this)) : NBDESIGNERPRODUCT.nbd_download_final_pdf(e, jQuery(this));
         });        
     });
+    jQuery('.nbd-pdf-options').show();
     jQuery.each(jQuery('.nbd-order-item-download-section'), function( index, value ){
         var self = jQuery(this),
             link = self.attr('data-href'),
@@ -75,7 +76,7 @@ jQuery(document).ready(function () {
             self.append(op_el);
             self.append('<a class="button nbd-order-download-file" href="'+link+'&type=png">'+download_title+'</a>');
             self.show()            
-        }
+        };    
     });
 });
 var share_image_url = '';
@@ -606,7 +607,23 @@ var NBDESIGNERPRODUCT = {
             parent = jQuery(e).parents('.nbd-order-item-download-section'),    
             el_action = parent.find('a.nbd-order-download-file'),
             link = parent.attr('data-href');
-            el_action.attr('href', link + '&type=' + type);        
+        if( type == 'pdf' ) {
+            jQuery('#nbd-show-bleed')
+            jQuery('.nbd-pdf-options').removeClass('nbd-hide');
+        }
+        el_action.attr('href', link + '&type=' + type);        
+    },
+    change_nbd_download_pdf_type: function( ){
+        jQuery.each(jQuery('.nbd-order-item-download-section'), function(){
+            var _bleed = jQuery('#nbd-show-bleed').is(':checked') ? 'yes' : 'no';
+            var _multi_file = jQuery('#nbd-multi-file').is(':checked') ? 'yes' : 'no';
+            jQuery('.nbd-pdf-options').addClass('nbd-hide');
+            jQuery.each( jQuery('.nbd-order-item-download-section'), function(){
+                var link = jQuery(this).find('.nbd-order-download-file').attr('href');
+                link += '&multi_file=' + _multi_file + '&bleed=' + _bleed;
+                jQuery(this).find('.nbd-order-download-file').attr('href', link);
+            })
+        });
     }
 };
 function addParameter(url, parameterName, parameterValue, atStart/*Add param before others*/) {

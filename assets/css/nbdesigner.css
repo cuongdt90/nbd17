@@ -1270,6 +1270,104 @@ table#nbd-quantity-pricing .nbd_quantity {
     border-radius: 0; 
     margin-right: 15px;
 }
+.nbd-pdf-options-inner {
+    position: absolute;
+    background: #fff;
+    width: 320px;
+    border-radius: 4px;
+    left: 50%;
+    margin-left: -160px;
+    margin-top: -100px;
+    top: 50%;
+    padding: 15px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+}
+.nbd-pdf-options.nbd-hide {
+    display: none !important;
+}
+.nbd-pdf-options {
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+}
+/*MD checkbox*/
+.md-checkbox {
+    position: relative;
+    height: 20px;
+    margin: 16px 0;
+}
+.md-checkbox label {
+    cursor: pointer;
+    margin-left: 15px;
+}
+.md-checkbox label:before, .md-checkbox label:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.md-checkbox label:before {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid rgba(0, 0, 0, 0.54);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background .3s;
+    box-sizing: border-box;
+}
+.md-checkbox input[type="checkbox"] {
+    outline: 0;
+    margin-right: 10px;
+}
+.md-checkbox input[type="checkbox"]:checked + label:before {
+    background: #394264;
+    border: none;
+}
+.md-checkbox input[type="checkbox"]:checked + label:after {
+    transform: rotate(-45deg);
+    top: 5px;
+    left: 4px;
+    width: 12px;
+    height: 6px;
+    border: 2px solid #fff;
+    border-top-style: none;
+    border-right-style: none;
+    box-sizing: border-box;    
+}
+/*End. MD checkbox*/
+.nbd-button {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 15px;
+    font-size: 14px;
+    line-height: 24px;
+    vertical-align: middle;
+    color: #fff;
+    text-transform: uppercase;
+    background: #0c8ea7;
+    -moz-transition: all ease .4s;
+    -ms-transition: all ease .4s;
+    -webkit-transition: all ease .4s;
+    transition: all ease .4s;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);    
+}
+.nbd-button:hover {
+    -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -moz-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+    box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);    
+}
 @media (max-width: 767px) {
     .nbd-table-pricing-wrap, .nbd-pricing-description {
         width: 100%;

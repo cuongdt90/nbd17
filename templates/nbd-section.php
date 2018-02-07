@@ -24,7 +24,7 @@ $class = nbdesigner_get_option('nbdesigner_class_design_button_detail');
                 <?php _e('Save for later', 'web-to-print-online-designer'); ?>
             </a>
             <?php
-                $allow_donwload_pdf = false;
+                $allow_donwload_pdf = true;
                 if( $allow_donwload_pdf ):
             ?>
             <a href="javascript:void(0)" onclick="NBDESIGNERPRODUCT.download_pdf()" class="button alt">

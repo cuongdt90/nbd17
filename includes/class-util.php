@@ -486,7 +486,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_position_pricing_in_detail_page' => 1,
         'nbdesigner_quantity_pricing_description' => '',
         'nbdesigner_thumbnail_width' => 300,
-        'nbdesigner_default_dpi' => 150,
+        'nbdesigner_default_dpi' => 96,
         'nbdesigner_show_in_cart' => 'yes',
         'nbdesigner_auto_add_cart_in_detail_page' => 'no',
         'nbdesigner_class_design_button_catalog' => '',
@@ -522,6 +522,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_min_res_upload_file' => '',            
         'nbdesigner_allow_download_file_upload' => 'no',       
         'nbdesigner_create_preview_image_file_upload' => 'no',
+        'nbdesigner_file_upload_preview_width' => 200,
         
         'nbdesigner_enable_download_pdf_before' => 'no',       
         'nbdesigner_enable_download_pdf_after' => 'no',   
@@ -647,7 +648,10 @@ function default_frontend_setting(){
         'nbdesigner_download_design_pdf' => 0,
         'nbdesigner_download_design_svg' => 0,
         'nbdesigner_download_design_jpg' => 0,
-        'nbdesigner_download_design_jpg_cmyk' => 0
+        'nbdesigner_download_design_jpg_cmyk' => 0,
+        'nbdesigner_download_design_upload_file' => 0,
+        'nbdesigner_attach_design_png' => 1,
+        'nbdesigner_attach_design_svg' => 0
     );
     return $default;
 }
@@ -979,9 +983,20 @@ function is_woo_v31(){
     return true;
 }
 function nbd_get_dpi($filename){
-    if(class_exists('Imagick')){
+    if( class_exists('Imagick') ){
         $image = new Imagick($filename);
         $resolutions = $image->getImageResolution();
+        $units = $image->getImageUnits();
+        if( $units == 2 ){
+            if (!empty($resolutions['y'])) {
+                $resolutions['y'] = round($resolutions['y'] * 2.54, 2);
+            }
+            if (!empty($resolutions['x'])) {
+                $resolutions['x'] = round($resolutions['x'] * 2.54, 2);
+            }
+        }else{
+            $resolutions['y'] = $resolutions['x'] = 72;
+        }
     }else{
         $a = fopen($filename,'r');
         $string = fread($a,20);
@@ -992,7 +1007,7 @@ function nbd_get_dpi($filename){
         $y = substr($data,4,4);  
         $resolutions = array('x' => hexdec($x), 'y' => hexdec($y));
     }
-    return array($resolutions);
+    return $resolutions;
 }
 /**
  * Locate template.
@@ -1135,6 +1150,12 @@ function nbd_check_permission(){
         if( !current_user_can('edit_nbd_template') ) return false;
     }    
     return true;
+}
+function nbd_check_order_permission( $order_id ){
+    $order = wc_get_order(absint( $order_id ) ); 
+    $uid = get_current_user_id();
+    if ($order->get_user_id() != $uid) return false;
+    return true;    
 }
 function get_nbd_variations( $product_id, $include_price = false ){
     $product = wc_get_product( $product_id );
@@ -1415,31 +1436,37 @@ function nbd_convert_svg_embed( $path ){
         file_put_contents($new_svg_path, $new_svg);            
     }
 }
-function nbd_export_pdfs( $nbd_item_key ){
+function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $showBleed = 'no' ){
     $path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key;
-    $folder = $path. '/customer-pdfs';
-    $output_file = $folder .'/'. $nbd_item_key .'_final.pdf';
-    if( !file_exists($output_file)){
+    $_watermark = $watermark ? '-watermark' : '';
+    $_force = $force ? '-force' : '';
+    $_showBleed = $showBleed == 'yes' ? '-bleed' : '';
+    $folder = $path. '/customer-pdfs' .$_watermark.$_force.$_showBleed;
+    $output_file = $folder .'/'. $nbd_item_key .'.pdf';
+    $result = array();
+    if( !file_exists($folder)){
+        wp_mkdir_p($folder);
         require_once(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/tcpdf.php');
         $datas = unserialize(file_get_contents($path .'/product.json'));
         $option = unserialize(file_get_contents($path .'/option.json'));
         $used_font_path = $path. '/used_font.json';
-        $used_font = json_decode( file_get_contents($used_font_path) );
-        $google_font_path = NBDESIGNER_PLUGIN_DIR . '/data/google-fonts.json';
-        $fonts = json_decode( file_get_contents($google_font_path) );   			
+        $used_font = json_decode( file_get_contents($used_font_path) );			
         foreach( $used_font as $font ){
-            if( $font->type == 'google' ){
-                $font_name = $font->name;
-                $variation = $fonts->$font_name->variants->normal;
-                $path_src = $variation->{'400'}->url->ttf;
-                $path_dst = NBDESIGNER_FONT_DIR . '/' . $font_name . '.ttf';
-                copy($path_src, $path_dst);
-                $path_font = $path_dst;
-            }else{
-                $has_custom_font = true;
-                $path_font = NBDESIGNER_FONT_DIR . '/' . $font->file;
-            }
-            $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);
+            foreach( $used_font as $font ){
+                if( $font->type == 'google' ){
+                    $font_name = $font->name;
+                    $path_font = nbd_download_google_font($font_name);;
+                }else{
+                    $has_custom_font = true;
+                    $path_font = NBDESIGNER_FONT_DIR . '/' . $font->file;
+                }
+                $true_type = ['Felipa'];
+                if (in_array($font_name, $true_type)) {
+                    $fontname = TCPDF_FONTS::addTTFfont($path_font, 'TrueType', '', 32);             
+                }else{
+                    $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);             
+                }
+            } 
         }
         $pdfs = array();
         $unit = get_option('nbdesigner_dimensions_unit');
@@ -1526,15 +1553,15 @@ function nbd_export_pdfs( $nbd_item_key ){
         $pdf->SetTitle(get_bloginfo( 'name' ));
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);       
-        $pdf->SetAutoPageBreak(TRUE, 0);   
-
+        $pdf->SetAutoPageBreak(TRUE, 0);  
+        $pdf->SetFont('roboto', '', 14, '', false);
+        
         foreach($pdfs as $key => $_pdf){         
             $customer_design = $_pdf['customer-design'];    
             $bTop = (float)$_pdf['bleed-top'];
             $bLeft = (float)$_pdf['bleed-left'];
             $bRight = (float)$_pdf['bleed-right'];
-            $bBottom = (float)$_pdf['bleed-bottom'];    
-            $showBleed = 'no'; 
+            $bBottom = (float)$_pdf['bleed-bottom']; 
             $cdTop = (float)$_pdf["cd-top"];
             $cdLeft = (float)$_pdf["cd-left"];
             $cdWidth = (float)$_pdf["cd-width"];
@@ -1544,7 +1571,17 @@ function nbd_export_pdfs( $nbd_item_key ){
             $bg_color_value = $_pdf['bg_color_value'];  
             if($bg_type == 'image'){
                 $path_bg = (absint($background) > 0 ) ? get_attached_file($background) : Nbdesigner_IO::convert_url_to_path( $background );
-            }      
+            }   
+            if(!$force){
+                $pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
+                $pdf->SetMargins($mLeft, $mTop, $mRight, true);     
+                $pdf->SetCreator( get_site_url() );
+                $pdf->SetTitle(get_bloginfo( 'name' ));
+                $pdf->setPrintHeader(false);
+                $pdf->setPrintFooter(false);       
+                $pdf->SetAutoPageBreak(TRUE, 0); 
+                $pdf->SetFont('roboto', '', 14, '', false);
+            }             
             $pdf->AddPage();             
             if($bg_type == 'image' && $path_bg){
                 $img_ext = array('jpg','jpeg','png');
@@ -1568,12 +1605,6 @@ function nbd_export_pdfs( $nbd_item_key ){
             }
             if($customer_design != ''){
                 $svg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/frame_'. $key .'_svg.svg';
-                require_once(NBDESIGNER_PLUGIN_DIR . 'includes/svg-sanitizer/sanitizer.php');               
-                $sanitizer = new Sanitizer();       
-                $sanitizer->minify(true);
-                $dirtySVG = file_get_contents($svg);
-                $cleanSVG = $sanitizer->sanitize($dirtySVG);
-                file_put_contents($svg, $cleanSVG);
                 $pdf->ImageSVG($svg, $mLeft + $cdLeft, $mTop + $cdTop, $cdWidth,$cdHeight, '', '', '', 0, true);                     
             }   
             if($showBleed == 'yes'){
@@ -1586,13 +1617,60 @@ function nbd_export_pdfs( $nbd_item_key ){
                 $pdf->Line($mLeft + $bgWidth - $bRight, 0, $mLeft + $bgWidth - $bRight, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
                 $pdf->Line($mLeft + $bgWidth - $bRight, $mTop + $bgHeight - $bBottom, $mLeft + $bgWidth - $bRight, $mTop + $bgHeight + $mBottom, array('color' => array(0,0,0), 'width' => 0.05));
             }
+            if( $watermark ){
+                $watermark_type = nbdesigner_get_option('nbdesigner_pdf_watermark_type');
+                if($watermark_type == 1){
+                    $watermark_image = nbdesigner_get_option('nbdesigner_pdf_watermark_image');
+                    $watermark_file = get_attached_file($watermark_image);
+                    if( $watermark_file ){
+                        $myPageWidth = $pdf->getPageWidth();
+                        $myPageHeight = $pdf->getPageHeight();                        
+                        list($watermark_width, $watermark_height) = getimagesize($watermark_file);
+                        $watermark_width = $watermark_width/72*25.4;
+                        $watermark_height = $watermark_height/72*25.4;
+                        $myX = ( $myPageWidth - $watermark_width )/2 > 0 ? ( $myPageWidth - $watermark_width )/2 : 0;
+                        $myY = ( $myPageHeight - $watermark_height )/2 > 0 ? ( $myPageHeight - $watermark_height )/2 : 0;
+                        $pdf->SetAlpha(0.2);
+                        $pdf->StartTransform();
+                        $pdf->Rotate(45, $myPageWidth / 2, $myPageHeight / 2);
+                        $pdf->Image($watermark_file, $myX, $myY, '', '', '', '', '', false);
+                        $pdf->StopTransform();
+                        $pdf->SetAlpha(1);
+                    }
+                }else{
+                    $watermark_text = nbdesigner_get_option('nbdesigner_pdf_watermark_text');
+                    $vfont = "freeserif";
+                    $vfontsize = 20;
+                    $vfontbold = "B";         
+                    $widthtext = $pdf->GetStringWidth(trim($watermark_text), $vfont, $vfontbold, $vfontsize, false );
+                    $widthtextcenter = round(($widthtext * sin(deg2rad(45))) / 2 ,0);
+                    $myPageWidth = $pdf->getPageWidth();
+                    $myPageHeight = $pdf->getPageHeight();
+                    $myX = ( $myPageWidth - $widthtext )/2 > 0 ? ( $myPageWidth - $widthtext )/2 : 0;
+                    $myY = $myPageHeight / 2;                
+                    $pdf->SetAlpha(0.2);
+                    $pdf->StartTransform();
+                    $pdf->Rotate(45, $myPageWidth / 2, $myPageHeight / 2);
+                    $pdf->SetFont($vfont, $vfontbold, $vfontsize);
+                    $pdf->Text($myX, $myY ,trim($watermark_text));
+                    $pdf->StopTransform();
+                    $pdf->SetAlpha(1);
+                }
+            }
+            if(!$force){
+                $output_file = $folder .'/'. $nbd_item_key .'_'.$key.'.pdf';
+                $pdf->Output($output_file, 'F');    
+                $result[] = $output_file;                 
+            }
         }       
-        if(!file_exists($folder)){
-            wp_mkdir_p($folder);
+        if($force){
+            $pdf->Output($output_file, 'F');  
+            $result[] = $output_file;    
         }
-        $pdf->Output($output_file, 'F');  
+    }else{
+        $result = Nbdesigner_IO::get_list_files( $folder );
     } 
-    return $output_file;
+    return $result;
 }
 function nbd_convert_files( $nbd_item, $type = 'jpg', $dpi = 300 ){
     $path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item;
@@ -1665,7 +1743,7 @@ function nbd_add_to_cart( $product_id, $variation_id, $quantity ){
     }
     return $added;
 }
-function nbd_download_product_designs( $order_id, $order_item_id, $nbd_item_key, $nbu_item_key, $type  ){
+function nbd_download_product_designs( $order_id, $order_item_id, $nbd_item_key, $nbu_item_key, $type, $force = false, $showBleed = 'no'  ){
     $option_name = array();
     if( $type != 'files' ){
         $product_data = unserialize(file_get_contents(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/product.json'));
@@ -1703,8 +1781,13 @@ function nbd_download_product_designs( $order_id, $order_item_id, $nbd_item_key,
             $files = Nbdesigner_IO::get_list_svgs($svg_path, 1);                  
             break;            
         case 'pdf':
-            $pdf = nbd_export_pdfs( $nbd_item_key ); 
-            $files[] = $pdf;
+            $enable_watermark = nbdesigner_get_option('nbdesigner_enable_pdf_watermark');
+            $watermark = $enable_watermark == 'yes' ? true : false;
+            if( $enable_watermark == 'before' ){
+                $order = wc_get_order($order_id);
+                if( $order->get_status() != 'completed' ) $watermark = true;                
+            }
+            $files = nbd_export_pdfs( $nbd_item_key, $watermark, $force, $showBleed ); 
             break;
         case 'files':
             if( $nbu_item_key != '' ){

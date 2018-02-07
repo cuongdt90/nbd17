@@ -16,7 +16,7 @@
         <div class="nb-col-6" ng-show="settings['nbdesigner_text_change_font'] == 1">
             <fieldset class="shadow" ng-click="loadFont()" data-target="#dg-fonts" data-toggle="modal">
                 <legend>{{(langs['FONT']) ? langs['FONT'] : "Fonts"}}:</legend>
-                <a ng-style="{'font-family': (editable.fontFamily) ? editable.fontFamily + ', sans-serif' : 'Roboto, sans-serif'}">{{currentFont.name}}</a>
+                <a ng-style="{'font-family': (editable.fontFamily) ? editable.fontFamily + ', sans-serif' : 'Tahoma, sans-serif'}">{{currentFont.name}}</a>
                 <span class="ui-accordion-header-icon ui-icon ui-icon-triangle-1-s pull-right"></span>
             </fieldset>
         </div>

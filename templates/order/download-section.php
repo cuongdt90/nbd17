@@ -18,7 +18,7 @@
         }
     }
     if( $nbu_item_key ){
-        $type['files'] = __('Upload files', 'web-to-print-online-designer');
+        if( nbdesigner_get_option('nbdesigner_download_design_upload_file') == 1 ) $type['files'] = __('Upload files', 'web-to-print-online-designer');
     }
 ?>
 <div style="display: none;" class="nbd-order-item-download-section" data-href="<?php echo $link_download; ?>" data-type='<?php echo json_encode($type); ?>' data-title="<?php _e('Download', 'web-to-print-online-designer'); ?>"></div>

@@ -100,12 +100,13 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                     ),
                     array(
                         'title' => __('Allow download design', 'web-to-print-online-designer'),
-                        'description' => __('Allow the customer download design after complete order.', 'web-to-print-online-designer'),
+                        'description' => __('Allow the customer download their designs or upload files.', 'web-to-print-online-designer'),
                         'id' => 'allow_customer_download_after_complete_order',
                         'default' => 'no',
                         'type' => 'radio',
                         'options' => array(
-                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'yes' => __('Yes - all order status', 'web-to-print-online-designer'),
+                            'complete' => __('Complete order', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer'),
                         )
                     ),
@@ -117,17 +118,19 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                                 'nbdesigner_download_design_pdf' => 0,                         
                                 'nbdesigner_download_design_svg' => 0,                         
                                 'nbdesigner_download_design_jpg' => 0,                         
-                                'nbdesigner_download_design_jpg_cmyk' => 0                        
+                                'nbdesigner_download_design_jpg_cmyk' => 0,                        
+                                'nbdesigner_download_design_upload_file' => 0                        
                             )),
                         'description' 	=> __( 'Choose design file type which the customer can download.', 'web-to-print-online-designer'),
                         'type' 		=> 'multicheckbox',
                         'class'         => 'regular-text',
                         'options'   => array(
                             'nbdesigner_download_design_png' => __('PNG', 'web-to-print-online-designer'),
-                            'nbdesigner_download_design_pdf' => __('PDF', 'web-to-print-online-designer'),
+                            'nbdesigner_download_design_pdf' => sprintf(__( 'PDF, detail config for <a target="_blank" href="%s">PDF</a>', 'web-to-print-online-designer'), esc_url(admin_url('admin.php?page=nbdesigner&tab=output'))),
                             'nbdesigner_download_design_svg' => __('SVG', 'web-to-print-online-designer'),
                             'nbdesigner_download_design_jpg' => __('JPG', 'web-to-print-online-designer'),
-                            'nbdesigner_download_design_jpg_cmyk' => __('CMYK - JPG', 'web-to-print-online-designer')
+                            'nbdesigner_download_design_jpg_cmyk' => __('CMYK - JPG', 'web-to-print-online-designer'),
+                            'nbdesigner_download_design_upload_file' => __('Upload files - The customer upload files', 'web-to-print-online-designer')
                         ),
                         'css' => 'margin: 0 15px 10px 5px;'
                     )                   
@@ -195,6 +198,22 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         )  
+                    ),
+                    array(
+                        'title' => __( 'Attach custom designs type', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_option_attach_type',
+                        'default'	=> json_encode(array(
+                                'nbdesigner_attach_design_png' => 0,                            
+                                'nbdesigner_attach_design_svg' => 0,                          
+                            )),
+                        'description' 	=> __( 'Choose design file type which attach in email.', 'web-to-print-online-designer'),
+                        'type' 		=> 'multicheckbox',
+                        'class'         => 'regular-text',
+                        'options'   => array(
+                            'nbdesigner_attach_design_png' => __('PNG', 'web-to-print-online-designer'),
+                            'nbdesigner_attach_design_svg' => __('SVG', 'web-to-print-online-designer')
+                        ),
+                        'css' => 'margin: 0 15px 10px 5px;'
                     )                     
                 ),
                 'nbd-pages'       => array(

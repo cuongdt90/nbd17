@@ -44,8 +44,8 @@
                                 $arr = array('nbd_item_key' => $nbd_item_key, 'order_id'    =>  $order_id, 'product_id' => $product_id, 'variation_id' => $item_meta->get_variation_id());
                                 $link_view_detail = add_query_arg($arr, admin_url('admin.php?page=nbdesigner_detail_order'));
                             ?>
+                        <?php  endif; ?>            
                             <a class="nbdesigner-right button button-small button-secondary"  href="<?php echo $link_view_detail; ?>"><?php _e('View detail', 'web-to-print-online-designer'); ?></a>
-                        <?php  endif; ?>
                         </div>
                         <?php  endif; ?>
                         <?php 

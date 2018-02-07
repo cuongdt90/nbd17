@@ -285,7 +285,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
                             $_depend = 'data-undepend=1';
                         }
                     }
-                    $input_html .= '<p class='.$class.'><input type="hidden" value="0" name="'. esc_attr($key) .'"/><input '.$_depend.' value="1" type="checkbox" '.$op_checked.' id="'. esc_attr($key) .'" name="'.esc_attr($key).'"/><label for="'. esc_attr($key) .'" style="'. esc_attr($css) .'">' .esc_attr($label). '</label></p>';
+                    $input_html .= '<p class='.$class.'><input type="hidden" value="0" name="'. esc_attr($key) .'"/><input '.$_depend.' value="1" type="checkbox" '.$op_checked.' id="'. esc_attr($key) .'" name="'.esc_attr($key).'"/><label for="'. esc_attr($key) .'" style="'. esc_attr($css) .'">' .$label. '</label></p>';
                 }
                 $input_html .= '</div>';
             }else if($type == 'nbd-media'){

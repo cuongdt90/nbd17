@@ -99,11 +99,16 @@
         <div class="container-inner-frame">
             <div class="container_item">
                 <a class="box-thumb nbd-tooltip-frame" data-placement="top" data-lang="{{orientation.source.orientation_name}}" ng-class="{active: currentVariant.orientationActive == orientation.name}" ng-repeat="orientation in currentVariant.info" ng-click="changeOrientation(orientation)">
-                    <img width="40" height="40" ng-show="orientation.source['bg_type'] == 'image'" ng-src="{{orientation.source['img_src']}}"  spinner-on-load/>
-                    <i ng-show="orientation.source['bg_type'] == 'color'" 
-                       ng-style="{'background': orientation.source['bg_color_value']}" ></i>
-                    <i ng-show="orientation.source['bg_type'] == 'tran'" 
-                       class="background-transparent" ></i>
+                    <p class="box-thumb-inner"  ng-hide='existDesign(orientation)'>
+                        <img width="40" height="40" ng-show="orientation.source['bg_type'] == 'image'" ng-src="{{orientation.source['img_src']}}"  spinner-on-load/>
+                        <i ng-show="orientation.source['bg_type'] == 'color'" 
+                           ng-style="{'background': orientation.source['bg_color_value']}" ></i>
+                        <i ng-show="orientation.source['bg_type'] == 'tran'" 
+                           class="background-transparent" ></i>
+                    </p>
+                    <p class="box-thumb-inner" ng-show='existDesign(orientation)'>
+                        <img ng-src="{{dataCustomerDesign[orientation.name]}}" />
+                    </p>
                 </a>
             </div>
         </div>
