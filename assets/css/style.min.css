@@ -424,7 +424,8 @@ button.cancel:hover {
 }
 
 .nbdesigner_modal_tab {
-    margin-bottom: -1px
+    margin-bottom: -1px;
+    font-size: 0;
 }
 
 .nbdesigner_modal_tab li {
@@ -432,7 +433,10 @@ button.cancel:hover {
     background: #ddd;
     text-align: center;
     border: 1px solid #ddd;
-    min-width: 100px
+    min-width: 100px;
+    margin-top: 2px;
+    margin: 2px 2px 0 0;
+    font-size: 14px;    
 }
 
 .nbdesigner_modal_tab li.active {
@@ -4049,11 +4053,14 @@ img.pattern_img {
     max-width: 100%;
     max-height: 100%;
 }
-#pixabay_results {
-    padding: 0 15px;
+#pixabay_results, #unsplash_results {
     max-height: 350px;
     overflow: hidden;
     position: relative;
+}
+#pixabay_loading{
+    display: none;
+    margin-top: 10px;
 }
 @media (max-width: 767px) {
     #upload-tabs li {

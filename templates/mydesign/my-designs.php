@@ -36,6 +36,7 @@
             ?>
             <tr class="order">
                 <td data-title="<?php _e('Preview', 'web-to-print-online-designer'); ?>">
+                    <p><?php echo get_the_title( $design->product_id ); ?></p>
                     <?php foreach ($listThumb as $image ): ?>
                     <img style="max-width: 100px; display: inline-block; border: 1px solid #ddd;" src="<?php echo Nbdesigner_IO::convert_path_to_url($image); ?>" />
                     <?php endforeach; ?>

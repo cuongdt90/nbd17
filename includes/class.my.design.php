@@ -449,9 +449,11 @@ class My_Design_Endpoint {
         if( is_nbd_gallery_page() ){
             //wp_enqueue_script('nbd-gallery-js', 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js', array('jquery'));
             //wp_enqueue_style('nbd-gallery-css', 'https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css');
+            wp_enqueue_script('masonry');
         }
         if( is_nbd_designer_page() ){
             wp_enqueue_style('nbd-artist-css', NBDESIGNER_CSS_URL . 'artist.css');
+            wp_enqueue_script('masonry');
         }
     }
     public function nbd_gallery_func($atts, $content = null) {
@@ -829,7 +831,8 @@ class My_Design_Endpoint {
             Nbdesigner_IO::copy_dir( $path, $item_path );   
             WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $item_folder); 
             $product_status    = get_post_status( $product_id );
-            if ( false !== WC()->cart->add_to_cart( $product_id, $quantity, $variation_id ) && 'publish' === $product_status ) {
+            //if ( false !== WC()->cart->add_to_cart( $product_id, $quantity, $variation_id ) && 'publish' === $product_status ) {
+            if( nbd_add_to_cart(  $product_id, $variation_id, $quantity  ) ){
                 do_action( 'woocommerce_ajax_added_to_cart', $product_id );
                 $result['flag'] = 1; 
             } else {

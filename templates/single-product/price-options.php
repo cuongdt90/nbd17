@@ -65,10 +65,10 @@
                 price_per_unit = 1;
             if( nbd_qty > 0 ){
                 jQuery.each(nbd_prices.start, function(index, value){
-                    var start = parseInt( value ),
-                        end = parseInt(nbd_prices.end[index]),
+                    var start = value != '' ? parseInt( value ) : 0,
+                        end = nbd_prices.end[index] != '' ? parseInt(nbd_prices.end[index]) : 0,
                         _price = convert_wc_price_to_float(nbd_prices.price[index]);
-                    if( !first_match && start <= nbd_qty && end >= nbd_qty ) {
+                    if( !first_match && start <= nbd_qty && ( end >= nbd_qty || end == 0 ) ) {
                         price_per_unit = _price; 
                         first_match = true;
                     }

@@ -209,6 +209,7 @@
                     include_once('components/modal_bleed_tip.php');		
                     include_once('components/modal_product_info.php');		
                     include_once('components/modal_product_info_preview.php');		
+                    //include_once('components/popover_preset_fields.php');		
                     ?>
                 </div>
                 <div id="od_config" ng-class="modeMobile ? 'mobile' : 'modepc'">	
@@ -283,6 +284,7 @@
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/spectrum.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/qrcode.js'; ?>"></script>
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>
+            <script type="text/javascript" src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
             <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/spectrum/1.3.0/js/spectrum.min.js"></script>    -->
             <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer.min.js'; ?>"></script>	
         </div>

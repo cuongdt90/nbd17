@@ -200,7 +200,7 @@ class Nbdesigner_DebugTool {
         $custom_css = '';
         $path = NBDESIGNER_DATA_DIR .'/custom.css';
         if(isset($_POST['content'])){
-            $custom_css = $_POST['content'];
+            $custom_css = stripslashes( $_POST['content'] );
             $fp = fopen($path, "w");
             fwrite($fp, $custom_css);
             fclose($fp);

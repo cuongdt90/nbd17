@@ -70,6 +70,7 @@
                                     <select onchange="changeLink(this)" style="padding: 0;">
                                     <?php foreach ($variations as $variation): ?>
                                         <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
+                                        <option value="0">Template apply for all variations</option>
                                     <?php endforeach; ?>
                                     </select>    
                                 </td>

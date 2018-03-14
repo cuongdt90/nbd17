@@ -380,6 +380,12 @@
             </div>
             <div id="nbdesigner-option" class="nbdesigner-option">
                 <div class="nbdesigner-opt-inner">
+                    <?php $multiple_edit = isset( $option['multiple_edit'] ) ? $option['multiple_edit'] : 0;?>
+                    <input type="hidden" value="0" name="_nbdesigner_option[multiple_edit]"/>
+                    <label for="_nbd_multiple_edit" class="nbdesigner-option-label"><?php echo _e('Multiple edit', 'web-to-print-online-designer'); ?></label>
+                    <input type="checkbox" value="1" name="_nbdesigner_option[multiple_edit]" id="_nbd_multiple_edit" <?php checked( $multiple_edit ); ?> class="short"/> 
+                </div>                
+                <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[admindesign]"/>
                     <label for="_nbdesigner_admindesign" class="nbdesigner-option-label"><?php echo _e('Use primary template', 'web-to-print-online-designer'); ?></label>
                     <input type="checkbox" value="1" name="_nbdesigner_option[admindesign]" id="_nbdesigner_admindesign" <?php checked( $option['admindesign'] ); ?> class="short"/>
@@ -421,6 +427,7 @@
                                             <select onchange="changeLink(this)">
                                             <?php foreach ($variations as $variation): ?>
                                                 <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
+                                                <option value="0">Template apply for all variations</option>
                                             <?php endforeach; ?>
                                             </select>    
                                         </td>
@@ -467,7 +474,7 @@
                 </div>
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[allow_specify_dimension]"/>
-                    <label for="_nbd_allow_specify_dimension" class="nbdesigner-option-label"><?php echo _e('Allow user define demension', 'web-to-print-online-designer'); ?></label>
+                    <label for="_nbd_allow_specify_dimension" class="nbdesigner-option-label"><?php echo _e('Allow user define dimension', 'web-to-print-online-designer'); ?></label>
                     <input type="checkbox" value="1" name="_nbdesigner_option[allow_specify_dimension]" id="_nbd_allow_specify_dimension" <?php checked( $option['allow_specify_dimension'] ); ?> class="short nbd-dependence" data-target="#nbd-custom-size"/>                    
                 </div> 
                 <div id="nbd-custom-size" class="<?php if (!$option['allow_specify_dimension']) echo 'nbdesigner-disable'; ?> nbd-independence nbdesigner-opt-inner">

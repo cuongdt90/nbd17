@@ -282,7 +282,23 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'class'         => 'regular-text',
                         'default'	=> '',
                         'type' 		=> 'text'
-                    ),                    
+                    ),                     
+                    array(
+                        'title' => __( 'Pixabay API key', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'You can use default key or your Pixabay API key. That feature allow the customer serach images from Pixabay.', 'web-to-print-online-designer').' <a href="https://pixabay.com/vi/service/about/api/" target="_blank">'.__("Where do I get this info?", 'web-to-print-online-designer').'</a>',
+                        'id' 		=> 'nbdesigner_pixabay_api_key',
+                        'class'         => 'regular-text',
+                        'default'	=> '27347-23fd1708b1c4f768195a5093b',
+                        'type' 		=> 'text'
+                    ),      
+                    array(
+                        'title' => __( 'Unsplash Application ID', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'You can use default key or your Unsplash Application ID. That feature allow the customer serach images from Pixabay.', 'web-to-print-online-designer').' <a href="https://unsplash.com/developers" target="_blank">'.__("Where do I get this info?", 'web-to-print-online-designer').'</a>',
+                        'id' 		=> 'nbdesigner_unsplash_api_key',
+                        'class'         => 'regular-text',
+                        'default'	=> '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8',
+                        'type' 		=> 'text'
+                    ),                                          
                     array(
                         'title' => __( 'Enable log mode', 'web-to-print-online-designer'),
                         'description'   => sprintf(__( 'Enable log mode for debug. <a href="%s">Logs</a>', 'web-to-print-online-designer'), esc_url(admin_url('admin.php?page=nbdesigner_tools#nbd-logs'))),

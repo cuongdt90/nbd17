@@ -1368,7 +1368,10 @@ table#nbd-quantity-pricing .nbd_quantity {
     -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
     box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);    
 }
-@media (max-width: 767px) {
+.nbdesigner_frontend_container p {
+    overflow: hidden;
+}
+@media (max-width: 768px) {
     .nbd-table-pricing-wrap, .nbd-pricing-description {
         width: 100%;
         margin-bottom: 15px;
@@ -1392,5 +1395,10 @@ table#nbd-quantity-pricing .nbd_quantity {
     }
     .nbdesigner-gallery .nbdesigner-container .nbdesigner-item .nbdesigner-img {
         width: 100% !important;
+    }
+}
+@media (max-width: 576px) {
+    .nbdesigner-item {
+        width: 100%;
     }
 }

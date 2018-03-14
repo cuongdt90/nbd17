@@ -23,10 +23,10 @@
     </p>      
     <div style="display: none;">
         <div id="tooltip_upload_rule" style="color: #394264; font-size: 12px;">
-            <p ng-if="undefined !== uploadSetting.allow_type && uploadSetting.allow_type != ''">Allow extensions: <b>{{formatListString( uploadSetting.allow_type )}}</b></p>
-            <p ng-if="undefined !== uploadSetting.disallow_type && uploadSetting.disallow_type != ''">Disallow extensions: <b>{{formatListString( uploadSetting.disallow_type )}}</b></p>
-            <p>Min size: <b>{{uploadSetting.minsize}} MB</b></p>
-            <p>Max size: <b>{{uploadSetting.maxsize}} MB</b></p>
+            <p ng-if="undefined !== uploadSetting.allow_type && uploadSetting.allow_type != ''">{{(langs['ALLOW_EXTENSIONS']) ? langs['ALLOW_EXTENSIONS'] : "Allow extensions"}}: <b>{{formatListString( uploadSetting.allow_type )}}</b></p>
+            <p ng-if="undefined !== uploadSetting.disallow_type && uploadSetting.disallow_type != ''">{{(langs['DISALLOW_EXTENSIONS']) ? langs['DISALLOW_EXTENSIONS'] : "Disallow extensions"}}: <b>{{formatListString( uploadSetting.disallow_type )}}</b></p>
+            <p>{{(langs['MIN_SIZE']) ? langs['MIN_SIZE'] : "Min size"}}: <b>{{uploadSetting.minsize}} MB</b></p>
+            <p>{{(langs['MAX_SIZE']) ? langs['MAX_SIZE'] : "Min size"}}: <b>{{uploadSetting.maxsize}} MB</b></p>
         </div>
     </div>
     <p ng-if="fileUpload.length > 0" class="file-upload-name">{{fileUpload[0]['name']}}</p>

@@ -212,6 +212,26 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         ) 
                     ), 
                     array(
+                        'title' => __( 'Enable search from Pixabay', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_pixabay',
+                        'default'	=> 'yes',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ), 
+                    array(
+                        'title' => __( 'Enable search from Unsplash', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_unsplash',
+                        'default'	=> 'yes',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),                     
+                    array(
                         'title' => __( 'Enable SVG code', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_enable_svg_code',
                         'default'	=> 'no',

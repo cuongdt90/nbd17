@@ -46,6 +46,9 @@ if( !class_exists('NBD_Updates') ) {
                         width: 16px;
                         height: 16px;
                     }
+                    .column-design {
+                        width: 10%;
+                    }
                 </style>';   
         }
         public static function instance() {
@@ -146,7 +149,7 @@ if( !class_exists('NBD_Updates') ) {
                     $res->tested = $this->tested;
                     $res->package = $remote->download_link;
                     $res->url = $this->author_homepage;
-                    $transient->response[$res->plugin] = $res;
+                    $transient->response[$res->plugin] = $res;                 
                 }
             }
             return $transient;

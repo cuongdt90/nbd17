@@ -55,11 +55,14 @@ class Product_Template_List_Table extends WP_List_Table {
         if(current_user_can('delete_nbd_template')){
             global $wpdb;
             $item = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}nbdesigner_templates WHERE id = $id");
-            if($item->priority == 1) return;
-            $path = NBDESIGNER_CUSTOMER_DIR. '/' .$item->folder;
-            if (Nbdesigner_IO::delete_folder($path) || !file_exists($path)) {
+            if( $item ){
+                if($item->priority == 1) return;
+                //$path = NBDESIGNER_CUSTOMER_DIR. '/' .$item->folder;
+    //            if (Nbdesigner_IO::delete_folder($path) || !file_exists($path)) {
+    //                $wpdb->delete("{$wpdb->prefix}nbdesigner_templates", array('id' => $id), array('%d'));
+    //            }      
                 $wpdb->delete("{$wpdb->prefix}nbdesigner_templates", array('id' => $id), array('%d'));
-            }            
+            }
         }
     }
     public static function make_primary_template($id, $pid){

@@ -5,7 +5,7 @@
 /*
 Plugin Name: Nbdesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
-Description: Allow customer design product before purchase.
+Description: A printing ecosystem.
 Version: 1.9.0
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
@@ -93,6 +93,8 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-updates.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/admin-options.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/frontend-options.php');
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );

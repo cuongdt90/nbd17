@@ -9,14 +9,14 @@ if(!class_exists('Nbdesigner_Helper')){
                 'title'		=> __('Backend', 'web-to-print-online-designer'),
                 'content'	=>
                     '<h2>' . __('Backend setting', 'web-to-print-online-designer') . '</h2>' .
-                    '<iframe width="560" height="315" src="https://www.youtube.com/embed/zegY2it0w3k?rel=0" frameborder="0" allowfullscreen></iframe>'      
+                    '<iframe src="https://player.vimeo.com/video/258220167" width="640" height="341" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'      
             ));
             $screen->add_help_tab( array(
                 'id'		=> 'frontend',
                 'title'		=> __('Frontend', 'web-to-print-online-designer'),
                 'content'	=>
                     '<h2>' . __('Frontend setting', 'web-to-print-online-designer') . '</h2>' .
-                    '<iframe width="560" height="315" src="https://www.youtube.com/embed/FLv_kMV3jv0?rel=0" frameborder="0" allowfullscreen></iframe>'          
+                    '<iframe src="https://player.vimeo.com/video/258220470" width="640" height="341" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'          
             ));       
             $screen->add_help_tab( array(
                 'id'		=> 'facebook',

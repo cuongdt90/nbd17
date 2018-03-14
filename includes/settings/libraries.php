@@ -15,7 +15,18 @@ if( !class_exists('Nbdesigner_Libraries') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         )                      
-                    )                     
+                    ),
+                    array(
+                        'title' => __( 'Angular js', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_perfect_angular_js',
+                        'description' 	=> __('AngularJS: https://angularjs.org/ <br /> Disable if the theme or other plugin included', 'web-to-print-online-designer'),
+                        'default'	=> 'yes',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    )                    
                 ),
                 'css-settings' => array(
                     array(

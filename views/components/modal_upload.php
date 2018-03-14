@@ -14,7 +14,8 @@
                     <li ng-show="settings['nbdesigner_enable_instagram_photo'] == 'yes'"><a href="#nbdesigner_instagram" role="tab" data-toggle="tab"><i class="fa fa-instagram visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['INSTAGRAM']) ? langs['INSTAGRAM'] : "Instagram"}}</span></a></li>
                     <li ng-show="settings['nbdesigner_enable_dropbox_photo'] == 'yes'"><a href="#nbdesigner_dropbox" role="tab" data-toggle="tab"><i class="fa fa-dropbox visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['DROPBOX']) ? langs['DROPBOX'] : "Dropbox"}}</span></a></li> 
                     <li ng-if="hasGetUserMedia && !modeMobile" ng-click="initWebcam()" ng-show="settings['nbdesigner_enable_image_webcam'] == 'yes'"><a href="#nbdesigner_webcam" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['WEBCAM']) ? langs['WEBCAM'] : "Webcam"}}</span></a></li>
-                    <li><a href="#nbdesigner_pixabay" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['PIXABAY']) ? langs['PIXABAY'] : "Pixabay"}}</span></a></li>
+                    <li ng-show="settings['nbdesigner_enable_pixabay'] == 'yes'"><a href="#nbdesigner_pixabay" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['PIXABAY']) ? langs['PIXABAY'] : "Pixabay"}}</span></a></li>
+                    <li ng-show="settings['nbdesigner_enable_unsplash'] == 'yes'"><a href="#nbdesigner_unsplash" role="tab" data-toggle="tab"><i class="fa fa-camera visible-xs" aria-hidden="true"></i><span class="hidden-xs">{{(langs['PIXABAY']) ? langs['PIXABAY'] : "Unsplash"}}</span></a></li>
                 </ul>
             </div>
             <div class="modal-body">
@@ -93,10 +94,30 @@
                             <a ng-click="searchPixabay()" class="btn btn-primary shadow nbdesigner_upload"><i class="fa fa-search"></i></a>
                         </p>
                         <div id="pixabay_results">
-                            <span class="view-thumb" ng-repeat="url in pixabayImages | reverse">
-                                <img class="img-responsive img-thumbnail nbdesigner_upload_image shadow hover-shadow" ng-src="{{url}}" ng-click="addImage(url)"  spinner-on-load/>
+                            <span class="view-thumb" ng-repeat="img in pixabayImages | reverse | limitTo: pixabayPerPage * pixabayPage">
+                                <img class="img-responsive img-thumbnail nbdesigner_upload_image shadow hover-shadow" data-url="" ng-src="{{img.preview}}" ng-click="addFacebookImage(img, $event)"  spinner-on-load/>
                             </span>   
                         </div>
+                        <div ng-show="pixabayPage <= pixabayPages">
+                            <button class="btn btn-primary shadow nbdesigner_upload" style="margin-right: 15px; margin-top: 10px;" ng-click="pixabayPage = pixabayPage + 1;callPixabayApi()">{{(langs['MORE']) ? langs['MORE'] : "More"}}</button>
+                            <img id="pixabay_loading" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/loading.svg'; ?>"/>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="nbdesigner_unsplash">
+                        <p>
+                            <a href="https://unsplash.com/" target="_blank"><svg class="_2m4hn" version="1.1" viewBox="0 0 32 32" width="32" height="32" aria-labelledby="unsplash-home" aria-hidden="false"><title id="unsplash-home">Unsplash Home</title><path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path></svg></a>
+                            <input style="height: 32px; vertical-align: top;" ng-model="unsplash_key" class="form-control hover-shadow nbdesigner_image_url"/>
+                            <a ng-click="searchUnsplash()" style="vertical-align: top;" class="btn btn-primary shadow nbdesigner_upload"><i class="fa fa-search"></i></a>
+                        </p>
+                        <div id="unsplash_results">
+                            <span class="view-thumb" ng-repeat="img in unsplashImages | reverse | limitTo: unsplashPerPage * unsplashPage">
+                                <img class="img-responsive img-thumbnail nbdesigner_upload_image shadow hover-shadow" data-url="" ng-src="{{img.preview}}" ng-click="addFacebookImage(img, $event)"  spinner-on-load/>
+                            </span>                              
+                        </div>
+                        <div ng-show="unsplashPage <= unsplashPages">
+                            <button class="btn btn-primary shadow nbdesigner_upload" style="margin-right: 15px; margin-top: 10px;" ng-click="unsplashPage = unsplashPage + 1;callUnsplashApi()">{{(langs['MORE']) ? langs['MORE'] : "More"}}</button>
+                            <img id="unsplash_loading" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/loading.svg'; ?>"/>
+                        </div>                        
                     </div>
                     <div class="tab-pane" id="nbdesigner_facebook" ng-show="settings['nbdesigner_enable_facebook_photo'] == 'yes'">
                         <?php 

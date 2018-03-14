@@ -428,7 +428,7 @@ function nbd_file_get_contents($url){
                 array('verify_peer' => false, 'verify_peer_name' => false)))); 
         }else{
             $result = file_get_contents($url);    
-        }                       
+        }             
     }else{
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSLVERSION, 3); 
@@ -532,6 +532,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_pdf_watermark_text' => get_bloginfo('name'),
         
         'nbdesigner_enable_perfect_scrollbar_js'    =>  'yes',
+        'nbdesigner_enable_perfect_angular_js'    =>  'yes',
         'nbdesigner_enable_perfect_scrollbar_css'    =>  'yes'
     ), $frontend));
     if(!$key) return $nbd_setting;
@@ -651,7 +652,12 @@ function default_frontend_setting(){
         'nbdesigner_download_design_jpg_cmyk' => 0,
         'nbdesigner_download_design_upload_file' => 0,
         'nbdesigner_attach_design_png' => 1,
-        'nbdesigner_attach_design_svg' => 0
+        'nbdesigner_attach_design_svg' => 0,
+        
+        'nbdesigner_pixabay_api_key' => '27347-23fd1708b1c4f768195a5093b',
+        'nbdesigner_unsplash_api_key' => '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8',
+        'nbdesigner_enable_pixabay' => 'yes',
+        'nbdesigner_enable_unsplash' => 'yes'
     );
     return $default;
 }
@@ -970,7 +976,7 @@ function nbd_get_woo_version(){
             return $plugin_folder[$plugin_file]['Version'];
     } else {
             return 0;
-    }        
+    }   
 }
 function is_woo_v3(){
     $woo_ver = nbd_get_woo_version(); 
@@ -1827,4 +1833,48 @@ function nbd_download_google_font( $font_name = ''){
         copy($path_src, $path_dst);
     }    
     return $path_dst;
+}
+function nbd_custom_notices($command, $mes) {
+    switch ($command) {
+        case 'success':
+            if (!isset($mes))
+                $mes = __('Your settings have been saved.', 'web-to-print-online-designer');
+            $notice = '<div class="updated notice notice-success is-dismissible">
+                            <p>' . $mes . '</p>
+                            <button type="button" class="notice-dismiss">
+                                <span class="screen-reader-text">Dismiss this notice.</span>
+                            </button>				  
+                        </div>';
+            break;
+        case 'error':
+            if (!isset($mes))
+                $mes = __('Irks! An error has occurred.', 'web-to-print-online-designer');
+            $notice = '<div class="notice notice-error is-dismissible">
+                            <p>' . $mes . '</p>
+                            <button type="button" class="notice-dismiss">
+                                <span class="screen-reader-text">Dismiss this notice.</span>
+                            </button>				  
+                        </div>';
+            break;
+        case 'notices':
+            if (!isset($mes))
+                $mes = __('Irks! An error has occurred.', 'web-to-print-online-designer');
+            $notice = '<div class="notice notice-warning">
+                            <p>' . $mes . '</p>				  
+                        </div>';
+            break;             
+        case 'warning':
+            if (!isset($mes))
+                $mes = __('Warning.', 'web-to-print-online-designer');
+            $notice = '<div class="notice notice-warning is-dismissible">
+                            <p>' . $mes . '</p>
+                            <button type="button" class="notice-dismiss">
+                                <span class="screen-reader-text">Dismiss this notice.</span>
+                            </button>				  
+                        </div>';
+            break;
+        default:
+            $notice = '';
+    }
+    return $notice;
 }
