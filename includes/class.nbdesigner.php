@@ -81,7 +81,8 @@ class Nbdesigner_Plugin {
             'nbdesigner_update_all_template'  =>  false,
             'nbd_clear_transients'  =>  false,
             'nbd_create_pages'  =>  false,
-            'nbd_get_product_config'  =>  true
+            'nbd_get_product_config'  =>  true,
+            'nbd_delete_order_design'  =>  false
         );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -1795,6 +1796,20 @@ class Nbdesigner_Plugin {
         $has_design = get_post_meta($order_id, '_nbd', true);
         $has_upload = get_post_meta($order_id, '_nbu', true);
         include_once(NBDESIGNER_PLUGIN_DIR . 'views/box-order-metadata.php');
+    }
+    public function nbd_delete_order_design(){
+        check_admin_referer('approve-design-email', 'nonce');
+        $result = array(
+            'flag'  =>  false
+        );
+        $order_id = $_POST['order_id'];
+        $order = wc_get_order( $order_id );
+        foreach( $order->get_items() as $item_id => $item_product ){
+            $result['flag'] = $result['flag'] || wc_delete_order_item_meta($item_id, '_nbd');
+            $result['flag'] = $result['flag'] || wc_delete_order_item_meta($item_id, '_nbu');        
+        }
+        $result['flag'] = $result['flag'] || delete_post_meta($order_id, '_nbd') || delete_post_meta($order_id, '_nbu');
+        wp_send_json($result);
     }
     public function nbdesigner_allow_create_product($id){
         $args = array(

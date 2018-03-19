@@ -88,6 +88,25 @@ jQuery(document).ready(function ($) {
             }
         }, 'json');
     });
+    $('#nbdesigner_delete_order_design').on('click', function(){
+        var _confirm = confirm('Are you sure delete all designs?');
+        if(_confirm){
+            var order_id = jQuery('input[name="nbdesigner_design_email_order_id"]').val(),
+                nonce = jQuery('#_nbdesigner_design_email_nonce').val();
+            var formdata = {
+                action:  'nbd_delete_order_design',
+                nonce:  nonce,
+                order_id:  order_id
+            };
+            $.post(admin_nbds.url, formdata, function(data) {
+                console.log(data);
+                if( data.flag ){
+                    jQuery('#nbdesigner_order_info').html('');
+                    jQuery('#nbdesigner_order_email_info').html('');
+                }
+            });
+        };
+    });
     $('#nbdesigner_uploads_email_submit').on('click', function(e){
         e.preventDefault();
         var formdata = $('#nbdesigner_order_email_info').find('textarea, select, input').serialize();

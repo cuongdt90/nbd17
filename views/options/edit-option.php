@@ -106,6 +106,17 @@
                                         <div class="nbd-section-wrap">
                                             <div class="nbd-field-info">
                                                 <div class="nbd-field-info-1">
+                                                    <label><b><?php _e('Replace default quantity input', 'web-to-print-online-designer'); ?></b></label>
+                                                </div>  
+                                                <div class="nbd-field-info-2">
+                                                    <select name="options[quantity_enable]" ng-model="options.quantity_enable">
+                                                        <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+                                                    </select>
+                                                </div>                                                    
+                                            </div>      
+                                            <div class="nbd-field-info" ng-show="options.quantity_enable == 'y'">
+                                                <div class="nbd-field-info-1">
                                                     <label><b><?php _e('Display type', 'web-to-print-online-designer'); ?></b></label>
                                                 </div>  
                                                 <div class="nbd-field-info-2">
@@ -116,7 +127,7 @@
                                                     </select>
                                                 </div>      
                                             </div>   
-                                            <div class="nbd-field-info" ng-show="options.quantity_type == 'r'">
+                                            <div class="nbd-field-info" ng-show="options.quantity_type == 'r' && options.quantity_enable == 'y'">
                                                 <div class="nbd-field-info-1">
                                                     <p><label><b><?php _e('Step value', 'web-to-print-online-designer'); ?></b><span class="woocommerce-help-tip" data-tip="<?php _e('Enter the step for the handle.', 'web-to-print-online-designer'); ?>" ></span></label></p>                                              
                                                 </div>  
@@ -139,7 +150,7 @@
                                             </div>                                              
                                             <div class="nbd-field-info">
                                                 <div class="nbd-field-info-1">
-                                                    <label><b><?php _e('Discount type base on breaks', 'web-to-print-online-designer'); ?></b></label>
+                                                    <label><b><?php _e('Discount type base on quantity breaks', 'web-to-print-online-designer'); ?></b></label>
                                                 </div>  
                                                 <div class="nbd-field-info-2">
                                                     <select name="options[quantity_discount_type]" ng-model="options.quantity_discount_type">
@@ -150,7 +161,7 @@
                                             </div>                                                                                       
                                             <div class="nbd-field-info">
                                                 <div class="nbd-field-info-1">
-                                                    <label><b><?php _e('Breaks', 'web-to-print-online-designer'); ?></b></label>
+                                                    <label><b><?php _e('Quantity breaks', 'web-to-print-online-designer'); ?></b></label>
                                                 </div>  
                                                 <div class="nbd-field-info-2">
                                                     <div class="nbd-table-wrap" style="overflow: hidden;">
@@ -174,6 +185,94 @@
                                             </div>   
                                         </div>      
                                     </div>
+                                    <div class="section-container">
+                                        <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Sides/Pages', 'web-to-print-online-designer'); ?>" readonly=""></p>
+                                        <div class="nbd-section-wrap">
+                                            <div class="nbd-field-info"> 
+                                                <div class="nbd-field-info-1">
+                                                    <label><b><?php _e('Enabled', 'web-to-print-online-designer'); ?></b> <span class="woocommerce-help-tip" data-tip="<?php _e('Choose whether the option is enabled or not.', 'web-to-print-online-designer'); ?>" ></span></label>
+                                                </div>  
+                                                <div class="nbd-field-info-2">
+                                                    <select name="options[side][enable]" ng-model="options.side.enable">
+                                                        <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+                                                    </select>
+                                                </div>                                                    
+                                            </div>
+                                            <div class="nbd-field-info" ng-show="options.side.enable == 'y'">
+                                                <div class="nbd-field-info-1">
+                                                    <label>
+                                                        <b><?php _e('Price type', 'web-to-print-online-designer'); ?></b>
+                                                        <span class="woocommerce-help-tip" data-tip="<?php _e('1- Fixed amount: This is an flat increase or decrease added to the product price. 2- Percent of the original price: This is a percentage increase or decrease of the initial product price. 3- Percent of the original price + options: This is a percentage increase or decrease of the initial product price plus all of the other options that are not of this type. 4- Current value * price: This will multiply field value by the Price you set.', 'web-to-print-online-designer'); ?>" ></span>
+                                                    </label>
+                                                </div>  
+                                                <div class="nbd-field-info-2">
+                                                    <select name="options[price_type]" ng-model="options.side.price_type">
+                                                        <option value="f"><?php _e('Fixed amount', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="p"><?php _e('Percent of the original price', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="p+"><?php _e('Percent of the original price + options', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="c"><?php _e('Current value * price', 'web-to-print-online-designer'); ?></option>
+                                                    </select>
+                                                </div>      
+                                            </div>
+                                            <div class="nbd-field-info" ng-show="options.side.enable == 'y'"> 
+                                                <div class="nbd-field-info-1">
+                                                    <label><b><?php _e('Depend quantity breaks', 'web-to-print-online-designer'); ?></b></label>
+                                                </div>  
+                                                <div class="nbd-field-info-2">
+                                                    <select name="options[side][depend_quantity]" ng-model="options.side.depend_quantity">
+                                                        <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+                                                    </select>
+                                                </div> 
+                                            </div>                                              
+                                            <div class="nbd-field-info" ng-show="options.side.enable == 'y'"> 
+                                                <div class="nbd-field-info-1">
+                                                    <label><b><?php _e('Dynamic number of sides / pages', 'web-to-print-online-designer'); ?></b></label>
+                                                </div>  
+                                                <div class="nbd-field-info-2">
+                                                    <select name="options[side][dynamic]" ng-model="options.side.dynamic">
+                                                        <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+                                                    </select>
+                                                </div> 
+                                            </div>      
+                                            <div class="nbd-field-info" ng-show="options.side.enable == 'y' && options.side.dynamic == 'n'"> 
+                                                <div class="nbd-field-info-1">
+                                                    <label><b><?php _e('Number of sides / pages', 'web-to-print-online-designer'); ?></b></label>
+                                                </div>  
+                                                <div class="nbd-field-info-2">
+                                                    <div class="nbd-table-wrap" style="overflow: hidden;">
+                                                        <table class="nbd-table">
+                                                            <tr ng-show="options.quantity_breaks.length > 1 && options.side.depend_quantity == 'y'">
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th ng-repeat="break in options.quantity_breaks">{{break.val}}</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th><?php _e('Actions', 'web-to-print-online-designer'); ?></th>
+                                                                <th><?php _e('Side name', 'web-to-print-online-designer'); ?></th>
+                                                                <th ng-repeat="break in options.quantity_breaks" ng-hide="options.side.depend_quantity != 'y' && $index > 0"><?php _e('Price', 'web-to-print-online-designer'); ?></th>
+                                                            </tr>                                                                
+                                                            <tr ng-repeat="op in options.side.options">
+                                                                <td>
+                                                                    <div style="display: flex;">
+                                                                        <a style="margin-right: 3px;" class="button nbd-mini-btn"  title="<?php _e('Delete', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-no-alt"></span></a>
+                                                                    </div>    
+                                                                </td>
+                                                                <td>
+                                                                    <input class="nbd-medium-ip" type="text" ng-model="op.name"/>
+                                                                </td>
+                                                                <td ng-repeat="break in options.quantity_breaks" ng-hide="options.side.depend_quantity != 'y' && $index > 0">
+                                                                    <input class="nbd-short-ip" type="number" ng-model="op.price[$index]"/>
+                                                                </td>                                                                            
+                                                            </tr>
+                                                        </table>
+                                                    </div> 
+                                                </div> 
+                                            </div>                                        
+                                        </div>        
+                                    </div>    
                                     <div class="section-container" ng-repeat="section in options.fields" ng-init="sectionIndex = $index">
                                         <p class="section-title"><input name="options[fields][{{$index}}][title]" ng-model="section.title"/></p>
                                         <div class="nbd-section-wrap">
@@ -195,27 +294,27 @@
                                                     <div class="clear"></div>
                                                 </div>      
                                                 <div class="tab-general nbd-field-content active">
-                                                    <div class="nbd-field-info" ng-class="data.class" ng-repeat="data in field.general">
+                                                    <div class="nbd-field-info" ng-repeat="(key, data) in field.general">
                                                         <div class="nbd-field-info-1" ng-show="check_depend(field.general, data)">
-                                                            <p><label><b>{{data.title}}</b> <span ng-if="data.description != ''" class="woocommerce-help-tip" data-tip="{{data.description}}" ></span></label></p>
-                                                        </div>      
+                                                            <div><label><b>{{data.title}}</b> <span ng-if="data.description != ''" class="woocommerce-help-tip" data-tip="{{data.description}}" ></span></label></div>
+                                                        </div>
                                                         <div class="nbd-field-info-2" ng-show="check_depend(field.general, data)">
                                                             <div ng-if="data.type == 'text' || data.type == 'number'">
-                                                                <input type="{{data.type == 'text' ? 'text' : 'number'}}" name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{data.field}}]" ng-model="data.value" ng-style="data.css">
-                                                            </div>  
+                                                                <input type="{{data.type == 'text' ? 'text' : 'number'}}" name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{key}}]" ng-model="data.value">
+                                                            </div>   
                                                             <div ng-if="data.type == 'textarea'">
-                                                                <textarea name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{data.field}}]" ng-model="data.value" ng-style="data.css"></textarea>
+                                                                <textarea name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{key}}]" ng-model="data.value"></textarea>
                                                             </div>
                                                             <div ng-if="data.type == 'radio'">
-                                                                <p ng-repeat="op in data.options"><label><input type="radio" name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{data.field}}]" ng-model="data.value" ng-value="op.key"> {{op.text}}</label></p>
+                                                                <div ng-repeat="op in data.options"><label><input type="radio" name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{key}}]" ng-model="data.value" ng-value="op.key"> {{op.text}}</label></div>
                                                             </div>     
                                                             <div ng-if="data.type == 'dropdown'">
-                                                                <select name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{data.field}}]" ng-model="data.value">
+                                                                <select name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{key}}]" ng-model="data.value">
                                                                     <option ng-repeat="op in data.options" value="{{op.key}}">{{op.text}}</option>
                                                                 </select>        
                                                             </div>    
                                                             <div ng-if="data.type == 'dropdown_group'">
-                                                                <select name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{data.field}}]" ng-model="data.value">
+                                                                <select name="options[fields][{{sectionIndex}}][fields][{{fieldIndex}}][general][{{key}}]" ng-model="data.value">
                                                                     <optgroup ng-repeat="gr in data.options" label={{gr.title}}>
                                                                         <option ng-repeat="op in gr.value" value="{{op.key}}">{{op.text}}</option>
                                                                     </optgroup>
@@ -238,26 +337,36 @@
                                                             <div ng-if="data.type == 'attributes'">
                                                                 <div class="nbd-table-wrap">
                                                                     <table class="nbd-table">
-                                                                        <tr ng-show="options.quantity_breaks.length > 1">
+                                                                        <tr ng-show="options.quantity_breaks.length > 1 && field.general.depend_quantity.value == 'y'">
+                                                                            <th></th>
                                                                             <th></th>
                                                                             <th ng-repeat="break in options.quantity_breaks">{{break.val}}</th>
                                                                         </tr>
                                                                         <tr>
+                                                                            <th><?php _e('Actions', 'web-to-print-online-designer'); ?></th>
                                                                             <th><?php _e('Atribute name', 'web-to-print-online-designer'); ?></th>
-                                                                            <th ng-repeat="break in options.quantity_breaks"><?php _e('Price', 'web-to-print-online-designer'); ?></th>
+                                                                            <th ng-repeat="break in options.quantity_breaks" ng-hide="field.general.depend_quantity.value != 'y' && $index > 0"><?php _e('Price', 'web-to-print-online-designer'); ?></th>
                                                                         </tr>                                                                        
                                                                         <tr ng-repeat="op in data.options">
                                                                             <td>
-                                                                                <input class="nbd-medium-ip" type="text" ng-model="op.text"/>
+                                                                                <div style="display: flex;">
+                                                                                    <a style="margin-right: 3px;" class="button nbd-mini-btn"  ng-click="remove_attribute(sectionIndex, fieldIndex, key, $index)" title="<?php _e('Delete', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-no-alt"></span></a>
+                                                                                    <a ng-show="!op.selected" class="button nbd-mini-btn" ng-click="seleted_attribute(sectionIndex, fieldIndex, key, $index)" title="<?php _e('Set as selected atribute', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-marker min"></span></a>
+                                                                                    <a ng-show="op.selected" class="button nbd-mini-btn" title="<?php _e('Selected atribute', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-yes"></span></a>
+                                                                                </div>    
                                                                             </td>
-                                                                            <td ng-repeat="break in options.quantity_breaks">
-                                                                                <input class="nbd-short-ip" type="number" ng-model="op.value[$index]"/>
+                                                                            <td>
+                                                                                <input class="nbd-medium-ip" type="text" ng-model="op.name"/>
+                                                                            </td>
+                                                                            <td ng-repeat="break in options.quantity_breaks" ng-hide="field.general.depend_quantity.value != 'y' && $index > 0">
+                                                                                <input class="nbd-short-ip" type="number" ng-model="op.price[$index]"/>
                                                                             </td>                                                                            
                                                                         </tr>
                                                                     </table>
                                                                 </div> 
-                                                            </div>
-                                                        </div>                                                        
+                                                                <div style="margin-top: 3px;"><a class="button" ng-click="add_attribute(sectionIndex, fieldIndex, key)"><span class="dashicons dashicons-plus"></span> <?php _e('Add attribute', 'web-to-print-online-designer'); ?></a></div>
+                                                            </div>                                                           
+                                                        </div>
                                                     </div>    
                                                 </div> 
                                                 <div class="tab-conditional nbd-field-content">  
@@ -330,9 +439,15 @@
                 </span>
             </div>
             <div ng-show="showPreview" class="frontend-prview-content">
-                <div class="preview-wrap">
-                    
-                </div>
+                <div ng-repeat="section in options.fields" ng-init="sectionIndex = $index">
+                    <p>{{section.title}}</p>
+                    <div class="preview-wrap" ng-repeat="field in section.fields" ng-init="fieldIndex = $index">
+                        <div class="nbd-field-title">{{field.general.title.value}} <span ng-if="data.description != ''" class="woocommerce-help-tip" data-tip="{{field.general.description.value}}" ></span></div>
+                        <div class="nbd-field-input" ng-if="field.general.data_type.value == 'n'">
+                            <input type="number" value=""/>
+                        </div>
+                    </div>
+                </div>    
                 <div class="nbd-quantity preview-wrap">
                     <div><b><?php _e('Quantity', 'web-to-print-online-designer'); ?></b></div>
                     <div ng-show="options.quantity_type == 'i'">

@@ -3,6 +3,7 @@
     $count_img_design = 0;
 ?>
 <div id="nbdesigner_order_info">
+    <p><a href="javascript:void(0)" class="button" id="nbdesigner_delete_order_design"><?php _e('Delete order design','web-to-print-online-designer'); ?></a></p>
 	<?php foreach($products AS $order_item_id => $product): ?>
 		<?php 
                     $nbd_item_key = wc_get_order_item_meta($order_item_id, '_nbd');

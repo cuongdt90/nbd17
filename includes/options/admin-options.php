@@ -80,6 +80,25 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'quantity_min' => '',
                 'quantity_max' => '',
                 'quantity_step' => 1,
+                'quantity_enable' => 'y',
+                'side' => array(
+                    'enable'    =>  'n',
+                    'dynamic'    =>  'n',
+                    'price_type'    =>  'f',
+                    'depend_quantity'   =>  'y',
+                    'options' =>  array(
+                        array(
+                            'name'  =>  'Single Sided',
+                            'side'  =>  1,
+                            'price' =>  array()
+                        ),
+                        array(
+                            'name'  =>  'Double Sided',
+                            'side'  =>  2,
+                            'price' =>  array()
+                        )                        
+                    )
+                ),
                 'quantity_breaks' => array(
                     array('val' =>  1, 'dis'    =>  1),
                     array('val' =>  10, 'dis'    =>  2),
@@ -92,30 +111,21 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         'fields'    => array(
                             0   =>  array(
                                 'general' => array(
-                                    array(
+                                    'title' =>  array(
                                         'title' => __( 'Title', 'web-to-print-online-designer'),
-                                        'field' => 'title',
                                         'description'   =>  '',
-                                        'class' => '',
-                                        'css'         => 'background: red',
                                         'value'	=> 'Title',
                                         'type' 		=> 'text'
                                     ),  
-                                    array(
+                                    'description'   =>  array(
                                         'title' => __( 'Description', 'web-to-print-online-designer'),
-                                        'field' => 'description',
-                                        'class' => '',
                                         'description'   =>  '',
-                                        'css'         => '',
                                         'value'	=> 'Description',
                                         'type' 		=> 'textarea'
                                     ),     
-                                    array(
+                                    'data_type'  =>  array(
                                         'title' => __( 'Data type', 'web-to-print-online-designer'),
-                                        'field' => 'type',
-                                        'class' => '',
                                         'description'   =>  '',
-                                        'css'         => '',
                                         'value'	=> 'n',
                                         'type' 		=> 'dropdown_group',
                                         'options' =>    array(
@@ -155,14 +165,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                                             )
                                         )
                                     ),                     
-                                    array(
+                                    'enabled'   =>  array(
                                         'title' => __( 'Enabled', 'web-to-print-online-designer'),
-                                        'field' => 'enabled',
-                                        'class' => '',
                                         'description'   =>  'Choose whether the option is enabled or not.',
-                                        'css'         => '',
                                         'value'	=> 'y',
-                                        'type' 		=> 'radio',
+                                        'type' 		=> 'dropdown',
                                         'options' =>    array(
                                             array(
                                                 'key'   =>  'y',
@@ -174,14 +181,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                                             )
                                         )
                                     ),   
-                                    array(
+                                    'required'  =>  array(
                                         'title' => __( 'Required', 'web-to-print-online-designer'),
-                                        'field' => 'required',
-                                        'class' => '',
-                                        'description'   =>  'Choose whether the option is enabled or not.',
-                                        'css'         => '',
+                                        'description'   =>  __( 'Choose whether the option is enabled or not.', 'web-to-print-online-designer'),
                                         'value'	=> 'n',
-                                        'type' 		=> 'radio',
+                                        'type' 		=> 'dropdown',
                                         'options' =>    array(
                                             array(
                                                 'key'   =>  'y',
@@ -193,13 +197,10 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                                             )
                                         )
                                     ), 
-                                    array(
+                                    'price_type'    =>  array(
                                         'title' => __( 'Price type', 'web-to-print-online-designer'),
-                                        'field' => 'price_type',
-                                        'class' => '',
                                         'description'   =>  '',
-                                        'css'         => '',
-                                        'value'	=> 'd',
+                                        'value'	=> 'f',
                                         'type' 		=> 'dropdown',
                                         'options' =>    array(
                                             array(
@@ -217,79 +218,83 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                                             array(
                                                 'key'   =>  'c',
                                                 'text'   =>  __( 'Current value * price', 'web-to-print-online-designer')
-                                            ), 
-                                            array(
-                                                'key'   =>  'd',
-                                                'text'   =>  __( 'Price depend quantity', 'web-to-print-online-designer')
                                             )
                                         )
-                                    ),                      
-                                    array(
+                                    ),
+                                    'depend_quantity'   =>  array(
+                                        'title' => __( 'Depend quantity breaks', 'web-to-print-online-designer'),
+                                        'description'   =>  '',
+                                        'value'	=> 'y',
+                                        'type' 		=> 'dropdown',
+                                        'options' =>    array(
+                                            array(
+                                                'key'   =>  'y',
+                                                'text'   =>  __( 'Yes', 'web-to-print-online-designer')
+                                            ),
+                                            array(
+                                                'key'   =>  'n',
+                                                'text'   =>  __( 'No', 'web-to-print-online-designer')
+                                            )
+                                        )
+                                    ),                                     
+                                    'price' =>  array(
                                         'title' => __( 'Price', 'web-to-print-online-designer'),
-                                        'field' => 'price',
                                         'description'   =>  'Enter the price for this field or leave it blank for no price.',
-                                        'class' => '',
-                                        'css'         => '',
                                         'value'	=> '',
                                         'depend'    =>  array(
-                                            'field' =>  'price_type',
+                                            'field' =>  'depend_quantity',
                                             'operator' =>  '#',
-                                            'value' =>  'd'
+                                            'value' =>  'y'
                                         ),                                        
                                         'type' 		=> 'number'
                                     ),                                     
-                                    array(
+                                    'sale_price'    =>  array(
                                         'title' => __( 'Sale Price', 'web-to-print-online-designer'),
-                                        'field' => 'sale_price',
                                         'description'   =>  'Enter the sale price for this field or leave it blankto use the default price.',
-                                        'class' => '',
-                                        'css'         => '',
                                         'value'	=> '',
                                         'depend'    =>  array(
-                                            'field' =>  'price_type',
+                                            'field' =>  'depend_quantity',
                                             'operator' =>  '#',
-                                            'value' =>  'd'
+                                            'value' =>  'y'
                                         ),                                           
                                         'type' 		=> 'number'
                                     ),
-                                    array(
+                                    'price_breaks'  =>  array(
                                         'title' => __( 'Price depend quantity breaks', 'web-to-print-online-designer'),
-                                        'field' => 'price_breaks',
                                         'depend'    =>  array(
-                                            'field' =>  'price_type',
+                                            'field' =>  'depend_quantity',
                                             'operator' =>  '=',
-                                            'value' =>  'd'
+                                            'value' =>  'y'
                                         ),
                                         'description'   =>  '',
-                                        'class' => '',
-                                        'css'         => '',
                                         'value'	=> array(10,9,8),
                                         'type' 		=> 'single_quantity_depend'                                        
                                     ),
-                                    array(
+                                    'attributes'    =>  array(
                                         'title' => __( 'Attributes', 'web-to-print-online-designer'),
-                                        'field' => 'attributes',
                                         'description'   =>  'Attributes let you define extra product data, such as size or color.',
-                                        'class' => '',
-                                        'css'         => '',
                                         'value'	=> 'Cutting options',                                       
                                         'type' 		=> 'attributes',
                                         'options' =>    array(
                                             array(
-                                                'text'  => 'No Lamination',
-                                                'value'	=> array(10,9,8),
+                                                'name'  => 'No Lamination',
+                                                'price'	=> array(10,9,8),
+                                                'selected'  =>  0
                                             ),
                                             array(
-                                                'text'  => 'Matt',
-                                                'value' =>  array()
+                                                'name'  => 'Matt',
+                                                'price' =>  array(),
+                                                'selected'  =>  0
                                             ),
                                             array(
-                                                'text'  => 'Gloss',
-                                                'value'	=> array(10,9,8),
+                                                'name'  => 'Gloss',
+                                                'price'	=> array(10,9,8),
+                                                'selected'  =>  1
                                             ),
                                             array(
-                                                'text'  => 'Anti Graffiti',
-                                                'value' =>  array()
+                                                'name'  => 'Anti Graffiti',
+                                                'price' =>  array(),
+                                                'selected'  =>  0
                                             )                                           
                                         )
                                     ),                                     

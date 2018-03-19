@@ -186,7 +186,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
         
     };
     $scope.add_price_break = function(){
-        var last =  $scope.options.quantity_breaks[$scope.options.quantity_breaks.length - 1].val; 
+        var last =  $scope.options.quantity_breaks.length > 0 ? $scope.options.quantity_breaks[$scope.options.quantity_breaks.length - 1].val : 0; 
         $scope.options.quantity_breaks.push({ val: last + 1 });
     };
     $scope.remove_price_break = function( index ){
@@ -209,13 +209,30 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
         if( angular.isUndefined(data.depend) ) return true;
         var check = data.depend.operator == '=' ? false : true;
         angular.forEach(fields, function(field, key){
-            if( field.field == data.depend.field && field.value == data.depend.value ){
+            if( key == data.depend.field && field.value == data.depend.value ){
                 check = data.depend.operator == '=' ? true : false;
             }
         });
         return check;
     };
-    
+    $scope.remove_attribute = function(sectionIndex, fieldIndex, key, $index){
+        $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'].splice($index, 1);
+    };
+    $scope.seleted_attribute = function(sectionIndex, fieldIndex, key, $index){
+        angular.forEach($scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'], function(field, _key){
+            $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'][_key]['selected'] = 0;
+        });
+        $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'][$index]['selected'] = 1;
+    };
+    $scope.add_attribute = function(sectionIndex, fieldIndex, key){
+        $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'].push(
+            {
+                name: '',
+                price: [],
+                selected: 0                
+            }
+        );
+    };
 }).directive('stringToNumber', function() {
     return {
         require: 'ngModel',
