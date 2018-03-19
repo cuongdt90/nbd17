@@ -208,7 +208,7 @@
                                                 </div>  
                                                 <div class="nbd-field-info-2">
                                                     <select name="options[price_type]" ng-model="options.side.price_type">
-                                                        <option value="f"><?php _e('Fixed amount', 'web-to-print-online-designer'); ?></option>
+                                                        <option value="f"><?php _e('Fixed amount ', 'web-to-print-online-designer'); ?></option>
                                                         <option value="p"><?php _e('Percent of the original price', 'web-to-print-online-designer'); ?></option>
                                                         <option value="p+"><?php _e('Percent of the original price + options', 'web-to-print-online-designer'); ?></option>
                                                         <option value="c"><?php _e('Current value * price', 'web-to-print-online-designer'); ?></option>
