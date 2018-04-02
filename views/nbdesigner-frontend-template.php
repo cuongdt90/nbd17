@@ -87,11 +87,12 @@
             $nbd_item_key = (isset($_GET['nbd_item_key']) &&  $_GET['nbd_item_key'] != '') ? $_GET['nbd_item_key'] : '';
             $nbu_item_key = (isset($_GET['nbu_item_key']) &&  $_GET['nbu_item_key'] != '') ? $_GET['nbu_item_key'] : '';
             $cart_item_key = (isset($_GET['cik']) &&  $_GET['cik'] != '') ? $_GET['cik'] : '';
+            $order_id = (isset($_GET['oid']) &&  $_GET['oid'] != '') ? $_GET['oid'] : '';
             $reference = (isset($_GET['reference']) &&  $_GET['reference'] != '') ? $_GET['reference'] : ''; 
             $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
             $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : (($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '');
-            $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);  
-            $_enable_upload_without_design = get_post_meta($product_id, '_nbdesigner_enable_upload_without_design', true);  
+            $_enable_upload = ($task == 'new' && $task2 == 'update' ) ? false : get_post_meta($product_id, '_nbdesigner_enable_upload', true);  
+            $_enable_upload_without_design = ( isset($_GET['task2']) && $_GET['task2'] == 'add_file' ) ? true : get_post_meta($product_id, '_nbdesigner_enable_upload_without_design', true);  
             $enable_upload = $_enable_upload ? 2 : 1;
             $enable_upload_without_design = $_enable_upload_without_design ? 2 : 1;
             $_product = wc_get_product( $product_id );
@@ -142,6 +143,7 @@
                 nbd_item_key    :   "<?php echo $nbd_item_key; ?>",
                 nbu_item_key    :   "<?php echo $nbu_item_key; ?>",
                 cart_item_key    :   "<?php echo $cart_item_key; ?>",
+                order_id    :   "<?php echo $order_id; ?>",
                 home_url    :   "<?php echo $home_url; ?>",
                 icl_home_url    :   "<?php echo $icl_home_url; ?>",
                 is_logged    :   <?php echo nbd_user_logged_in(); ?>,

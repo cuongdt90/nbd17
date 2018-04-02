@@ -1,5 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<div id="dg-bleed-tip"  class="modal fade nbdesigner_modal">
+<div id="dg-bleed-tip" class="modal fade nbdesigner_modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="padding-bottom: 15px;">

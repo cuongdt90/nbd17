@@ -133,7 +133,18 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             'nbdesigner_download_design_upload_file' => __('Upload files - The customer upload files', 'web-to-print-online-designer')
                         ),
                         'css' => 'margin: 0 15px 10px 5px;'
-                    )                   
+                    ),
+                    array(
+                        'title' => __('Force to upload SVG files', 'web-to-print-online-designer'),
+                        'description' => __('Some themes or plugins disable upload SVG files feature. This option force to upload SVG files.', 'web-to-print-online-designer'),
+                        'id' => 'nbd_force_upload_svg',
+                        'default' => 'no',
+                        'type' => 'radio',
+                        'options' => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer'),
+                        )
+                    ),                    
                 ),
                 'admin-notifications' => array(
                     array(
@@ -239,6 +250,14 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'id' 		=> 'nbdesigner_gallery_page_id',
                         'type' 		=> 'select',
                         'default'	=> nbd_get_page_id( 'gallery' ),
+                        'options'        =>  nbd_get_pages()
+                    ),
+                    array(
+                        'title' => __( 'Redirect login', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Choose login page on design tool.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_logged_page_id',
+                        'type' 		=> 'select',
+                        'default'	=> nbd_get_page_id( 'logged' ),
                         'options'        =>  nbd_get_pages()
                     )                     
                 ),

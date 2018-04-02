@@ -1,6 +1,8 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div class="nbd-gallery-con">
     <?php 
+        $limit = $row * $per_row;
+        $current_user_id = get_current_user_id();    
         if( $pid || $cat ):
             if( $cat ){
                 $product_cat = get_term( $cat, 'product_cat' );
@@ -16,7 +18,7 @@
     </div>
     <div class="nbd-list-designs">
         <div class="nbd-design-filter"></div>
-        <div class="nbdesigner-gallery nbd-gallery-processing" id="nbdesigner-gallery">
+        <div class="nbdesigner-gallery nbd-gallery-wrap" id="nbdesigner-gallery">
         <?php 
             if( $pid ):
             $link_start_design = add_query_arg(array('product_id'    =>  $pid),  getUrlPageNBD('create'));
@@ -39,8 +41,15 @@
                 </div>
             </div>    
         <?php endif; ?>
-        <?php include_once('gallery.php'); ?>
-        </div>           
+        <?php include_once('gallery-item.php'); ?>
+        </div> 
+        <div>
+            <div class="nbd-load-more" id="nbd-load-more"></div>
+            <div id="nbd-pagination-wrap" >
+                <?php if($pagination) include_once('pagination.php'); ?> 
+            </div>    
+            <?php include_once('popup-wrap.php'); ?> 
+        </div>        
     </div>  <!-- End. list designs -->    
 </div> 
 <script>

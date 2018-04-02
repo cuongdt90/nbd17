@@ -376,7 +376,39 @@ class NBD_Image {
         } catch( Exception $e ){
             die('Error when creating a thumbnail: ' . $e->getMessage());
         }            
-    }   
+    } 
+    public static function imagick_convert_pdf_to_jpg( $input_file, $ouput_file ){
+        try {          
+            $image = new Imagick();
+            $image->setResolution(72,72);
+            $image->readimage( $input_file.'[0]' );           
+            $image->setImageFormat('jpeg');
+            $image->writeImage( $ouput_file );
+            $image->clear(); 
+            $image->destroy();
+        } catch( Exception $e ){
+            die('Error when creating a thumbnail: ' . $e->getMessage());
+        }        
+    }
+}
+function nbd_alias($value) {
+    $arr = array(
+        'a' => 'à|ả|ã|á|ạ|ă|ằ|ẳ|ẵ|ắ|ặ|â|ầ|ẩ|ẫ|ấ|ậ',
+        'd' => 'đ',
+        'e' => 'è|ẻ|ẽ|é|ẹ|ê|ề|ể|ễ|ế|ệ',
+        'i' => 'ì|ỉ|ĩ|í|ị',
+        'o' => 'ò|ỏ|õ|ó|ọ|ô|ồ|ổ|ỗ|ố|ộ|ơ|ờ|ở|ỡ|ớ|ợ',
+        'u' => 'ù|ủ|ũ|ú|ụ|ư|ừ|ử|ữ|ứ|ự',
+        'y' => 'ỳ|ỷ|ỹ|ý|ỵ',
+    );
+    $newValue = mb_strtolower(trim($value), 'utf-8');
+    foreach ($arr as $key => $val) {
+        $pattern = '#(' . $val . ')#imu';
+        $newValue = preg_replace($pattern, $key, $newValue);
+    }
+    $newValue = preg_replace('#[^0-9a-zA-Z\s\-.]#i', '', $newValue);
+    $newValue = preg_replace('#(\s)+#im', '-', $newValue);
+    return $newValue;
 }
 function is_available_imagick(){
     if(!class_exists("Imagick")) return false;
@@ -500,6 +532,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_notifications_emails' => '',
         'nbdesigner_admin_emails' => '',
         'allow_customer_redesign_after_order' => 'yes',
+        'nbd_force_upload_svg' => 'no',
         'nbdesigner_mindpi_upload' => 0,
         'nbdesigner_hide_button_cart_in_detail_page'    =>  'no',
         'nbdesigner_printful_key' => '',   
@@ -1167,12 +1200,13 @@ function get_nbd_variations( $product_id, $include_price = false ){
     $product = wc_get_product( $product_id );
     $variations = array();
     if( $product->is_type( 'variable' ) ) {
-        $available_variations = $product->get_available_variations();   
+        $available_variations = $product->get_available_variations();  
         foreach ($available_variations as $variation){
             $enable = get_post_meta($variation['variation_id'], '_nbdesigner_variation_enable', true);
             if($enable){
                 if( is_array( $variation['attributes'] ) ){
                     $new_name = '';
+                    $count_empty = 0;
                     foreach ( $variation['attributes'] AS $name => $value ) {
                         //if ( !empty( $value ) ) $new_name .= ucfirst($value).', ';
                         if ( !empty( $value ) ){
@@ -1186,9 +1220,12 @@ function get_nbd_variations( $product_id, $include_price = false ){
                                 }
                             }
                             $new_name .= ucfirst($value).', ';
+                        }else{
+                            $count_empty++;
                         }
                     }                    
                     $new_name = substr($new_name, 0, -2);
+                    if( $count_empty ==  count($variation['attributes']) ) $new_name = __( 'Any option', 'web-to-print-online-designer' );
                 }   
                 $var = array(
                     'id'    =>  $variation['variation_id'],
@@ -1345,7 +1382,7 @@ function nbd_bulk_variations_add_to_cart_message( $count ) {
     endif;
     wc_add_notice( $message );
 }
-function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $option_name = array()){
+function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $option_name = array(), $download = true){
     if(file_exists($archive_file_name)){
         unlink($archive_file_name);
     }        
@@ -1380,29 +1417,31 @@ function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $
             $archive->add($file, PCLZIP_OPT_REMOVE_PATH, $dir, PCLZIP_OPT_ADD_PATH, $path_arr[count($path_arr) - 2]);               
         }            
     }
-    if ( !is_file( $archive_file_name ) ){
-        header($_SERVER['SERVER_PROTOCOL'].' 404 Not Found');
-        exit;
-    } elseif ( !is_readable( $archive_file_name ) ){
-        header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
-        exit;
-    } else {
-        header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Accept-Ranges: bytes");
-        header("Connection: keep-alive");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Cache-Control: public");
-        header("Content-type: application/zip");
-        header("Content-Description: File Transfer");
-        header("Content-Disposition: attachment; filename=\"".$nameZip."\"");
-        header('Content-Length: '.filesize($archive_file_name));
-        header("Content-Transfer-Encoding: binary");
-        ob_clean();
-        @readfile($archive_file_name);
-        exit;    
-    }      
+    if($download){
+        if ( !is_file( $archive_file_name ) ){
+            header($_SERVER['SERVER_PROTOCOL'].' 404 Not Found');
+            exit;
+        } elseif ( !is_readable( $archive_file_name ) ){
+            header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
+            exit;
+        } else {
+            header($_SERVER['SERVER_PROTOCOL'].' 200 OK');
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Accept-Ranges: bytes");
+            header("Connection: keep-alive");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: public");
+            header("Content-type: application/zip");
+            header("Content-Description: File Transfer");
+            header("Content-Disposition: attachment; filename=\"".$nameZip."\"");
+            header('Content-Length: '.filesize($archive_file_name));
+            header("Content-Transfer-Encoding: binary");
+            ob_clean();
+            @readfile($archive_file_name);
+            exit;    
+        }    
+    }
 }
 function nbd_convert_svg_embed( $path ){
     $svgs = Nbdesigner_IO::get_list_svgs($path, 1);
@@ -1560,7 +1599,7 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(false);       
         $pdf->SetAutoPageBreak(TRUE, 0);  
-        $pdf->SetFont('roboto', '', 14, '', false);
+        //$pdf->SetFont('roboto', '', 14, '', false);
         
         foreach($pdfs as $key => $_pdf){         
             $customer_design = $_pdf['customer-design'];    
@@ -1586,7 +1625,7 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
                 $pdf->setPrintHeader(false);
                 $pdf->setPrintFooter(false);       
                 $pdf->SetAutoPageBreak(TRUE, 0); 
-                $pdf->SetFont('roboto', '', 14, '', false);
+                //$pdf->SetFont('roboto', '', 14, '', false);
             }             
             $pdf->AddPage();             
             if($bg_type == 'image' && $path_bg){

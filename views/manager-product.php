@@ -8,6 +8,7 @@
 </div>
 <?php add_thickbox(); ?>
 <div class="wrap postbox nbdesigner-manager-product">
+    <?php if( count($pro) ): ?>
     <div>
 	<?php 
             global $wpdb;
@@ -87,7 +88,10 @@
             <span class="displaying-num"><?php echo $number_pro.' '. __('Products', 'web-to-print-online-designer'); ?></span>
             <?php echo $paging->html();  ?>
         </div>
-    </div>    
+    </div>
+    <?php else: ?>
+    <?php echo sprintf(__('No product, <a href="%s" target="_blank">view user guide</a>', 'web-to-print-online-designer'), 'http://document.netbaseteam.com/guide/wp-online-design/'); ?>
+    <?php endif; ?>
 </div>
 <script>
     changeLink = function(e){

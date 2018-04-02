@@ -111,4 +111,10 @@ class NBD_Update_Data{
         }
         return $designer_setting;  
     }
+    public static function create_missing_pages(){
+        
+    }
+    public static function create_missing_tables(){
+        
+    }
 }

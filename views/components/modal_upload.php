@@ -142,9 +142,9 @@
                             <p>{{(langs['MES_INSTAGRAM']) ? langs['MES_INSTAGRAM'] : "Please fill Instagram app ID"}}</p>
                         <?php  else:  ?>
                         <p>
-                            <button class="btn btn-primary shadow nbdesigner_upload" id="instagram_login">
+                            <button class="btn btn-primary shadow nbdesigner_upload" id="instagram_login" ng-click="authenticateInstagram()">
                                 <i class="fa fa-instagram" aria-hidden="true"></i>
-                                <span ng-click="authenticateInstagram()">Login</span>
+                                <span>Login</span>
                             </button>
                             <button class="btn btn-primary shadow nbdesigner_upload" ng-show="instaAccessToken != ''" id="instagram_logout">
                                 <i class="fa fa-power-off" aria-hidden="true"></i>
@@ -160,7 +160,7 @@
                             if($dbID == ''): ?>
                             <p>{{(langs['MES_DROPBOX']) ? langs['MES_DROPBOX'] : "Please fill Dropbox app ID"}}</p>
                         <?php  else:  ?>
-                            <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="2eny7knxczzy98x"></script>
+                            <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="<?php echo $dbID; ?>"></script>
                             <script>
                                 var options = {
                                     success: function(files) {

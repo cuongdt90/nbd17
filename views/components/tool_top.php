@@ -31,3 +31,32 @@
     </ul>
 </div>
 <p ng-hide="settings.enable_upload == '1' || settings.is_mobile == '1' || settings.task == 'edit' || settings.task == 'create'" class="toggle-upload shadow"  ng-click="changeDesignMode('upload')"><i class="fa fa-cloud-upload" aria-hidden="true"></i> {{(langs['UPLOAD_DESIGN']) ? langs['UPLOAD_DESIGN'] : "Upload design"}}</p>
+<!-- Side nav 2 -->
+<div class="preview-thumbnail-wrap" ng-show="state == 'dev'">
+    <span class="fa fa-chevron-up thumbnail-nav" ng-click="previousOrientation(currentSide.id)" ng-class="currentSide.id > 0 ? 'ready' : '' " title="Previous"></span>
+    <div class="preview-thumbnail-item" ng-hide="currentSide.id > $index || $index > (currentSide.id + 1)" ng-class="{active: currentVariant.orientationActive == orientation.name}" ng-repeat="orientation in currentVariant.info" ng-click="changeOrientation(orientation)" ng-click="changeOrientation(orientation)">
+        <div class="preview-thumbnail-inner" ng-style="{
+            'width': orientation.source['img_src_width'] / 5 + 'px',
+            'height': orientation.source['img_src_height'] / 5 + 'px',
+            'top':  orientation.source['img_src_top'] / 5 + 'px',
+            'left':  orientation.source['img_src_left'] / 5 + 'px'
+        }">
+            <img ng-show="orientation.source['bg_type'] == 'image'" ng-src="{{orientation.source['img_src']}}" />
+            <span ng-show="orientation.source['bg_type'] == 'color'" ng-style="{'background': orientation.source['bg_color_value']}"></span>
+            <span ng-show="orientation.source['bg_type'] == 'tran'" class="background-transparent"></span>
+        </div>
+        <div class="preview-thumbnail-inner" ng-show='existDesign(orientation)' ng-style="{
+            'width': orientation.source['area_design_width'] / 5 + 'px',
+            'height': orientation.source['area_design_height'] / 5 + 'px',
+            'top':  orientation.source['area_design_top'] / 5 + 'px',
+            'left':  orientation.source['area_design_left'] / 5 + 'px'        
+        }">
+            <img ng-src="{{dataCustomerDesign[orientation.name]}}" />
+        </div>
+    </div>
+    <span class="fa fa-chevron-down thumbnail-nav next" ng-click="nextOrientation(currentSide.id)" ng-class="currentSide.id < (currentVariant.numberFrame - 1 ) ? 'ready' : '' " title="Next"></span>
+</div>
+<div class="printing-line" ng-show="state == 'dev' && (currentVariant.info[currentSide.id].source.show_bleed == 1 || currentVariant.info[currentSide.id].source.show_safe_zone == 1)">
+    <div><span class='nbd-bleed-notation'></span> <b>{{(langs['TRIM_LINE']) ? langs['TRIM_LINE'] : "Trim line"}}</b></div>
+    <div><span class='nbd-safe-zone-notation-box'></span> <b>{{(langs['SAFE_ZONE']) ? langs['SAFE_ZONE'] : "Trim Safe zone"}}</b></div>
+</div>

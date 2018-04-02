@@ -305,18 +305,27 @@ get_header(); ?>
         </span>        
     <?php 
         $row = apply_filters('nbd_artist_designs_row', 5);
-        $per_row = intval( apply_filters('nbd_artist_designs_per_row', 6) );
+        $per_row = intval( apply_filters('nbd_artist_designs_per_row', 4) );
         $des = '';
         $pagination = true;
         $url = add_query_arg(array('id' => $user_id), getUrlPageNBD('designer'));
         $page = (get_query_var('paged')) ? get_query_var('paged') : 1; 
         $templates = My_Design_Endpoint::nbdesigner_get_templates_by_page($page, $row, $per_row, false, false, $user_id);
         $favourite_templates = My_Design_Endpoint::get_favourite_templates();
-        $total = My_Design_Endpoint::count_total_template( false, $user_id );        
+        $total = My_Design_Endpoint::count_total_template( false, $user_id );     
+        $limit = $row * $per_row;
+        $current_user_id = get_current_user_id();           
     ?>
-    <div class="nbd-gallery-processing" id="nbdesigner-gallery">
-        <?php include_once('gallery.php'); ?>
-    </div>  
+        <div id="nbdesigner-gallery">
+            <?php include_once('gallery-item.php'); ?>
+        </div> 
+        <div>
+            <div class="nbd-load-more" id="nbd-load-more"></div>
+            <div id="nbd-pagination-wrap" >
+                <?php if($pagination) include_once('pagination.php'); ?> 
+            </div>  
+            <?php include_once('popup-wrap.php'); ?> 
+        </div>
     </div>    
 <?php endif; ?>   
 <script>

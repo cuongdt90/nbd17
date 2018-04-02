@@ -4062,7 +4062,75 @@ img.pattern_img {
     display: none;
     margin-top: 10px;
 }
+.preview-thumbnail-wrap {
+    position: fixed;
+    width: 100px;
+    right: 65px;
+    bottom: 100px;
+    cursor: pointer;
+    max-height: 210px;
+}
+.preview-thumbnail-item {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    position: relative; 
+    box-sizing: content-box;
+}
+.preview-thumbnail-item.active {
+    border: 1px solid #394264;
+}
+.preview-thumbnail-inner {
+    position: absolute;
+}
+.preview-thumbnail-item span {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+.preview-thumbnail-item img {
+    width: 100%;
+    height: 100%; 
+}
+.thumbnail-nav {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    margin-left: -15px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border-radius: 100%;
+    background: #fff;
+    line-height: 30px;
+    cursor: pointer;
+    z-index: 2;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);    
+    opacity: 0;
+    pointer-events: none;    
+}
+.thumbnail-nav.ready {
+    opacity: 1;
+    pointer-events: all;    
+}
+.thumbnail-nav.next {
+    bottom: -15px;
+    top: unset;
+}
+.printing-line {
+    position: fixed;
+    top: 50px;
+    right: 65px;
+    z-index: 98;
+    background: #fff;
+    padding: 15px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.05), 0 2px 10px 0 rgba(0, 0, 0, 0.05); 
+}
 @media (max-width: 767px) {
+    .preview-thumbnail-wrap, .printing-line {
+        display: none;
+    }
     #upload-tabs li {
         display: inline-block;
         margin-bottom: 3px;

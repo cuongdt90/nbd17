@@ -49,7 +49,15 @@ if(!class_exists('Nbdesigner_Helper')){
                     '<p>'.__('Click <b>Create credentials > API key</b>. Next, look for your API key in the <b>API keys</b> section.', 'web-to-print-online-designer') . '</p>'.
                     '<p><b>'.__('To get Client ID', 'web-to-print-online-designer').'</b></p>'.
                     '<p>'.__('Click <b>Create credentials > OAuth client ID</b>. After you have created the credentials, you can see your client ID on the <b>Credentials</b> page.', 'web-to-print-online-designer') . '</p>'                
-            ));            
+            ));  
+            $screen->add_help_tab( array(
+                'id'		=> 'setup_wizard',
+                'title'		=> __('Setup wizard', 'web-to-print-online-designer'),
+                'content'	=>
+                    '<h2>' . __('Setup wizard', 'web-to-print-online-designer') . '</h2>' .
+                    '<p>'.__('If you need to access the setup wizard again, please click on the button below.', 'web-to-print-online-designer') . '</p>'.
+                    '<p>'. sprintf(__('<a class="button-primary" href="%s">Setup wizard</a>', 'web-to-print-online-designer'), admin_url( 'index.php?page=nbd-setup' )) . '</p>'                
+            ));
             $screen->set_help_sidebar(
                 '<p><strong>' . __('For more information', 'web-to-print-online-designer') . ':</strong></p>' .
                 '<p>' . __('<a class="button" href="https://cmsmart.net/support_ticket" target="_blank">Support ticket</a>') . '</p>' .

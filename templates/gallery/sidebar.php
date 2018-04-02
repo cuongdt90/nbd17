@@ -37,6 +37,22 @@
         </div>   
     </div>
 </div>
+<div class="nbd-designers nbd-sidebar-con">
+    <p class="nbd-sidebar-h3"><?php _e('Wishlist', 'web-to-print-online-designer'); ?></p>
+    <div class="nbd-sidebar-con-inner wishlist">
+        <?php foreach( $fts as $t ): ?>
+        <div class="wishlist-tem-wrap" data-id="<?php echo $t['id']; ?>">
+            <div class="left" onclick="previewTempalte(event, <?php echo $t['id']; ?>)">
+                <img src="<?php echo $t['img']; ?>" class="nbdesigner-img"/>
+            </div>
+            <div class="right">
+                <div><?php _e('Template for', 'web-to-print-online-designer'); ?></div>
+                <div><?php echo $t['title']; ?></div>
+            </div>
+        </div>    
+        <?php endforeach; ?>
+    </div>    
+</div>
 <script>
     var showAllProduct = function(e){
         jQuery(e).hide();

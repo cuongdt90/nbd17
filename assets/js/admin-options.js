@@ -207,32 +207,71 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
     };
     $scope.check_depend = function( fields, data ){
         if( angular.isUndefined(data.depend) ) return true;
-        var check = data.depend.operator == '=' ? false : true;
-        angular.forEach(fields, function(field, key){
-            if( key == data.depend.field && field.value == data.depend.value ){
-                check = data.depend.operator == '=' ? true : false;
-            }
+        var check = [], total_check = true;
+        angular.forEach(data.depend, function(f, _key){
+            check[_key] = f.operator == '=' ? false : true;
+            angular.forEach(fields, function(field, key){
+                if( key == f.field && field.value == f.value ){
+                    check[_key] = f.operator == '=' ? true : false;
+                }
+            });
         });
-        return check;
-    };
-    $scope.remove_attribute = function(sectionIndex, fieldIndex, key, $index){
-        $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'].splice($index, 1);
-    };
-    $scope.seleted_attribute = function(sectionIndex, fieldIndex, key, $index){
-        angular.forEach($scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'], function(field, _key){
-            $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'][_key]['selected'] = 0;
+        angular.forEach(check, function(c, k){
+            total_check = total_check && c;
         });
-        $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'][$index]['selected'] = 1;
+        return total_check;
     };
-    $scope.add_attribute = function(sectionIndex, fieldIndex, key){
-        $scope.options['fields'][sectionIndex]['fields'][fieldIndex]['general'][key]['options'].push(
+    $scope.remove_attribute = function(fieldIndex, key, $index){
+        $scope.options['fields'][fieldIndex]['general'][key]['options'].splice($index, 1);
+    };
+    $scope.seleted_attribute = function(fieldIndex, key, $index){
+        angular.forEach($scope.options['fields'][fieldIndex]['general'][key]['options'], function(field, _key){
+            $scope.options['fields'][fieldIndex]['general'][key]['options'][_key]['selected'] = 0;
+        });
+        $scope.options['fields'][fieldIndex]['general'][key]['options'][$index]['selected'] = 1;
+    };
+    $scope.add_attribute = function(fieldIndex, key){
+        $scope.options['fields'][fieldIndex]['general'][key]['options'].push(
             {
                 name: '',
                 price: [],
-                selected: 0                
+                selected: 0,
+                preview_type:  'i',
+                image:  0,
+                image_url:  '',
+                color:  '#ffffff'                
             }
         );
     };
+    $scope.set_attribute_image = function(fieldIndex, $index){
+        var file_frame;
+        if ( file_frame ) {
+            file_frame.open();
+            return;
+        };
+        file_frame = wp.media.frames.file_frame = wp.media({
+            title: 'Choose Image',
+            button: {
+                text: 'Choose Image'
+            },
+            library: {
+                    type: [ 'image' ]
+            },
+            multiple: false
+        });
+        file_frame.on( 'select', function() {
+            var attachment = file_frame.state().get('selection').first().toJSON();
+            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image = attachment.id;
+            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = attachment.url;
+            if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply();
+        });
+        file_frame.open(); 
+    };
+    $scope.remove_attribute_image= function(fieldIndex, $index){
+        $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image = 0;
+        $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = '';
+    }; 
+    $scope.init();
 }).directive('stringToNumber', function() {
     return {
         require: 'ngModel',
@@ -245,6 +284,23 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
             });
         }
     };
+}).directive( 'nbdColorPicker', function() {
+    return {
+        restrict: 'A',
+        link: function( scope, element ) {
+            jQuery(element).wpColorPicker({
+                change: function (evt, ui) {
+                    var $input = jQuery(this);
+                    setTimeout(function () {
+                        if ($input.wpColorPicker('color') !== $input.data('tempcolor')) {
+                            $input.change().data('tempcolor', $input.wpColorPicker('color'));
+                            $input.val($input.wpColorPicker('color'));
+                        }
+                    }, 10);
+                }
+            });
+        }
+    }
 });
 jQuery( document ).ready(function($){
     $('.nbd-field-tab').on('click', function(){

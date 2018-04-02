@@ -1,84 +1,4 @@
-<?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
-<?php 
-$limit = $row * $per_row;
-$k = 0;
-$current_user_id = get_current_user_id();
-if(count($templates)):  ?>
-<?php
-    foreach ($templates as $key => $temp): 
-    $link_template = add_query_arg(array(
-        'product_id' => $temp['product_id'],
-        'variation_id' => $temp['variation_id'],
-        'reference'  =>  $temp['folder']
-    ), getUrlPageNBD('create'));       
-    $gallery_type = 1;
-?>
-    <div class="nbdesigner-item" <?php echo 'data-index='.$key; ?>>
-        <div class="nbd-gallery-item">
-            <div class="nbd-gallery-item-inner">
-                <a href="<?php echo $link_template; ?>" onclick="previewTempalte(event, <?php echo $temp['tid']; ?>)">
-                    <img src="<?php echo $temp['image']; ?>" class="nbdesigner-img"/>
-                </a>
-            </div>
-            <div class="nbd-gallery-item-acction">
-                <span class="nbd-gallery-item-name"><?php echo $temp['title']; ?></span>
-                <div class="nbd-like-icons">
-                    <span class="nbd-like-icon like <?php if(in_array($temp['tid'], $favourite_templates)) echo 'active'; ?>" onclick="updateFavouriteTemplate(this, 'unlike', <?php echo $temp['tid']; ?>)">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                            <title>Vote</title>
-                            <path fill="#db133b" d="M17.19 4.155c-1.672-1.534-4.383-1.534-6.055 0l-1.135 1.042-1.136-1.042c-1.672-1.534-4.382-1.534-6.054 0-1.881 1.727-1.881 4.52 0 6.246l7.19 6.599 7.19-6.599c1.88-1.726 1.88-4.52 0-6.246z"></path>
-                        </svg>                        
-                    </span>
-                    <span class="nbd-like-icon unlike <?php if(!in_array($temp['tid'], $favourite_templates)) echo 'active'; ?>" onclick="updateFavouriteTemplate(this, 'like', <?php echo $temp['tid']; ?>)">
-                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                            <title>Voted</title>
-                            <path fill="#db133b" d="M17.19 4.156c-1.672-1.535-4.383-1.535-6.055 0l-1.135 1.041-1.136-1.041c-1.672-1.535-4.382-1.535-6.054 0-1.881 1.726-1.881 4.519 0 6.245l7.19 6.599 7.19-6.599c1.88-1.726 1.88-4.52 0-6.245zM16.124 9.375l-6.124 5.715-6.125-5.715c-0.617-0.567-0.856-1.307-0.856-2.094s0.138-1.433 0.756-1.999c0.545-0.501 1.278-0.777 2.063-0.777s1.517 0.476 2.062 0.978l2.1 1.825 2.099-1.826c0.546-0.502 1.278-0.978 2.063-0.978s1.518 0.276 2.063 0.777c0.618 0.566 0.755 1.212 0.755 1.999s-0.238 1.528-0.856 2.095z"></path>
-                        </svg>                       
-                    </span>
-                    <span class="nbd-like-icon loading">
-                        <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>" />
-                    </span>
-                </div>
-            </div>
-            <?php 
-                if( $temp['user_id'] == $current_user_id ): 
-                $link_edit_design = add_query_arg(array('id' => $temp['user_id'], 'template_id' => $temp['tid']), getUrlPageNBD('designer'));
-            ?>
-            <a class="nbd-edit-template" href="<?php echo $link_edit_design; ?>" title="<?php _e('Edit template', 'web-to-print-online-designer'); ?>">
-                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="12" height="14" viewBox="0 0 12 14">
-                    <title>Edit template</title>
-                    <path fill="#757575" d="M2.836 12l0.711-0.711-1.836-1.836-0.711 0.711v0.836h1v1h0.836zM6.922 4.75c0-0.102-0.070-0.172-0.172-0.172-0.047 0-0.094 0.016-0.133 0.055l-4.234 4.234c-0.039 0.039-0.055 0.086-0.055 0.133 0 0.102 0.070 0.172 0.172 0.172 0.047 0 0.094-0.016 0.133-0.055l4.234-4.234c0.039-0.039 0.055-0.086 0.055-0.133zM6.5 3.25l3.25 3.25-6.5 6.5h-3.25v-3.25zM11.836 4c0 0.266-0.109 0.523-0.289 0.703l-1.297 1.297-3.25-3.25 1.297-1.289c0.18-0.187 0.438-0.297 0.703-0.297s0.523 0.109 0.711 0.297l1.836 1.828c0.18 0.187 0.289 0.445 0.289 0.711z"></path>
-                </svg>            
-            </a>    
-            <?php endif; ?>
-        </div>
-    </div>
-    <?php 
-    $k ++;
-    endforeach; ?> 
-<?php else: ?>    
-    <?php _e('No template', 'web-to-print-online-designer'); ?>
-<?php endif; ?>
-<?php if(($total > $limit) && $pagination): ?>
-<?php  
-    require_once NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.pagination.php';
-    $paging = new Nbdesigner_Pagination();
-    $config = array(
-        'current_page'  => isset($page) ? $page : 1, 
-        'total_record'  => $total,
-        'limit'         => $limit,
-        'link_full'     => add_query_arg(array('paged' => '{p}'), $url),
-        'link_first'    => $url              
-    );	
-    $paging->init($config); 
-?>
-    <div class="tablenav top nbdesigner-pagination-con">
-        <div class="tablenav-pages">
-            <span class="displaying-num"><?php printf( _n( '%s Template', '%s Templates', $total, 'web-to-print-online-designer'), number_format_i18n( $total ) ); ?>
-            <?php echo $paging->html();  ?>
-        </div>
-    </div>  
-<?php endif; ?>  
+<?php if (!defined('ABSPATH')) exit; ?>
 <div class="nbd-backdrop nbd-popup hide" id="nbd-popup">
     <div class="nbd-popup-content-wrap">
         <span class="nbd-popup-close" onclick="NBDPopup.hidePopup()">
@@ -107,6 +27,15 @@ if(count($templates)):  ?>
 <script>
     var art_id = "<?php echo $current_user_id; ?>";
     var nonce = "<?php echo wp_create_nonce('nbd_update_favourite_template') ?>"; 
+    var nbd_page = {
+        url: "<?php echo $url; ?>",
+        current_page: parseInt(<?php echo isset($page) ? $page : 1; ?>),
+        row: parseInt(<?php echo $row; ?>),
+        per_row: parseInt(<?php echo $per_row; ?>),
+        total: parseInt(<?php echo $total; ?>),
+        limit: parseInt(<?php echo $limit; ?>),
+        last_page: parseInt(<?php echo ceil($total/$limit); ?>)
+    };    
     var updateFavouriteTemplate = function(e, type, template_id){
         var self = jQuery(e),
         parent = self.parent('.nbd-like-icons'),
@@ -128,8 +57,39 @@ if(count($templates)):  ?>
         jQuery.post(woocommerce_params.ajax_url , _data, function(data){
             localStorage.setItem("nbd_favourite_templates", JSON.stringify(data.templates));
             parent.find('.nbd-like-icon.loading').removeClass('active');
-            parent.find('.nbd-like-icon.'+type).addClass('active');    
+            parent.find('.nbd-like-icon.'+type).addClass('active');
+            if( type == 'like' ){
+                updateWishlistSidebar( self, template_id );
+            }else{
+                jQuery.each(jQuery('.wishlist-tem-wrap'), function(){
+                    if( jQuery(this).attr('data-id') == template_id ){
+                        jQuery(this).addClass('unwish');
+                    }
+                });
+            }
         });
+    };
+    var updateWishlistSidebar = function(e, temp_id){
+        var parent = e.parents('.nbdesigner-item');
+        var exist = false;
+        jQuery.each(jQuery('.wishlist-tem-wrap'), function(){
+            if( jQuery(this).attr('data-id') == temp_id ){
+                jQuery(this).removeClass('unwish');
+                exist = true;
+            }
+        });
+        if( !exist ){
+            var wish_html  = '<div class="wishlist-tem-wrap" data-id="'+parent.attr('data-id')+'">';
+                wish_html +=    '<div class="left" onclick="previewTempalte(event, '+parent.attr('data-id')+')">';
+                wish_html +=        '<img src="'+parent.attr('data-img')+'" class="nbdesigner-img"/>';
+                wish_html +=    '</div>';
+                wish_html +=        '<div class="right">';
+                wish_html +=        '<div>Template for</div>';
+                wish_html +=        '<div>'+parent.attr('data-title')+'</div>';
+                wish_html +=    '</div>';
+                wish_html += '</div>';
+            jQuery('.nbd-sidebar-con-inner.wishlist').prepend(wish_html);
+        }
     };
     var nbd_preview_html = [];
     var previewTempalte = function(e, tid){
@@ -213,21 +173,7 @@ if(count($templates)):  ?>
     jQuery( document ).ready(function(){
         var templates = '<?php echo json_encode($favourite_templates); ?>';
         localStorage.setItem("nbd_favourite_templates", templates);  
-        var xl = is_nbd_gallery == 1 ? 3 : 4;
-        setTimeout(function(){ 
-            jQuery('#nbdesigner-gallery').drystone({
-                gutter: 15,
-                item: '.nbdesigner-item',
-                xs: [576, 1],
-                sm: [768, 2],
-                md: [992, 2],
-                lg: [1200, 3],
-                xl: xl,
-                onComplete: function() {
-                    jQuery('#nbdesigner-gallery').removeClass('nbd-gallery-processing');
-                }
-            });
-        }, 10);
+        renderNBDGallery( true );
         NBDPopup.calcWidth();
     }); 
     jQuery("body").click(function(e) {
@@ -235,9 +181,60 @@ if(count($templates)):  ?>
             NBDPopup.hidePopup();
         }
     });
+    jQuery(document).bind('keydown', function(e) {
+        if( e.which == 27 ){
+            NBDPopup.hidePopup();
+        }
+    });
     jQuery(window).on('resize', function () {
         NBDPopup.calcWidth();
+    });
+    var isNBDLoading = false;
+    jQuery(window).on('scroll', function () {
+        !isNBDLoading && (nbd_page.current_page < nbd_page.last_page) && isScrolledIntoView('#nbd-pagination') && loadMoreGallery( nbd_page );
     });  
+    var renderNBDGallery = function( init ){
+        imagesLoaded( jQuery('#nbdesigner-gallery'), function() {
+            if( !init ) jQuery('#nbdesigner-gallery').masonry('destroy');
+            jQuery('#nbdesigner-gallery').masonry({
+                itemSelector: '.nbdesigner-item'
+            });
+            jQuery.each(jQuery('#nbdesigner-gallery .nbdesigner-item'), function(e) {
+                jQuery(this).addClass("in-view");
+            });
+        });        
+    };
+    var loadMoreGallery = function( nbd_page ){
+        jQuery('#nbd-load-more').show();
+        isNBDLoading = true;
+        nbd_page.current_page++;
+        jQuery('#nbd-pagination').addClass('nbdesigner-disable');
+        jQuery.ajax({
+            url: nbds_frontend.url,
+            method: "POST",
+            data: {
+                action: 'nbd_get_next_gallery_page',
+                url: nbd_page.url,
+                page: nbd_page.current_page,
+                row: nbd_page.row,
+                per_row: nbd_page.per_row,
+                total: nbd_page.total,
+                limit: nbd_page.limit,
+                nonce: nonce
+            }
+        }).done(function(data){
+            jQuery('#nbd-pagination').removeClass('nbdesigner-disable');
+            var new_url = addParameter(nbd_page.url, 'paged', nbd_page.current_page, false);
+            history.pushState(null, null, new_url );
+            isNBDLoading = false;
+            if( data.flag ){
+                jQuery('#nbdesigner-gallery').append(data.items);
+                jQuery('#nbd-pagination-wrap').html('').html(data.pagination);
+                renderNBDGallery( false );
+            }
+            jQuery('#nbd-load-more').hide();
+        }); 
+    };
     var NBDPopup = {
         initPopup: function(){
             jQuery('.nbd-popup').addClass('active');
@@ -272,5 +269,12 @@ if(count($templates)):  ?>
                 jQuery('.nbd-popup').addClass('hide');
             }, 500);
         }
-    };    
+    }; 
+    var isScrolledIntoView = function(elem){
+        var docViewTop = jQuery(window).scrollTop();
+        var docViewBottom = docViewTop + jQuery(window).height();
+        var elemTop = jQuery(elem).offset().top;
+        var elemBottom = elemTop + jQuery(elem).height();
+        return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+    };
 </script>

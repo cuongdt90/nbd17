@@ -73,7 +73,8 @@ class My_Design_Endpoint {
                 'nbd_delete_my_design' => true,
                 'nbd_add_design_to_cart' => true,
                 'nbd_get_list_product_ready_to_create_template' => true,
-                'nbd_get_preview_product_before_create_template' => true
+                'nbd_get_preview_product_before_create_template' => true,
+                'nbd_get_next_gallery_page' => true
             );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -461,33 +462,78 @@ class My_Design_Endpoint {
             return;
         }        
         $page = (get_query_var('paged')) ? get_query_var('paged') : 1; 
-        $per_row = intval( apply_filters('nbd_gallery_designs_per_row', 5) );
+        $per_row = intval( apply_filters('nbd_gallery_designs_per_row', 3) );
         $row = apply_filters('nbd_gallery_designs_row', 5);
         $favourite_templates = $this->get_favourite_templates();
         $cat = (isset($_GET['cat']) && absint($_GET['cat'])) ? absint($_GET['cat']) : 0; 
         $pid = (isset($_GET['pid']) && absint($_GET['pid'])) ? absint($_GET['pid']) : 0; 
+        $url = getUrlPageNBD('gallery');
+        if($pid) $url = add_query_arg(array('pid' => $pid), $url);
+        if($cat) $url = add_query_arg(array('cat' => $cat), $url);
         $atts = shortcode_atts(array(
             'row' => $row,
             'per_row' => $per_row,
             'pagination' => 'true',
-            'url'   =>  '',
+            'url'   =>  $url,
             'des' => 'Gallery design templates',
             'page' => $page,
             'cat' => $cat,
             'pid' => $pid,
             'favourite_templates'   =>  $favourite_templates,
+            'fts'   =>  $this->get_detail_favourite_templates(),
             'templates' => array(),
             'products'  =>  nbd_get_products_has_design(),
             'categories'    =>  $this->get_categories_has_design(),
             'designers'    =>  $this->get_designers(),
             'total' => $this->count_total_template(false, false, $cat)
         ), $atts);
-        if( $atts['per_row'] > 6 ) $atts['per_row'] = 6;        
+        if( $atts['per_row'] > 6 ) $atts['per_row'] = 6;
         $atts['templates'] = $this->nbdesigner_get_templates_by_page($page, absint($atts['row']), absint($atts['per_row']), $pid, false, false, $cat);
         ob_start();
         nbdesigner_get_template('gallery/main.php', $atts);
         return ob_get_clean();  
     }  
+    public function nbd_get_next_gallery_page(){
+        if (!wp_verify_nonce($_POST['nonce'], 'nbd_update_favourite_template')) {
+            die('Security error');
+        }  
+        $result['flag'] = 0;
+        $page = $_POST['page'];
+        $row = $_POST['row'];
+        $total = $_POST['total'];
+        $limit = $_POST['limit'];
+        $per_row = $_POST['per_row'];
+        $url = $_POST['url'];
+        $parts = parse_url($_POST['url']);
+        if( isset($parts['query']) ){
+            parse_str($parts['query'], $query);
+        }else{
+            $query = array();
+        }
+        $pid = isset($query['pid']) ? $query['pid'] : false;
+        $cat = isset($query['cat']) ? $query['cat'] : false;
+        $templates = $this->nbdesigner_get_templates_by_page($page, $row, $per_row, $pid, false, false, $cat);
+        $favourite_templates = $this->get_favourite_templates();
+        ob_start();
+        if( count($templates) ){
+            $result['flag'] = 1;
+            nbdesigner_get_template('gallery/gallery-item.php', array(
+                'templates' =>  $templates,
+                'current_user_id' => get_current_user_id() ,
+                'favourite_templates'   => $favourite_templates
+            ));         
+            $result['items'] = ob_get_clean();
+        }
+        ob_start();
+        nbdesigner_get_template('gallery/pagination.php', array(
+            'total' =>  $total,
+            'limit' => $limit,
+            'url' => $url,
+            'page' => $page
+        ));         
+        $result['pagination'] = ob_get_clean();
+        wp_send_json($result);
+    }
     public function nbd_update_favorite_template(){
         if (!wp_verify_nonce($_POST['nonce'], 'nbd_update_favourite_template')) {
             die('Security error');
@@ -541,6 +587,39 @@ class My_Design_Endpoint {
             $templates = unserialize( WC()->session->get('nbd_favourite_templates') ); 
         }
         return $templates;
+    }
+    public function get_detail_favourite_templates(){
+        global $wpdb;
+        $ft = array();
+        $templates = $this->get_favourite_templates();
+        $ids =  array_slice($templates,-3,3);
+        if( count($ids) ){
+            $sql = "SELECT t.*, p.post_title FROM {$wpdb->prefix}nbdesigner_templates AS t";
+            $sql .= " LEFT JOIN {$wpdb->prefix}posts AS p ON t.product_id = p.ID";
+            $sql .= " WHERE t.id IN (". implode(",",$ids) .")";
+            $result = $wpdb->get_results($sql, 'ARRAY_A');
+            foreach ($result as $t){
+                $path_preview = NBDESIGNER_CUSTOMER_DIR .'/'.$t['folder']. '/preview';
+                if( $t['thumbnail'] ){
+                    $image = wp_get_attachment_url( $t['thumbnail'] );
+                }else{
+                    $listThumb = Nbdesigner_IO::get_list_images($path_preview);
+                    $image = '';
+                    if(count($listThumb)){
+                        $image = Nbdesigner_IO::wp_convert_path_to_url(reset($listThumb));
+                    }                
+                }
+                $ft[] = array(
+                    'id'    =>  $t['id'],
+                    'title'    =>  $t['post_title'],
+                    'product_id' => $t['product_id'],
+                    'variation_id' => $t['variation_id'],
+                    'folder'  =>  $t['folder'],                    
+                    'img'   =>  $image
+                );
+            }
+        }
+        return $ft;
     }
     private function set_favourite_templates( $template_id, $type ){
         $templates = $this->get_favourite_templates();     

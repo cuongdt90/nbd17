@@ -5,7 +5,7 @@
 /*
 Plugin Name: Nbdesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
-Description: A printing ecosystem.
+Description: A Woocommerce printing ecosystem.
 Version: 1.9.0
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
@@ -93,6 +93,8 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-updates.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-shortcodes.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-setup-wizard.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/admin-options.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/frontend-options.php');
 
@@ -120,7 +122,7 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-widget.php');
  * This will be fixed in 4.7.3, see the Trac ticket: https://core.trac.wordpress.org/ticket/39550
  * 
  */
-if (version_compare($GLOBALS['wp_version'], '4.7.2', '<=')) {
+if (version_compare($GLOBALS['wp_version'], '4.7.2', '<=') || nbdesigner_get_option('nbd_force_upload_svg') == 'yes') {
     add_filter( 'wp_check_filetype_and_ext', 'wp39550_disable_real_mime_check', 10, 4 );
 }
 function wp39550_disable_real_mime_check( $data, $file, $filename, $mimes ) {
