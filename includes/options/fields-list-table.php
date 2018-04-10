@@ -9,7 +9,7 @@ class NBD_Options_List_Table extends WP_List_Table {
             'plural' => __('Printing options', 'web-to-print-online-designer'), 
             'ajax' => false 
         ));
-    }    
+    }
     public function prepare_items() {
         $columns = $this->get_columns();
         $hidden = array();
@@ -78,7 +78,7 @@ class NBD_Options_List_Table extends WP_List_Table {
     }    
     function column_title($item) {
         $title = $item['title'];
-        $_nonce = wp_create_nonce('nbdesigner_template_nonce');
+        $_nonce = wp_create_nonce('nbd_options_nonce');
         $actions = array(
             'edit' => sprintf('<a href="?page=%s&action=%s&id=%s&paged=%s&_wpnonce=%s">'.__('Edit', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'edit', absint($item['id']), $this->get_pagenum(), $_nonce)
         );

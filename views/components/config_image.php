@@ -3,16 +3,16 @@
     <ul class="config_list" id="image_config_list">
         <li><a href="#image_dimension"><span class="fa fa-picture-o" aria-hidden="true"></span></a>
         </li>       
-        <li  ng-show="settings['nbdesigner_image_grayscale'] == 1 || settings['nbdesigner_image_invert'] == 1 || settings['nbdesigner_image_sepia'] == 1 || settings['nbdesigner_image_sepia2'] == 1">
+        <li ng-hide="editable.available_color" ng-show="settings['nbdesigner_image_grayscale'] == 1 || settings['nbdesigner_image_invert'] == 1 || settings['nbdesigner_image_sepia'] == 1 || settings['nbdesigner_image_sepia2'] == 1">
             <a href="#image_filter1"><span class="filter1 fa fa-filter" aria-hidden="true"></span></a>
         </li>
-        <li ng-show="settings['nbdesigner_image_blend'] == 1 || settings['nbdesigner_image_remove_white'] == 1 || settings['nbdesigner_image_transparency'] == 1 || settings['nbdesigner_image_tint'] == 1">
+        <li ng-hide="editable.available_color" ng-show="settings['nbdesigner_image_blend'] == 1 || settings['nbdesigner_image_remove_white'] == 1 || settings['nbdesigner_image_transparency'] == 1 || settings['nbdesigner_image_tint'] == 1">
             <a href="#image_filter2"><span class="filter2 fa fa-filter" aria-hidden="true"></span></a>
         </li>
-        <li ng-show="settings['nbdesigner_image_brightness'] == 1 || settings['nbdesigner_image_noise'] == 1 || settings['nbdesigner_image_pixelate'] == 1 || settings['nbdesigner_image_multiply'] == 1">
+        <li ng-hide="editable.available_color" ng-show="settings['nbdesigner_image_brightness'] == 1 || settings['nbdesigner_image_noise'] == 1 || settings['nbdesigner_image_pixelate'] == 1 || settings['nbdesigner_image_multiply'] == 1">
             <a href="#image_filter3"><span class="filter3 fa fa-filter" aria-hidden="true"></span></a>
         </li>
-        <li ng-show="settings['nbdesigner_image_blur'] == 1 || settings['nbdesigner_image_sharpen'] == 1 || settings['nbdesigner_image_emboss'] == 1 || settings['nbdesigner_image_edge_enhance'] == 1">
+        <li ng-hide="editable.available_color" ng-show="settings['nbdesigner_image_blur'] == 1 || settings['nbdesigner_image_sharpen'] == 1 || settings['nbdesigner_image_emboss'] == 1 || settings['nbdesigner_image_edge_enhance'] == 1">
             <a href="#image_filter4"><span class="filter4 fa fa-filter" aria-hidden="true"></span></a>
         </li>	
         <li  ng-show="settings['nbdesigner_image_rotate'] == 1 || settings['nbdesigner_image_crop'] == 1 || settings['nbdesigner_image_shapecrop'] == 1">
@@ -21,13 +21,20 @@
     </ul>    
     <div class="list-indicator"></div>
     <div id="image_dimension" class="nbdesigner_config_content content">
-        <div class="nb-col-30" ng-show="settings['nbdesigner_image_unlock_proportion'] == 1">
+        <!-- <div class="nb-col-30" ng-show="settings['nbdesigner_image_unlock_proportion'] == 1">
             <p class="label-config">{{(langs['UNLOCK_PROPORTION']) ? langs['UNLOCK_PROPORTION'] : "Unlock proportion"}}</p>
             <div class="switch">
                 <input id="text-lock" class="cmn-toggle cmn-toggle-round" type="checkbox" ng-model="lockProportion"  ng-change="unlockProportion()">
                 <label for="text-lock"></label>
             </div>  
-        </div>	        
+        </div> --> 
+        <div class="nb-col-30" ng-show="canvas.getActiveObject() && (task === 'create' || (task == 'edit' && design_type == 'template' ))">
+            <p class="label-config">{{(langs['AVAILABLE_COLORS']) ? langs['AVAILABLE_COLORS'] : "Available Colors"}}</p>
+            <div class="md-checkbox" style="display: inline-block; margin: 0;">
+                <input id="available_color" ng-model="editable.available_color" ng-change="toggleAvailableColor()" type="checkbox">
+                <label for="available_color" class="">&nbsp;</label>
+            </div>  
+        </div>         
         <div class="nb-col-40 has-popover-option" style="padding-left: 15px;" ng-show="settings['nbdesigner_image_shadow'] == 1">
             <p class="label-config">{{(langs['SHADOW']) ? langs['SHADOW'] : "Shadow"}}</p>
                 <?php  if($enableColor == 'yes'): ?>

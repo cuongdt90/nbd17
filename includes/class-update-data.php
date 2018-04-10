@@ -1,7 +1,12 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 class NBD_Update_Data{
-    
+    public static function install_update(){
+        $version = get_option("nbdesigner_version_plugin", null);
+        if (!is_null($version) && version_compare($version, "1.5.0", '<')) {    
+            self::update_data_150();
+        }
+    }
     public function ajax(){
         $ajax_events = array(
             'nbd_update_all_template' => false
@@ -83,20 +88,6 @@ class NBD_Update_Data{
         $result = array('flag' => 1);
         echo json_encode($result);
         wp_die();
-    }    
-    public static function insert_default_files(){
-        $default_background = get_option('nbdesigner_default_background' );
-        $default_overlay = get_option('nbdesigner_default_overlay' );
-        if( !$default_background || !wp_get_attachment_url($default_background) ) {
-            $background_file = NBDESIGNER_PLUGIN_URL . 'assets/images/default.png';
-            $bg_id = nbd_add_attachment( $background_file );
-            update_option('nbdesigner_default_background', $bg_id );
-        }
-        if( !$default_overlay || !wp_get_attachment_url($default_overlay) ) {
-            $overlay_file = NBDESIGNER_PLUGIN_URL . 'assets/images/overlay.png';
-            $ol_id = nbd_add_attachment( $overlay_file );
-            update_option('nbdesigner_default_overlay', $ol_id );
-        }
     }
     public static function nbd_update_media_v180( $designer_setting ){
         $default_background = get_option('nbdesigner_default_background' );
@@ -111,10 +102,66 @@ class NBD_Update_Data{
         }
         return $designer_setting;  
     }
-    public static function create_missing_pages(){
-        
-    }
-    public static function create_missing_tables(){
-        
-    }
+    /**
+     * Update data admin templates in older version (before 1.5.0)
+     * @since 1.5.0
+     * 
+     */
+    public static function update_data_150(){
+        global $wpdb;
+        $origin_path = NBDESIGNER_ADMINDESIGN_DIR . '/';
+        $listTemplates = array();
+        $args = array(
+            'post_type' => 'product',
+            'meta_key' => '_nbdesigner_admintemplate_primary',
+            'orderby' => 'date',
+            'order' => 'DESC',
+            'posts_per_page'=>-1,
+            'meta_query' => array(
+                array(
+                    'key' => '_nbdesigner_admintemplate_primary',
+                    'value' => 1,
+                )
+            )
+        );   
+        $posts = get_posts($args); 
+        foreach ($posts as $p){
+            $pro = wc_get_product($p->ID);
+            $list_folder = array();
+            $path = $origin_path . $p->ID;
+            if ($dir = @opendir($path)) {
+                while (($file = readdir($dir) ) !== false) {
+                    if (in_array($file, array('.', '..')))
+                        continue;
+                    if (is_dir($path . '/' . $file)) {
+                        $list_folder[] =  $file;
+                    }
+                }
+            }
+            @closedir($dir);   
+            if(is_array($list_folder)){
+                foreach($list_folder as $folder){
+                    $listTemplates[] = array('product_id' => $p->ID, 'folder' => $folder);
+                }
+            }           
+        }   
+        if(is_array($listTemplates)){
+            foreach($listTemplates as $temp){
+                $created_date = new DateTime();
+                $user_id = wp_get_current_user()->ID;
+                $table_name =  $wpdb->prefix . 'nbdesigner_templates';
+                $priority = 0;
+                if($temp['folder'] == 'primary') $priority = 1;
+                $wpdb->insert($table_name, array(
+                    'product_id' => $temp['product_id'],
+                    'folder' => $temp['folder'],
+                    'user_id' => $user_id,
+                    'created_date' => $created_date->format('Y-m-d H:i:s'),
+                    'publish' => 1,
+                    'private' => 0,
+                    'priority' => $priority
+                ));  
+            }                       
+        }
+    }    
 }

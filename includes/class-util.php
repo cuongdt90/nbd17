@@ -477,7 +477,7 @@ function nbd_file_get_contents($url){
             $result = curl_exec($ch);
             curl_close($ch);          
         }
-    }	
+    }
     return $result;    
 }
 function hex_code_to_rgb($code){        
@@ -513,11 +513,13 @@ function nbdesigner_get_all_frontend_setting(){
 function nbdesigner_get_default_setting($key = false){
     $frontend = default_frontend_setting();
     $nbd_setting = apply_filters('nbdesigner_default_settings', array_merge(array(
+        'nbdesigner_design_layout'  =>  'c',
         'nbdesigner_position_button_in_catalog' => 1,
         'nbdesigner_position_button_product_detail' => 1,
         'nbdesigner_position_pricing_in_detail_page' => 1,
         'nbdesigner_quantity_pricing_description' => '',
         'nbdesigner_thumbnail_width' => 300,
+        'nbdesigner_template_width' => 500,
         'nbdesigner_default_dpi' => 96,
         'nbdesigner_show_in_cart' => 'yes',
         'nbdesigner_auto_add_cart_in_detail_page' => 'no',

@@ -4,7 +4,18 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
     class Nbdesigner_Settings_General {
         public static function get_options() {
             return apply_filters('nbdesigner_general_settings', array(
-                'general-settings' => array(                          
+                'general-settings' => array(   
+                    array(
+                        'title' => __( 'Design layout', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_design_layout',
+                        'description' 	=> __('Choose layout for design tool.', 'web-to-print-online-designer'),
+                        'default'	=> 'c',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'c' => __('Classic', 'web-to-print-online-designer'),
+                            'm' => __('Modern', 'web-to-print-online-designer'),
+                        )                        
+                    ),                     
                     array(
                         'title' => __( 'Default output resolution - DPI', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_default_dpi',
@@ -25,13 +36,23 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         )                        
                     ),   
                     array(
-                        'title' => __( 'Preview thumbnail width', 'web-to-print-online-designer'),
+                        'title' => __( 'Preview design size', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_thumbnail_width',
+                        'description' 	=> __('This is size of preview design image which will show in cart or order page.', 'web-to-print-online-designer'),
                         'css'         => 'width: 65px',
                         'default'	=> '300',
                         'subfix'        => ' px',
                         'type' 		=> 'number'
-                    ),                    
+                    ),  
+                    array(
+                        'title' => __( 'Preview template size', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_template_width',
+                        'description' 	=> __('This is size of preview template image which will show in gallery page.', 'web-to-print-online-designer'),
+                        'css'         => 'width: 65px',
+                        'default'	=> '300',
+                        'subfix'        => ' px',
+                        'type' 		=> 'number'
+                    ),                     
                     array(
                         'title' => __('Hide On Smartphones', 'web-to-print-online-designer'),
                         'description' => __('Hide product designer on smartphones and display an information instead.', 'web-to-print-online-designer'),

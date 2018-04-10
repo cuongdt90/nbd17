@@ -1,12 +1,21 @@
 <?php
 if (!defined('ABSPATH')) exit;
 $class = nbdesigner_get_option('nbdesigner_class_design_button_detail'); 
+$_enable_upload = get_post_meta($pid, '_nbdesigner_enable_upload', true);
+$_enable_upload_without_design = get_post_meta($pid, '_nbdesigner_enable_upload_without_design', true);
+$label = apply_filters('nbd_start_design_label', __('Start Design', 'web-to-print-online-designer'));
+if( $_enable_upload ){
+    $label = apply_filters('nbd_start_design_and_upload_label', __('Start and upload design', 'web-to-print-online-designer'));
+}
+if( $_enable_upload_without_design ){
+    $label = apply_filters('nbd_upload_design_label', __('Upload Design', 'web-to-print-online-designer'));
+}
 ?>
 <div class="nbdesigner_frontend_container">
     <p>
         <a class="button alt nbdesign-button nbdesigner-disable <?php echo $class; ?>" id="triggerDesign" >
             <img class="nbdesigner-img-loading" src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>"/>
-            <?php _e('Start Design', 'web-to-print-online-designer'); ?>
+            <?php echo $label; ?>
         </a>
     </p>   
     <h4 id="nbdesigner-preview-title" style="display: none;"><?php _e('Custom design', 'web-to-print-online-designer'); ?></h4>

@@ -70,18 +70,30 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         public function printing_options(){ 
             require_once NBDESIGNER_PLUGIN_DIR . 'includes/options/fields-list-table.php';
             $nbd_options = new NBD_Options_List_Table();       
-            $options = $this->build_options(); 
-            if( isset( $_GET['action'] ) ){
+            if( isset( $_GET['action'] ) ){    
                 if( $_GET['action'] == 'delete' ){
                     wp_redirect(esc_url_raw(add_query_arg(array('paged' => 1), admin_url('admin.php?page=nbd_printing_options'))));
                 }else{
+                    if( isset( $_POST['save'] ) ){
+                        $this->save_option();
+                    }                    
+                    $_options = $this->get_option();//$_options = false;
+                    if($_options){
+                        $options = $this->build_options( unserialize($_options['fields']) );
+                        $options['id'] = $_options['id'];
+                        $options['title'] = $_options['title'];
+                        $options['priority'] = $_options['priority'];                   
+                    }else{
+                        $options = $this->build_options();
+                        $options['id'] = 0;
+                        $options['title'] = '';
+                        $options['priority'] = 1;                     
+                    }
+                    $default_field = $this->default_config_field();                      
                     $message = array(
                         'content' =>    'success',
                         'flag'  =>  'success'
                     );
-                    if( isset( $_POST['save'] ) ){
-                        $this->save_option();
-                    }
                     include_once(NBDESIGNER_PLUGIN_DIR . 'views/options/edit-option.php');
                 }
             }else{
@@ -98,11 +110,28 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 );
                 add_screen_option( $option, $args );            
             }            
-        }    
+        }
         public function save_option(){
-ob_start();
-var_dump($_POST);
-error_log(ob_get_clean());
+            $nonce = esc_attr($_REQUEST['_wpnonce']);
+            if (!wp_verify_nonce($nonce, 'nbd_options_nonce')) {
+                die('Go get a life script kiddies');
+            }
+            $id = absint($_REQUEST['id']);
+            $modified_date = new DateTime();
+            $arr = array(
+                'title' =>  $_POST['title'],
+                'modified'  => $modified_date->format('Y-m-d H:i:s'),
+                'fields'    => serialize($_POST['options'])
+            );
+            global $wpdb;
+            $wpdb->update("{$wpdb->prefix}nbdesigner_options", $arr, array( 'id' => $id) );            
+        }
+        public function get_option(){
+            global $wpdb;
+            $sql = "SELECT * FROM {$wpdb->prefix}nbdesigner_options";
+            $sql .= " WHERE id = " . esc_sql($_REQUEST['id']);
+            $result = $wpdb->get_results($sql, 'ARRAY_A');
+            return count($result[0]) ? $result[0] : false;
         }
         public function delete_options(){
 
@@ -110,10 +139,6 @@ error_log(ob_get_clean());
         public function build_options( $options = null ){
             if( is_null($options) ){
                 $options = array(
-                    'id'    =>   1,
-                    'title' =>  'Business Card Printing',
-                    'priority' =>  10,
-                    'product_ids'   =>  array(),
                     'quantity_type' => 'r',
                     'quantity_discount_type' => 'p',
                     'quantity_min' => 1,
@@ -137,42 +162,63 @@ error_log(ob_get_clean());
                         array('val' =>  1, 'dis'    =>  '')
                     ),  
                     'fields'    => array(
-                        0   =>  array(
-                            'general' => array(
-                                'title' =>  null,
-                                'description' =>  null,
-                                'data_type' =>  null,
-                                'enabled' =>  null,
-                                'required' =>  null,
-                                'price_type' =>  null,
-                                'depend_quantity' =>  null,
-                                'price' =>  null,
-                                'price_breaks' =>  null,
-                                'attributes' =>  null
-                            ),
-                            'conditional' => array(
-                                
-                            ),
-                            'appearance' => array(
-                                'display_type' =>  null,
-                                'change_image_product' =>  null,
-                                'quantity_selector' =>  null
-                            )                            
-                        )                           
+                        0   =>  $this->default_field()                          
                     )                    
                 );
             }
             foreach( $options['fields'] as $f_key => $field ){
                 foreach ($field as $tab =>  $data){
-                    foreach ($data as $key => $f){
-                        $funcname = "build_config_".$key;
-                        $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);                     
+                    if( $tab != 'id' ){
+                        foreach ($data as $key => $f){
+                            $funcname = "build_config_".$tab.'_'.$key;
+                            $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);                     
+                        }
                     }
                 }
             }
             return $options;
         }
-        public function build_config_title( $value = null ){
+        public function default_field(){
+            return array(
+                'id'    =>  round(microtime(true) * 1000),
+                'general' => array(
+                    'title' =>  null,
+                    'description' =>  null,
+                    'data_type' =>  null,
+                    'enabled' =>  null,
+                    'required' =>  null,
+                    'price_type' =>  null,
+                    'depend_quantity' =>  null,
+                    'price' =>  null,
+                    'price_breaks' =>  null,
+                    'attributes' =>  null
+                ),
+                'conditional' => array(
+                    'enable'    =>  'n',
+                    'show'    =>  'y',
+                    'logic'    =>  'a',
+                    'depend'    =>  null
+                ),
+                'appearance' => array(
+                    'display_type' =>  null,
+                    'change_image_product' =>  null,
+                    'quantity_selector' =>  null
+                )                            
+            ); 
+        }
+        public function default_config_field(){
+            $field = $this->default_field();
+            foreach ($field as $tab =>  $data){
+                if( $tab != 'id' ){
+                    foreach ($data as $key => $f){
+                        $funcname = "build_config_".$tab.'_'.$key;
+                        $field[$tab][$key] = $this->$funcname($f);                     
+                    }
+                }
+            }
+            return $field;
+        }
+        public function build_config_general_title( $value = null ){
             if (is_null($value)) $value = __( 'Title', 'web-to-print-online-designer');
             return array(
                 'title' => __( 'Title', 'web-to-print-online-designer'),
@@ -181,7 +227,7 @@ error_log(ob_get_clean());
                 'type'  => 'text'              
             );
         }
-        public function build_config_description( $value = null ){
+        public function build_config_general_description( $value = null ){
             if (is_null($value)) $value = __( 'Description', 'web-to-print-online-designer');
             return array(
                 'title' => __( 'Description', 'web-to-print-online-designer'),
@@ -190,7 +236,7 @@ error_log(ob_get_clean());
                 'type'  => 'textarea'              
             );            
         }
-        public function build_config_data_type( $value = null ){
+        public function build_config_general_data_type( $value = null ){
             if (is_null($value)) $value = 'm';
             return array(
                 'title' => __( 'Data type', 'web-to-print-online-designer'),
@@ -209,7 +255,7 @@ error_log(ob_get_clean());
                 )               
             );            
         } 
-        public function build_config_enabled( $value = null ){
+        public function build_config_general_enabled( $value = null ){
             if (is_null($value)) $value = 'y';
             return array(
                 'title' => __( 'Enabled', 'web-to-print-online-designer'),
@@ -228,7 +274,7 @@ error_log(ob_get_clean());
                 )               
             );            
         }
-        public function build_config_required( $value = null ){
+        public function build_config_general_required( $value = null ){
             if (is_null($value)) $value = 'n';
             return array(
                 'title' => __( 'Required', 'web-to-print-online-designer'),
@@ -247,7 +293,7 @@ error_log(ob_get_clean());
                 )               
             );            
         } 
-        public function build_config_price_type( $value = null ){
+        public function build_config_general_price_type( $value = null ){
             if (is_null($value)) $value = 'f';
             return array(
                 'title' => __( 'Price type', 'web-to-print-online-designer'),
@@ -274,7 +320,7 @@ error_log(ob_get_clean());
                 )               
             );            
         }
-        public function build_config_depend_quantity( $value = null ){
+        public function build_config_general_depend_quantity( $value = null ){
             if (is_null($value)) $value = 'y';
             return array(
                 'title' => __( 'Depend quantity breaks', 'web-to-print-online-designer'),
@@ -293,7 +339,7 @@ error_log(ob_get_clean());
                 )               
             );            
         }    
-        public function build_config_price( $value = null ){
+        public function build_config_general_price( $value = null ){
             if (is_null($value)) $value = '';
             return array(
                 'title' => __( 'Price', 'web-to-print-online-designer'),
@@ -314,7 +360,7 @@ error_log(ob_get_clean());
                 'type'  => 'number'                
             );
         }
-        public function build_config_price_breaks( $value = null ){
+        public function build_config_general_price_breaks( $value = null ){
             if (is_null($value)) $value = array();
             return array(  
                 'title' => __( 'Price depend quantity breaks', 'web-to-print-online-designer'),
@@ -335,9 +381,9 @@ error_log(ob_get_clean());
                 'type'  => 'single_quantity_depend'                  
             );
         }     
-        public function build_config_attributes( $options = null ){
-            if (is_null($options)) $options = array(
-                array(
+        public function build_config_general_attributes( $attributes = null ){
+            if (is_null($attributes)){ $options = array(
+                0 => array(
                     'name'  => '',
                     'price'	=> array(),
                     'selected'  =>  0,
@@ -346,12 +392,16 @@ error_log(ob_get_clean());
                     'image_url' =>  '',
                     'color' =>  '#ffffff'                
                 )
-            );
-            foreach($options as $key => $op){
-                if( $op['image'] != 0 ){
-                    $options[$key]['image_url'] = wp_get_attachment_url( absint($op['image']) );
+            );} else {
+                $options = $attributes['options'];
+            };             
+            foreach( $options as $key => $option){                 
+                if( absint($option['image']) != 0 ){
+                    $options[$key]['image_url'] = wp_get_attachment_url( absint($option['image']) );
+                }else{
+                    $options[$key]['image_url'] = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
                 }
-            }
+            }           
             return array(  
                 'title' => __( 'Attributes', 'web-to-print-online-designer'),
                 'description'   =>  'Attributes let you define extra product data, such as size or color.',                                     
@@ -366,7 +416,7 @@ error_log(ob_get_clean());
                 'options'   => $options 
             );
         }
-        public function build_config_display_type( $value = null ){
+        public function build_config_appearance_display_type( $value = null ){
             if (is_null($value)) $value = 'd';
             return array(  
                 'title' => __( 'Display type', 'web-to-print-online-designer'),
@@ -389,7 +439,7 @@ error_log(ob_get_clean());
                 ) 			
             );
         }    
-        public function build_config_change_image_product( $value = null ){
+        public function build_config_appearance_change_image_product( $value = null ){
             if (is_null($value)) $value = 'n';
             return array(  
                 'title' => __( 'Changes product image', 'web-to-print-online-designer'),
@@ -408,7 +458,7 @@ error_log(ob_get_clean());
                 )			
             );
         }  
-        public function build_config_quantity_selector( $value = null ){
+        public function build_config_appearance_quantity_selector( $value = null ){
             if (is_null($value)) $value = 'n';
             return array(  
                 'title' => __( 'Quantity selector', 'web-to-print-online-designer'),
@@ -426,6 +476,28 @@ error_log(ob_get_clean());
                     )
                 )  			
             );
+        }
+        public function build_config_conditional_enable( $value = null ){
+            if (is_null($value)) $value = 'n';
+            return $value;
+        }
+        public function build_config_conditional_show( $value = null ){
+            if (is_null($value)) $value = 'n';
+            return $value;
+        } 
+        public function build_config_conditional_logic( $value = null ){
+            if (is_null($value)) $value = 'a';
+            return $value;
+        } 
+        public function build_config_conditional_depend( $value = null ){
+            if (is_null($value)) $value = array(
+                0   =>  array(
+                    'id'    => '',
+                    'operator'  =>  'i',
+                    'val'   =>  ''
+                )
+            );
+            return $value;
         }         
     }
 }

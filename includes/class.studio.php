@@ -11,6 +11,7 @@ class Nbdesigner_Studio {
         if (is_admin()) {
             $this->ajax();
         }
+        add_action('nbd_installed', array($this, 'update_content_stuido_page'));
     }
     public function ajax(){
         $ajax_events = array(

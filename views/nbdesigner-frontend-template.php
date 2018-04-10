@@ -231,6 +231,7 @@
                 include_once('components/popover_layer.php');
                 include_once('components/popover_tools.php');
                 include_once('components/popover_color.php');
+                include_once('components/popover_layer_color.php');
                 include_once('components/tool_top.php');
                 include_once('components/helpdesk.php');
                 ?>

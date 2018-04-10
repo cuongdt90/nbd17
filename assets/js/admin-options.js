@@ -173,11 +173,8 @@ var AD_NBD_OPTIONS = {
         
     }
 };
-angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
+angular.module('optionApp', []).controller('optionCtrl', function( $scope, $timeout ) {
     /* init parameters */
-    $scope.options = NBDOPTIONS; 
-    $scope.options.quantity_value = 10;
-    //$scope.quantity_breaks = [{val: 1},{val: 10},{val: 20},{val: 50}];
     $scope.showPreview = true;
     $scope.previewWide = false;
     /* end init parameters */
@@ -193,14 +190,37 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
         $scope.options.quantity_breaks.splice(index, 1);
     };    
     /* end. quantity */
-    $scope.prepend_field = function(){
-        
+    $scope.add_field = function(){
+        var field = {};
+        angular.copy(NBDOPTION_FIELD, field);
+        var d = new Date();
+        field['id'] = '' + d.getTime();
+        field.isExpand = true;
+        $scope.options.fields.push( field );
     };
-    $scope.append_field = function(){
-        
-    };    
+    $scope.copy_field = function( index ){
+        var field = {};
+        angular.copy($scope.options.fields[index], field);
+        var d = new Date();
+        field['id'] = '' + d.getTime();
+        field['general']['title']['value'] = field['general']['title']['value'] + ' - Copy';
+        $scope.options.fields.push( field )
+    };
+    $scope.delete_field = function(index){
+        $scope.options.fields.splice(index, 1);
+    }; 
+    $scope.toggleExpandField =  function(index, $event){
+        $scope.options.fields[index].isExpand = !$scope.options.fields[index].isExpand;
+        var parent = jQuery($event.target).parents('.nbd-field-wrap');
+        $timeout(function() {
+            jQuery('html,body').animate({ scrollTop: parent.offset().top - 50}, 200);
+        }, 0);
+    }; 
     $scope.init = function(){
-        
+        $scope.options = NBDOPTIONS;
+        angular.forEach($scope.options.fields, function(field, key){
+            field.isExpand = false;
+        });
     };
     $scope.debug = function(){
         console.log($scope.options);       
@@ -301,20 +321,41 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope ) {
             });
         }
     }
+}).directive( 'nbdTab', function() {
+    return {
+        restrict: 'A',
+        link: function( scope, element ) {
+            jQuery.each( jQuery(element).find('.nbd-field-tab'), function(){
+                jQuery(this).on('click', function(){
+                    var target = jQuery(this).data('target');
+                    jQuery(this).parents('.nbd-field-wrap').find('.nbd-field-content').removeClass('active');
+                    jQuery(this).parent('ul').find('li').removeClass('active');
+                    jQuery(this).parents('.nbd-field-wrap').find('.'+target).addClass('active');
+                    jQuery(this).addClass('active');      
+                });
+            });            
+        }
+    }
+}).directive( 'nbdTip', function($timeout) {
+    return {
+        restrict: 'E',
+        scope: {
+            dataTip: '@tip'
+        },
+        template: '<span class="woocommerce-help-tip" data-tip="{{dataTip}}" ></span>',
+        link: function( scope, element, attrs ) {
+            var tiptip_args = {
+                'attribute': 'data-tip',
+                'fadeIn': 50,
+                'fadeOut': 50,
+                'delay': 200
+            };
+            $timeout(function() {
+                jQuery(element).find('.woocommerce-help-tip').tipTip( tiptip_args );
+            }, 0);
+        }
+    }
 });
 jQuery( document ).ready(function($){
-    $('.nbd-field-tab').on('click', function(){
-        var target = $(this).data('target');
-        $(this).parents('.nbd-field-wrap').find('.nbd-field-content').removeClass('active');
-        $(this).parent('ul').find('li').removeClass('active');
-        $(this).parents('.nbd-field-wrap').find('.'+target).addClass('active');
-        $(this).addClass('active');
-    });
-    var tiptip_args = {
-        'attribute': 'data-tip',
-        'fadeIn': 50,
-        'fadeOut': 50,
-        'delay': 200
-    };
-    $( '.woocommerce-help-tip' ).tipTip( tiptip_args );    
+   
 });
