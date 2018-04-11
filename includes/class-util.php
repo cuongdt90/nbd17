@@ -1035,8 +1035,6 @@ function nbd_get_dpi($filename){
             if (!empty($resolutions['x'])) {
                 $resolutions['x'] = round($resolutions['x'] * 2.54, 2);
             }
-        }else{
-            $resolutions['y'] = $resolutions['x'] = 72;
         }
     }else{
         $a = fopen($filename,'r');
