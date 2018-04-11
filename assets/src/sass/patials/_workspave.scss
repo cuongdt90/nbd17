@@ -1,0 +1,24 @@
+.nbd-workspace{
+  display: flex;
+  max-width: 100%;
+  min-height: calc(100vh - 60px);
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  position: relative;
+  width: auto;
+  margin: 54px 0 0 0;
+  clear: both;
+
+  .main {
+    background-size: 16px;
+    position: relative;
+    width: calc(100vw - 420px);
+    padding-top: 50px;
+    left: 420px;
+    top: 0;
+    display: inline-block;
+    height: calc(100vh - 54px);
+  }
+}
+

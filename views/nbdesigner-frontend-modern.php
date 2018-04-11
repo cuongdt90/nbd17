@@ -185,8 +185,15 @@
     <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
         <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
             <div id="design-container">
-                <?php include_once('modern/sidebar.php'); ?>
-                <?php include_once('modern/toolbar.php'); ?>
+                <div class="nbd-navigations">
+                    <?php include 'modern/main-bar.php';?>
+                </div>
+                <div class="nbd-workspace">
+                    <?php include_once('modern/sidebar.php'); ?>
+                    <div class="main">
+                        <?php include_once('modern/toolbar.php'); ?>
+                    </div>
+                </div>
             </div>
         </div>
         <?php if(!NBDESIGNER_MODE_DEV): ?>

@@ -1,22 +1,22 @@
-<div class="main-bar">
+<div class="nbd-main-bar">
     <a href="#" class="logo"><img src="" alt="online design"></a>
     <ul class="menu-left">
-        <li class="menu-item active">
+        <li class="menu-item">
             <span>file</span>
             <ul class="sub-menu">
-                <li class="sub-menu-item">
+                <li class="sub-menu-item flex space-between">
                     <span>Import file</span>
                     <small>(Ctrl+O)</small>
                 </li>
-                <li class="sub-menu-item">
+                <li class="sub-menu-item flex space-between">
                     <span>Import file</span>
                     <small>(Ctrl+O)</small>
                 </li>
-                <li class="sub-menu-item">
+                <li class="sub-menu-item flex space-between">
                     <span>Import file</span>
                     <small>(Ctrl+O)</small>
                 </li>
-                <li class="sub-menu-item">
+                <li class="sub-menu-item flex space-between">
                     <span>Import file</span>
                     <small>(Ctrl+O)</small>
                 </li>
@@ -87,7 +87,6 @@
             </ul>
         </li>
     </ul>
-
     <ul class="menu-right">
         <li class="menu-item"><span>Title</span></li>
         <li class="menu-item"><span>Share</span></li>

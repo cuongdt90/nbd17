@@ -1,0 +1,32 @@
+body, html {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  background: #fafafa;
+  overflow: hidden;
+  color: #666;
+}
+
+button,html,input,select,textarea, md-bottom-sheet .md-subheader, .md-chips  {
+  font-family: 'Poppins', sans-serif;
+}
+p,  h3, h4, input, textarea, span {
+  color: #666;
+}
+input, textarea, span {
+  font-size: 14px;
+}
+
+.flex{
+  display: flex !important;
+}
+
+.space-between{
+  justify-content: space-between;
+}
+
+.box-shadow-right{
+  box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.12);
+}
+.box-shadow-bottom{
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}

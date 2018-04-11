@@ -1,0 +1,15 @@
+.nbd-tool-bar {
+  background: #ebeced;
+  border-bottom: 1px solid #e4e4e4;
+  width: calc(100% - 420px);
+  display: inline-block;
+  position: fixed;
+  z-index: 10;
+  box-sizing: border-box;
+  color: #3f4652;
+  left: 420px;
+  top: 54px;
+  padding: 0 24px 0 10px;
+  white-space: nowrap;
+  height: 49px;
+}
