@@ -180,7 +180,7 @@ $(document).ready(function(){
                 };                
             });
         });
-    $('#dag-files-images, #uploaded-facebook, #dropbox_images, #nbdesigner_art_container, #nbdesigner_font_container, #nbdesigner_instagram, .nbdesigner_config_svg, #pattern-boddy, #tool-help, #design-help, #general-help, #nbdesigner-list-template, #nbd-list-cart-design, #nbd-list-my-design, #upload-design-preview, #nbd-list-product, #product-variation-wrap, #product-info-wrap, #product-info-preview-wrap, #pixabay_results, #unsplash_results').perfectScrollbar();   
+    $('.nbd-sidebar .tabs-content .tab, #dag-files-images, #uploaded-facebook, #dropbox_images, #nbdesigner_art_container, #nbdesigner_font_container, #nbdesigner_instagram, .nbdesigner_config_svg, #pattern-boddy, #tool-help, #design-help, #general-help, #nbdesigner-list-template, #nbd-list-cart-design, #nbd-list-my-design, #upload-design-preview, #nbd-list-product, #product-variation-wrap, #product-info-wrap, #product-info-preview-wrap, #pixabay_results, #unsplash_results').perfectScrollbar();
     /* megnify */
     if ($(".magniflier").length) {
         var native_width = 0;
@@ -299,6 +299,12 @@ $(document).ready(function(){
     $('#toggle-config-style').on('click', function(){
         $('#config-style').toggleClass('open');
     });
+
+    $('.nbd-tooltip-hover').tooltipster({
+        side: "bottom",
+        theme: 'tooltipster-borderless',
+    });
+
     $('.nbd-tooltip').tooltipster({
         trigger: "click",
         side: "bottom",
