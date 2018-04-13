@@ -1,0 +1,115 @@
+.nbd-main-menu {
+  display: flex;
+  list-style-type: none;
+  align-items: center;
+  justify-content: space-between;
+  li {
+    span {
+      font-size: 16px;
+      cursor: pointer;
+      user-select: none;
+      color: #666;
+      text-transform: capitalize;
+    }
+    &.menu-item{
+      display: inline-block;
+      padding: 15px;
+      font-size: 16px;
+      line-height: 16px;
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      i.icon-nbd {
+        font-size: 16px;
+      }
+    }
+    &.active{
+      .sub-menu {
+        display: block;
+      }
+    }
+
+  }
+  .sub-menu{
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #fff;
+    color: #3f4652;
+    border-radius: 4px;
+    min-width: 250px;
+    box-shadow: 3px 3px 8px 0 rgba(0,0,0,.3);
+    display: none;
+    z-index: 10000002;
+    top: calc(100% + 10px);
+    li {
+      width: 100%;
+      padding: 8px 18px;
+      text-align: left;
+      white-space: nowrap;
+      display: block;
+      position: relative;
+      margin: 0;
+      span {
+        font-size: 14px;
+        text-align: left;
+        white-space: nowrap;
+      }
+    }
+
+    &:after {
+      border: 7px solid transparent;
+      border-bottom: 7px solid #fff;
+      content: "";
+      position: absolute;
+      top: -14px;
+    }
+
+    &[data-pos="left"]{
+      left: -5px;
+      &:after{
+        left: 20px;
+      }
+    }
+
+    &[data-pos="right"]{
+      right: 5px;
+      &:after{
+        right: 10px;
+      }
+    }
+
+    &[data-pos="center"]{
+      left: 50%;
+      transform: translateX(-50%);
+      &:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  >li[data-overlay="overlay"] {
+    &:after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      width: 0;
+      height: 0;
+      z-index: 10000001;
+      opacity: 0;
+      transition: opacity 250ms ease;
+      cursor: default;
+    }
+    &.active{
+      &:after {
+        opacity: 1;
+        width: 100vw;
+        height: 100vw;
+      }
+    }
+  }
+
+}
