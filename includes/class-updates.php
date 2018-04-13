@@ -236,6 +236,7 @@ if( !class_exists('NBD_Updates') ) {
             $html_installation .= '<ul>';
             $html_installation .=   '<li>PHP 5.6 or greater is recommended</li>';
             $html_installation .=   '<li>MySQL 5.6 or greater is recommended</li>';
+            $html_installation .=   '<li>PHP allow_url_fopen is required</li>';
             $html_installation .=   '<li>PHP Imagick API is recommended</li>';
             $html_installation .= '</ul>';
             //todo something
