@@ -30,3 +30,45 @@ input, textarea, span {
 .box-shadow-bottom{
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
+
+.icon-nbd{
+  color: #888;
+  display: block;
+  &.rotate-45 {
+    transform: rotate(-45deg);
+  }
+  &.rotate45{
+    transform: rotate(45deg);
+  }
+
+  &.rotate-90{
+    transform: rotate(-90deg);
+  }
+
+  &.rotate90 {
+    transform: rotate(90deg);
+  }
+
+  &.rotate-135{
+    transform: rotate(-135deg);
+  }
+  &.rotate-180{
+    transform: rotate(-180deg);
+  }
+
+  &.rotate135{
+    transform: rotate(135deg);
+  }
+
+  &.color-fill{
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.14), 0 2px 2px 0 rgba(0,0,0,.098), 0 1px 5px 0 rgba(0,0,0,.084);
+    display: inline-block;
+    border-radius: 50%;
+  }
+
+}
+
+.font-28{
+  font-size: 28px !important;
+}
+

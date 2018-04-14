@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'online-design';
-  src:  url('fonts/online-design.eot?6j7zvm');
-  src:  url('fonts/online-design.eot?6j7zvm#iefix') format('embedded-opentype'),
-  url('fonts/online-design.ttf?6j7zvm') format('truetype'),
-  url('fonts/online-design.woff?6j7zvm') format('woff'),
-  url('fonts/online-design.svg?6j7zvm#online-design') format('svg');
+  src:  url('fonts/online-design.eot?v3wm07');
+  src:  url('fonts/online-design.eot?v3wm07#iefix') format('embedded-opentype'),
+  url('fonts/online-design.ttf?v3wm07') format('truetype'),
+  url('fonts/online-design.woff?v3wm07') format('woff'),
+  url('fonts/online-design.svg?v3wm07#online-design') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,56 +24,66 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-nbd-arrow-to-right:before {
+.icon-nbd-dropdown-arrows:before {
+  content: "\e908";
+  color: #3f4652;
+}
+.icon-nbd-fomat-info-outline:before {
+  content: "\e90a";
+}
+.icon-nbd-fomat-position:before {
+  content: "\e90b";
+}
+.icon-nbd-fomat-top-left:before {
+  content: "\e90c";
+}
+.icon-nbd-fomat-vertical-align-center:before {
+  content: "\e90d";
+}
+.icon-nbd-fomat-vertical-align-top:before {
+  content: "\e90f";
+}
+.icon-nbd-format-align-center:before {
+  content: "\e910";
+}
+.icon-nbd-format-align-justify:before {
+  content: "\e911";
+}
+.icon-nbd-format-align-left:before {
+  content: "\e912";
+}
+.icon-nbd-format-align-right:before {
   content: "\e914";
+}
+.icon-nbd-format-bold:before {
+  content: "\e916";
+}
+.icon-nbd-format-color-fill:before {
+  content: "\e917";
+}
+.icon-nbd-format-italic:before {
+  content: "\e918";
+}
+.icon-nbd-format-underlined:before {
+  content: "\e91a";
 }
 .icon-nbd-bottom-center:before {
   content: "\e915";
 }
-.icon-nbd-bottom-center-2:before {
-  content: "\e916";
-}
-.icon-nbd-center-horizontal:before {
-  content: "\e917";
-}
-.icon-nbd-center-vertical:before {
-  content: "\e918";
-}
 .icon-nbd-info-circle:before {
   content: "\e919";
-}
-.icon-nbd-bold:before {
-  content: "\e90b";
-}
-.icon-nbd-central-align:before {
-  content: "\e90c";
-}
-.icon-nbd-central-alignment:before {
-  content: "\e90d";
-}
-.icon-nbd-italicize-text:before {
-  content: "\e90f";
-}
-.icon-nbd-left-alignment:before {
-  content: "\e910";
-}
-.icon-nbd-right-alignment:before {
-  content: "\e911";
-}
-.icon-nbd-underlined-text:before {
-  content: "\e912";
 }
 .icon-nbd-uppercase:before {
   content: "\e913";
 }
 .icon-nbd-fill-color:before {
-  content: "\e908";
+  content: "\e91c";
 }
 .icon-nbd-layer-stack:before {
   content: "\e909";
 }
 .icon-nbd-position:before {
-  content: "\e90a";
+  content: "\e91b";
 }
 .icon-nbd-process:before {
   content: "\e906";
