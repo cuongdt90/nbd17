@@ -7,6 +7,7 @@ jQuery(document).ready(function () {
     var w = -width;
     var h = -height;
     var showDesignFrame = function(){
+        jQuery('body').addClass('nbd-prevent-scroll');
         jQuery('#container-online-designer').addClass('show');
         jQuery('#container-online-designer').stop().animate({
             top: 0,
@@ -14,7 +15,7 @@ jQuery(document).ready(function () {
             bottom: 0
         }, 500);        
     };
-    jQuery('#container-online-designer').css({'width': width, 'height': height, 'top': h, 'opacity': 0, 'bottom': 0});
+    jQuery('#container-online-designer').css({'height': height, 'top': h, 'opacity': 0, 'bottom': 0});
     jQuery('#triggerDesign').on('click', function () {
         showDesignFrame();
     });
@@ -22,6 +23,7 @@ jQuery(document).ready(function () {
         hideDesignFrame();
     });
     hideDesignFrame = function (mes) {
+        jQuery('body').removeClass('nbd-prevent-scroll');
         var _h = -jQuery(window).height();
         jQuery('#container-online-designer').stop().animate({
             top: _h,

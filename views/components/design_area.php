@@ -1,4 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
+<div style="max-height: 100%; width: 100%;position: relative; overflow: hidden;" id="nbd-viewport">
 <div class="viewport" ng-style="{'width': designerWidth, 'height': designerHeight, 'left': offset,
                                            'min-width' : '320px',
                                            'min-height' : '320px'}">
@@ -49,7 +50,7 @@
             <i class="fa fa-share-square-o nbd-tooltip-i18n" aria-hidden="true" data-lang="REPLACE_IMAGE" ng-click="preReplaceImage()"></i>
         </div>        
     </div>
-</div>
+</div></div>
 <a ng-hide="settings['ui_mode'] == 1" href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="shadow hover-shadow back-to-main-site nbd-tooltip-i18n"  data-placement="right" data-lang="RETURN_TO_SHOP"><i class="fa fa-home"></i></a>
 <div class="side-navigator" ng-show="settings.is_mobile != '1'">
     <span class="fa fa-chevron-left side-nav" ng-click="previousOrientation(currentSide.id)" ng-class="currentSide.id > 0 ? 'ready' : '' " title="Previous"></span>

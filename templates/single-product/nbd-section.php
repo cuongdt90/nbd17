@@ -101,7 +101,7 @@ if( $_enable_upload_without_design ){
     <?php endif; ?>
     <?php do_action('nbd_after_single_product_design_section', $pid, $option); ?>
 </div>
-<div style="position: fixed; top: 0; left: 0; z-index: 999999; opacity: 0; width: 100%; height: 100%;" id="container-online-designer">
+<div style="position: fixed; top: 0; left: 0; right: 0; z-index: 999999; opacity: 0;" id="container-online-designer">
     <iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="<?php echo $src; ?>"></iframe>
     <span id="closeFrameDesign"  class="nbdesigner_pp_close">&times;</span>
 </div>

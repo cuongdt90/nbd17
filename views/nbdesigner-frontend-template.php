@@ -185,7 +185,7 @@
         </script>
     </head>
     <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
-        <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
+        <div style="width: 100%; height: 100%;overflow: hidden;" ng-controller="DesignerController" ng-cloak>
             <div id="design-container" class="design-mode" ng-class="designMode == 'custom' ? 'active' : ''">
                 <div class="container-fluid" id="designer-controller">
                     <?php

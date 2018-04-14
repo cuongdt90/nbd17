@@ -1,3 +1,6 @@
+body.nbd-prevent-scroll {
+    overflow: hidden;
+}
 #nbdesigner_frontend_area .img-con {
     margin: 0 5px 5px 0;
     border: 1px solid #ddd;
