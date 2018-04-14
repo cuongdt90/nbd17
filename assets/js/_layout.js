@@ -29,6 +29,7 @@ var hideConfig = function(){
 var menuLoaded = 0;
 var show_left_menu_tooltip = false;
 $(document).ready(function(){
+    nbd_window.NBDESIGNERPRODUCT.hide_loading_iframe();
     setTimeout(function() {
         $('#menu').triggerHandler('click');
     },10);       
@@ -181,7 +182,7 @@ $(document).ready(function(){
             });
         });
     $('#nbd-viewport, #dag-files-images, #uploaded-facebook, #dropbox_images, #nbdesigner_art_container, #nbdesigner_font_container, #nbdesigner_instagram, .nbdesigner_config_svg, #pattern-boddy, #tool-help, #design-help, #general-help, #nbdesigner-list-template, #nbd-list-cart-design, #nbd-list-my-design, #upload-design-preview, #nbd-list-product, #product-variation-wrap, #product-info-wrap, #product-info-preview-wrap, #pixabay_results, #unsplash_results').perfectScrollbar();   
-    $('#nbd-viewport').css('height', jQuery(window).height())
+    $('#nbd-viewport').css('height', jQuery(window).height());
     /* megnify */
     if ($(".magniflier").length) {
         var native_width = 0;
