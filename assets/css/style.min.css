@@ -4299,3 +4299,8 @@ img.pattern_img {
         margin-left: 15px !important;
     }
 }
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    #typography textarea.form-control {
+        font-size: 16px !important;
+    }
+}

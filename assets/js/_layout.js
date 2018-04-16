@@ -29,7 +29,9 @@ var hideConfig = function(){
 var menuLoaded = 0;
 var show_left_menu_tooltip = false;
 $(document).ready(function(){
-    nbd_window.NBDESIGNERPRODUCT.hide_loading_iframe();
+    if(typeof nbd_window.NBDESIGNERPRODUCT != 'undefined'){
+        nbd_window.NBDESIGNERPRODUCT.hide_loading_iframe();
+    };
     setTimeout(function() {
         $('#menu').triggerHandler('click');
     },10);       

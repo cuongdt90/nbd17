@@ -21,7 +21,7 @@ jQuery(document).ready(function () {
             bottom: 0
         }, 500);        
     };
-    jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0});
+    jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': width});
     jQuery('#triggerDesign').on('click', function () {
         showDesignFrame();
     });
