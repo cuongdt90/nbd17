@@ -61,7 +61,7 @@
     </ul>
     <ul class="nbd-main-menu menu-right">
         <li class="menu-item">
-            <input type="text" name="title" class="title" value="Title"/>
+            <input type="text" name="title" class="title" placeholder="Title"/>
         </li>
         <li class="menu-item"><i class="icon-nbd icon-nbd-share2"></i><span>Share</span></li>
         <li class="menu-item"><i class="icon-nbd icon-nbd-process"></i><span>Process</span></li>
