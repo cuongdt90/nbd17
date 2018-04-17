@@ -16,6 +16,9 @@ input, textarea, span {
   font-size: 14px;
 }
 
+img{
+  max-width: 100%;
+}
 .flex{
   display: flex !important;
 }
@@ -74,4 +77,12 @@ input, textarea, span {
 
 .font-21{
   font-size: 21px !important;
+}
+
+.ps-scrollbar-y-rail {
+  right: 0 !important;
+  width: 6px;
+  .ps-scrollbar-y{
+    width: 6px;
+  }
 }

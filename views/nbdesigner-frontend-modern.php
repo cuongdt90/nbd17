@@ -226,13 +226,18 @@
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/lodash.js'; ?>"></script>
         <?php endif; ?>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle.min.js'; ?>"></script>
+
+        <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.curvedText.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.removeColor.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/_layout.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/spectrum.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/qrcode.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>	        
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
+
     </body>
 </html>
 <?php endif; endif;?>

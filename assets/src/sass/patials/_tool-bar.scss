@@ -123,8 +123,11 @@
             .color-palette-popup {
               background-color: red;
               width: 100px;
-              height: 100px;position: absolute;
+              height: 100px;
+              position: absolute;
               display: none;
+              top: 0;
+              left: -50%;
             }
 
           }
@@ -277,13 +280,6 @@
             }
           }
         }
-      }
-    }
-    .ps-scrollbar-y-rail {
-      right: 0 !important;
-      width: 6px;
-      .ps-scrollbar-y{
-        width: 6px;
       }
     }
   }

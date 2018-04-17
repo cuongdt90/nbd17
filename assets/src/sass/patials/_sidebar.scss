@@ -109,6 +109,80 @@
 
     }
   }
+
+
+  #tab-photo{
+    .search {
+      margin: 20px 10px;
+      position: relative;
+      display: inline-block;
+      width: 80%;
+      input{
+        padding: 5px 35px 5px 10px;
+        width: 100%;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #ebebeb;
+        &:focus{
+          border-color: #eee;
+        }
+      }
+      i{
+        position: absolute;
+        font-size: 21px;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    .categories {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .category{
+        width: 33.33%;
+        padding: 10px;
+        &:hover{
+          img{
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+          }
+          p{
+            color: #607d8b;
+            font-weight: bold;
+          }
+        }
+        img{
+          width: 80px;
+          transition: all .3s;
+        }
+        p{
+          margin-top: 5px;
+          transition: all .3s;
+          font-size: 12px;
+        }
+      }
+    }
+
+    .loading-photo {
+      display: none;
+      img {
+        width: 40px;
+        margin-bottom: 20px;
+      }
+    }
+
+    #nbdesigner-gallery{
+      .nbdesigner-item {
+        width: 20%;
+      }
+      .nbdesigner-item-2{
+        width: 40%;
+      }
+    }
+
+  }
 }
 
 #selectedTab {

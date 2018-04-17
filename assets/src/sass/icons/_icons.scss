@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'online-design';
-  src:  url('fonts/online-design.eot?lx3qya');
-  src:  url('fonts/online-design.eot?lx3qya#iefix') format('embedded-opentype'),
-  url('fonts/online-design.ttf?lx3qya') format('truetype'),
-  url('fonts/online-design.woff?lx3qya') format('woff'),
-  url('fonts/online-design.svg?lx3qya#online-design') format('svg');
+  src:  url('fonts/online-design.eot?stcrer');
+  src:  url('fonts/online-design.eot?stcrer#iefix') format('embedded-opentype'),
+  url('fonts/online-design.ttf?stcrer') format('truetype'),
+  url('fonts/online-design.woff?stcrer') format('woff'),
+  url('fonts/online-design.svg?stcrer#online-design') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -37,38 +37,41 @@
 .icon-nbd-fomat-position:before {
   content: "\e90c";
 }
-.icon-nbd-fomat-top-left:before {
+.icon-nbd-fomat-search:before {
   content: "\e90d";
 }
-.icon-nbd-fomat-vertical-align-center:before {
+.icon-nbd-fomat-top-left:before {
   content: "\e90f";
 }
-.icon-nbd-fomat-vertical-align-top:before {
+.icon-nbd-fomat-vertical-align-center:before {
   content: "\e910";
 }
-.icon-nbd-format-align-center:before {
+.icon-nbd-fomat-vertical-align-top:before {
   content: "\e911";
 }
-.icon-nbd-format-align-justify:before {
+.icon-nbd-format-align-center:before {
   content: "\e912";
 }
-.icon-nbd-format-align-left:before {
+.icon-nbd-format-align-justify:before {
   content: "\e914";
 }
-.icon-nbd-format-align-right:before {
+.icon-nbd-format-align-left:before {
   content: "\e916";
 }
-.icon-nbd-format-bold:before {
+.icon-nbd-format-align-right:before {
   content: "\e917";
 }
-.icon-nbd-format-color-fill:before {
+.icon-nbd-format-bold:before {
   content: "\e918";
 }
-.icon-nbd-format-italic:before {
+.icon-nbd-format-color-fill:before {
   content: "\e91a";
 }
-.icon-nbd-format-underlined:before {
+.icon-nbd-format-italic:before {
   content: "\e91d";
+}
+.icon-nbd-format-underlined:before {
+  content: "\e91e";
 }
 .icon-nbd-bottom-center:before {
   content: "\e915";

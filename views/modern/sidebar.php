@@ -44,13 +44,51 @@
                 Energistically maintain leading-edge markets rather than functional servic
             </span>
         </div>
-        <div class="tab">
-            <span>4</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
+        <div id="tab-photo" class="tab">
+            <div class="tab-inner">
+                <div class="search">
+                    <input type="search" name="search" placeholder="search"/>
+                    <i class="icon-nbd icon-nbd-fomat-search"></i>
+                </div>
+                <div class="categories">
+                    <div class="category">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                        <p>Image Free</p>
+                    </div>
+                    <div class="category">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                        <p>Image Free</p>
+                    </div>
+                    <div class="category">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                        <p>Image Free</p>
+                    </div>
+                    <div class="category">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                        <p>Image Free</p>
+                    </div>
+                </div>
+                <div class="loading-photo">
+                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                </div>
+                <div class="nbdesigner-gallery" id="nbdesigner-gallery">
+<!--                    <div class="nbdesigner-item">-->
+<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="nbdesigner-item nbdesigner-item-2">-->
+<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="nbdesigner-item">-->
+<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="nbdesigner-item nbdesigner-item-2">-->
+<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
+<!--                    </div>-->
+<!--                    <div class="nbdesigner-item">-->
+<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
+<!--                    </div>-->
+                </div>
+            </div>
         </div>
         <div class="tab">
             <span>5</span>
@@ -120,4 +158,3 @@
         </div>
     </div>
 </div>
-
