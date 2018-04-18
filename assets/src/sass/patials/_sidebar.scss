@@ -50,7 +50,6 @@
         }
       }
       li.active {
-        //background: #607d8b;
         i{
           color: #fff;
         }
@@ -140,10 +139,14 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
+      position: relative;
 
       .category{
         width: 33.33%;
         padding: 10px;
+        //margin: 10px;
+        position: absolute;
+        z-index: 99;
         &:hover{
           img{
             box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -153,6 +156,17 @@
             font-weight: bold;
           }
         }
+
+        &.active{
+          img{
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+          }
+          p{
+            color: #607d8b;
+            font-weight: bold;
+          }
+        }
+
         img{
           width: 80px;
           transition: all .3s;
@@ -172,13 +186,44 @@
         margin-bottom: 20px;
       }
     }
-
+    .result-loaded {
+      position: static;
+      border-top: 1px solid #ebebeb;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      overflow: hidden;
+    }
     #nbdesigner-gallery{
       .nbdesigner-item {
-        width: 20%;
+        width: 33.33%;
       }
       .nbdesigner-item-2{
-        width: 40%;
+        width: 66.67%;
+      }
+    }
+    .content-category{
+      position: relative;
+      &.active-expanded{
+        .pointer{
+          display: block;
+        }
+      }
+      .pointer{
+        position: absolute;
+        z-index: 2;
+        display: none;
+        width: 10px;
+        bottom: -5px;
+        height: 10px;
+        margin: 14px 0 0 -8px;
+        background-color: #fff;
+        border-top: 1px solid #ebebeb;
+        border-right: 1px solid #ebebeb;
+        -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        -webkit-transition: border-color .3s linear;
+        transition: border-color .3s linear;
       }
     }
 

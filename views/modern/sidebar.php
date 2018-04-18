@@ -50,43 +50,64 @@
                     <input type="search" name="search" placeholder="search"/>
                     <i class="icon-nbd icon-nbd-fomat-search"></i>
                 </div>
-                <div class="categories">
-                    <div class="category">
-                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                        <p>Image Free</p>
+                <div class="content-category">
+                    <div class="categories">
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
+                        <div class="category">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
+                            <p>Image Free</p>
+                        </div>
                     </div>
-                    <div class="category">
-                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                        <p>Image Free</p>
-                    </div>
-                    <div class="category">
-                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                        <p>Image Free</p>
-                    </div>
-                    <div class="category">
-                        <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                        <p>Image Free</p>
-                    </div>
+                    <div class="pointer"></div>
                 </div>
                 <div class="loading-photo">
                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
                 </div>
-                <div class="nbdesigner-gallery" id="nbdesigner-gallery">
-<!--                    <div class="nbdesigner-item">-->
-<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="nbdesigner-item nbdesigner-item-2">-->
-<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="nbdesigner-item">-->
-<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="nbdesigner-item nbdesigner-item-2">-->
-<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="nbdesigner-item">-->
-<!--                        <img src="--><?php //echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?><!--" alt="">-->
-<!--                    </div>-->
+                <div class="result-loaded">
+                    <div class="nbdesigner-gallery" id="nbdesigner-gallery">
+                        <div class="nbdesigner-item">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
+                        </div>
+                        <div class="nbdesigner-item nbdesigner-item-2">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
+                        </div>
+                        <div class="nbdesigner-item">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
+                        </div>
+                        <div class="nbdesigner-item nbdesigner-item-2">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
+                        </div>
+                        <div class="nbdesigner-item">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
