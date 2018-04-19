@@ -14,8 +14,6 @@
         </ul>
     </div>
 
-
-
     <div class="tabs-content">
         <i class="fa fa-times" aria-hidden="true"></i>
         <div class="tab active">
@@ -53,36 +51,28 @@
                 <div class="content-category">
                     <div class="categories">
                         <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
+                            <i class="icon-nbd icon-nbd-file-upload"></i>
+                            <p>Image Upload</p>
                         </div>
                         <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
+                            <i class="icon-nbd icon-nbd-attachment"></i>
+                            <p>Image Url</p>
                         </div>
                         <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
+                            <i class="icon-nbd icon-nbd-facebook-logo"></i>
+                            <p>Facebook</p>
                         </div>
                         <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
+                            <i class="icon-nbd icon-nbd-instagram-logo"></i>
+                            <p>Instagram</p>
                         </div>
                         <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
+                            <i class="icon-nbd icon-nbd-dropbox-logo"></i>
+                            <p>Dropbox</p>
                         </div>
                         <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
-                        </div>
-                        <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
-                        </div>
-                        <div class="category">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL.'images/photos.png'; ?>" alt="" width="30px">
-                            <p>Image Free</p>
+                            <i class="icon-nbd icon-nbd-webcam"></i>
+                            <p>Webcam</p>
                         </div>
                     </div>
                     <div class="pointer"></div>
@@ -91,25 +81,14 @@
                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
                 </div>
                 <div class="result-loaded">
-                    <div class="nbdesigner-gallery" id="nbdesigner-gallery">
-                        <div class="nbdesigner-item">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
-                        </div>
-                        <div class="nbdesigner-item nbdesigner-item-2">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
-                        </div>
-                        <div class="nbdesigner-item">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
-                        </div>
-                        <div class="nbdesigner-item nbdesigner-item-2">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
-                        </div>
-                        <div class="nbdesigner-item">
-                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/mobile.png';?>" alt="">
-                        </div>
-                    </div>
+                    <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>
                 </div>
             </div>
+            <div class="info-support">
+                <span>Image Upload</span>
+                <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+            </div>
+
         </div>
         <div class="tab">
             <span>5</span>
@@ -127,55 +106,41 @@
                 Energistically maintain leading-edge markets rather than functional servic
             </span>
         </div>
-        <div id="test" class="tab">
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-            <span>7</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
+        <div id="tab-layer" class="tab">
+            <div class="inner-tab-layer">
+                <ul class="menu-layer">
+                    <li class="menu-item item-layer-text">
+                        <i class="icon-nbd icon-nbd-text-fields item-left"></i>
+                        <div class="item-center"><input type="text"/></div>
+                        <span class="item-right">
+                            <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
+                            <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
+                            <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                        </span>
+                    </li>
+
+                    <li class="menu-item item-layer-curved">
+                        <i class="icon-nbd icon-nbd-vector item-left"></i>
+                        <div class="item-center"><input type="text"/></div>
+                        <span class="item-right">
+                            <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
+                            <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
+                            <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                        </span>
+                    </li>
+
+                    <li class="menu-item item-layer-image">
+                        <i class="icon-nbd icon-nbd-image-layer item-left"></i>
+                        <span class="item-center">Design</span>
+                        <span class="item-right">
+                            <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
+                            <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
+                            <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                        </span>
+                    </li>
+
+                </ul>
+            </div>
         </div>
     </div>
 </div>
