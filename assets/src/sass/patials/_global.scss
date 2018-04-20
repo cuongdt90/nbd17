@@ -21,6 +21,16 @@ ul {
   margin-bottom: 0;
 }
 
+input {
+  border: 1px solid #ebebeb;
+  outline: none;
+  border-radius: 3px;
+  &:focus{
+    border-color: #ccc;
+  }
+
+}
+
 img{
   max-width: 100%;
 }
@@ -137,4 +147,11 @@ img{
 .animate1100 {
   -webkit-animation-duration: 1.1s;
   animation-duration: 1.1s;
+}
+
+.nbd-hover-shadow{
+  transition: box-shadow 0.2s ease-in-out;
+  &:hover{
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+  }
 }

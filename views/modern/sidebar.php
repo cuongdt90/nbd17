@@ -42,54 +42,89 @@
                 Energistically maintain leading-edge markets rather than functional servic
             </span>
         </div>
-        <div id="tab-photo" class="tab">
-            <div class="tab-inner">
-                <div class="search">
-                    <input type="search" name="search" placeholder="search"/>
-                    <i class="icon-nbd icon-nbd-fomat-search"></i>
-                </div>
-                <div class="content-category">
-                    <div class="categories">
-                        <div class="category">
-                            <i class="icon-nbd icon-nbd-file-upload"></i>
-                            <p>Image Upload</p>
+        <div class="tab" id="tab-photo">
+            <div class="tab-main tab-scroll">
+                <div class="tab-inner">
+                    <div class="main-category">
+                        <div class="categories">
+                            <div class="category" data-type="image-upload">
+                                <i class="icon-nbd icon-nbd-file-upload"></i>
+                                <p>Image Upload</p>
+                            </div>
+                            <div class="category" data-type="image-url">
+                                <i class="icon-nbd icon-nbd-attachment"></i>
+                                <p>Image Url</p>
+                            </div>
+                            <div class="category" data-type="facebook">
+                                <i class="icon-nbd icon-nbd-facebook-logo"></i>
+                                <p>Facebook</p>
+                            </div>
+                            <div class="category" data-type="instagram">
+                                <i class="icon-nbd icon-nbd-instagram-logo"></i>
+                                <p>Instagram</p>
+                            </div>
+                            <div class="category" data-type="dropbox">
+                                <i class="icon-nbd icon-nbd-dropbox-logo"></i>
+                                <p>Dropbox</p>
+                            </div>
+                            <div class="category" data-type="webcam">
+                                <i class="icon-nbd icon-nbd-webcam"></i>
+                                <p>Webcam</p>
+                            </div>
                         </div>
-                        <div class="category">
-                            <i class="icon-nbd icon-nbd-attachment"></i>
-                            <p>Image Url</p>
-                        </div>
-                        <div class="category">
-                            <i class="icon-nbd icon-nbd-facebook-logo"></i>
-                            <p>Facebook</p>
-                        </div>
-                        <div class="category">
-                            <i class="icon-nbd icon-nbd-instagram-logo"></i>
-                            <p>Instagram</p>
-                        </div>
-                        <div class="category">
-                            <i class="icon-nbd icon-nbd-dropbox-logo"></i>
-                            <p>Dropbox</p>
-                        </div>
-                        <div class="category">
-                            <i class="icon-nbd icon-nbd-webcam"></i>
-                            <p>Webcam</p>
-                        </div>
+                        <div class="pointer"></div>
                     </div>
-                    <div class="pointer"></div>
+                    <div class="loading-photo">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                    </div>
+                    <div class="result-loaded">
+                        <div class="content-category">
+                            <div class="item-category type-upload" data-type="image-upload">
+                                <div class="form-upload">
+                                    <i class="icon-nbd icon-nbd-cloud-upload"></i>
+                                    <span>Click or drop images here</span>
+                                </div>
+                                <div class="elements-uploaded"></div>
+                            </div>
+                            <div class="item-category type-url" data-type="image-url">
+                                <div class="form-group">
+                                    <label>Image Url</label>
+                                    <div class="input-group">
+                                        <input type="text" name="image-url"/>
+                                        <button class="nbd-button">insert</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item-category type-facebook" data-type="facebook">
+                                facebook
+                            </div>
+                            <div class="item-category type-instagram" data-type="instagram">
+                                <button class="nbd-button button-login nbd-hover-shadow">
+                                    <i class="icon-nbd icon-nbd-instagram-logo"></i>
+                                    <span>Login</span>
+                                </button>
+                            </div>
+                            <div class="item-category type-dropbox" data-type="dropbox">
+                                dropbox
+                            </div>
+                            <div class="item-category type-webcam" data-type="webcam">
+                                webcam
+                            </div>
+                        </div>
+                        <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>
+                    </div>
                 </div>
-                <div class="loading-photo">
-                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
-                </div>
-                <div class="result-loaded">
-                    <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>
+                <div class="info-support">
+                    <span>Image Upload</span>
+                    <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
                 </div>
             </div>
-            <div class="info-support">
-                <span>Image Upload</span>
-                <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+            <div class="search">
+                <input type="search" name="search" placeholder="search"/>
+                <i class="icon-nbd icon-nbd-fomat-search"></i>
             </div>
-
         </div>
+
         <div class="tab">
             <span>5</span>
             <span>
@@ -107,39 +142,40 @@
             </span>
         </div>
         <div id="tab-layer" class="tab">
-            <div class="inner-tab-layer">
-                <ul class="menu-layer">
-                    <li class="menu-item item-layer-text">
-                        <i class="icon-nbd icon-nbd-text-fields item-left"></i>
-                        <div class="item-center"><input type="text"/></div>
-                        <span class="item-right">
-                            <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                            <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                            <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
-                        </span>
-                    </li>
+            <div class="tab-main tab-scroll">
+                <div class="inner-tab-layer">
+                    <ul class="menu-layer">
+                        <li class="menu-item item-layer-text">
+                            <i class="icon-nbd icon-nbd-text-fields item-left"></i>
+                            <div class="item-center"><input type="text"/></div>
+                            <span class="item-right">
+                                <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
+                                <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
+                                <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                            </span>
+                        </li>
 
-                    <li class="menu-item item-layer-curved">
-                        <i class="icon-nbd icon-nbd-vector item-left"></i>
-                        <div class="item-center"><input type="text"/></div>
-                        <span class="item-right">
-                            <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                            <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                            <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
-                        </span>
-                    </li>
+                        <li class="menu-item item-layer-curved">
+                            <i class="icon-nbd icon-nbd-vector item-left"></i>
+                            <div class="item-center"><input type="text"/></div>
+                            <span class="item-right">
+                                <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
+                                <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
+                                <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                            </span>
+                        </li>
+                        <li class="menu-item item-layer-image">
+                            <i class="icon-nbd icon-nbd-image-layer item-left"></i>
+                            <span class="item-center">Design</span>
+                            <span class="item-right">
+                                <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
+                                <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
+                                <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                            </span>
+                        </li>
 
-                    <li class="menu-item item-layer-image">
-                        <i class="icon-nbd icon-nbd-image-layer item-left"></i>
-                        <span class="item-center">Design</span>
-                        <span class="item-right">
-                            <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                            <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                            <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
-                        </span>
-                    </li>
-
-                </ul>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
