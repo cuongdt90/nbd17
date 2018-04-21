@@ -199,6 +199,9 @@
 				</div>	
             </div>
         </div>
+        <?php include 'modern/popup.php'?>
+        <?php include 'modern/loading-page.php'?>
+
         <?php if(!NBDESIGNER_MODE_DEV): ?>
         <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <?php else: ?>

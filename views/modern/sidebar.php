@@ -13,17 +13,115 @@
             <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span>Layers</span></li>
         </ul>
     </div>
-
     <div class="tabs-content">
         <i class="fa fa-times" aria-hidden="true"></i>
-        <div class="tab active">
-            <div style="padding: 10px">
-                <span>1</span>
-                <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
+        <div class="tab active" id="tab-product">
+            <div class="nbd-search">
+                <input type="search" name="search" placeholder="search"/>
+                <i class="icon-nbd icon-nbd-fomat-search"></i>
+            </div>
+            <div class="tab-main tab-scroll">
+                <div class="nbd-products">
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nbd-product">
+                        <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-product-img">
+                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                            </div>
+                            <div class="nbd-product-info">
+                                <span class="product-name" title="Business Card">Business Card</span>
+                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="tab">
@@ -119,7 +217,7 @@
                     <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
                 </div>
             </div>
-            <div class="search">
+            <div class="nbd-search">
                 <input type="search" name="search" placeholder="search"/>
                 <i class="icon-nbd icon-nbd-fomat-search"></i>
             </div>
@@ -175,6 +273,26 @@
                         </li>
 
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nbd-sidebar-preview show product-more-info">
+        <div class="preview-head">
+            <span>infomation</span>
+            <i class="icon-nbd icon-nbd-fomat-highlight-off close-preview"></i>
+        </div>
+        <div class="main-preview tab-scroll">
+            <div class="preview-body">
+                <div class="main-body">
+                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="">
+                    <span class="product-name">Business Card</span>
+                    <span class="product-desc">Business cards are cards bearing business information about a company or individual. They are shared during formal introductions as a convenience and a memory aid. A business card typically includes the giver's name, company or business affiliation (usually with a logo) and contact information such as street addresses, telephone number(s), fax number, e-mail addresses and website. Before the advent of electronic communication business cards might also include telex details</span>
+                </div>
+            </div>
+            <div class="preview-footer">
+                <div class="main-footer">
+                    <button class="nbd-button">Choose</button>
                 </div>
             </div>
         </div>

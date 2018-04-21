@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'online-design';
-  src:  url('fonts/online-design.eot?q1mua3');
-  src:  url('fonts/online-design.eot?q1mua3#iefix') format('embedded-opentype'),
-  url('fonts/online-design.ttf?q1mua3') format('truetype'),
-  url('fonts/online-design.woff?q1mua3') format('woff'),
-  url('fonts/online-design.svg?q1mua3#online-design') format('svg');
+  src:  url('fonts/online-design.eot?4qwf7');
+  src:  url('fonts/online-design.eot?4qwf7#iefix') format('embedded-opentype'),
+  url('fonts/online-design.ttf?4qwf7') format('truetype'),
+  url('fonts/online-design.woff?4qwf7') format('woff'),
+  url('fonts/online-design.svg?4qwf7#online-design') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,99 +27,111 @@
 .icon-nbd-attachment:before {
   content: "\e908";
 }
-.icon-nbd-cloud-upload:before {
+.icon-nbd-clear:before {
   content: "\e90a";
 }
-.icon-nbd-dropbox-logo:before {
+.icon-nbd-cloud-upload:before {
   content: "\e90b";
 }
-.icon-nbd-dropdown-arrows:before {
+.icon-nbd-dropbox-logo:before {
   content: "\e90c";
+}
+.icon-nbd-dropdown-arrows:before {
+  content: "\e90d";
   color: #3f4652;
 }
-.icon-nbd-facebook-logo:before {
-  content: "\e90d";
-}
-.icon-nbd-file-upload:before {
+.icon-nbd-facebook-circle:before {
   content: "\e90f";
 }
-.icon-nbd-fomat-done:before {
+.icon-nbd-facebook-logo:before {
   content: "\e910";
 }
-.icon-nbd-fomat-highlight-off:before {
+.icon-nbd-file-upload:before {
   content: "\e911";
 }
-.icon-nbd-fomat-info-outline:before {
+.icon-nbd-fomat-done:before {
   content: "\e912";
 }
-.icon-nbd-fomat-lock-open:before {
+.icon-nbd-fomat-highlight-off:before {
   content: "\e914";
 }
-.icon-nbd-fomat-lock-outline:before {
+.icon-nbd-fomat-info-outline:before {
   content: "\e916";
 }
-.icon-nbd-fomat-position:before {
+.icon-nbd-fomat-lock-open:before {
   content: "\e917";
 }
-.icon-nbd-fomat-search:before {
+.icon-nbd-fomat-lock-outline:before {
   content: "\e918";
 }
-.icon-nbd-fomat-top-left:before {
+.icon-nbd-fomat-position:before {
   content: "\e91a";
 }
-.icon-nbd-fomat-vertical-align-center:before {
+.icon-nbd-fomat-search:before {
   content: "\e91d";
 }
-.icon-nbd-fomat-vertical-align-top:before {
+.icon-nbd-fomat-top-left:before {
   content: "\e91e";
 }
-.icon-nbd-fomat-visibility:before {
+.icon-nbd-fomat-vertical-align-center:before {
   content: "\e91f";
 }
-.icon-nbd-fomat-visibility-off:before {
+.icon-nbd-fomat-vertical-align-top:before {
   content: "\e920";
 }
-.icon-nbd-format-align-center:before {
+.icon-nbd-fomat-visibility:before {
   content: "\e921";
 }
-.icon-nbd-format-align-justify:before {
+.icon-nbd-fomat-visibility-off:before {
   content: "\e922";
 }
-.icon-nbd-format-align-left:before {
+.icon-nbd-format-align-center:before {
   content: "\e923";
 }
-.icon-nbd-format-align-right:before {
+.icon-nbd-format-align-justify:before {
   content: "\e924";
 }
-.icon-nbd-format-bold:before {
+.icon-nbd-format-align-left:before {
   content: "\e925";
 }
-.icon-nbd-format-color-fill:before {
+.icon-nbd-format-align-right:before {
   content: "\e926";
 }
-.icon-nbd-format-italic:before {
+.icon-nbd-format-bold:before {
   content: "\e927";
 }
-.icon-nbd-format-underlined:before {
+.icon-nbd-format-color-fill:before {
   content: "\e928";
 }
-.icon-nbd-image-layer:before {
+.icon-nbd-format-italic:before {
   content: "\e929";
 }
-.icon-nbd-instagram-logo:before {
+.icon-nbd-format-underlined:before {
   content: "\e92a";
 }
-.icon-nbd-sortable:before {
+.icon-nbd-google-plus-circle:before {
   content: "\e92b";
 }
-.icon-nbd-text-fields:before {
+.icon-nbd-image-layer:before {
   content: "\e92c";
 }
-.icon-nbd-vector:before {
+.icon-nbd-instagram-logo:before {
   content: "\e92d";
 }
-.icon-nbd-webcam:before {
+.icon-nbd-sortable:before {
   content: "\e92f";
+}
+.icon-nbd-text-fields:before {
+  content: "\e930";
+}
+.icon-nbd-twitter-circle:before {
+  content: "\e931";
+}
+.icon-nbd-vector:before {
+  content: "\e932";
+}
+.icon-nbd-webcam:before {
+  content: "\e933";
 }
 .icon-nbd-bottom-center:before {
   content: "\e915";

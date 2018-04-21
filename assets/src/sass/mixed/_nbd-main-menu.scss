@@ -64,17 +64,24 @@
       position: absolute;
       top: -14px;
     }
+    &:before{
+      border: 7px solid transparent;
+      border-bottom: 7px solid #ebebeb;
+      content: "";
+      position: absolute;
+      top: -14px;
+    }
 
     &[data-pos="left"]{
       left: -5px;
-      &:after{
+      &:after,&:before{
         left: 20px;
       }
     }
 
     &[data-pos="right"]{
       right: 5px;
-      &:after{
+      &:after,&:before{
         right: 10px;
       }
     }
@@ -82,7 +89,7 @@
     &[data-pos="center"]{
       left: 50%;
       transform: translateX(-50%);
-      &:after {
+      &:after,&:before {
         left: 50%;
         transform: translateX(-50%);
       }
