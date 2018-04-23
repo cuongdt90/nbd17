@@ -15,109 +15,219 @@
     </div>
     <div class="tabs-content">
         <i class="fa fa-times" aria-hidden="true"></i>
-        <div class="tab active" id="tab-product">
+        <div class="tab active" id="tab-product-template">
             <div class="nbd-search">
                 <input type="search" name="search" placeholder="search"/>
                 <i class="icon-nbd icon-nbd-fomat-search"></i>
             </div>
-            <div class="tab-main tab-scroll">
-                <div class="nbd-products">
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+            <div class="tab-product" id="tab-product">
+                <div class="tab-main tab-scroll">
+                    <div class="nbd-products">
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
                             </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nbd-product">
+                            <div class="nbd-main-product nbd-hover-shadow">
+                                <div class="nbd-product-img">
+                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                                </div>
+                                <div class="nbd-product-info">
+                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
+                </div>
+            </div>
+            <div class="tab-template" id="tab-template">
+                <i class="icon-nbd icon-nbd-fomat-highlight-off close-template"></i>
+                <div class="tab-main tab-scroll">
+                    <div class="nbd-items-dropdown">
+                        <div class="main-items">
+                            <div class="items">
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="main-item">
+                                        <div class="item-img">
+                                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
+                                        </div>
+                                        <div class="item-info">
+                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
+                            <div class="pointer"></div>
                         </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
+                        <div class="loading-photo">
+                            <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
                         </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="nbd-product">
-                        <div class="nbd-main-product nbd-hover-shadow">
-                            <div class="nbd-product-img">
-                                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
-                            </div>
-                            <div class="nbd-product-info">
-                                <span class="product-name" title="Business Card">Business Card</span>
-                                <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
+                        <div class="result-loaded">
+                            <div class="nbdesigner-gallery">
                             </div>
                         </div>
                     </div>
@@ -168,6 +278,14 @@
                             <div class="category" data-type="webcam">
                                 <i class="icon-nbd icon-nbd-webcam"></i>
                                 <p>Webcam</p>
+                            </div>
+                            <div class="category" data-type="pixaby">
+                                <i class="icon-nbd icon-nbd-pixabay"></i>
+                                <p>Pixabay</p>
+                            </div>
+                            <div class="category" data-type="unsplash">
+                                <i class="icon-nbd icon-nbd-camera-alt"></i>
+                                <p>Unsplash</p>
                             </div>
                         </div>
                         <div class="pointer"></div>
@@ -277,7 +395,7 @@
             </div>
         </div>
     </div>
-    <div class="nbd-sidebar-preview show product-more-info">
+    <div class="nbd-sidebar-preview product-more-info">
         <div class="preview-head">
             <span>infomation</span>
             <i class="icon-nbd icon-nbd-fomat-highlight-off close-preview"></i>

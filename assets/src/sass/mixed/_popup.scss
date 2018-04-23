@@ -28,7 +28,7 @@
   .main-popup{
     pointer-events: all;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 0 42px rgba(0,0,0,.15);
     box-sizing: border-box;
     display: inline-block;
@@ -41,7 +41,6 @@
     width: 525px;
 
   }
-
   &.popup-share{
     .main-popup{
       .head{
@@ -75,7 +74,6 @@
                 font-size: 45px;
                 border-radius: 50%;
               }
-
               &.active, &:hover{
                 &.facebook{
                   i{
@@ -95,7 +93,6 @@
                   }
                 }
               }
-
             }
           }
         }
@@ -122,6 +119,12 @@
         }
       }
       .footer{}
+    }
+  }
+  &.popup-webcam{
+    .main-popup{
+      width: 80%;
+      min-height: 500px;
     }
   }
 

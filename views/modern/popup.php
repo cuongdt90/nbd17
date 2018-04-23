@@ -21,6 +21,24 @@
                 <button class="nbd-button nbd-hover-shadow">Share now</button>
             </div>
         </div>
-        <div class="footer"></div>
+        <div class="footer">
+            <div class="nbd-buton">
+                <button class="nbd-"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nbd-popup popup-webcam">
+    <div class="overlay-popup"></div>
+    <div class="main-popup">
+        <div class="head">
+        </div>
+        <div class="body">
+
+        </div>
+        <div class="footer">
+
+        </div>
     </div>
 </div>
