@@ -125,7 +125,10 @@
     .main-popup{
       width: 80%;
       min-height: 500px;
+      display: flex;
+    }
+    .footer{
+      align-self: flex-end;
     }
   }
-
 }

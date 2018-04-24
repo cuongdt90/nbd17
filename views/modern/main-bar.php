@@ -1,5 +1,5 @@
 <div class="nbd-main-bar">
-    <a href="#" class="logo"><img src="" alt="online design"></a>
+    <a href="#" class="logo"><img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/netbaseteam.png" alt="online design"></a>
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item" data-overlay="overlay">
             <span>Edit</span>

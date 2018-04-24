@@ -485,6 +485,7 @@
             }
             .nbd-product-img {
               overflow: hidden;
+              cursor: pointer;
               &:hover {
                 img {
                   transform: scale(1.1);

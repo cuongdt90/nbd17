@@ -1,5 +1,5 @@
 <div class="nbd-toolbar">
-    <div class="toolbar-text">
+    <div style="display: none" class="toolbar-text">
         <ul class="nbd-main-menu menu-left">
             <li class="menu-item item-font-familly">
                 <button class="toolbar-bottom">
@@ -131,6 +131,202 @@
             <li class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Text underline"></i></li>
         </ul>
     </div>
+    <div class="toolbar-image">
+        <ul class="nbd-main-menu">
+            <li class="menu-item menu-filter">
+                <span>Filter</span>
+                <div class="sub-menu" data-pos="left">
+                    <ul class="filter-presets">
+                        <li class="filter-scroll scrollLeft disable"><i class="icon-nbd icon-nbd-arrow-drop-down"></i></li>
+                        <li class="container-presets">
+                            <ul class="main-presets">
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                                <li class="preset">
+                                    <div class="image">
+                                        <div class="inner">
+                                            <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
+                                        </div>
+                                        <span class="title">Grayscale</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="filter-scroll scrollRight"><i class="icon-nbd icon-nbd-arrow-drop-down"></i></li>
+                    </ul>
+                    <div class="filter-ranges">
+                       <ul class="main-ranges">
+                           <li class="range range-brightness">
+                               <label>Brightness</label>
+                               <div class="main-track">
+                                   <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                   <span class="range-track"></span>
+                                   <span class="snap-guide"></span>
+                               </div>
+                               <span class="value-display">0</span>
+                           </li>
+                           <li class="range range-brightness">
+                               <label>Brightness</label>
+                               <div class="main-track">
+                                   <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                   <span class="range-track"></span>
+                                   <span class="snap-guide"></span>
+                               </div>
+                               <span class="value-display">50</span>
+                           </li>
+                           <li class="range range-brightness">
+                               <label>Brightness</label>
+                               <div class="main-track">
+                                   <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                   <span class="range-track"></span>
+                                   <span class="snap-guide"></span>
+                               </div>
+                               <span class="value-display">50</span>
+                           </li>
+                           <li class="range range-brightness">
+                               <label>Brightness</label>
+                               <div class="main-track">
+                                   <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                   <span class="range-track"></span>
+                                   <span class="snap-guide"></span>
+                               </div>
+                               <span class="value-display">50</span>
+                           </li>
+                           <li class="range range-brightness">
+                               <label>Brightness</label>
+                               <div class="main-track">
+                                   <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                   <span class="range-track"></span>
+                                   <span class="snap-guide"></span>
+                               </div>
+                               <span class="value-display">50</span>
+                           </li>
+                           <li class="range range-brightness">
+                               <label>Brightness</label>
+                               <div class="main-track">
+                                   <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                   <span class="range-track"></span>
+                                   <span class="snap-guide"></span>
+                               </div>
+                               <span class="value-display">50</span>
+                           </li>
+                       </ul>
+                    </div>
+                </div>
+            </li>
+            <li class="menu-item menu-crop">Crop</li>
+        </ul>
+    </div>
     <div class="toolbar-common">
         <ul class="nbd-main-menu">
             <li class="menu-item item-color-fill">
@@ -203,7 +399,7 @@
                 </div>
             </li>
             <li class="menu-item item-position">
-                <i class="icon-nbd icon-nbd-position nbd-tooltip-hover" title="layer position"></i>
+                <i class="icon-nbd icon-nbd-apps nbd-tooltip-hover" title="layer position" style="font-size: 21px;"></i>
                 <div class="sub-menu" data-pos="right">
                     <ul>
                         <li class="title">
@@ -211,17 +407,17 @@
                             <i class="colse"></i>
                         </li>
                         <li><i class="icon-nbd icon-nbd-fomat-vertical-align-center nbd-tooltip-hover" title="Center vertical"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate-45" title="Top left"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate0" title="Top center"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate45" title="Top right"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-90" title="Top left"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-45" title="Top center"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover" title="Top right"></i></li>
                         <li><i class="icon-nbd icon-nbd-fomat-vertical-align-center nbd-tooltip-hover rotate90" title="Center horizontal"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate-90" title="Middle left"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-135" title="Middle left"></i></li>
                         <li><i class="icon-nbd icon-nbd-bottom-center nbd-tooltip-hover middle-center" title="Middle center"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate90" title="Middle right"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate45" title="Middle right"></i></li>
                         <li><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover" title="Intro"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate-135" title="Bottom left"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate-180" title="Bottom center"></i></li>
-                        <li><i class="icon-nbd icon-nbd-fomat-vertical-align-top nbd-tooltip-hover rotate135" title="Bottom right"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-180" title="Bottom left"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate135" title="Bottom center"></i></li>
+                        <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate90" title="Bottom right"></i></li>
                     </ul>
                 </div>
             </li>
