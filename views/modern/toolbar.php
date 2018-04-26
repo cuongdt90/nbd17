@@ -140,126 +140,127 @@
                         <li class="filter-scroll scrollLeft disable"><i class="icon-nbd icon-nbd-arrow-drop-down"></i></li>
                         <li class="container-presets">
                             <ul class="main-presets">
-                                <li class="preset">
+                                <li class="preset active">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
                                 <li class="preset">
                                     <div class="image">
                                         <div class="inner">
                                             <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">
                                         </div>
-                                        <span class="title">Grayscale</span>
                                     </div>
+                                    <span class="title">Grayscale</span>
                                 </li>
+
                             </ul>
                         </li>
                         <li class="filter-scroll scrollRight"><i class="icon-nbd icon-nbd-arrow-drop-down"></i></li>

@@ -1,4 +1,8 @@
 $main-color: #607d8b;
+$facebook-color:#3b5998;
+$dropbox-color:#007ee5;
+$instagram-color:#8a3ab9;
+$pixabay-color: #000;
 
 body, html {
   font-family: 'Poppins', sans-serif;
@@ -185,4 +189,8 @@ img{
       font-size: 16px;
     }
   }
+}
+
+.title{
+  font-size: 18px;
 }

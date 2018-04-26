@@ -6,6 +6,40 @@
     .nbd-main-menu {
       border: 1px solid #ebebeb;
       border-radius: 45px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+      .menu-item{
+        padding: 8px;
+        i{
+          font-size: 24px;
+        }
+        &.zoomer-fullscreen{
+          border-right: 1px solid #ebebeb;
+        }
+
+        &.zoomer-level{
+          position: relative;
+          span{
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .sub-menu {
+            min-width: auto;
+            top: -15px;
+            transform: translate(-50%,-100%);
+            box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+            &:after, &:before{
+              transform: translateX(-50%) rotate(-180deg);
+              bottom: -14px;
+              top: auto;
+            }
+            .zoomer-popover-item{
+              font-size: 14px;
+              padding: 5px 15px;
+            }
+          }
+        }
+      }
     }
   }
 }

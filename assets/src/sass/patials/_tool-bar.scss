@@ -358,8 +358,15 @@
             transition: all .1s;
             padding: 4px;
             transform: translateX(0);
+            &.active{
+              .image {
+                border: 2px solid $main-color;
+                transform: scale(1,1);
+              }
+            }
             .image{
-              width: 60px;
+              padding: 2px;
+              width: 62px;
             }
             .title{
               text-align: center;

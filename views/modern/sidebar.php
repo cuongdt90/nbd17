@@ -1,17 +1,16 @@
-
-
 <div class="nbd-sidebar box-shadow-right">
     <div class="tabs-nav box-shadow-right">
         <ul class="main-tabs" data-tab="tab-1">
             <div id="selectedTab"></div>
-            <li class="tab active"><i class="icon-nbd icon-nbd-box"></i><span>Product</span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-ligature"></i><span>Typography</span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-illutration"></i><span>Illustrations</span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-images"></i><span>Photos</span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-illutration-2"></i><span>Elements</span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-qrcode"></i><span>QR Code</span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span>Layers</span></li>
+            <li class="tab active"><i class="icon-nbd icon-nbd-box"></i><span><?php _e('Product','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-ligature"></i><span><?php _e('Typography','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-illutration"></i><span><?php _e('Illustrations','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-images"></i><span><?php _e('Photos','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-illutration-2"></i><span><?php _e('Elements','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-qrcode"></i><span><?php _e('QR Code','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span><?php _e('Layers','web-to-print-online-designer'); ?></span></li>
         </ul>
+        <div class="keyboard-shortcuts"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover tooltipstered"></i></div>
     </div>
     <div class="tabs-content">
         <i class="fa fa-times" aria-hidden="true"></i>
@@ -138,7 +137,6 @@
                                         </div>
                                         <div class="item-info">
                                             <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +217,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="pointer"></div>
                         </div>
@@ -234,21 +231,159 @@
                 </div>
             </div>
         </div>
-        <div class="tab">
-            <span>2</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
+        <div class="tab" id="tab-typography">
+            <div class="tab-main tab-scroll">
+                <div class="typography-head">
+                    <span class="text-guide" style="color: #fff; margin-bottom: 20px;display: block;"><?php _e('Click to add text','nbd-online-design'); ?></span>
+                    <div class="head-main">
+                        <span class="text-heading" style="color: #fff; display: block; font-size: 40px; font-weight: 700">Add heading</span>
+                        <span class="text-sub-heading" style="display: block; font-size: 24px; font-weight: 500; color: #fff"><?php _e('Add subheading','nbd-online-design');?></span>
+                        <span class="text-body" style="display: block;color: #fff"><?php _e('Add subheading','nbd-online-design'); ?></span>
+                    </div>
+                </div>
+                <div class="typography-body">
+                    <ul class="typography-items">
+                       <li class="typography-item">
+                           <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                   alt="Typography">
+                       </li>
+                        <li class="typography-item">
+                            <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                 alt="Typography">
+                        </li>
+                        <li class="typography-item">
+                            <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                 alt="Typography">
+                        </li>
+                        <li class="typography-item">
+                            <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                 alt="Typography">
+                        </li>
+                        <li class="typography-item">
+                            <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                 alt="Typography">
+                        </li>
+                        <li class="typography-item">
+                            <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                 alt="Typography">
+                        </li>
+                        <li class="typography-item">
+                            <img src="http://192.168.9.175/online-design/wp-content/plugins/web-to-print-online-designer/data/typography/img/1.png"
+                                 alt="Typography">
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="tab">
-            <span>3</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
+        <div class="tab" id="tab-svg">
+            <div class="nbd-search">
+                <input type="search" name="search" placeholder="search"/>
+                <i class="icon-nbd icon-nbd-fomat-search"></i>
+            </div>
+            <div class="tab-main tab-scroll">
+                <div class="nbd-items-dropdown">
+                    <div class="main-items">
+                        <div class="items">
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 50,30 47,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 7,10 7,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 7,10 7,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 50,30 47,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 50,30 47,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 50,30 47,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="main-item">
+                                    <div class="item-svg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" focusable="false"><g id="cat-placeholder">
+                                                <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 50,30 47,10L1,18H23L14,6Z"></path>
+                                            </g></svg>
+                                    </div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Animal</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pointer"></div>
+                    </div>
+                    <div class="loading-photo">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                    </div>
+                    <div class="result-loaded">
+                        <div class="nbdesigner-gallery">
+                        </div>
+                    </div>
+                    <div class="info-support">
+                        <span>Facebook</span>
+                        <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="tab" id="tab-photo">
             <div class="tab-main tab-scroll">
