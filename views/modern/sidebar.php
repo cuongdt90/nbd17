@@ -7,7 +7,7 @@
             <li class="tab"><i class="icon-nbd icon-nbd-illutration"></i><span><?php _e('Illustrations','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-images"></i><span><?php _e('Photos','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-illutration-2"></i><span><?php _e('Elements','web-to-print-online-designer'); ?></span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-qrcode"></i><span><?php _e('QR Code','web-to-print-online-designer'); ?></span></li>
+<!--            <li class="tab"><i class="icon-nbd icon-nbd-qrcode"></i><span>--><?php //_e('QR Code','web-to-print-online-designer'); ?><!--</span></li>-->
             <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span><?php _e('Layers','web-to-print-online-designer'); ?></span></li>
         </ul>
         <div class="keyboard-shortcuts"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover tooltipstered"></i></div>
@@ -476,21 +476,116 @@
             </div>
         </div>
 
-        <div class="tab">
-            <span>5</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
-        </div>
-        <div class="tab">
-            <span>6</span>
-            <span>
-                Authoritatively redefine error-free total linkage vis-a-vis sustainable action items.
-                Professionally enable pandemic infomediaries whereas scalable "outside the box" thinking.
-                Energistically maintain leading-edge markets rather than functional servic
-            </span>
+        <div class="tab" id="tab-element">
+            <div class="tab-main tab-scroll">
+                <div class="nbd-items-dropdown">
+                    <div class="main-items">
+                        <div class="items">
+                            <div class="item" data-type="draw">
+                                <div class="main-item">
+                                    <div class="item-icon"><i class="icon-nbd icon-nbd-draw"></i></div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Draw</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item" data-type="shapes">
+                                <div class="main-item">
+                                    <div class="item-icon"><i class="icon-nbd icon-nbd-shapes"></i></div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Shapes</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item" data-type="icons">
+                                <div class="main-item">
+                                    <div class="item-icon"><i class="icon-nbd icon-nbd-diamond"></i></div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Icons</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item" data-type="lines">
+                                <div class="main-item">
+                                    <div class="item-icon"><i class="icon-nbd icon-nbd-line"></i></div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">Lines</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item" data-type="qr-code">
+                                <div class="main-item">
+                                    <div class="item-icon"><i class="icon-nbd icon-nbd-qrcode"></i></div>
+                                    <div class="item-info">
+                                        <span class="item-name" title="Business Card">QR-Code</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pointer"></div>
+                    </div>
+                    <div class="loading-photo">
+                        <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                    </div>
+                    <div class="result-loaded">
+                        <div class="content-items">
+                            <div class="content-item type-draw" data-type="draw">
+                                <div class="main-type">
+                                    <span class="heading-title">Drawing Mode</span>
+                                    <ul class="main-ranges">
+                                        <li class="range range-brightness">
+                                            <label>Brightness</label>
+                                            <div class="main-track">
+                                                <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                                                <span class="range-track"></span>
+<!--                                                <span class="snap-guide"></span>-->
+                                            </div>
+                                            <span class="value-display">50</span>
+                                        </li>
+                                        <li class="range range-brightness">
+                                            <label>Brightness</label>
+                                            <div class="main-track">
+                                                <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                                                <span class="range-track"></span>
+<!--                                                <span class="snap-guide"></span>-->
+                                            </div>
+                                            <span class="value-display">50</span>
+                                        </li>
+                                    </ul>
+                                    <div class="brush">
+                                        <button class="nbd-button nbd-dropdown">
+                                            Brush <i class="icon-nbd icon-nbd-arrow-drop-down"></i>
+                                            <div class="nbd-sub-dropdown" data-pos="left">
+                                                <ul class="tab-scroll">
+                                                    <li><span>Pencil</span></li>
+                                                    <li><span>Circle</span></li>
+                                                    <li><span>Spray</span></li>
+                                                    <li><span>Pattern</span></li>
+                                                    <li><span>Horizontal line</span></li>
+                                                    <li><span>Vertical line</span></li>
+                                                    <li><span>Square</span></li>
+                                                    <li><span>Diamond</span></li>
+                                                    <li><span>Textture</span></li>
+                                                </ul>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content-item type-shape" data-type="shape"></div>
+                            <div class="content-item type-icons" data-type="icons"></div>
+                            <div class="content-item type-lines" data-type="lines"></div>
+                            <div class="content-item type-qrcode" data-type="qr-code"></div>
+                        </div>
+                        <div class="nbdesigner-gallery" id="nbdesigner-gallery">
+                        </div>
+                    </div>
+                    <div class="info-support">
+                        <span>Facebook</span>
+                        <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="tab-layer" class="tab">
             <div class="tab-main tab-scroll">

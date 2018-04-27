@@ -54,7 +54,7 @@
             <span>undo</span>
         </li>
 
-        <li class="menu-item">
+        <li class="menu-item active">
             <i class="icon-nbd icon-nbd-redo2"></i>
             <span>redo</span>
         </li>

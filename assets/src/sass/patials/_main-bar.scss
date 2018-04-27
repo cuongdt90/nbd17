@@ -27,6 +27,10 @@
       margin: auto;
       li{
         &.menu-item{
+          opacity: .5;
+          &.active{
+            opacity: 1;
+          }
           padding: 0 15px;
           display: flex;
           flex-direction: column;

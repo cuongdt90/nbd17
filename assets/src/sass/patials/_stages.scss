@@ -1,0 +1,47 @@
+.nbd-stages {
+  height:100%;
+  .stages-inner {
+    height: 100%;
+  }
+  .stage{
+    padding: 50px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    .stage-main {
+      width: 410px;
+      height: 410px;
+      box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+      position: relative;
+      background-color: #fff;
+      margin: auto 0;
+    }
+    .page-toolbar {
+      width: 40px;
+      height: 410px;
+      margin-left: 10px;
+      .page-main {
+        height: 100%;
+        text-align: center;
+        ul {
+          list-style-type: none;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          li{
+            padding: 10px 0;
+            i{
+              font-size: 21px;
+            }
+            span{
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
