@@ -26,17 +26,15 @@
       li.menu-item{
         padding: 10px 15px;
         i{
-          font-size: 18px;
+          font-size: 24px;
           text-align: center;
         }
 
         &.item-color-fill{
-
           .sub-menu{
             width: 220px;
             min-width: 220px;
           }
-
           .nbd-color-palette{
             padding: 10px;
             position: relative;
@@ -133,10 +131,34 @@
 
           }
         }
-        &.item-position{
-          padding: 7px 12px;
-          .sub-menu {
+        &.item-stack{
+          .sub-menu{
+            min-width: 300px;
+            ul{
+              display: block;
+              li{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                &:hover{
+                  background-color: $menu-hover-color;
+                }
+                i{
+                  margin-right: 10px;
+                }
+                span{
+                  &.keyboard{
+                    margin-left: auto;
+                  }
+                }
+              }
+            }
 
+          }
+        }
+        &.item-position{
+          padding: 10px 12px;
+          .sub-menu {
             ul{
               display: flex;
               flex-wrap: wrap;
@@ -148,27 +170,14 @@
                 }
 
                 i{
-                  font-size: 18px;
+                  font-size: 24px;
+                  cursor: pointer;
                 }
               }
             }
 
           }
         }
-        &.item-stack{
-          .sub-menu{
-            ul{
-              display: block;
-              li{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              }
-            }
-
-          }
-        }
-
       }
 
     }
@@ -188,7 +197,7 @@
             li{
               width: auto;
               i{
-                font-size: 18px;
+                font-size: 24px;
               }
             }
           }
@@ -332,10 +341,15 @@
       align-items: center;
       .filter-scroll {
         padding: 0;
-
+        cursor: pointer;
         &.disable{
           i{
             opacity: 0.2;
+          }
+        }
+        &:hover{
+          i{
+            color: $main-color;
           }
         }
         i{
@@ -367,6 +381,7 @@
             .image{
               padding: 2px;
               width: 62px;
+              cursor: pointer;
             }
             .title{
               text-align: center;

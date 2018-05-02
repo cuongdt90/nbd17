@@ -32,8 +32,23 @@
           justify-content: center;
           li{
             padding: 10px 0;
+            cursor: pointer;
+            &:hover{
+              i{
+                opacity: 1;
+              }
+            }
+            &.disabled{
+              &:hover{
+                i{
+                  opacity: 0.5;
+                }
+              }
+            }
+
             i{
-              font-size: 21px;
+              font-size: 24px;
+              opacity: 0.5;
             }
             span{
               font-size: 18px;

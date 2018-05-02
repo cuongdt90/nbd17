@@ -331,7 +331,7 @@
     <div class="toolbar-common">
         <ul class="nbd-main-menu">
             <li class="menu-item item-color-fill">
-                <i class="icon-nbd icon-nbd-format-color-fill nbd-tooltip-hover font-21 color-fill" title="color"></i>
+                <i class="icon-nbd icon-nbd-format-color-fill nbd-tooltip-hover color-fill" title="color"></i>
                 <div class="sub-menu" data-pos="center">
                     <div class="nbd-color-palette" style="position: relative">
                         <h3 class="color-palette-label">Color document</h3>
@@ -381,28 +381,33 @@
                 <div class="sub-menu" data-pos="right">
                     <ul>
                         <li class="sub-menu-item">
-                            <span><i class=""></i> Bring to Front</span>
-                            <span>Ctrl+Shift+]</span>
+                            <i class="icon-nbd icon-nbd-bring-to-front"></i>
+                            <span>Bring to Front</span>
+                            <span class="keyboard">Ctrl+Shift+]</span>
                         </li>
                         <li class="sub-menu-item">
-                            <span><i class=""></i> Bring Forward</span>
-                            <span>Ctrl+]</span>
+                            <i class="icon-nbd icon-nbd-bring-forward"></i>
+                            <span>Bring Forward</span>
+                            <span class="keyboard">Ctrl+]</span>
                         </li>
                         <li class="sub-menu-item">
-                            <span><i class=""></i> Send to Backward</span>
-                            <span>Ctrl+[</span>
+                            <i class="icon-nbd icon-nbd-sent-to-backward"></i>
+                            <span>Send to Backward</span>
+                            <span class="keyboard">Ctrl+[</span>
                         </li>
                         <li class="sub-menu-item">
-                            <span><i class=""></i> Send to Back</span>
-                            <span>Ctrl+Shift+[</span>
+                            <i class="icon-nbd icon-nbd-send-to-back"></i>
+                            <span>Send to Back</span>
+                            <span class="keyboard">Ctrl+Shift+[</span>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="menu-item item-position">
-                <i class="icon-nbd icon-nbd-apps nbd-tooltip-hover" title="layer position" style="font-size: 21px;"></i>
+                <i class="icon-nbd icon-nbd-apps nbd-tooltip-hover" title="layer position"></i>
                 <div class="sub-menu" data-pos="right">
                     <ul>
+                        <i class="icon-nbd-clear nbd-close-sub-menu"></i>
                         <li class="title">
                             <span>Layer position</span>
                             <i class="colse"></i>

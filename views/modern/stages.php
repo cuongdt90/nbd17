@@ -13,10 +13,11 @@
             <div class="page-toolbar">
                 <div class="page-main">
                     <ul>
-                        <li><i class="icon-nbd icon-nbd-arrow-upward"></i></li>
+                        <li class="disabled"><i class="icon-nbd icon-nbd-arrow-upward" title="Prev Page"></i></li>
                         <li><span>1</span></li>
-                        <li><i class="icon-nbd icon-nbd-arrow-upward rotate-180"></i></li>
-                        <li><i class="icon-nbd icon-nbd-reset"></i></li>
+                        <li><i class="icon-nbd icon-nbd-arrow-upward rotate-180" title="Next Page"></i></li>
+                        <li><i class="icon-nbd icon-nbd-content-copy" title="Copy Design"></i></li>
+                        <li><i class="icon-nbd icon-nbd-refresh" title="Reset Design"></i></li>
                     </ul>
                 </div>
             </div>

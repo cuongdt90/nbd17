@@ -3,6 +3,7 @@ $facebook-color:#3b5998;
 $dropbox-color:#007ee5;
 $instagram-color:#8a3ab9;
 $pixabay-color: #000;
+$menu-hover-color: rgba(158,158,158,.2);
 
 body, html {
   font-family: 'Poppins', sans-serif;
@@ -197,4 +198,33 @@ img{
 
 .title{
   font-size: 14px;
+}
+
+.nbd-input {
+  padding: 3px 5px;
+  border-radius: 5px;
+  border: 1px solid #ebebeb;
+  outline: none;
+  &:focus{
+    border-color: #ddd;
+  }
+  &::placeholder{
+    color: #999;
+  }
+}
+
+.nbd-close-sub-menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #bbb;
+  font-size: 21px;
+  cursor: pointer;
+  z-index: 99;
+  &:hover{
+    color: #666;
+  }
+}
+.icon-nbd-info-circle {
+  cursor: pointer;
 }

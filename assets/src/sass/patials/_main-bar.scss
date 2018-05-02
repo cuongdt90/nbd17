@@ -23,6 +23,26 @@
     list-style: none;
     margin-bottom: 0;
 
+    &.menu-left{
+      .sub-menu {
+        ul{
+          flex-wrap: wrap;
+          margin: 10px 0;
+          li{
+            &:hover{
+              background-color: $menu-hover-color;
+            }
+          }
+        }
+      }
+      .item-view {
+        .sub-menu{
+          li{
+            align-items: center;
+          }
+        }
+      }
+    }
     &.menu-center{
       margin: auto;
       li{
@@ -48,7 +68,7 @@
       }
     }
     &.menu-right{
-      li.menu-item{
+      .menu-item{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -56,6 +76,53 @@
           font-size: 16px;
           color: #666;
           margin-right: 5px;
+        }
+        &.item-process{
+          .sub-menu {
+            min-width: 320px;
+            .sub-header {
+              padding: 20px 10px;
+              font-weight: 500;
+              position: relative;
+              border-bottom: 1px solid #ebebeb;
+              i{
+                position: absolute;
+                top: 19px;
+                right: 10px;
+              }
+            }
+
+            .sub-body {
+              padding: 20px 10px;
+              border-bottom: 1px solid #ebebeb;
+              .process-select {
+                background: transparent;
+                cursor: pointer;
+                border-radius: 5px;
+                border: 1px solid #ebebeb;
+                font-size: 14px;
+                line-height: 2.78572;
+                outline: 0;
+                padding: 5px 30px 5px 10px;
+                transition: background .4s ease;
+                width: 100%;
+              }
+            }
+            .sub-footer{
+              padding: 20px 10px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              .nbd-add-to-cart{
+                padding: 15px 25px;
+              }
+              i{
+                font-size: 24px;
+                border-radius: 50%;
+              }
+            }
+
+          }
         }
       }
       input.title {

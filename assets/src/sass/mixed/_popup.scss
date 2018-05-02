@@ -1,20 +1,27 @@
-.nbd-popup{
+.nbd-popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, .6);
-  z-index: 9999999;
-  display: none;
-  &.show{
-    display: block;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    z-index: 99999;
+    .main-popup {
+      transform: translate(-50%, -50%);
+    }
   }
-  .close-popup{
+  .close-popup {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 21px;
+    font-size: 24px;
+    cursor: pointer;
   }
   .overlay-popup {
     position: absolute;
@@ -25,11 +32,11 @@
     width: 100%;
     height: 100%;
   }
-  .main-popup{
+  .main-popup {
     pointer-events: all;
     background-color: #fff;
     border-radius: 4px;
-    box-shadow: 0 0 42px rgba(0,0,0,.15);
+    box-shadow: 0 0 42px rgba(0, 0, 0, .15);
     box-sizing: border-box;
     display: inline-block;
     padding: 20px;
@@ -37,13 +44,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
     width: 525px;
+    transform: translate(-50%, 0);
+    transition: all .3s;
 
   }
-  &.popup-share{
-    .main-popup{
-      .head{
+  &.popup-share {
+    .main-popup {
+      .head {
         text-align: center;
         h2 {
           font-size: 21px;
@@ -54,12 +62,12 @@
       }
       .body {
         padding-top: 20px;
-        .share-with{
+        .share-with {
           display: flex;
           justify-content: flex-start;
           align-items: center;
           margin-bottom: 20px;
-          span{
+          span {
             margin-right: 20px;
           }
 
@@ -68,27 +76,27 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            li.social{
+            li.social {
               margin: 0 15px;
-              i{
+              i {
                 font-size: 45px;
                 border-radius: 50%;
               }
-              &.active, &:hover{
-                &.facebook{
-                  i{
+              &.active, &:hover {
+                &.facebook {
+                  i {
                     color: #3b5998;
                   }
                 }
 
-                &.twitter{
-                  i{
+                &.twitter {
+                  i {
                     color: #00aced;
                   }
                 }
 
-                &.google-plus{
-                  i{
+                &.google-plus {
+                  i {
                     color: #d34836;
                   }
                 }
@@ -96,8 +104,8 @@
             }
           }
         }
-        .share-content{
-          textarea{
+        .share-content {
+          textarea {
             border: solid 1px #ebebeb;
             border-radius: 5px;
             min-height: 78px;
@@ -106,45 +114,46 @@
             box-sizing: border-box;
             outline: none;
             width: 100%;
-            &:focus{
+            &:focus {
               border-color: #ccc;
             }
           }
         }
-        .share-btn{
+        .share-btn {
           margin-top: 20px;
           .nbd-button {
             border-radius: 5px;
           }
         }
       }
-      .footer{}
+      .footer {
+      }
     }
   }
-  &.popup-webcam{
-    .main-popup{
+  &.popup-webcam {
+    .main-popup {
       width: 80%;
       min-height: 500px;
       display: flex;
     }
-    .footer{
+    .footer {
       align-self: flex-end;
     }
   }
-  &.popup-keyboard{
-    .main-popup{
+  &.popup-keyboard {
+    .main-popup {
       .head {
         padding-bottom: 10px;
-        border-bottom: 1px solid#ebebeb;
+        border-bottom: 1px solid #ebebeb;
       }
       .body {
         margin-top: 20px;
-        table{
-          tr{
-            td{
+        table {
+          tr {
+            td {
               padding: 3px 0;
               font-size: 12px;
-              &.keys{
+              &.keys {
                 padding-right: 10px;
                 text-align: right;
               }
@@ -152,10 +161,10 @@
           }
         }
 
-        kbd{
+        kbd {
           display: inline-block;
           padding: 3px 5px;
-          font: 11px "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+          font: 11px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
           line-height: 10px;
           color: #444d56;
           vertical-align: middle;

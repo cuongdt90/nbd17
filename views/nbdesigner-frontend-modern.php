@@ -195,6 +195,7 @@
 							<?php include 'modern/toolbar.php'; ?>
                             <?php include 'modern/stages.php';?>
                             <?php include 'modern/toolbar-zoom.php';?>
+                            <?php include 'modern/context-menu.php'?>
 						</div>
 					</div>
 				</div>	

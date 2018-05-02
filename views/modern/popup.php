@@ -88,3 +88,15 @@
         <div class="footer"></div>
     </div>
 </div>
+
+<div class="nbd-popup popup-fileType">
+    <div class="overlay-popup"></div>
+    <div class="main-popup">
+        <i class="icon-nbd icon-nbd-clear close-popup"></i>
+        <div class="head"></div>
+        <div class="body">
+            <div class="main-body"></div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
