@@ -3482,7 +3482,7 @@ img.pattern_img {
 }
 .nbd-cat.dropdown-menu>li>a {
     position: relative;
-    padding: 3px 30px 3px 20px;
+    padding: 3px 50px 3px 20px;
 }
 .nbd-cat.dropdown-menu>li>a span {
     position: absolute;
@@ -4069,6 +4069,7 @@ img.pattern_img {
     bottom: 100px;
     cursor: pointer;
     max-height: 210px;
+    z-index: 98;
 }
 .preview-thumbnail-item {
     width: 100px;

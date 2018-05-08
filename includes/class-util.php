@@ -1046,6 +1046,8 @@ function nbd_get_dpi($filename){
         $y = substr($data,4,4);  
         $resolutions = array('x' => hexdec($x), 'y' => hexdec($y));
     }
+    $resolutions['x'] = $resolutions['x'] != 0 ? $resolutions['x'] : 72;
+    $resolutions['y'] = $resolutions['y'] != 0 ? $resolutions['y'] : 72;
     return $resolutions;
 }
 /**

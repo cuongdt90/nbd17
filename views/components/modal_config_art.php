@@ -19,16 +19,17 @@
                         showInput: true}">
                 </spectrum-colorpicker>                                     
                <?php else: ?>
-                <spectrum-colorpicker
+                <span ng-repeat="color in editable.paths">{{color.fill}}</span>
+                <!-- <spectrum-colorpicker
                     ng-repeat="color in editable.paths"
-                    ng-model="pathColor[color.key]" 
+                    ng-model="color.fill" 
                     ng-change="updatePathColor(color)"                     
                     options="{
                         showPaletteOnly: true, 
                         togglePaletteOnly: false, 
                         hideAfterPaletteSelect:true,
                         palette: colorPalette}">
-                </spectrum-colorpicker>    
+                </spectrum-colorpicker>    -->
                <?php endif; ?>  
             </div>
         </div>

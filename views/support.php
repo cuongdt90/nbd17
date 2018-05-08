@@ -16,7 +16,7 @@ $faqs = $nbd_news->sections->faq;
     color: #608299;
 }    
 .nbd-welcome-nav {
-    background-color: #055b39;
+    background-color: #0093d3;
     margin: -50px -50px 0 -50px;
 }
 .nbd-welcome-nav__version {
@@ -180,7 +180,7 @@ $faqs = $nbd_news->sections->faq;
         <ul>
             <li><a href="https://cmsmart.net/support_ticket" target="_blank"><?php esc_attr_e( 'Support', 'web-to-print-online-designer' ); ?></a></li>
             <li><a href="http://document.netbaseteam.com/guide/wp-online-design/" target="_blank"><?php esc_attr_e( 'Documentation', 'web-to-print-online-designer' ); ?></a></li>
-            <li><a href="https://cmsmart.net/forum/" target="_blank"><?php esc_attr_e( 'Forum', 'web-to-print-online-designer' ); ?></a></li>
+            <li><a href="https://cmsmart.net/forum/wordpress-plugins_551d1690f9d6ef540e000094" target="_blank"><?php esc_attr_e( 'Forum', 'web-to-print-online-designer' ); ?></a></li>
         </ul>        
     </section>
     <div class="nbd-logo">

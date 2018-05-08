@@ -487,7 +487,7 @@ class Nbdesigner_Plugin {
         }               
 
         /* Install */
-        NBD_Install::nbdesigner_add_custom_page();
+        NBD_Install::create_pages();
         NBD_Install::create_tables();
         NBD_Install::init_files_and_folders();
         NBD_Install::insert_default_files();
@@ -4986,7 +4986,8 @@ class Nbdesigner_Plugin {
                 continue;
                 $type = pathinfo($img_src, PATHINFO_EXTENSION);
                 $type = ($type =='svg' ) ? 'svg+xml' : $type;
-                $data = nbd_file_get_contents($img_src);
+                $path_image = Nbdesigner_IO::convert_url_to_path($img_src);
+                $data = nbd_file_get_contents($path_image);
                 $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
                 $tagName->setAttribute('xlink:href', $base64);
             }

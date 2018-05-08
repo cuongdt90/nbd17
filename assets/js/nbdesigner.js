@@ -11,6 +11,9 @@ jQuery(document).ready(function () {
         jQuery('body').addClass('nbd-prevent-scroll');
         if( !nbd_append_iframe ){
             var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
+            if( jQuery('input[name="variation_id"]').length ){
+                iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+            }
             jQuery('#container-online-designer').append('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');
             nbd_append_iframe = true;
         }
@@ -21,7 +24,7 @@ jQuery(document).ready(function () {
             bottom: 0
         }, 500);        
     };
-    jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': width});
+    jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': '100%'});
     jQuery('#triggerDesign').on('click', function () {
         showDesignFrame();
     });
