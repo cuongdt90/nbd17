@@ -2,6 +2,11 @@
   position: absolute;
   bottom: 20px;
   right: 30px;
+  @media screen and (max-width: 767px){
+    bottom: 75px;
+    display: none;
+  }
+
   .zoomer-toolbar{
     .nbd-main-menu {
       border: 1px solid #ebebeb;
@@ -33,9 +38,34 @@
               bottom: -14px;
               top: auto;
             }
-            .zoomer-popover-item{
+            .zoomer-popover-list {
+              margin: 10px 0;
+            }
+            .zoomer-popover-item {
               font-size: 14px;
-              padding: 5px 15px;
+              padding: 5px 40px 5px 15px;
+              cursor: pointer;
+              &.active{
+                position: relative;
+                &:before {
+                  font-family: online-design !important;
+                  content: "\e923";
+                  position: absolute;
+                  top: 4px;
+                  right: 10px;
+                  speak: none;
+                  font-style: normal;
+                  font-weight: 400;
+                  font-variant: normal;
+                  text-transform: none;
+                  line-height: 1;
+                  -webkit-font-smoothing: antialiased;
+                  font-size: 18px;
+                }
+              }
+              &:hover{
+                background-color: $menu-hover-color;
+              }
             }
           }
         }

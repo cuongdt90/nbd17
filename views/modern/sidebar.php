@@ -2,15 +2,17 @@
     <div class="tabs-nav box-shadow-right">
         <ul class="main-tabs" data-tab="tab-1">
             <div id="selectedTab"></div>
-            <li class="tab active"><i class="icon-nbd icon-nbd-box"></i><span><?php _e('Product','web-to-print-online-designer'); ?></span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-ligature"></i><span><?php _e('Typography','web-to-print-online-designer'); ?></span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-illutration"></i><span><?php _e('Illustrations','web-to-print-online-designer'); ?></span></li>
+            <li class="tab layerTab active"><i class="icon-nbd icon-nbd-box"></i><span><?php _e('Design','web-to-print-online-designer'); ?></span></li>
+            <li class="tab tab-first active"><i class="icon-nbd icon-nbd-box"></i><span><?php _e('Product','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-text"></i><span><?php _e('Typography','web-to-print-online-designer'); ?></span></li>
+            <li class="tab"><i class="icon-nbd icon-nbd-sharp-star"></i><span><?php _e('Illustrations','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-images"></i><span><?php _e('Photos','web-to-print-online-designer'); ?></span></li>
-            <li class="tab"><i class="icon-nbd icon-nbd-illutration-2"></i><span><?php _e('Elements','web-to-print-online-designer'); ?></span></li>
-<!--            <li class="tab"><i class="icon-nbd icon-nbd-qrcode"></i><span>--><?php //_e('QR Code','web-to-print-online-designer'); ?><!--</span></li>-->
+            <li class="tab"><i class="icon-nbd icon-nbd-geometrical-shapes-group"></i><span><?php _e('Elements','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span><?php _e('Layers','web-to-print-online-designer'); ?></span></li>
+            <li class="tab tab-end"></li>
         </ul>
         <div class="keyboard-shortcuts"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover tooltipstered nbd-hover-shadow"></i></div>
+        <div class="nbd-sidebar-close"><i class="icon-nbd icon-nbd-clear"></i></div>
     </div>
     <div class="tabs-content">
         <i class="fa fa-times" aria-hidden="true"></i>
@@ -380,7 +382,7 @@
                     </div>
                     <div class="info-support">
                         <span>Facebook</span>
-                        <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+                        <i class="icon-nbd icon-nbd-clear close-result-loaded"></i>
                     </div>
                 </div>
             </div>
@@ -435,6 +437,18 @@
                                     <i class="icon-nbd icon-nbd-cloud-upload"></i>
                                     <span>Click or drop images here</span>
                                 </div>
+                                <div class="allow-size">
+                                    <span>Accept file types: <strong>png, jpg, gif</strong></span>
+                                    <span>Max file size: <strong>20 MB</strong></span>
+                                    <span>Min file size: <strong>0 MB</strong></span>
+                                </div>
+                                <div class="nbd-term">
+                                    <div class="nbd-checkbox">
+                                        <input id="accept-term" type="checkbox">
+                                        <label for="accept-term">&nbsp;</label>
+                                    </div>
+                                    <span class="term-read">I accept the terms</span>
+                                </div>
                                 <div class="elements-uploaded"></div>
                             </div>
                             <div class="item-category type-url" data-type="image-url">
@@ -467,7 +481,7 @@
                 </div>
                 <div class="info-support">
                     <span>Image Upload</span>
-                    <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+                    <i class="icon-nbd icon-nbd-clear close-result-loaded"></i>
                 </div>
             </div>
             <div class="nbd-search">
@@ -913,7 +927,7 @@
                     </div>
                     <div class="info-support">
                         <span>Facebook</span>
-                        <i class="icon-nbd icon-nbd-fomat-highlight-off close-result-loaded"></i>
+                        <i class="icon-nbd icon-nbd-clear close-result-loaded"></i>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,14 @@
-<div class="nbd-popup popup-share">
+<!------------------------------------------------------------------------------------
+                data-animate:
+                    + bottom-to-top
+                    + top-to-bottom
+                    + left-to-right
+                    + right-to-left
+                    + scale
+                    + fixed-top
+------------------------------------------------------------------------------------->
+
+<div class="nbd-popup popup-share" data-animate="bottom-to-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
@@ -25,7 +35,7 @@
     </div>
 </div>
 
-<div class="nbd-popup popup-webcam">
+<div class="nbd-popup popup-webcam" data-animate="top-to-bottom">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
@@ -42,7 +52,7 @@
     </div>
 </div>
 
-<div class="nbd-popup popup-keyboard">
+<div class="nbd-popup popup-keyboard" data-animate="bottom-to-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
@@ -59,28 +69,45 @@
                         </tr>
                         <tr>
                             <td class="keys">
-                                <kbd>s</kbd>
+                                <kbd>ctrl</kbd>
                                 or
-                                <kbd>/</kbd>
+                                <kbd>s</kbd>
                             </td>
                             <td>Focus search bar</td>
                         </tr>
                         <tr>
                             <td class="keys">
-                                <kbd>s</kbd>
+                                <kbd>shift</kbd>
                                 or
-                                <kbd>/</kbd>
+                                <kbd>s</kbd>
                             </td>
                             <td>Focus search bar</td>
                         </tr>
                         <tr>
                             <td class="keys">
-                                <kbd>s</kbd>
+                                <kbd>Delete</kbd>
                                 or
-                                <kbd>/</kbd>
+                                <kbd>s</kbd>
                             </td>
                             <td>Focus search bar</td>
                         </tr>
+                        <tr>
+                            <td class="keys">
+                                <kbd>Delete</kbd>
+                                or
+                                <kbd>s</kbd>
+                            </td>
+                            <td>Focus search bar</td>
+                        </tr>
+                        <tr>
+                            <td class="keys">
+                                <kbd>Delete</kbd>
+                                or
+                                <kbd>s</kbd>
+                            </td>
+                            <td>Focus search bar</td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -89,13 +116,27 @@
     </div>
 </div>
 
-<div class="nbd-popup popup-fileType">
+<div class="nbd-popup popup-fileType" data-animate="bottom-to-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
         <div class="head"></div>
         <div class="body">
             <div class="main-body"></div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
+
+<div class="nbd-popup popup-term" data-animate="fixed-top">
+    <div class="overlay-popup"></div>
+    <div class="main-popup">
+        <i class="icon-nbd icon-nbd-clear close-popup"></i>
+        <div class="head"></div>
+        <div class="body">
+            <div class="main-body">
+                Nbd term
+            </div>
         </div>
         <div class="footer"></div>
     </div>

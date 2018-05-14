@@ -47,12 +47,11 @@
     list-style: none;
     background: #fff;
     color: #3f4652;
-    border-radius: 4px;
+    border-radius: 2px;
     min-width: 250px;
     box-shadow: 3px 3px 8px 0 rgba(0,0,0,.3);
     top: calc(100% + 10px);
     cursor: auto;
-    //display: none;
     opacity: 0;
     visibility: hidden;
     z-index: -1;
@@ -111,17 +110,69 @@
       }
     }
 
-    .sub-menu-item{
+    .hover-menu{
       position: relative;
       .hover-sub-menu-item {
         position: absolute;
         top: 0;
         right: 0;
-        transform: translateX(100%);
         background-color: #fff;
         box-shadow: 3px 3px 8px 0 rgba(0,0,0,.3);
+        visibility: hidden;
+        opacity: 0;
+        z-index: -1;
+        transition: all .3s;
+        border-radius: 2px;
+        font-size: 13px;
+        span{
+          font-size: 13px;
+        }
       }
+
+      &[data-animate="bottom-to-top"]{
+        .hover-sub-menu-item{
+          transform: translate(100%,50%);
+        }
+      }
+
+      &[data-animate="top-to-bottom"]{
+        .hover-sub-menu-item{
+          transform: translate(100%,-50%);
+        }
+      }
+
+      &[data-animate="left-to-right"]{
+        .hover-sub-menu-item{
+          transform: translateX(50%);
+        }
+      }
+      &[data-animate="right-to-left"]{
+        .hover-sub-menu-item{
+          transform: translateX(-50%);
+        }
+      }
+      &[data-animate="scale"]{
+        .hover-sub-menu-item{
+          transform: scale(0.8) translate(100%);
+        }
+      }
+
+      &.show{
+        .hover-sub-menu-item {
+          visibility: visible;
+          opacity: 1;
+          z-index: 99;
+          transform: translateX(100%);
+        }
+        &[data-animate="scale"]{
+          .hover-sub-menu-item{
+            transform: scale(1) translate(100%);
+          }
+        }
+      }
+
     }
+
   }
   >li[data-overlay="overlay"] {
     &:after {
@@ -142,6 +193,10 @@
         opacity: 1;
         width: 100vw;
         height: 100vw;
+        @media screen and (max-width: 767px){
+          height: 200vw;
+          //display: none;
+        }
       }
     }
   }

@@ -18,6 +18,16 @@
     top: 0;
     display: inline-block;
     height: calc(100vh - 54px);
+    @media screen and (max-width: 1023px) {
+      width: calc(100vw - 75px);
+      left: 75px;
+    }
+    @media screen and (max-width: 767px) {
+      width: calc(100vw);
+      height: calc(100vh - 114px);
+      left: 0;
+      z-index: 10000001;
+    }
   }
 
   .main-ranges {

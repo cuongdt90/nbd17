@@ -1,9 +1,22 @@
 .nbd-sidebar {
   width: 420px;
+  @media screen and (max-width: 1023px){
+      width: 75px;
+  }
   height: calc(100vh - 54px);
   position: fixed;
   z-index: 99;
   display: flex;
+  @media screen and (max-width: 767px){
+    bottom: 0;
+    left: 0;
+    top: 100vh;
+    transform: translateY(-100%);
+    width: 100vw;
+    height: 60px;
+    min-height: 60px;
+    z-index: 1000000;
+  }
   .tabs-nav {
     min-height: calc(100vh - 54px);
     list-style: none;
@@ -14,6 +27,10 @@
     display: inline-block !important;
     z-index: 3;
     position: relative;
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      min-height: auto;
+    }
     .keyboard-shortcuts {
       position: absolute;
       bottom: 0;
@@ -21,14 +38,16 @@
       padding: 15px;
       width: 100%;
       text-align: center;
-      i{
+      @media screen and (max-width: 767px) {
+        display: none;
+      }
+      i {
         margin: auto;
         font-size: 24px;
         display: inline-block;
         border-radius: 50%;
       }
     }
-
     ul.main-tabs {
       list-style: none;
       margin: 0;
@@ -37,7 +56,39 @@
       float: left;
       display: flex;
       flex-direction: column;
-      li.tab {
+      @media screen and (max-width: 767px) {
+        flex-direction: row;
+        overflow-x: auto;
+        /* We don't want vertical scrolling */
+        overflow-y: hidden;
+        /* Make an auto-hiding scroller for the 3 people using a IE */
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        /* For WebKit implementations, provide inertia scrolling */
+        -webkit-overflow-scrolling: touch;
+        /* We don't want internal inline elements to wrap */
+        white-space: nowrap;
+        /* Remove the default scrollbar for WebKit implementations */
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .tab {
+          color: #888;
+          padding: 10px 20px;
+          align-items: center;
+          width: auto;
+        }
+      }
+
+      .layerTab {
+        display: none;
+        @media screen and (max-width: 767px) {
+          display: block;
+
+        }
+      }
+
+      .tab {
         float: left;
         padding: 15px 0;
         width: 100%;
@@ -50,6 +101,11 @@
         position: relative;
         -webkit-font-smoothing: antialiased;
         text-align: center;
+        @media screen and (max-width: 767px) {
+          &.active {
+            background-color: $main-color;
+          }
+        }
         i {
           display: block;
           font-size: 24px;
@@ -74,6 +130,25 @@
         }
       }
     }
+    .nbd-sidebar-close {
+      position: absolute;
+      top: 0;
+      right: -395px;
+      height: 50px;
+      width: 50px;
+      background: #000;
+      display: none;
+      @media screen and (max-width: 1023px) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        display: none;
+      }
+      i {
+        font-size: 28px;
+        color: #fff;
+      }
+    }
   }
   .tab-scroll{
     position: relative;
@@ -91,6 +166,16 @@
     overflow: hidden;
     position: relative;
     background: #fff;
+    @media screen and (max-width: 767px) {
+      position: absolute;
+      right: auto;
+      width: 100vw;
+      left: 0;
+      transform: translateY(-100%);
+      height: calc(100vh - 114px);
+      top: 0;
+      //display: none;
+    }
     > i {
       font-size: 25px;
       position: absolute;
@@ -119,6 +204,7 @@
         z-index: 2;
         opacity: 1;
         visibility: visible;
+        //transform: translate(0,0);
       }
 
       &.before {
@@ -129,6 +215,13 @@
         transform: translateY(33%);
       }
 
+      &.left {
+        transform: translateX(-33%);
+      }
+      &.right {
+        transform: translateX(33%);
+      }
+
     }
     .nbd-search {
       padding: 20px 10px;
@@ -137,11 +230,11 @@
       width: 100%;
       top: 0;
       left: 0;
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px rgba(0, 0, 0, .12);
       input {
         padding: 5px 35px 5px 10px;
         width: 100%;
-        border-radius: 5px;
+        border-radius: 2px;
         outline: none;
         border: 1px solid #ebebeb;
         &:focus {
@@ -274,7 +367,7 @@
           font-size: 40px;
           transition: all .3s;
           border: 1px solid #ebebeb;
-          border-radius: 5px;
+          border-radius: 2px;
           cursor: pointer;
         }
         p {
@@ -311,18 +404,54 @@
           display: none;
         }
         div[data-type="image-upload"]{
-          margin: 20px 10px;
-          border: 2px dashed #ebebeb;
           transition: all .3s;
           &:hover{
             border-color: #ccc;
           }
           .form-upload{
+            margin: 20px 10px;
+            border: 2px dashed #ebebeb;
             padding: 10px;
+            pointer-events: auto;
+            opacity: 0.5;
             i{
+              pointer-events: auto;
+              cursor: none;
               font-size: 40px;
             }
           }
+
+          &.accept{
+            .form-upload {
+              cursor: pointer;
+              opacity: 1;
+            }
+          }
+
+          .allow-size{
+            padding: 0 10px;
+            margin-bottom: 20px;
+            span{
+              display: block;
+              text-align: left;
+              font-size: 12px;
+              line-height: 1.5;
+            }
+          }
+          .nbd-term {
+            padding: 0 10px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            .term-read {
+              font-size: 14px;
+              text-decoration: underline;
+              font-weight: bold;
+              cursor: pointer;
+            }
+          }
+
+
         }
         div[data-type="image-url"]{
           .form-group {
@@ -342,12 +471,12 @@
                 width: 100%;
               }
               button{
-                padding: 0 10px;
                 border: none;
                 background-color: #607d8b;
                 color: #fff;
-                border-top-right-radius: 3px;
-                border-bottom-right-radius: 3px;
+                margin: 0;
+                border-radius: 0 3px 3px 0;
+                padding: 0;
               }
             }
           }
@@ -423,9 +552,10 @@
     }
     .info-support {
       position: fixed;
-      top: 150px;
+      top: 130px;
       width: 345px;
       left: 0;
+      padding: 10px 0;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -443,15 +573,16 @@
         padding: 3px 10px;
         background: rgba(0,0,0,1);
         color: #fff;
+        border-radius: 2px;
       }
       span {
         margin: auto;
-        font-size: 16px;
+        font-size: 18px;
       }
       i.close-result-loaded {
         display: inline-block;
         position: absolute;
-        top: 0;
+        top: 10px;
         right: 6px;
         font-size: 24px;
         padding: 0 5px;
@@ -500,7 +631,7 @@
             font-size: 24px;
           }
           .item-right {
-            border-radius: 5px;
+            border-radius: 2px;
             i{
               cursor: pointer;
               &[data-active="false"]{
@@ -532,7 +663,7 @@
           }
 
           input{
-            border-radius: 5px;
+            border-radius: 2px;
             border: 1px solid #ebebeb;
             padding: 3px 5px;
             outline: none;
@@ -576,7 +707,7 @@
           .item{
             width: 33.33%;
             .main-item{
-              border-radius: 5px;
+              border-radius: 2px;
               cursor: pointer;
               .item-svg{
                 svg{
@@ -649,13 +780,13 @@
             width: 33.33%;
             //padding: 10px;
             .main-item {
-              border-radius: 5px;
+              border-radius: 2px;
               border: 0;
               cursor: pointer;
               .item-icon {
                 padding: 20px;
                 border: 1px solid #ebebeb;
-                border-radius: 5px;
+                border-radius: 2px;
                 i{
                   font-size: 40px;
                 }
@@ -704,6 +835,8 @@
                   justify-content: space-between;
                   align-items: center;
                   outline: none;
+                  overflow: visible;
+                  margin: 0;
                   &:focus{
                     outline: none;
                   }
@@ -720,6 +853,8 @@
                     min-width: 105px;
                     li {
                       padding: 3px 10px;
+                      text-align: left;
+                      line-height: normal;
                       &:hover{
                         background-color: $main-color;
                         span{
@@ -728,6 +863,7 @@
                       }
                       span{
                         font-size: 12px;
+                        text-transform: capitalize;
                       }
                     }
                   }
@@ -762,7 +898,6 @@
       }
     }
   }
-
   #tab-product-template{
     .tab-main{
       margin-top: 82px;
@@ -891,7 +1026,7 @@
       padding: 0 10px;
       margin: 15px 0 30px;
       .nbd-button{
-        border-radius: 5px;
+        border-radius: 2px;
       }
     }
     }
@@ -1024,10 +1159,11 @@
         top: 0;
         right: 6px;
         font-size: 24px;
-        padding: 0 5px;
+        padding: 0 2px;
       }
     }
   }
+
 }
 
 #selectedTab {
@@ -1044,6 +1180,9 @@
   -webkit-transition: transform .4s ease-out;
   -moz-transition: transform .4s ease-out;
   transition: transform .4s ease-out;
+  @media screen and (max-width: 767px){
+      display: none;
+  }
 }
 ul[data-tab="tab-1"] #selectedTab {
   -webkit-transform: translateY(0);

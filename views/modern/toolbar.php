@@ -128,13 +128,13 @@
             <li class="menu-item"><i class="icon-nbd icon-nbd-uppercase nbd-tooltip-hover" title="Uppercase / Lowercase"></i></li>
             <li class="menu-item"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="Text style bold"></i></li>
             <li class="menu-item"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" title="Text style italic"></i></li>
-            <li class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Text underline"></i></li>
+            <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Text underline"></i></li>
         </ul>
     </div>
     <div class="toolbar-image">
         <ul class="nbd-main-menu">
             <li class="menu-item menu-filter">
-                <span>Filter</span>
+                <span><i class="icon-nbd icon-nbd-filter"></i> Filter</span>
                 <div class="sub-menu" data-pos="left">
                     <ul class="filter-presets">
                         <li class="filter-scroll scrollLeft disable"><i class="icon-nbd icon-nbd-arrow-drop-down"></i></li>
@@ -325,7 +325,14 @@
                     </div>
                 </div>
             </li>
-            <li class="menu-item menu-crop">Crop</li>
+            <li class="menu-item menu-crop"><i class="icon-nbd icon-nbd-round-crop"></i> Crop</li>
+        </ul>
+    </div>
+    <div style="display: none" class="toolbar-group">
+        <ul class="nbd-main-menu">
+            <li class="menu-item menu-group">
+                <i class="icon-nbd icon-nbd-ungroup nbd-tooltip-hover tooltipstered" title="Ungroup"></i>
+            </li>
         </ul>
     </div>
     <div class="toolbar-common">
