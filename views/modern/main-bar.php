@@ -113,6 +113,16 @@
                 </div>
             </div>
         </li>
+        <li class="menu-item item-more">
+            <i class="icon-nbd icon-nbd-baseline-more-vert"></i>
+            <div class="sub-menu" data-pos="right">
+                <ul>
+                    <li class="sub-menu-item">aaaaa</li>
+                    <li class="sub-menu-item">bbbbb</li>
+                    <li class="sub-menu-item">ccccc</li>
+                </ul>
+            </div>
+        </li>
     </ul>
 
 </div>

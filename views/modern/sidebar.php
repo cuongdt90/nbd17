@@ -2,7 +2,7 @@
     <div class="tabs-nav box-shadow-right">
         <ul class="main-tabs" data-tab="tab-1">
             <div id="selectedTab"></div>
-            <li class="tab layerTab active"><i class="icon-nbd icon-nbd-box"></i><span><?php _e('Design','web-to-print-online-designer'); ?></span></li>
+            <li class="tab layerTab active"><i class="icon-nbd icon-nbd-baseline-palette"></i><span><?php _e('Design','web-to-print-online-designer'); ?></span></li>
             <li class="tab tab-first active"><i class="icon-nbd icon-nbd-box"></i><span><?php _e('Product','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-text"></i><span><?php _e('Typography','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-sharp-star"></i><span><?php _e('Illustrations','web-to-print-online-designer'); ?></span></li>

@@ -18,12 +18,17 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             add_action('nbd_menu', array($this, 'tab_menu'));   
             add_action('nbd_create_tables', array($this, 'create_options_table'));  
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'), 30, 1);
+            add_action( 'init', array( $this, 'create_taxonomy' ), 0);
+            add_action('init', array( $this, 'create_custom_post_type'));
         }
         public function tab_menu(){
             if(current_user_can('manage_nbd_tool')){  
                 $options_hook = add_submenu_page(
                     'nbdesigner', 'Printing Options', 'Printing Options', 'manage_nbd_tool', 'nbd_printing_options', array($this, 'printing_options')
-                );             
+                );
+                $options_hook_category = add_submenu_page(
+                    'nbdesigner', 'Category', 'Category', 'manage_nbd_tool', 'edit-tags.php?taxonomy=category&post_type=clipart'
+                );
                 add_action( "load-$options_hook", array( $this, 'screen_option' ));
             }             
         }
@@ -100,6 +105,92 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 include_once(NBDESIGNER_PLUGIN_DIR . 'views/options/options-list-table.php');
             }
         }
+        public function create_taxonomy(){
+
+            $labels = array(
+                'name'              => _x( 'category', 'taxonomy general name', 'web-to-print-online-designer' ),
+                'singular_name'     => _x( 'category', 'taxonomy singular name', 'web-to-print-online-designer' ),
+                'search_items'      => __( 'Search category', 'web-to-print-online-designer' ),
+                'all_items'         => __( 'All category', 'web-to-print-online-designer' ),
+                'parent_item'       => __( 'Parent category', 'web-to-print-online-designer' ),
+                'parent_item_colon' => __( 'Parent category:', 'web-to-print-online-designer' ),
+                'edit_item'         => __( 'Edit category', 'web-to-print-online-designer' ),
+                'update_item'       => __( 'Update category', 'web-to-print-online-designer' ),
+                'add_new_item'      => __( 'Add New category', 'web-to-print-online-designer' ),
+                'new_item_name'     => __( 'New category Name', 'web-to-print-online-designer' ),
+                'menu_name'         => __( 'category', 'web-to-print-online-designer' ),
+            );
+            $args = array(
+                'labels' => $labels,
+                'description' => __( 'category for cliparts', 'web-to-print-online-designer' ),
+                'hierarchical' => false,
+                'public' => true,
+                'publicly_queryable' => true,
+                'show_ui' => true,
+                'show_in_menu' => true,
+                'show_in_nav_menus' => true,
+                'show_in_rest' => false,
+                'show_tagcloud' => true,
+                'show_in_quick_edit' => true,
+                'show_admin_column' => true,
+            );
+            register_taxonomy( 'category', array('clipart'), $args );
+
+        }
+        public function create_custom_post_type(){
+
+            $labels = array(
+                'name' => __( 'cliparts', 'Post Type General Name', 'web-to-print-online-designer' ),
+                'singular_name' => __( 'clipart', 'Post Type Singular Name', 'web-to-print-online-designer' ),
+                'menu_name' => __( 'cliparts', 'web-to-print-online-designer' ),
+                'name_admin_bar' => __( 'clipart', 'web-to-print-online-designer' ),
+                'archives' => __( 'clipart Archives', 'web-to-print-online-designer' ),
+                'attributes' => __( 'clipart Attributes', 'web-to-print-online-designer' ),
+                'parent_item_colon' => __( 'Parent clipart:', 'web-to-print-online-designer' ),
+                'all_items' => __( 'All cliparts', 'web-to-print-online-designer' ),
+                'add_new_item' => __( 'Add New clipart', 'web-to-print-online-designer' ),
+                'add_new' => __( 'Add New', 'web-to-print-online-designer' ),
+                'new_item' => __( 'New clipart', 'web-to-print-online-designer' ),
+                'edit_item' => __( 'Edit clipart', 'web-to-print-online-designer' ),
+                'update_item' => __( 'Update clipart', 'web-to-print-online-designer' ),
+                'view_item' => __( 'View clipart', 'web-to-print-online-designer' ),
+                'view_items' => __( 'View cliparts', 'web-to-print-online-designer' ),
+                'search_items' => __( 'Search clipart', 'web-to-print-online-designer' ),
+                'not_found' => __( 'Not found', 'web-to-print-online-designer' ),
+                'not_found_in_trash' => __( 'Not found in Trash', 'web-to-print-online-designer' ),
+                'featured_image' => __( 'Featured Image', 'web-to-print-online-designer' ),
+                'set_featured_image' => __( 'Set featured image', 'web-to-print-online-designer' ),
+                'remove_featured_image' => __( 'Remove featured image', 'web-to-print-online-designer' ),
+                'use_featured_image' => __( 'Use as featured image', 'web-to-print-online-designer' ),
+                'insert_into_item' => __( 'Insert into clipart', 'web-to-print-online-designer' ),
+                'uploaded_to_this_item' => __( 'Uploaded to this clipart', 'web-to-print-online-designer' ),
+                'items_list' => __( 'cliparts list', 'web-to-print-online-designer' ),
+                'items_list_navigation' => __( 'cliparts list navigation', 'web-to-print-online-designer' ),
+                'filter_items_list' => __( 'Filter cliparts list', 'web-to-print-online-designer' ),
+            );
+            $args = array(
+                'label' => __( 'clipart', 'web-to-print-online-designer' ),
+                'description' => __( 'custom post type', 'web-to-print-online-designer' ),
+                'labels' => $labels,
+                'menu_icon' => '',
+                'supports' => array(),
+                'taxonomies' => array(),
+                'public' => true,
+                'show_ui' => true,
+                'show_in_menu' => false,
+                'menu_position' => 5,
+                'show_in_admin_bar' => false,
+                'show_in_nav_menus' => false,
+                'can_export' => true,
+                'has_archive' => true,
+                'hierarchical' => false,
+                'exclude_from_search' => false,
+                'show_in_rest' => true,
+                'publicly_queryable' => true,
+                'capability_type' => 'post',
+            );
+            register_post_type( 'clipart', $args );
+        }
         public function screen_option(){
             if( !isset($_GET['action']) ){
                 $option = 'per_page';
@@ -108,8 +199,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     'default' => 10,
                     'option'  => 'options_per_page'
                 );
-                add_screen_option( $option, $args );            
-            }            
+                add_screen_option( $option, $args );
+            }
         }
         public function save_option(){
             $nonce = esc_attr($_REQUEST['_wpnonce']);
