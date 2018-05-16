@@ -1,7 +1,7 @@
 .nbd-workspace{
   display: flex;
   max-width: 100%;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 54px);
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
@@ -28,6 +28,19 @@
       left: 0;
       z-index: 10000001;
     }
+
+    /* Safari 10.1+ */
+
+    //@media not all and (min-resolution:.001dpcm) {
+    //  @supports (-webkit-appearance:none) {
+    //  height: calc(100vh - 204px);
+    //  }
+    //}
+
+    //@media not all and (min-resolution:.001dpcm) {
+    //  height: calc(100vh - 204px);
+    //}
+
   }
 
   .main-ranges {
@@ -110,5 +123,15 @@
     }
   }
 
+}
+
+.safari {
+  .nbd-workspace {
+    .main {
+      @media screen and (max-width: 767px){
+        height: calc(100vh - 204px);
+      }
+    }
+  }
 }
 

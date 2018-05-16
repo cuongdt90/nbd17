@@ -52,9 +52,9 @@
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>
                     <div class="hover-sub-menu-item">
                         <ul>
-                            <li>Layer</li>
-                            <li>Bounding</li>
-                            <li>grid</li>
+                            <li><span>Layer</span></li>
+                            <li><span>Bounding</span></li>
+                            <li><span>grid</span></li>
                         </ul>
                     </div>
                 </li>
@@ -91,7 +91,7 @@
         </li>
         <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i><span>Share</span></li>
         <li class="menu-item item-process" data-overlay="overlay">
-            <i class="icon-nbd icon-nbd-process"></i><span>Process</span>
+            <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right">
                 <div class="main-sub-menu">
                     <div class="sub-header">
@@ -113,16 +113,16 @@
                 </div>
             </div>
         </li>
-        <li class="menu-item item-more">
-            <i class="icon-nbd icon-nbd-baseline-more-vert"></i>
-            <div class="sub-menu" data-pos="right">
-                <ul>
-                    <li class="sub-menu-item">aaaaa</li>
-                    <li class="sub-menu-item">bbbbb</li>
-                    <li class="sub-menu-item">ccccc</li>
-                </ul>
-            </div>
-        </li>
+<!--        <li class="menu-item item-more">-->
+<!--            <i class="icon-nbd icon-nbd-baseline-more-vert"></i>-->
+<!--            <div class="sub-menu" data-pos="right">-->
+<!--                <ul>-->
+<!--                    <li class="sub-menu-item">aaaaa</li>-->
+<!--                    <li class="sub-menu-item">bbbbb</li>-->
+<!--                    <li class="sub-menu-item">ccccc</li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </li>-->
     </ul>
 
 </div>

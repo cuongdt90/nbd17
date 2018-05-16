@@ -36,6 +36,18 @@ input {
     border-color: #ccc;
   }
 
+  &::placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+
+  &:-ms-input-placeholder {
+    color: #ccc;
+  }
+
+  &::-ms-input-placeholder {
+    color: #ccc;
+  }
 }
 
 img{

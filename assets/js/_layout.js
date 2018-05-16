@@ -301,7 +301,7 @@ $(document).ready(function(){
     });
 
     $('.nbd-tooltip-hover').tooltipster({
-        side: "bottom",
+        side: "top",
         theme: 'tooltipster-borderless',
     });
 

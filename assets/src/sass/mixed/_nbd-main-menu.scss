@@ -5,7 +5,7 @@
   justify-content: space-between;
   li,button {
     span {
-      font-size: 16px;
+      font-size: 14px;
       cursor: pointer;
       user-select: none;
       color: #666;
@@ -14,8 +14,8 @@
     &.menu-item{
       display: inline-block;
       padding: 15px;
-      font-size: 16px;
-      line-height: 16px;
+      font-size: 14px;
+      line-height:normal;
       cursor: pointer;
       user-select: none;
       position: relative;
@@ -50,7 +50,7 @@
     border-radius: 2px;
     min-width: 250px;
     box-shadow: 3px 3px 8px 0 rgba(0,0,0,.3);
-    top: calc(100% + 10px);
+    top: calc(100% + 9px);
     cursor: auto;
     opacity: 0;
     visibility: hidden;
@@ -66,7 +66,7 @@
       position: relative;
       margin: 0;
       span {
-        font-size: 14px;
+        font-size: 13px;
         text-align: left;
         white-space: nowrap;
       }
@@ -84,7 +84,7 @@
       border-bottom: 7px solid #ebebeb;
       content: "";
       position: absolute;
-      top: -14px;
+      top: -15px;
     }
 
     &[data-pos="left"]{
@@ -132,7 +132,7 @@
           top: auto;
         }
         span {
-          font-size: 13px;
+          font-size: 12px;
         }
       }
 
@@ -202,8 +202,14 @@
         height: 100vw;
         @media screen and (max-width: 767px){
           height: 200vw;
-          //display: none;
+          display: none;
         }
+      }
+    }
+
+    .sub-menu {
+      &:before{
+        top: -14px;
       }
     }
   }
