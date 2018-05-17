@@ -9,14 +9,14 @@
             <li class="tab"><i class="icon-nbd icon-nbd-images" style="font-size: 21px"></i><span><?php _e('Photos','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-geometrical-shapes-group"></i><span><?php _e('Elements','web-to-print-online-designer'); ?></span></li>
             <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span><?php _e('Layers','web-to-print-online-designer'); ?></span></li>
-            <li class="tab tab-end"></li>
+            <li class="tab tab-end" style="pointer-events: none"></li>
         </ul>
         <div class="keyboard-shortcuts"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover tooltipstered nbd-hover-shadow"></i></div>
         <div class="nbd-sidebar-close"><i class="icon-nbd icon-nbd-clear"></i></div>
     </div>
     <div class="tabs-content">
         <i class="fa fa-times" aria-hidden="true"></i>
-        <div class="tab active" id="tab-product-template">
+        <div class="tab tab-first active" id="tab-product-template">
             <div class="nbd-search">
                 <input type="search" name="search" placeholder="search"/>
                 <i class="icon-nbd icon-nbd-fomat-search"></i>
@@ -25,100 +25,100 @@
                 <div class="tab-main tab-scroll">
                     <div class="nbd-products">
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="nbd-product">
-                            <div class="nbd-main-product nbd-hover-shadow">
+                            <div class="nbd-main-product nbd-shadow-1dp">
                                 <div class="nbd-product-img">
                                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                                 </div>
                                 <div class="nbd-product-info">
-                                    <span class="product-name" title="Business Card">Business Card</span>
+                                    <span class="product-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                     <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -148,8 +148,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -159,8 +158,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -170,8 +168,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -181,8 +178,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -192,8 +188,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -203,8 +198,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -214,8 +208,7 @@
                                             <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
                                         </div>
                                         <div class="item-info">
-                                            <span class="item-name" title="Business Card">Business Card</span>
-                                            <!--                                        <i class="icon-nbd icon-nbd-info-circle product-more-info nbd-hover-shadow" data-productId="2"></i>-->
+                                            <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                                         </div>
                                     </div>
                                 </div>
@@ -238,7 +231,7 @@
                 <div class="typography-head">
                     <span class="text-guide" style="color: #fff; margin-bottom: 20px;display: block;"><?php _e('Click to add text','nbd-online-design'); ?></span>
                     <div class="head-main">
-                        <span class="text-heading" style="color: #fff; display: block; font-size: 40px; font-weight: 700">Add heading</span>
+                        <span class="text-heading" style="color: #fff; display: block; font-size: 40px; font-weight: 700"><?php _e('Add heading','web-to-print-online-designer'); ?></span>
                         <span class="text-sub-heading" style="display: block; font-size: 24px; font-weight: 500; color: #fff"><?php _e('Add subheading','nbd-online-design');?></span>
                         <span class="text-body" style="display: block;color: #fff"><?php _e('Add subheading','nbd-online-design'); ?></span>
                     </div>
@@ -294,7 +287,7 @@
                                             </g></svg>
                                     </div>
                                     <div class="item-info">
-                                        <span class="item-name" title="Business Card">Animal</span>
+                                        <span class="item-name" title="Business Card"><?php _e('Animal','web-to-print-online-designer'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -394,35 +387,35 @@
                         <div class="categories">
                             <div class="category" data-type="image-upload">
                                 <i class="icon-nbd icon-nbd-file-upload"></i>
-                                <p>Image Upload</p>
+                                <p><?php _e('Image Upload','web-to-print-online-designer'); ?></p>
                             </div>
                             <div class="category" data-type="image-url">
                                 <i class="icon-nbd icon-nbd-attachment"></i>
-                                <p>Image Url</p>
+                                <p><?php _e('Image Url','web-to-print-online-designer'); ?></p>
                             </div>
                             <div class="category" data-type="facebook">
                                 <i class="icon-nbd icon-nbd-facebook-logo"></i>
-                                <p>Facebook</p>
+                                <p><?php _e('Facebook','web-to-print-online-designer'); ?></p>
                             </div>
                             <div class="category" data-type="instagram">
                                 <i class="icon-nbd icon-nbd-instagram-logo"></i>
-                                <p>Instagram</p>
+                                <p><?php _e('Instagram','web-to-print-online-designer'); ?></p>
                             </div>
                             <div class="category" data-type="dropbox">
                                 <i class="icon-nbd icon-nbd-dropbox-logo"></i>
-                                <p>Dropbox</p>
+                                <p><?php _e('Dropbox','web-to-print-online-designer'); ?></p>
                             </div>
-                            <div class="category" data-type="webcam">
+                            <div ng-if="!settings['is_mobile]" class="category" data-type="webcam">
                                 <i class="icon-nbd icon-nbd-webcam"></i>
-                                <p>Webcam</p>
+                                <p><?php _e('Webcam','web-to-print-online-designer'); ?></p>
                             </div>
                             <div class="category" data-type="pixaby">
                                 <i class="icon-nbd icon-nbd-pixabay"></i>
-                                <p>Pixabay</p>
+                                <p><?php _e('Pixabay','web-to-print-online-designer'); ?></p>
                             </div>
                             <div class="category" data-type="unsplash">
                                 <i class="icon-nbd icon-nbd-camera-alt"></i>
-                                <p>Unsplash</p>
+                                <p><?php _e('Unsplash','web-to-print-online-designer'); ?></p>
                             </div>
                         </div>
                         <div class="pointer"></div>
@@ -435,52 +428,52 @@
                             <div class="item-category type-upload" data-type="image-upload">
                                 <div class="form-upload">
                                     <i class="icon-nbd icon-nbd-cloud-upload"></i>
-                                    <span>Click or drop images here</span>
+                                    <span><?php _e('Click or drop images here','web-to-print-online-designer'); ?></span>
                                 </div>
                                 <div class="allow-size">
-                                    <span>Accept file types: <strong>png, jpg, gif</strong></span>
-                                    <span>Max file size: <strong>20 MB</strong></span>
-                                    <span>Min file size: <strong>0 MB</strong></span>
+                                    <span><?php _e('Accept file types','web-to-print-online-designer'); ?>: <strong>png, jpg, gif</strong></span>
+                                    <span><?php _e('Max file size','web-to-print-online-designer'); ?>: <strong>20 MB</strong></span>
+                                    <span><?php _e('Min file size','web-to-print-online-designer'); ?>: <strong>0 MB</strong></span>
                                 </div>
                                 <div class="nbd-term">
                                     <div class="nbd-checkbox">
                                         <input id="accept-term" type="checkbox">
                                         <label for="accept-term">&nbsp;</label>
                                     </div>
-                                    <span class="term-read">I accept the terms</span>
+                                    <span class="term-read"><?php _e('I accept the terms','web-to-print-online-designer'); ?></span>
                                 </div>
                                 <div class="elements-uploaded"></div>
                             </div>
                             <div class="item-category type-url" data-type="image-url">
                                 <div class="form-group">
-                                    <label>Image Url</label>
+                                    <label><?php _e('Image Url','web-to-print-online-designer'); ?></label>
                                     <div class="input-group">
                                         <input type="text" name="image-url"/>
-                                        <button class="nbd-button">insert</button>
+                                        <button class="nbd-button"><?php _e('insert','web-to-print-online-designer'); ?></button>
                                     </div>
                                 </div>
                             </div>
                             <div class="item-category type-facebook" data-type="facebook">
-                                facebook
+                                <?php _e('facebook','web-to-print-online-designer'); ?>
                             </div>
                             <div class="item-category type-instagram" data-type="instagram">
                                 <button class="nbd-button button-login nbd-hover-shadow">
                                     <i class="icon-nbd icon-nbd-instagram-logo"></i>
-                                    <span>Login</span>
+                                    <span><?php _e('Login','web-to-print-online-designer'); ?></span>
                                 </button>
                             </div>
                             <div class="item-category type-dropbox" data-type="dropbox">
-                                dropbox
+                                <?php _e('dropbox','web-to-print-online-designer'); ?>
                             </div>
                             <div class="item-category type-webcam" data-type="webcam">
-                                webcam
+                                <?php _e('webcam','web-to-print-online-designer'); ?>
                             </div>
                         </div>
                         <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>
                     </div>
                 </div>
                 <div class="info-support">
-                    <span>Image Upload</span>
+                    <span><?php _e('Image Upload','web-to-print-online-designer'); ?></span>
                     <i class="icon-nbd icon-nbd-clear close-result-loaded"></i>
                 </div>
             </div>
@@ -489,7 +482,6 @@
                 <i class="icon-nbd icon-nbd-fomat-search"></i>
             </div>
         </div>
-
         <div class="tab" id="tab-element">
             <div class="tab-main tab-scroll">
                 <div class="nbd-items-dropdown">
@@ -499,7 +491,7 @@
                                 <div class="main-item">
                                     <div class="item-icon"><i class="icon-nbd icon-nbd-draw"></i></div>
                                     <div class="item-info">
-                                        <span class="item-name" title="Business Card">Draw</span>
+                                        <span class="item-name" title="Business Card"><?php _e('Draw','web-to-print-online-designer'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -507,7 +499,7 @@
                                 <div class="main-item">
                                     <div class="item-icon"><i class="icon-nbd icon-nbd-shapes"></i></div>
                                     <div class="item-info">
-                                        <span class="item-name" title="Business Card">Shapes</span>
+                                        <span class="item-name" title="Business Card"><?php _e('Shapes','web-to-print-online-designer'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -515,7 +507,7 @@
                                 <div class="main-item">
                                     <div class="item-icon"><i class="icon-nbd icon-nbd-diamond"></i></div>
                                     <div class="item-info">
-                                        <span class="item-name" title="Business Card">Icons</span>
+                                        <span class="item-name" title="Business Card"><?php _e('Icons','web-to-print-online-designer'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -523,7 +515,7 @@
                                 <div class="main-item">
                                     <div class="item-icon"><i class="icon-nbd icon-nbd-line"></i></div>
                                     <div class="item-info">
-                                        <span class="item-name" title="Business Card">Lines</span>
+                                        <span class="item-name" title="Business Card"><?php _e('Lines','web-to-print-online-designer'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -531,7 +523,7 @@
                                 <div class="main-item">
                                     <div class="item-icon"><i class="icon-nbd icon-nbd-qrcode"></i></div>
                                     <div class="item-info">
-                                        <span class="item-name" title="Business Card">QR-Code</span>
+                                        <span class="item-name" title="Business Card"><?php _e('QR-Code','web-to-print-online-designer'); ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -545,7 +537,7 @@
                         <div class="content-items">
                             <div class="content-item type-draw" data-type="draw">
                                 <div class="main-type">
-                                    <span class="heading-title">Drawing Mode</span>
+                                    <span class="heading-title"><?php _e('Drawing Mode','web-to-print-online-designer'); ?></span>
                                     <ul class="main-ranges">
                                         <li class="range range-brightness">
                                             <label>Brightness</label>
@@ -569,15 +561,15 @@
                                             Brush <i class="icon-nbd icon-nbd-arrow-drop-down"></i>
                                             <div class="nbd-sub-dropdown" data-pos="left">
                                                 <ul class="tab-scroll">
-                                                    <li><span>Pencil</span></li>
-                                                    <li><span>Circle</span></li>
-                                                    <li><span>Spray</span></li>
-                                                    <li><span>Pattern</span></li>
-                                                    <li><span>Horizontal line</span></li>
-                                                    <li><span>Vertical line</span></li>
-                                                    <li><span>Square</span></li>
-                                                    <li><span>Diamond</span></li>
-                                                    <li><span>Textture</span></li>
+                                                    <li><span><?php _e('Pencil','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Circle','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Spray','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Pattern','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Horizontal line','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Vertical line','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Square','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Diamond','web-to-print-online-designer'); ?></span></li>
+                                                    <li><span><?php _e('Textture','web-to-print-online-designer'); ?></span></li>
                                                 </ul>
                                             </div>
                                         </button>
@@ -592,7 +584,7 @@
                                     <div class="main-input">
                                         <input type="text" class="nbd-input input-qrcode" name="qr-code" placeholder="http://example.com">
                                     </div>
-                                    <button class="nbd-button">Create QRCode</button>
+                                    <button class="nbd-button"><?php _e('Create QRCode','web-to-print-online-designer'); ?></button>
                                     <div class="main-qrcode">
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="256" height="256">
                                             <rect x="0" y="0" width="256" height="256" style="fill:#ffffff;shape-rendering:crispEdges;"></rect>
@@ -932,7 +924,7 @@
                 </div>
             </div>
         </div>
-        <div id="tab-layer" class="tab">
+        <div class="tab tab-last" id="tab-layer">
             <div class="tab-main tab-scroll">
                 <div class="inner-tab-layer">
                     <ul class="menu-layer">
@@ -972,20 +964,20 @@
     </div>
     <div class="nbd-sidebar-preview product-more-info">
         <div class="preview-head">
-            <span>infomation</span>
+            <span><?php _e('infomation','web-to-print-online-designer'); ?></span>
             <i class="icon-nbd icon-nbd-fomat-highlight-off close-preview"></i>
         </div>
         <div class="main-preview tab-scroll">
             <div class="preview-body">
                 <div class="main-body">
                     <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="">
-                    <span class="product-name">Business Card</span>
+                    <span class="product-name"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
                     <span class="product-desc">Business cards are cards bearing business information about a company or individual. They are shared during formal introductions as a convenience and a memory aid. A business card typically includes the giver's name, company or business affiliation (usually with a logo) and contact information such as street addresses, telephone number(s), fax number, e-mail addresses and website. Before the advent of electronic communication business cards might also include telex details</span>
                 </div>
             </div>
             <div class="preview-footer">
                 <div class="main-footer">
-                    <button class="nbd-button">Choose</button>
+                    <button class="nbd-button"><?php _e('Choose','web-to-print-online-designer'); ?></button>
                 </div>
             </div>
         </div>

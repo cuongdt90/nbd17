@@ -7,15 +7,15 @@
             <div class="sub-menu" data-pos="left">
                 <ul>
                     <li class="sub-menu-item flex space-between">
-                        <span>Import file</span>
+                        <span><?php _e('Import file','web-to-print-online-designer'); ?></span>
                         <small>(Ctrl+O)</small>
                     </li>
                     <li class="sub-menu-item flex space-between">
-                        <span>Export file</span>
+                        <span><?php _e('Export file','web-to-print-online-designer'); ?></span>
                         <small>(Ctrl+O)</small>
                     </li>
                     <li class="sub-menu-item flex space-between">
-                        <span>Clear all design</span>
+                        <span><?php _e('Clear all design','web-to-print-online-designer'); ?></span>
                         <small>(Ctrl+O)</small>
                     </li>
                 </ul>
@@ -26,11 +26,11 @@
             <span>View</span>
             <ul class="sub-menu" data-pos="left">
                 <li class="sub-menu-item flex space-between">
-                    <span>Show rule</span>
+                    <span><?php _e('Show rule','web-to-print-online-designer'); ?></span>
                     <small>(Ctrl+O)</small>
                 </li>
                 <li class="sub-menu-item flex space-between">
-                    <span>show grid</span>
+                    <span><?php _e('show grid','web-to-print-online-designer'); ?></span>
                     <small>(Ctrl+O)</small>
                 </li>
 
@@ -44,27 +44,27 @@
                 ------------------------------------------------------------------------------------->
 
                 <li class="sub-menu-item flex space-between">
-                    <span>show guideline</span>
+                    <span><?php _e('show guideline','web-to-print-online-designer'); ?></span>
                     <small>(Ctrl+O)</small>
                 </li>
                 <li class="sub-menu-item flex space-between hover-menu" data-animate="bottom-to-top">
-                    <span>snap mode</span>
+                    <span><?php _e('show guideline','web-to-print-online-designer'); ?></span>
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>
                     <div class="hover-sub-menu-item">
                         <ul>
-                            <li><span>Layer</span></li>
-                            <li><span>Bounding</span></li>
-                            <li><span>grid</span></li>
+                            <li><span><?php _e('Layer','web-to-print-online-designer'); ?></span></li>
+                            <li><span><?php _e('Bounding','web-to-print-online-designer'); ?></span></li>
+                            <li><span><?php _e('grid','web-to-print-online-designer'); ?></span></li>
                         </ul>
                     </div>
                 </li>
                 <li class="sub-menu-item flex space-between hover-menu" data-animate="bottom-to-top">
-                    <span>snap warning</span>
+                    <span><?php _e('snap warning','web-to-print-online-designer'); ?></span>
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>
                     <div class="hover-sub-menu-item">
                         <ul>
-                            <li>Out of stage</li>
-                            <li>Image resolution</li>
+                            <li><?php _e('Out of stage','web-to-print-online-designer'); ?></li>
+                            <li><?php _e('Image resolution','web-to-print-online-designer'); ?></li>
                         </ul>
                     </div>
                 </li>
@@ -77,37 +77,37 @@
 
         <li class="menu-item in">
             <i class="icon-nbd icon-nbd-undo2"></i>
-            <span>undo</span>
+            <span><?php _e('undo','web-to-print-online-designer'); ?></span>
         </li>
 
         <li class="menu-item in">
             <i class="icon-nbd icon-nbd-redo2"></i>
-            <span>redo</span>
+            <span><?php _e('redo','web-to-print-online-designer'); ?></span>
         </li>
     </ul>
     <ul class="nbd-main-menu menu-right">
         <li class="menu-item item-title">
             <input type="text" name="title" class="title" placeholder="Title"/>
         </li>
-        <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i><span>Share</span></li>
+        <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i><span><?php _e('Share','web-to-print-online-designer'); ?></span></li>
         <li class="menu-item item-process" data-overlay="overlay">
             <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right">
                 <div class="main-sub-menu">
                     <div class="sub-header">
-                        <span>Product Option</span>
+                        <span><?php _e('Product Option','web-to-print-online-designer'); ?></span>
                         <i class="icon-nbd-clear nbd-close-sub-menu"></i>
                     </div>
                     <div class="sub-body">
                         <select class="process-select">
-                            <option value="pdf-standard"><span>PDF-Standard</span></option>
-                            <option value="pdf-print"><span>PDF-Standard</span></option>
+                            <option value="pdf-standard"><span><?php _e('PDF-Standard','web-to-print-online-designer'); ?></span></option>
+                            <option value="pdf-print"><span><?php _e('PDF-Standard','web-to-print-online-designer'); ?></span></option>
                             <option value="jpg"><span>JPG</span></option>
                             <option value="png"><span>PNG</span></option>
                         </select>
                     </div>
                     <div class="sub-footer">
-                        <button class="nbd-button nbd-add-to-cart">Add To Cart</button>
+                        <button class="nbd-button nbd-add-to-cart"><?php _e('Add To Cart','web-to-print-online-designer'); ?></button>
                         <i class="icon-nbd-info-circle nbd-show-popup-fileType nbd-hover-shadow"></i>
                     </div>
                 </div>

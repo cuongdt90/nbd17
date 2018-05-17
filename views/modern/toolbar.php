@@ -14,7 +14,7 @@
                         <div class="group-font">
                             <div class="toolbar-menu-header">
                                 <div class="toolbar-header-line"></div>
-                                <div class="toolbar-separator">Font document</div>
+                                <div class="toolbar-separator"><?php _e('Font document','web-to-print-online-designer'); ?></div>
                                 <div class="toolbar-header-line"></div>
                             </div>
                             <ul>
@@ -45,7 +45,7 @@
                         <div class="group-font">
                             <div class="toolbar-menu-header">
                                 <div class="toolbar-header-line"></div>
-                                <div class="toolbar-separator">Font Vietnamese</div>
+                                <div class="toolbar-separator"><?php _e('Font Vietnamese','web-to-print-online-designer'); ?></div>
                                 <div class="toolbar-header-line"></div>
                             </div>
                             <ul>
@@ -345,7 +345,7 @@
                 <i class="icon-nbd icon-nbd-format-color-fill nbd-tooltip-hover color-fill" title="color" style="font-size: 21px"></i>
                 <div class="sub-menu" data-pos="center">
                     <div class="nbd-color-palette" style="position: relative">
-                        <h3 class="color-palette-label">Color document</h3>
+                        <h3 class="color-palette-label"><?php _e('Color document','web-to-print-online-designer'); ?></h3>
                         <div class="working-palette">
                             <ul class="main-color-palette">
                                 <li class="color-palette-add"></li>
@@ -362,7 +362,7 @@
                                 <li class="color-palette-item"></li>
                             </ul>
                         </div>
-                        <h3 class="color-palette-label">Color document</h3>
+                        <h3 class="color-palette-label"><?php _e('Color document','web-to-print-online-designer'); ?></h3>
                         <div class="pinned-palette">
                             <ul class="main-color-palette">
                                 <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
@@ -393,22 +393,22 @@
                     <ul>
                         <li class="sub-menu-item">
                             <i class="icon-nbd icon-nbd-bring-to-front"></i>
-                            <span>Bring to Front</span>
+                            <span><?php _e('Bring to Front','web-to-print-online-designer'); ?></span>
                             <span class="keyboard">Ctrl+Shift+]</span>
                         </li>
                         <li class="sub-menu-item">
                             <i class="icon-nbd icon-nbd-bring-forward"></i>
-                            <span>Bring Forward</span>
+                            <span><?php _e('Bring Forward','web-to-print-online-designer'); ?></span>
                             <span class="keyboard">Ctrl+]</span>
                         </li>
                         <li class="sub-menu-item">
                             <i class="icon-nbd icon-nbd-sent-to-backward"></i>
-                            <span>Send to Backward</span>
+                            <span><?php _e('Send to Backward','web-to-print-online-designer'); ?></span>
                             <span class="keyboard">Ctrl+[</span>
                         </li>
                         <li class="sub-menu-item">
                             <i class="icon-nbd icon-nbd-send-to-back"></i>
-                            <span>Send to Back</span>
+                            <span><?php _e('Send to Back','web-to-print-online-designer'); ?></span>
                             <span class="keyboard">Ctrl+Shift+[</span>
                         </li>
                     </ul>

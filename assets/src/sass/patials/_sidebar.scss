@@ -279,6 +279,11 @@
         padding: 10px;
         position: absolute;
         z-index: 99;
+        &[data-type="webcam"]{
+          @media screen and (max-width: 767px){
+            display: none;
+          }
+        }
         &:hover {
           &[data-type="facebook"]{
             i,p {
@@ -296,6 +301,9 @@
             }
           }
           &[data-type="webcam"]{
+            @media screen and (max-width: 767px){
+                display: none;
+            }
             i,p {
               color: $main-color;
             }
@@ -933,6 +941,11 @@
             padding: 10px 5px;
             .nbd-main-product {
               border: 1px solid #ebebeb;
+              &:hover{
+                .product-more-info{
+                  font-weight: bold;
+                }
+              }
             }
             .product-name {
               cursor: pointer;
@@ -943,14 +956,6 @@
             .nbd-product-img {
               overflow: hidden;
               cursor: pointer;
-              &:hover {
-                img {
-                  transform: scale(1.1);
-                }
-              }
-              img {
-                transition: all .3s;
-              }
             }
             .nbd-product-info {
               display: flex;
@@ -959,10 +964,6 @@
               align-items: center;
               .product-more-info {
                 border-radius: 50%;
-                &:hover {
-                  font-weight: bold;
-                  transform: scale(1.1);
-                }
               }
             }
 

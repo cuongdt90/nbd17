@@ -182,6 +182,7 @@
             var NBDESIGNLANG = <?php echo json_encode(nbd_get_language( $lang_code ));  ?>  
         </script>
     </head>
+
     <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
         <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
             <div id="design-container">
@@ -201,8 +202,9 @@
 				</div>	
             </div>
         </div>
-        <?php include 'modern/popup.php'?>
-        <?php include 'modern/loading-page.php'?>
+        <?php include 'modern/popup.php';?>
+        <?php include 'modern/loading-page.php';?>
+        <?php include 'modern/toasts.php';?>
 
         <?php if(!NBDESIGNER_MODE_DEV): ?>
         <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>

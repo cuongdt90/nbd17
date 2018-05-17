@@ -17,7 +17,7 @@
         </div>
         <div class="body">
             <div class="share-with">
-                <span>Share with:</span>
+                <span><?php _e('Share with','web-to-print-online-designer'); ?>:</span>
                 <ul class="socials">
                     <li class="social facebook"><i class="icon-nbd icon-nbd-facebook-circle nbd-hover-shadow"></i></li>
                     <li class="social twitter"><i class="icon-nbd icon-nbd-twitter-circle nbd-hover-shadow"></i></li>
@@ -57,7 +57,7 @@
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
         <div class="head">
-            <span class="title">Keyboard shortcuts</span>
+            <span class="title"><?php _e('Keyboard shortcuts','web-to-print-online-designer'); ?></span>
         </div>
         <div class="body">
             <div class="main-body">
@@ -73,7 +73,7 @@
                                 or
                                 <kbd>s</kbd>
                             </td>
-                            <td>Focus search bar</td>
+                            <td><?php _e('Focus search bar','web-to-print-online-designer'); ?></td>
                         </tr>
                         <tr>
                             <td class="keys">

@@ -22,7 +22,7 @@
 }
 .tooltipster-sidetip.tooltipster-borderless .tooltipster-box {
   border: none;
-  background: #394264;
+  background: $main-color;
   font-size: 12px;
   border-radius: 2px;
 }
@@ -60,19 +60,16 @@
   border: 6px solid transparent
 }
 .tooltipster-sidetip.tooltipster-borderless.tooltipster-bottom .tooltipster-arrow-border {
-  border-bottom-color: #394264;
+  border-bottom-color: $main-color;
 }
 .tooltipster-sidetip.tooltipster-borderless.tooltipster-left .tooltipster-arrow-border {
-  border-left-color: #1b1b1b;
-  border-left-color: rgba(10, 10, 10, .9)
+  border-left-color: $main-color;
 }
 .tooltipster-sidetip.tooltipster-borderless.tooltipster-right .tooltipster-arrow-border {
-  border-right-color: #1b1b1b;
-  border-right-color: rgba(10, 10, 10, .9)
+  border-right-color: $main-color;
 }
 .tooltipster-sidetip.tooltipster-borderless.tooltipster-top .tooltipster-arrow-border {
-  border-top-color: #1b1b1b;
-  border-top-color: rgba(10, 10, 10, .9)
+  border-top-color: $main-color;
 }
 .tooltipster-sidetip.tooltipster-borderless.tooltipster-bottom .tooltipster-arrow-uncropped {
   top: -6px
