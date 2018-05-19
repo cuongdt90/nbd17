@@ -789,7 +789,7 @@
 
     }
   }
-  #tab-element{
+  #tab-element, #tab-element-test{
     .nbd-items-dropdown{
       margin-top: 30px;
       .main-items{
@@ -892,7 +892,6 @@
                     }
                   }
                 }
-
               }
             }
             &.type-qrcode {
