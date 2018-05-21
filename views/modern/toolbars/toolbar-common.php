@@ -24,11 +24,7 @@
                     <h3 class="color-palette-label"><?php _e('Color document','web-to-print-online-designer'); ?></h3>
                     <div class="pinned-palette">
                         <ul class="main-color-palette">
-                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
-                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: green;"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
+                            <li ng-repeat="color in __colorPalette track by $index" class="color-palette-item" data-color="{{color}}" title="#253702" ng-style="{'background': color}">{{__colorPalette}}</li>
                         </ul>
                     </div>
                     <div class="pinned-palette">
@@ -40,9 +36,17 @@
                             <li class="color-palette-item"></li>
                         </ul>
                     </div>
-
-                    <div class="color-palette-popup"></div>
-
+                    <div class="color-palette-popup">
+                        <spectrum-colorpicker
+                                ng-model="colorBackground"
+                                ng-change="changeBackgroundColor(colorBackground)"
+                                options="{
+                                    preferredFormat: 'hex',
+                                    showInput: true,
+                                    palette: colorPalette
+                                }">
+                        </spectrum-colorpicker>
+                    </div>
                 </div>
             </div>
         </li>

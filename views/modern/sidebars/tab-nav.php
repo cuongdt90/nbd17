@@ -7,7 +7,6 @@
         <li class="tab" ng-if="settings['nbdesigner_enable_clipart'] == 'yes'"><i class="icon-nbd icon-nbd-sharp-star" style="font-size: 28px"></i><span><?php _e('Cliparts','web-to-print-online-designer'); ?></span></li>
         <li class="tab" ng-if="settings['nbdesigner_enable_image'] == 'yes'"><i class="icon-nbd icon-nbd-images" style="font-size: 21px"></i><span><?php _e('Photos','web-to-print-online-designer'); ?></span></li>
         <li class="tab"><i class="icon-nbd icon-nbd-geometrical-shapes-group"></i><span><?php _e('Elements','web-to-print-online-designer'); ?></span></li>
-        <li class="tab"><i class="icon-nbd icon-nbd-geometrical-shapes-group"></i><span><?php _e('Elements-Test','web-to-print-online-designer'); ?></span></li>
         <li class="tab"><i class="icon-nbd icon-nbd-stack"></i><span><?php _e('Layers','web-to-print-online-designer'); ?></span></li>
         <li class="tab tab-end" style="pointer-events: none"></li>
     </ul>

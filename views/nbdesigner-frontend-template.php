@@ -175,7 +175,7 @@
                 }               
             }
             row.push(NBDESIGNCONFIG['nbdesigner_default_color']);
-            colorPalette.push(row);                                  
+            colorPalette.push(row);
             <?php if($ui_mode == 1): ?>
                 nbd_window = window.parent;
             <?php else: ?>      

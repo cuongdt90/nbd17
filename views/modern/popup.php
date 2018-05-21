@@ -135,7 +135,7 @@
         <div class="head"></div>
         <div class="body">
             <div class="main-body">
-                Nbd term
+                {{settings['nbdesigner_upload_term']}}
             </div>
         </div>
         <div class="footer"></div>

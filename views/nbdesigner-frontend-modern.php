@@ -164,13 +164,15 @@
             <?php endforeach; ?>
             var _colors = NBDESIGNCONFIG['nbdesigner_hex_names'].split(','),
             colorPalette = [], row = [];
+            __colorPalette = [];
             for(var i=0; i < _colors.length; ++i) {
                 var color = _colors[i].split(':')[0];
                 row.push(color);
                 if(i % 10 == 9){
                     colorPalette.push(row);
                     row = [];
-                }               
+                }
+                __colorPalette.push(color);
             }
             row.push(NBDESIGNCONFIG['nbdesigner_default_color']);
             colorPalette.push(row);                                  

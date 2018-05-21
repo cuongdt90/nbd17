@@ -138,11 +138,11 @@
                         <li class="range range-brightness">
                             <label>Brightness</label>
                             <div class="main-track">
-                                <input class="slide-input" type="range" step="1" min="-100" max="100" value="50">
+                                <input ng-model="brightness" class="slide-input" type="range" step="1" min="-100" max="100">
                                 <span class="range-track"></span>
                                 <span class="snap-guide"></span>
                             </div>
-                            <span class="value-display">0</span>
+                            <span class="value-display1">{{brightness}}</span>
                         </li>
                         <li class="range range-brightness">
                             <label>Brightness</label>
