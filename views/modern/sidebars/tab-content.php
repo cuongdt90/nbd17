@@ -254,7 +254,6 @@
             </div>
         </div>
     </div>
-
     <div class="tab" ng-if="settings['nbdesigner_enable_clipart'] == 'yes'" id="tab-svg">
         <div class="nbd-search">
             <input type="search" name="search" placeholder="search"/>
@@ -410,7 +409,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item" ng-if="settings['nbdesigner_enable_image_webcam'] == 'yes'" data-type="webcam" data-api="false">
+                        <div class="item" ng-if="settings['nbdesigner_enable_image_webcam'] == 'yes' || !settings['is_mobile']" data-type="webcam" data-api="false">
                             <div class="main-item">
                                 <div class="item-icon"><i class="icon-nbd icon-nbd-webcam"></i></div>
                                 <div class="item-info">

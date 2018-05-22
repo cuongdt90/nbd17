@@ -1,4 +1,4 @@
-<div class="toolbar-text">
+<div class="toolbar-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'">
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-font-familly">
             <button class="toolbar-bottom">
@@ -124,9 +124,9 @@
                 </ul>
             </div>
         </li>
-        <li class="menu-item item-transform"><i class="icon-nbd icon-nbd-uppercase nbd-tooltip-hover" title="Uppercase / Lowercase"></i></li>
-        <li class="menu-item item-text-bold" ng-if="settings['nbdesigner_text_bold'] == '1'"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="Text style bold"></i></li>
-        <li class="menu-item item-text-italic" ng-if="settings['nbdesigner_text_italic'] == '1'"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" title="Text style italic"></i></li>
-        <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Text underline"></i></li>
+        <li class="menu-item item-transform"><i class="icon-nbd icon-nbd-uppercase nbd-tooltip-hover" title="Uppercase"></i></li>
+        <li class="menu-item item-text-bold" ng-if="settings['nbdesigner_text_bold'] == '1'"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="Bold"></i></li>
+        <li class="menu-item item-text-italic" ng-if="settings['nbdesigner_text_italic'] == '1'"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" title="Italic"></i></li>
+        <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Underline"></i></li>
     </ul>
 </div>

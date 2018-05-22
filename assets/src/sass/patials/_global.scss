@@ -32,7 +32,7 @@ input {
   border: 1px solid #ebebeb;
   outline: none;
   border-radius: 2px;
-  &:focus{
+  &:focus,&:active{
     border-color: #ccc;
   }
 

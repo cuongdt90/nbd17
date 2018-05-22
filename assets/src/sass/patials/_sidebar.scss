@@ -387,8 +387,9 @@
               border-radius: 2px;
               cursor: pointer;
               transition: box-shadow .3s;
+              box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px -1px rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.12);
               &:hover {
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px;
+                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
               }
               .item-svg{
                 svg{
@@ -483,7 +484,6 @@
       }
     }
   }
-
   #tab-element{
     .nbd-items-dropdown{
       .content-items {
@@ -557,7 +557,6 @@
       }
     }
   }
-
   #tab-photo{
     .result-loaded {
       .content-items {
@@ -638,6 +637,48 @@
               }
             }
           }
+        }
+      }
+    }
+    .main-items {
+      .item {
+        .item-icon {
+          i{
+            transition: color .3s;
+          }
+        }
+
+        &:hover{
+          &[data-type="facebook"]{
+            .item-icon {
+              i{
+                color: $facebook-color;
+              }
+            }
+          }
+          &[data-type="instagram"]{
+            .item-icon {
+              i{
+                color: $instagram-color;
+              }
+            }
+          }
+          &[data-type="dropbox"]{
+            .item-icon {
+              i{
+                color: $dropbox-color;
+              }
+            }
+          }
+
+          &[data-type="pixabay"]{
+            .item-icon {
+              i{
+                color: $pixabay-color;
+              }
+            }
+          }
+
         }
       }
     }
@@ -801,8 +842,9 @@
             cursor: pointer;
             .item-icon{
               transition: all .3s;
+              box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px -1px rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.12);
               &:hover {
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 2px 1px -1px;
+                box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
               }
             }
           }

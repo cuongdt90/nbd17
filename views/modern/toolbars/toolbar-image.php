@@ -1,4 +1,4 @@
-<div class="toolbar-image">
+<div class="toolbar-image" ng-if="settings['nbdesigner_enable_image'] == 'yes'" style="display: none">
     <ul class="nbd-main-menu">
         <li class="menu-item menu-filter">
             <i class="icon-nbd icon-nbd-baseline-tune"></i>

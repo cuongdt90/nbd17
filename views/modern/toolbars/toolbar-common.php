@@ -4,49 +4,40 @@
             <i class="icon-nbd icon-nbd-format-color-fill nbd-tooltip-hover color-fill" title="color" style="font-size: 21px"></i>
             <div class="sub-menu" data-pos="center">
                 <div class="nbd-color-palette" style="position: relative">
-                    <h3 class="color-palette-label"><?php _e('Color document','web-to-print-online-designer'); ?></h3>
-                    <div class="working-palette">
+                    <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
+                        <h3 class="color-palette-label"><?php _e('Set color','web-to-print-online-designer'); ?></h3>
                         <ul class="main-color-palette">
-                            <li class="color-palette-add"></li>
-                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                        </ul>
-                        <ul class="main-color-palette">
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                        </ul>
-                    </div>
-                    <h3 class="color-palette-label"><?php _e('Color document','web-to-print-online-designer'); ?></h3>
-                    <div class="pinned-palette">
-                        <ul class="main-color-palette">
-                            <li ng-repeat="color in __colorPalette track by $index" class="color-palette-item" data-color="{{color}}" title="#253702" ng-style="{'background': color}">{{__colorPalette}}</li>
-                        </ul>
-                    </div>
-                    <div class="pinned-palette">
-                        <ul class="main-color-palette">
-                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                            <li class="color-palette-item"></li>
-                        </ul>
-                    </div>
-                    <div class="color-palette-popup">
-                        <spectrum-colorpicker
-                                ng-model="colorBackground"
-                                ng-change="changeBackgroundColor(colorBackground)"
-                                options="{
+                            <li class="color-palette-add">
+                                <spectrum-colorpicker
+                                        ng-model="colorBackground"
+                                        ng-change="changeBackgroundColor(colorBackground)"
+                                        options="{
                                     preferredFormat: 'hex',
                                     showInput: true,
-                                    palette: colorPalette
+                                    showAlpha: true,
+                                    containerClassName: 'nbd-sp'
                                 }">
-                        </spectrum-colorpicker>
+                                </spectrum-colorpicker>
+                            </li>
+                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
+                        </ul>
                     </div>
+                    <div class="pinned-palette default-palette">
+                        <h3 class="color-palette-label"><?php _e('Default color','web-to-print-online-designer'); ?></h3>
+                        <ul class="main-color-palette">
+                            <li ng-repeat="color in __colorPalette track by $index" class="color-palette-item" data-color="{{color}}" title="{{__colorPalette}}" ng-style="{'background': color}">{{__colorPalette}}</li>
+                        </ul>
+                    </div>
+                    <div class="pinned-palette default-palette">
+                        <ul class="main-color-palette">
+                            <li class="color-palette-item" data-color="#000000" title="#000000" style="background-color: #000000;"></li>
+                            <li class="color-palette-item" data-color="#666666" title="#666666" style="background-color: #666666;"></li>
+                            <li class="color-palette-item" data-color="#a8a8a8" title="#a8a8a8" style="background-color: #a8a8a8;"></li>
+                            <li class="color-palette-item" data-color="#d9d9d9" title="#d9d9d9" style="background-color: #d9d9d9;"></li>
+                            <li class="color-palette-item" data-color="#ffffff" title="#ffffff" style="background-color: #ffffff;"></li>
+                        </ul>
+                    </div>
+                    <div class="color-palette-popup"></div>
                 </div>
             </div>
         </li>
