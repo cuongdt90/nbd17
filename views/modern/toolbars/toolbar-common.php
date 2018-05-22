@@ -14,7 +14,6 @@
                                         options="{
                                     preferredFormat: 'hex',
                                     showInput: true,
-                                    showAlpha: true,
                                     containerClassName: 'nbd-sp'
                                 }">
                                 </spectrum-colorpicker>
