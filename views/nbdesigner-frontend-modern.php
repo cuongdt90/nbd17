@@ -72,7 +72,7 @@
         <link type="text/css" href="<?php echo $custom_css_url; ?>" rel="stylesheet" media="all">
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php if(is_rtl()): ?>
-        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/nbdesigner-rtl.css'; ?>" rel="stylesheet" media="all">
+        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/modern-rtl.css'; ?>" rel="stylesheet" media="all">
         <?php endif; ?>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -185,7 +185,7 @@
         </script>
     </head>
 
-    <body ng-app="app" class="nbd-mode-modern nbd-mode-<?php echo $ui_mode; ?>">
+    <body ng-app="app" class="nbd-mode-modern nbd-mode-<?php echo $ui_mode; ?> <?php echo is_rtl() ? 'nbd-modern-rtl' : '';?>">
         <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
             <div id="design-container">
 				<div class="container-fluid" id="designer-controller">

@@ -21,21 +21,29 @@ var onError = function (err) {
     this.emit('end');
 };
 
-gulp.task('frontstyle', function() {
-    return gulp.src('./src/sass/modern.scss')
-        .pipe(plumber({ errorHandler: onError }))
+gulp.task('right-to-left', function() {
+    return gulp.src('./src/sass/rtl.scss')
+        .pipe(plumber({errorHandler: onError}))
         .pipe(sass())
         .pipe(autoprefixer())
         .pipe(gcmq())
         .pipe(minifyCSS())
-        .pipe(gulp.dest('./css/'))
+        .pipe(rename('modern-rtl.css'))
+        .pipe(gulp.dest('./css/'));
 });
 
 
-
+gulp.task('frontstyle', function() {
+    return gulp.src('./src/sass/modern.scss')
+        .pipe(plumber({errorHandler: onError}))
+        .pipe(sass())
+        .pipe(autoprefixer())
+        .pipe(gcmq())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('./css/'));
+});
 
 gulp.task('watch', function() {
-	gulp.watch('src/sass/**/*.scss', ['frontstyle']);
+	gulp.watch('src/sass/**/*.scss', ['frontstyle','right-to-left']);
 });
-
-gulp.task('default', ['front']);
+gulp.task('default', ['frontstyle','right-to-left']);
