@@ -230,6 +230,67 @@ class Nbdesigner_IO {
                 break;             
         }
         return $thumb;
+    }
+    public static function read_json_setting($fullname) {
+        if (file_exists($fullname)) {
+            $list = json_decode(file_get_contents($fullname));           
+        } else {
+            $list = '';
+            file_put_contents($fullname, $list);
+        }
+        return $list;
+    }
+    public static function delete_json_setting($fullname, $id, $reindex = true) {
+        $list = self::read_json_setting($fullname);
+        if (is_array($list)) {
+            array_splice($list, $id, 1);
+            if ($reindex) {
+                $key = 0;
+                foreach ($list as $val) {
+                    $val->id = (string) $key;
+                    $key++;
+                }
+            }
+        }
+        $res = json_encode($list);
+        file_put_contents($fullname, $res);
+    }  
+    public static function update_json_setting($fullname, $data, $id) {
+        $list = self::read_json_setting($fullname);
+        if (is_array($list))
+            $list[$id] = $data;
+        else {
+            $list = array();
+            $list[] = $data;
+        }
+        $_list = array();
+        foreach ($list as $val) {
+            $_list[] = $val;
+        }
+        $res = json_encode($_list);
+        file_put_contents($fullname, $res);
+    }
+    public static function update_json_setting_depend($fullname, $id) {
+        $list = self::read_json_setting($fullname);
+        if (!is_array($list)) return;
+        foreach ($list as $val) {             
+            if (!((sizeof($val) > 0))) continue;       
+            foreach ($val->cat as $k => $v) {
+                if ($v == $id) {                   
+                    array_splice($val->cat, $k, 1);
+                    break;
+                }
+            }
+            foreach ($val->cat as $k => $v) {
+                if ($v > $id) {
+                    $new_v = (string) --$v;
+                    unset($val->cat[$k]);
+                    array_splice($val->cat, $k, 0, $new_v);									
+                }
+            }
+        }
+        $res = json_encode($list);
+        file_put_contents($fullname, $res);
     }    
 }
 class NBD_Image {
@@ -579,16 +640,16 @@ function default_frontend_setting(){
         'nbdesigner_text_change_font' => 1,
         'nbdesigner_text_italic' => 1,
         'nbdesigner_text_bold' => 1,
-        'nbdesigner_text_underline' => 1,
-        'nbdesigner_text_through' => 1,
-        'nbdesigner_text_overline' => 1,
+        'nbdesigner_text_underline' => 0,
+        'nbdesigner_text_through' => 0,
+        'nbdesigner_text_overline' => 0,
         'nbdesigner_text_case' => 1,
         'nbdesigner_text_align_left' => 1,
         'nbdesigner_text_align_right' => 1,
         'nbdesigner_text_align_center' => 1,
         'nbdesigner_text_color' => 1,
         'nbdesigner_text_background' => 1,
-        'nbdesigner_text_shadow' => 1,
+        'nbdesigner_text_shadow' => 0,
         'nbdesigner_text_line_height' => 1,
         'nbdesigner_text_font_size' => 1,
         'nbdesigner_text_opacity' => 1,
@@ -597,7 +658,7 @@ function default_frontend_setting(){
         'nbdesigner_text_rotate' => 1,
         'nbdesigner_default_text' => __('Text here', 'web-to-print-online-designer'),
         'nbdesigner_enable_curvedtext' => 'yes',
-        'nbdesigner_enable_textpattern' => 'yes',
+        'nbdesigner_enable_textpattern' => 'no',
         
         'nbdesigner_enable_clipart' => 'yes',
         'nbdesigner_clipart_change_path_color' => 1,           
@@ -606,7 +667,7 @@ function default_frontend_setting(){
 
         'nbdesigner_enable_image' => 'yes',
         'nbdesigner_image_unlock_proportion' => 1,           
-        'nbdesigner_image_shadow' => 1,           
+        'nbdesigner_image_shadow' => 0,           
         'nbdesigner_image_opacity' => 1,           
         'nbdesigner_image_grayscale' => 1,           
         'nbdesigner_image_invert' => 1,           
@@ -649,12 +710,12 @@ function default_frontend_setting(){
         'nbdesigner_draw_brush_pencil' => 1,          
         'nbdesigner_draw_brush_circle' => 1,          
         'nbdesigner_draw_brush_spray' => 1,          
-        'nbdesigner_draw_brush_pattern' => 1,          
-        'nbdesigner_draw_brush_hline' => 1,          
-        'nbdesigner_draw_brush_vline' => 1,          
-        'nbdesigner_draw_brush_square' => 1,          
-        'nbdesigner_draw_brush_diamond' => 1,          
-        'nbdesigner_draw_brush_texture' => 1,          
+        'nbdesigner_draw_brush_pattern' => 0,          
+        'nbdesigner_draw_brush_hline' => 0,          
+        'nbdesigner_draw_brush_vline' => 0,          
+        'nbdesigner_draw_brush_square' => 0,          
+        'nbdesigner_draw_brush_diamond' => 0,          
+        'nbdesigner_draw_brush_texture' => 0,          
         'nbdesigner_draw_shape' => 1, 
         'nbdesigner_draw_shape_rectangle' => 1, 
         'nbdesigner_draw_shape_circle' => 1, 
@@ -1178,6 +1239,27 @@ function nbd_get_default_variation_id( $product_id ){
     }
     return $variation_id;
 }
+function nbd_get_default_variation_id2( $product_id ){
+    $variation_id = 0;
+    $variations     = wc_get_products( array(
+        'status'         => array( 'private', 'publish' ),
+        'type'           => 'variation',
+        'parent'         => $product_id,
+        'limit'          => $per_page,
+        'page'           => -1,
+        'orderby'        => array(
+                'menu_order' => 'ASC',
+                'ID'         => 'DESC',
+        ),
+        'return'         => 'objects',
+    ) ); 
+    if ( $variations ) {
+        foreach ( $variations as $variation_object ) {
+            $vid   = $variation_object->get_id();
+            $variation_data = array_merge( array_map( 'maybe_unserialize', get_post_custom( $vid ) ), wc_get_product_variation_attributes( $vid ) );
+        }
+    }
+}
 function nbd_check_permission(){
     if( isset($_GET['cik']) ){
         if( !(isset($_GET['task2']) && $_GET['task2'] != '') && !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
@@ -1498,23 +1580,28 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
         $option = unserialize(file_get_contents($path .'/option.json'));
         $used_font_path = $path. '/used_font.json';
         $used_font = json_decode( file_get_contents($used_font_path) );			
+        $path_font = array();
         foreach( $used_font as $font ){
-            foreach( $used_font as $font ){
-                if( $font->type == 'google' ){
-                    $font_name = $font->name;
-                    $path_font = nbd_download_google_font($font_name);;
-                }else{
-                    $has_custom_font = true;
-                    $path_font = NBDESIGNER_FONT_DIR . '/' . $font->file;
+            if( $font->type == 'google' ){
+                $font_name = $font->name;
+                $path_font = nbd_download_google_font($font_name);;
+            }else{
+                $has_custom_font = true;
+                foreach( $font->file as $key => $font_file ){
+                    $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
                 }
-                $true_type = ['Felipa'];
-                if (in_array($font_name, $true_type)) {
-                    $fontname = TCPDF_FONTS::addTTFfont($path_font, 'TrueType', '', 32);             
-                }else{
-                    $fontname = TCPDF_FONTS::addTTFfont($path_font, '', '', 32);             
-                }
-            } 
-        }
+            }
+            $true_type = ['Felipa', 'Rammetto One'];
+            if (in_array($font_name, $true_type)) {
+                foreach($path_font as $pfont){
+                    $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);
+                }          
+            }else{
+                foreach($path_font as $pfont){
+                    $fontname = TCPDF_FONTS::addTTFfont($pfont, '', '', 32);
+                }       
+            }
+        } 
         $pdfs = array();
         $unit = get_option('nbdesigner_dimensions_unit');
         if(!$unit) $unit = "cm";   
@@ -1859,8 +1946,10 @@ function nbd_download_product_designs( $order_id, $order_item_id, $nbd_item_key,
     }
 }
 function nbd_download_google_font( $font_name = ''){
-    $path_dst = NBDESIGNER_FONT_DIR . '/' . $font_name . '.ttf';
-    if( !file_exists($path_dst) ){
+    $path_dst = array(
+        'r' =>  NBDESIGNER_FONT_DIR . '/' . $font_name . '.ttf'
+    );
+    if( !file_exists($path_dst['r']) ){
         $google_font_path = NBDESIGNER_PLUGIN_DIR . '/data/google-fonts-ttf.json';
         $fonts = json_decode( file_get_contents($google_font_path) );         
         $items = $fonts->items;
@@ -1871,7 +1960,19 @@ function nbd_download_google_font( $font_name = ''){
             }
         }
         $path_src = isset($font->regular) ? $font->regular : reset($font);
-        copy($path_src, $path_dst);
+        copy($path_src, $path_dst['r']);
+        if( isset($font->italic) ){
+            $path_dst['i'] = NBDESIGNER_FONT_DIR . '/' . $font_name . 'i.ttf';
+            copy($font->italic, $path_dst['i']);
+        }
+        if( isset($font->{"700"}) ){
+            $path_dst['b'] = NBDESIGNER_FONT_DIR . '/' . $font_name . 'b.ttf';
+            copy($font->{"700"}, $path_dst['b']);
+        }    
+        if( isset($font->{"700italic"}) ){
+            $path_dst['bi'] = NBDESIGNER_FONT_DIR . '/' . $font_name . 'bi.ttf';
+            copy($font->{"700italic"}, $path_dst['bi']);
+        }          
     }    
     return $path_dst;
 }
@@ -1918,4 +2019,128 @@ function nbd_custom_notices($command, $mes) {
             $notice = '';
     }
     return $notice;
+}
+function nbd_font_subsets(){
+    return array(
+        'all'   =>  array(
+            'name'  =>  'All language',
+            'preview_text'  =>  'Abc Xyz',
+            'default_font'  =>  'Roboto'
+        ),	
+        'arabic'   =>  array(
+            'name'  =>  'Arabic',
+            'preview_text'  =>  'ءيوهن',
+            'default_font'  =>  'Cairo'
+        ),
+        'bengali'   =>  array(
+            'name'  =>  'Bengali',
+            'preview_text'  =>  'অআইঈউ',
+            'default_font'  =>  'Hind Siliguri'
+        ),
+        'cyrillic'   =>  array(
+            'name'  =>  'Cyrillic',
+            'preview_text'  =>  'БВГҐД',
+            'default_font'  =>  'Roboto'
+        ),   
+        'cyrillic-ext'   =>  array(
+            'name'  =>  'Cyrillic Extended',
+            'preview_text'  =>  'БВГҐД',
+            'default_font'  =>  'Roboto'
+        ),
+        'devanagari'   =>  array(
+            'name'  =>  'Devanagari',
+            'preview_text'  =>  'आईऊऋॠ',
+            'default_font'  =>  'Noto Sans'
+        ),
+        'greek'   =>  array(
+            'name'  =>  'Greek',
+            'preview_text'  =>  'αβγδε',
+            'default_font'  =>  'Roboto'
+        ),
+        'greek-ext'   =>  array(
+            'name'  =>  'Greek Extended',
+            'preview_text'  =>  'αβγδε',
+            'default_font'  =>  'Roboto'
+        ), 
+        'gujarati'   =>  array(
+            'name'  =>  'Gujarati',
+            'preview_text'  =>  'આઇઈઉઊ',
+            'default_font'  =>  'Shrikhand'
+        ),
+        'gurmukhi'   =>  array(
+            'name'  =>  'Gurmukhi',
+            'preview_text'  =>  'ਆਈਊਏਐ',
+            'default_font'  =>  'Baloo Paaji'
+        ),
+        'hebrew'   =>  array(
+            'name'  =>  'Hebrew',
+            'preview_text'  =>  'אבגדה',
+            'default_font'  =>  'Arimo'
+        ),
+        'kannada'   =>  array(
+            'name'  =>  'Kannada',
+            'preview_text'  =>  'ಅಆಇಈಉ',
+            'default_font'  =>  'Baloo Tamma'
+        ),   
+        'khmer'   =>  array(
+            'name'  =>  'Khmer',
+            'preview_text'  =>  'កខគឃង',
+            'default_font'  =>  'Hanuman'
+        ),
+        'korean'   =>  array(
+            'name'  =>  'Korean',
+            'preview_text'  =>  '가개갸거게',
+            'default_font'  =>  'Nanum Gothic'
+        ),
+        'latin'   =>  array(
+            'name'  =>  'Latin',
+            'preview_text'  =>  'Abc Xyz',
+            'default_font'  =>  'Roboto'
+        ),
+        'latin-ext'   =>  array(
+            'name'  =>  'Latin Extended',
+            'preview_text'  =>  'Abc Xyz',
+            'default_font'  =>  'Roboto'
+        ), 
+        'malayalam'   =>  array(
+            'name'  =>  'Malayalam',
+            'preview_text'  =>  'അആഇഈഉ',
+            'default_font'  =>  'Baloo Chettan'
+        ),
+        'myanmar'   =>  array(
+            'name'  =>  'Myanmar',
+            'preview_text'  =>  'ကခဂဃင',
+            'default_font'  =>  'Padauk'
+        ),
+        'oriya'   =>  array(
+            'name'  =>  'Oriya',
+            'preview_text'  =>  'ଅଆଇଈଉ',
+            'default_font'  =>  'Baloo Bhaina'
+        ),
+        'sinhala'   =>  array(
+            'name'  =>  'Sinhala',
+            'preview_text'  =>  'අආඇඈඉ',
+            'default_font'  =>  'Abhaya Libre'
+        ),
+        'tamil'   =>  array(
+            'name'  =>  'Tamil',
+            'preview_text'  =>  'க்ங்ச்ஞ்ட்',
+            'default_font'  =>  'Catamaran'
+        ), 
+        'telugu'   =>  array(
+            'name'  =>  'Telugu',
+            'preview_text'  =>  'అఆఇఈఉ',
+            'default_font'  =>  'Gurajada'
+        ),
+        'thai'   =>  array(
+            'name'  =>  'Thai',
+            'preview_text'  =>  'กขคฆง',
+            'default_font'  =>  'Kanit'
+        ),
+        'vietnamese'   =>  array(
+            'name'  =>  'Vietnamese',
+            'preview_text'  =>  'Abc Xyz',
+            'default_font'  =>  'Roboto'
+        )       
+    );
 }

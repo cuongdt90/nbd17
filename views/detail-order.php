@@ -38,86 +38,11 @@
         <a class="button-primary nbdesigner-right" href="<?php echo admin_url('post.php?post=' . absint($order_id) . '&action=edit'); ?>"><?php _e('Back to order', 'web-to-print-online-designer'); ?></a>
     </h2>
         <ul class="nbd-nav-tab">
-            <li><a href="#customer-design"><?php _e('Design & Resource', 'web-to-print-online-designer') ?></a></li>
+            <li><a href="#customer-design"><?php _e('Resource', 'web-to-print-online-designer') ?></a></li>
             <li><a href="#convert-download"><?php _e('Convert & Download', 'web-to-print-online-designer') ?></a></li>     
             <li><a href="#save-to-pdf"><?php _e('Create PDF', 'web-to-print-online-designer') ?></a></li>
         </ul>   
         <div id="customer-design">
-            <div class="nbdesigner_detail_order_container">
-                <div class="nbdesigner_preview">
-                    <div id="nbdesigner_large_image">
-                    </div>
-                    <div id="nbdesigner_large_design">
-                    </div>
-                    <div id="nbdesigner_large_overlay">
-                    </div>                
-                </div>
-                <div class="owl-carousel">
-                <?php if(is_array($datas)){
-                    foreach($datas as $key => $data):
-                    $contentImage = '';
-                    if(isset($list_design[$key])) $contentImage = $list_design[$key];                
-                    $proWidth = $data['product_width'];
-                    $proHeight = $data['product_height'];
-                    $bleed_top_bottom = $unitRatio * $data['bleed_top_bottom'];
-                    $bleed_left_right = $unitRatio * $data['bleed_left_right'];
-                    $bgTop = 0;
-                    $bgLeft = 0;
-                    if($proWidth > $proHeight){
-                        $bgRatio = 500 / $proWidth;
-                        $bgWidth = 500;
-                        $bgHeight = round($proHeight * $bgRatio);
-                        $offsetLeft = 0;
-                        $offsetTop = round((500 - $bgHeight) / 2);  
-                        $scale = round(500 / ($unitRatio * $proWidth * $mm2Px), 2);
-                    }else{
-                        $bgRatio = 500 / $proHeight;
-                        $bgHeight = 500;
-                        $bgWidth = round($proWidth * $bgRatio);
-                        $offsetTop = 0;
-                        $offsetLeft = round((500 - $bgWidth) / 2);  
-                        $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
-                    }
-                    $cdWidth = $data['area_design_width'];
-                    $cdHeight = $data['area_design_height'];
-                    $cdLeft = $data['area_design_left'];
-                    $cdTop = $data['area_design_top'];  
-                ?>
-                    <div class="item nbdesigner_item">
-                        <div class="large" 
-                            data-style="position: absolute; <?php echo 'top: '.$offsetTop.'px; left: '.$offsetLeft.'px; width: '.$bgWidth.'px; height: '.$bgHeight.'px;'; ?>"
-                            style="position: absolute; <?php echo 'top: '.(1/4*$offsetTop).'px; left: '.(1/4*$offsetLeft).'px; width: '.(1/4*$bgWidth).'px; height: '.(1/4*$bgHeight).'px;'; ?>"
-                            data-design="position: absolute; <?php echo 'top: '.$cdTop.'px; left: '.$cdLeft.'px; width: '.$cdWidth.'px; height: '.$cdHeight.'px;'; ?>"
-                            data-design-src="<?php if(isset($list_design[$key])) echo $list_design[$key]; else echo '1'; ?>" data-index="<?php echo $key; ?>"
-                            data-overlay="<?php if($data['show_overlay']) echo $data['img_overlay']; else echo '1'; ?>"
-                            data-bg-tyle="<?php echo $data['bg_type']; ?>"
-                            data-bg-color="<?php echo $data['bg_color_value']; ?>"
-                            data-bg="<?php echo $data['img_src'] ?>"
-                        >
-                            <?php if($data['bg_type'] == 'image'): ?>
-                            <img class="nbdesigner_detail_order" src="<?php echo $data['img_src'] ?>" />
-                            <?php elseif($data['bg_type'] == 'color'): ?>
-                            <div style="width: 100%; height: 100%; background: <?php echo $data['bg_color_value']; ?>"></div>
-                            <?php endif; ?>
-                        </div>
-                        <?php if(isset($list_design[$key])): ?>
-                        <img src="<?php echo $list_design[$key]; ?>" 
-                            style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>" 
-                        />
-                        <?php endif; ?>
-                        <?php if($data['show_overlay']): ?>
-                        <div
-                            style="position: absolute; <?php echo 'top: '.(1/4*$cdTop).'px; left: '.(1/4*$cdLeft).'px; width: '.(1/4*$cdWidth).'px; height: '.(1/4*$cdHeight).'px;'; ?>"
-                        >
-                            <img src="<?php echo $data['img_overlay']; ?>" />
-                        </div>
-                        <?php endif; ?>                    
-                    </div>         
-                <?php endforeach;} ?>    
-                </div> 
-            </div>
-            <hr />
-            <h3><?php _e('Resource', 'web-to-print-online-designer') ?></h3>
             <div>
                 <div>  
                     <p><span class="dashicons dashicons-images-alt2"></span></span><b><?php _e('Images', 'web-to-print-online-designer') ?></b></p>
@@ -308,6 +233,8 @@
                 if(isset($list_design[$key])) $contentImage = $list_design[$key];                
                 $proWidth = $data['product_width'];
                 $proHeight = $data['product_height'];
+                $bleed_top_bottom = $unitRatio * $data['bleed_top_bottom'];
+                $bleed_left_right = $unitRatio * $data['bleed_left_right'];                
                 $bgTop = 0;
                 $bgLeft = 0;
                 if($proWidth > $proHeight){
@@ -316,14 +243,15 @@
                     $bgHeight = round($proHeight * $bgRatio);
                     $offsetLeft = 0;
                     $offsetTop = round((500 - $bgHeight) / 2);  
-                    $scale = round(500 / ($unitRatio * $proWidth * $mm2Px), 2);
+                    $scale = 500 / ($unitRatio * $proWidth * $mm2Px);
                 }else{
                     $bgRatio = 500 / $proHeight;
                     $bgHeight = 500;
                     $bgWidth = round($proWidth * $bgRatio);
                     $offsetTop = 0;
-                    $scale = round(500 / ($unitRatio * $proHeight * $mm2Px), 2);    
+                    $scale = 500 / ($unitRatio * $proHeight * $mm2Px);    
                 }
+                
                 $cdWidth = round($bgRatio * $data['real_width']);
                 $cdHeight = round($bgRatio * $data['real_height']);
                 $cdLeft = round($bgRatio * $data['real_left']);
@@ -426,7 +354,7 @@
                         <td class="forminp forminp-text">                            
                             <?php if($data['bg_type'] == 'image'): ?>
                             <a class="button" onclick="changeBackground(this)"><?php _e('Change image', 'web-to-print-online-designer'); ?></a>
-                            <img class="bg_src" src="<?php echo $data['img_src']; ?>"  style="width: 30px; height: 30px; display: inline-block; vertical-align: top;"/><br />
+                            <a class="button" href="<?php echo $data['img_src']; ?>" target="_blank"><?php _e('View', 'web-to-print-online-designer'); ?></a><br />
                             <small><?php _e('Change image with heigh resolution if you want. Support: jpeg, jpg, png, svg', 'web-to-print-online-designer'); ?></small>
                             <?php elseif($data['bg_type'] == 'color'): ?>
                             <span 
@@ -439,84 +367,6 @@
                     </tr>                     
                 </tbody>
             </table>
-            
-            <p><b><?php echo __('Scale Factor', 'web-to-print-online-designer').': '.$scale; ?></b></p>
-            <div class="design-containers">
-                <div class="ruler corner">
-                    <span class="dashicons dashicons-screenoptions nbdesigner-toggle-grid" onclick="toggleGrid(this)"></span>
-                </div>               
-                <div class="ruler hRule"></div>
-                <div class="ruler vRule"></div>
-                <div class="vRuner"></div>
-                <div class="hRuner"></div>
-                <div class="hPos">
-                    L:&nbsp;<span id="x-pos">0</span>&nbsp;
-                    W:&nbsp;<span id="x-width">0</span>
-                </div>
-                <div class="vPos">
-                    T:&nbsp;<span id="y-pos">0</span>&nbsp;
-                    H:&nbsp;<span id="y-height">0</span>                   
-                </div>      
-                <div class="margin-top" style="
-                     width: <?php  echo $bgWidth.'px';?>;
-                     top: 18px; left: 18px; height: 0;">
-                </div>
-                <div class="margin-right" style="
-                     height: <?php  echo $bgHeight.'px';?>;
-                     left: <?php  echo ($bgWidth + 18).'px';?>;
-                     top: 18px; width: 0;">
-                </div>
-                <div class="margin-bottom" style="
-                     width: <?php  echo $bgWidth.'px';?>;
-                     top: <?php  echo ($bgHeight + 18).'px';?>;
-                     left: 18px; height: 0;">
-                </div>
-                <div class="margin-left" style="
-                    height: <?php  echo $bgHeight.'px';?>;
-                    left: 18px; top: 18px; width: 0;">
-                </div>
-                <?php $bleedTop = $bleedLeft = $bleedRight = $bleedBottom = 3; ?>
-                <div class="bleed-top-left bleed-line hz" 
-                     style="top: <?php echo round($bleedTop * $mm2Px) + 18; ?>px; left: <?php echo round($bleedLeft * $mm2Px) - 2;  ?>px"></div>
-                <div class="bleed-top-right bleed-line hz" 
-                     style="top: <?php echo round(($bleedTop * $mm2Px)) + 18 ; ?>px; left: <?php echo $bgWidth + 18 - round($bleedRight * $mm2Px); ?>px"></div>
-                <div class="bleed-bottom-left bleed-line hz" 
-                     style="top: <?php echo $bgHeight - round($bleedBottom * $mm2Px) + 18; ?>px; left: <?php echo round($bleedLeft * $mm2Px) - 2;  ?>px"></div>
-                <div class="bleed-bottom-right bleed-line hz" 
-                     style="top: <?php echo $bgHeight - round($bleedBottom * $mm2Px) + 18; ?>px; left: <?php echo $bgWidth + 18 - round($bleedRight * $mm2Px); ?>px"></div>
-                <div class="bleed-top-left bleed-line vt" 
-                     style="top: <?php echo round($bleedTop * $mm2Px) - 2; ?>px; left: <?php echo round($bleedLeft * $mm2Px) + 18; ?>px"></div>
-                <div class="bleed-top-right bleed-line vt" 
-                     style="top: <?php echo round($bleedTop * $mm2Px) - 2; ?>px; left: <?php echo $bgWidth - round($bleedRight * $mm2Px) + 18; ?>px"></div>
-                <div class="bleed-bottom-left bleed-line vt" 
-                     style="top: <?php echo $bgHeight - round($bleedBottom * $mm2Px) + 18; ?>px; left: <?php echo round($bleedLeft * $mm2Px) + 18; ?>px"></div>
-                <div class="bleed-bottom-right bleed-line vt" 
-                     style="top: <?php echo $bgHeight - round($bleedBottom * $mm2Px) + 18; ?>px; left: <?php echo $bgWidth + 18 - round($bleedRight * $mm2Px); ?>px"></div>                
-                <div class="design-container">
-                    <div class="design-inner has-grid">
-                        <div class="pdf-layer bg" style="width: <?php  echo $bgWidth.'px';?>;
-                                                      height: <?php  echo $bgHeight.'px';?>;
-                                                      left: <?php  echo $bgLeft.'px';?>;
-                                                      top: <?php  echo $bgTop.'px';?>;">
-                            <?php if($data['bg_type'] == 'image'): ?>
-                            <img src="<?php echo $data['img_src'] ?>"/>
-                            <?php elseif($data['bg_type'] == 'color'): ?>
-                            <div style="width: 100%; height: 100%; background: <?php echo $data['bg_color_value']; ?>"></div>
-                            <?php else: ?>
-                            <div class="background-transparent"></div>
-                            <?php endif; ?>
-                        </div>  
-                        <div class="pdf-layer cd" style="width: <?php  echo $cdWidth.'px';?>;
-                                                      height: <?php  echo $cdHeight.'px';?>;
-                                                      left: <?php  echo $cdLeft.'px';?>;
-                                                      top: <?php echo $cdTop.'px';?>;">
-                            <?php if($contentImage != ''): ?>
-                            <img src="<?php echo $contentImage . '?&t=' . round(microtime(true) * 1000); ?>"/>
-                            <?php endif; ?>
-                        </div>   
-                    </div>
-                </div>  
-            </div>
             <div>                
                 <input type="hidden" value="<?php echo $data['img_src'] ?>" name="pdf[<?php echo $key; ?>][background]" class="bg_src_hidden">
                 <input type="hidden" value="<?php echo $data['bg_type'] ?>" name="pdf[<?php echo $key; ?>][bg_type]">
@@ -546,132 +396,17 @@
         </p>            
         </div>    
         <script>
-            var mm2Px = parseFloat(<?php echo $mm2Px; ?>);
             var _round = function(num){
                 return Number((num).toFixed(0)); 
             };            
             jQuery(document).ready(function() {
-                jQuery('.owl-carousel').owlCarousel({
-                    loop:true,
-                    items:4,
-                    nav: true,
-                    navText: [
-                        "<span class='dashicons dashicons-arrow-left-alt2'></span>",
-                        "<span class='dashicons dashicons-arrow-right-alt2'></span>"
-                    ]
-                });
-                var first = jQuery('.owl-item.active').first().find('.large'),
-                src = first.data('bg'),
-                design = first.data('design'),
-                style = first.data('style'),
-                design_src = first.data('design-src'),
-                bg_type = first.data('bg-tyle'),
-                bg_color = first.data('bg-color'),
-                overlay = first.data('overlay');
-                if(bg_type == 'color'){
-                    jQuery('#nbdesigner_large_image').append('<div style="width: 100%; height: 100%; background: '+bg_color+'" >');
-                }else if(bg_type == 'image'){
-                    jQuery('#nbdesigner_large_image').append('<img src="'+src+'" />');
-                }                
-                jQuery('#nbdesigner_large_image').attr('style', style);
-                if(design_src != '1'){
-                    jQuery('#nbdesigner_large_design').append('<img src="'+design_src+'" />');                              
-                }
-                jQuery('#nbdesigner_large_design').attr('style', design);        
-                if(overlay != '1'){
-                    jQuery('#nbdesigner_large_overlay').append('<img src="'+overlay+'" />');                   
-                }             
-                jQuery('#nbdesigner_large_overlay').attr('style', design);    
-                jQuery('.owl-item').on('click', function() {
-                    var target = jQuery(this).find('.large'),
-                    src = target.data('bg'),
-                    style = target.data('style'),
-                    design = target.data('design'),
-                    index = target.data('index'),
-                    design_src = target.data('design-src'),
-                    bg_type = target.data('bg-tyle'),
-                    bg_color = target.data('bg-color'),
-                    overlay = target.data('overlay');   
-                    jQuery('#nbdesigner_large_image').html('');
-                    jQuery('#nbdesigner_large_design').html('');
-                    jQuery('#nbdesigner_large_overlay').html('');
-                    if(bg_type == 'color'){
-                        jQuery('#nbdesigner_large_image').append('<div style="width: 100%; height: 100%; background: '+bg_color+'" >');
-                    }else if(bg_type == 'image'){
-                        jQuery('#nbdesigner_large_image').append('<img src="'+src+'" />');
-                    }                
-                    jQuery('#nbdesigner_large_image').attr('style', style);
-                    if(design_src != '1'){
-                        jQuery('#nbdesigner_large_design').append('<img src="'+design_src+'" />');                                         
-                    }   
-                    jQuery('#nbdesigner_large_design').attr('style', design);  
-                    if(overlay != '1'){
-                        jQuery('#nbdesigner_large_overlay').append('<img src="'+overlay+'" />');                        
-                    }
-                    jQuery('#nbdesigner_large_overlay').attr('style', design);   
-                });  
                 jQuery( "#nbdesign-order-tabs" ).tabs({
                     active: 2
                 });  
-                jQuery( "#save-to-pdf" ).tabs({});                
-                jQuery(document).on('click', function(e){
-                    if(!jQuery(e.target).parent().hasClass('pdf-layer')){
-                        jQuery(".pdf-layer.selected").resizable("destroy").draggable("destroy");
-                        jQuery(".pdf-layer").removeClass('selected');
-                        jQuery('.hPos, .vPos').css({"display" : "none"});
-                    };
-                });
-                var updatePosition = function(top, left, height, width){
-                    jQuery('#x-width').text(width);
-                    jQuery('#y-height').text(height);  
-                    jQuery('.hRuner').css("left", (left + 18) + "px");
-                    jQuery('.vRuner').css("top", (top + 18) + "px");
-                    jQuery('.hPos').css({"left" : left + 18, "top" : top, "display" : "block"});
-                    jQuery('#x-pos').text(left);
-                    jQuery('#y-pos').text(top);                        
-                    var w = jQuery('.vPos').outerWidth();
-                    jQuery('.vPos').css({"left" : left - w, "top" : top + 18, "display" : "block"});                         
-                };
-                jQuery.each(jQuery(".pdf-layer"), function(){
-                    
-                });
-                /* Horizontal ruler ticks */
-                var $hRule = jQuery('.hRule');
-                var tickLabelPos = 18;
-                while ( tickLabelPos <= $hRule.width() ) {
-                    if ((( tickLabelPos - 18 ) %50 ) == 0 ) {
-                        newTickLabel = "<div class='tickLabel'>" + ( tickLabelPos - 18 ) + "</div>";
-                        jQuery(newTickLabel).css( "left", tickLabelPos+"px" ).appendTo($hRule);
-                    } else if ((( tickLabelPos - 18 ) %10 ) == 0 ) {
-                        newTickLabel = "<div class='tickMajor'></div>";
-                        jQuery(newTickLabel).css("left",tickLabelPos+"px").appendTo($hRule);
-                    } else if ((( tickLabelPos - 18 ) %5 ) == 0 ) {
-                        newTickLabel = "<div class='tickMinor'></div>";
-                        jQuery(newTickLabel).css( "left", tickLabelPos+"px" ).appendTo($hRule);
-                    }
-                    tickLabelPos = (tickLabelPos + 5);				
-                }    
-                /* Vertical ruler ticks */
-                var $vRule = jQuery('.vRule');
-                tickLabelPos = 18;
-                newTickLabel = "";
-                while (tickLabelPos <= $vRule.height()) {
-                    if ((( tickLabelPos - 18 ) %50 ) == 0) {
-                        newTickLabel = "<div class='tickLabel'><span>" + ( tickLabelPos - 18 ) + "</span></div>";
-                        jQuery(newTickLabel).css( "top", tickLabelPos+"px" ).appendTo($vRule);
-                    } else if (((tickLabelPos - 18)%10) == 0) {
-                        newTickLabel = "<div class='tickMajor'></div>";
-                        jQuery(newTickLabel).css( "top", tickLabelPos+"px" ).appendTo($vRule);
-                    } else if (((tickLabelPos - 18)%5) == 0) {
-                        newTickLabel = "<div class='tickMinor'></div>";
-                        jQuery(newTickLabel).css( "top", tickLabelPos+"px" ).appendTo($vRule);
-                    }
-                    tickLabelPos = ( tickLabelPos + 5 );				
-                };
+                jQuery( "#save-to-pdf" ).tabs({});
                 var ajaxurl = "<?php echo admin_url('admin-ajax.php');  ?>"
                 jQuery('#create_pdf').on('click', function(e){
                     e.preventDefault();
-                    <?php //if(!isset($license['type']) || (isset($license['type']) && $license['type'] == 'free')): ?>
                     <?php if(0): ?>
                     swal({
                       title: "Oops!",
@@ -705,141 +440,6 @@
                     <?php endif; ?>
                 });                
             });
-            var changeMargin = function(e, command){
-                var parent = jQuery(e).parents('.inner.side');
-                var value = _round(parseInt(jQuery(e).val()) * mm2Px),
-                dTop = parent.find('.margin-top'),
-                dLeft = parent.find('.margin-left'),
-                dRight = parent.find('.margin-right'),
-                dBottom = parent.find('.margin-bottom'),
-                bg = parent.find('.pdf-layer.bg'),
-                cd = parent.find('.pdf-layer.cd')
-                cdOriginTop = parseInt(parent.find('.cd-top').val()),
-                cdOriginLeft = parseInt(parent.find('.cd-left').val()),
-                bgOriginTop = parseInt(parent.find('.bg-top').val()),
-                bgOriginLeft = parseInt(parent.find('.bg-left').val()),
-                bgWidth = parseInt(bg.width()),
-                bgHeight = parseInt(bg.height()),
-                mLeft = _round(parseInt(parent.find('.margin-left-val').val()) * mm2Px),
-                mRight = _round(parseInt(parent.find('.margin-right-val').val()) * mm2Px),
-                mTop = _round(parseInt(parent.find('.margin-top-val').val()) * mm2Px),
-                mBottom = _round(parseInt(parent.find('.margin-bottom-val').val()) * mm2Px);
-                switch(command){
-                    case 'top':
-                        dTop.css({
-                            'height': value + 'px',
-                            'width' : (mLeft + mRight + bgWidth) + 'px'
-                        });
-                        dLeft.css('top', (value + 18) + 'px');
-                        dRight.css('top', (value + 18) + 'px');
-                        dBottom.css('top', (bgHeight + value + 18) + 'px');
-                        bg.css('top', (bgOriginTop + value) + 'px');
-                        cd.css('top', (cdOriginTop + value) + 'px');
-                        break;
-                    case 'bottom':
-                        dBottom.css({
-                            'height': value + 'px',
-                            'width' : (mLeft + mRight + bgWidth) + 'px'
-                        });                      
-                        break;                        
-                    case 'left':
-                        dTop.css({
-                            'width' : (value + mRight + bgWidth) + 'px'
-                        });    
-                        dBottom.css({
-                            'width' : (value + mRight + bgWidth) + 'px'
-                        });                        
-                        dRight.css('left', (value + bgWidth + 18) + 'px');
-                        dLeft.css({
-                            'width': value + 'px',
-                            'top' : (mTop + 18) + 'px'
-                        });                      
-                        bg.css('left', (bgOriginLeft + value) + 'px');                        
-                        cd.css('left', (cdOriginLeft + value) + 'px');                        
-                        break;    
-                    case 'right':  
-                        dTop.css({
-                            'width' : (value + mLeft + bgWidth) + 'px'
-                        });    
-                        dBottom.css({
-                            'width' : (value + mLeft + bgWidth) + 'px'
-                        });                         
-                        dRight.css({
-                            'width': value + 'px',
-                            'top' : (mTop + 18) + 'px'
-                        });                         
-                        break;                          
-                };
-                updateBleedPosition(parent);
-            };
-            var updateBleedPosition = function(parent){
-                var tlh = parent.find('.bleed-top-left.hz'),
-                trh = parent.find('.bleed-top-right.hz'),        
-                blh = parent.find('.bleed-bottom-left.hz'),        
-                brh = parent.find('.bleed-bottom-right.hz'),        
-                tlt = parent.find('.bleed-top-left.vt'),        
-                trt = parent.find('.bleed-top-right.vt'),        
-                blt = parent.find('.bleed-bottom-left.vt'),        
-                brt = parent.find('.bleed-bottom-right.vt'), 
-                bt = parseInt(parent.find('input[name*="bleed-top"]').val()),
-                br = parseInt(parent.find('input[name*="bleed-right"]').val()),
-                bb = parseInt(parent.find('input[name*="bleed-bottom"]').val()),
-                bl = parseInt(parent.find('input[name*="bleed-left"]').val()),
-                bg = parent.find('.pdf-layer.bg'),
-                bgTop = bg.position().top,
-                bgLeft = bg.position().left,
-                bgWidth = bg.width(),
-                bgHeight = bg.height();
-                tlh.css({
-                    'top': (bgTop + _round(bt * mm2Px) + 18)+ 'px',
-                    'left': (bgLeft + _round(bl * mm2Px) - 2)+ 'px'
-                });
-                trh.css({
-                    'top': (bgTop + _round(bt * mm2Px) + 18)+ 'px',
-                    'left': (bgLeft + bgWidth - _round(br * mm2Px) + 18)+ 'px'
-                });      
-                blh.css({
-                    'top': (bgTop + bgHeight - _round(bb * mm2Px) + 18)+ 'px',
-                    'left': (bgLeft + _round(bl * mm2Px) - 2)+ 'px'
-                });
-                brh.css({
-                    'top': (bgTop + bgHeight - _round(bb * mm2Px) + 18)+ 'px',
-                    'left': (bgLeft + bgWidth - _round(br * mm2Px) + 18)+ 'px'
-                });  
-                tlt.css({
-                    'top': (bgTop + _round(bt * mm2Px) - 2)+ 'px',
-                    'left': (bgLeft + _round(bl * mm2Px) + 18)+ 'px'
-                });
-                trt.css({
-                    'top': (bgTop + _round(bt * mm2Px) - 2)+ 'px',
-                    'left': (bgLeft + bgWidth - _round(br * mm2Px) + 18)+ 'px'
-                });      
-                blt.css({
-                    'top': (bgTop + bgHeight - _round(bb * mm2Px) + 18)+ 'px',
-                    'left': (bgLeft + _round(bl * mm2Px) + 18)+ 'px'
-                });
-                brt.css({
-                    'top': (bgTop + bgHeight - _round(bb * mm2Px) + 18)+ 'px',
-                    'left': (bgLeft + bgWidth - _round(br * mm2Px) + 18)+ 'px'
-                });                 
-            };
-            var changeBleed = function(e, command){
-                var parent = jQuery(e).parents('.inner.side');
-                updateBleedPosition(parent);
-            };
-            var showSettingBleed = function(e){
-                var value = jQuery(e).val();
-                if(value == 'yes'){
-                    jQuery(e).parents('.inner.side').find('.setting-bleed').fadeIn();
-                    jQuery(e).parents('.inner.side').find('.bleed-line').fadeIn();
-                }else {
-                    jQuery(e).parents('.inner.side').find('.setting-bleed').fadeOut();
-                    jQuery(e).parents('.inner.side').find('.bleed-line').fadeOut();
-                }
-            };
-            var toggleGrid = function(e){
-                jQuery(e).parents('.inner.side').find('.design-inner ').toggleClass('has-grid');
-            };
             var changeBackground = function(e){
                 var upload;
                 if (upload) {

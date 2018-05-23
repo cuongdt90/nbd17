@@ -229,8 +229,8 @@ img.nbdesigner_loaded {
     outline: none;
 }
 .nbdesigner_font_info {
-    width: 50%;
-    float: left;
+/*    width: 60%;
+    float: left;*/
 }
 .nbdesigner_font_preview {
     width: 30%;
@@ -830,4 +830,112 @@ input.area_design_width, input.area_design_height, input.area_design_top, input.
     background: #ddd;
     max-width: 300px;
     margin-bottom: 15px;
+}
+.nbd-font-file-wrap {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;    
+    width: 300px;
+}
+.gg-font-preview-wrap:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+.gg-font-preview-wrap-inner {
+    overflow: hidden;
+    margin-left: -5px;
+    margin-right: -5px;    
+}
+.gg-font-preview {
+    width: 25%; 
+    margin: 0;
+    display: inline-block;
+    float: left;
+}
+.gg-font-preview-inner-wrap {
+    padding: 5px;
+}
+.gg-font-preview-inner {
+    padding: 5px 10px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    background: #fff;
+    position: relative;
+}
+.gg-font-preview:nth-child(4n+1) {
+    clear: both;
+}
+.gg-font-preview-inner .action {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #0085ba;
+    cursor: pointer;
+    color: #0085ba;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+}
+.gg-font-preview-inner .action.uncheck {
+    color: #ddd;
+    border: 1px solid #ddd;
+}
+.gg-font-preview-inner .action.disable {
+    color: #ddd;
+    border: 1px solid #ddd;
+    pointer-events: none;
+}
+.gg-font-preview-inner p {
+    margin: 0;
+    word-wrap: break-word;
+}
+.gg-font-option {
+    padding-top: 15px;
+}
+.gg-font-option select {
+    vertical-align: top;;
+}
+.gg-font-name {
+    font-size: 20px;
+}
+.gg-font-pagination {
+    margin-top: 10px;
+    font-size: 0;
+}
+.gg-font-pagination span{
+    padding: 0 11px;
+    height: 30px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #0085ba;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 3px;
+}
+.gg-font-pagination span.active {
+    background: #0085ba;
+    color: #fff;
+    -web-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);    
+}
+.nbd-pagesize-wrap {
+    overflow: hidden;
+    margin: 10px 0;    
+    line-height: 30px;
+}
+.nbd-pagesize-wrap:after {
+    clear: both;
+    display: block;
+    content: '';
 }

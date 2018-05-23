@@ -323,6 +323,10 @@ $(document).ready(function(){
         side: "top",
         theme: 'tooltipster-borderless'
     });    
+    $('.nbd-tooltip-hover').tooltipster({
+        side: "top",
+        theme: 'tooltipster-borderless',
+    });    
     $('.nbd-tooltip').on('click', function(){
         $(this).tooltip('hide');
     });

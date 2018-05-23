@@ -164,13 +164,15 @@
             <?php endforeach; ?>
             var _colors = NBDESIGNCONFIG['nbdesigner_hex_names'].split(','),
             colorPalette = [], row = [];
+            __colorPalette = [];
             for(var i=0; i < _colors.length; ++i) {
                 var color = _colors[i].split(':')[0];
                 row.push(color);
                 if(i % 10 == 9){
                     colorPalette.push(row);
                     row = [];
-                }               
+                }
+                __colorPalette.push(color);
             }
             row.push(NBDESIGNCONFIG['nbdesigner_default_color']);
             colorPalette.push(row);                                  
@@ -182,13 +184,30 @@
             var NBDESIGNLANG = <?php echo json_encode(nbd_get_language( $lang_code ));  ?>  
         </script>
     </head>
-    <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
-        <div style="width: 100%; height: 100%;" ng-controller="DesignerController" ng-cloak>
+
+    <body ng-app="nbd-app" class="nbd-mode-modern nbd-mode-<?php echo $ui_mode; ?>">
+        <div style="width: 100%; height: 100%;" ng-controller="designCtrl" ng-cloak>
             <div id="design-container">
-                <?php include_once('modern/sidebar.php'); ?>
-                <?php include_once('modern/toolbar.php'); ?>
+				<div class="container-fluid" id="designer-controller">
+					<div class="nbd-navigations">
+						<?php include 'modern/main-bar.php';?>
+					</div>
+					<div class="nbd-workspace">
+						<?php include 'modern/sidebar.php';?>
+						<div class="main">
+							<?php include 'modern/toolbar.php'; ?>
+                            <?php include 'modern/stages.php';?>
+                            <?php include 'modern/toolbar-zoom.php';?>
+                            <?php include 'modern/context-menu.php'?>
+						</div>
+					</div>
+				</div>	
             </div>
         </div>
+        <?php include 'modern/popup.php';?>
+        <?php include 'modern/loading-page.php';?>
+        <?php include 'modern/toasts.php';?>
+
         <?php if(!NBDESIGNER_MODE_DEV): ?>
         <script type='text/javascript' src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <?php else: ?>
@@ -216,13 +235,20 @@
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/lodash.js'; ?>"></script>
         <?php endif; ?>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle.min.js'; ?>"></script>
+        <!-- https://github.com/benmajor/jQuery-Touch-Events-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-touch-events/1.0.5/jquery.mobile-events.js"></script>
+
+        <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.curvedText.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric.removeColor.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/_layout.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/spectrum.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/qrcode.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>	        
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
+
     </body>
 </html>
 <?php endif; endif;?>

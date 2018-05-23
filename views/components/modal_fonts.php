@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <div class="modal fade nbdesigner_modal" id="dg-fonts">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button style="margin-top: 0;" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>	
@@ -21,9 +21,16 @@
             </div>
             <div class="modal-body">
                 <div id="nbdesigner_font_container">
-                    <span class="nbdesigner_font" width="100" ng-repeat="font in AllFonts | filterCat : curentCatFont | filter : fontName| limitTo : fontPageSize" font-on-load>
-                        <a ng-click="changeFont(font)"><span class="nbdesigner_font_name" ng-style="{'font-family': font.alias}" ng-attr-data-font="{{font.alias}}">{{font.name}}</span></a>
-                    </span>
+                    <div class="gg-font-preview-wrap-inner">
+                        <div ng-click="changeFont(font)" class="gg-font-preview disable" ng-repeat="font in AllFonts | filterCat : curentCatFont | filter : fontName| limitTo : fontPageSize">
+                            <div class="gg-font-preview-inner-wrap">
+                                <div class="gg-font-preview-inner">
+                                    <p class="gg-font-name">{{font.name}}</p>
+                                    <p font-on-loading data-loading="Loading..." data-preview="subsets[font.subset]['preview_text']" data-font="font" ><span style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;display: none; font-size: 20px;" class="font-preview" contenteditable="false">{{subsets[font.subset]['preview_text']}}</span></p>
+                                </div>
+                            </div>    
+                        </div>  
+                    </div>      
                 </div>
                 <div>
                     <button ng-show="(countFont > 10) && (countFont > fontPageSize)" style="margin-right: 15px; margin-top: 10px;" id="font-load-more" type="button" class="btn btn-primary shadow nbdesigner_upload" ng-click="changeFontPageSize(false)">{{(langs['MORE']) ? langs['MORE'] : "More"}}</button>

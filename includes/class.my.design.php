@@ -66,7 +66,7 @@ class My_Design_Endpoint {
                 'nbd_get_user_designs' => true,
                 'nbd_update_favorite_template' => true,
                 'nbd_update_artist_info' => true,
-                'nbd_save_for_later' => true,
+                'nbd_save_for_later' => false,
                 'nbd_update_my_template' => true,
                 'nbd_delete_my_template' => true,
                 'nbd_get_template_preview' => true,

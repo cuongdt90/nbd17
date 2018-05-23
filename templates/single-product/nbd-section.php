@@ -84,6 +84,7 @@ if( $_enable_upload_without_design ){
         if( nbdesigner_get_option('nbdesigner_save_for_later') == 'yes' ):
     ?>
         <p>
+            <?php if( is_user_logged_in() ): ?>
             <a href="javascript:void(0)" onclick="NBDESIGNERPRODUCT.save_for_later()" class="button alt nbd-save-for-later" id="nbd-save-for-later">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
                     <title>check2</title>
@@ -92,6 +93,7 @@ if( $_enable_upload_without_design ){
                 <img class="nbd-save-loading hide" src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>"/> 
                 <?php _e('Save for later', 'web-to-print-online-designer'); ?>
             </a>
+            <?php endif; ?>
             <?php
                 $allow_donwload_pdf = true;
                 if( $allow_donwload_pdf ):

@@ -20,8 +20,8 @@ if( !class_exists('NBD_Install') ) {
                 );      
                 $studio_page_id = wp_insert_post($post, false);
                 update_option( 'nbdesigner_studio_page_id', $studio_page_id );
-            }      
-
+            }
+            
             /* Create design your own page */   
             $create_your_own_page_id = nbd_get_page_id( 'create_your_own' );
             if ( $create_your_own_page_id == -1|| !get_post($create_your_own_page_id) ){        

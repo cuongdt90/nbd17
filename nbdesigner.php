@@ -3,7 +3,7 @@
  * @package Nbdesigner
  */
 /*
-Plugin Name: Nbdesigner
+Plugin Name: NBDesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
 Description: A Woocommerce printing ecosystem.
 Version: 1.9.0
@@ -12,7 +12,7 @@ Author URI: http://netbaseteam.com/
 License: GPLv2 or later
 Text Domain: web-to-print-online-designer
 Domain Path: /langs
-WC tested up to: 3.3.0
+WC tested up to: 3.3.5
 */
 
 if ( !function_exists( 'add_action' ) ) {

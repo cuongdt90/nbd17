@@ -1000,8 +1000,8 @@ var MATERIALCOLORTEMPLATE = ["Red", "Pink", "Purple", "Deep Purple", "Indigo", "
             $scope.createGoogleFontImage(GOOGLEFONTS);
         };
         $scope.debug = function($val){
-            //$scope.openSaveAlert(3000);
-            nbdPlg.log();
+            $scope.openSaveAlert(3000);
+            //nbdPlg.log();
         };
     }).config(function($mdThemingProvider, $mdIconProvider, $provide){
         $mdIconProvider.iconSet('nbd', NBDCONFIG['svgUrl'] + 'nbd-icons.svg');

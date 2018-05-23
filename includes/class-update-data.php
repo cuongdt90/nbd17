@@ -6,6 +6,9 @@ class NBD_Update_Data{
         if (!is_null($version) && version_compare($version, "1.5.0", '<')) {    
             self::update_data_150();
         }
+        if (!is_null($version) && version_compare($version, "1.9.0", '<')) {    
+            self::update_fonts();
+        }        
     }
     public function ajax(){
         $ajax_events = array(
@@ -163,5 +166,51 @@ class NBD_Update_Data{
                 ));  
             }                       
         }
-    }    
+    } 
+    /**
+     * Update variations and subset fonts
+     * @since 1.9.0
+     * 
+     */    
+    public static function update_fonts(){
+        /* Update custom fonts */
+        $path = NBDESIGNER_DATA_DIR . '/fonts.json';
+        $list = Nbdesigner_IO::read_json_setting( $path );
+        $new_list = array();
+        if( count($list) ){
+            foreach( $list as $key => $font ){
+                $new_list[$key] = (array)$font;
+                if( !is_object($font->file) ){
+                    $new_list[$key]['file'] = array();
+                    $new_list[$key]['file']['r'] = $font->file;
+                }
+                if( !isset($font->subset) ) $new_list[$key]['subset'] = 'all';
+            }
+            $res = json_encode($new_list);
+            file_put_contents($path, $res);            
+        }
+        /* Update google fonts */
+        $gg_fonts = array();
+        $path_gg_font = NBDESIGNER_DATA_DIR. '/googlefonts.json';
+        $all_gg_fonts = json_decode(file_get_contents(NBDESIGNER_PLUGIN_DIR. '/data/google-fonts-ttf.json'))->items;
+        $gg_fonts_bf = json_decode(file_get_contents($path_gg_font)); 
+        foreach($gg_fonts_bf as $key => $font){
+            $subset = 'all';
+            foreach( $all_gg_fonts as $f ){
+                if( $font->name == $f->family ){
+                    $subset = $f->subsets[0];
+                    break;
+                }
+            }
+            $gg_fonts[] = array(
+                "id"    =>  $key,
+                "name"    =>  $font->name,
+                "alias"    =>  $font->name,
+                "type"   =>  "google", 
+                "subset"   =>  $subset, 
+                "cat" => array("99")
+            );             
+        };
+        file_put_contents($path_gg_font, json_encode($gg_fonts));
+    }
 }

@@ -4206,7 +4206,48 @@ img.pattern_img {
     padding-top: 5px;
     border-top: 1px solid #ddd;    
 }
+.gg-font-preview-wrap-inner {
+    overflow: hidden;
+    margin-left: -5px;
+    margin-right: -5px;    
+}
+.gg-font-preview {
+    width: 25%; 
+    margin: 0;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    opacity: 1;
+}
+.gg-font-preview.disable {
+    pointer-events: none;
+    opacity: 0.3;
+}
+.gg-font-preview-inner-wrap {
+    padding: 7px;
+}
+.gg-font-preview-inner {
+    padding: 5px 10px;
+    -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+    background: #fff;
+    font-size: 14px;
+    -webkit-transition:  all 0.4s;
+    -moz-transition:  all 0.4s;
+    transition:  all 0.4s;
+}
+.gg-font-preview-inner p {
+    margin: 0;
+}
+.gg-font-preview:nth-child(4n+1) {
+    clear: both;
+}
 @media (max-width: 767px) {
+    .gg-font-preview {
+        width: 50%;
+    }
     .preview-thumbnail-wrap, .printing-line {
         display: none;
     }

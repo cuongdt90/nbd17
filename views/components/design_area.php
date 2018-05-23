@@ -14,14 +14,14 @@
                     'background' : (img.bg_type == 'color') ? img.bg_color_value : ''
                  }"
             >
-                <img ng-show="img.bg_type == 'image'" ng-src="{{img.img_src}}"  spinner-on-load ng-style="{'width': '100%', 'height': '100%'}" />
+                <img ng-if="img.bg_type == 'image'" ng-src="{{img.img_src}}"  spinner-on-load ng-style="{'width': '100%', 'height': '100%'}" />
             </div>                               
         </div>
         <div class="grid-area">
             <canvas id="grid"></canvas>
         </div>	
-
-        <div class="design-aria" ng-class="currentVariant.designArea['area_design_type'] == '2' ? 'nbd-rounded' : ''"
+        
+        <div class="design-aria" ng-class="currentVariant.designArea['area_design_type'] == '2' ? 'nbd-rounded' : ''"  oncontextmenu="return false"
              ng-style="{'width': currentVariant.designArea['area_design_width'] * zoom * designScale,
 					   'height' : currentVariant.designArea['area_design_height'] * zoom * designScale,
 					   'top' : calcLeft(currentVariant.designArea['area_design_top']),
@@ -30,6 +30,17 @@
              >
             <canvas id="designer-canvas" width="500" height="500"></canvas> 
         </div>
+        
+        <div class="designer-overlay" style="position: absolute; pointer-events: none;" ng-if="currentVariant.info[currentSide.id]['source']['show_overlay'] == '1' && currentVariant.info[currentSide.id]['source']['include_overlay'] == '0'"
+             ng-style="{'width': currentVariant.designArea['area_design_width'] * zoom * designScale,
+					   'height' : currentVariant.designArea['area_design_height'] * zoom * designScale,
+					   'top' : calcLeft(currentVariant.designArea['area_design_top']),
+					   'left' : calcLeft(currentVariant.designArea['area_design_left'])
+				}"
+             >
+            <img style="width: 100%; height: 100%; margin: 0;" ng-src="{{currentVariant.info[currentSide.id]['source']['img_overlay']}}"/>
+        </div>        
+        
         <div class="nbd-bleed" ng-if="currentVariant.info[currentSide.id].source.show_bleed == 1" ng-class="currentVariant.designArea['area_design_type'] == '2' ? 'nbd-rounded' : ''"
              ng-style="{'width': ( currentVariant.designArea['area_design_width']  - 2 * currentVariant.designArea['bleed_left_right'] * currentVariant.designArea['ratio']  ) * zoom * designScale,
                         'height' : ( currentVariant.designArea['area_design_height']  - 2 * currentVariant.designArea['bleed_top_bottom'] * currentVariant.designArea['ratio']  ) * zoom * designScale,
@@ -100,14 +111,14 @@
         <div class="container-inner-frame">
             <div class="container_item">
                 <a class="box-thumb nbd-tooltip-frame" data-placement="top" data-lang="{{orientation.source.orientation_name}}" ng-class="{active: currentVariant.orientationActive == orientation.name}" ng-repeat="orientation in currentVariant.info" ng-click="changeOrientation(orientation)">
-                    <p class="box-thumb-inner"  ng-hide='existDesign(orientation)'>
-                        <img width="40" height="40" ng-show="orientation.source['bg_type'] == 'image'" ng-src="{{orientation.source['img_src']}}"  spinner-on-load/>
+                    <p class="box-thumb-inner"  ng-hide='state == "dev" && existDesign(orientation)'>
+                        <img width="40" height="40" ng-if="orientation.source['bg_type'] == 'image'" ng-src="{{orientation.source['img_src']}}"  spinner-on-load/>
                         <i ng-show="orientation.source['bg_type'] == 'color'" 
                            ng-style="{'background': orientation.source['bg_color_value']}" ></i>
                         <i ng-show="orientation.source['bg_type'] == 'tran'" 
                            class="background-transparent" ></i>
                     </p>
-                    <p class="box-thumb-inner" ng-show='existDesign(orientation)'>
+                    <p class="box-thumb-inner" ng-show='state == "dev" && existDesign(orientation)'>
                         <img ng-src="{{dataCustomerDesign[orientation.name]}}" />
                     </p>
                 </a>
