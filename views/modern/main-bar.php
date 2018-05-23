@@ -1,5 +1,8 @@
 <div class="nbd-main-bar">
-    <a href="#" class="logo"><img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/netbaseteam.png" alt="online design"></a>
+    <a href="#" class="logo">
+        <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/house.png" alt="online design" style="margin-right: 10px">
+        <span>Designing</span>
+    </a>
     <i class="icon-nbd icon-nbd-menu menu-mobile"></i>
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-edit" data-overlay="overlay">
@@ -68,28 +71,41 @@
                         </ul>
                     </div>
                 </li>
+
             </ul>
             <div id="nbd-overlay"></div>
         </li>
-
-    </ul>
-    <ul class="nbd-main-menu menu-center">
-
+        <li class="menu-item item-share nbd-show-popup-share">
+            <i class="icon-nbd icon-nbd-share2 nbd-tooltip-hover" title="Share" style="display: none"></i>
+            <span><?php _e('Share','web-to-print-online-designer'); ?></span>
+        </li>
         <li class="menu-item in">
-            <i class="icon-nbd icon-nbd-undo2"></i>
+            <i class="icon-nbd icon-nbd-undo2 nbd-tooltip-hover" style="display: none" title="Undo" style="font-size: 21px"></i>
             <span><?php _e('undo','web-to-print-online-designer'); ?></span>
         </li>
-
         <li class="menu-item in">
-            <i class="icon-nbd icon-nbd-redo2"></i>
-            <span><?php _e('redo','web-to-print-online-designer'); ?></span>
+            <i class="icon-nbd icon-nbd-redo2 nbd-tooltip-hover" style="display: none;" title="Redo" style="font-size: 21px"></i>
+            <span ><?php _e('redo','web-to-print-online-designer'); ?></span>
         </li>
+
     </ul>
+<!--    <ul class="nbd-main-menu menu-center">-->
+<!---->
+<!--        <li class="menu-item in">-->
+<!--            <i class="icon-nbd icon-nbd-undo2 nbd-tooltip-hover" title="Undo"></i>-->
+<!--            <span style="display: none">--><?php //_e('undo','web-to-print-online-designer'); ?><!--</span>-->
+<!--        </li>-->
+<!---->
+<!--        <li class="menu-item in">-->
+<!--            <i class="icon-nbd icon-nbd-redo2 nbd-tooltip-hover" title="Redo"></i>-->
+<!--            <span style="display: none;">--><?php //_e('redo','web-to-print-online-designer'); ?><!--</span>-->
+<!--        </li>-->
+<!--    </ul>-->
     <ul class="nbd-main-menu menu-right">
         <li class="menu-item item-title">
-            <input type="text" name="title" class="title" placeholder="Title"/>
+            <input type="text" name="title" class="title" placeholder="DESIGN NAME"/>
         </li>
-        <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i><span><?php _e('Share','web-to-print-online-designer'); ?></span></li>
+<!--        <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2 nbd-tooltip-hover" title="Share"></i><span style="display: none">--><?php //_e('Share','web-to-print-online-designer'); ?><!--</span></li>-->
         <li class="menu-item item-process" data-overlay="overlay">
             <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right">

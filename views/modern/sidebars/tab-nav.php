@@ -1,4 +1,4 @@
-<div class="tabs-nav box-shadow-right">
+<div class="tabs-nav">
     <ul class="main-tabs" data-tab="tab-1">
         <div id="selectedTab"></div>
         <li class="tab layerTab active"><i class="icon-nbd icon-nbd-baseline-palette"></i><span><?php _e('Design','web-to-print-online-designer'); ?></span></li>

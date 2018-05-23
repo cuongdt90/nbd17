@@ -1,4 +1,4 @@
-<div class="nbd-context-menu">
+<div class="nbd-context-menu" style="display: none;">
     <div class="main-context">
         <ul class="contexts">
             <li class="context-item"><i class="icon-nbd icon-nbd-reflect-horizontal"></i> <?php _e('Reflect Horizontal','web-to-print-online-designer'); ?></li>

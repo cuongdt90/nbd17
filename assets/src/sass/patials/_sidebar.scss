@@ -1,4 +1,12 @@
 .nbd-sidebar {
+  span, label{
+    color: rgba(255,255,255,0.9);
+  }
+
+  .icon-nbd{
+    color: $tab-content-text;
+  }
+
   width: 420px;
   @media screen and (max-width: 1023px){
       width: 75px;
@@ -22,6 +30,7 @@
   }
   .tabs-nav {
     min-height: calc(100vh - 54px);
+    background-color: $tab-color;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -49,6 +58,7 @@
         font-size: 18px;
         display: inline-block;
         border-radius: 50%;
+        color: #fff;
       }
     }
     ul.main-tabs {
@@ -115,8 +125,10 @@
           font-size: 24px;
           margin-bottom: 5px;
           transition: transform .7s ease-out, color .6s ease-out;
+          color: #fff;
         }
         span {
+          color: #fff;
           font-size: 11px;
           font-weight: 500;
           display: block;
@@ -155,13 +167,15 @@
     }
   }
   .tab-scroll{
+    margin-top: 72px;
+    height: calc(100% - 72px);
     position: relative;
     width: 100%;
-    height: 100%;
     overflow-y: auto;
     overflow: hidden;
   }
   .tabs-content {
+    background-color: $tab-content-color;
     width: 345px;
     text-align: center;
     height: calc(100vh - 54px);
@@ -169,7 +183,6 @@
     right: 0;
     overflow: hidden;
     position: relative;
-    background: #fff;
     @media screen and (max-width: 767px) {
       position: absolute;
       right: auto;
@@ -178,18 +191,6 @@
       transform: translateY(-100%);
       height: calc(100vh - 114px);
       top: 0;
-      //display: none;
-      /* Safari 10.1+ */
-      //@media not all and (min-resolution:.001dpcm) {
-      //  height: calc(100vh - 204px);
-      //}
-
-      //@media not all and (min-resolution:.001dpcm) {
-      //  @supports (-webkit-appearance:none) {
-      //    height: calc(100vh - 204px);
-      //  }
-      //}
-
     }
     > i {
       font-size: 25px;
@@ -210,7 +211,6 @@
       z-index: 1;
       opacity: 0;
       visibility: hidden;
-
       //overflow-y: scroll;
       //overflow: auto;
       overflow: hidden;
@@ -237,15 +237,19 @@
         transform: translateX(33%);
       }
 
+      .tab-main{
+        padding: 0 15px;
+      }
+
     }
     .nbd-search {
-      padding: 20px 10px;
+      padding: 20px;
       position: absolute;
       display: inline-block;
       width: 100%;
       top: 0;
       left: 0;
-      border-bottom: 1px solid #ebebeb;
+      //border-bottom: 1px solid #ebebeb;
       input {
         padding: 5px 35px 5px 10px;
         width: 100%;
@@ -267,6 +271,10 @@
     }
   }
   #tab-layer{
+    .tab-scroll{
+      margin-top: 0;
+      height: 100%;
+    }
     .inner-tab-layer {
       padding: 10px 0;
       .menu-layer {
@@ -275,7 +283,8 @@
           justify-content: space-between;
           align-items: center;
           padding: 10px;
-          border-bottom: 1px solid #ebebeb;
+          border: 1px solid #ebebeb;
+          margin-bottom: 10px;
           cursor: move;
           .item-left, .item-center{
             position: relative;
@@ -296,12 +305,6 @@
               }
             }
           }
-          &:first-child {
-            border-top: 1px solid #ebebeb;
-          }
-          &:hover{
-            box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
-          }
 
           i{
             padding: 5px;
@@ -320,10 +323,10 @@
                   color: rgba(255, 89, 133, 0.75);
                 }
                 &.icon-lock{
-                  color: #d8dd87;
+                  color: #fff;
                 }
                 &.icon-visibility{
-                  color: #607d8b;
+                  color: #fff;
                 }
               }
             }
@@ -344,6 +347,7 @@
             border: 1px solid #ebebeb;
             padding: 3px 5px;
             outline: none;
+            max-width: 150px;
             &:focus{
               border-color: #ddd;
             }
@@ -360,7 +364,7 @@
   }
   #tab-svg{
     .tab-main{
-      margin-top: 72px;
+      //margin-top: 72px;
       height: -webkit-calc(100% - 72px);
       height: calc(100% - 72px);
     }
@@ -388,6 +392,7 @@
               cursor: pointer;
               transition: box-shadow .3s;
               box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px -1px rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.12);
+              background-color: $tab-content-text;
               &:hover {
                 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
               }
@@ -399,23 +404,12 @@
               .item-info{
                 justify-content: center;
                 padding: 5px;
+                span{
+                  color: #888;
+                }
               }
             }
           }
-        }
-        .pointer{
-          position: absolute;
-          z-index: 2;
-          display: none;
-          width: 10px;
-          bottom: -5px;
-          height: 10px;
-          margin: 14px 0 0 -8px;
-          background-color: #fff;
-          border-top: 1px solid #ebebeb;
-          border-right: 1px solid #ebebeb;
-          transform: rotate(-45deg);
-          transition: border-color .3s linear;
         }
       }
       .result-loaded{
@@ -432,6 +426,10 @@
     }
   }
   #tab-typography{
+    .tab-scroll{
+      margin-top: 0;
+      height:100%;
+    }
     .tab-main{
       background-color: $main-color;
       .typography-head {
@@ -448,6 +446,10 @@
     }
   }
   #tab-element, #tab-photo{
+    .tab-scroll{
+      margin-top: 0;
+      height: 100%;
+    }
     .nbd-items-dropdown{
       margin-top: 30px;
       .main-items{
@@ -461,8 +463,10 @@
                 padding: 20px;
                 border: 1px solid #ebebeb;
                 border-radius: 2px;
+                background-color: $tab-content-text;
                 i{
                   font-size: 40px;
+                  color: #888;
                 }
               }
               .item-info {
@@ -498,9 +502,18 @@
                 outline: none;
                 overflow: visible;
                 margin: 0;
+                border: 1px solid $tab-content-text;
                 &:focus{
                   outline: none;
                 }
+                &.active,&:hover {
+                  background-color: $tab-content-text;
+                  color: #888;
+                  i{
+                    color: #888;
+                  }
+                }
+
                 i{
                   color: #fff;
                   font-size: 18px;
@@ -517,14 +530,12 @@
                     text-align: left;
                     line-height: normal;
                     &:hover{
-                      background-color: $main-color;
-                      span{
-                        color: #fff;
-                      }
+                      background-color: $menu-hover-color;
                     }
                     span{
                       font-size: 12px;
                       text-transform: capitalize;
+                      color: #888;
                     }
                   }
                 }
@@ -544,6 +555,11 @@
             button{
               text-transform: uppercase;
               margin-bottom: 20px;
+              border: 1px solid $tab-content-text;
+              &:hover {
+                background-color: $tab-content-text;
+                color: #888;
+              }
             }
           }
           .heading-title {
@@ -565,16 +581,21 @@
           &:hover{
             border-color: #ccc;
           }
-          .form-upload{
+          .form-upload {
             margin: 20px 10px;
             border: 2px dashed #ebebeb;
             padding: 10px;
             pointer-events: auto;
             opacity: 0.5;
-            i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            i {
               pointer-events: auto;
               cursor: none;
               font-size: 40px;
+              color: #fff;
+              margin-right: 15px;
             }
           }
 
@@ -685,8 +706,9 @@
   }
   #tab-product-template{
     .tab-main{
-      margin-top: 72px;
-      height: calc(100% - 72px);
+      //margin-top: 72px;
+      //height: calc(100% - 72px);
+      height: 100%;
     }
     #tab-product {
       width: 100%;
@@ -695,7 +717,6 @@
         .nbd-products {
           display: flex;
           flex-wrap: wrap;
-          padding: 0 5px;
           margin-bottom: 30px;
           .nbd-product {
             width: 50%;
@@ -705,6 +726,7 @@
                 opacity: 0;
                 visibility: hidden;
                 transition: all .3s;
+                color: #888;
               }
               &:hover{
                 .product-more-info {
@@ -718,6 +740,7 @@
               white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;
+              color: #888;
             }
             .nbd-product-img {
               overflow: hidden;
@@ -728,6 +751,7 @@
               justify-content: space-between;
               padding: 10px 5px;
               align-items: center;
+              background-color: #fff;
               .product-more-info {
                 border-radius: 50%;
               }
@@ -774,7 +798,7 @@
     min-width: 250px;
     max-width: 420px;
     height: 100%;
-    background-color: #fff;
+    background-color: $sidebar-preview;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     position: absolute;
     top: 0;
@@ -797,6 +821,7 @@
       border-bottom: 1px solid #ccc;
       i{
         font-size: 24px;
+        color: $tab-content-text;
       }
     }
     .preview-body{
@@ -858,6 +883,9 @@
             padding: 10px 5px;
             align-items: center;
 
+            .item-name {
+              color: #fff;
+            }
             .product-name,.item-name{
               cursor: pointer;
               white-space: nowrap;
@@ -877,11 +905,11 @@
         bottom: -5px;
         height: 10px;
         margin: 14px 0 0 -8px;
-        background-color: #fff;
         border-top: 1px solid #ebebeb;
         border-right: 1px solid #ebebeb;
         transform: rotate(-45deg);
         transition: border-color .3s linear;
+        background-color: $tab-content-color;
       }
     }
     .result-loaded {
@@ -992,7 +1020,7 @@
         display: inline-block;
         position: absolute;
         top: 3px;
-        right: 6px;
+        right: 18px;
         font-size: 25px;
         padding: 0 2px;
         cursor: pointer;

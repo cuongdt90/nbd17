@@ -184,5 +184,44 @@
   .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.item-position .sub-menu ul li.title{
     text-align: right;
   }
+  .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.item-position .sub-menu ul {
+    flex-direction: row;
+  }
+  .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.item-position .sub-menu .rotate90 {
+    transform: rotate(90deg);
+  }
+  .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.item-position .sub-menu .rotate-90 {
+    transform: rotate(-90deg);
+  }
+  .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.item-stack .sub-menu ul li i {
+    margin-left: 10px;
+    margin-right: 0;
+  }
+  .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.item-stack .sub-menu ul li span.keyboard {
+    margin-right: auto;
+    margin-left: 0;
+  }
+  .nbd-toolbar .toolbar-image .filter-presets {
+    flex-direction: row;
+  }
+  .nbd-popup.popup-keyboard .main-popup .head {
+    text-align: right;
+  }
+  .nbd-popup.popup-keyboard .keyboard-mapping {
+    margin-left: auto;
+    text-align: right;
+  }
+  .nbd-sidebar .tabs-content .nbd-search i {
+    left: 20px;
+    right: auto;
+  }
 
+  @media screen and (max-width: 767px){
+    .nbd-toolbar,.nbd-workspace .main {
+      right: 0;
+    }
+    .nbd-stages .stage {
+      flex-direction: column;
+    }
+  }
 }

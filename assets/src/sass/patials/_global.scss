@@ -1,4 +1,10 @@
 $main-color: #607d8b;
+$tab-color: #324852;
+$tab-content-color: #607d8b;
+$tab-content-text : rgba(255,255,255,0.9);
+$sidebar-preview: #839eab;
+$input-bg-color: #ebebeb24;
+$body-color: #eaeaea;
 $facebook-color:#3b5998;
 $dropbox-color:#007ee5;
 $instagram-color:#8a3ab9;
@@ -8,7 +14,7 @@ $menu-hover-color: rgba(158,158,158,.2);
 body, html {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
-  background: #fafafa;
+  background: $body-color;
   overflow: hidden;
   color: #666;
 }
@@ -17,10 +23,10 @@ button,html,input,select,textarea, md-bottom-sheet .md-subheader, .md-chips  {
   font-family: 'Poppins', sans-serif;
 }
 p,  h3, h4, input, textarea, span {
-  color: #666;
+  color: #888;
 }
-input, textarea, span {
-  font-size: 14px;
+span {
+  font-size: 12px;
 }
 
 ul {

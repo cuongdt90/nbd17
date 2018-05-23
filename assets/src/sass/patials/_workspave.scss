@@ -30,6 +30,23 @@
     }
   }
 
+  .nbd-sidebar {
+    .main-ranges {
+      .range {
+        .main-track {
+          .slide-input {
+            &::-webkit-slider-thumb{
+              background: $tab-content-text;
+            }
+            &::-moz-range-thumb{
+              background: $tab-content-text;
+            }
+          }
+        }
+      }
+    }
+  }
+
   .main-ranges {
     display: table;
     .range {
@@ -44,7 +61,6 @@
         font-weight: normal;
         font-size: 12px;
       }
-
       .main-track{
         display: table-cell;
         position: relative;
@@ -78,7 +94,6 @@
             cursor: pointer;
           }
         }
-
         .range-track {
           background-color: #aaa;
           height: 2px;
