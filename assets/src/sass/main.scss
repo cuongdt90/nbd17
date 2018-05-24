@@ -1,0 +1,49 @@
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Header
+  # header
+# Footer
+  # footer
+
+# Partials
+	# Progress
+	  # ...
+	  # ...
+	  # ...
+--------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------
+# Icons
+--------------------------------------------------------------*/
+@import "icons/icons";
+
+/*--------------------------------------------------------------
+# Partials
+--------------------------------------------------------------*/
+@import "patials/global";
+@import "patials/animate";
+@import "patials/main-bar";
+@import "patials/sidebar";
+@import "patials/toolbar-zoom";
+@import "patials/stages";
+@import "patials/workspave";
+@import "patials/tool-bar";
+@import "patials/context-menu";
+
+/*--------------------------------------------------------------
+# Mixed
+--------------------------------------------------------------*/
+@import "mixed/tooltipster";
+@import "mixed/nbd-main-menu";
+@import "mixed/load-page";
+@import "mixed/popup";
+@import "mixed/dropdown";
+@import "mixed/toasts";
+@import "mixed/spectrum";
+
+/*--------------------------------------------------------------
+# Component
+--------------------------------------------------------------*/
+@import "component/checkbox";

@@ -85,7 +85,7 @@
         </li>
         <li class="menu-item in">
             <i class="icon-nbd icon-nbd-redo2"></i>
-            <span style="font-size: 12px;"><?php _e('undo','web-to-print-online-designer'); ?></span>
+            <span style="font-size: 12px;"><?php _e('Redo','web-to-print-online-designer'); ?></span>
         </li>        
 
         <li class="menu-item in" ng-click='debug()' style="display: none;">

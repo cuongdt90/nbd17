@@ -1,0 +1,77 @@
+.nbd-toolbar-zoom {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  @media screen and (max-width: 767px){
+    bottom: 75px;
+    display: none;
+  }
+
+  .zoomer-toolbar{
+    .nbd-main-menu {
+      border: 1px solid #ebebeb;
+      border-radius: 60px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+      .menu-item{
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        i{
+          font-size: 24px;
+        }
+        &.zoomer-fullscreen{
+          border-right: 1px solid #ebebeb;
+        }
+
+        &.zoomer-level{
+          position: relative;
+          span{
+            font-size: 14px;
+            font-weight: 500;
+          }
+          .sub-menu {
+            min-width: auto;
+            top: -15px;
+            transform: translate(-50%,-100%);
+            box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+            &:after, &:before{
+              transform: translateX(-50%) rotate(-180deg);
+              bottom: -14px;
+              top: auto;
+            }
+            .zoomer-popover-list {
+              margin: 10px 0;
+            }
+            .zoomer-popover-item {
+              font-size: 13px;
+              padding: 5px 40px 5px 15px;
+              cursor: pointer;
+              &.active{
+                position: relative;
+                &:before {
+                  font-family: online-design !important;
+                  content: "\e928";
+                  position: absolute;
+                  top: 4px;
+                  right: 10px;
+                  speak: none;
+                  font-style: normal;
+                  font-weight: 400;
+                  font-variant: normal;
+                  text-transform: none;
+                  line-height: 1;
+                  -webkit-font-smoothing: antialiased;
+                  font-size: 18px;
+                }
+              }
+              &:hover{
+                background-color: $menu-hover-color;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
