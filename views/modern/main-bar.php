@@ -79,16 +79,16 @@
     </ul>
     <ul class="nbd-main-menu menu-center">
 
-        <li class="menu-item in">
+        <li class="menu-item">
             <i class="icon-nbd icon-nbd-undo2"></i>
             <span style="font-size: 12px;"><?php _e('undo','web-to-print-online-designer'); ?></span>
         </li>
-        <li class="menu-item in">
+        <li class="menu-item">
             <i class="icon-nbd icon-nbd-redo2"></i>
             <span style="font-size: 12px;"><?php _e('Redo','web-to-print-online-designer'); ?></span>
         </li>        
 
-        <li class="menu-item in" ng-click='debug()' style="display: none;">
+        <li class="menu-item in" ng-click='debug()' >
             <i class="icon-nbd icon-nbd-format-bold"></i>
             <span><?php _e('Debug','web-to-print-online-designer'); ?></span>
         </li>

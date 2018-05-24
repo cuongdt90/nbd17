@@ -12,12 +12,17 @@
 </div>
 <?php if($type == 'variable'): ?>
 <div class="nbd-preview-product-variation">
+    <?php if( count($variations) ): ?>
     <label><?php _e('Choose variation', 'web-to-print-online-designer'); ?></label>
     <select class="nbd-select" onchange="switchNBDProductVariation(this)">
         <?php foreach( $variations as $variation ): ?>
         <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
         <?php endforeach; ?>
     </select>
+    <?php 
+        else: 
+            $variations[0]['id'] = 0;
+        endif; ?>
 </div>
 <?php endif; ?>
 <div style="margin-top: 15px;">

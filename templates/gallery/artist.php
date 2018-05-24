@@ -7,9 +7,11 @@ get_header(); ?>
     do_action( 'nbd_before_designer_page_content' ); 
     $user_id = (isset($_GET['id']) && $_GET['id'] != '' ) ? intval( $_GET['id'] ) : 0;
     $user_infos = nbd_get_artist_info($user_id);
+    $wp_user_infos = get_user_by('id', $user_id);
     $banner_url = wp_get_attachment_url( $user_infos['nbd_artist_banner'] );
     $current_user_id = get_current_user_id();
     $link_designer = add_query_arg(array('id' => $current_user_id), getUrlPageNBD('designer'));
+    $user_infos['nbd_artist_name'] = $user_infos['nbd_artist_name'] != '' ? $user_infos['nbd_artist_name'] : $wp_user_infos->display_name;
 ?>
 <div class="nbd-user-infos">
     <div class="nbd-user-banner">

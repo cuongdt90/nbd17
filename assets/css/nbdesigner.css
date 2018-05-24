@@ -482,20 +482,20 @@ body.nbd-prevent-scroll {
     -webkit-transition: all ease .3s;
     transition: all ease .3s;    
 }
-.nbd-sidebar-con-inner ul li a:before {
+.nbd-sidebar-con-inner ul li a .before {
     display: block;
     width: 15px;
     position: absolute;
     left: -15px;
-    content: '→';
     opacity: 0;
     -moz-transition: all .3s;
     -o-transition: all .3s;
     -webkit-transition: all .3s;
     transition: all .3s;   
     font-weight: bold;
+    fill: #0c8ea7;
 }
-.nbd-sidebar-con-inner ul li a:hover:before, .nbd-sidebar-con-inner ul li a.active:before {
+.nbd-sidebar-con-inner ul li a:hover .before, .nbd-sidebar-con-inner ul li a.active .before {
     left: 0;
     opacity: 1;
 }

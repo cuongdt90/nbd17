@@ -52,5 +52,5 @@ if(count($templates)):  ?>
     </div>
     <?php endforeach;
     else: ?>    
-    <?php _e('No template', 'web-to-print-online-designer'); ?>
+    <?php //todo something ?>
 <?php endif;

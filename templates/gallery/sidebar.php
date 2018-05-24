@@ -28,7 +28,15 @@
             foreach( $products as $key => $product ): 
                 $link_prodcut_templates = add_query_arg(array('pid' => $product['product_id']), getUrlPageNBD('gallery'));
             ?>
-                <li class="nbd-tem-list-product <?php if($key > 14) echo 'nbd-hide'; ?>"><a class="<?php if($pid == $product['product_id']) echo 'active'; ?>" href="<?php echo $link_prodcut_templates; ?>"><span><?php echo $product['name']; ?></span></a></li>        
+                <li class="nbd-tem-list-product <?php if($key > 14) echo 'nbd-hide'; ?>">
+                    <a class="<?php if($pid == $product['product_id']) echo 'active'; ?>" href="<?php echo $link_prodcut_templates; ?>">                   
+                        <svg class="before" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="none" d="M0 0h24v24H0z"/>
+                            <path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z"/>
+                        </svg>    
+                        <span><?php echo $product['name']; ?></span>
+                    </a>
+                </li>        
             <?php endforeach; ?>  
             </ul>
             <?php if(count($products) > 15): ?>
