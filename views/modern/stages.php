@@ -16,7 +16,7 @@
             <div class="stage-main">
                 <div class="stage-background"></div>
                 <div class="design-zone">
-                    <canvas nbd-canvas stage="stage" index="{{$index}}" id="nbd-stage-{{$index}}"></canvas>
+                    <canvas nbd-canvas stage="stage" ctx="ctxMenuStyle" index="{{$index}}" id="nbd-stage-{{$index}}"></canvas>
                 </div>
                 <div class="stage-grid"></div>
                 <div class="bounding-layers"></div>

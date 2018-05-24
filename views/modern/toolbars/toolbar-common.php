@@ -1,22 +1,14 @@
 <div class="toolbar-common">
     <ul class="nbd-main-menu">
         <li class="menu-item item-color-fill">
-            <i class="icon-nbd icon-nbd-format-color-fill nbd-tooltip-hover color-fill" title="color" style="font-size: 21px"></i>
+            <span style="background: #06d79c; width: 21px; height: 21px; border-radius: 4px;display: inline-block;"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
             <div class="sub-menu" data-pos="center">
                 <div class="nbd-color-palette" style="position: relative">
                     <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
                         <h3 class="color-palette-label"><?php _e('Set color','web-to-print-online-designer'); ?></h3>
                         <ul class="main-color-palette">
                             <li class="color-palette-add">
-                                <spectrum-colorpicker
-                                        ng-model="colorBackground"
-                                        ng-change="changeBackgroundColor(colorBackground)"
-                                        options="{
-                                    preferredFormat: 'hex',
-                                    showInput: true,
-                                    containerClassName: 'nbd-sp'
-                                }">
-                                </spectrum-colorpicker>
+
                             </li>
                             <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
                         </ul>
@@ -36,7 +28,21 @@
                             <li class="color-palette-item" data-color="#ffffff" title="#ffffff" style="background-color: #ffffff;"></li>
                         </ul>
                     </div>
-                    <div class="color-palette-popup"></div>
+                    <div class="nbd-color-picker" style="position: absolute; left: -0; transform: translateX(-100%); top: 0; ">
+                        <spectrum-colorpicker
+                                ng-model="colorBackground"
+                                ng-change="changeBackgroundColor(colorBackground)"
+                                options="{
+                                    color: '#169ddf',
+                                    preferredFormat: 'hex',
+                                    flat: true,
+                                    showInput: true,
+                                    containerClassName: 'nbd-sp',
+                                    chooseText: '<?php _e('OK','web-to-print-online-designer'); ?>',
+                                    cancelText: '<?php _e('Cancel','web-to-print-online-designer'); ?>'
+                        }">
+                        </spectrum-colorpicker>                        
+                    </div>
                 </div>
             </div>
         </li>
@@ -84,7 +90,7 @@
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-135" title="Middle left"></i></li>
                     <li><i class="icon-nbd icon-nbd-bottom-center nbd-tooltip-hover middle-center" title="Middle center"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate45" title="Middle right"></i></li>
-                    <li><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover" title="Intro"></i></li>
+                    <li style="opacity: 0"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover" title="Intro"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-180" title="Bottom left"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate135" title="Bottom center"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate90" title="Bottom right"></i></li>

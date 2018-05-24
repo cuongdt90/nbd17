@@ -388,13 +388,13 @@ jQuery(document).ready(function ($) {
         var row = '<tr>',
                 prefix = '';
         for (var i = 0; i < values.length; ++i) {
-            if ($tbody.prev('thead').find('input').eq(i).prev('span').length > 0) {
-                prefix = $tbody.prev('thead').find('input').eq(i).prev('span').html();
-            }
+//            if ($tbody.prev('thead').find('input').eq(i).prev('span').length > 0) {
+//                prefix = $tbody.prev('thead').find('input').eq(i).prev('span').html();
+//            }
             if(values[i][0] == "#"){
-                row += '<td>' + prefix + '<span class="nbdesigner-values-group-td-value button" style="background: '+values[i]+'">' + values[i] + '</span></td>';
+                row += '<td><span class="nbdesigner-values-group-td-value button" style="background: '+values[i]+'">' + values[i] + '</span></td>';
             }else{
-                row += '<td>' + prefix + '<span class="nbdesigner-values-group-td-value">' + values[i] + '</span></td>';
+                row += '<td><span class="nbdesigner-values-group-td-value">' + values[i] + '</span></td>';
             }           
         };      
         row += '<td><a href="#" class="nbdesigner-values-group-remove">&times;</a></td></tr>';
