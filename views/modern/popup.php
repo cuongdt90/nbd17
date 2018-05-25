@@ -8,7 +8,7 @@
                     + fixed-top
 ------------------------------------------------------------------------------------->
 
-<div class="nbd-popup popup-share" data-animate="bottom-to-top">
+<div class="nbd-popup popup-share" data-animate="bottom-to-top"> 
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
