@@ -1,0 +1,23 @@
+.nbd-guideline-notation {
+  top: 120px;
+  left: 5px;
+  white-space: nowrap;
+  position: absolute;
+  z-index: 2;
+  background: #fff;
+  padding: 15px 15px 5px 15px;
+  pointer-events: none;
+  box-shadow: 1px 0 10px rgba(0,0,0,.08);
+  @media screen and (max-width: 767px){
+      display: none;
+  }
+  .notation-guiline {
+    width: 30px;
+    height: 0;
+    border-top-width: 2px;
+    border-top-style: solid;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+  }
+}

@@ -116,10 +116,9 @@
         text-align: center;
         @media screen and (max-width: 767px) {
           &.active {
-            background-color: $main-color;
+            background-color: $tab-active;
           }
         }
-
         span,i{
           color: #fff;
         }
@@ -141,10 +140,10 @@
       }
       li.active {
         i {
-          color: $main-color;
+          color: #888;
         }
         span {
-          color: $main-color;
+          color: #888;
         }
       }
     }
@@ -284,6 +283,12 @@
           border: none;
           .item-left, .item-center{
             position: relative;
+          }
+          .item-center{
+            margin-right: auto;
+            input{
+              max-width: 160px;
+            }
           }
           &.lock-active{
             .item-left, .item-center{
@@ -611,22 +616,29 @@
           &:hover{
             border-color: #ccc;
           }
-          .form-upload{
+          .form-upload {
             margin: 20px 10px;
             border: 2px dashed #ebebeb;
             padding: 10px;
             pointer-events: auto;
             opacity: 0.5;
-            i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            i {
               pointer-events: auto;
               cursor: none;
               font-size: 40px;
+              margin-right: 15px;
             }
           }
           &.accept{
             .form-upload {
               cursor: pointer;
               opacity: 1;
+              i{
+                cursor: pointer;
+              }
             }
           }
           .allow-size{
@@ -793,6 +805,7 @@
               justify-content: space-between;
               padding: 10px 5px;
               align-items: center;
+              background-color: #fff;
               .product-more-info {
                 border-radius: 50%;
               }

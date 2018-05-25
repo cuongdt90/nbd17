@@ -1,6 +1,6 @@
 .nbd-warning {
   position: absolute;
-  top: 60px;
+  top: 10px;
   right: 10px;
   min-width: 100px;
   max-width: 350px;
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     background-color: #fff;
     box-shadow: 1px 0 10px rgba(0,0,0,.08);
     visibility: hidden;
@@ -22,6 +22,7 @@
     opacity: 0;
     z-index: -1;
     transition: all .3s;
+    padding: 5px;
     &.nbd-show{
       visibility: visible;
       opacity:1;
@@ -33,20 +34,17 @@
       font-size: 21px;
     }
     .warning {
-      border-right: 1px solid #ebebeb;
-      background-color: #de9309;
-      color: #fff;
+      color: #de9309;
     }
 
     .title-warning {
       padding: 0 5px;
-      font-size: 14px;
+      font-size: 12px;
       margin-right: auto;
     }
 
     .close-warning{
       cursor: pointer;
-      border-left: 1px solid #ebebeb;
     }
   }
 }

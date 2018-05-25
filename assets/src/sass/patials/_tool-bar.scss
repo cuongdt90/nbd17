@@ -7,12 +7,37 @@
   color: #3f4652;
   left: 420px;
   top: 54px;
-  padding: 0 24px 0 10px;
   white-space: nowrap;
   height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  .main-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 24px 0 10px;
+    @media screen and (max-width: 767px){
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+    li.menu-item{
+      @media screen and (max-width: 767px){
+        position: static;
+
+        .sub-menu{
+          left: 50%;
+          top: 60px;
+          transform: translateX(-50%);
+          &:before, &:after{
+            display: none;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+        }
+      }
+
+    }
+
+  }
   @media screen and (max-width: 1023px) {
     width: calc(100vw - 75px);
     left: 75px;
@@ -31,6 +56,9 @@
     .nbd-main-menu {
       li.menu-item {
         padding: 2px 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         i {
           font-size: 24px;
           text-align: center;
@@ -75,7 +103,7 @@
                   box-shadow: 0 0 3px 0 rgba(0, 0, 0, .75);
                 }
                 &.color-palette-add {
-                  span{
+                  span {
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -86,7 +114,7 @@
                       width: 100%;
                       height: 100%;
                       border: none;
-                      &:hover,&:active {
+                      &:hover, &:active {
                         border-color: transparent;
                       }
                       &:after {
