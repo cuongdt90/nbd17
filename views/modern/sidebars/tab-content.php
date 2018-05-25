@@ -9,7 +9,7 @@
             <div class="tab-main tab-scroll">
                 <div class="nbd-products">
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="nbd-product">
-                        <div class="nbd-main-product nbd-shadow-1dp">
+                        <div class="nbd-main-product">
                             <div class="nbd-product-img">
                                 <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Product">
                             </div>
