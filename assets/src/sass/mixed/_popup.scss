@@ -127,24 +127,25 @@
                 border-radius: 50%;
                 cursor: pointer;
               }
+
+              &.facebook {
+                i {
+                  color: #3b5998;
+                }
+              }
+
+              &.twitter {
+                i {
+                  color: #00aced;
+                }
+              }
+
+              &.google-plus {
+                i {
+                  color: #d34836;
+                }
+              }
               &.active, &:hover {
-                &.facebook {
-                  i {
-                    color: #3b5998;
-                  }
-                }
-
-                &.twitter {
-                  i {
-                    color: #00aced;
-                  }
-                }
-
-                &.google-plus {
-                  i {
-                    color: #d34836;
-                  }
-                }
               }
             }
           }

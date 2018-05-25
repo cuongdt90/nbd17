@@ -1,6 +1,5 @@
 .nbd-toolbar {
   background: #fff;
-  border-bottom: 1px solid #e4e4e4;
   width: calc(100% - 420px);
   position: fixed;
   z-index: 10;
@@ -196,6 +195,29 @@
     align-items: center;
     .nbd-main-menu {
       &.menu-right {
+        .menu-item {
+          padding: 2px 7px;
+          margin: 0 4px;
+          border: 1px solid transparent;
+          border-radius: 2px;
+
+          i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: normal;
+            height: 24px;
+          }
+
+          &:not(:first-child) {
+            &:hover {
+              border-color: #ebebeb;
+            }
+          }
+          &.selected {
+            background-color: #ebebeb;
+          }
+        }
         .sub-menu {
           min-width: auto;
           ul {
@@ -214,20 +236,6 @@
             }
           }
         }
-        .menu-item {
-          padding: 2px 7px;
-          margin: 0 4px;
-          border: 1px solid transparent;
-          border-radius: 2px;
-          &:not(:first-child) {
-            &:hover {
-              border-color: #ebebeb;
-            }
-          }
-          &.selected {
-            background-color: #ebebeb;
-          }
-        }
       }
       &.menu-left {
         border-right: 1px solid #ebebeb;
@@ -235,6 +243,12 @@
         .menu-item {
           padding: 0;
           margin: 0 10px;
+          &.active{
+            .toolbar-bottom {
+              border: 1px solid #ebeced;
+              background-color: #ebebeb;
+            }
+          }
           .toolbar-bottom {
             display: flex;
             justify-content: space-between;
@@ -248,8 +262,15 @@
             outline: none;
             box-sizing: border-box;
             font-weight: 500;
-            border: 1px solid #ebeced;
             background-color: #fff;
+            border: 1px solid #fff;
+            transition: all 0.4s;
+            input{
+              background-color: transparent;
+            }
+            &:hover, &.active{
+              border: 1px solid #ebeced;
+            }
             i.icon-nbd {
               font-size: 12px;
               margin-left: 10px;
@@ -259,7 +280,7 @@
             }
           }
           .toolbar-input {
-            width: 70px;
+            width: 30px;
             border: none;
             outline: none;
           }
@@ -436,3 +457,13 @@
   }
 }
 
+.nbd-main-product{
+  .nbd-shadow-1dp {
+    background: #fff;
+    box-shadow: none;
+    transition: all 0.4s;
+    &:hover{
+      box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
+    }
+  }
+}

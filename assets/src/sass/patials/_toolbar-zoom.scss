@@ -9,10 +9,10 @@
 
   .zoomer-toolbar{
     .nbd-main-menu {
-      border: 1px solid #ebebeb;
       border-radius: 60px;
       background-color: #fff;
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+      box-shadow: 1px 0 10px rgba(0, 0, 0, 0.08);
+      border: none;
       .menu-item{
         padding: 5px;
         display: flex;
@@ -34,7 +34,7 @@
             min-width: auto;
             top: -15px;
             transform: translate(-50%,-100%);
-            box-shadow: 0 1px 5px 0 rgba(0,0,0,.3);
+            box-shadow: 1px 0 10px rgba(0,0,0,.08);
             &:after, &:before{
               transform: translateX(-50%) rotate(-180deg);
               bottom: -14px;

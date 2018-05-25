@@ -1,4 +1,5 @@
-$main-color: #607d8b;
+$main-color: #4F5467;
+$tab-active : #edf1f5;
 $facebook-color:#3b5998;
 $dropbox-color:#007ee5;
 $instagram-color:#8a3ab9;
@@ -62,7 +63,7 @@ img{
 }
 
 .box-shadow-right{
-  box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.12);
+  box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
 }
 .box-shadow-bottom{
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -171,7 +172,7 @@ img{
 
 .nbd-button{
   color: #fff;
-  background: #607d8b;
+  background: $main-color;
   display: inline-block;
   position: relative;
   cursor: pointer;
@@ -191,7 +192,7 @@ img{
   user-select: none;
   outline: none;
   border: 0;
-  padding: 0 6px;
+  padding: 0 12px;
   margin: 6px 8px;
   white-space: nowrap;
   text-transform: uppercase;
