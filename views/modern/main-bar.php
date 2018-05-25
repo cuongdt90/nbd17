@@ -1,7 +1,12 @@
-<div class="nbd-main-bar">    
+<?php
+$custom_logo_id = get_theme_mod( 'custom_logo' );
+$image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo-frontend.png';
+$srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
+?>
+<div class="nbd-main-bar">
 	<a href="#" class="logo">
-        <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/logo-frontend.png" alt="online design">
-        <span class="logo-title">Online Design</span>
+        <img src="<?php echo $srcImage;?>" alt="online design">
     </a>
 
     <i class="icon-nbd icon-nbd-menu menu-mobile"></i>

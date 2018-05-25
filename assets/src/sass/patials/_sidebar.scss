@@ -184,7 +184,6 @@
     overflow: hidden;
     position: relative;
     background: $tab-active;
-    box-shadow: 0 1px 5px 0 rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.14), 0 2px 5px -1px rgba(0,0,0,.12);
     @media screen and (max-width: 767px) {
       position: absolute;
       right: auto;
@@ -908,7 +907,6 @@
             cursor: pointer;
             .item-icon{
               transition: all .3s;
-              box-shadow: 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 1px -1px rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.12);
               &:hover {
                 box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
               }
