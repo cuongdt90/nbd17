@@ -491,7 +491,7 @@
                     <div class="items">
                         <div class="item" data-type="draw" data-api="false">
                             <div class="main-item">
-                                <div class="item-icon"><i class="icon-nbd icon-nbd-draw"></i></div>
+                                <div class="item-icon"><i class="icon-nbd icon-nbd-drawing"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Business Card"><?php _e('Draw','web-to-print-online-designer'); ?></span>
                                 </div>

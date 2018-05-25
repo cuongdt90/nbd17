@@ -90,7 +90,7 @@
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-135" title="Middle left"></i></li>
                     <li><i class="icon-nbd icon-nbd-bottom-center nbd-tooltip-hover middle-center" title="Middle center"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate45" title="Middle right"></i></li>
-                    <li style="opacity: 0"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover" title="Intro"></i></li>
+                    <li style="opacity: 0;visibility: hidden"><i class="icon-nbd icon-nbd-info-circle nbd-tooltip-hover" title="Intro"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate-180" title="Bottom left"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate135" title="Bottom center"></i></li>
                     <li><i class="icon-nbd icon-nbd-fomat-top-left nbd-tooltip-hover rotate90" title="Bottom right"></i></li>

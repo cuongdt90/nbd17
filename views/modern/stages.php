@@ -50,6 +50,26 @@
                 </div>
                 <div class="stage-snapLines"></div>
                 <div class="stage-overlay"></div>
+				<div class="nbd-warning">
+					<div class="item main-warning nbd-show">
+						<i class="icon-nbd icon-nbd-baseline-warning warning"></i>
+						<span class="title-warning">Warning Trouble</span>
+						<i class="icon-nbd icon-nbd-clear close-warning"></i>
+					</div>
+
+					<div class="item main-warning nbd-show">
+						<i class="icon-nbd icon-nbd-baseline-warning warning"></i>
+						<span class="title-warning">Warning Trouble</span>
+						<i class="icon-nbd icon-nbd-clear close-warning"></i>
+					</div>
+
+					<div class="item main-warning nbd-show">
+						<i class="icon-nbd icon-nbd-baseline-warning warning"></i>
+						<span class="title-warning">Warning Trouble</span>
+						<i class="icon-nbd icon-nbd-clear close-warning"></i>
+					</div>
+
+				</div>				
                 <div class="stage-guideline"></div>
             </div>
             <div class="page-toolbar">
