@@ -1,4 +1,4 @@
-<div class="toolbar-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'">
+<div class="toolbar-text" ng-show="stages[currentStage].states.isText">
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-font-familly">
             <button class="toolbar-bottom">
@@ -110,7 +110,55 @@
                     </div>
                 </div>
             </button>
-        </li>
+        </li>     
+    </ul>
+    <ul class="nbd-main-menu menu-right">
+        <li class="menu-item item-color-fill">
+            <span ng-style="{'background': stages[currentStage].states.text.fill}" style="width: 21px; height: 21px; border-radius: 4px;display: inline-block;"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
+            <div class="sub-menu" data-pos="center">
+                <div class="nbd-color-palette" style="position: relative">
+                    <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
+                        <h3 class="color-palette-label"><?php _e('Set color','web-to-print-online-designer'); ?></h3>
+                        <ul class="main-color-palette">
+                            <li class="color-palette-add">
+
+                            </li>
+                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
+                        </ul>
+                    </div>
+                    <div class="pinned-palette default-palette">
+                        <h3 class="color-palette-label"><?php _e('Default color','web-to-print-online-designer'); ?></h3>
+                        <ul class="main-color-palette">
+                            <li ng-repeat="color in __colorPalette track by $index" class="color-palette-item" data-color="{{color}}" title="{{__colorPalette}}" ng-style="{'background': color}">{{__colorPalette}}</li>
+                        </ul>
+                    </div>
+                    <div class="pinned-palette default-palette">
+                        <ul class="main-color-palette">
+                            <li class="color-palette-item" data-color="#000000" title="#000000" style="background-color: #000000;"></li>
+                            <li class="color-palette-item" data-color="#666666" title="#666666" style="background-color: #666666;"></li>
+                            <li class="color-palette-item" data-color="#a8a8a8" title="#a8a8a8" style="background-color: #a8a8a8;"></li>
+                            <li class="color-palette-item" data-color="#d9d9d9" title="#d9d9d9" style="background-color: #d9d9d9;"></li>
+                            <li class="color-palette-item" data-color="#ffffff" title="#ffffff" style="background-color: #ffffff;"></li>
+                        </ul>
+                    </div>
+                    <div class="nbd-color-picker" style="position: absolute; left: -0; transform: translateX(-100%); top: 0; ">
+                        <spectrum-colorpicker
+                                ng-model="stages[currentStage].states.text.fill"
+                                ng-change="changeBackgroundColor()"
+                                options="{
+                                    color: '#169ddf',
+                                    preferredFormat: 'hex',
+                                    flat: true,
+                                    showInput: true,
+                                    containerClassName: 'nbd-sp',
+                                    chooseText: '<?php _e('OK','web-to-print-online-designer'); ?>',
+                                    cancelText: '<?php _e('Cancel','web-to-print-online-designer'); ?>'
+                        }">
+                        </spectrum-colorpicker>                        
+                    </div>
+                </div>
+            </div>
+        </li>           
     </ul>
     <ul class="nbd-main-menu menu-right">
         <li class="menu-item item-align">

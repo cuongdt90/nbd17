@@ -1,7 +1,7 @@
 <div class="toolbar-common">
     <ul class="nbd-main-menu">
         <li class="menu-item item-color-fill">
-            <span style="background: #06d79c; width: 21px; height: 21px; border-radius: 4px;display: inline-block;"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
+            <span ng-style="{'background': stages[currentStage].states.text.fill}" style="width: 21px; height: 21px; border-radius: 4px;display: inline-block;"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
             <div class="sub-menu" data-pos="center">
                 <div class="nbd-color-palette" style="position: relative">
                     <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
@@ -30,8 +30,8 @@
                     </div>
                     <div class="nbd-color-picker" style="position: absolute; left: -0; transform: translateX(-100%); top: 0; ">
                         <spectrum-colorpicker
-                                ng-model="colorBackground"
-                                ng-change="changeBackgroundColor(colorBackground)"
+                                ng-model="stages[currentStage].states.text.fill"
+                                ng-change="changeBackgroundColor()"
                                 options="{
                                     color: '#169ddf',
                                     preferredFormat: 'hex',
