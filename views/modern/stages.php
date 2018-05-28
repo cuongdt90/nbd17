@@ -118,22 +118,34 @@
         transform: translate(calc(-100% - 10px), calc(-100% + 5px));
         text-shadow: 1px 1px #fff;
     }
+    .layer-angle {
+        position: absolute;
+        display: inline-block;
+        font-family: monospace;
+        color: #404762;   
+        visibility: hidden;
+        text-shadow: 1px 1px #fff;        
+    }
+    .layer-angle span {
+        font-size: 9px !important;
+        display: inline-block;
+    }
     .snapline {
         position: absolute;
     }
     .h-snapline {
         top: -9999px;
-        left: 0;
-        width: 100%;
-        height: 3px!important;
+        left: -20px;
+        width: calc(100% + 40px);
+        height: 3px !important;
         background-image: linear-gradient(to right,rgba(214,96,96,.95) 1px,transparent 1px);
         background-size: 2px 1px;
         background-repeat: repeat-x;     
     }
     .v-snapline {
         left: -9999px;
-        top: 0;
-        height: 100%;
+        top: -20px;
+        height: calc(100% + 40px);
         width: 3px!important;
         background-image: linear-gradient(to bottom,rgba(214,96,96,.95) 1px,transparent 1px);
         background-size: 1px 2px;
@@ -173,6 +185,7 @@
                     <div class="bounding-layers-inner">
                         <div class="bounding-rect" ng-style="stages[currentStage].states.boundingObject"></div>
                         <div class="layer-coordinates" ng-style="stages[currentStage].states.coordinates.style">{{stages[currentStage].states.coordinates.top}} {{stages[currentStage].states.coordinates.left}}</div>
+                        <div class="layer-angle" ng-style="stages[currentStage].states.rotate.style"><span ng-style="{transform: 'rotate(-'+stages[currentStage].states.rotate.angle+'deg)'}">{{stages[currentStage].states.rotate.angle}}</span></div>
                     </div>
                 </div>
                 <div class="stage-snapLines">
@@ -183,6 +196,12 @@
                         <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vl"></div>
                         <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vc"></div>
                         <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vr"></div>
+                        <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.hcc"></div>
+                        <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vcc"></div>
+                        <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vel"></div>
+                        <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.ver"></div>
+                        <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.het"></div>
+                        <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.heb"></div>
                     </div>                    
                 </div>
                 <div class="stage-overlay"></div>				
