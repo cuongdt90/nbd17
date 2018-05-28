@@ -25,16 +25,104 @@
         opacity: .3;
         pointer-events: none;
     }  
-    .bounding-layers-inner {
+    .bounding-layers-inner,
+    .stage-snapLines-inner {
         position: relative;
         width: 100%;
         height: 100%;
+    }
+    .bounding-rect {
+        position: absolute;
+        display: inline-block;
+        visibility: hidden;
+        top: -20px;
+        left: -20px;
+        width: 10px;
+        height: 10px;
+        border: 1px dashed #ddd;
+        transform-origin: 0% 0%;
+    }
+    .nbd-sidebar #tab-typography .tab-main .typography-body .typography-item {
+        cursor: pointer;
+    }
+    .text-heading {
+        font-size: 40px;
+        font-weight: 700;        
+    }
+    .text-sub-heading {
+        font-size: 24px;
+        font-weight: 500;        
+    } 
+    .text-heading, .text-sub-heading, .text-body {
+        color: #4F5467;
+        cursor: pointer;
+        display: block;
+    }
+    .nbd-signal {
+        position: absolute;
+        bottom: 15px;
+        left: 5px;
+        height: 20px;
+        display: inline-block;
+        border-radius: 20px;
+        background: #fff;
+        line-height: 17px;
+        padding-right: 5px;
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+    .nbd-signal a {
+        font-size: 9px;
+        color: #404762;  
+        font-family: arial, sans-serif;
+    }
+    .nbd-signal:hover {
+        background: #055b39;
+        -webkit-box-shadow: 1px 0 10px rgba(0,0,0,.08);
+        box-shadow: 1px 0 10px rgba(0,0,0,.08);        
+    }
+    .nbd-signal:hover a{
+        text-decoration: none;
+        color: #fff;        
+    }
+    .nbd-signal svg {
+        vertical-align: top;
+        background: #fff;
+        border-radius: 50%;
+    }
+    .nbd-input {
+        border: none;
+    }
+    .nbd-sidebar #tab-photo .result-loaded .content-items div[data-type=image-upload] .form-upload i {
+        vertical-align: middle;
+        margin-right: 5px;     
+        color: #404762;
+    }
+    .nbd-sidebar #tab-photo .result-loaded .content-items div[data-type=image-upload] .form-upload   {
+        border: 2px dashed #fff;
+        padding: 30px 10px;        
+    } 
+    .nbd-sidebar #tab-photo .result-loaded .content-items div[data-type=image-upload] .form-upload i:before,
+    .nbd-sidebar #tab-photo .result-loaded .content-items div[data-type=image-upload] .form-upload{
+        color: #404762;
+        font-weight: bold;
+    }
+    .layer-coordinates {
+        position: absolute;
+        display: inline-block;
+        font-size: 9px;
+        font-family: monospace;
+        color: #404762;   
+        visibility: hidden;
+        transform: translate(calc(-100% - 10px), calc(-100% + 5px));
+        text-shadow: 1px 1px 1px #fff;
     }
 </style>
 <div class="nbd-stages">
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
-            <div class="nbd-warning">
+            <div class="nbd-warning" style="display: none;">
                 <div class="item main-warning nbd-show">
                     <i class="icon-nbd icon-nbd-baseline-warning warning"></i>
                     <span class="title-warning">Warning Trouble</span>
@@ -55,20 +143,22 @@
 
             </div>            
             <div class="stage-main">
-                <div class="stage-background"></div>
+                <div class="stage-background" ng-style="{background: stages[currentStage].config.background}"></div>
                 <div class="design-zone">
                     <canvas nbd-canvas stage="stage" ctx="ctxMenuStyle" index="{{$index}}" id="nbd-stage-{{$index}}"></canvas>
                 </div>
                 <div class="stage-grid"></div>
                 <div class="bounding-layers">
                     <div class="bounding-layers-inner">
-                        <div
-                            
-                        >
-                        </div>
+                        <div class="bounding-rect" ng-style="stages[currentStage].states.boundingObject"></div>
+                        <div class="layer-coordinates" ng-style="stages[currentStage].states.coordinates.style">{{stages[currentStage].states.coordinates.top}} {{stages[currentStage].states.coordinates.left}}</div>
                     </div>
                 </div>
-                <div class="stage-snapLines"></div>
+                <div class="stage-snapLines">
+                    <div class="stage-snapLines-inner">
+                        <div class="bounding-rect" ></div>
+                    </div>                    
+                </div>
                 <div class="stage-overlay"></div>				
                 <div class="stage-guideline"></div>
             </div>
