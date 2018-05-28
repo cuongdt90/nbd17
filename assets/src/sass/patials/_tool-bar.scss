@@ -18,6 +18,15 @@
     @media screen and (max-width: 767px){
       overflow-x: auto;
       overflow-y: hidden;
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      /* For WebKit implementations, provide inertia scrolling */
+      -webkit-overflow-scrolling: touch;
+      /* We don't want internal inline elements to wrap */
+      white-space: nowrap;
+      /* Remove the default scrollbar for WebKit implementations */
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
     li.menu-item{
       @media screen and (max-width: 767px){

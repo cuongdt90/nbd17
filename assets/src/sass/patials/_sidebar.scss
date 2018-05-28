@@ -140,10 +140,10 @@
       }
       li.active {
         i {
-          color: #888;
+          color: $main-color;
         }
         span {
-          color: #888;
+          color: $main-color;
         }
       }
     }
@@ -452,7 +452,7 @@
               border: 0;
               cursor: pointer;
               .item-icon {
-                padding: 20px;
+                padding: 15px 20px 5px;
                 border-radius: 2px;
                 background: #fff;
                 border: none;
@@ -496,6 +496,18 @@
                 outline: none;
                 overflow: visible;
                 margin: 0;
+                @media screen and (max-width: 767px){
+                    .nbd-sub-dropdown {
+                      right: -100%;
+                      left: auto;
+                      bottom: 0;
+                      top: auto;
+                      transform: translate(20%, 0%);
+                      &:after,&:before{
+                        display: none;
+                      }
+                    }
+                }
                 &:focus{
                   outline: none;
                 }
@@ -792,9 +804,7 @@
             }
             .product-name {
               cursor: pointer;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
+              word-break: break-all;
             }
             .nbd-product-img {
               overflow: hidden;
@@ -932,15 +942,14 @@
           .item-info{
             display: flex;
             justify-content: space-between;
-            padding: 10px 5px;
+            padding: 5px;
+            background-color: #fff;
             align-items: center;
 
             .product-name,.item-name{
               cursor: pointer;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
               font-size: 12px;
+              word-break: break-all;
             }
 
           }
