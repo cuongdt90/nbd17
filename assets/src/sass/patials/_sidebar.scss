@@ -83,6 +83,9 @@
           align-items: center;
           width: auto;
           height: 60px;
+          &.tab-end {
+            //padding: 0;
+          }
           span,i{
             color: #fff;
           }
