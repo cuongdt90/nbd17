@@ -788,7 +788,7 @@ class Nbdesigner_Plugin {
     }
     public function nbdesigner_menu() {       
         if (current_user_can('manage_nbd_setting')) {
-            add_menu_page('Nbdesigner', 'NBDesigner', 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings'), NBDESIGNER_PLUGIN_URL . 'assets/images/logo.png', 26);
+            add_menu_page('Nbdesigner', 'NBDesigner', 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings'), NBDESIGNER_PLUGIN_URL . 'assets/images/logo-icon-r.svg', 26);
             $nbdesigner_manage = add_submenu_page(
                     'nbdesigner', 'NBDesigner Settings', 'Settings', 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings')
             );

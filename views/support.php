@@ -184,7 +184,7 @@ $faqs = $nbd_news->sections->faq;
         </ul>        
     </section>
     <div class="nbd-logo">
-        <img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/nbd.png" alt="Storefront" />
+        <img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/logo.svg" alt="Storefront" />
     </div> 
     <div class="nbd-intro">
         <p><?php _e('Hello! You might be interested in the following NBDesigner NEWS and our printing solutions.', 'web-to-print-online-designer'); ?></p>
