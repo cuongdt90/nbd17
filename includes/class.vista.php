@@ -39,11 +39,10 @@ if(!class_exists('Nbdesigner_Vista')) {
             add_action('wp_enqueue_scripts', function() {
                 $js_libs = array(
 
-                    'materialize' => array(
-                        'cdn-link' => 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js',
-                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/materialize.min.js',
-                        'version'   => '1.0.0-beta',
-                        'depends'  => array()
+                    'vista' => array(
+                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/vista.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
                     ),
                 );
                 $css_libs = array(
@@ -54,14 +53,15 @@ if(!class_exists('Nbdesigner_Vista')) {
                     ),
                 );
                 foreach ($js_libs as $key => $js){
-                    $link = ( NBDESIGNER_MODE_DEV ) ? $js['link'] : $js['cdn-link'];
+                    $link = $js['link'];
                     wp_register_script($key, $link, $js['depends'], $js['version']);
                 }
                 foreach ($css_libs as $key => $css){
-                    $link = ( NBDESIGNER_MODE_DEV ) ? $css['link'] : $css['cdn-link'];
+                    $link = $css['link'];
                     wp_register_style($key, $link, $css['depends'], $css['version']);
                 }
-                wp_enqueue_style( 'vista', '' );
+                wp_enqueue_style( 'vista', '');
+                wp_enqueue_script('vista');
             });
         }
 
