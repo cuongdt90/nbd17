@@ -217,7 +217,7 @@
                 <div class="head-main">
                     <span class="text-heading"  ng-click='addText()' style="color: #4F5467; display: block; font-size: 40px; font-weight: 700"><?php _e('Add heading','web-to-print-online-designer'); ?></span>
                     <span class="text-sub-heading" style="display: block; font-size: 24px; font-weight: 500; color: #4F5467"><?php _e('Add subheading','nbd-online-design');?></span>
-                    <span class="text-body" style="display: block;color: #4F5467"><?php _e('Add subheading','nbd-online-design'); ?></span>
+                    <span ng-click="debug2()" class="text-body" style="display: block;color: #4F5467"><?php _e('Add subheading','nbd-online-design'); ?></span>
                 </div>
             </div>
             <div class="typography-body">

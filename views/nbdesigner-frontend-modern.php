@@ -222,7 +222,7 @@
                                     <rect x="9.9" y="4.4" transform="matrix(-1 -3.267878e-07 3.267878e-07 -1 19.8086 20.0035)" class="st4" width="0.1" height="11.1"/>
                                     <rect x="9.9" y="4.4" transform="matrix(3.267741e-07 -1 1 3.267741e-07 -9.740747e-02 19.906)" class="st4" width="0.1" height="11.1"/>
                                     </svg>     
-                                    @NetbaseTeam
+                                    &copy;Netbase
                                 </a>
                             </div>
                         </div>

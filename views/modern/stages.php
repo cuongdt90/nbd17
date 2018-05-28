@@ -116,8 +116,29 @@
         color: #404762;   
         visibility: hidden;
         transform: translate(calc(-100% - 10px), calc(-100% + 5px));
-        text-shadow: 1px 1px 1px #fff;
+        text-shadow: 1px 1px #fff;
     }
+    .snapline {
+        position: absolute;
+    }
+    .h-snapline {
+        top: -9999px;
+        left: 0;
+        width: 100%;
+        height: 3px!important;
+        background-image: linear-gradient(to right,rgba(214,96,96,.95) 1px,transparent 1px);
+        background-size: 2px 1px;
+        background-repeat: repeat-x;     
+    }
+    .v-snapline {
+        left: -9999px;
+        top: 0;
+        height: 100%;
+        width: 3px!important;
+        background-image: linear-gradient(to bottom,rgba(214,96,96,.95) 1px,transparent 1px);
+        background-size: 1px 2px;
+        background-repeat: repeat-y;
+    }    
 </style>
 <div class="nbd-stages">
     <div class="stages-inner">
@@ -156,7 +177,12 @@
                 </div>
                 <div class="stage-snapLines">
                     <div class="stage-snapLines-inner">
-                        <div class="bounding-rect" ></div>
+                        <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.ht"></div>
+                        <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.hc"></div>
+                        <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.hb"></div>
+                        <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vl"></div>
+                        <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vc"></div>
+                        <div class="snapline v-snapline" ng-style="stages[currentStage].states.snaplines.vr"></div>
                     </div>                    
                 </div>
                 <div class="stage-overlay"></div>				
