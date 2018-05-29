@@ -112,7 +112,7 @@
             </button>
         </li>     
     </ul>
-    <ul class="nbd-main-menu menu-right">
+    <ul class="nbd-main-menu menu-center">
         <li class="menu-item item-color-fill">
             <span ng-style="{'background': stages[currentStage].states.text.fill}" style="width: 21px; height: 21px; border-radius: 4px;display: inline-block;"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
             <div class="sub-menu" data-pos="center">
@@ -176,5 +176,30 @@
         <li class="menu-item item-text-bold" ng-if="settings['nbdesigner_text_bold'] == '1'"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="Bold"></i></li>
         <li class="menu-item item-text-italic" ng-if="settings['nbdesigner_text_italic'] == '1'"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" title="Italic"></i></li>
         <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Underline"></i></li>
+    </ul>
+    <ul class="nbd-main-menu menu-right">
+        <li class="menu-item item-spacing">
+            <i class="icon-nbd icon-nbd-line_spacing"></i>
+            <div class="sub-menu" data-pos="center">
+                <div class="main-ranges" style="padding: 30px 10px 15px">
+                    <div class="range range-spacing">
+                        <label>Spacing</label>
+                        <div class="main-track">
+                            <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                            <span class="range-track"></span>
+                        </div>
+                        <span class="value-display">50</span>
+                    </div>
+                    <div class="range range-line-height">
+                        <label>Line height</label>
+                        <div class="main-track">
+                            <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                            <span class="range-track"></span>
+                        </div>
+                        <span class="value-display">50</span>
+                    </div>
+                </div>
+            </div>
+        </li>
     </ul>
 </div>

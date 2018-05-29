@@ -199,8 +199,10 @@
                         </div>
                         <div class="pointer"></div>
                     </div>
-                    <div class="loading-photo">
-                        <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                    <div class="loading-photo" style="width: 40px; height: 40px;">
+                        <svg class="circular" viewBox="25 25 50 50">
+                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                        </svg>
                     </div>
                     <div class="result-loaded">
                         <div class="nbdesigner-gallery">
@@ -336,8 +338,10 @@
                     </div>
                     <div class="pointer"></div>
                 </div>
-                <div class="loading-photo">
-                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                <div class="loading-photo" style="width: 40px; height: 40px;">
+                    <svg class="circular" viewBox="25 25 50 50">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                    </svg>
                 </div>
                 <div class="result-loaded">
                     <div class="nbdesigner-gallery">
@@ -426,8 +430,10 @@
                     </div>
                     <div class="pointer"></div>
                 </div>
-                <div class="loading-photo">
-                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                <div class="loading-photo" style="width: 40px; height: 40px;">
+                    <svg class="circular" viewBox="25 25 50 50">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                    </svg>
                 </div>
                 <div class="result-loaded">
                     <div class="content-items">
@@ -532,8 +538,10 @@
                     </div>
                     <div class="pointer"></div>
                 </div>
-                <div class="loading-photo">
-                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/loading-photo.gif';?>" alt="Loading Photo">
+                <div class="loading-photo" style="width: 40px; height: 40px;">
+                    <svg class="circular" viewBox="25 25 50 50">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                    </svg>
                 </div>
                 <div class="result-loaded">
                     <div class="content-items">

@@ -1,23 +1,3 @@
-//.nbd-load-page {
-//  position: fixed;
-//  width: 100%;
-//  height: 100%;
-//  background: #fff;
-//  top: 0;
-//  z-index: 999999;
-//  display: flex;
-//  align-items: center;
-//  justify-content: center;
-//  img{
-//    margin: auto;
-//    position: absolute;
-//    top: 50%;
-//    left: 50%;
-//    transform: translate(-50%, -50%);
-//    width: 200px;
-//  }
-//}
-
 .nbd-load-page{
   position:absolute;
   top:0;
@@ -37,31 +17,32 @@
       display:block;
       padding-top:100%
     }
-    .circular{
-      -webkit-animation:rotate 2s linear infinite;
-      -moz-animation:rotate 2s linear infinite;
-      -ms-animation:rotate 2s linear infinite;
-      animation:rotate 2s linear infinite;
-      height:100%;
-      -webkit-transform-origin:center center;
-      transform-origin:center center;
-      width:100%;
-      position:absolute;
-      top:0;
-      bottom:0;
-      left:0;
-      right:0;
-      margin:auto
-    }
-    .path{
-      stroke-dasharray:1,200;
-      stroke-dashoffset:0;
-      -webkit-animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
-      -moz-animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
-      -ms-animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
-      animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
-      stroke-linecap:round
-    }
+  }
+}
+
+.circular{
+  -webkit-animation:rotate 2s linear infinite;
+  -moz-animation:rotate 2s linear infinite;
+  -ms-animation:rotate 2s linear infinite;
+  animation:rotate 2s linear infinite;
+  height:100%;
+  -webkit-transform-origin:center center;
+  transform-origin:center center;
+  width:100%;
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:auto;
+  .path{
+    stroke-dasharray:1,200;
+    stroke-dashoffset:0;
+    -webkit-animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
+    -moz-animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
+    -ms-animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
+    animation:dash 1.5s ease-in-out infinite,color 6s ease-in-out infinite;
+    stroke-linecap:round
   }
 }
 

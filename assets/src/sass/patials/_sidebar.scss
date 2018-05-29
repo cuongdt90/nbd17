@@ -395,13 +395,16 @@
               border-radius: 2px;
               cursor: pointer;
               transition: box-shadow .3s;
-              background: #fff;
               border: none;
-              padding-top: 10px;
               &:hover {
-                box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.1);
+                .item-svg{
+                  box-shadow: 1px 0px 10px rgba(0, 0, 0, 0.1);
+                }
               }
               .item-svg{
+                background: #fff;
+                padding: 20px;
+                border-radius: 2px;
                 svg{
                   width: 40px;
                 }
@@ -455,7 +458,7 @@
               border: 0;
               cursor: pointer;
               .item-icon {
-                padding: 15px 20px 5px;
+                padding: 20px;
                 border-radius: 2px;
                 background: #fff;
                 border: none;
@@ -946,7 +949,7 @@
             display: flex;
             justify-content: space-between;
             padding: 5px;
-            background-color: #fff;
+            background-color: transparent;
             align-items: center;
 
             .product-name,.item-name{
@@ -966,8 +969,8 @@
         bottom: -5px;
         height: 10px;
         margin: 14px 0 0 -8px;
-        border-top: 1px solid $main-color;
-        border-right: 1px solid $main-color;
+        border-top: 1px solid #ebebeb;
+        border-right: 1px solid #ebebeb;
         transform: rotate(-45deg);
         transition: border-color .3s linear;
         background-color: $tab-active;
@@ -980,7 +983,7 @@
       display: none;
       position: relative;
       &.loaded {
-        border-top: 1px solid $main-color;
+        border-top: 1px solid #ebebeb;
         .content-items {
           transform: translateY(0%);
           opacity: 1;

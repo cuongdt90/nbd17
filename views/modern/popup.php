@@ -141,3 +141,23 @@
         <div class="footer"></div>
     </div>
 </div>
+
+<div class="nbd-popup popup-select" data-animate="scale">
+<!--    <div class="overlay-popup"></div>-->
+    <div class="main-popup">
+        <i class="icon-nbd icon-nbd-clear close-popup"></i>
+        <div class="head">
+            Delete All Layers
+        </div>
+        <div class="body">
+            <div class="main-body">
+                <span class="title">Are you sure you want to delete all layers?</span>
+                <div class="main-select">
+                    <button class="nbd-button select-no"><i class="icon-nbd icon-nbd-clear"></i> No</button>
+                    <button class="nbd-button select-yes"><i class="icon-nbd icon-nbd-fomat-done"></i> Yes</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
