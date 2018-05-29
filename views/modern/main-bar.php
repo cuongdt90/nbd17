@@ -87,19 +87,13 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 
     </ul>
     <ul class="nbd-main-menu menu-center">
-
-        <li class="menu-item">
-            <i class="icon-nbd-baseline-undo" style="font-size: 24px"></i>
-            <span style="font-size: 12px;"><?php _e('undo','web-to-print-online-designer'); ?></span>
+        <li class="menu-item undo-redo" ng-click="undo()" ng-class="stages[currentStage].isUndoable ? 'in' : 'nbd-disabled'">
+            <i class="icon-nbd-baseline-undo" style="font-size: 24px"></i>{{}}
+            <span style="font-size: 12px;"><?php _e('Undo','web-to-print-online-designer'); ?></span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item undo-redo" ng-click="redo()" ng-class="stages[currentStage].isRedoable ? 'in' : 'nbd-disabled'">
             <i class="icon-nbd-baseline-redo" style="font-size: 24px"></i>
             <span style="font-size: 12px;"><?php _e('Redo','web-to-print-online-designer'); ?></span>
-        </li>        
-
-        <li class="menu-item in" ng-click='debug()' style="display: none;" >
-            <i class="icon-nbd icon-nbd-format-bold"></i>
-            <span><?php _e('Debug','web-to-print-online-designer'); ?></span>
         </li>
     </ul>
     <ul class="nbd-main-menu menu-right">

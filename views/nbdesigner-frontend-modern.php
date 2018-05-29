@@ -185,7 +185,7 @@
     </head>
 
     <body ng-app="nbd-app" class="nbd-mode-modern nbd-mode-<?php echo $ui_mode; ?> <?php echo (is_rtl()) ? 'nbd-modern-rtl' : '';?>">
-        <div style="width: 100%; height: 100%;" ng-controller="designCtrl" ng-cloak>
+        <div style="width: 100%; height: 100%;" ng-controller="designCtrl" keypress keyup  ng-cloak>
             <div id="design-container">
                 <div class="container-fluid" id="designer-controller">
                     <div class="nbd-navigations">

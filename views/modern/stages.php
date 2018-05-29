@@ -155,6 +155,12 @@
         pointer-events: none;
         opacity: 0.3;
     }
+    .nbd-disabled {
+        pointer-events: none;
+    }
+/*    .nbd-main-bar ul.menu-center li.menu-item.undo-redo.in {
+        opacity: 1;
+    }*/
 </style>
 <div class="nbd-stages">
     <div class="stages-inner">
@@ -218,7 +224,7 @@
                         <li><span>{{$index + 1}}</span></li>
                         <li ng-class="$index == (stages.length - 1) ? 'disabled' : ''" ng-click="switchStage($index, 'next')"><i class="icon-nbd icon-nbd-arrow-upward rotate-180" title="<?php _e('Next Page','web-to-print-online-designer'); ?>"></i></li>
                         <li><i class="icon-nbd icon-nbd-content-copy" title="<?php _e('Copy Design','web-to-print-online-designer'); ?>"></i></li>
-                        <li><i class="icon-nbd icon-nbd-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
+                        <li ng-click="clearStage()"><i class="icon-nbd icon-nbd-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
                     </ul>
                 </div>
             </div>

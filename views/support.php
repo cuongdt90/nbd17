@@ -233,7 +233,7 @@ $faqs = $nbd_news->sections->faq;
     </div>
     <div class="nbd-project">
         <p>
-            <?php printf( esc_html__( 'An %s project', 'web-to-print-online-designer' ), '<a href="http://netbaseteam.com/" target="_blank"><img src="' . NBDESIGNER_PLUGIN_URL . '/assets/images/netbaseteam.png" alt="Netbase Team" /></a>' ); ?>
+            <?php printf( esc_html__( 'A %s project', 'web-to-print-online-designer' ), '<a href="http://netbaseteam.com/" target="_blank"><img src="' . NBDESIGNER_PLUGIN_URL . '/assets/images/netbaseteam.png" alt="Netbase Team" /></a>' ); ?>
         </p>
     </div>
 </div>
