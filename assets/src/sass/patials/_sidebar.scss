@@ -380,6 +380,7 @@
     .nbd-items-dropdown{
       span{
         font-size: 12px;
+        color: $main-color;
       }
       .info-support{
         span{
@@ -852,6 +853,9 @@
               width: 50%;
             }
           }
+          .item-info {
+            background-color: #fff;
+          }
         }
       }
     }
@@ -956,6 +960,7 @@
               cursor: pointer;
               font-size: 12px;
               word-break: break-all;
+              color: $main-color;
             }
 
           }
