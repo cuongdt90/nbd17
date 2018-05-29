@@ -1,1 +1,20 @@
-@import "patials/global";
+@import "patials/reset";
+@import "patials/color-variables";
+@import "patials/icons";
+@import "library/perfect-scrollbar";
+
+.nbd-vista {
+  min-height: 500px;
+  // component
+  @import "component/button";
+
+  // patials
+  @import "patials/global";
+  @import "patials/toolbar";
+  @import "patials/scrollbar";
+  .v-workspace {
+    display: flex;
+    @import "patials/sidebar";
+    @import "patials/layout";
+  }
+}

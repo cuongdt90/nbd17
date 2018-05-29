@@ -1,0 +1,66 @@
+.v-toolbar {
+  margin-bottom: 30px;
+  .main-toolbar {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ebebeb;
+    border-radius: 2px;
+  }
+}
+.v-main-menu {
+  display: flex;
+  .v-menu-item {
+    padding: 5px 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:last-child {
+      &:after {
+        display: none;
+      }
+    }
+    &:after {
+      position: absolute;
+      content: "";
+      top: 6px;
+      right: 0;
+      height: calc(100% - 12px);
+      width: 2px;
+      background: #ebebeb;
+    }
+    &:before {
+      position: absolute;
+      content: "";
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      transition: all .3s;
+      background: $main-color;
+    }
+    &:hover{
+      &:before{
+        background: $main-hover-color;
+      }
+    }
+    &:hover,&.active {
+      &:before {
+        width: 100%;
+      }
+    }
+    i {
+      margin-right: 5px;
+      color: $main-color;
+    }
+  }
+}
+.v-tab-contents {
+  .v-tab-content {
+    display: none;
+    &.active{
+      display: block;
+    }
+  }
+}

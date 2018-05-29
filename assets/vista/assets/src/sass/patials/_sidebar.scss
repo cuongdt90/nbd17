@@ -1,0 +1,29 @@
+.v-sidebar {
+  height: 400px;
+  width: 260px;
+  .v-title {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .v-action {
+    margin-bottom: 20px;
+  }
+
+  .v-content{
+    .text-editor {
+      .text-field {
+        display: block;
+        border: 1px solid #ebebeb;
+        padding: 5px 10px;
+        border-radius: 2px;
+        outline: none;
+        margin-bottom: 10px;
+        &:focus{
+          border-color: $main-color;
+        }
+      }
+    }
+  }
+}
