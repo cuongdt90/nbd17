@@ -87,11 +87,11 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 
     </ul>
     <ul class="nbd-main-menu menu-center">
-        <li class="menu-item undo-redo" ng-click="undo()" ng-class="stages[currentStage].isUndoable ? 'in' : 'nbd-disabled'">
-            <i class="icon-nbd-baseline-undo" style="font-size: 24px"></i>{{}}
+        <li class="menu-item undo-redo" ng-click="undo()" ng-class="stages[currentStage].states.isUndoable ? 'in' : 'nbd-disabled'">
+            <i class="icon-nbd-baseline-undo" style="font-size: 24px"></i>
             <span style="font-size: 12px;"><?php _e('Undo','web-to-print-online-designer'); ?></span>
         </li>
-        <li class="menu-item undo-redo" ng-click="redo()" ng-class="stages[currentStage].isRedoable ? 'in' : 'nbd-disabled'">
+        <li class="menu-item undo-redo" ng-click="redo()" ng-class="stages[currentStage].states.isRedoable ? 'in' : 'nbd-disabled'">
             <i class="icon-nbd-baseline-redo" style="font-size: 24px"></i>
             <span style="font-size: 12px;"><?php _e('Redo','web-to-print-online-designer'); ?></span>
         </li>
@@ -124,16 +124,6 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                 </div>
             </div>
         </li>
-<!--        <li class="menu-item item-more">-->
-<!--            <i class="icon-nbd icon-nbd-baseline-more-vert"></i>-->
-<!--            <div class="sub-menu" data-pos="right">-->
-<!--                <ul>-->
-<!--                    <li class="sub-menu-item">aaaaa</li>-->
-<!--                    <li class="sub-menu-item">bbbbb</li>-->
-<!--                    <li class="sub-menu-item">ccccc</li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </li>-->
     </ul>
 
 </div>

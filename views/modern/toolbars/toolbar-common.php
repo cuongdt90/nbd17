@@ -5,18 +5,18 @@
             <div class="sub-menu" data-pos="center">
                 <div class="main-ranges" style="padding: 30px 15px 10px;">
                     <div class="range range-opacity">
-                        <label>Opacity</label>
+                        <label><?php _e('Opacity','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-change="changeOpacity()" ng-model="stages[currentStage].isUndoable.states.opacity">
                             <span class="range-track"></span>
                         </div>
-                        <span class="value-display">50</span>
+                        <span class="value-display">{{stages[currentStage].isUndoable.states.opacity}}</span>
                     </div>
                 </div>
             </div>
         </li>
         <li class="menu-item item-stack">
-            <i class="icon-nbd icon-nbd-layer-stack nbd-tooltip-hover" title="<?php _e('layer stack','web-to-print-online-designer'); ?>"></i>
+            <i class="icon-nbd icon-nbd-layer-stack nbd-tooltip-hover" title="<?php _e('Layer stack','web-to-print-online-designer'); ?>"></i>
             <div class="sub-menu" data-pos="right">
                 <ul>
                     <li class="sub-menu-item">

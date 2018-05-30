@@ -1582,8 +1582,8 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
         $used_font = json_decode( file_get_contents($used_font_path) );			
         $path_font = array();
         foreach( $used_font as $font ){
+            $font_name = $font->name;
             if( $font->type == 'google' ){
-                $font_name = $font->name;
                 $path_font = nbd_download_google_font($font_name);;
             }else{
                 $has_custom_font = true;

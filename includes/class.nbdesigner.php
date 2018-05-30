@@ -205,7 +205,7 @@ class Nbdesigner_Plugin {
         if( get_option('nbdesigner_attachment_admin_email', false) == 'yes' ){
             add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email'), 10, 3);
         }
-        add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email2'), 10, 3);
+        //add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email2'), 10, 3);
         /** bulk action **/
         add_action( 'woocommerce_before_add_to_cart_button', array(&$this, 'bulk_variation_field'), 9999 );
         if ( isset( $_POST['nbd-variation-value'] ) && $_POST['nbd-variation-value'] ) {
@@ -2577,7 +2577,7 @@ class Nbdesigner_Plugin {
             /* Create new design */
             $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
             if( ($task == 'new' && $task2 == 'update' ) || $task == 'create' || !isset($nbd_item_session) ){
-                $nbd_item_key = substr(md5(uniqid()),0,10);
+                $nbd_item_key = substr(md5(uniqid()),0,5).rand(1,100).time();
             }else {
                 $nbd_item_key = $nbd_item_session;
             }
@@ -2924,7 +2924,12 @@ class Nbdesigner_Plugin {
             $nbd_session = WC()->session->get($item . '_nbd');
             if(isset($nbd_session)){
                 WC()->session->__unset($item . '_nbd'); 
-                $has_nbd = true;
+                $src = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session;
+                $dst = NBDESIGNER_CUSTOMER_DIR . '/' . $order_id.'_'.$nbd_session;
+                if( $nbd_session != '' && file_exists($src) ){
+                    Nbdesigner_IO::copy_dir($src, $dst);
+                    $has_nbd = true;                    
+                }
             }
             /* upload design */
             $nbu_session = WC()->session->get($item . '_nbu');
@@ -3158,7 +3163,7 @@ class Nbdesigner_Plugin {
         }
         /* custom design */
         $nbd_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
-        if(isset($nbd_session)){
+        if(isset($nbd_session) && $nbd_session != ''){
             WC()->session->set($cart_item_key. '_nbd', $nbd_session);
             WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
             
@@ -3167,7 +3172,7 @@ class Nbdesigner_Plugin {
         }
         /* up design */
         $nbu_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);
-        if(isset($nbu_session)){
+        if(isset($nbu_session) && $nbu_session != ''){
             WC()->session->set($cart_item_key. '_nbu', $nbu_session);
             WC()->session->__unset('nbu_item_key_'.$nbd_item_cart_key);
             
@@ -3654,7 +3659,7 @@ class Nbdesigner_Plugin {
                 $nbu_item_key = $_POST['nbu_item_key'];
             }else {   
                 $nbu_item_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);  
-                $nbu_item_key = isset($nbu_item_session) ? $nbu_item_session : substr(md5(uniqid()),0,10);
+                $nbu_item_key = isset($nbu_item_session) ? $nbu_item_session : substr(md5(uniqid()),0,5).rand(1,100).time();
             }             
             $path_dir = NBDESIGNER_UPLOAD_DIR . '/' .$nbu_item_key; 
             $new_name = sanitize_file_name($_FILES['file']["name"]);
@@ -4557,8 +4562,8 @@ class Nbdesigner_Plugin {
             /* From svg */
             $path_font = array();
             foreach( $used_font as $font ){
+                $font_name = $font->name;
                 if( $font->type == 'google' ){
-                    $font_name = $font->name;
                     $path_font = nbd_download_google_font($font_name);;
                 }else{
                     $has_custom_font = true;
