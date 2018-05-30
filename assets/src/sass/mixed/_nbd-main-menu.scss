@@ -15,7 +15,7 @@
       font-size: 14px;
       cursor: pointer;
       user-select: none;
-      color: #666;
+      color: $main-color;
       text-transform: capitalize;
     }
     &.menu-item{
@@ -53,7 +53,7 @@
     padding: 0;
     list-style: none;
     background: #fff;
-    color: #3f4652;
+    color: $main-color;
     border-radius: 2px;
     min-width: 250px;
     box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
