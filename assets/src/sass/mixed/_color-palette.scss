@@ -21,6 +21,9 @@
       content: "";
       position: absolute;
       top: -15px;
+      @media screen and (max-width: 767px){
+          display: none;
+      }
     }
     &:after{
       border: 7px solid transparent;
@@ -28,6 +31,9 @@
       content: "";
       position: absolute;
       top: -14px;
+      @media screen and (max-width: 767px){
+        display: none;
+      }
     }
     padding: 10px;
     position: relative;

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'online-design';
-  src:  url('fonts/online-design.eot?l5hnqk');
-  src:  url('fonts/online-design.eot?l5hnqk#iefix') format('embedded-opentype'),
-  url('fonts/online-design.ttf?l5hnqk') format('truetype'),
-  url('fonts/online-design.woff?l5hnqk') format('woff'),
-  url('fonts/online-design.svg?l5hnqk#online-design') format('svg');
+  src:  url('fonts/online-design.eot?7wpyc1');
+  src:  url('fonts/online-design.eot?7wpyc1#iefix') format('embedded-opentype'),
+  url('fonts/online-design.ttf?7wpyc1') format('truetype'),
+  url('fonts/online-design.woff?7wpyc1') format('woff'),
+  url('fonts/online-design.svg?7wpyc1#online-design') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-nbd-lock:before {
+  content: "\f023";
+}
+.icon-nbd-expand:before {
+  content: "\f065";
+}
+.icon-nbd-arrows-v:before {
+  content: "\f07d";
+}
+.icon-nbd-arrows-h:before {
+  content: "\f07e";
+}
 .icon-nbd-add-black:before {
   content: "\e908";
 }
