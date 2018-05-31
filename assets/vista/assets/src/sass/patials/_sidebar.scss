@@ -1,6 +1,9 @@
 .v-sidebar {
-  height: 400px;
+  height: 500px;
   width: 260px;
+  .main-sidebar, .v-tab-contents, .v-tab-content {
+    height: 100%;
+  }
   .v-title {
     font-size: 21px;
     font-weight: bold;
@@ -10,8 +13,7 @@
   .v-action {
     margin-bottom: 20px;
   }
-
-  .v-content{
+  .v-content {
     .text-editor {
       .text-field {
         display: block;
@@ -20,8 +22,35 @@
         border-radius: 2px;
         outline: none;
         margin-bottom: 10px;
-        &:focus{
+        &:focus {
           border-color: $main-color;
+        }
+      }
+    }
+  }
+  #v-text-toolbar {
+    .v-action {
+      //padding-right: 7px;
+    }
+    .v-content {
+      height: calc(100% - 110px);
+    }
+  }
+  #v-design-toolbar{
+   .v-content {
+     height: calc(100% - 53px);
+   }
+    .items {
+      background-color: #ebebeb;
+      .item {
+        padding: 10px;
+        img {
+          margin: auto;
+          padding: 10px;
+          border: 1px solid transparent;
+          &:hover{
+            border-color: $main-color;
+          }
         }
       }
     }

@@ -4,7 +4,8 @@
 @import "library/perfect-scrollbar";
 
 .nbd-vista {
-  min-height: 500px;
+  height: 580px;
+  margin-bottom: 30px;
   // component
   @import "component/button";
 
@@ -13,6 +14,7 @@
   @import "patials/toolbar";
   @import "patials/scrollbar";
   .v-workspace {
+    height: 500px;
     display: flex;
     @import "patials/sidebar";
     @import "patials/layout";

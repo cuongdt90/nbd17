@@ -1,4 +1,5 @@
 .nbd-toolbar {
+  height: 50px;
   background: #fff;
   width: calc(100% - 420px);
   position: fixed;
@@ -8,7 +9,6 @@
   left: 420px;
   top: 54px;
   white-space: nowrap;
-  height: 50px;
   .main-toolbar {
     display: flex;
     justify-content: space-between;

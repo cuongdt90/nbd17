@@ -1,0 +1,17 @@
+.toolbox {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 250px;
+  border: 1px solid #ebebeb;
+  border-radius: 2px;
+  .header-box {
+    padding: 10px;
+  }
+  .main-box {
+    padding: 0 10px 10px;
+  }
+  .footer-box {
+
+  }
+}

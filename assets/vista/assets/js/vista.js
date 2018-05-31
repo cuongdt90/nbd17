@@ -17,6 +17,7 @@
     };
     $(document).ready(function () {
         $('.nbd-vista .v-tabs').nbTab();
-        var ps = new PerfectScrollbar('.v-scrollbar');
+        var ps = new PerfectScrollbar('#v-text-toolbar .v-scrollbar');
+        var ps1 = new PerfectScrollbar('#v-design-toolbar .v-scrollbar');
     });
 })(jQuery);
