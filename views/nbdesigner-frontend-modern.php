@@ -226,6 +226,7 @@
                                 </a>
                             </div>
                         </div>
+                        <?php include 'modern/toollock.php';?>
                     </div>
                 </div>	
             </div>
