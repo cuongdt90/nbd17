@@ -11,14 +11,16 @@ body, html {
   font-weight: 300;
   background: #fafafa;
   overflow: hidden;
-  color: #666;
+  //color: #666;
+  color: $main-color;
 }
 
 button,html,input,select,textarea, md-bottom-sheet .md-subheader, .md-chips  {
   font-family: 'Poppins', sans-serif;
 }
 p,  h3, h4, input, textarea, span {
-  color: #666;
+  //color: #666;
+  color: $main-color;
 }
 input, textarea, span {
   font-size: 14px;
