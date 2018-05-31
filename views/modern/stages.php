@@ -157,10 +157,53 @@
     }
     .nbd-disabled {
         pointer-events: none;
+        opacity: 0.3;
     }
-/*    .nbd-main-bar ul.menu-center li.menu-item.undo-redo.in {
+    .color-palette-add {
+        position: relative;
+    }
+    .color-palette-add:after {
+        content: '+';
+        position: absolute;
+        top: 0;
+        left:0;
+        width: 40px;
+        height: 40px;  
+        display: inline-block;
+        line-height: 40px;
+        content: "\e908";
+        text-align: center;
+        color: #888888;
+        font-family: online-design!important;
+        font-size: 20px;
+    }
+    .nbd-text-color-picker {
+        position: absolute; 
+        left: 40px; 
+        top: 50px;
+        -webkit-transform: scale(.8);
+        -ms-transform: scale(.8);
+        transform: scale(.8); 
+        visibility: hidden;
+        opacity: 0;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;        
+        transition: all .3s; 
+        -webkit-box-shadow: 1px 0 15px rgba(0,0,0,.2);    
+        box-shadow: 1px 0 15px rgba(0,0,0,.2);    
+        background-color: #fff;
+        overflow: hidden;
+    }
+    .nbd-text-color-picker.active {
         opacity: 1;
-    }*/
+        visibility: visible;
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);        
+    }
+    .nbd-sp.sp-container {
+        box-shadow: none;
+    }
 </style>
 <div class="nbd-stages">
     <div class="stages-inner">
@@ -224,7 +267,7 @@
                         <li><span>{{$index + 1}}</span></li>
                         <li ng-class="$index == (stages.length - 1) ? 'disabled' : ''" ng-click="switchStage($index, 'next')"><i class="icon-nbd icon-nbd-arrow-upward rotate-180" title="<?php _e('Next Page','web-to-print-online-designer'); ?>"></i></li>
                         <li><i class="icon-nbd icon-nbd-content-copy" title="<?php _e('Copy Design','web-to-print-online-designer'); ?>"></i></li>
-                        <li ng-click="clearStage()"><i class="icon-nbd icon-nbd-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
+                        <li><i class="icon-nbd icon-nbd-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
                     </ul>
                 </div>
             </div>

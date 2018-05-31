@@ -14,7 +14,7 @@
             <li class="context-item" ng-show="stages[currentStage].states.isGroup"><i class="icon-nbd icon-nbd-dis-vertical"></i> <?php _e('Distribute Vertical','web-to-print-online-designer'); ?></li>
             <li class="separator"></li>
             <li class="context-item" ng-click="copyLayers()"><i class="icon-nbd icon-nbd-content-copy"></i> <?php _e('Duplicate','web-to-print-online-designer'); ?></li>
-            <li class="context-item"  ng-show="stages[currentStage].states.isGroup"><i class="icon-nbd icon-nbd-ungroup"></i> <?php _e('Ungroup','web-to-print-online-designer'); ?></li>
+            <li class="context-item"  ng-click="deactiveAllLayer()" ng-show="stages[currentStage].states.isGroup"><i class="icon-nbd icon-nbd-ungroup"></i> <?php _e('Ungroup','web-to-print-online-designer'); ?></li>
             <li class="context-item" ng-click="deleteLayers()"><i class="icon-nbd icon-nbd-delete"></i> <?php _e('Delete','web-to-print-online-designer'); ?></li>
         </ul>
     </div>

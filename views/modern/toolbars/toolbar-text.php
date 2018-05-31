@@ -114,22 +114,20 @@
     </ul>
     <ul class="nbd-main-menu menu-center">
         <li class="menu-item item-color-fill">
-            <span ng-style="{'background': stages[currentStage].states.text.fill}" style="width: 21px; height: 21px; border-radius: 4px;display: inline-block;"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
+            <span ng-style="{'background': stages[currentStage].states.text.fill}" style="width: 21px; height: 21px; border-radius: 4px;display: inline-block;border: 1px solid rgb(221, 221, 221);"  class="nbd-tooltip-hover color-fill" title="<?php _e('Color','web-to-print-online-designer'); ?>" ></span>
             <div class="sub-menu" data-pos="center">
                 <div class="nbd-color-palette" style="position: relative">
                     <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
                         <h3 class="color-palette-label"><?php _e('Set color','web-to-print-online-designer'); ?></h3>
                         <ul class="main-color-palette">
-                            <li class="color-palette-add">
-
-                            </li>
-                            <li class="color-palette-item" data-color="#253702" title="#253702" style="color: red;"></li>
+                            <li class="color-palette-add" ng-click="showTextColorPalette()" ng-style="{'background-color': currentColor}"></li>
+                            <li ng-repeat="color in listAddedColor track by $index" ng-click="changeTextFill(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background-color': color}"></li>
                         </ul>
                     </div>
                     <div class="pinned-palette default-palette">
                         <h3 class="color-palette-label"><?php _e('Default color','web-to-print-online-designer'); ?></h3>
                         <ul class="main-color-palette">
-                            <li ng-repeat="color in __colorPalette track by $index" class="color-palette-item" data-color="{{color}}" title="{{__colorPalette}}" ng-style="{'background': color}">{{__colorPalette}}</li>
+                            <li ng-repeat="color in __colorPalette track by $index" ng-click="changeTextFill(color)" class="color-palette-item" data-color="{{color}}" title="{{__colorPalette}}" ng-style="{'background': color}">{{__colorPalette}}</li>
                         </ul>
                     </div>
                     <div class="pinned-palette default-palette">
@@ -141,20 +139,21 @@
                             <li class="color-palette-item" data-color="#ffffff" title="#ffffff" style="background-color: #ffffff;"></li>
                         </ul>
                     </div>
-                    <div class="nbd-color-picker" style="position: absolute; left: -0; transform: translateX(-100%); top: 0; ">
+                    <div class="nbd-text-color-picker" id="nbd-text-color-picker" ng-class="showTextColorPicker ? 'active' : ''">
                         <spectrum-colorpicker
-                                ng-model="stages[currentStage].states.text.fill"
-                                ng-change="changeBackgroundColor()"
-                                options="{
-                                    color: '#169ddf',
-                                    preferredFormat: 'hex',
-                                    flat: true,
-                                    showInput: true,
-                                    containerClassName: 'nbd-sp',
-                                    chooseText: '<?php _e('OK','web-to-print-online-designer'); ?>',
-                                    cancelText: '<?php _e('Cancel','web-to-print-online-designer'); ?>'
+                            ng-model="currentColor"
+                            options="{
+                                preferredFormat: 'hex',
+                                color: '#fff',
+                                flat: true,
+                                showButtons: false,
+                                showInput: true,
+                                containerClassName: 'nbd-sp'
                         }">
-                        </spectrum-colorpicker>                        
+                        </spectrum-colorpicker> 
+                        <div>
+                            <button class="nbd-button" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                        </div>
                     </div>
                 </div>
             </div>

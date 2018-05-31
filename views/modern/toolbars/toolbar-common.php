@@ -7,15 +7,15 @@
                     <div class="range range-opacity">
                         <label><?php _e('Opacity','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-change="changeOpacity()" ng-model="stages[currentStage].isUndoable.states.opacity">
+                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-mouseup="changeOpacity()" ng-model="stages[currentStage].states.opacity">
                             <span class="range-track"></span>
                         </div>
-                        <span class="value-display">{{stages[currentStage].isUndoable.states.opacity}}</span>
+                        <span class="value-display">{{stages[currentStage].states.opacity}}</span>
                     </div>
                 </div>
             </div>
         </li>
-        <li class="menu-item item-stack">
+        <li class="menu-item item-stack" ng-class="stages[currentStage].states.isLayer ? '' : 'nbd-disabled'">
             <i class="icon-nbd icon-nbd-layer-stack nbd-tooltip-hover" title="<?php _e('Layer stack','web-to-print-online-designer'); ?>"></i>
             <div class="sub-menu" data-pos="right">
                 <ul>
