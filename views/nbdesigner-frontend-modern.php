@@ -125,6 +125,7 @@
                 art_url    :   "<?php echo NBDESIGNER_ART_URL; ?>",
                 is_designer :  <?php if(current_user_can('edit_nbd_template')) echo 1; else echo 0; ?>,
                 assets_url  :   "<?php echo NBDESIGNER_PLUGIN_URL . 'assets/'; ?>",
+                plg_url  :   "<?php echo NBDESIGNER_PLUGIN_URL; ?>",
                 ajax_url    : "<?php echo admin_url('admin-ajax.php'); ?>",
                 nonce   :   "<?php echo wp_create_nonce('save-design'); ?>",
                 nonce_get   :   "<?php echo wp_create_nonce('nbdesigner-get-data'); ?>",

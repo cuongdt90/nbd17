@@ -212,50 +212,7 @@
             </div>
         </div>
     </div>
-    <div class="tab" ng-if="settings['nbdesigner_enable_text'] == 'yes'" id="tab-typography">
-        <div class="tab-main tab-scroll">
-            <div class="typography-head">
-                <span ng-click='debug()' class="text-guide" style="color: #4F5467; margin-bottom: 20px;display: block;"><?php _e('Click to add text','nbd-online-design'); ?></span>
-                <div class="head-main">
-                    <span class="text-heading"  ng-click='addText()' style="color: #4F5467; display: block; font-size: 40px; font-weight: 700"><?php _e('Add heading','web-to-print-online-designer'); ?></span>
-                    <span class="text-sub-heading" ng-click="addImage()" style="display: block; font-size: 24px; font-weight: 500; color: #4F5467"><?php _e('Add subheading','nbd-online-design');?></span>
-                    <span ng-click="debug2()" class="text-body" style="display: block;color: #4F5467"><?php _e('Add subheading','nbd-online-design'); ?></span>
-                </div>
-            </div>
-            <div class="typography-body">
-                <ul class="typography-items">
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/22.png"
-                             alt="Typography">
-                    </li>
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/23.png"
-                             alt="Typography">
-                    </li>
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/24.png"
-                             alt="Typography">
-                    </li>
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/25.png"
-                             alt="Typography">
-                    </li>
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/26.png"
-                             alt="Typography">
-                    </li>
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/27.png"
-                             alt="Typography">
-                    </li>
-                    <li class="typography-item">
-                        <img src="http://dev.cmsmart.net:3000/wp/wp-content/plugins/web-to-print-online-designer/data/typography/img/28.png"
-                             alt="Typography">
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <?php include 'tab-typography.php'; ?>    
     <div class="tab" ng-if="settings['nbdesigner_enable_clipart'] == 'yes'" id="tab-svg">
         <div class="nbd-search">
             <input type="search" name="search" placeholder="search"/>
@@ -267,15 +224,6 @@
                 <i class="icon-nbd icon-nbd-chevron-right rotate90"></i>
                 <div class="nbd-sub-dropdown" data-pos="center">
                     <ul class="tab-scroll">
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
-                        <li><span>Alphabet</span><span>15</span></li>
                         <li><span>Alphabet</span><span>15</span></li>
                     </ul>
                 </div>
@@ -365,70 +313,6 @@
                 </div>
                 <div class="result-loaded" style="display: block;">
                     <div class="nbdesigner-gallery">
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
-                        <div class="nbdesigner-item in-view">
-                            <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
-                        </div>
                         <div class="nbdesigner-item in-view">
                             <img src="https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg">
                         </div>

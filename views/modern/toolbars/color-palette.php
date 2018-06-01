@@ -10,7 +10,7 @@
         <div class="pinned-palette default-palette">
             <h3 class="color-palette-label"><?php _e('Default color','web-to-print-online-designer'); ?></h3>
             <ul class="main-color-palette">
-                <li ng-repeat="color in __colorPalette track by $index" ng-click="changeTextFill(color)" class="color-palette-item" data-color="{{color}}" title="{{__colorPalette}}" ng-style="{'background': color}">{{__colorPalette}}</li>
+                <li ng-repeat="color in __colorPalette track by $index" ng-click="changeTextFill(color)" class="color-palette-item" data-color="{{color}}" title="{{__colorPalette}}" ng-style="{'background': color}"></li>
             </ul>
         </div>
         <div class="pinned-palette default-palette">
@@ -26,13 +26,13 @@
             <spectrum-colorpicker
                 ng-model="currentColor"
                 options="{
-                                preferredFormat: 'hex',
-                                color: '#fff',
-                                flat: true,
-                                showButtons: false,
-                                showInput: true,
-                                containerClassName: 'nbd-sp'
-                        }">
+                    preferredFormat: 'hex',
+                    color: '#fff',
+                    flat: true,
+                    showButtons: false,
+                    showInput: true,
+                    containerClassName: 'nbd-sp'
+            }">
             </spectrum-colorpicker>
             <div>
                 <button class="nbd-button" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>

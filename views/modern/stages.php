@@ -201,8 +201,55 @@
         -ms-transform: scale(1);
         transform: scale(1);        
     }
+    .nbd-color-palette {
+        opacity: 0;
+        display: block !important;
+        visibility: hidden;
+        -webkit-transform: scale(0.8);
+        -ms-transform: scale(0.8);
+        transform: scale(0.8);  
+        -webkit-transition: all .4s;
+        -moz-transition: all .4s;        
+        transition: all .4s;         
+    }
+    .nbd-color-palette.show {
+        opacity: 1;
+        visibility: visible;
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);           
+    }    
     .nbd-sp.sp-container {
         box-shadow: none;
+    }
+    .nbd-text-color-picker .nbd-button {
+        margin-top: 0;
+        margin-left: 11px;
+        margin-bottom: 10px;        
+    }
+    .nbd-workspace .main {
+        overflow: hidden;
+    }
+    .tab-main .loading-photo {
+        position: absolute;
+        z-index: 99;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }    
+    .nbd-sidebar #tab-typography .tab-main .typography-body .typography-item {
+        opacity: 0;
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        -ms-transition: all 0.4s;
+        transition: all 0.4s;
+    }
+    .nbd-sidebar #tab-typography .tab-main .typography-body .typography-item.in-view {
+        opacity: 1;
+    }
+    .nbd-sidebar #tab-typography .tab-main .typography-body .typography-item img {
+        background: none;
     }
 </style>
 <div class="nbd-stages">
