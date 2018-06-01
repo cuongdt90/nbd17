@@ -10,7 +10,7 @@
         </div>
         <div class="typography-body">
             <ul class="typography-items">
-                <li class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.limit" repeat-end="onEndRepeat('typography')">
+                <li class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.currentPage * resource.typography.perPage" repeat-end="onEndRepeat('typography')">
                     <img ng-src="{{generateTypoLink(typo)}}"alt="Typography" />
                 </li>
             </ul>
