@@ -6,11 +6,19 @@
                     + right-to-left
                     + scale
                     + fixed-top
+                    + none
 ------------------------------------------------------------------------------------->
 
-<div class="nbd-popup popup-share" data-animate="bottom-to-top"> 
+<div class="nbd-popup popup-share" data-animate="none">
     <div class="overlay-popup"></div>
     <div class="main-popup">
+        <div class="overlay-main active">
+            <div class="loaded">
+                <svg class="circular" viewBox="25 25 50 50" style="width: 40px;height: 40px;">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                </svg>
+            </div>
+        </div>
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
         <div class="head">
             <h2><?php _e('Share this design','nbd-online-design'); ?></h2>
@@ -34,7 +42,6 @@
         <div class="footer"></div>
     </div>
 </div>
-
 <div class="nbd-popup popup-webcam" data-animate="top-to-bottom">
     <div class="overlay-popup"></div>
     <div class="main-popup">
@@ -51,7 +58,6 @@
         </div>
     </div>
 </div>
-
 <div class="nbd-popup popup-keyboard" data-animate="bottom-to-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
@@ -115,7 +121,6 @@
         <div class="footer"></div>
     </div>
 </div>
-
 <div class="nbd-popup popup-fileType" data-animate="bottom-to-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
@@ -127,7 +132,6 @@
         <div class="footer"></div>
     </div>
 </div>
-
 <div class="nbd-popup popup-term" data-animate="fixed-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
@@ -141,7 +145,6 @@
         <div class="footer"></div>
     </div>
 </div>
-
 <div class="nbd-popup popup-select clear-stage-alert" data-animate="scale">
 <!--    <div class="overlay-popup"></div>-->
     <div class="main-popup">
