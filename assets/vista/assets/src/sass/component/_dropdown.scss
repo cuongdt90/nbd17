@@ -1,0 +1,15 @@
+.v-dropdown {
+  position: relative;
+  .v-dropdown-menu {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.active{
+    .v-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

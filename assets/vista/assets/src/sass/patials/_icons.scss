@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'nbd-vista';
-  src:  url('fonts/nbd-vista.eot?h98iiz');
-  src:  url('fonts/nbd-vista.eot?h98iiz#iefix') format('embedded-opentype'),
-  url('fonts/nbd-vista.ttf?h98iiz') format('truetype'),
-  url('fonts/nbd-vista.woff?h98iiz') format('woff'),
-  url('fonts/nbd-vista.svg?h98iiz#nbd-vista') format('svg');
+  src:  url('fonts/nbd-vista.eot?nu00mb');
+  src:  url('fonts/nbd-vista.eot?nu00mb#iefix') format('embedded-opentype'),
+  url('fonts/nbd-vista.ttf?nu00mb') format('truetype'),
+  url('fonts/nbd-vista.woff?nu00mb') format('woff'),
+  url('fonts/nbd-vista.svg?nu00mb#nbd-vista') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,27 +24,46 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.nbd-icon-vista-group-work:before {
+.nbd-icon-vista-arrow-drop-down:before {
   content: "\e900";
 }
-.nbd-icon-vista-image:before {
+.nbd-icon-vista-arrows:before {
   content: "\e901";
+  color: #3f4652;
 }
-.nbd-icon-vista-more:before {
+.nbd-icon-vista-bold:before {
   content: "\e902";
 }
-.nbd-icon-vista-proof:before {
+.nbd-icon-vista-expand-more:before {
   content: "\e903";
 }
-.nbd-icon-vista-redo:before {
+.nbd-icon-vista-group-work:before {
   content: "\e904";
 }
-.nbd-icon-vista-save:before {
+.nbd-icon-vista-image:before {
   content: "\e905";
 }
-.nbd-icon-vista-text:before {
+.nbd-icon-vista-italic:before {
   content: "\e906";
 }
-.nbd-icon-vista-undo:before {
+.nbd-icon-vista-more:before {
   content: "\e907";
+}
+.nbd-icon-vista-navigate-next:before {
+  content: "\e908";
+}
+.nbd-icon-vista-proof:before {
+  content: "\e909";
+}
+.nbd-icon-vista-redo:before {
+  content: "\e90a";
+}
+.nbd-icon-vista-save:before {
+  content: "\e90b";
+}
+.nbd-icon-vista-text:before {
+  content: "\e90c";
+}
+.nbd-icon-vista-undo:before {
+  content: "\e90d";
 }

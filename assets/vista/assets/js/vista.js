@@ -1,6 +1,5 @@
 (function ($) {
     $.fn.nbTab = function (options) {
-        var sefl = this;
         var defaults = {};
         var opts = $.extend({}, $.fn.nbTab.default, options);
         return this.each(function () {
@@ -15,8 +14,49 @@
             });
         });
     };
+    $.fn.nbDropdown = function (options) {
+        var defaults = {};
+        var opts = $.extend({}, $.fn.nbTab.default, options);
+        return this.each(function () {
+            var sefl = this;
+            var $btn = $(this).find('.v-btn-dropdown');
+            var $menu = $(this).find('.v-dropdown-menu');
+
+            $(this).nbClickOutSite({
+                'targetE' : $(this),
+                'removeClass': 'active'
+            });
+
+            $btn.on('click', function () {
+                if ($(sefl).hasClass('active')) {
+                    $(sefl).removeClass('active');
+                }else {
+                    $(sefl).addClass('active');
+                }
+            });
+        });
+    };
+
+    $.fn.nbClickOutSite = function (options) {
+        var defaults = {
+            'targetE' : null,
+            'removeClass' : ''
+        };
+        var opts = $.extend({}, $.fn.nbClickOutSite.defaults, options);
+        return this.each(function () {
+            var sefl = this;
+            var $win = $(document);
+            $win.on("click", function(event){
+                if ($(sefl).has(event.target).length == 0 && !$(sefl).is(event.target)){
+                    opts.targetE.removeClass(opts.removeClass);
+                }
+            });
+        });
+    };
+
     $(document).ready(function () {
         $('.nbd-vista .v-tabs').nbTab();
+        $('.nbd-vista .v-dropdown').nbDropdown();
         var ps = new PerfectScrollbar('#v-text-toolbar .v-scrollbar');
         var ps1 = new PerfectScrollbar('#v-design-toolbar .v-scrollbar');
     });
