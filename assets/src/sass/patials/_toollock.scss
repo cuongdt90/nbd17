@@ -7,7 +7,6 @@
   }
   .main-tool-lock{
     padding: 10px;
-    background: rgba(2555,255,255,.5);
   }
   ul{
     list-style: none;
@@ -28,9 +27,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       cursor: pointer;
       border-radius: 2px;
+      box-shadow: 1px 0 10px rgba(0,0,0,.08);
       &.active {
         i{
           color: #ef5350;
