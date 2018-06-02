@@ -3,7 +3,7 @@
         <?php include 'toolbars/toolbar-text.php'; ?>
         <?php include 'toolbars/toolbar-image.php'; ?>
         <?php include 'toolbars/toolbar-group.php'; ?>
-        <?php include 'toolbars/toolbar-color.php';?>
+        <?php //include 'toolbars/toolbar-color.php';?>
         <?php include 'toolbars/toolbar-common.php'; ?>
         <?php include 'toolbars/color-palette.php';?>
     </div>

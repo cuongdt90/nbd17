@@ -1,3 +1,4 @@
+<div style="width: 1px; height: 30px;"></div>
 <div class="toolbar-common">
     <ul class="nbd-main-menu">
         <li class="menu-item item-opacity">
@@ -7,7 +8,7 @@
                     <div class="range range-opacity">
                         <label><?php _e('Opacity','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-mouseup="changeOpacity()" ng-model="stages[currentStage].states.opacity">
+                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-mouseup="setTextAttribute('opacity', stages[currentStage].states.opacity / 100)" ng-model="stages[currentStage].states.opacity">
                             <span class="range-track"></span>
                         </div>
                         <span class="value-display">{{stages[currentStage].states.opacity}}</span>

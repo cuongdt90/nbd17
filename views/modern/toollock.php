@@ -1,4 +1,4 @@
-<div class="nbd-tool-lock">
+<div class="nbd-tool-lock" ng-show="stages[currentStage].states.isLayer">
     <div class="main-tool-lock">
         <ul class="items-lock">
             <li class="item-lock nbd-tooltip-hover-left" title="Lock all adjustment"><i class="icon-nbd icon-nbd-lock"></i></li>

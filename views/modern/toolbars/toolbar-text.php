@@ -67,44 +67,14 @@
         </li>
         <li class="menu-item item-font-size">
             <button class="toolbar-bottom">
-                <input class="toolbar-input" type="text" name="font-size" value="12"/>
+                <input class="toolbar-input" type="text" ng-keyup="$event.keyCode == 13 && setTextAttribute('fontSize', stages[currentStage].states.text.fontSize)" name="font-size" ng-model="stages[currentStage].states.text.fontSize"/>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
                 <div class="sub-menu" data-pos="left">
                     <div id="toolbar-font-size-dropdown">
                         <ul>
-                            <li class="sub-menu-item chosen">
-                                <span>12</span>
-                                <i class="icon-nbd icon-nbd-fomat-done"></i>
-                            </li>
-
-                            <li class="sub-menu-item">
-                                <span>14</span>
-                            </li>
-
-                            <li class="sub-menu-item">
-                                <span>16</span>
-                            </li>
-
-                            <li class="sub-menu-item">
-                                <span>18</span>
-                            </li>
-                            <li class="sub-menu-item">
-                                <span>20</span>
-                            </li>
-                            <li class="sub-menu-item">
-                                <span>22</span>
-                            </li>
-                            <li class="sub-menu-item">
-                                <span>24</span>
-                            </li>
-                            <li class="sub-menu-item">
-                                <span>26</span>
-                            </li>
-                            <li class="sub-menu-item">
-                                <span>28</span>
-                            </li>
-                            <li class="sub-menu-item">
-                                <span>30</span>
+                            <li class="sub-menu-item" ng-click="setTextAttribute('fontSize', fontsize)" ng-class="stages[currentStage].states.text.fontSize == fontsize ? 'chosen' : ''" ng-repeat="fontsize in ['6','8','10','12','14','16','18','21','24','28','32','36','42','48','56','64','72','80','88','96','104','120','144']">
+                                <span>{{fontsize}}</span>
+                                <i class="icon-nbd icon-nbd-fomat-done" ng-if="stages[currentStage].states.text.fontSize == fontsize"></i>
                             </li>
                         </ul>
                     </div>
@@ -122,38 +92,49 @@
             <i class="icon-nbd icon-nbd-format-align-center nbd-tooltip-hover" title="Text align"></i>
             <div class="sub-menu" data-pos="center">
                 <ul>
-                    <li class="sub-menu-item" ng-show="settings['nbdesigner_text_align_left'] == '1'"><i class="icon-nbd icon-nbd-format-align-left nbd-tooltip-hover" title="Text align left"></i></li>
-                    <li class="sub-menu-item" ng-show="settings['nbdesigner_text_align_center'] == '1'"><i class="icon-nbd icon-nbd-format-align-center nbd-tooltip-hover" title="Text align center"></i></li>
-                    <li class="sub-menu-item"><i class="icon-nbd icon-nbd-format-align-justify nbd-tooltip-hover" title="Text align justify"></i></li>
-                    <li class="sub-menu-item" ng-show="settings['nbdesigner_text_align_right'] == '1'"><i class="icon-nbd icon-nbd-format-align-right nbd-tooltip-hover" title="Text align right"></i></li>
+                    <li ng-click="setTextAttribute('textAlign', 'left')" class="sub-menu-item" 
+                        ng-class="stages[currentStage].states.text.textAlign == 'left' ? 'selected' : ''"
+                        ng-if="settings['nbdesigner_text_align_left'] == '1'"><i class="icon-nbd icon-nbd-format-align-left nbd-tooltip-hover" title="<?php _e('Text align left','web-to-print-online-designer'); ?>"></i></li>
+                    <li ng-click="setTextAttribute('textAlign', 'center')" class="sub-menu-item" 
+                        ng-class="stages[currentStage].states.text.textAlign == 'center' ? 'selected' : ''"
+                        ng-if="settings['nbdesigner_text_align_center'] == '1'"><i class="icon-nbd icon-nbd-format-align-center nbd-tooltip-hover" title="<?php _e('Text align center','web-to-print-online-designer'); ?>"></i></li>
+                    <li ng-click="setTextAttribute('textAlign', 'right')" class="sub-menu-item" 
+                        ng-class="stages[currentStage].states.text.textAlign == 'right' ? 'selected' : ''"
+                        ng-if="settings['nbdesigner_text_align_right'] == '1'"><i class="icon-nbd icon-nbd-format-align-right nbd-tooltip-hover" title="<?php _e('Text align right','web-to-print-online-designer'); ?>"></i></li>
                 </ul>
             </div>
         </li>
-        <li class="menu-item item-transform"><i class="icon-nbd icon-nbd-uppercase nbd-tooltip-hover" title="Uppercase"></i></li>
-        <li class="menu-item item-text-bold" ng-if="settings['nbdesigner_text_bold'] == '1'"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="Bold"></i></li>
-        <li class="menu-item item-text-italic" ng-if="settings['nbdesigner_text_italic'] == '1'"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" title="Italic"></i></li>
+        <li ng-click="setTextAttribute('is_uppercase', stages[currentStage].states.text.is_uppercase ? false : true)"
+            ng-class="stages[currentStage].states.text.is_uppercase ? 'selected' : ''" class="menu-item item-transform"><i class="icon-nbd icon-nbd-uppercase nbd-tooltip-hover" title="<?php _e('Uppercase','web-to-print-online-designer'); ?>"></i></li>
+        <li ng-click="setTextAttribute('fontWeight', stages[currentStage].states.text.fontWeight == 'bold' ? 'normal' : 'bold')" 
+            ng-class="stages[currentStage].states.text.fontWeight == 'bold' ? 'selected' : ''" class="menu-item item-text-bold" 
+            ng-if="settings['nbdesigner_text_bold'] == '1'"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="<?php _e('Bold','web-to-print-online-designer'); ?>"></i></li>
+        <li ng-click="setTextAttribute('fontStyle', stages[currentStage].states.text.fontStyle == 'italic' ? 'normal' : 'italic')" 
+            ng-class="stages[currentStage].states.text.fontStyle == 'italic' ? 'selected' : ''" class="menu-item item-text-italic" 
+            ng-if="settings['nbdesigner_text_italic'] == '1'"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" 
+            title="<?php _e('Italic','web-to-print-online-designer'); ?>"></i></li>
         <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Underline"></i></li>
     </ul>
     <ul class="nbd-main-menu menu-right">
-        <li class="menu-item item-spacing">
+        <li class="menu-item item-spacing  nbd-tooltip-hover" title="<?php _e('Line height and spacing','web-to-print-online-designer'); ?>">
             <i class="icon-nbd icon-nbd-line_spacing"></i>
             <div class="sub-menu" data-pos="center">
                 <div class="main-ranges" style="padding: 30px 10px 15px">
                     <div class="range range-spacing">
-                        <label>Spacing</label>
+                        <label><?php _e('Spacing','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                            <input class="slide-input" ng-mouseup="setTextAttribute('spacing', stages[currentStage].states.text.spacing)" ng-model="stages[currentStage].states.text.spacing" type="range" step="1" min="0" max="100">
                             <span class="range-track"></span>
                         </div>
-                        <span class="value-display">50</span>
+                        <span class="value-display">{{stages[currentStage].states.text.spacing}}</span>
                     </div>
                     <div class="range range-line-height">
-                        <label>Line height</label>
+                        <label><?php _e('Line height','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
+                            <input class="slide-input" ng-mouseup="setTextAttribute('lineHeight', stages[currentStage].states.text.lineHeight)" ng-model="stages[currentStage].states.text.lineHeight" type="range" step="0.1" min="0" max="3">
                             <span class="range-track"></span>
                         </div>
-                        <span class="value-display">50</span>
+                        <span class="value-display">{{stages[currentStage].states.text.lineHeight}}</span>
                     </div>
                 </div>
             </div>

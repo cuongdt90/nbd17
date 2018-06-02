@@ -251,6 +251,21 @@
     .nbd-sidebar #tab-typography .tab-main .typography-body .typography-item img {
         background: none;
     }
+    .popup-share.nbd-popup .overlay-main {
+        background: rgba(255,255,255,0.85);
+    }
+    .nbd-tool-lock {
+        top: 50px;
+    }
+    .nbd-toolbar .toolbar-text .nbd-main-menu.menu-left .menu-item .sub-menu>div#toolbar-font-size-dropdown {
+        max-height: 240px;
+    } 
+    .nbd-toolbar .toolbar-text .nbd-main-menu.menu-right .sub-menu ul li.selected {
+        background-color: rgba(158,158,158,.2);
+    }
+    .canvas-container {
+        border: 1px solid green;
+    }
 </style>
 <div class="nbd-stages">
     <div class="stages-inner">
