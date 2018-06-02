@@ -194,7 +194,7 @@
                     </div>
                     <div class="nbd-workspace">
                         <?php include 'modern/sidebar.php';?>
-                        <div class="main">
+                        <div class="main <?php echo (wp_is_mobile()) ? 'active' : ''; ?>">
                             <?php include 'modern/toolbar.php'; ?>
                             <?php include 'modern/stages.php';?>
                             <?php include 'modern/toolbar-zoom.php';?>

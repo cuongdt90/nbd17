@@ -135,7 +135,7 @@
         <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Underline"></i></li>
     </ul>
     <ul class="nbd-main-menu menu-right">
-        <li class="menu-item item-spacing">
+        <li class="menu-item item-spacing" data-range="true">
             <i class="icon-nbd icon-nbd-line_spacing"></i>
             <div class="sub-menu" data-pos="center">
                 <div class="main-ranges" style="padding: 30px 10px 15px">

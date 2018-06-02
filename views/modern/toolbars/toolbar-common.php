@@ -1,6 +1,6 @@
 <div class="toolbar-common">
     <ul class="nbd-main-menu">
-        <li class="menu-item item-opacity">
+        <li class="menu-item item-opacity" data-range="true">
             <i class="icon-nbd icon-nbd-opacity nbd-tooltip-hover" title="<?php _e('Opacity','web-to-print-online-designer'); ?>"></i>
             <div class="sub-menu" data-pos="center">
                 <div class="main-ranges" style="padding: 30px 15px 10px;">
