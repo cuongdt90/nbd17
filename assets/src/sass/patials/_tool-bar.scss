@@ -2,31 +2,27 @@
   background: #fff;
   width: calc(100% - 420px);
   position: fixed;
-  z-index: 10;
   box-sizing: border-box;
   color: #3f4652;
   left: 420px;
   top: 54px;
   white-space: nowrap;
   height: 50px;
+  z-index: 99;
   .main-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
     padding: 0 24px 0 10px;
+    &.overflow-hidden {
+      @media screen and (max-width: 767px){
+        overflow: hidden;
+      }
+    }
     @media screen and (max-width: 767px){
       overflow-x: auto;
       overflow-y: hidden;
-      -ms-overflow-style: -ms-autohiding-scrollbar;
-      /* For WebKit implementations, provide inertia scrolling */
-      -webkit-overflow-scrolling: touch;
-      /* We don't want internal inline elements to wrap */
-      white-space: nowrap;
-      /* Remove the default scrollbar for WebKit implementations */
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
     li.menu-item{
       @media screen and (max-width: 767px){
