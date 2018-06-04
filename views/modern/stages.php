@@ -266,6 +266,57 @@
     .canvas-container {
         border: 1px solid green;
     }
+    @keyframes timeline {
+        0% {
+            background-position: -350px 0;
+        }
+        100% {
+            background-position: 400px 0;
+        }
+    }
+    .font-loading {
+        animation: timeline;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+        background-size: 800px auto;
+        background-position: 100px 0;
+        pointer-events: none;
+        opacity: 0.7;
+    }
+    .group-font li {
+        cursor: pointer;
+    }
+    .nbd-main-menu .sub-menu li span.font-name-wrap {
+        line-height: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .nbd-main-menu .sub-menu li span.font-name {
+        margin-right: 10px;
+        font-size: 18px;
+    }
+    .nbd-main-menu .sub-menu li .font-selected {
+        line-height: 40px;
+        margin-left: 5px;
+        color: #404762;
+    }
+    .toolbar-font-search i.icon-nbd-clear {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        width: 24px;
+        height: 33px;
+        line-height: 33px;
+        cursor: pointer;
+    }
+    @media screen and (max-width: 767px) {
+        .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
+            color: #404762;
+        }
+    }
 </style>
 <div class="nbd-stages">
     <div class="stages-inner">

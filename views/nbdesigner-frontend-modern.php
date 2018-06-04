@@ -150,9 +150,9 @@
                 login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",  
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>,
-                gg_font: <?php echo file_get_contents(NBDESIGNER_DATA_DIR . '/googlefonts.json'); ?>
+                gg_fonts: <?php echo file_get_contents(NBDESIGNER_DATA_DIR . '/googlefonts.json'); ?>,
+                subsets: <?php echo json_encode(nbd_font_subsets()); ?>
             }; 
-            console.log(NBDESIGNCONFIG.gg_font);
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
             <?php 
                 $settings = nbdesigner_get_all_frontend_setting();

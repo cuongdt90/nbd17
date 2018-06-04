@@ -2,63 +2,37 @@
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-font-familly">
             <button class="toolbar-bottom">
-                <span class="toolbar-label toolbar-label-font">Roboto</span>
+                <span class="toolbar-label toolbar-label-font">{{stages[currentStage].states.text.fontFamily}}</span>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
             </button>
             <div class="sub-menu" data-pos="left">
                 <div class="toolbar-font-search">
-                    <input type="search" name="font-search" value="" placeholder="Search"/>
+                    <input type="search" name="font-search" ng-model="resource.font.filter.search" placeholder="Search"/>
+                    <i ng-show="resource.font.filter.search.length > 0" ng-click="resource.font.filter.search = ''" class="icon-nbd icon-nbd-clear"></i>
                 </div>
-                <div id="toolbar-font-familly-dropdown">
-                    <div class="group-font">
+                <div id="toolbar-font-familly-dropdown" nbd-scroll="scrollLoadMore(container, type)" data-container="#toolbar-font-familly-dropdown" data-type="font">
+                    <div class="group-font" ng-show="stages[currentStage].states.fontUsed.length > 0">
                         <div class="toolbar-menu-header">
                             <div class="toolbar-header-line"></div>
-                            <div class="toolbar-separator"><?php _e('Font document','web-to-print-online-designer'); ?></div>
+                            <div class="toolbar-separator"><?php _e('Document Fonts','web-to-print-online-designer'); ?></div>
                             <div class="toolbar-header-line"></div>
                         </div>
                         <ul>
-                            <li class="sub-menu-item chosen">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/ABeeZee.png" alt="ABeeZee"/>
-                                <i class="icon-nbd icon-nbd-fomat-done"></i>
-                            </li>
-
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Abel.png" alt="Abel"/>
-                            </li>
-
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Abhaya Libre.png" alt="Abhaya Libre"/>
-                            </li>
-
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Abril Fatface.png" alt="Abril Fatface"/>
-                            </li>
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Aclonica.png" alt="Aclonica"/>
-                            </li>
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Acme.png" alt="Acme"/>
+                            <li ng-click="setTextAttribute('fontFamily', font.alias, font)" class="sub-menu-item" ng-repeat="font in stages[currentStage].states.fontUsed">
+                                <span class="font-name-wrap" style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;"><span class="font-name">{{font.name}}</span><span ng-if="['all', 'latin', 'latin-ext', 'vietnamese'].indexOf(font.subset) < 0"> {{settings.subsets[font.subset]['preview_text']}}</span></span>
                             </li>
                         </ul>
                     </div>
                     <div class="group-font">
                         <div class="toolbar-menu-header">
                             <div class="toolbar-header-line"></div>
-                            <div class="toolbar-separator"><?php _e('Font Vietnamese','web-to-print-online-designer'); ?></div>
+                            <div class="toolbar-separator"><?php _e('All Fonts','web-to-print-online-designer'); ?></div>
                             <div class="toolbar-header-line"></div>
                         </div>
                         <ul>
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Actor.png" alt="Actor"/>
-                            </li>
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Adamina.png" alt="Adamina"/>
-                            </li>
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Advent Pro.png" alt="Advent Pro"/>
-                            </li>
-                            <li class="sub-menu-item">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>/data/google-font-images/Aguafina Script.png" alt="Aguafina Script"/>
+                            <li class="sub-menu-item" ng-class="font.alias == stages[currentStage].states.text.fontFamily ? 'chosen' : ''" ng-click="setTextAttribute('fontFamily', font.alias, font)" ng-repeat="font in resource.font.filteredFonts" repeat-end="onEndRepeat('font')" data-font="font" font-on-load load-font-fail-action="loadFontFailAction(font)" data-preview="settings.subsets[font.subset]['preview_text']" >
+                                <span class="font-name-wrap" style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;"><span class="font-name">{{font.name}}</span><span ng-if="['all', 'latin', 'latin-ext', 'vietnamese'].indexOf(font.subset) < 0"> {{settings.subsets[font.subset]['preview_text']}}</span></span>
+                                <i ng-if="font.alias == stages[currentStage].states.text.fontFamily" class="icon-nbd icon-nbd-fomat-done font-selected"></i>
                             </li>
                         </ul>
                     </div>
