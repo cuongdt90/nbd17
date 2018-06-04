@@ -201,6 +201,12 @@
       transform: translateY(-100%);
       height: calc(100vh - 114px);
       top: 0;
+      opacity: 0;
+      visibility: hidden;
+      &.active {
+        opacity: 1;
+        visibility: visible;
+      }
     }
 
     > i {
@@ -257,7 +263,7 @@
       width: 100%;
       top: 0;
       left: 0;
-      border:none;
+      border: none;
       input {
         padding: 10px 35px 10px 10px;
         width: 100%;
