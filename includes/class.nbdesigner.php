@@ -1071,9 +1071,19 @@ class Nbdesigner_Plugin {
             $fonts = json_decode(stripslashes($_POST['fonts']));
             foreach($fonts as $key => $font){
                 $subset = 'all';
+                $file = array('r' => 1);
                 foreach( $all_fonts as $f ){
                     if( $font->name == $f->family ){
                         $subset = $f->subsets[0];
+                        if( isset($f->files->italic) ){
+                            $file['i'] = 1;
+                        }
+                        if( isset($f->files->{"700"}) ){
+                            $file['b'] = 1;
+                        }
+                        if( isset($f->files->{"700italic"}) ){
+                            $file['bi'] = 1;
+                        }
                         break;
                     }
                 }
@@ -1083,6 +1093,7 @@ class Nbdesigner_Plugin {
                     "alias"    =>  $font->name,
                     "type"   =>  "google", 
                     "subset"   =>  $subset, 
+                    "file"   =>  $file, 
                     "cat" => array("99")
                 );             
             }

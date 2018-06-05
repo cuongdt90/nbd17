@@ -2144,3 +2144,15 @@ function nbd_font_subsets(){
         )       
     );
 }
+function nbd_get_fonts(){
+    $gg_fonts = array();
+    $custom_fonts = array();
+    if(file_exists(NBDESIGNER_DATA_DIR . '/googlefonts.json')) {
+        $gg_fonts = json_decode( file_get_contents(NBDESIGNER_DATA_DIR . '/googlefonts.json') );
+    }
+    if(file_exists(NBDESIGNER_DATA_DIR . '/fonts.json')) {
+        $custom_fonts = json_decode( file_get_contents(NBDESIGNER_DATA_DIR . '/fonts.json') );
+    }
+    $fonts = array_merge($gg_fonts,$custom_fonts);
+    echo json_encode($fonts);
+}

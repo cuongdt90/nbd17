@@ -1,4 +1,4 @@
-<div class="tab" ng-if="settings['nbdesigner_enable_text'] == 'yes'" id="tab-typography" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-typography" data-type="typography">
+<div class="tab" ng-if="settings['nbdesigner_enable_text'] == 'yes'" id="tab-typography" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-typography" data-type="typography" data-offset="20">
     <div class="tab-main tab-scroll">
         <div class="typography-head">
             <span ng-click='debug()' class="text-guide" style="color: #4F5467; margin-bottom: 20px;display: block;"><?php _e('Click to add text','nbd-online-design'); ?></span>

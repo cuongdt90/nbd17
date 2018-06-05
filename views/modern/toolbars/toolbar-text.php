@@ -2,15 +2,15 @@
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-font-familly">
             <button class="toolbar-bottom">
-                <span class="toolbar-label toolbar-label-font">{{stages[currentStage].states.text.fontFamily}}</span>
+                <span class="toolbar-label toolbar-label-font">{{stages[currentStage].states.text.font.name}}</span>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
             </button>
             <div class="sub-menu" data-pos="left">
                 <div class="toolbar-font-search">
-                    <input type="search" name="font-search" ng-model="resource.font.filter.search" placeholder="Search"/>
+                    <input type="search" name="font-search" ng-model="resource.font.filter.search" placeholder="<?php _e('Search in','web-to-print-online-designer'); ?> {{resource.font.data.length}} <?php _e('fonts','web-to-print-online-designer'); ?>"/>
                     <i ng-show="resource.font.filter.search.length > 0" ng-click="resource.font.filter.search = ''" class="icon-nbd icon-nbd-clear"></i>
                 </div>
-                <div id="toolbar-font-familly-dropdown" nbd-scroll="scrollLoadMore(container, type)" data-container="#toolbar-font-familly-dropdown" data-type="font">
+                <div id="toolbar-font-familly-dropdown" nbd-scroll="scrollLoadMore(container, type)" data-container="#toolbar-font-familly-dropdown" data-type="font" data-offset="40">
                     <div class="group-font" ng-show="stages[currentStage].states.fontUsed.length > 0">
                         <div class="toolbar-menu-header">
                             <div class="toolbar-header-line"></div>
@@ -18,7 +18,7 @@
                             <div class="toolbar-header-line"></div>
                         </div>
                         <ul>
-                            <li ng-click="setTextAttribute('fontFamily', font.alias, font)" class="sub-menu-item" ng-repeat="font in stages[currentStage].states.fontUsed">
+                            <li ng-click="setTextAttribute('fontFamily', font.alias)" class="sub-menu-item" ng-repeat="font in stages[currentStage].states.fontUsed">
                                 <span class="font-name-wrap" style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;"><span class="font-name">{{font.name}}</span><span ng-if="['all', 'latin', 'latin-ext', 'vietnamese'].indexOf(font.subset) < 0"> {{settings.subsets[font.subset]['preview_text']}}</span></span>
                             </li>
                         </ul>
@@ -30,7 +30,7 @@
                             <div class="toolbar-header-line"></div>
                         </div>
                         <ul>
-                            <li class="sub-menu-item" ng-class="font.alias == stages[currentStage].states.text.fontFamily ? 'chosen' : ''" ng-click="setTextAttribute('fontFamily', font.alias, font)" ng-repeat="font in resource.font.filteredFonts" repeat-end="onEndRepeat('font')" data-font="font" font-on-load load-font-fail-action="loadFontFailAction(font)" data-preview="settings.subsets[font.subset]['preview_text']" >
+                            <li class="sub-menu-item" ng-class="font.alias == stages[currentStage].states.text.fontFamily ? 'chosen' : ''" ng-click="setTextAttribute('fontFamily', font.alias)" ng-repeat="font in resource.font.filteredFonts" repeat-end="onEndRepeat('font')" data-font="font" font-on-load load-font-fail-action="loadFontFailAction(font)" data-preview="settings.subsets[font.subset]['preview_text']" >
                                 <span class="font-name-wrap" style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;"><span class="font-name">{{font.name}}</span><span ng-if="['all', 'latin', 'latin-ext', 'vietnamese'].indexOf(font.subset) < 0"> {{settings.subsets[font.subset]['preview_text']}}</span></span>
                                 <i ng-if="font.alias == stages[currentStage].states.text.fontFamily" class="icon-nbd icon-nbd-fomat-done font-selected"></i>
                             </li>
@@ -81,17 +81,16 @@
         <li ng-click="setTextAttribute('is_uppercase', stages[currentStage].states.text.is_uppercase ? false : true)"
             ng-class="stages[currentStage].states.text.is_uppercase ? 'selected' : ''" class="menu-item item-transform"><i class="icon-nbd icon-nbd-uppercase nbd-tooltip-hover" title="<?php _e('Uppercase','web-to-print-online-designer'); ?>"></i></li>
         <li ng-click="setTextAttribute('fontWeight', stages[currentStage].states.text.fontWeight == 'bold' ? 'normal' : 'bold')" 
-            ng-class="stages[currentStage].states.text.fontWeight == 'bold' ? 'selected' : ''" class="menu-item item-text-bold" 
+            ng-class="{'selected': stages[currentStage].states.text.fontWeight == 'bold', 'nbd-disabled': !(stages[currentStage].states.text.font.file.b && ( stages[currentStage].states.text.fontStyle != 'italic' || ( stages[currentStage].states.text.fontStyle == 'italic' && stages[currentStage].states.text.font.file.bi ) ))}" class="menu-item item-text-bold"             
             ng-if="settings['nbdesigner_text_bold'] == '1'"><i class="icon-nbd icon-nbd-format-bold nbd-tooltip-hover" title="<?php _e('Bold','web-to-print-online-designer'); ?>"></i></li>
         <li ng-click="setTextAttribute('fontStyle', stages[currentStage].states.text.fontStyle == 'italic' ? 'normal' : 'italic')" 
-            ng-class="stages[currentStage].states.text.fontStyle == 'italic' ? 'selected' : ''" class="menu-item item-text-italic" 
+            ng-class="{'selected': stages[currentStage].states.text.fontStyle == 'italic','nbd-disabled' : !(stages[currentStage].states.text.font.file.i && ( stages[currentStage].states.text.fontWeight != 'bold' || ( stages[currentStage].states.text.fontWeight == 'bold' && stages[currentStage].states.text.font.file.bi ) ))}" class="menu-item item-text-italic" 
             ng-if="settings['nbdesigner_text_italic'] == '1'"><i class="icon-nbd icon-nbd-format-italic nbd-tooltip-hover" 
             title="<?php _e('Italic','web-to-print-online-designer'); ?>"></i></li>
         <li style="display: none" class="menu-item"><i class="icon-nbd icon-nbd-format-underlined nbd-tooltip-hover" title="Underline"></i></li>
     </ul>
     <ul class="nbd-main-menu menu-right">
-        <li class="menu-item item-spacing  nbd-tooltip-hover" title="<?php _e('Line height and spacing','web-to-print-online-designer'); ?>">
-        <li class="menu-item item-spacing" data-range="true">
+        <li class="menu-item item-spacing  nbd-tooltip-hover" data-range="true" title="<?php _e('Line height and spacing','web-to-print-online-designer'); ?>">
             <i class="icon-nbd icon-nbd-line_spacing"></i>
             <div class="sub-menu" data-pos="center">
                 <div class="main-ranges" style="padding: 30px 10px 15px">
