@@ -16,7 +16,7 @@
     };
     $.fn.nbDropdown = function (options) {
         var defaults = {};
-        var opts = $.extend({}, $.fn.nbTab.default, options);
+        var opts = $.extend({}, $.fn.nbDropdown.defaults, options);
         return this.each(function () {
             var sefl = this;
             var $btn = $(this).find('.v-btn-dropdown');
@@ -54,10 +54,15 @@
         });
     };
 
+    $.fn.nbPerfectScrollbar = function () {
+        return this.each(function () {
+            new PerfectScrollbar(this);
+        });
+    };
+
     $(document).ready(function () {
         $('.nbd-vista .v-tabs').nbTab();
         $('.nbd-vista .v-dropdown').nbDropdown();
-        var ps = new PerfectScrollbar('#v-text-toolbar .v-scrollbar');
-        var ps1 = new PerfectScrollbar('#v-design-toolbar .v-scrollbar');
+        $('.nbd-vista .v-scrollbar').nbPerfectScrollbar();
     });
 })(jQuery);
