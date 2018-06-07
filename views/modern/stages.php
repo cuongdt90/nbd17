@@ -212,6 +212,9 @@
         -moz-transition: all .4s;        
         transition: all .4s;         
     }
+    .nbd-color-palette-inner .nbd-perfect-scroll{
+        max-height: 200px;        
+    }
     .nbd-color-palette.show {
         opacity: 1;
         visibility: visible;
@@ -312,9 +315,135 @@
         line-height: 33px;
         cursor: pointer;
     }
+    .clipart-wrap .clipart-item,
+    .mansory-wrap .mansory-item {
+        visibility: visible !important; 
+        width: 33.33%;
+        padding: 2px;
+        opacity: 0;
+        z-index: 3;
+        cursor: pointer;
+    }
+    .mansory-wrap{
+        margin-top: 15px;
+    }
+    .clipart-wrap .clipart-item img {
+        border: 4px solid rgba(64, 71, 98, 0.08);
+        background: #d0d6dd;
+    }
+    .mansory-wrap .mansory-item.in-view,
+    .clipart-wrap .clipart-item.in-view {
+        opacity: 1;
+    }
+    .mansory-wrap .mansory-item .photo-desc {
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+        -webkit-transform: translateY(50%);
+        -ms-transform: translateY(50%);
+        transform: translateY(50%);
+        -webkit-transition: all .2s;
+        transition: all .2s;
+        bottom: 2px;
+        left: 2px;
+        padding: 2px 10px;
+        display: block;
+        width: -webkit-calc(100% - 4px);
+        width: calc(100% - 4px);
+        text-align: left;
+        background: rgba(0,0,0,.3);
+        color: #fff;
+        font-size: 10px;        
+    }
+    .mansory-wrap .mansory-item:hover .photo-desc {
+        opacity: 1;
+        visibility: visible;
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);        
+    }
+    .mansory-wrap .mansory-item 
+    .nbd-sidebar #tab-svg .cliparts-category {
+        margin-top: 70px;
+        padding: 0px 10px 10px;        
+    }
+    .nbd-perfect-scroll {
+        position: relative;
+        overflow: hidden;        
+    }
+    .nbd-onload {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+    .nbd-color-picker-preview {
+        width: 24px;
+        height: 24px;
+        border-radius: 4px;
+        display: inline-block;
+        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 6px inset, rgba(255, 255, 255, 0.25) -1px -1px 0px inset;        
+    }
+    .nbd-toolbar .main-toolbar .tool-path li.menu-item.item-color-fill {
+        margin: 0;
+        padding: 2px;
+    }
+    .nbd-sidebar #tab-photo .nbd-items-dropdown .main-items .items .item[data-type="pixabay"] .main-item .item-icon {
+        padding: 10px 20px;
+    }
+    .nbd-sidebar #tab-photo .nbd-items-dropdown .main-items .items .item[data-type="pixabay"] .main-item .item-icon i {
+        font-size: 60px;
+    }
+    .nbd-sidebar .nbd-items-dropdown .result-loaded .nbdesigner-gallery .nbdesigner-item .photo-desc {
+        font-size: 10px;
+    }
+    .nbd-sidebar #tab-photo .nbd-items-dropdown .loading-photo {
+        width: 40px;
+        height: 40px;
+        position: unset;
+        margin-left: 50%;
+        margin-top: 20px;        
+    }
+    .nbd-sidebar .nbd-items-dropdown .info-support {
+        top: 62px;
+    }
+    .nbd-sidebar .nbd-items-dropdown .info-support i.close-result-loaded {
+        right: 0;
+    }
+    .nbd-sidebar .nbd-items-dropdown .info-support i, .nbd-sidebar .nbd-items-dropdown .info-support span {
+        background: #404762;
+    }    
+    #tab-photo .ps-scrollbar-x-rail {
+        display: none;
+    }
+    .type-instagram.button-login {
+        display: flex;
+        margin: auto;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;        
+    }
+    .type-instagram.button-login .icon-nbd {
+        color: #fff;
+        vertical-align: middle;
+        font-size: 20px;
+        margin-right: 5px;        
+    }
+    .type-instagram.button-login span {
+        color: #fff;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;
+        }
+        .nbd-toolbar .toolbar-text .nbd-main-menu.menu-left .menu-item .toolbar-input {
+            width: 50px;
+        }
+        .nbd-toolbar .toolbar-text .nbd-main-menu.menu-left .menu-item .toolbar-bottom {
+            padding: 0px 10px;
         }
     }
 </style>

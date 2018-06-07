@@ -34,11 +34,19 @@ if(!class_exists('NBD_RESOURCE')){
                 //todo something
             }else{     
                 $rq_type = $_REQUEST['type'];
+                $data = array();
                 switch ($rq_type) {
                     case 'typography':
                         $path = NBDESIGNER_PLUGIN_DIR . '/data/typography/typography.json';
-                        $data = json_decode( file_get_contents($path) );
-                        break;                
+                        if(file_exists($path) ) $data = json_decode( file_get_contents($path) );
+                        break;  
+                    case 'clipart':
+                        $path_cat = NBDESIGNER_DATA_DIR . '/art_cat.json';
+                        $path_art = NBDESIGNER_DATA_DIR . '/arts.json'; 
+                        $data['cat'] = $data['arts'] = array();
+                        $data['cat'] = file_exists($path_cat) ? json_decode(file_get_contents($path_cat)) : array();
+                        $data['arts'] = file_exists($path_art) ? json_decode(file_get_contents($path_art)) : array();                     
+                        break;
                 }
                 $flag = 1;
             }

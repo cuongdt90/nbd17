@@ -2875,7 +2875,7 @@ class Nbdesigner_Plugin {
         $success = file_put_contents($full_name, $data);
         if($success){
             $result['flag'] = 'success';        
-            $result['url'] = wp_convert_path_to_url( $full_name );
+            $result['url'] = Nbdesigner_IO::wp_convert_path_to_url( $full_name );
         }else{
             $result['flag'] = 'false';
         }
