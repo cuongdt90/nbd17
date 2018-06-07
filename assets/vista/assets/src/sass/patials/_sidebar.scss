@@ -14,6 +14,7 @@
     margin-bottom: 20px;
   }
   .v-content {
+    position: relative;
     .text-editor {
       .text-field {
         display: block;
@@ -27,11 +28,9 @@
         }
       }
     }
+    @import "element";
   }
-  #v-text-toolbar {
-    .v-action {
-      //padding-right: 7px;
-    }
+  #v-text-toolbar,#v-more-toolbar {
     .v-content {
       height: calc(100% - 110px);
     }
@@ -53,6 +52,11 @@
           }
         }
       }
+    }
+  }
+  #v-image-toolbar {
+    .v-content{
+      height: calc(100% - 55px);
     }
   }
 }

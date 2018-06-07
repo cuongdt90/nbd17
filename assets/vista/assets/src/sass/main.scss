@@ -2,6 +2,7 @@
 @import "patials/color-variables";
 @import "patials/icons";
 @import "library/perfect-scrollbar";
+@import "library/animate/index";
 
 .nbd-vista {
   height: 580px;
@@ -9,11 +10,19 @@
   // component
   @import "component/button";
   @import "component/dropdown";
+  @import "component/checkbox";
+  @import "component/ranges";
 
   // patials
   @import "patials/global";
   @import "patials/toolbar";
   @import "patials/scrollbar";
+  @import "patials/popup";
+  @import "patials/context-menu";
+  @import "patials/warning";
+  @import "patials/toollock";
+  @import "patials/toasts";
+  @import "patials/loading";
   .v-workspace {
     height: 500px;
     display: flex;

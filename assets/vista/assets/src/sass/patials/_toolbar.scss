@@ -35,19 +35,25 @@
       content: "";
       bottom: 0;
       left: 0;
-      height: 2px;
-      width: 0;
+      height: 1px;
+      width: 100%;
       transition: all .3s;
       background: $main-color;
+      transform: scale(0);
     }
     &:hover{
       &:before{
         background: $main-hover-color;
       }
     }
+    &.active{
+      &:before {
+        height: 2px;
+      }
+    }
     &:hover,&.active {
       &:before {
-        width: 100%;
+        transform: scale(1);
       }
     }
     i {

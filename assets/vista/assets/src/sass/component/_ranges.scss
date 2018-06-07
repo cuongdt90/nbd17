@@ -1,0 +1,85 @@
+.v-ranges {
+  display: table;
+  .range {
+    display: table-row;
+    height: 30px;
+    label{
+      display: table-cell;
+      padding-right: 10px;
+      text-align: right;
+      text-transform: capitalize;
+      white-space: nowrap;
+      font-weight: normal;
+      font-size: 12px;
+    }
+    .main-track{
+      display: table-cell;
+      position: relative;
+      width: 100%;
+      .slide-input {
+        background-color: transparent;
+        border: none;
+        height: 7px;
+        outline: none;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 100;
+        margin: 4px 0 0;
+        -webkit-appearance: none;
+        &::-webkit-slider-thumb{
+          appearance: none;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: $main-color;
+          cursor: pointer;
+          @media screen and (max-width: 767px){
+            width: 20px;
+            height: 20px;
+          }
+        }
+        &::-moz-range-thumb{
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background: $main-color;
+          cursor: pointer;
+          @media screen and (max-width: 767px){
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      .range-track {
+        background-color: #aaa;
+        height: 2px;
+        position: absolute;
+        top: 7px;
+        left: 0;
+        width: 100%;
+      }
+
+      .snap-guide {
+        position: absolute;
+        border-left: 2px solid #aaa;
+        left: 50%;
+        top: 0;
+        height: 12px;
+        margin-top: 2px;
+        z-index: 90;
+      }
+    }
+    .value-display {
+      display: table-cell;
+      text-align: right;
+      padding-left: 10px;
+      min-width: 31px;
+      font-size: 12px;
+    }
+
+  }
+}

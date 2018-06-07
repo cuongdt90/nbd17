@@ -49,6 +49,16 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'version'   => '1.0.0',
                         'depends'  => array('jquery')
                     ),
+                    'images-loaded' => array(
+                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/imagesloaded.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
+                    'masonry' => array(
+                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/masonry.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    )
                 );
                 $css_libs = array(
                     'vista' => array(
@@ -68,6 +78,8 @@ if(!class_exists('Nbdesigner_Vista')) {
                 wp_enqueue_style( 'vista');
                 wp_enqueue_script('vista');
                 wp_enqueue_script('perfect-scrollbar');
+                wp_enqueue_script('images-loaded');
+                wp_enqueue_script('masonry');
             });
         }
 

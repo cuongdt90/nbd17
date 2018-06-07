@@ -39,7 +39,6 @@
                 <div class="text-editor">
                     <span contenteditable="true" class="text-field">Job Title</span>
                 </div>
-
                 <div class="text-editor">
                     <span contenteditable="true" class="text-field">Job Title</span>
                 </div>

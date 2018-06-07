@@ -1,9 +1,115 @@
 .nbd-icon-vista {
   font-size: 24px;
+  color: $main-color;
+  line-height: normal;
+  display: inline-block;
 }
 a{
   color: $text-color;
 }
 img{
   max-width: 100%;
+}
+strong{
+  font-weight: bold;
+}
+
+input[type=email], input[type=password], input[type=search], input[type=text], input[type=url], textarea {
+  box-shadow: none;
+  border-radius: 2px;
+  background-color: #f2f2f2;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.text-center{
+  text-align: center;
+}
+.text-capital{
+  text-transform: capitalize !important;
+}
+
+.rotate-45{
+  display: inline-block;
+  transform: rotate(-45deg);
+}
+.rotate45{
+  display: inline-block;
+  transform: rotate(45deg);
+}
+.rotate30{
+  display: inline-block;
+  transform: rotate(30deg);
+}
+.rotate-30{
+  display: inline-block;
+  transform: rotate(-30deg);
+}
+.rotate-60{
+  display: inline-block;
+  transform: rotate(-60deg);
+}
+.rotate60{
+  display: inline-block;
+  transform: rotate(60deg);
+}
+.rotate90{
+  display: inline-block;
+  transform: rotate(90deg);
+}
+.rotate-90{
+  display: inline-block;
+  transform: rotate(-90deg);
+}
+.rotate135{
+  display: inline-block;
+  transform: rotate(135deg);
+}
+.rotate-135{
+  display: inline-block;
+  transform: rotate(-135deg);
+}
+.rotate-180{
+  display: inline-block;
+  transform: rotate(-180deg);
+}
+.rotate180{
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.animate100 {
+  animation-duration: 0.1s !important;
+}
+
+.animate200 {
+  animation-duration: 0.2s !important;
+}
+
+.animate300 {
+  animation-duration: 0.3s !important;
+}
+.animate400 {
+  animation-duration: 0.4s !important;
+}
+.animate500 {
+  animation-duration: 0.5s !important;
+}
+.animate600 {
+  animation-duration: 0.6s !important;
+}
+.animate700 {
+  animation-duration: 0.7s !important;
+}
+.animate800 {
+  animation-duration: 0.8s !important;
+}
+.animate900 {
+  animation-duration: 0.9s !important;
+}
+.animate1000 {
+  animation-duration: 1s !important;
+}
+.animate1100 {
+  animation-duration: 1.1s !important;
 }

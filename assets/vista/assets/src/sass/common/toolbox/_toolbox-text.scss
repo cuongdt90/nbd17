@@ -1,4 +1,11 @@
 .v-toolbox-text{
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #ebebeb;
+  min-width: 250px;
+  border-radius: 2px;
+  background: #fff;
   .toolbox-font-family {
     .v-dropdown {
       .v-dropdown-menu {
@@ -11,11 +18,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            .font-right {
+              margin-left: auto;
+            }
             i.checked{
               font-size: 14px;
               display: none;
               color: $main-color;
               font-weight: bold;
+              margin-left: 10px;
+            }
+            span{
+              color: $main-color;
             }
             &.active{
               i.checked {
@@ -67,26 +81,10 @@
       max-height: 220px;
     }
   }
-  .toolbox-align{
-    .items {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .item {
-        width: 40px;
-        height: 40px;
-        line-height: 40px;
-        border: 1px solid #ebebeb;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        i {
-          font-size: 18px;
-        }
-      }
-    }
+  .toolbox-color-palette {
+      @import "../../component/color-palette";
   }
+  .toolbox-align{}
   .v-btn {
     &.btn-font-family{
       width: 100%;
@@ -102,6 +100,9 @@
       border: 1px solid #ebebeb;
       padding: 5px;
       height: auto;
+      span{
+        font-weight: bold;
+      }
       i{
         font-size: 16px;
       }
@@ -131,6 +132,28 @@
         }
       }
     }
+    &.btn-color {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      box-shadow: none;
+      padding: 5px;
+      border: 1px solid #ebebeb;
+      .color-selected {
+        width: 85px;
+        height: 24px;
+        background-color: red;
+        line-height: 1;
+        border: 1px solid #e6e6e6;
+      }
+      i{
+        color: $main-color;
+        font-size: 16px;
+        line-height: normal;
+        margin-left: 10px;
+      }
+    }
   }
   .v-dropdown {
     .v-dropdown-menu {
@@ -140,5 +163,26 @@
       border-top: none;
     }
   }
-
+  .footer-box {
+    .items{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      .item {
+        flex: 1 1 50%;
+        text-align: center;
+        padding: 5px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        i {
+          color: $main-color;
+        }
+        &.item-reset {
+          border-right: 1px solid #ebebeb;
+        }
+      }
+    }
+  }
 }

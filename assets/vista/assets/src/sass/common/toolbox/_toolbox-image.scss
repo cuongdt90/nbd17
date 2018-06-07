@@ -1,0 +1,137 @@
+.v-toolbox-image {
+  position: absolute;
+  top: 250px;
+  right: 0;
+  border: 1px solid #ebebeb;
+  min-width: 250px;
+  border-radius: 2px;
+  background: #fff;
+  .toolbox-first {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .toolbox-general {
+      .items{
+        .item {
+          margin-right: 10px;
+          text-align: center;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+    .toolbox-directional{
+      position: relative;
+      margin: -28px 0 0 20px;
+      display: inline-block;
+      width: 68px;
+      height: 68px;
+      .item-direct {
+        cursor: pointer;
+        position: absolute;
+        width: 26px;
+        height: 22px;
+        text-align: center;
+        border: 1px solid #ebebeb;
+        border-top: none;
+        i{
+          font-size: 18px;
+          line-height: normal;
+        }
+        &:first-child{
+          top: 0;
+          left: 21px;
+        }
+        &:nth-child(2) {
+          top: 23px;
+          right: -3px;
+        }
+        &:nth-child(3) {
+          bottom: 0;
+          left: 21px;
+        }
+        &:nth-child(4) {
+          top: 23px;
+          left: -3px;
+        }
+      }
+    }
+  }
+  .toolbox-last {
+    .v-assets{
+      .v-asset {
+        i{
+          font-size: 28px;
+        }
+      }
+    }
+    .v-ranges {
+      width: calc(100% - 100px);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      .main-track{
+        position: relative;
+        width: 100%;
+        .slide-input {
+          background-color: transparent;
+          border: none;
+          height: 7px;
+          outline: none;
+          padding: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          z-index: 100;
+          margin-top: -3px;
+          -webkit-appearance: none;
+          &::-webkit-slider-thumb{
+            appearance: none;
+            width: 7px;
+            height: 20px;
+            //border-radius: 50%;
+            background: $main-color;
+            cursor: pointer;
+          }
+          &::-moz-range-thumb{
+            width: 7px;
+            height: 20px;
+            //border-radius: 50%;
+            background: $main-color;
+            cursor: pointer;
+          }
+        }
+
+        .range-track {
+          background-color: #aaa;
+          height: 2px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+        }
+
+        .snap-guide {
+          position: absolute;
+          border-left: 2px solid #aaa;
+          left: 50%;
+          top: 0;
+          height: 12px;
+          margin-top: 2px;
+          z-index: 90;
+        }
+      }
+    }
+  }
+  .footer-box {
+    .main-footer {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+    }
+  }
+}
