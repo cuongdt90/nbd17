@@ -19,14 +19,14 @@
             <div>
                 <div class="clipart-wrap">
                     <div class="clipart-item"  ng-repeat="art in resource.clipart.filteredArts | limitTo: resource.clipart.filter.currentPage * resource.clipart.filter.perPage" repeat-end="onEndRepeat('clipart')">
-                        <img  ng-src="{{art.url}}" ng-click="addArt(art, true)">
+                        <img  ng-src="{{art.url}}" ng-click="addArt(art, true, true)">
                     </div>
                 </div>
                 <div class="loading-photo" style="width: 40px; height: 40px;">
                     <svg class="circular" viewBox="25 25 50 50">
                         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                     </svg>
-                </div>                 
+                </div>
             </div>
         </div>
     </div>
