@@ -153,7 +153,7 @@
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>,
                 fonts: <?php echo nbd_get_fonts(); ?>,
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
-                fbID: <?php echo $fbID; ?>,
+                fbID: "<?php echo $fbID; ?>",
                 enable_dropbox: false
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
