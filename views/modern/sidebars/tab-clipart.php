@@ -4,7 +4,7 @@
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>
     <div class="cliparts-category">
-        <button class="nbd-button nbd-dropdown">
+        <div class="nbd-button nbd-dropdown">
             <span>{{resource.clipart.filter.currentCat.name}}</span>
             <i class="icon-nbd icon-nbd-chevron-right rotate90"></i>
             <div class="nbd-sub-dropdown" data-pos="center">
@@ -12,7 +12,7 @@
                     <li ng-click="changeCat('clipart', cat)" ng-repeat="cat in resource.clipart.data.cat"><span>{{cat.name}}</span><span>{{cat.amount}}</span></li>
                 </ul>
             </div>
-        </button>
+        </div>
     </div>
     <div class="tab-main tab-scroll">
         <div class="nbd-items-dropdown" style="padding:10px;">
