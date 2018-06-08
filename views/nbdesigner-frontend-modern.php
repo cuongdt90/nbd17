@@ -231,6 +231,7 @@
                                     &copy;Netbase
                                 </a>
                             </div>
+                            <?php include 'modern/loading-workflow.php';?>
                         </div>
                         <?php include 'modern/toollock.php';?>
                     </div>
