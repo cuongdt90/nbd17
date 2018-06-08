@@ -435,6 +435,16 @@
     .type-instagram.button-login span {
         color: #fff;
     }
+    .popup-term .head {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;        
+    }
+    .form-control:focus {
+        border-color: rgba(64, 71, 98, 1);
+        outline: 0;
+        box-shadow: none;
+    }    
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;

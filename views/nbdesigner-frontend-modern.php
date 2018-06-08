@@ -108,7 +108,8 @@
                 $icl_home_url = untrailingslashit(icl_get_home_url());
                 $is_wpml = 1;
                 $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
-            }            
+            };
+            $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');            
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
@@ -152,6 +153,7 @@
                 product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>,
                 fonts: <?php echo nbd_get_fonts(); ?>,
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
+                fbID: <?php echo $fbID; ?>,
                 enable_dropbox: false
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];

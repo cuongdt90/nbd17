@@ -141,10 +141,10 @@
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
-        <div class="head"></div>
+        <div class="head"><?php _e('Image upload terms','web-to-print-online-designer'); ?></div>
         <div class="body">
             <div class="main-body">
-                {{settings['nbdesigner_upload_term']}}
+                <?php echo stripslashes(nbdesigner_get_option('nbdesigner_upload_term')); ?>
             </div>
         </div>
         <div class="footer"></div>
