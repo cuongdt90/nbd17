@@ -1,5 +1,6 @@
 .v-scrollbar{
   position: relative;
+  overflow: hidden;
   height: 100%;
   > .main-scrollbar{
     padding-right: 5px;
