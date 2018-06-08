@@ -20,10 +20,15 @@
 @import "icons/icons";
 
 /*--------------------------------------------------------------
+# Library
+--------------------------------------------------------------*/
+@import "library/animate/index";
+
+/*--------------------------------------------------------------
 # Partials
 --------------------------------------------------------------*/
 @import "patials/global";
-@import "patials/animate";
+//@import "patials/animate";
 @import "patials/main-bar";
 @import "patials/sidebar";
 @import "patials/toolbar-zoom";
@@ -52,3 +57,4 @@
 # Component
 --------------------------------------------------------------*/
 @import "component/checkbox";
+@import "component/tabs";

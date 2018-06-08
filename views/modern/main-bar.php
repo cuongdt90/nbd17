@@ -15,7 +15,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
             <span><?php _e('Edit','web-to-print-online-designer'); ?></span>
             <div class="sub-menu" data-pos="left">
                 <ul>
-                    <li class="sub-menu-item flex space-between">
+                    <li class="sub-menu-item flex space-between item-import-file">
                         <span><?php _e('Import file','web-to-print-online-designer'); ?></span>
                         <small>Ctrl+O</small>
                     </li>

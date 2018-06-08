@@ -8,8 +8,14 @@
                     + fixed-top
                     + none
 ------------------------------------------------------------------------------------->
+<?php
+$custom_logo_id = get_theme_mod( 'custom_logo' );
+$image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo-frontend.png';
+$srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
+?>
 
-<div class="nbd-popup popup-share" data-animate="none">
+<div class="nbd-popup popup-share" data-animate="scale">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <div class="overlay-main active">
@@ -63,64 +69,79 @@
         </div>
     </div>
 </div>
-<div class="nbd-popup popup-keyboard" data-animate="bottom-to-top">
+<div class="nbd-popup popup-keyboard" data-animate="fixed-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
         <div class="head">
-            <span class="title"><?php _e('Keyboard shortcuts','web-to-print-online-designer'); ?></span>
+            <div class="nbd-tab-nav">
+                <ul class="nbd-tabs">
+                    <li class="nbd-tab active" data-tab="nbd-keyboard-shortcut">
+                        <span class="title"><?php _e('Keyboard shortcuts','web-to-print-online-designer'); ?></span>
+                    </li>
+                    <li class="nbd-tab" data-tab="nbd-keyboard-about">
+                        <span class="title"><?php _e('About','web-to-print-online-designer'); ?></span>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="body">
             <div class="main-body">
-                <table class="keyboard-mapping">
-                    <tbody>
-                        <tr>
-                            <th></th>
-                            <th><?php _e('Site wide shortcuts','web-to-print-online-designer'); ?></th>
-                        </tr>
-                        <tr>
-                            <td class="keys">
-                                <kbd>ctrl</kbd>
-                                or
-                                <kbd>s</kbd>
-                            </td>
-                            <td><?php _e('Focus search bar','web-to-print-online-designer'); ?></td>
-                        </tr>
-                        <tr>
-                            <td class="keys">
-                                <kbd>shift</kbd>
-                                or
-                                <kbd>s</kbd>
-                            </td>
-                            <td>Focus search bar</td>
-                        </tr>
-                        <tr>
-                            <td class="keys">
-                                <kbd>Delete</kbd>
-                                or
-                                <kbd>s</kbd>
-                            </td>
-                            <td>Focus search bar</td>
-                        </tr>
-                        <tr>
-                            <td class="keys">
-                                <kbd>Delete</kbd>
-                                or
-                                <kbd>s</kbd>
-                            </td>
-                            <td>Focus search bar</td>
-                        </tr>
-                        <tr>
-                            <td class="keys">
-                                <kbd>Delete</kbd>
-                                or
-                                <kbd>s</kbd>
-                            </td>
-                            <td>Focus search bar</td>
-                        </tr>
-
-                    </tbody>
-                </table>
+                <div class="nbd-tab-contents">
+                    <div class="tab-scroll">
+                        <div id="nbd-keyboard-shortcut" class="nbd-tab-content active">
+                            <table class="keyboard-mapping">
+                                <tbody>
+                                <tr>
+                                    <th></th>
+                                    <th><?php _e('Site wide shortcuts','web-to-print-online-designer'); ?></th>
+                                </tr>
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>ctrl</kbd>
+                                        or
+                                        <kbd>s</kbd>
+                                    </td>
+                                    <td><?php _e('Focus search bar','web-to-print-online-designer'); ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>shift</kbd>
+                                        or
+                                        <kbd>s</kbd>
+                                    </td>
+                                    <td>Focus search bar</td>
+                                </tr>
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Delete</kbd>
+                                        or
+                                        <kbd>s</kbd>
+                                    </td>
+                                    <td>Focus search bar</td>
+                                </tr>
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Delete</kbd>
+                                        or
+                                        <kbd>s</kbd>
+                                    </td>
+                                    <td>Focus search bar</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="nbd-keyboard-about" class="nbd-tab-content">
+                            <div class="text-center" style="margin-bottom: 40px; margin-top: 20px">
+                                <img src="<?php echo $srcImage ?>" alt="Logo Online Design" style="width: 80px">
+                            </div>
+                            <div class="copy-right">
+                                <p class="text-center">Online Design - Copyright © <script>document.write(new Date().getFullYear())</script><a href="#" target="_blank"> Onlinde Design Team </a>.</p>
+                                <p class="text-center">All Rights Reserved</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer"></div>
@@ -169,3 +190,14 @@
         <div class="footer"></div>
     </div>
 </div>
+<!--<div class="nbd-popup popup-import-file" data-animate="fixed-top">-->
+<!--    <div class="overlay-popup"></div>-->
+<!--    <div class="main-popup">-->
+<!--        <i class="icon-nbd icon-nbd-clear close-popup"></i>-->
+<!--        <div class="head"></div>-->
+<!--        <div class="body">-->
+<!--            -->
+<!--        </div>-->
+<!--        <div class="footer"></div>-->
+<!--    </div>-->
+<!--</div>-->
