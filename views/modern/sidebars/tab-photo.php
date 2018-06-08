@@ -83,9 +83,10 @@
             <div class="result-loaded">
                 <div class="content-items">
                     <div ng-class="settings['nbdesigner_upload_show_term'] !== 'yes' ? 'accept' : '' " class="content-item type-upload" data-type="image-upload">
-                        <div class="form-upload" nbd-dnd-file>
+                        <div class="form-upload nbd-dnd-file" nbd-dnd-file="uploadFile(files)">
                             <i class="icon-nbd icon-nbd-cloud-upload"></i>
                             <span><?php _e('Click or drop images here','web-to-print-online-designer'); ?></span>
+                            <input type="file" accept="image/*" style="display: none;"/>
                         </div>
                         <div class="allow-size">
                             <span><?php _e('Accept file types','web-to-print-online-designer'); ?>: <strong>png, jpg, gif</strong></span>

@@ -19,7 +19,7 @@
             <div>
                 <div class="clipart-wrap">
                     <div class="clipart-item"  ng-repeat="art in resource.clipart.filteredArts | limitTo: resource.clipart.filter.currentPage * resource.clipart.filter.perPage" repeat-end="onEndRepeat('clipart')">
-                        <img  ng-src="{{art.url}}" ng-click="addArt(art, true, true)">
+                        <img  ng-src="{{art.url}}" ng-click="addArt(art, true, true)" alt="{{art.name}}">
                     </div>
                 </div>
                 <div class="loading-photo" style="width: 40px; height: 40px;">

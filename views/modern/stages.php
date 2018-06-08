@@ -445,6 +445,12 @@
         outline: 0;
         box-shadow: none;
     }    
+    .nbd-dnd-file {
+        cursor: pointer;
+    }
+    .nbd-dnd-file.highlight {
+        border: 2px dashed rgba(64, 71, 98, 1) !important;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;
