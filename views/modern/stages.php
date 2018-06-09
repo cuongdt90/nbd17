@@ -58,39 +58,7 @@
         cursor: pointer;
         display: block;
     }
-    .nbd-signal {
-        position: absolute;
-        bottom: 15px;
-        left: 5px;
-        height: 20px;
-        display: inline-block;
-        border-radius: 20px;
-        background: #fff;
-        line-height: 17px;
-        padding-right: 5px;
-        -webkit-transition: all 0.4s;
-        -moz-transition: all 0.4s;
-        transition: all 0.4s;
-    }
-    .nbd-signal a {
-        font-size: 9px;
-        color: #404762;  
-        font-family: arial, sans-serif;
-    }
-    .nbd-signal:hover {
-        background: #055b39;
-        -webkit-box-shadow: 1px 0 10px rgba(0,0,0,.08);
-        box-shadow: 1px 0 10px rgba(0,0,0,.08);        
-    }
-    .nbd-signal:hover a{
-        text-decoration: none;
-        color: #fff;        
-    }
-    .nbd-signal svg {
-        vertical-align: top;
-        background: #fff;
-        border-radius: 50%;
-    }
+
     .nbd-input {
         border: none;
     }
