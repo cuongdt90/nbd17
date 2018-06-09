@@ -434,26 +434,6 @@
 <div class="nbd-stages">
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
-<!--            <div class="nbd-warning" style="display: none;">-->
-<!--                <div class="item main-warning nbd-show">-->
-<!--                    <i class="icon-nbd icon-nbd-baseline-warning warning"></i>-->
-<!--                    <span class="title-warning">Warning Trouble</span>-->
-<!--                    <i class="icon-nbd icon-nbd-clear close-warning"></i>-->
-<!--                </div>-->
-<!---->
-<!--                <div class="item main-warning nbd-show">-->
-<!--                    <i class="icon-nbd icon-nbd-baseline-warning warning"></i>-->
-<!--                    <span class="title-warning">Warning Trouble</span>-->
-<!--                    <i class="icon-nbd icon-nbd-clear close-warning"></i>-->
-<!--                </div>-->
-<!---->
-<!--                <div class="item main-warning nbd-show">-->
-<!--                    <i class="icon-nbd icon-nbd-baseline-warning warning"></i>-->
-<!--                    <span class="title-warning">Warning Trouble</span>-->
-<!--                    <i class="icon-nbd icon-nbd-clear close-warning"></i>-->
-<!--                </div>-->
-<!---->
-<!--            </div>            -->
             <?php include 'warning.php'?>
             <div class="stage-main">
                 <div class="stage-background" ng-style="{background: stages[currentStage].config.background}"></div>
