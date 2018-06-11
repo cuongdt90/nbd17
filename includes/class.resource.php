@@ -48,9 +48,10 @@ if(!class_exists('NBD_RESOURCE')){
                         $data['arts'] = file_exists($path_art) ? json_decode(file_get_contents($path_art)) : array();                     
                         break;
                     case 'save_typography':
-                        $path = NBDESIGNER_PLUGIN_DIR . '/data/typography/typo.json';
+                        $path = NBDESIGNER_PLUGIN_DIR . 'data/typography/typo.json';
                         $folder = substr(md5(uniqid()),0,5).rand(1,100).time();
-                        $store_path = NBDESIGNER_PLUGIN_DIR . '/data/typography/store/' . $folder;
+                        $store_path = NBDESIGNER_PLUGIN_DIR . 'data/typography/store/' . $folder;
+                        if( !file_exists($store_path) ) wp_mkdir_p ($store_path);
                         $design_path = $store_path . '/design.json';
                         $used_font_path = $store_path . '/used_font.json';
                         $preview_path = $store_path . '/preview.png';
@@ -82,6 +83,39 @@ if(!class_exists('NBD_RESOURCE')){
                             $data['typo'] = $list_typo;
                         }
                         break;
+                    case 'google_font':
+                        $all_gg_fonts = json_decode(file_get_contents(NBDESIGNER_PLUGIN_DIR. '/data/google-fonts-ttf.json'))->items;
+                        $font_name = $_REQUEST['font_name'];
+                        $subset = 'all';
+                        $file = array('r' => 1);
+                        $flag = 0;
+                        foreach( $all_gg_fonts as $f ){
+                            if( $font_name == $f->family || str_replace(" ","",$font_name) == $f->family ){
+                                if( str_replace(" ","",$font_name) == $f->family ) $font_name = str_replace(" ","",$font_name);
+                                $subset = $f->subsets[0];
+                                if( isset($f->files->italic) ){
+                                    $file['i'] = 1;
+                                }
+                                if( isset($f->files->{"700"}) ){
+                                    $file['b'] = 1;
+                                }
+                                if( isset($f->files->{"700italic"}) ){
+                                    $file['bi'] = 1;
+                                }  
+                                $flag = 1;
+                                break;
+                            }
+                        }
+                        $data = array(
+                            "id"    =>  99,
+                            "name"    =>  $font_name,
+                            "alias"    =>  $font_name,
+                            "type"   =>  "google", 
+                            "subset"   =>  $subset, 
+                            "file"   =>  $file, 
+                            "cat" => array("99")
+                        );
+                        break;                         
                 }
             }
             wp_send_json(
@@ -89,8 +123,7 @@ if(!class_exists('NBD_RESOURCE')){
                     'flag' =>  $flag, 
                     'data'  =>  $data
                 )
-            );        
-            //echo $data;die();
+            );
         }
     }
 }

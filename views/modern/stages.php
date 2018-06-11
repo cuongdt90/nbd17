@@ -419,6 +419,9 @@
     .nbd-dnd-file.highlight {
         border: 2px dashed rgba(64, 71, 98, 1) !important;
     }
+    .nbd-sidebar .tab-scroll{
+        -ms-overflow-style:none;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;
