@@ -70,7 +70,6 @@ if(!class_exists('NBD_SHORTCODES')){
 
             $atts = shortcode_atts( array(
                 'row'        => '4',
-                'pagination' => 'true',
                 'per_row'    => '2',
                 'limit'      => '10'
             ), $atts, 'nbd_template');
