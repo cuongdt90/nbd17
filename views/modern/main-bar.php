@@ -101,7 +101,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
             <input type="text" name="title" class="title" placeholder="Title" value="Business Card"/>
         </li>
         <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i></li>
-        <li class="menu-item item-process" data-overlay="overlay">
+        <li class="menu-item item-process" data-overlay="overlay" ng-click="saveData('typography')">
             <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right" style="display: none;">
                 <div class="main-sub-menu">

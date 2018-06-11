@@ -100,7 +100,11 @@
                             </div>
                             <span class="term-read"><?php _e('I accept the terms','web-to-print-online-designer'); ?></span>
                         </div>
-                        <div class="elements-uploaded"></div>
+                        <div id="nbd-upload-wrap">
+                            <div class="mansory-wrap">
+                                <div class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.upload.data" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
+                            </div>                             
+                        </div>
                     </div>
                     <div class="content-item type-url" data-type="image-url">
                         <div class="form-group">
@@ -245,7 +249,7 @@
             </div>
             <div class="info-support">
                 <span>Facebook</span>
-                <i class="icon-nbd icon-nbd-clear close-result-loaded"></i>
+                <i class="icon-nbd icon-nbd-clear close-result-loaded" ng-click="onClickPhotoTab('')"></i>
             </div>
         </div>
     </div>
