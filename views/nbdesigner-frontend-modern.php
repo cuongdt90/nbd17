@@ -64,7 +64,7 @@
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/jquery-ui.min.css'; ?>" rel="stylesheet" media="all" />
         <link href='https://fonts.googleapis.com/css?family=Poppins:400,100,300italic,300' rel='stylesheet' type='text/css'>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bootstrap.min.css'; ?>" rel="stylesheet" media="all"/>
-        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bundle.css'; ?>" rel="stylesheet" media="all"/>
+<!--        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bundle.css'; ?>" rel="stylesheet" media="all"/>-->
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/tooltipster.bundle.min.css'; ?>" rel="stylesheet" media="all"/>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/modern.css'; ?>" rel="stylesheet" media="all">
         <?php $custom_css_url = file_exists( NBDESIGNER_DATA_DIR . '/custom.css' ) ? NBDESIGNER_DATA_URL .'/custom.css' : NBDESIGNER_PLUGIN_URL .'assets/css/custom.css'; ?>
@@ -190,7 +190,7 @@
         </script>
     </head>
 
-    <body ng-app="nbd-app" class="nbd-mode-modern nbd-mode-<?php echo $ui_mode; ?> <?php echo (is_rtl()) ? 'nbd-modern-rtl' : '';?>">
+    <body ng-app="nbd-app" class="nbd-mode-modern nbd-mode-<?php echo $ui_mode; ?> <?php echo (is_rtl()) ? 'nbd-modern-rtl' : '';?>">     
         <div style="width: 100%; height: 100%;" ng-controller="designCtrl" ng-click="wraperClickHandle($event)" keypress ng-cloak>
             <div id="design-container">
                 <div class="container-fluid" id="designer-controller">

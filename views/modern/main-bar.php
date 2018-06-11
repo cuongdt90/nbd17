@@ -40,11 +40,11 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
             <ul class="sub-menu" data-pos="left">
                 <li class="sub-menu-item flex space-between">
                     <span class="title-menu"><?php _e('Rule','web-to-print-online-designer'); ?></span>
-                    <small>Ctrl+R</small>
+                    <small>{{ 'M-R' | keyboardShortcut }}</small>
                 </li>
-                <li class="sub-menu-item flex space-between">
+                <li class="sub-menu-item flex space-between" ng-click="settings.showGrid = !settings.showGrid" ng-class="settings.showGrid ? 'active' : ''">
                     <span class="title-menu"><?php _e('Show grid','web-to-print-online-designer'); ?></span>
-                    <small>Ctrl+'</small>
+                    <small>{{ 'M-G' | keyboardShortcut }}</small>
                 </li>
 
                 <!------------------------------------------------------------------------------------
@@ -56,9 +56,9 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                     + scale
                 ------------------------------------------------------------------------------------->
 
-                <li class="sub-menu-item flex space-between">
-                    <span class="title-menu"><?php _e('Show guideline','web-to-print-online-designer'); ?></span>
-                    <small>Ctrl+;</small>
+                <li class="sub-menu-item flex space-between" ng-click="settings.bleedLine = !settings.bleedLine" ng-class="settings.bleedLine ? 'active' : ''">
+                    <span class="title-menu"><?php _e('Show bleed line','web-to-print-online-designer'); ?></span>
+                    <small>{{ 'M-;' | keyboardShortcut }}</small>
                 </li>
                 <li class="sub-menu-item flex space-between hover-menu active" data-animate="bottom-to-top">
                     <span class="title-menu"><?php _e('Snap to','web-to-print-online-designer'); ?></span>
@@ -98,7 +98,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
     </ul>
     <ul class="nbd-main-menu menu-right">
         <li class="menu-item item-title">
-            <input type="text" name="title" class="title" placeholder="Title" value="Business Card"/>
+            <input type="text" name="title" class="title" placeholder="Title" ng-model="stages[currentStage].config.name"/>
         </li>
         <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i></li>
         <li class="menu-item item-process" data-overlay="overlay" ng-click="saveData('typography')">
