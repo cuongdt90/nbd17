@@ -422,6 +422,9 @@
     .nbd-sidebar .tab-scroll{
         -ms-overflow-style:none;
     }
+    .nbd-onloading {
+        pointer-events: none;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;
