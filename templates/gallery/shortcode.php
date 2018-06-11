@@ -15,11 +15,13 @@ if(count($templates)):
         ), $UrlPageNBD);
     ?>
         <div class="template nbd-col-<?php echo $atts['per_row']?>">
-            <a href="<?php echo $link_template; ?>">
-                <img src="<?php echo $temp['image']; ?>" class="nbdesigner-img"/>
-                <span>Start design</span>
-            </a>
-            <p><?php echo $temp['title']; ?></p>
+            <div class="main">
+                <a href="<?php echo $link_template; ?>">
+                    <img src="<?php echo $temp['image']; ?>" class="nbdesigner-img"/>
+                    <span>Start design</span>
+                </a>
+                <p><?php echo $temp['title']; ?></p>
+            </div>
         </div>
     <?php endforeach;?>
     </div>

@@ -60,9 +60,9 @@ jQuery('body').on('click', '#nbdesigner-shortcode-create', function(){
 });
 jQuery('body').on('click', '#nbdesigner-shortcode-template-create', function(){
     var per_row = jQuery('#nbdesigner-shortcode-number').val(),
-        row = jQuery('#nbdesigner-shortcode-number-row').val(),
-        pagination = jQuery('#nbdesigner-pagination').prop('checked');
-    var content = '[nbd_template row="'+row+'" pagination="'+pagination+'" per_row="'+per_row+'" ][/nbd_template]';
+        limit = jQuery('#nbdesigner-shortcode-limit-template').val();
+        // pagination = jQuery('#nbdesigner-pagination').prop('checked');
+    var content = '[nbd_template limit="'+limit+'" per_row="'+per_row+'" ][/nbd_template]';
     tinyMCE.activeEditor.selection.setContent( content );
     if(nbds_open_editor !== false){
         tinyMCE.activeEditor.windowManager.close();
