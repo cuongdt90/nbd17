@@ -64,9 +64,18 @@ if(!class_exists('NBD_SHORTCODES')){
         /* Shortcode [nbd_template limit="4"] */
         public function nbd_templates_func( $atts ){
             if( !$this->check_nbd_active() ) return '';
+//            $atts = shortcode_atts( array(
+//                'limit'      => '4'
+//            ), $atts, 'nbd_products' );
+
             $atts = shortcode_atts( array(
-                'limit'      => '4'
-            ), $atts, 'nbd_products' ); 
+                'row'        => '4',
+                'pagination' => 'true',
+                'per_row'    => '2',
+                'limit'      => '10'
+            ), $atts, 'nbd_template');
+
+
             global $wpdb;
             $sql = "SELECT p.ID, p.post_title, t.id AS tid, t.name, t.folder, t.product_id, t.variation_id, t.user_id, t.thumbnail FROM {$wpdb->prefix}nbdesigner_templates AS t";     
             $sql .= " LEFT JOIN {$wpdb->prefix}posts AS p ON t.product_id = p.ID";
@@ -91,7 +100,8 @@ if(!class_exists('NBD_SHORTCODES')){
             } 
             ob_start();
             nbdesigner_get_template('gallery/shortcode.php', array(
-                'templates' =>  $listTemplates
+                'templates' =>  $listTemplates,
+                'atts'      => $atts
             ));
             return ob_get_clean();            
         }
