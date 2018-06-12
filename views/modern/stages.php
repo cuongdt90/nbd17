@@ -454,7 +454,29 @@
     }
     .safe-line {
         border: 1px solid green;
-    }    
+    }   
+    .fullScreenMode .design-zone {
+        pointer-events: none;
+    }
+    .fullScreenMode .page-toolbar {
+        display: none;
+    }
+    .fullScreenMode .stage{
+        background: #000;
+        padding: 0;
+    }
+    .nbd-sidebar #tab-element .main-items .item[data-type=draw] .item-icon i {
+        color: #404762;
+    }   
+    .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item.active {
+        border: 1px solid #404762;
+    }
+    .sortable-placeholder {
+        border: 3px dashed #aaa;
+        height: 50px;
+        display: flex;
+        margin: 4px;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;

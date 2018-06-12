@@ -23,22 +23,22 @@
                     <li class="sub-menu-item" ng-click="setStackPosition('bring-front')">
                         <i class="icon-nbd icon-nbd-bring-to-front"></i>
                         <span><?php _e('Bring to Front','web-to-print-online-designer'); ?></span>
-                        <span class="keyboard">Ctrl+Shift+]</span>
+                        <span class="keyboard">{{ 'M-S-]' | keyboardShortcut }}</span>
                     </li>
                     <li class="sub-menu-item" ng-click="setStackPosition('bring-forward')">
                         <i class="icon-nbd icon-nbd-bring-forward"></i>
                         <span><?php _e('Bring Forward','web-to-print-online-designer'); ?></span>
-                        <span class="keyboard">Ctrl+]</span>
+                        <span class="keyboard">{{ 'M-]' | keyboardShortcut }}</span>
                     </li>
                     <li class="sub-menu-item" ng-click="setStackPosition('send-backward')">
                         <i class="icon-nbd icon-nbd-sent-to-backward"></i>
                         <span><?php _e('Send to Backward','web-to-print-online-designer'); ?></span>
-                        <span class="keyboard">Ctrl+[</span>
+                        <span class="keyboard">{{ 'M-[' | keyboardShortcut }}</span>
                     </li>
                     <li class="sub-menu-item" ng-click="setStackPosition('send-back')">
                         <i class="icon-nbd icon-nbd-send-to-back"></i>
                         <span><?php _e('Send to Back','web-to-print-online-designer'); ?></span>
-                        <span class="keyboard">Ctrl+Shift+[</span>
+                        <span class="keyboard">{{ 'M-S-[' | keyboardShortcut }}</span>
                     </li>
                 </ul>
             </div>

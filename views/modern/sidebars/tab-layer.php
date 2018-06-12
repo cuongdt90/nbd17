@@ -1,44 +1,20 @@
 <div class="tab tab-last" id="tab-layer">
     <div class="tab-main tab-scroll">
         <div class="inner-tab-layer">
-            <ul class="menu-layer">
-                <li class="menu-item item-layer-text">
-                    <i class="icon-nbd icon-nbd-text-fields item-left"></i>
-                    <div class="item-center"><input style="border: none;" value="First Name" type="text"/></div>
+            <ul class="menu-layer" nbd-layer="sortLayer(srcIndex, dstIndex)">
+                <li class="menu-item item-layer-text" data-index="{{layer.index}}" ng-click="activeLayer(layer.index)" ng-class="layer.selectable ? '' : 'lock-active'" ng-repeat="layer in stages[currentStage].layers">
+                    <i ng-if="layer.type == 'text'" class="icon-nbd icon-nbd-text-fields item-left"></i>
+                    <i ng-if="layer.type == 'path'" class="icon-nbd icon-nbd-vector item-left"></i>
+                    <i ng-if="layer.type == 'image'" class="icon-nbd icon-nbd-image-layer item-left"></i>
+                    <div ng-if="layer.type == 'text'" class="item-center"><input style="border: none;" ng-change="setLayerAttribute('text', layer.text, layer.index, $index)" ng-model="layer.text" type="text"/></div>
+                    <span ng-if="layer.type == 'path'" class="item-center"><?php _e('Path group','web-to-print-online-designer'); ?></span>
+                    <span ng-if="layer.type == 'image'" class="item-center"><?php _e('Image','web-to-print-online-designer'); ?></span>
                     <span class="item-right">
-                        <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                        <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                        <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
+                        <i ng-click="setLayerAttribute('visible', !layer.visible, layer.index, $index)" ng-class="layer.visible ? 'icon-nbd-fomat-visibility' : 'icon-nbd-fomat-visibility-off'" class="icon-nbd icon-visibility" data-active="true" data-act="visibility"></i>
+                        <i ng-click="setLayerAttribute('selectable', !layer.selectable, layer.index, $index)" ng-class="layer.selectable ? 'icon-nbd-fomat-lock-open' : 'icon-nbd-fomat-lock-outline'" class="icon-nbd icon-lock" data-active="true" data-act="lock"></i>
+                        <i ng-click="deleteLayers(layer.index)" class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
                     </span>
                 </li>
-                <li class="menu-item item-layer-curved">
-                    <i class="icon-nbd icon-nbd-text-fields item-left"></i>
-                    <div class="item-center"><input style="border: none;" value="Last Name" type="text"/></div>
-                    <span class="item-right">
-                        <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                        <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                        <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
-                    </span>
-                </li>
-                <li class="menu-item item-layer-curved">
-                    <i class="icon-nbd icon-nbd-vector item-left"></i>
-                    <span class="item-center">Path group</span>
-                    <span class="item-right">
-                        <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                        <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                        <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
-                    </span>
-                </li>
-                <li class="menu-item item-layer-image">
-                    <i class="icon-nbd icon-nbd-image-layer item-left"></i>
-                    <span class="item-center">Image</span>
-                    <span class="item-right">
-                        <i class="icon-nbd icon-nbd-fomat-visibility icon-visibility" data-active="true" data-act="visibility"></i>
-                        <i class="icon-nbd icon-nbd-fomat-lock-open icon-lock" data-active="true" data-act="lock"></i>
-                        <i class="icon-nbd icon-nbd-fomat-highlight-off icon-close" data-act="close"></i>
-                    </span>
-                </li>
-
             </ul>
         </div>
     </div>
