@@ -1,4 +1,4 @@
-<div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="v-image-toolbar" class="v-tab-content">
+<div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="v-image-toolbar" class="v-tab-content" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
     <span class="v-title">Image</span>
     <div class="v-content">
         <div class="v-scrollbar">
@@ -42,13 +42,13 @@
                                     <span class="item-name" title="Webcam"><?php _e('Webcam','web-to-print-online-designer'); ?></span>
                                 </div>
                             </div>
-                            <div ng-if="settings['nbdesigner_enable_pixabay'] == 'yes'" class="item" data-type="pixabay" data-api="true">
+                            <div ng-click="onClickTab('Pixabay', 'photo')" ng-if="settings['nbdesigner_enable_pixabay'] == 'yes'" class="item" data-type="pixabay" data-api="true">
                                 <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-pixabay"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Pixabay"><?php _e('Pixabay','web-to-print-online-designer'); ?></span>
                                 </div>
                             </div>
-                            <div ng-if="settings['nbdesigner_enable_unsplash'] == 'yes'" class="item" data-type="unsplash" data-api="true">
+                            <div ng-click="onClickTab('Unsplash', 'photo')" ng-if="settings['nbdesigner_enable_unsplash'] == 'yes'" class="item" data-type="unsplash" data-api="true">
                                 <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-camera-alt"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Unsplash"><?php _e('Unsplash','web-to-print-online-designer'); ?></span>
@@ -107,12 +107,15 @@
                                 <?php _e('webcam','web-to-print-online-designer'); ?>
                             </div>
                         </div>
-                        <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>
-                    </div>
-                    <div class="loading-photo" style="display: none; width: 40px; height: 40px;">
-                        <svg class="circular" viewBox="25 25 50 50">
-                            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-                        </svg>
+                        <!--                        <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>-->
+                        <div class="nbdesigner-gallery" id="nbdesigner-gallery">
+                            <div class="nbdesigner-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.photo.data" repeat-end="onEndRepeat('photo')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
+                        </div>
+                        <div class="loading-photo" style="display: none; width: 40px; height: 40px;">
+                            <svg class="circular" viewBox="25 25 50 50">
+                                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>

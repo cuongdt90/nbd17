@@ -251,9 +251,9 @@ function checkMobileDevice(){
                         var src = 'https://media-public.canva.com/MABrm9_5-j0/3/thumbnail_large.jpg';
                         var item = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>'
 
-                        for (var i=0;i<100;i++) {
-                            $galleryItem.append(item);
-                        }
+                        // for (var i=0;i<100;i++) {
+                        //     $galleryItem.append(item);
+                        // }
 
                         $resultLoaded.show();
                         $galleryItem.hide();
@@ -319,20 +319,20 @@ function checkMobileDevice(){
                     }
 
                     // Event click in close result
-                    $infoSupport.find('.close-result-loaded').on('click', function () {
+                    // $infoSupport.find('.close-result-loaded').on('click', function () {
+                    //
+                    //     $mainItems.removeClass('active-expanded');
+                    //     // $resultLoaded.find('.nbdesigner-gallery').empty();
+                    //     $resultLoaded.hide();
+                    //     $resultLoaded.removeClass('loaded');
+                    //     $galleryItem.hide();
+                    //     $item.show();
+                    //     $loadingGif.hide();
+                    //     $item.show().css({'opacity' : '1'});
+                    //     $tabScroll.scrollTop(0);
+                    // });
 
-                        $mainItems.removeClass('active-expanded');
-                        // $resultLoaded.find('.nbdesigner-gallery').empty();
-                        $resultLoaded.hide();
-                        $resultLoaded.removeClass('loaded');
-                        $galleryItem.hide();
-                        $item.show();
-                        $loadingGif.hide();
-                        $item.show().css({'opacity' : '1'});
-                        $tabScroll.scrollTop(0);
-                    });
-
-                    return false;
+                    // return false;
                 }
 
             });
