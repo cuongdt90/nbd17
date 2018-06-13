@@ -19,8 +19,10 @@
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="nbd-icon-vista nbd-icon-vista-clear close-popup"></i>
-        <div class="head">This is terms</div>
-        <div class="body"></div>
+        <div class="head">Image upload terms</div>
+        <div class="body">
+            {{settings['nbdesigner_upload_term']}}
+        </div>
         <div class="footer"></div>
     </div>
 </div>

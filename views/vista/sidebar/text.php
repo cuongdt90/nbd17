@@ -1,4 +1,4 @@
-<div id="v-text-toolbar" class="v-tab-content">
+<div ng-if="settings['nbdesigner_enable_text'] == 'yes'" id="v-text-toolbar" class="v-tab-content">
     <span class="v-title">Text</span>
     <div class="v-action">
         <button class="v-btn waves-effect" style="width: 100%">Add New Text Field</button>

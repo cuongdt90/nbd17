@@ -84,7 +84,6 @@
       }
     }
   }
-
   &[data-animate="fixed-top"] {
     align-items: flex-start;
     .main-popup {
@@ -98,7 +97,6 @@
       }
     }
   }
-
   .close-popup {
     position: absolute;
     top: 10px;
@@ -317,6 +315,14 @@
           }
         }
       }
+    }
+  }
+  &.v-popup-terms {
+    .head {
+      margin-bottom: 20px;
+    }
+    .body {
+
     }
   }
 }

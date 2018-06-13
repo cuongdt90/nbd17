@@ -431,6 +431,7 @@ function checkMobileDevice(){
             if (checkMobileDevice()) {
                 this.mobile();
             }
+            this.checkTerm();
         },
         mobile: function () {
             var $sideBar = $('.nbd-vista .v-sidebar');
@@ -443,10 +444,30 @@ function checkMobileDevice(){
                 }else {
                     $sideBar.addClass('active');
                     $layout.removeClass('active');
-                    // $('.nbd-vista .v-menu-item.v-tab-layer').removeClass('active');
                 }
             });
+        },
 
+        checkTerm : function () {
+            var $termCheck = $('.type-upload .nbd-term .nbd-checkbox input');
+            var $formUpload = $('.type-upload .form-upload');
+            var isUpload = false;
+            $termCheck.on('click', function () {
+                var $typeUpload = $(this).closest('.type-upload');
+                if ($(this).is(':checked')) {
+                    $typeUpload.addClass('accept');
+                    isUpload = true;
+                }else {
+                    $typeUpload.removeClass('accept');
+                    isUpload = false;
+                }
+            });
+            $formUpload.on('click', function () {
+                if (!isUpload) {
+                    alert('Please accept the upload term conditions');
+                    return false;
+                }
+            });
         }
     };
 
@@ -469,7 +490,6 @@ function checkMobileDevice(){
         $('.nbd-vista .nbd-term .term-read').on('click', function () {
             $('.nbd-vista .v-popup-terms').nbShowPopup();
         });
-
         $('.nbd-color-palette .color-palette-add').on('click', function () {
             if ($('.nbd-text-color-picker').hasClass('active')) {
                 $('.nbd-text-color-picker').removeClass('active');
@@ -482,5 +502,6 @@ function checkMobileDevice(){
                 'removeClass' : 'active'
             });
         });
+
     });
 })(jQuery);

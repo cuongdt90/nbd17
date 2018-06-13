@@ -10,10 +10,10 @@
                 <li class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="v-design-toolbar">
                     <i class="nbd-icon-vista nbd-icon-vista-group-work"></i><span>Design</span>
                 </li>
-                <li class="v-tab v-menu-item" data-tab="v-text-toolbar">
+                <li class="v-tab v-menu-item" data-tab="v-text-toolbar" ng-if="settings['nbdesigner_enable_text'] == 'yes'">
                     <i class="nbd-icon-vista nbd-icon-vista-text"></i><span>Text</span>
                 </li>
-                <li class="v-tab v-menu-item" data-tab="v-image-toolbar">
+                <li ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="v-image-toolbar">
                     <i class="nbd-icon-vista nbd-icon-vista-image"></i><span>Image</span>
                 </li>
                 <li class="v-tab v-menu-item" data-tab="v-more-toolbar">

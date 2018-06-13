@@ -29,6 +29,16 @@ input[type=email], input[type=password], input[type=search], input[type=text], i
   text-transform: capitalize !important;
 }
 
+.nbd-disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.nbd-enable {
+  pointer-events: unset;
+  opacity: 1;
+}
+
 .rotate-45{
   display: inline-block;
   transform: rotate(-45deg);
