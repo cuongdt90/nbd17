@@ -12,8 +12,9 @@ class Nbdesigner_Compatibility {
     public function compatibility_dokan(){
         if( !is_admin() ){
             if( class_exists('Dokan_Pro') ){
-                add_filter( 'dokan_product_data_tabs', array(&$this, 'nbd_dokan_product_data_tabs'), 10, 1 );	
-                add_action( 'dokan_product_tab_content', array(&$this, 'box_config_product'), 10, 2 );
+//                add_filter( 'dokan_product_data_tabs', array(&$this, 'nbd_dokan_product_data_tabs'), 10, 1 );
+//                add_action( 'dokan_product_tab_content', array(&$this, 'box_config_product'), 10, 2 );
+                add_action( 'dokan_product_edit_after_inventory_variants', array(&$this, 'box_config_product'), 10, 2 );
             }else{
                 add_action( 'dokan_product_edit_after_inventory_variants', array(&$this, 'box_config_product'), 10, 2 );
             }
