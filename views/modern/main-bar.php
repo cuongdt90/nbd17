@@ -5,10 +5,9 @@ $srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo-frontend.png';
 $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 ?>
 <div class="nbd-main-bar">
-	<a href="#" class="logo">
+    <a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="logo">
         <img src="<?php echo $srcImage;?>" alt="online design">
     </a>
-
     <i class="icon-nbd icon-nbd-menu menu-mobile"></i>
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-edit">

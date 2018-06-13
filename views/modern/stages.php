@@ -477,6 +477,15 @@
         display: flex;
         margin: 4px;
     }
+    .nbd-toolbar .toolbar-text .nbd-main-menu.menu-left .menu-item .toolbar-bottom span {
+        line-height: 24px;
+    }
+    .nbd-sidebar #tab-element .nbd-items-dropdown .content-items .content-item.type-qrcode .main-input input {
+        padding: 10px;
+    }
+    .nbd-hiden {
+        visibility: hidden;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;

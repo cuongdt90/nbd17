@@ -3,7 +3,7 @@
         <input type="search" name="search" placeholder="search" ng-model="resource.clipart.filter.search"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>
-    <div class="cliparts-category">
+    <div class="cliparts-category" ng-class="resource.clipart.data.cat.length > 0 ? '' : 'nbd-hiden'">
         <div class="nbd-button nbd-dropdown">
             <span>{{resource.clipart.filter.currentCat.name}}</span>
             <i class="icon-nbd icon-nbd-chevron-right rotate90"></i>

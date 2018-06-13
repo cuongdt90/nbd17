@@ -10,7 +10,7 @@
         </div>
         <div class="typography-body">
             <ul class="typography-items">
-                <li ng-click="insertCanvaTypo(generateTypoLink(typo))" class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.filter.currentPage * resource.typography.filter.perPage" repeat-end="onEndRepeat('typography')">
+                <li ng-click="insertCanvaTypo(typo)" class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.filter.currentPage * resource.typography.filter.perPage" repeat-end="onEndRepeat('typography')">
                     <img ng-src="{{generateTypoLink(typo)}}"alt="Typography" />
                 </li>
             </ul>
