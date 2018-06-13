@@ -75,6 +75,11 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'version'   => '1.0.0',
                         'depends'  => array('jquery')
                     ),
+                    'app-vista' => array(
+                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/app-vista.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
                     'bundle-vista' => array(
                         'link' => NBDESIGNER_ASSETS_URL.'vista/assets/js/bundle-vista.min.js',
                         'version'   => '1.0.0',
@@ -113,7 +118,7 @@ if(!class_exists('Nbdesigner_Vista')) {
 
                 wp_enqueue_script('jquery-ui');
                 wp_enqueue_script('angular');
-                wp_enqueue_script('app-modern');
+                wp_enqueue_script('app-vista');
                 wp_enqueue_script('bundle-vista');
                 wp_enqueue_script('add-to-cart');
 //                wp_enqueue_script('perfect-scrollbar');
