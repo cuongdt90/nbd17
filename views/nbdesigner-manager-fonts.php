@@ -211,8 +211,9 @@
             <div class="gg-font-preview-wrap">
                 <div class="nbd-pagesize-wrap">
                     <b><?php _e('Total', 'web-to-print-online-designer');?> {{fonts.length}} <?php _e('fonts', 'web-to-print-online-designer');?></b>
+                    <a class="button button-primary" ng-click="selectAll()"><?php _e('Select All', 'web-to-print-online-designer');?></a>
                     <div style="display: inline-block; float: right;">
-                        <label for='nbd-selected'><?php _e('Select ', 'web-to-print-online-designer');?></label>
+                        <label for='nbd-selected'><?php _e('Display ', 'web-to-print-online-designer');?></label>
                         <select id='nbd-selected' ng-model="filterFont.select" ng-change="resetCurentPage()">
                             <option value=""><?php _e('All', 'web-to-print-online-designer');?></option>
                             <option value="selected"><?php _e('Selected', 'web-to-print-online-designer');?></option>
@@ -226,9 +227,10 @@
                             <option ng-value="30">36</option>
                             <option ng-value="50">56</option>
                         </select>                
-                    </div>                      
+                    </div>
                 </div>
                 <p><small><?php _e('Click check mark to select/unselect font', 'web-to-print-online-designer');?></small></p>
+                <p style="font-size: 10px; font-weight: bold; color: red;"><?php _e('Please remove unused fonts to make the design editor loads faster', 'web-to-print-online-designer');?></p>
                 <div class="gg-font-preview-wrap-inner">
                     <div class="gg-font-preview" ng-repeat="font in fonts | startFrom:filterFont.currentPage*filterFont.pageSize | limitTo:filterFont.pageSize">
                         <div class="gg-font-preview-inner-wrap" style="font-family: '{{font.family}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif">
@@ -297,6 +299,12 @@
                 angular.forEach($scope.selectedFonts, function(_font, k) {    
                     if( font.family == _font.name ) $scope.allFonts[key].selected = true;
                 });        
+            });            
+        };
+        $scope.selectAll = function(){
+            $scope.selectedFonts = [];
+            angular.forEach($scope.allFonts, function(font, key) {     
+                $scope.selectedFonts.push({name: font.family});
             });            
         };
         $scope.selectFont = function( font, $event ){

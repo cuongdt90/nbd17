@@ -1,55 +1,50 @@
-<div class="tab" id="tab-element">
+<div class="tab" id="tab-element" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
     <div class="tab-main tab-scroll">
         <div class="nbd-items-dropdown">
             <div class="main-items">
                 <div class="items">
-                    <div class="item" data-type="draw" data-api="false">
+                    <div class="item" data-type="draw" data-api="false" ng-click="onClickTab('draw', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-drawing"></i></div>
                             <div class="item-info">
-                                <span class="item-name" title="Business Card"><?php _e('Draw','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('Draw','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
-                    <div class="item" data-type="shapes" data-api="true">
+                    <div class="item" data-type="shapes" data-api="false" ng-click="onClickTab('shape', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-shapes"></i></div>
                             <div class="item-info">
-                                <span class="item-name" title="Business Card"><?php _e('Shapes','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('Shapes','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
-                    <div class="item" data-type="icons" data-api="true">
+                    <div class="item" data-type="icons" data-api="false" ng-click="onClickTab('icon', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-diamond"></i></div>
                             <div class="item-info">
-                                <span class="item-name" title="Business Card"><?php _e('Icons','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('Icons','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
-                    <div class="item" data-type="lines" data-api="true">
+                    <div class="item" data-type="lines" data-api="false" ng-click="onClickTab('line', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-line"></i></div>
                             <div class="item-info">
-                                <span class="item-name" title="Business Card"><?php _e('Lines','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('Lines','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
-                    <div class="item" data-type="qr-code" data-api="false">
+                    <div class="item" data-type="qr-code" data-api="false" ng-click="onClickTab('qrcode', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-qrcode"></i></div>
                             <div class="item-info">
-                                <span class="item-name" title="Business Card"><?php _e('QR-Code','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('QR-Code','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="pointer"></div>
-            </div>
-            <div class="loading-photo" style="width: 40px; height: 40px;">
-                <svg class="circular" viewBox="25 25 50 50">
-                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
-                </svg>
             </div>
             <div class="result-loaded">
                 <div class="content-items">
@@ -94,9 +89,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content-item type-shape" data-type="shape"></div>
-                    <div class="content-item type-icons" data-type="icons"></div>
-                    <div class="content-item type-lines" data-type="lines"></div>
+                    <div class="content-item type-shapes" data-type="shapes" id="nbd-shape-wrap">
+                        <div class="mansory-wrap">
+                            <div class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.shape.data" repeat-end="onEndRepeat('shape')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                        </div>                        
+                    </div>
+                    <div class="content-item type-icons" data-type="icons" id="nbd-icon-wrap">
+                        <div class="mansory-wrap">
+                            <div class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.icon.data" repeat-end="onEndRepeat('icon')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                        </div>                          
+                    </div>
+                    <div class="content-item type-lines" data-type="lines" id="nbd-line-wrap">
+                        <div class="mansory-wrap">
+                            <div class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.line.data" repeat-end="onEndRepeat('line')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                        </div>                          
+                    </div>
                     <div class="content-item type-qrcode" data-type="qr-code">
                         <div class="main-type">
                             <div class="main-input">
@@ -112,10 +119,15 @@
                 </div>
                 <div class="nbdesigner-gallery" id="nbdesigner-gallery">
                 </div>
+                <div class="loading-photo" style="width: 40px; height: 40px;">
+                    <svg class="circular" viewBox="25 25 50 50">
+                        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+                    </svg>
+                </div>           
             </div>
             <div class="info-support">
                 <span>Facebook</span>
-                <i class="icon-nbd icon-nbd-clear close-result-loaded"></i>
+                <i class="icon-nbd icon-nbd-clear close-result-loaded" ng-click="onClickTab('', 'element')"></i>
             </div>
         </div>
     </div>
