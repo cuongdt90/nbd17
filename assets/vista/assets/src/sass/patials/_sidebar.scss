@@ -1,6 +1,19 @@
 .v-sidebar {
   height: 500px;
   width: 260px;
+  @media screen and (max-width: 767px) {
+    position: relative;
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: -1;
+    &.active {
+      width: 100%;
+      opacity: 1;
+      visibility: visible;
+      z-index: 1;
+    }
+  }
   .main-sidebar, .v-tab-contents, .v-tab-content {
     height: 100%;
   }
@@ -30,27 +43,27 @@
     }
     @import "element";
   }
-  #v-text-toolbar,#v-more-toolbar {
+  #v-text-toolbar, #v-more-toolbar {
     .v-content {
       height: calc(100% - 110px);
     }
   }
-  #v-design-toolbar{
-   .v-content {
-     height: 100%;
-     .v-scrollbar{
-       &.layout{
-         margin-bottom: 20px;
-         height: calc(100% - 250px);
-         background-color: #ebebeb;
-         .main-scrollbar{
-           margin-bottom: 0;
-         }
-       }
-       &.bg-color{
-         height: 122px;
+  #v-design-toolbar {
+    .v-content {
+      height: 100%;
+      .v-scrollbar {
+        &.layout {
+          margin-bottom: 20px;
+          height: calc(100% - 250px);
+          background-color: #ebebeb;
+          .main-scrollbar {
+            margin-bottom: 0;
+          }
+        }
+        &.bg-color {
+          height: 122px;
           .main-color {
-            .items{
+            .items {
               display: flex;
               justify-content: flex-start;
               align-items: center;
@@ -78,10 +91,10 @@
               }
             }
           }
-       }
+        }
 
-     }
-   }
+      }
+    }
     .items {
       .item {
         padding: 10px;
@@ -89,7 +102,7 @@
           margin: auto;
           padding: 10px;
           border: 1px solid transparent;
-          &:hover{
+          &:hover {
             border-color: $main-color;
           }
         }
@@ -97,7 +110,7 @@
     }
   }
   #v-image-toolbar {
-    .v-content{
+    .v-content {
       height: calc(100% - 55px);
     }
   }

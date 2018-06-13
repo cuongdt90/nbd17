@@ -1,13 +1,20 @@
-@import "patials/reset";
-@import "patials/color-variables";
 @import "patials/icons";
-@import "library/perfect-scrollbar";
-@import "library/animate/index";
+@import "patials/reset";
 
 .nbd-vista {
   height: 580px;
   margin-bottom: 30px;
   overflow: hidden;
+  box-sizing: border-box;
+
+  @import "patials/color-variables";
+
+  // Library
+  @import "library/perfect-scrollbar";
+  @import "library/animate/index";
+  @import "library/spectrum";
+  @import "library/jquery-ui.min";
+
   // component
   @import "component/button";
   @import "component/dropdown";
@@ -24,6 +31,7 @@
   @import "patials/toollock";
   @import "patials/toasts";
   @import "patials/loading";
+  @import "patials/spectrum";
   .v-workspace {
     height: 500px;
     display: flex;

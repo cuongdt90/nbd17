@@ -46,6 +46,24 @@
                             <li class="item" style="background-color: #398758"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>
                             <li class="item" style="background-color: #928C3C"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>
                             <li class="item" style="background-color: #928C3C"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>
+
+<!--                            <div class="nbd-text-color-picker active" id="nbd-text-color-picker">-->
+<!--                                <spectrum-colorpicker-->
+<!--                                        ng-model="currentColor"-->
+<!--                                        options="{-->
+<!--                                                preferredFormat: 'hex',-->
+<!--                                                color: '#fff',-->
+<!--                                                flat: true,-->
+<!--                                                showButtons: false,-->
+<!--                                                showInput: true,-->
+<!--                                                containerClassName: 'nbd-sp'-->
+<!--                                            }">-->
+<!--                                </spectrum-colorpicker>-->
+<!--                                <div>-->
+<!--                                    <button class="v-btn" ng-click="addColor()">--><?php //_e('Add color','web-to-print-online-designer'); ?><!--</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
                         </ul>
                     </div>
                 </div>

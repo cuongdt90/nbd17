@@ -1,10 +1,31 @@
 .v-toolbar {
   margin-bottom: 30px;
+  @media screen and (max-width: 767px){
+      margin-bottom: 0;
+  }
   .main-toolbar {
     display: flex;
     justify-content: space-between;
     border: 1px solid #ebebeb;
     border-radius: 2px;
+    @media screen and (max-width: 767px){
+      border-color: transparent;
+      flex-wrap: wrap;
+      .v-toolbar-item {
+        border: 1px solid #ebebeb;
+        overflow-x: auto;
+        &.left-toolbar{
+        }
+        &.right-toolbar {
+          margin-top: 20px;
+          border: 1px solid #ebebeb;
+          width: 100%;
+          .v-main-menu {
+            justify-content: center;
+          }
+        }
+      }
+    }
   }
 }
 .v-main-menu {

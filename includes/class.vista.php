@@ -6,6 +6,7 @@ if(!class_exists('Nbdesigner_Vista')) {
     class Nbdesigner_Vista
     {
         protected static $instance;
+        protected $isDesign = false;
 
         public function __construct()
         {
@@ -58,7 +59,33 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/masonry.min.js',
                         'version'   => '1.0.0',
                         'depends'  => array('jquery')
-                    )
+                    ),
+                    'angular' => array(
+                        'link' => NBDESIGNER_PLUGIN_URL .'assets/libs/angular.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
+                    'jquery-ui' => array(
+                        'link' => NBDESIGNER_PLUGIN_URL . 'assets/libs/jquery-ui.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
+                    'app-modern' => array(
+                        'link' => NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
+                    'bundle-vista' => array(
+                        'link' => NBDESIGNER_ASSETS_URL.'vista/assets/js/bundle-vista.min.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
+                    'add-to-cart' => array(
+                        'link' => NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js',
+                        'version'   => '1.0.0',
+                        'depends'  => array('jquery')
+                    ),
+
                 );
                 $css_libs = array(
                     'vista' => array(
@@ -66,6 +93,12 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'version'   => '1.0.0',
                         'depends'  =>  array()
                     ),
+                    'vista-rtl' => array(
+                        'link' => NBDESIGNER_ASSETS_URL.'vista/assets/css/vista-rtl.css',
+                        'version'   => '1.0.0',
+                        'depends'  =>  array()
+                    ),
+
                 );
                 foreach ($js_libs as $key => $js){
                     $link = $js['link'];
@@ -76,10 +109,22 @@ if(!class_exists('Nbdesigner_Vista')) {
                     wp_register_style($key, $link, $css['depends'], $css['version']);
                 }
                 wp_enqueue_style( 'vista');
+//                wp_enqueue_style( 'spectrum');
+
+                wp_enqueue_script('jquery-ui');
+                wp_enqueue_script('angular');
+                wp_enqueue_script('app-modern');
+                wp_enqueue_script('bundle-vista');
+                wp_enqueue_script('add-to-cart');
+//                wp_enqueue_script('perfect-scrollbar');
+//                wp_enqueue_script('images-loaded');
+//                wp_enqueue_script('masonry');
                 wp_enqueue_script('vista');
-                wp_enqueue_script('perfect-scrollbar');
-                wp_enqueue_script('images-loaded');
-                wp_enqueue_script('masonry');
+
+                if (is_rtl()) {
+                    wp_enqueue_style('vista-rtl');
+                }
+
             });
         }
 

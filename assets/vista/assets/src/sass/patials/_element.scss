@@ -33,6 +33,12 @@
       }
       .item {
         width: 80px;
+        @media screen and (max-width: 767px){
+          width: 100px;
+        }
+        @media screen and (max-width: 320px){
+            width: 70px;
+        }
         margin-bottom: 15px;
         cursor: pointer;
         .item-icon{

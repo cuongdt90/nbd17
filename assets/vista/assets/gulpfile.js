@@ -31,8 +31,20 @@ gulp.task('frontstyle', function() {
         .pipe(gulp.dest('./css/'))
 });
 
-gulp.task('watch', function() {
-    gulp.watch('src/sass/**/*.scss', ['frontstyle']);
+gulp.task('right-to-left', function() {
+    return gulp.src('./src/sass/rtl.scss')
+        .pipe(plumber({errorHandler: onError}))
+        .pipe(sass())
+        .pipe(autoprefixer())
+        .pipe(gcmq())
+        .pipe(minifyCSS())
+        .pipe(rename('vista-rtl.css'))
+        .pipe(gulp.dest('./css/'));
 });
 
-gulp.task('default', ['front']);
+
+gulp.task('watch', function() {
+    gulp.watch('src/sass/**/*.scss', ['frontstyle', 'right-to-left']);
+});
+
+gulp.task('default', ['frontstyle','right-to-left']);

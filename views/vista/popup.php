@@ -15,7 +15,7 @@
     </div>
 </div>
 
-<div class="v-popup v-popup-terms" data-animate="scale">
+<div class="v-popup v-popup-terms" data-animate="fixed-top">
     <div class="overlay-popup"></div>
     <div class="main-popup">
         <i class="nbd-icon-vista nbd-icon-vista-clear close-popup"></i>

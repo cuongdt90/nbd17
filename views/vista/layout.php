@@ -1,4 +1,4 @@
-<div class="v-layout">
+<div class="v-layout <?php echo (wp_is_mobile()) ? 'active' : ''?>">
     <div class="stage">
         <div class="main-stage" style="width: 400px; height: 400px; background-color: #ebebeb"></div>
     </div>
@@ -148,6 +148,22 @@
                                                 <li class="color-palette-item" data-color="#ffffff" title="#ffffff"
                                                     style="background-color: #ffffff;"></li>
                                             </ul>
+                                        </div>
+                                        <div class="nbd-text-color-picker" id="nbd-text-color-picker">
+                                            <spectrum-colorpicker
+                                                ng-model="currentColor"
+                                                options="{
+                                                preferredFormat: 'hex',
+                                                color: '#fff',
+                                                flat: true,
+                                                showButtons: false,
+                                                showInput: true,
+                                                containerClassName: 'nbd-sp'
+                                            }">
+                                            </spectrum-colorpicker>
+                                            <div>
+                                                <button class="v-btn" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

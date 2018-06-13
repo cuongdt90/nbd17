@@ -84,6 +84,21 @@
       }
     }
   }
+
+  &[data-animate="fixed-top"] {
+    align-items: flex-start;
+    .main-popup {
+      margin-top: 60px;
+      transform: translate(0, -50%);
+      transition: all .3s;
+    }
+    &.nb-show {
+      .main-popup {
+        transform: translate(0, 0);
+      }
+    }
+  }
+
   .close-popup {
     position: absolute;
     top: 10px;
