@@ -37,10 +37,10 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
         <li class="menu-item item-view">
             <span><?php _e('View','web-to-print-online-designer'); ?></span>
             <ul class="sub-menu" data-pos="left">
-                <li class="sub-menu-item flex space-between">
+<!--                <li class="sub-menu-item flex space-between">
                     <span class="title-menu"><?php _e('Rule','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-R' | keyboardShortcut }}</small>
-                </li>
+                </li>-->
                 <li class="sub-menu-item flex space-between" ng-click="settings.showGrid = !settings.showGrid" ng-class="settings.showGrid ? 'active' : ''">
                     <span class="title-menu"><?php _e('Show grid','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-G' | keyboardShortcut }}</small>
@@ -57,9 +57,9 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 
                 <li class="sub-menu-item flex space-between" ng-click="settings.bleedLine = !settings.bleedLine" ng-class="settings.bleedLine ? 'active' : ''">
                     <span class="title-menu"><?php _e('Show bleed line','web-to-print-online-designer'); ?></span>
-                    <small>{{ 'M-;' | keyboardShortcut }}</small>
+                    <small>{{ 'M-L' | keyboardShortcut }}</small>
                 </li>
-                <li class="sub-menu-item flex space-between hover-menu active" data-animate="bottom-to-top">
+<!--                <li class="sub-menu-item flex space-between hover-menu active" data-animate="bottom-to-top">
                     <span class="title-menu"><?php _e('Snap to','web-to-print-online-designer'); ?></span>
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>
                     <div class="hover-sub-menu-item">
@@ -69,8 +69,8 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                             <li><span class="title-menu"><?php _e('Grid','web-to-print-online-designer'); ?></span></li>
                         </ul>
                     </div>
-                </li>
-				<li class="sub-menu-item flex space-between hover-menu" data-animate="bottom-to-top">
+                </li>-->
+		<li class="sub-menu-item flex space-between hover-menu" data-animate="bottom-to-top">
                     <span class="title-menu"><?php _e('Show warning','web-to-print-online-designer'); ?></span>
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>
                     <div class="hover-sub-menu-item">

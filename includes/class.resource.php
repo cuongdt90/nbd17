@@ -40,6 +40,11 @@ if(!class_exists('NBD_RESOURCE')){
                         $path = $_REQUEST['task'] == 'typography' ? NBDESIGNER_PLUGIN_DIR . '/data/typography/typography.json' : NBDESIGNER_PLUGIN_DIR . '/data/typography/typo.json';
                         if(file_exists($path) ) $data = json_decode( file_get_contents($path) );
                         break;  
+                    case 'get_typo':
+                        $path = NBDESIGNER_PLUGIN_DIR . '/data/typography/store/'.$_REQUEST['folder'];
+                        $data['font'] = json_decode( file_get_contents($path.'/used_font.json') );
+                        $data['design'] = json_decode( file_get_contents($path.'/design.json') );
+                        break;                         
                     case 'clipart':
                         $path_cat = NBDESIGNER_DATA_DIR . '/art_cat.json';
                         $path_art = NBDESIGNER_DATA_DIR . '/arts.json'; 
@@ -81,7 +86,7 @@ if(!class_exists('NBD_RESOURCE')){
                             );
                             $exist_id = -1;
                             foreach ($list_typo as $index => $typo){
-                                if( $index == $id ){
+                                if( $typo->id == $id ){
                                     $exist_id = $index; break;
                                 }
                             }

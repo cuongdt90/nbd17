@@ -486,6 +486,15 @@
     .nbd-hiden {
         visibility: hidden;
     }
+    .main-qrcode svg{
+        transform: scale(2) translateY(25%);
+    }
+    .main-qrcode svg path{
+        fill: #404762;
+    }
+    .tab-scroll .ps__scrollbar-x-rail {
+        display: none;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;

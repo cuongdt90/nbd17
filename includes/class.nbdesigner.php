@@ -3733,11 +3733,7 @@ class Nbdesigner_Plugin {
     public function nbdesigner_customer_upload(){       
         if (!wp_verify_nonce($_POST['nonce'], 'save-design')) {
             die('Security error');
-        } 
-ob_start();
-var_dump($_POST);
-var_dump($_FILES);
-error_log(ob_get_clean());
+        }
         $allow_extension = array('jpg','jpeg','png','gif','svg');
         $max_size = nbdesigner_get_option('nbdesigner_maxsize_upload');
         $min_dpi = nbdesigner_get_option('nbdesigner_mindpi_upload');
