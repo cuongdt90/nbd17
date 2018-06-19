@@ -7,27 +7,19 @@
         <!--            <i class="icon-nbd icon-nbd-fomat-highlight-off close-template"></i>-->
         <div class="tab-main tab-scroll">
             <div style="padding: 10px">
+                <h3 class="color-palette-label" style="font-size: 11px; text-align: left; margin: 0 0 5px; text-transform: uppercase;"><?php _e('Document colors','web-to-print-online-designer'); ?></h3>
                 <ul class="main-color-palette nbd-perfect-scroll" style="margin-bottom: 10px; max-height: 220px">
-                    <li class="color-palette-add" ng-click="showTextColorPalette()" ng-style="{'background-color': currentColor}"></li>
-                    <li ng-repeat="color in listAddedColor track by $index" ng-click="changeFill(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background-color': color}"></li>
+                    <li class="color-palette-add" ng-click="showBgColorPalette()" ng-style="{'background-color': currentColor}"></li>
+                    <li ng-repeat="color in listAddedColor track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background-color': color}"></li>
                 </ul>
                 <div class="pinned-palette default-palette" style="margin-bottom: 10px">
-                    <h3 class="color-palette-label" style="font-size: 14px; text-align: left; margin-top: 15px"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
+                    <h3 class="color-palette-label" style="font-size: 11px; text-align: left; margin: 0 0 5px; text-transform: uppercase;"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
                     <ul class="main-color-palette">
                         <li ng-repeat="color in __colorPalette track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
                     </ul>
                 </div>
-                <div class="pinned-palette default-palette" >
-                    <ul class="main-color-palette">
-                        <li class="color-palette-item" data-color="#000000" title="#000000" style="background-color: #000000;"></li>
-                        <li class="color-palette-item" data-color="#666666" title="#666666" style="background-color: #666666;"></li>
-                        <li class="color-palette-item" data-color="#a8a8a8" title="#a8a8a8" style="background-color: #a8a8a8;"></li>
-                        <li class="color-palette-item" data-color="#d9d9d9" title="#d9d9d9" style="background-color: #d9d9d9;"></li>
-                        <li class="color-palette-item" data-color="#ffffff" title="#ffffff" style="background-color: #ffffff;"></li>
-                    </ul>
-                </div>
 
-                <div class="nbd-text-color-picker" id="nbd-text-color-picker" ng-class="showTextColorPicker ? 'active' : ''" style="z-index: 999;">
+                <div class="nbd-text-color-picker" id="nbd-text-color-picker" ng-class="showBgColorPicker ? 'active' : ''" style="z-index: 999;">
                     <spectrum-colorpicker
                         ng-model="currentColor"
                         options="{

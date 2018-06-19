@@ -8,6 +8,7 @@
                 <span ng-click="debug2()" class="text-body" style="display: block;color: #4F5467"><?php _e('Add subheading','nbd-online-design'); ?></span>
             </div>
         </div>
+        <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
         <div class="typography-body">
             <ul class="typography-items">
                 <li ng-click="insertCanvaTypo(typo)" class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.filter.currentPage * resource.typography.filter.perPage" repeat-end="onEndRepeat('typography')">

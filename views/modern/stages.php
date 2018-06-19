@@ -523,6 +523,9 @@
         background-color: currentColor;
         display: inline-block;
     }    
+    .nbd-sidebar #tab-product-template #tab-template {
+        padding: 0;
+    }
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;
