@@ -435,12 +435,12 @@
         bottom: 15px;
     }
     .nbd-stages .stage .page-toolbar {
-        position: absolute;
-        top: calc(50% + 30px);
-        right: -40px;
-        transform: translateY(-50%);
-        height: unset;
-        margin: 0;
+        /*position: absolute;*/
+        /*top: calc(50% + 30px);*/
+        /*right: -40px;*/
+        /*transform: translateY(-50%);*/
+        /*height: unset;*/
+        /*margin: 0;*/
     }
     .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-menu {
         box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12); 
