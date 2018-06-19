@@ -10,12 +10,12 @@
             <div class="tab-main">
                 <div>
                     <ul class="main-color-palette ">
-                        <li class="color-palette-add nbd-show-color-palette" ng-click="showTextColorPalette()" ng-style="{'background-color': currentColor}"></li>
+                        <li class="color-palette-add"  ng-style="{'background-color': currentColor}"></li>
                         <li ng-repeat="color in listAddedColor track by $index" ng-click="changeFill(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background-color': color}"></li>
                     </ul>  
                     <div class="pinned-palette default-palette">
                         <ul class="main-color-palette">
-                            <li ng-repeat="color in __colorPalette track by $index" ng-click="changeFill(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
+                            <li ng-repeat="color in __colorPalette track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
                         </ul>
                     </div>                
                 </div>                   
