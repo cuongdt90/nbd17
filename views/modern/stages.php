@@ -495,6 +495,34 @@
     .tab-scroll .ps__scrollbar-x-rail {
         display: none;
     }
+    .main-color-palette {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: start;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }    
+    .main-color-palette li {
+        list-style: none;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.05), inset -1px -1px 0 rgba(0,0,0,.05);
+        box-shadow: inset 1px 1px 0 rgba(0,0,0,.05), inset -1px -1px 0 rgba(0,0,0,.05);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        color: transparent;
+        background-color: currentColor;
+        display: inline-block;
+    }    
     @media screen and (max-width: 767px) {
         .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
             color: #404762;
@@ -517,7 +545,7 @@
                 <?php include 'warning.php'?>
                 <div class="stage-main" ng-style="{'width' : calcStyle(stage.config.width * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.height * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
-                    <div class="stage-background" ></div>
+                    <div class="stage-background" ng-style="{'background-color': stage.config.bgColor}"></div>
                     <div class="design-zone">
                         <canvas nbd-canvas stage="stage" ctx="ctxMenuStyle" index="{{$index}}" id="nbd-stage-{{$index}}"></canvas>
                     </div>

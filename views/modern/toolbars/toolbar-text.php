@@ -2,7 +2,7 @@
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-font-familly">
             <button class="toolbar-bottom">
-                <span class="toolbar-label toolbar-label-font" ng-style="{'font-family': stages[currentStage].states.text.font.alias}">{{stages[currentStage].states.text.font.name}}</span>
+                <span class="toolbar-label toolbar-label-font" ng-style="{'font-family': stages[currentStage].states.text.font.alias, 'font-weight': stages[currentStage].states.text.fontWeight}">{{stages[currentStage].states.text.font.name}}</span>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
             </button>
             <div class="sub-menu" data-pos="left">
@@ -11,14 +11,14 @@
                     <i ng-show="resource.font.filter.search.length > 0" ng-click="resource.font.filter.search = ''" class="icon-nbd icon-nbd-clear"></i>
                 </div>
                 <div id="toolbar-font-familly-dropdown" nbd-scroll="scrollLoadMore(container, type)" data-container="#toolbar-font-familly-dropdown" data-type="font" data-offset="40">
-                    <div class="group-font" ng-show="stages[currentStage].states.fontUsed.length > 0">
+                    <div class="group-font" ng-show="stages[currentStage].states.usedFonts.length > 0">
                         <div class="toolbar-menu-header">
                             <div class="toolbar-header-line"></div>
                             <div class="toolbar-separator"><?php _e('Document Fonts','web-to-print-online-designer'); ?></div>
                             <div class="toolbar-header-line"></div>
                         </div>
                         <ul>
-                            <li ng-click="setTextAttribute('fontFamily', font.alias)" class="sub-menu-item" ng-repeat="font in stages[currentStage].states.fontUsed">
+                            <li ng-click="setTextAttribute('fontFamily', font.alias)" class="sub-menu-item" ng-repeat="font in stages[currentStage].states.usedFonts">
                                 <span class="font-name-wrap" style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;"><span class="font-name">{{font.name}}</span><span ng-if="['all', 'latin', 'latin-ext', 'vietnamese'].indexOf(font.subset) < 0"> {{settings.subsets[font.subset]['preview_text']}}</span></span>
                             </li>
                         </ul>
@@ -97,10 +97,10 @@
                     <div class="range range-spacing">
                         <label><?php _e('Spacing','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" ng-mouseup="setTextAttribute('spacing', stages[currentStage].states.text.spacing)" ng-model="stages[currentStage].states.text.spacing" type="range" step="1" min="0" max="100">
+                            <input class="slide-input" ng-mouseup="setTextAttribute('charSpacing', stages[currentStage].states.text.charSpacing)" ng-model="stages[currentStage].states.text.charSpacing" type="range" step="1" min="0" max="1000">
                             <span class="range-track"></span>
                         </div>
-                        <span class="value-display">{{stages[currentStage].states.text.spacing}}</span>
+                        <span class="value-display">{{stages[currentStage].states.text.charSpacing}}</span>
                     </div>
                     <div class="range range-line-height">
                         <label><?php _e('Line height','web-to-print-online-designer'); ?></label>

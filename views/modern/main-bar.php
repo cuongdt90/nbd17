@@ -96,11 +96,11 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
         </li>
     </ul>
     <ul class="nbd-main-menu menu-right">
-        <li class="menu-item item-title">
+        <li class="menu-item item-title animated slideInDown animate700">
             <input type="text" name="title" class="title" placeholder="Title" ng-model="stages[currentStage].config.name"/>
         </li>
-        <li class="menu-item item-share nbd-show-popup-share"><i class="icon-nbd icon-nbd-share2"></i></li>
-        <li class="menu-item item-process" data-overlay="overlay" ng-click="saveData('typography')">
+        <li class="menu-item item-share nbd-show-popup-share animated slideInDown animate800"><i class="icon-nbd icon-nbd-share2"></i></li>
+        <li class="menu-item item-process animated slideInDown animate900" data-overlay="overlay" ng-click="saveData('typography')">
             <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right" style="display: none;">
                 <div class="main-sub-menu">
