@@ -1,4 +1,4 @@
-<div class="tab tab-first active animated slideInLeft animate" id="tab-product-template">
+<div class="tab tab-first active" id="tab-product-template">
     <div class="nbd-search" ng-if="settings.ui_mode != '1'">
         <input type="search" name="search" placeholder="search"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
