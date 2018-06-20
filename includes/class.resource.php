@@ -131,7 +131,7 @@ if(!class_exists('NBD_RESOURCE')){
                             "file"   =>  $file, 
                             "cat" => array("99")
                         );
-                        break;                         
+                        break; 
                 }
             }
             wp_send_json(

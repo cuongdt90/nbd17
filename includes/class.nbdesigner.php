@@ -3671,7 +3671,7 @@ class Nbdesigner_Plugin {
             }else {   
                 $nbu_item_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);  
                 $nbu_item_key = isset($nbu_item_session) ? $nbu_item_session : substr(md5(uniqid()),0,5).rand(1,100).time();
-            }             
+            }
             $path_dir = NBDESIGNER_UPLOAD_DIR . '/' .$nbu_item_key; 
             $new_name = sanitize_file_name($_FILES['file']["name"]);
             $new_name = nbd_alias($new_name);

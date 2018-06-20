@@ -1,8 +1,8 @@
 <div class="tab tab-first active" id="tab-product-template">
-    <div class="nbd-search" ng-if="settings.ui_mode != '1'">
+<!--    <div class="nbd-search" ng-if="settings.ui_mode != '1'">
         <input type="search" name="search" placeholder="search"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
-    </div>
+    </div>-->
     <div class="tab-template show" id="tab-template">
         <!--            <i class="icon-nbd icon-nbd-fomat-highlight-off close-template"></i>-->
         <div class="tab-main tab-scroll">
@@ -40,83 +40,10 @@
             <div class="nbd-items-dropdown">
                 <div class="main-items">
                     <div class="items">
-                        <div class="item" data-type="business-card" data-api="true">
+                        <div class="item" data-type="business-card" data-api="true" ng-repeat="temp in resource.templates" ng-click="insertTemplate('template', temp)">
                             <div class="main-item">
                                 <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item" data-type="business-card" data-api="true">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="Image Template">
-                                </div>
-                                <div class="item-info">
-                                    <span class="item-name" title="Business Card"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
+                                    <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
                                 </div>
                             </div>
                         </div>

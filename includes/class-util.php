@@ -901,6 +901,28 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
 //    }
     return $results;
 }
+function nbd_get_resorce_templates($product_id, $variation_id){
+    $data = array();
+    $templates = nbd_get_templates($product_id, $variation_id);
+    foreach ($templates as $tem){
+        $path_preview = NBDESIGNER_CUSTOMER_DIR .'/'.$tem['folder']. '/preview';
+        $listThumb = Nbdesigner_IO::get_list_images($path_preview);
+        if(count($listThumb)){
+            $_temp = array();
+            $_temp['id'] =  $tem['folder'];
+            foreach($listThumb as $img){
+                $_temp['src'][] = Nbdesigner_IO::wp_convert_path_to_url($img);
+            }
+            if( isset($tem['thumbnail']) ){
+                $_temp['thumbnail'] = wp_get_attachment_url( $tem['thumbnail'] );
+            }else{
+                $_temp['thumbnail'] = $_temp['src'][0];
+            }
+            $data[] = $_temp;
+        }                
+    }
+    return $data;
+}
 function nbd_get_template_by_folder( $folder ){
     $data = array();
     $path = NBDESIGNER_CUSTOMER_DIR .'/'.$folder;
