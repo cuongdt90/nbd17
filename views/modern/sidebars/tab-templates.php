@@ -19,7 +19,7 @@
                     </ul>
                 </div>
 
-                <div class="nbd-text-color-picker" id="nbd-text-color-picker" ng-class="showBgColorPicker ? 'active' : ''" style="z-index: 999;">
+                <div class="nbd-text-color-picker" id="nbd-bg-color-picker" ng-class="showBgColorPicker ? 'active' : ''" style="z-index: 999;">
                     <spectrum-colorpicker
                         ng-model="currentColor"
                         options="{
@@ -40,7 +40,7 @@
             <div class="nbd-items-dropdown">
                 <div class="main-items">
                     <div class="items">
-                        <div class="item" data-type="business-card" data-api="true" ng-repeat="temp in resource.templates" ng-click="insertTemplate('template', temp)">
+                        <div class="item" data-type="business-card" data-api="true" ng-repeat="temp in resource.templates" ng-click="insertTemplate(temp)">
                             <div class="main-item">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">

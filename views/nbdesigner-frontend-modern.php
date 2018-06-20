@@ -213,7 +213,6 @@
                 position: relative;
             }
             .color-palette-add:after {
-                content: '+';
                 position: absolute;
                 top: 0;
                 left:0;
@@ -223,9 +222,10 @@
                 line-height: 40px;
                 content: "\e908";
                 text-align: center;
-                color: #888888;
+                color: #404762;
                 font-family: online-design!important;
                 font-size: 20px;
+                text-shadow: 1px 1px 1px #fff;
             }
             .nbd-text-color-picker {
                 position: absolute; 
@@ -315,6 +315,9 @@
             } 
             .nbd-toolbar .toolbar-text .nbd-main-menu.menu-right .sub-menu ul li.selected {
                 background-color: rgba(158,158,158,.2);
+            }
+            .design-wrap {
+                position: absolute;
             }
             @keyframes timeline {
                 0% {
@@ -450,7 +453,7 @@
                 margin-top: 20px;        
             }
             .nbd-sidebar .nbd-items-dropdown .info-support {
-                top: 62px;
+                left: unset;
             }
             .nbd-sidebar .nbd-items-dropdown .info-support i.close-result-loaded {
                 right: 0;
@@ -460,6 +463,9 @@
             }    
             #tab-photo .ps-scrollbar-x-rail {
                 display: none;
+            }
+            .nbd-sidebar .tabs-content .nbd-search input {
+                border: 1px solid #404762;
             }
             .type-instagram.button-login {
                 display: flex;
