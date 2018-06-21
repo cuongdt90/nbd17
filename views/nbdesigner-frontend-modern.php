@@ -522,14 +522,6 @@
             .nbd-toolbar-zoom {
                 bottom: 15px;
             }
-            .nbd-stages .stage .page-toolbar {
-                /*position: absolute;*/
-                /*top: calc(50% + 30px);*/
-                /*right: -40px;*/
-                /*transform: translateY(-50%);*/
-                /*height: unset;*/
-                /*margin: 0;*/
-            }
             .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-menu {
                 box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12); 
             }
@@ -550,7 +542,6 @@
                 display: none;
             }
             .fullScreenMode .stage{
-                background: #000;
                 padding: 0;
             }
             .nbd-sidebar #tab-element .main-items .item[data-type=draw] .item-icon i {
@@ -617,6 +608,23 @@
             [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
               display: none !important;
             }
+            .fullScreenMode .nbd-stages {
+                width: 100%;
+                background: #000;
+            }
+            .fullScreenMode .nbd-stages .ps__scrollbar-x-rail,
+            .fullScreenMode .nbd-stages .ps__scrollbar-y-rail {
+                display: none;
+            }
+            .fullscreen-stage-nav {
+                position: absolute;
+                bottom: 40px;
+                right: 40px;
+                display: none;
+            }
+            .fullScreenMode .fullscreen-stage-nav {
+                display: inline-block;
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -629,6 +637,13 @@
                 }
                 .nbd-stages .stage {
                     padding: 10px;
+                    padding-bottom: 60px;
+                }
+                .nbd-stages .stage .stage-main {
+                    margin: 0;
+                }
+                .nbd-stages .stage .page-toolbar {
+                    bottom: -44px;
                 }
             }
         </style>        
@@ -787,7 +802,7 @@
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular.min.js'; ?>"></script>
         <?php endif; ?>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.min.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.unmin.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
 

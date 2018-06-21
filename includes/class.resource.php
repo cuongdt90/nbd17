@@ -30,11 +30,11 @@ if(!class_exists('NBD_RESOURCE')){
         }
         public function nbd_get_resource(){
             $flag = 1;
+            $data = array();
             if (!wp_verify_nonce($_REQUEST['nonce'], 'nbdesigner-get-data')) {
                 //todo something
             }else{     
                 $rq_type = $_REQUEST['type'];
-                $data = array();
                 switch ($rq_type) {
                     case 'typography':
                         $path = $_REQUEST['task'] == 'typography' ? NBDESIGNER_PLUGIN_DIR . '/data/typography/typography.json' : NBDESIGNER_PLUGIN_DIR . '/data/typography/typo.json';

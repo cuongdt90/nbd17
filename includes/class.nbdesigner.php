@@ -4582,7 +4582,7 @@ class Nbdesigner_Plugin {
                         $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
                     }
                 }
-                $true_type = ['Felipa', 'Rammetto One'];
+                $true_type = ['Felipa', 'Rammetto One', 'Yellowtail'];
                 if (in_array($font_name, $true_type)) {
                     foreach($path_font as $pfont){
                         $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);

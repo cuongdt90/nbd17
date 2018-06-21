@@ -1,4 +1,4 @@
-<div class="nbd-stages">
+<div class="nbd-stages" id="nbd-stages">
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
             <div style="display: inline-block;position: relative;">
@@ -81,4 +81,16 @@
             </div>    
         </div>
     </div>
+    <div class="nbd-toolbar-zoom fullscreen-stage-nav">
+        <div class="zoomer">
+            <div class="zoomer-toolbar">
+                <ul class="nbd-main-menu">
+                    <li class="menu-item zoomer-item zoomer-fullscreen" ng-click="exitFullscreenMode()"><i class="icon-nbd icon-nbd-fullscreen"></i></li>
+                    <li class="menu-item" ng-click="switchStage(currentStage, 'prev')" ng-class="currentStage > 0 ? '' : 'nbd-disabled'"><i class="icon-nbd icon-nbd-arrow-upward rotate-90"></i></li>
+                    <li class="menu-item zoomer-item zoomer-level">{{currentStage+1}}/{{stages.length}}</li>
+                    <li class="menu-item" ng-click="switchStage(currentStage, 'next')" ng-class="currentStage < (stages.length - 1) ? '' : 'nbd-disabled'"><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>    
 </div>

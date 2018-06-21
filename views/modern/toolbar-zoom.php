@@ -2,7 +2,7 @@
     <div class="zoomer">
         <div class="zoomer-toolbar">
             <ul class="nbd-main-menu">
-                <li class="menu-item zoomer-item zoomer-fullscreen" ng-click="toggleFullScreenMode()"><i class="icon-nbd icon-nbd-fullscreen"></i></li>
+                <li class="menu-item zoomer-item zoomer-fullscreen" ng-click="enableFullScreenMode()"><i class="icon-nbd icon-nbd-fullscreen"></i></li>
                 <li class="menu-item zoomer-item zoomer-out" ng-click="zoomStage(stages[currentStage].states.currentScaleIndex - 1)" ng-class="stages[currentStage].states.currentScaleIndex > 0 ? '' : 'nbd-disabled'"><i class="icon-nbd icon-nbd-remove"></i></li>
                 <li class="menu-item zoomer-item zoomer-level">
                     <span>{{stages[currentStage].states.scaleRange[stages[currentStage].states.currentScaleIndex].value}}</span>
