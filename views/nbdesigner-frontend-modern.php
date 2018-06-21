@@ -213,7 +213,6 @@
                 position: relative;
             }
             .color-palette-add:after {
-                content: '+';
                 position: absolute;
                 top: 0;
                 left:0;
@@ -223,9 +222,10 @@
                 line-height: 40px;
                 content: "\e908";
                 text-align: center;
-                color: #888888;
+                color: #404762;
                 font-family: online-design!important;
                 font-size: 20px;
+                text-shadow: 1px 1px 1px #fff;
             }
             .nbd-text-color-picker {
                 position: absolute; 
@@ -315,6 +315,9 @@
             } 
             .nbd-toolbar .toolbar-text .nbd-main-menu.menu-right .sub-menu ul li.selected {
                 background-color: rgba(158,158,158,.2);
+            }
+            .design-wrap {
+                position: absolute;
             }
             @keyframes timeline {
                 0% {
@@ -450,7 +453,7 @@
                 margin-top: 20px;        
             }
             .nbd-sidebar .nbd-items-dropdown .info-support {
-                top: 62px;
+                left: unset;
             }
             .nbd-sidebar .nbd-items-dropdown .info-support i.close-result-loaded {
                 right: 0;
@@ -460,6 +463,9 @@
             }    
             #tab-photo .ps-scrollbar-x-rail {
                 display: none;
+            }
+            .nbd-sidebar .tabs-content .nbd-search input {
+                border: 1px solid #404762;
             }
             .type-instagram.button-login {
                 display: flex;
@@ -516,14 +522,6 @@
             .nbd-toolbar-zoom {
                 bottom: 15px;
             }
-            .nbd-stages .stage .page-toolbar {
-                /*position: absolute;*/
-                /*top: calc(50% + 30px);*/
-                /*right: -40px;*/
-                /*transform: translateY(-50%);*/
-                /*height: unset;*/
-                /*margin: 0;*/
-            }
             .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-menu {
                 box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12); 
             }
@@ -544,7 +542,6 @@
                 display: none;
             }
             .fullScreenMode .stage{
-                background: #000;
                 padding: 0;
             }
             .nbd-sidebar #tab-element .main-items .item[data-type=draw] .item-icon i {
@@ -611,6 +608,23 @@
             [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
               display: none !important;
             }
+            .fullScreenMode .nbd-stages {
+                width: 100%;
+                background: #000;
+            }
+            .fullScreenMode .nbd-stages .ps__scrollbar-x-rail,
+            .fullScreenMode .nbd-stages .ps__scrollbar-y-rail {
+                display: none;
+            }
+            .fullscreen-stage-nav {
+                position: absolute;
+                bottom: 40px;
+                right: 40px;
+                display: none;
+            }
+            .fullScreenMode .fullscreen-stage-nav {
+                display: inline-block;
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -623,6 +637,13 @@
                 }
                 .nbd-stages .stage {
                     padding: 10px;
+                    padding-bottom: 60px;
+                }
+                .nbd-stages .stage .stage-main {
+                    margin: 0;
+                }
+                .nbd-stages .stage .page-toolbar {
+                    bottom: -44px;
                 }
             }
         </style>        
@@ -781,7 +802,7 @@
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular.min.js'; ?>"></script>
         <?php endif; ?>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.min.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.unmin.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
 
