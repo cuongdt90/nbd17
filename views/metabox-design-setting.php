@@ -475,12 +475,12 @@
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[allow_specify_dimension]"/>
                     <label for="_nbd_allow_specify_dimension" class="nbdesigner-option-label"><?php echo _e('Allow user define dimension', 'web-to-print-online-designer'); ?></label>
-                    <input type="checkbox" value="1" name="_nbdesigner_option[allow_specify_dimension]" id="_nbd_allow_specify_dimension" <?php checked( $option['allow_specify_dimension'] ); ?> class="short nbd-dependence" data-target="#nbd-custom-size"/>                    
+                    <input type="checkbox" value="1" name="_nbdesigner_option[allow_specify_dimension]" id="_nbd_allow_specify_dimension" <?php checked( $option['allow_specify_dimension'] ); ?> class="short nbd-dependence" data-target="#nbd-custom-size"/>
                 </div> 
                 <div id="nbd-custom-size" class="<?php if (!$option['allow_specify_dimension']) echo 'nbdesigner-disable'; ?> nbd-independence nbdesigner-opt-inner">
                     <label for="_nbdesigner_customprice" class="nbdesigner-option-label"><?php echo _e('Allow', 'web-to-print-online-designer'); ?></label>
                     <input name="_nbdesigner_option[type_dimension]" value="1" type="radio" <?php checked( $option['type_dimension'], 1); ?> class="nbd-dependence" data-target="#nbd-custom-size-free" /><?php _e('All dimensions', 'web-to-print-online-designer'); ?>   
-                    &nbsp;<input name="_nbdesigner_option[type_dimension]" value="2" type="radio" <?php checked( $option['type_dimension'], 2); ?> class="nbd-dependence" data-target="#nbd-custom-size-defined" /><?php _e('Predefined dimensions', 'web-to-print-online-designer'); ?>                     
+                    <input name="_nbdesigner_option[type_dimension]" value="2" type="radio" <?php checked( $option['type_dimension'], 2); ?> class="nbd-dependence" data-target="#nbd-custom-size-defined" /><?php _e('Predefined dimensions', 'web-to-print-online-designer'); ?>
                     <div id="nbd-custom-size-free" class="<?php if ($option['type_dimension'] != 1) echo 'nbdesigner-disable'; ?> nbd-untarget">
                         <div class="nbdesigner-opt-inner">
                             <label class="nbdesigner-option-label"><?php echo _e('Min', 'web-to-print-online-designer'); ?> (<?php echo $unit; ?>)</label>
@@ -518,7 +518,60 @@
                     </div>
                 </div> 
                 <?php do_action('nbd_after_option_product_design', $post_id, $option); ?>
-            </div>   
+
+                <div class="nbdesigner-opt-inner">
+                    <label class="nbdesigner-option-label"><?php echo _e('Option color', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
+                    <?php
+                        $option_color = isset($option['color']['show']) ? $option['color']['show'] : 0;
+                        $option_color_type = isset($option['color']['type']) ? $option['color']['type'] : 'setting';
+
+                    ?>
+<!--                    --><?php //echo '<pre>'; print_r($option); echo '</pre>'; echo __FILE__; die(); ?>
+                    <input name="_nbdesigner_option[color][show]" value="1" type="radio" <?php checked( $option_color, 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>
+                    <input name="_nbdesigner_option[color][show]" value="0" type="radio" <?php checked( $option_color,0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>
+                </div>
+                <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type" style="display: <?php echo ($option_color == 0) ? 'none' : 'block';?>" >
+                    <label class="nbdesigner-option-label"><?php echo _e('Color Type', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
+                    <input name="_nbdesigner_option[color][type]" value="setting" type="radio" <?php echo ($option_color_type == 'setting') ? 'checked="checked"' : ''?>  /><?php _e('Setting color', 'web-to-print-online-designer'); ?>
+                    <input name="_nbdesigner_option[color][type]" value="swatch" type="radio" <?php echo ($option_color_type == 'swatch') ? 'checked="checked"' : ''?> /><?php _e('Color swatch', 'web-to-print-online-designer'); ?>
+                    <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-setting" style="display: <?php echo ($option_color_type == 'setting') ? 'block' : 'none'?>">
+                        <table class="nbdesigner-option-color-setting">
+                            <thead>
+                                <tr>
+                                    <th><input type="text" name="_designer_setting" value="<?php echo $v['bg_color_value'] ?>" class="nbd-color-picker" /></th>
+                                    <th><input type="text" style="font-weight: normal" id="nbdesigner-color-name" placeholder="Name"></th>
+                                    <th><a href="#" class="button-secondary" id="nbdesigner-add-color-setting">Add</a></th>
+                                </tr>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>preview</td>
+                                    <td>delete</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                                $color_setting_name = (isset($option['color']['setting']['name'])) ? $option['color']['setting']['name'] : array();
+                                $color_setting_hex = (isset($option['color']['setting']['hex'])) ? $option['color']['setting']['hex'] : array();
+                            ?>
+                            <?php foreach ($color_setting_name as $key => $value):?>
+                                <tr>
+                                    <td>
+                                        <span><?php echo $value;?></span>
+                                        <input type="hidden" name="_nbdesigner_option[color][setting][name][]" value="<?php echo $value;?>">
+                                    </td>
+                                    <td>
+                                        <span class="nbdesigner-values-group-td-value button" style="background: <?php echo $color_setting_hex[$key];?>; color: #fff"><?php echo $color_setting_hex[$key];?></span>
+                                        <input type="hidden" name="_nbdesigner_option[color][setting][hex][]" value="<?php echo $color_setting_hex[$key];?>">
+                                    </td>
+                                    <td><a href="#" class="nbdesigner-remove-color-setting">×</a></td>
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <div id="nbd-upload-design" class="nbd-options-tab" style="padding: 10px;">
             <div class="nbdr-opt-inner">
@@ -546,7 +599,7 @@
             <div class="nbdesigner-opt-inner">
                 <label for="_nbd_mindpi_upload" class="nbdesigner-option-label"><?php echo _e('Min. resolution DPI for JPG image', 'web-to-print-online-designer'); ?></label>
                 <input type="number" step="any" class="short nbdesigner-short-input" id="_nbd_mindpi_upload" name="_designer_upload[mindpi]" value="<?php echo $upload_setting['mindpi']; ?>"/>
-            </div>   
+            </div>
         </div>
     </div>    
 </div>
@@ -612,8 +665,59 @@ function  nbd_add_js_code(){
         $('.nbdesign-config-realsize-tooltip').first().pointer( da_option );
         $('.nbdesign-config-realsize-tooltip').first().on('click', function(){
             $(this).pointer("open")
-        });        
+        });
+
+        // Option color and size
+        $('input[name="_nbdesigner_option[color][show]"]').on('change', function () {
+            if ($(this).val() == '1') {
+                $('.nbdesigner-option-color-type').show();
+            }else {
+                $('.nbdesigner-option-color-type').hide();
+            }
+        });
+        $('input[name="_nbdesigner_option[color][type]"]').on('change', function () {
+            if ($(this).val() == 'setting') {
+                $('.nbdesigner-option-color-type-setting').show();
+            }
+        });
+
+        $('#nbdesigner-add-color-setting').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this),
+                $inputs = $this.closest('tr').find('input[type="text"]');
+            var values = [],itemColor;
+            $inputs.each(function(i, item) {
+                values.push(item.value);
+            });
+            itemColor = '<tr>' +
+                          '<td>' +
+                                '<span>'+ values[1] +'</span>' +
+                                '<input type="hidden" name="_nbdesigner_option[color][setting][name][]" value="'+ values[1] +'">' +
+                          '</td>' +
+                           '<td><span class="nbdesigner-values-group-td-value button" style="background: '+ values[0] +'; color: #fff">'+ values[0] +'</span>' +
+                                '<input type="hidden" name="_nbdesigner_option[color][setting][hex][]" value="'+ values[0] +'">' +
+                           '</td>' +
+                           '<td>' +
+                                '<a href="#" class="nbdesigner-remove-color-setting">×</a>' +
+                           '</td>' +
+                        '</tr>';
+            $('.nbdesigner-option-color-setting tbody').append(itemColor);
+
+            $('.nbdesigner-remove-color-setting').on('click', function () {
+                $(this).closest('tr').remove();
+                return false;
+            });
+
+            return false;
+        });
+
+        $('.nbdesigner-remove-color-setting').on('click', function () {
+            $(this).closest('tr').remove();
+            return false;
+        });
+
     });
+
 </script>
 <?php
 }

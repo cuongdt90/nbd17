@@ -3,7 +3,7 @@
     <label class="nbdesigner-option-label"><?php echo _e('Price base on design area', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
     <?php $price_base_area = isset($option['price_base_area']) ? $option['price_base_area'] : 0; ?>
     <input name="_nbdesigner_option[price_base_area]" value="1" type="radio" <?php checked( $price_base_area, 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>   
-    &nbsp;<input name="_nbdesigner_option[price_base_area]" value="0" type="radio" <?php checked( $price_base_area,0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>  
+    <input name="_nbdesigner_option[price_base_area]" value="0" type="radio" <?php checked( $price_base_area,0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>
 </div> 
 <div class="nbdesigner-opt-inner nbd-independence <?php if( !$price_base_area ) echo 'nbdesigner-disable'; ?>" id="nbd_area_pricing_table_wrap">
     <table id="nbd_area_pricing_table" class="nbd_pricing_table">

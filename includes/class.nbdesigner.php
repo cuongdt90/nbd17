@@ -2075,7 +2075,7 @@ class Nbdesigner_Plugin {
         $enable = $_POST['_nbdesigner_enable']; 
         $enable_upload = $_POST['_nbdesigner_enable_upload']; 
         $upload_without_design = $_POST['_nbdesigner_enable_upload_without_design']; 
-        $option = serialize($_POST['_nbdesigner_option']); 
+        $option = serialize($_POST['_nbdesigner_option']);
         $setting_design = serialize($_POST['_designer_setting']);  
         $setting_upload = serialize($_POST['_designer_upload']);  
         if(!$this->nbdesigner_allow_create_product($post_id)) return;
