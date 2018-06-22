@@ -1,4 +1,8 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
+<?php
+    global $post;
+    $product = wc_get_product($post);
+?>
 <style type="text/css">
     .nbd-tabs {
         margin-bottom: 0;
@@ -524,7 +528,6 @@
                     <?php
                         $option_color = isset($option['color']['show']) ? $option['color']['show'] : 0;
                         $option_color_type = isset($option['color']['type']) ? $option['color']['type'] : 'setting';
-
                     ?>
 <!--                    --><?php //echo '<pre>'; print_r($option); echo '</pre>'; echo __FILE__; die(); ?>
                     <input name="_nbdesigner_option[color][show]" value="1" type="radio" <?php checked( $option_color, 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>
@@ -533,41 +536,62 @@
                 <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type" style="display: <?php echo ($option_color == 0) ? 'none' : 'block';?>" >
                     <label class="nbdesigner-option-label"><?php echo _e('Color Type', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
                     <input name="_nbdesigner_option[color][type]" value="setting" type="radio" <?php echo ($option_color_type == 'setting') ? 'checked="checked"' : ''?>  /><?php _e('Setting color', 'web-to-print-online-designer'); ?>
+
+                    <?php if ($product->is_type('variable')) : ?>
                     <input name="_nbdesigner_option[color][type]" value="swatch" type="radio" <?php echo ($option_color_type == 'swatch') ? 'checked="checked"' : ''?> /><?php _e('Color swatch', 'web-to-print-online-designer'); ?>
+                    <?php endif; ?>
+
                     <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-setting" style="display: <?php echo ($option_color_type == 'setting') ? 'block' : 'none'?>">
-                        <table class="nbdesigner-option-color-setting">
+                        <table class="nbdesigner-option-color-setting nbd_pricing_table">
                             <thead>
                                 <tr>
-                                    <th><input type="text" name="_designer_setting" value="<?php echo $v['bg_color_value'] ?>" class="nbd-color-picker" /></th>
-                                    <th><input type="text" style="font-weight: normal" id="nbdesigner-color-name" placeholder="Name"></th>
-                                    <th><a href="#" class="button-secondary" id="nbdesigner-add-color-setting">Add</a></th>
-                                </tr>
-                                <tr>
                                     <td>Name</td>
-                                    <td>preview</td>
-                                    <td>delete</td>
+                                    <td>Color</td>
+                                    <td>Image</td>
+                                    <td><a href="#" class="button-secondary" id="nbdesigner-add-color-setting">Add</a></td>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
                                 $color_setting_name = (isset($option['color']['setting']['name'])) ? $option['color']['setting']['name'] : array();
                                 $color_setting_hex = (isset($option['color']['setting']['hex'])) ? $option['color']['setting']['hex'] : array();
+                                $color_setting_image_id = (isset($option['color']['setting']['image_id'])) ? $option['color']['setting']['image_id'] : array();
+                                $color_setting_image_url = (isset($option['color']['setting']['image_url'])) ? $option['color']['setting']['image_url'] : array();
                             ?>
                             <?php foreach ($color_setting_name as $key => $value):?>
+                                <?php $src = wp_get_attachment_image_src($color_setting_image_id[$key], 'full', ''); ?>
                                 <tr>
                                     <td>
-                                        <span><?php echo $value;?></span>
-                                        <input type="hidden" name="_nbdesigner_option[color][setting][name][]" value="<?php echo $value;?>">
+<!--                                        <span>--><?php //echo $value;?><!--</span>-->
+                                        <input type="text" name="_nbdesigner_option[color][setting][name][]" value="<?php echo $value;?>">
                                     </td>
                                     <td>
-                                        <span class="nbdesigner-values-group-td-value button" style="background: <?php echo $color_setting_hex[$key];?>; color: #fff"><?php echo $color_setting_hex[$key];?></span>
-                                        <input type="hidden" name="_nbdesigner_option[color][setting][hex][]" value="<?php echo $color_setting_hex[$key];?>">
+                                        <?php if ($color_setting_hex[$key] !== ''): ?>
+                                            <span class="nbdesigner-values-group-td-value button" style="background: <?php echo $color_setting_hex[$key];?>; color: #fff"><?php echo $color_setting_hex[$key];?></span>
+                                            <input type="hidden" name="_nbdesigner_option[color][setting][hex][]" value="<?php echo $color_setting_hex[$key];?>" class="save-color">
+                                        <?php else: ?>
+                                            <input type="text" name="_nbdesigner_option[color][setting][hex][]" value="<?php echo $color_setting_hex[$key]; ?>" class="nbdesigner-option-color-select" />
+                                        <?php endif; ?>
                                     </td>
+                                    <td>
+                                        <?php if (is_array($src)) : ?>
+                                            <img src="<?php echo $src[0];?>" width="30px"
+                                                 alt="Product">
+                                            <input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="<?php echo $color_setting_image_id[$key];?>">
+                                        <?php else: ?>
+                                            <a class="button nbdesigner-button nbdesigner-color-add-image">Add image</a>
+                                            <input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="0">
+                                        <?php endif; ?>
+                                    </td>
+
                                     <td><a href="#" class="nbdesigner-remove-color-setting">×</a></td>
                                 </tr>
                             <?php endforeach;?>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-swatch" style="display: none">
+                        
                     </div>
                 </div>
 
@@ -668,6 +692,7 @@ function  nbd_add_js_code(){
         });
 
         // Option color and size
+        var attachment = null;
         $('input[name="_nbdesigner_option[color][show]"]').on('change', function () {
             if ($(this).val() == '1') {
                 $('.nbdesigner-option-color-type').show();
@@ -678,6 +703,10 @@ function  nbd_add_js_code(){
         $('input[name="_nbdesigner_option[color][type]"]').on('change', function () {
             if ($(this).val() == 'setting') {
                 $('.nbdesigner-option-color-type-setting').show();
+                $('.nbdesigner-option-color-type-swatch').hide();
+            }else {
+                $('.nbdesigner-option-color-type-setting').hide();
+                $('.nbdesigner-option-color-type-swatch').show();
             }
         });
 
@@ -685,28 +714,41 @@ function  nbd_add_js_code(){
             e.preventDefault();
             var $this = $(this),
                 $inputs = $this.closest('tr').find('input[type="text"]');
-            var values = [],itemColor;
+            var values = [],itemColor, itemImage = '',itemColor = '';
             $inputs.each(function(i, item) {
                 values.push(item.value);
             });
+
+            itemColor = '<input type="text" name="_nbdesigner_option[color][setting][hex][]" value="" class="nbdesigner-option-color-select" />';
+            if (attachment !== null) {
+                itemImage = '<img src="' + attachment.url + '" width="30px" alt="Product">' +
+                    '<input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="'+ attachment.id +'">';
+                attachment = null;
+            }else {
+
+                itemImage = '<a class="button nbdesigner-button nbdesigner-color-add-image">Add image</a>' +
+                    '<input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="0">';
+            }
+
             itemColor = '<tr>' +
                           '<td>' +
-                                '<span>'+ values[1] +'</span>' +
-                                '<input type="hidden" name="_nbdesigner_option[color][setting][name][]" value="'+ values[1] +'">' +
+                                '<input type="text" name="_nbdesigner_option[color][setting][name][]" value="">' +
                           '</td>' +
-                           '<td><span class="nbdesigner-values-group-td-value button" style="background: '+ values[0] +'; color: #fff">'+ values[0] +'</span>' +
-                                '<input type="hidden" name="_nbdesigner_option[color][setting][hex][]" value="'+ values[0] +'">' +
-                           '</td>' +
+                           '<td>' + itemColor +'</td>' +
+                            '<td>' + itemImage +'</td>' +
                            '<td>' +
                                 '<a href="#" class="nbdesigner-remove-color-setting">×</a>' +
                            '</td>' +
                         '</tr>';
             $('.nbdesigner-option-color-setting tbody').append(itemColor);
-
             $('.nbdesigner-remove-color-setting').on('click', function () {
                 $(this).closest('tr').remove();
                 return false;
             });
+            $('.nbdesigner-color-add-image').on('click', function (e) {
+                addImage($(this), e);
+            });
+            $('.nbdesigner-option-color-select').wpColorPicker({});
 
             return false;
         });
@@ -716,6 +758,39 @@ function  nbd_add_js_code(){
             return false;
         });
 
+        function addImage(eClick, e) {
+            var $td = eClick.closest('td');
+            var sefl = eClick, itemImage = '';
+            var image = null;
+            var upload;
+            if (upload) {
+                upload.open();
+                return;
+            }
+            var index = $(e).data('index'),
+
+                upload = wp.media.frames.file_frame = wp.media({
+                    title: 'Choose Image',
+                    button: {
+                        text: 'Choose Image'
+                    },
+                    multiple: false
+                });
+            upload.on('select', function () {
+                image = upload.state().get('selection').first().toJSON();
+                $td.empty();
+                itemImage = '<img src="' + image.url + '" width="30px" alt="Product" class="nbdesigner-color-add-image">' +
+                    '<input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="'+ image.id +'">';
+                $itemImage = $(itemImage);
+                $td.append($itemImage);
+                sefl.remove();
+                $itemImage.on('click', function (e) {
+                    addImage($(this), e);
+                });
+
+            });
+            upload.open();
+        }
     });
 
 </script>
