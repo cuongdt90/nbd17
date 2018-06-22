@@ -657,6 +657,7 @@ function default_frontend_setting(){
         'nbdesigner_text_proportion' => 1,
         'nbdesigner_text_rotate' => 1,
         'nbdesigner_default_text' => __('Text here', 'web-to-print-online-designer'),
+        'nbdesigner_default_font_subset' => 'all',
         'nbdesigner_enable_curvedtext' => 'yes',
         'nbdesigner_enable_textpattern' => 'no',
         
@@ -2165,6 +2166,25 @@ function nbd_font_subsets(){
             'default_font'  =>  'Roboto'
         )       
     );
+}
+function _nbd_font_subsets(){
+    $subsets = array();
+    foreach(nbd_font_subsets() as $key => $subset){
+        $subsets[$key] = $subset['name'];
+    }
+    return $subsets;
+}
+function nbd_get_default_font(){
+    $default_fonts =  json_decode( file_get_contents(NBDESIGNER_PLUGIN_DIR . '/data/default-font.json'));
+    $subset = nbdesigner_get_option('nbdesigner_default_font_subset');
+    $subsets = nbd_font_subsets();
+    $font = 'Roboto';   
+    foreach($subsets as $key => $sub){
+        if( $key == $subset ) $font = $sub['default_font'];
+    }
+    foreach( $default_fonts as $f ){
+        if( $f->name == $font ) return json_encode($f);
+    }
 }
 function nbd_get_fonts(){
     $gg_fonts = array();
