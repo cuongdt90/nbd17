@@ -725,6 +725,7 @@
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
                 fbID: "<?php echo $fbID; ?>",
                 enable_dropbox: false,
+                default_font: <?php echo nbd_get_default_font(); ?>,
                 templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];

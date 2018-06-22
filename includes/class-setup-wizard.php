@@ -95,7 +95,7 @@ class NBD_Admin_Setup_Wizard {
                 <?php do_action( 'admin_head' ); ?>
         </head>
         <body class="nbd-setup wp-core-ui">
-            <h1 id="nbd-logo"><a href="http://netbaseteam.com/"><img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/nbd.png" alt="NBDesigner" /></a></h1>
+            <h1 id="nbd-logo"><a href="http://netbaseteam.com/"><img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/logo.svg" alt="NBDesigner" /></a></h1>
         <?php
     } 
     public function setup_wizard_footer() {
@@ -114,12 +114,26 @@ class NBD_Admin_Setup_Wizard {
     }   
     public function nbd_setup_general_setup(){
         $dimension_unit = nbdesigner_get_option('nbdesigner_dimensions_unit');
+        $default_font_subset = nbdesigner_get_option('nbdesigner_default_font_subset');
+        $license = '';
+        $_license = get_option('nbdesigner_license');
+        if( $_license ){
+            $license = (array) json_decode( $_license );
+        }  
+        $license['key'] = '';
         ?>
         <h1><?php esc_html_e( 'General', 'web-to-print-online-designer' ); ?></h1>  
         <form method="post" class="general-step">
             <div class="nbd-setup-shipping-unit">
+                <p><label for="nbdesigner_license"><?php echo sprintf(__( '<strong>License key</strong>—get your <a target="_blank" href="%s">premium license key</a>', 'web-to-print-online-designer'), 'https://cmsmart.net/your-profile/purchase_download?time='.time()); ?></label></p>     
+                <div><input class="full-width" id="nbdesigner_license" name="nbdesigner_license" value="<?php echo $license['key']; ?>"/></div>
+                <?php if( $license['key'] == '' ): ?>
+                <p><label for="nbdesigner_license"><?php _e('<strong>Get free license key</strong>', 'web-to-print-online-designer'); ?></label></p>
+                <div><input id="nbdesigner_license" name="nbdesigner_license" value="<?php echo $license['key']; ?>"/></div>
+                <?php endif; ?>
+                
                 <p>
-                    <label for="weight_unit">
+                    <label for="dimension_unit">
                         <?php
                             printf( wp_kses(
                                     __( '<strong>Dimension unit</strong>—used to calculate design area.', 'web-to-print-online-designer' ),
@@ -128,10 +142,16 @@ class NBD_Admin_Setup_Wizard {
                         ?>
                     </label>
                 </p>
-                <select id="weight_unit" name="weight_unit" class="wc-enhanced-select">
+                <select id="dimension_unit" name="nbdesigner_dimensions_unit" class="wc-enhanced-select">
                     <option value="cm" <?php selected( $dimension_unit, 'cm' ); ?>><?php esc_html_e( 'cm', 'web-to-print-online-designer' ); ?></option>
                     <option value="in" <?php selected( $dimension_unit, 'in' ); ?>><?php esc_html_e( 'in', 'web-to-print-online-designer' ); ?></option>
                     <option value="mm" <?php selected( $dimension_unit, 'mm' ); ?>><?php esc_html_e( 'mm', 'web-to-print-online-designer' ); ?></option>
+                </select>
+                <p><label for="font_subset"><?php _e('<strong>Font subset</strong>—choose your language font subset.', 'web-to-print-online-designer'); ?></label></p>
+                <select id="font_subset" name="nbdesigner_default_font_subset" class="wc-enhanced-select">
+                    <?php foreach( _nbd_font_subsets() as $key => $subset ): ?>
+                    <option value="<?php echo $key ?>" <?php selected( $default_font_subset, $key ); ?>><?php echo $subset; ?></option>
+                    <?php  endforeach; ?>
                 </select>
             </div>  
             <p class="nbd-setup-actions step">

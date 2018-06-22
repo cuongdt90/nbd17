@@ -172,7 +172,8 @@ class Nbdesigner_Plugin {
         add_action( 'woocommerce_cart_item_removed', array($this, 'nbdesigner_remove_cart_item_design'), 10, 2 );
         add_action( 'woocommerce_product_after_variable_attributes', array($this,'nbdesigner_variation_settings_fields'), 10, 3 );
         add_action( 'woocommerce_save_product_variation', array($this,'nbdesigner_save_variation_settings_fields'), 10, 2 );
-        add_filter( 'woocommerce_add_cart_item_data', array($this, 'nbd_add_cart_item_data'), 10, 3 );      
+        add_filter( 'woocommerce_add_cart_item_data', array($this, 'nbd_add_cart_item_data'), 10, 3 );   
+        add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session' ), 1, 2 );
         add_filter( 'woocommerce_add_cart_item', array($this, 'nbd_add_cart_item'), 99999, 1 ); 
         add_filter( 'woocommerce_cart_item_price', array(&$this, 'change_cart_item_prices_text'), 10, 3 );
         add_filter( 'woocommerce_cart_item_subtotal', array(&$this, 'change_cart_item_prices_text'), 10, 3 );
@@ -3023,7 +3024,11 @@ class Nbdesigner_Plugin {
     public function render_cart($title = null, $cart_item = null, $cart_item_key = null) {
         if ($cart_item_key && ( is_cart() || is_checkout() )) {
             $nbd_session = WC()->session->get($cart_item_key . '_nbd'); 
-            $nbu_session = WC()->session->get($cart_item_key . '_nbu');   
+            $nbu_session = WC()->session->get($cart_item_key . '_nbu'); 
+            if( isset($cart_item['nbd_item_meta_ds']) ){
+                if( isset($cart_item['nbd_item_meta_ds']['nbd']) ) $nbd_session = $cart_item['nbd_item_meta_ds']['nbd'];
+                if( isset($cart_item['nbd_item_meta_ds']['nbu']) ) $nbu_session = $cart_item['nbd_item_meta_ds']['nbu'];
+            }
             $_show_design = nbdesigner_get_option('nbdesigner_show_in_cart');
             $product_id = $cart_item['product_id'];
             $variation_id = $cart_item['variation_id'];
@@ -3218,13 +3223,15 @@ class Nbdesigner_Plugin {
     public function nbdesigner_add_new_order_item($item_id, $item, $order_id){
         if (isset($item->legacy_cart_item_key)){
             /* custom design */
-            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbd')) {
+            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbd') || isset($item->legacy_values["nbd_item_meta_ds"]["nbd"])) {
                 $nbd_session = WC()->session->get($item->legacy_cart_item_key. '_nbd');
+                if( isset($item->legacy_values["nbd_item_meta_ds"]["nbd"]) ) $nbd_session = $item->legacy_values["nbd_item_meta_ds"]["nbd"];
                 wc_add_order_item_meta($item_id, "_nbd", $nbd_session);
             }
             /* up design */
-            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbu')) {
+            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbu') || isset($item->legacy_values["nbd_item_meta_ds"]["nbu"])) {
                 $nbu_session = WC()->session->get($item->legacy_cart_item_key. '_nbu');
+                if( isset($item->legacy_values["nbd_item_meta_ds"]["nbu"]) ) $nbu_session = $item->legacy_values["nbd_item_meta_ds"]["nbu"];
                 wc_add_order_item_meta($item_id, "_nbu", $nbu_session);
             }    
             if( WC()->session->__isset($item->legacy_cart_item_key . '_nbd_initial_price') ){
@@ -4504,8 +4511,16 @@ class Nbdesigner_Plugin {
         if( $nbu_session && isset($_POST['nbd-upload-files']) && $_POST['nbd-upload-files'] != '' ){
             $files = $_POST['nbd-upload-files'];
             $this->update_files_upload( $files, $nbu_session );
-        }       
+        }
+        if( isset($nbd_session) ) $cart_item_data['nbd_item_meta_ds']['nbd'] = $nbd_session;
+        if( isset($nbu_session) ) $cart_item_data['nbd_item_meta_ds']['nbu'] = $nbu_session;
         return $cart_item_data;
+    }
+    public function get_cart_item_from_session($cart_item, $values){
+        if ( isset( $values['nbd_item_meta_ds'] ) ) {
+            $cart_item['nbd_item_meta_ds'] = $values['nbd_item_meta_ds'];
+        }
+        return $cart_item;
     }
     public function update_files_upload( $files, $nbu_session = '' ){
         $files = explode('|', $files);

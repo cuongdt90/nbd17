@@ -16,6 +16,14 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         ) 
                     ),  
                     array(
+                        'title' => __( 'Default font subset', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Choose your language font subset.', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_default_font_subset',
+                        'type' 		=> 'select',
+                        'default'	=> 'all',
+                        'options'        =>  _nbd_font_subsets()
+                    ),                    
+                    array(
                         'title' => __( 'Default text', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_default_text',
                         'default'	=> 'Text here',
