@@ -1230,6 +1230,38 @@ function nbd_get_language($code){
     }    
     return $data;
 }
+function nbd_get_license_key(){
+    $license = array(
+        'key'   =>  ''
+    );
+    $path = NBDESIGNER_DATA_CONFIG_DIR . '/license.json';
+    if( file_exists($path) ){
+        $license = (array) json_decode(file_get_contents($path));
+    }else{
+        $_license = get_option('nbdesigner_license');
+        if( $_license ){
+            $license = (array) json_decode( $_license );
+        }        
+    }
+    return $license;
+}
+function nbd_active_domain($license_key){
+    $url = 'https://cmsmart.net/activedomain/netbase/WPP1074/'.$license_key.'/'.base64_encode(rtrim(get_bloginfo('wpurl'), '/'));
+    $result = nbd_file_get_contents($url);
+    if($result){
+        $path_data = NBDESIGNER_DATA_CONFIG_DIR . '/license.json';
+        if (!file_exists(NBDESIGNER_DATA_CONFIG_DIR)) {
+            wp_mkdir_p(NBDESIGNER_DATA_CONFIG_DIR);
+        }     
+        $data = (array) json_decode($result);
+        $data['key'] = $license_key;
+        if($data['type'] == 'free') $data['number_domain'] = "5";
+        $data['salt'] = md5($license_key.$data['type']);  
+        $license = json_encode($data);
+        file_put_contents($path_data, $license);
+        update_option('nbdesigner_license', $license);  
+    }
+}
 function nbd_is_product( $id ){
     $product = wc_get_product($id);
     if( $product ) return true;
