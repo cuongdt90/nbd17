@@ -11,7 +11,7 @@
 <?php
 $custom_logo_id = get_theme_mod( 'custom_logo' );
 $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo-frontend.png';
+$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo.svg';
 $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 ?>
 
@@ -33,16 +33,16 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
             <div class="share-with">
                 <span><?php _e('Share with','web-to-print-online-designer'); ?>:</span>
                 <ul class="socials">
-                    <li class="social facebook"><i class="icon-nbd icon-nbd-facebook-circle nbd-hover-shadow"></i></li>
-                    <li class="social twitter"><i class="icon-nbd icon-nbd-twitter-circle nbd-hover-shadow"></i></li>
-                    <li class="social google-plus"><i class="icon-nbd icon-nbd-google-plus-circle nbd-hover-shadow"></i></li>
+                    <li ng-click="createShareLink('facebook', 'https://facebook.com/sharer/sharer.php?u=')" class="social facebook"><i class="icon-nbd icon-nbd-facebook-circle nbd-hover-shadow"></i></li>
+                    <li ng-click="createShareLink('twitter', 'https://twitter.com/share?url=')" class="social twitter"><i class="icon-nbd icon-nbd-twitter-circle nbd-hover-shadow"></i></li>
+                    <li ng-click="createShareLink('google', 'https://plus.google.com/share?url=')" class="social google-plus"><i class="icon-nbd icon-nbd-google-plus-circle nbd-hover-shadow"></i></li>
                 </ul>
             </div>
             <div class="share-content">
-                <textarea placeholder="Write a comment"></textarea>
+                <textarea ng-change="updateShareLink()" placeholder="<?php _e('Write a comment'); ?>" ng-model="resource.social.comment"></textarea>
             </div>
             <div class="share-btn">
-                <button class="nbd-button nbd-hover-shadow"><?php _e('Share now','nbd-online-design'); ?></button>
+                <a href="{{resource.social.link}}" target="_blank" ng-class="resource.social.link != '' ? '' : 'nbd-disabled'" class="nbd-button nbd-hover-shadow"><?php _e('Share now','nbd-online-design'); ?></a>
             </div>
         </div>
         <div class="footer"></div>

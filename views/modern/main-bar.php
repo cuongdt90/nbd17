@@ -11,24 +11,40 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
     <i class="icon-nbd icon-nbd-menu menu-mobile"></i>
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-edit">
+            <span><?php _e('File','web-to-print-online-designer'); ?></span>
+            <div class="sub-menu" data-pos="left">
+                <ul>
+                    <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesign()">
+                        <span><?php _e('Open My Design','web-to-print-online-designer'); ?></span>
+                        <small>{{ 'M-O' | keyboardShortcut }}</small>
+                    </li>
+                    <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesignInCart()">
+                        <span><?php _e('Design in Cart','web-to-print-online-designer'); ?></span>
+                        <small>{{ 'M-S-O' | keyboardShortcut }}</small>
+                    </li>                    
+                    <li class="sub-menu-item flex space-between item-import-file" ng-click="importDesign()">
+                        <span><?php _e('Import Design','web-to-print-online-designer'); ?></span>
+                        <small>{{ 'M-S-I' | keyboardShortcut }}</small>
+                    </li>
+                    <li class="sub-menu-item flex space-between" ng-click="exportDesign()">
+                        <span><?php _e('Export Design','web-to-print-online-designer'); ?></span>
+                        <small>{{ 'M-S-E' | keyboardShortcut }}</small>
+                    </li>                 
+                </ul>
+            </div>
+            <div id="nbd-overlay"></div>
+        </li>
+        <li class="menu-item item-edit">
             <span><?php _e('Edit','web-to-print-online-designer'); ?></span>
             <div class="sub-menu" data-pos="left">
                 <ul>
-                    <li class="sub-menu-item flex space-between item-import-file">
-                        <span><?php _e('Import file','web-to-print-online-designer'); ?></span>
-                        <small>Ctrl+O</small>
-                    </li>
-                    <li class="sub-menu-item flex space-between">
-                        <span><?php _e('Export file','web-to-print-online-designer'); ?></span>
-                        <small>Ctrl+O</small>
-                    </li>
-                    <li class="sub-menu-item flex space-between">
+                    <li class="sub-menu-item flex space-between" ng-click="clearAllStage()">
                         <span><?php _e('Clear all design','web-to-print-online-designer'); ?></span>
-                        <small>Ctrl+L</small>
+                        <small>{{ 'M-S-L' | keyboardShortcut }}</small>
                     </li>
-                    <li class="sub-menu-item flex space-between">
+                    <li class="sub-menu-item flex space-between" ng-click="saveData('saveforlater')">
                         <span><?php _e('Save for later','web-to-print-online-designer'); ?></span>
-                        <small>Ctrl+Shift+S</small>
+                        <small>{{ 'M-S-S' | keyboardShortcut }}</small>
                     </li>                    
                 </ul>
             </div>
@@ -99,7 +115,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
         <li class="menu-item item-title animated slideInDown animate700">
             <input type="text" name="title" class="title" placeholder="Title" ng-model="stages[currentStage].config.name"/>
         </li>
-        <li class="menu-item item-share nbd-show-popup-share animated slideInDown animate800"><i class="icon-nbd icon-nbd-share2"></i></li>
+        <li class="menu-item item-share nbd-show-popup-share animated slideInDown animate800" ng-click="saveData('share')"><i class="icon-nbd icon-nbd-share2"></i></li>
         <li class="menu-item item-process animated slideInDown animate900" data-overlay="overlay" ng-click="saveData()">
             <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right" style="display: none;">

@@ -556,7 +556,7 @@ class My_Design_Endpoint {
         $product_id = absint($_POST['product_id']);
         $variation_id = absint($_POST['variation_id']);
         $folder = $_POST['folder'];
-        $design_folder = substr(md5(uniqid()),0,10);
+        $design_folder = substr(md5(uniqid()),0,5).rand(1,100).time();
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder;
         $design_path = NBDESIGNER_CUSTOMER_DIR . '/' . $design_folder;
         Nbdesigner_IO::copy_dir( $path, $design_path );

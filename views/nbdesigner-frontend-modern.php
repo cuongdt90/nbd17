@@ -625,6 +625,30 @@
             .fullScreenMode .fullscreen-stage-nav {
                 display: inline-block;
             }
+            .nbd-templates {
+                
+            }
+            .nbd-templates .item .item-img {
+                height: auto;
+            }
+            .nbd-templates .items .item .main-item {
+                border: 1px solid #ebebeb;
+                cursor: pointer;
+            }            
+            .nbd-templates .items .item {
+                width: 50%;
+                box-sizing: border-box;
+                display: inline-block;
+                padding: 10px;
+            }    
+            .nbd-mode-1 .nbd-main-bar .logo {
+                visibility: hidden;
+            }
+            .nbd-popup.popup-share .main-popup .body .share-btn .nbd-button:focus,
+            .nbd-popup.popup-share .main-popup .body .share-btn .nbd-button:hover {
+                color: #fff;
+                text-decoration: none;
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -724,6 +748,7 @@
                 fonts: <?php echo nbd_get_fonts(); ?>,
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
                 fbID: "<?php echo $fbID; ?>",
+                nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 enable_dropbox: false,
                 default_font: <?php echo nbd_get_default_font(); ?>,
                 templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>

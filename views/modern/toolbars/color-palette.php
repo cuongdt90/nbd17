@@ -35,7 +35,7 @@
             }">
             </spectrum-colorpicker>
             <div>
-                <button class="nbd-button" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                <button class="nbd-button" ng-click="addColor();changeFill(currentColor);"><?php _e('Choose','web-to-print-online-designer'); ?></button>
             </div>
         </div>
     </div>

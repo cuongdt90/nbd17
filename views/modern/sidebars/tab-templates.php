@@ -37,10 +37,10 @@
                 </div>
 
             </div>
-            <div class="nbd-items-dropdown">
+            <div class="nbd-templates">
                 <div class="main-items">
                     <div class="items">
-                        <div class="item" data-type="business-card" data-api="true" ng-repeat="temp in resource.templates" ng-click="insertTemplate(temp)">
+                        <div class="item" data-type="business-card" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
                             <div class="main-item">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
@@ -50,14 +50,10 @@
                     </div>
                     <div class="pointer"></div>
                 </div>
-                <div class="loading-photo" style="width: 40px; height: 40px;">
+                <div class="loading-photo" style="width: 40px; height: 40px; display: none;">
                     <svg class="circular" viewBox="25 25 50 50">
                         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                     </svg>
-                </div>
-                <div class="result-loaded">
-                    <div class="nbdesigner-gallery">fsdfsdfdsfsf
-                    </div>
                 </div>
             </div>
         </div>
