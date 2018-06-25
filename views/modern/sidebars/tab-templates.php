@@ -32,7 +32,7 @@
                         }">
                     </spectrum-colorpicker>
                     <div style="text-align: <?php echo (is_rtl()) ? 'right' : 'left'?>">
-                        <button class="nbd-button" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                        <button class="nbd-button" ng-click="addColor();changeBackground(currentColor);"><?php _e('Choose','web-to-print-online-designer'); ?></button>
                     </div>
                 </div>
 
