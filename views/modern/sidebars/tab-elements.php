@@ -27,14 +27,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="item" data-type="lines" data-api="false" ng-click="onClickTab('line', 'element')">
+<!--                    <div class="item" data-type="lines" data-api="false" ng-click="onClickTab('line', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-line"></i></div>
                             <div class="item-info">
                                 <span class="item-name"><?php _e('Lines','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="item" data-type="qr-code" data-api="false" ng-click="onClickTab('qrcode', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-qrcode"></i></div>
