@@ -14,11 +14,10 @@
                 </ul>
                 <div class="pinned-palette default-palette" style="margin-bottom: 10px">
                     <h3 class="color-palette-label" style="font-size: 11px; text-align: left; margin: 0 0 5px; text-transform: uppercase;"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
-                    <ul class="main-color-palette">
-                        <li ng-repeat="color in __colorPalette track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
-                    </ul>
+                    <ul class="main-color-palette" ng-repeat="palette in resource.defaultPalette" style="margin-bottom: 15px;">
+                        <li ng-class="{'first-left': $first, 'last-right': $last}" ng-repeat="color in palette track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
+                    </ul>   
                 </div>
-
                 <div class="nbd-text-color-picker" id="nbd-bg-color-picker" ng-class="showBgColorPicker ? 'active' : ''" style="z-index: 999;">
                     <spectrum-colorpicker
                         ng-model="currentColor"

@@ -40,7 +40,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                 <ul>
                     <li class="sub-menu-item flex space-between" ng-click="clearAllStage()">
                         <span><?php _e('Clear all design','web-to-print-online-designer'); ?></span>
-                        <small>{{ 'M-S-L' | keyboardShortcut }}</small>
+                        <small>{{ 'M-E' | keyboardShortcut }}</small>
                     </li>
                     <li class="sub-menu-item flex space-between" ng-click="saveData('saveforlater')">
                         <span><?php _e('Save for later','web-to-print-online-designer'); ?></span>

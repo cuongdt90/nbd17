@@ -655,6 +655,21 @@
             .nbd-sidebar #tab-element .nbd-items-dropdown .content-items .content-item.type-draw .brush .nbd-sub-dropdown ul li.active span {
                 color: #fff;
             }
+            .default-palette .first-left {
+                border-top-left-radius: 4px;
+            }
+            .default-palette .first-right {
+                border-top-right-radius: 4px;
+            }
+            .default-palette .last-left {
+                border-bottom-left-radius: 4px;
+            }
+            .default-palette .last-right {
+                border-bottom-right-radius: 4px;
+            }   
+            .nbd-signal .signal-logo {
+                opacity: 0.7;
+            }            
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
