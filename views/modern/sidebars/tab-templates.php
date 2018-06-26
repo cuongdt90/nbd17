@@ -38,7 +38,23 @@
             </div>
             <div class="nbd-templates">
                 <div class="main-items">
-                    <div class="items">
+                    <div class="items" style="text-align: left;">
+                        <p ng-show="resource.myTemplates.length > 0">My designs</p>
+                        <div class="item slideInDown animate300 animated" data-type="business-card" ng-repeat="temp in resource.myTemplates" ng-click="loadMyDesign(temp.id, false)">
+                            <div class="main-item">
+                                <div class="item-img">
+                                    <img ng-src="{{temp.src}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
+                                </div>
+                            </div>
+                        </div>  
+                        <p ng-show="resource.cartTemplates.length > 0">My designs in cart</p>
+                        <div class="item slideInDown animate300 animated" data-type="business-card" ng-repeat="temp in resource.cartTemplates" ng-click="loadMyDesign(temp.id, true)">
+                            <div class="main-item">
+                                <div class="item-img">
+                                    <img ng-src="{{temp.src}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
+                                </div>
+                            </div>
+                        </div>                         
                         <div class="item" data-type="business-card" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
                             <div class="main-item">
                                 <div class="item-img">

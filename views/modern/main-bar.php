@@ -14,11 +14,11 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
             <span><?php _e('File','web-to-print-online-designer'); ?></span>
             <div class="sub-menu" data-pos="left">
                 <ul>
-                    <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesign()">
+                    <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesign(null, false)">
                         <span><?php _e('Open My Design','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-O' | keyboardShortcut }}</small>
                     </li>
-                    <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesignInCart()">
+                    <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesign(null, true)">
                         <span><?php _e('Design in Cart','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-S-O' | keyboardShortcut }}</small>
                     </li>                    
