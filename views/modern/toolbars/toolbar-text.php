@@ -2,7 +2,7 @@
     <ul class="nbd-main-menu menu-left">
         <li class="menu-item item-font-familly">
             <button class="toolbar-bottom">
-                <span class="toolbar-label toolbar-label-font" ng-style="{'font-family': stages[currentStage].states.text.font.alias, 'font-weight': stages[currentStage].states.text.fontWeight}">{{stages[currentStage].states.text.font.name}}</span>
+                <span class="toolbar-label toolbar-label-font" ng-style="{'font-family': stages[currentStage].states.text.font.alias}">{{stages[currentStage].states.text.font.name}}</span>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
             </button>
             <div class="sub-menu" data-pos="left">
