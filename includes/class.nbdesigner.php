@@ -2616,6 +2616,10 @@ class Nbdesigner_Plugin {
         }
         if(false != $save_status){
             /* todo edit $product_config if has custom dimension */
+            if( isset($_POST['share']) ){
+                Nbdesigner_IO::copy_dir( $path, $path.'s' );
+                $result['sfolder'] = $nbd_item_key.'s';
+            }
             $path_config = $path . '/config.json';
             $config = nbd_get_data_from_json($path_config);            
             if( count( $config->product ) ){
