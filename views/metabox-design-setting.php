@@ -1,9 +1,28 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <?php
-    global $post;
-    $product = wc_get_product($post);
+    global $wp;
+    $product = wc_get_product($post_id);
+    $current_url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 ?>
 <style type="text/css">
+    .nbdesigner-option-size-type .nbd_pricing_table td, .nbdesigner-option-size-type .nbd_pricing_table th{
+        padding: 5px 8px;
+    }
+    .nbdesigner-td-option-size {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    .nbdesigner-td-option-size span{
+        margin-right: 5px;
+    }
+    .nbdesigner-td-option-size input{
+        max-width: 60px;
+    }
+    .nbdesigner-container-table {
+        overflow: auto;
+        max-height: 500px;
+    }
     .nbd-tabs {
         margin-bottom: 0;
     }
@@ -44,6 +63,9 @@
     .rtl .nbd-option-top {
         margin-left: 30px;
         margin-right: 0px;
+    }
+    .nbdesigner-color-add-image {
+        cursor: pointer;
     }
 </style>
 <div id="nbdesigner-setting-container">
@@ -379,6 +401,9 @@
                             </div>	
                         </div>
                     </div>
+
+                    <?php $slugD = sanitize_title($v['orientation_name']);?>
+                    <input name="_designer_setting[<?php echo $k; ?>][slug_nbdesigner]" value="<?php echo $slugD; ?>" type="hidden" />
             <?php $count++; endforeach; ?>
                 <input type="hidden" value="<?php echo $count; ?>" id="nbdesigner-count-box"/>
             </div>
@@ -523,66 +548,70 @@
                 </div> 
                 <?php do_action('nbd_after_option_product_design', $post_id, $option); ?>
 
+                <!-- Option color -->
                 <div class="nbdesigner-opt-inner">
-                    <label class="nbdesigner-option-label"><?php echo _e('Option color', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
+                    <label class="nbdesigner-option-label"><?php echo _e('Option color', 'web-to-print-online-designer'); ?></label>
                     <?php
                         $option_color = isset($option['color']['show']) ? $option['color']['show'] : 0;
                         $option_color_type = isset($option['color']['type']) ? $option['color']['type'] : 'setting';
                     ?>
-<!--                    --><?php //echo '<pre>'; print_r($option); echo '</pre>'; echo __FILE__; die(); ?>
+
                     <input name="_nbdesigner_option[color][show]" value="1" type="radio" <?php checked( $option_color, 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>
                     <input name="_nbdesigner_option[color][show]" value="0" type="radio" <?php checked( $option_color,0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>
                 </div>
                 <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type" style="display: <?php echo ($option_color == 0) ? 'none' : 'block';?>" >
-                    <label class="nbdesigner-option-label"><?php echo _e('Color Type', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
+                    <label class="nbdesigner-option-label"><?php echo _e('Color Type', 'web-to-print-online-designer'); ?></label>
                     <input name="_nbdesigner_option[color][type]" value="setting" type="radio" <?php echo ($option_color_type == 'setting') ? 'checked="checked"' : ''?>  /><?php _e('Setting color', 'web-to-print-online-designer'); ?>
-
                     <?php if ($product->is_type('variable')) : ?>
-                    <input name="_nbdesigner_option[color][type]" value="swatch" type="radio" <?php echo ($option_color_type == 'swatch') ? 'checked="checked"' : ''?> /><?php _e('Color swatch', 'web-to-print-online-designer'); ?>
+                        <input name="_nbdesigner_option[color][type]" value="swatch" type="radio" <?php echo ($option_color_type == 'swatch') ? 'checked="checked"' : ''?> /><?php _e('Color swatch', 'web-to-print-online-designer'); ?>
                     <?php endif; ?>
-
-                    <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-setting" style="display: <?php echo ($option_color_type == 'setting') ? 'block' : 'none'?>">
+                    <div class="nbdesigner-container-table nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-setting" style="display: <?php echo ($option_color_type == 'setting') ? 'block' : 'none'?>">
                         <table class="nbdesigner-option-color-setting nbd_pricing_table">
                             <thead>
                                 <tr>
                                     <td>Name</td>
-                                    <td>Color</td>
-                                    <td>Image</td>
+                                    <?php foreach ($designer_setting as $key => $value) : ?>
+                                    <td><?php echo $value['orientation_name'];?></td>
+                                    <?php endforeach; ?>
                                     <td><a href="#" class="button-secondary" id="nbdesigner-add-color-setting">Add</a></td>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
+                                $color_setting = (isset($option['color']['setting'])) ? $option['color']['setting'] : array();
                                 $color_setting_name = (isset($option['color']['setting']['name'])) ? $option['color']['setting']['name'] : array();
-                                $color_setting_hex = (isset($option['color']['setting']['hex'])) ? $option['color']['setting']['hex'] : array();
-                                $color_setting_image_id = (isset($option['color']['setting']['image_id'])) ? $option['color']['setting']['image_id'] : array();
-                                $color_setting_image_url = (isset($option['color']['setting']['image_url'])) ? $option['color']['setting']['image_url'] : array();
                             ?>
                             <?php foreach ($color_setting_name as $key => $value):?>
-                                <?php $src = wp_get_attachment_image_src($color_setting_image_id[$key], 'full', ''); ?>
                                 <tr>
                                     <td>
-<!--                                        <span>--><?php //echo $value;?><!--</span>-->
                                         <input type="text" name="_nbdesigner_option[color][setting][name][]" value="<?php echo $value;?>">
                                     </td>
-                                    <td>
-                                        <?php if ($color_setting_hex[$key] !== ''): ?>
-                                            <span class="nbdesigner-values-group-td-value button" style="background: <?php echo $color_setting_hex[$key];?>; color: #fff"><?php echo $color_setting_hex[$key];?></span>
-                                            <input type="hidden" name="_nbdesigner_option[color][setting][hex][]" value="<?php echo $color_setting_hex[$key];?>" class="save-color">
-                                        <?php else: ?>
-                                            <input type="text" name="_nbdesigner_option[color][setting][hex][]" value="<?php echo $color_setting_hex[$key]; ?>" class="nbdesigner-option-color-select" />
-                                        <?php endif; ?>
-                                    </td>
-                                    <td>
-                                        <?php if (is_array($src)) : ?>
-                                            <img src="<?php echo $src[0];?>" width="30px"
-                                                 alt="Product">
-                                            <input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="<?php echo $color_setting_image_id[$key];?>">
-                                        <?php else: ?>
-                                            <a class="button nbdesigner-button nbdesigner-color-add-image">Add image</a>
-                                            <input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="0">
-                                        <?php endif; ?>
-                                    </td>
+<!--                                    --><?php //echo '<pre>'; print_r($color_setting); echo '</pre>'; echo __FILE__; die(); ?>
+                                    <?php foreach ($designer_setting as $keyD => $valueD) : ?>
+                                        <?php $slugD = ($valueD['slug_nbdesigner'] !== '') ? $valueD['slug_nbdesigner'] : sanitize_title($valueD['orientation_name']); ?>
+                                        <?php $src = wp_get_attachment_image_src($color_setting[$slugD]['image_id'][$key], 'full', ''); ?>
+                                        <td>
+                                            <table>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" name="_nbdesigner_option[color][setting][<?php echo $slugD; ?>][hex][]" value="<?php echo $color_setting[$slugD]['hex'][$key]; ?>" class="nbdesigner-option-color-setting-select" />
+                                                    </td>
+
+                                                    <td>
+                                                        <?php if (is_array($src)) : ?>
+                                                            <img src="<?php echo $src[0];?>" width="30px" alt="Product" class="nbdesigner-color-setting-add-image" data-designer="<?php echo $slugD;?>">
+                                                            <input type="hidden" name="_nbdesigner_option[color][setting][<?php echo $slugD; ?>][image_id][]" value="<?php echo $color_setting[$slugD]['image_id'][$key]?>">
+                                                        <?php else: ?>
+                                                            <a class="button nbdesigner-button nbdesigner-color-setting-add-image" data-designer="<?php echo $slugD;?>">Add image</a>
+                                                            <input type="hidden" name="_nbdesigner_option[color][setting][<?php echo $slugD; ?>][image_id][]" value="0">
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    <?php endforeach; ?>
 
                                     <td><a href="#" class="nbdesigner-remove-color-setting">×</a></td>
                                 </tr>
@@ -590,11 +619,319 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-swatch" style="display: none">
-                        
+                    <?php if ($product->is_type('variable')) : ?>
+                    <?php
+                    $attributes = $product->get_variation_attributes();
+                    $arrAttr = array();
+                    foreach ($attributes as $keyAttr =>$attribute) {
+                        $arrTerms = array();
+                        foreach ($attribute as $value) {
+                            $tmp = array();
+                            $tmp['name'] = $value;
+                            $tmp['slug'] = $value;
+                            $arrTerms[$value] = $tmp;
+                        }
+                        $arrAttr[$keyAttr] = $arrTerms;
+                    }
+                    $attsSwatch = (!empty($option['color']['swatch'])) ? $option['color']['swatch'] : array();
+                    if (empty($attsSwatch) || !isset($attsSwatch)) {
+                        $attsSwatch = [];
+                        foreach ($arrAttr as $keyAtt => $attribute) {
+                            $tmpAtt = [];
+                            foreach ($attribute as $keyValue => $value) {
+                                $tmpValue = [];
+                                $tmpValue['slug'] = $value['slug'];
+                                $tmpValue['name'] = $value['name'];
+                                foreach ($designer_setting as $keyDesign => $designer) {
+                                    $tmpDesigner = [];
+                                    $slugDesigner = ($designer['slug_nbdesigner'] !== '') ? $designer['slug_nbdesigner'] : sanitize_title($designer['orientation_name']);
+
+                                    $tmpDesigner['color'] = '';
+                                    $tmpDesigner['image_id'] = 0;
+
+                                    $tmpValue[$slugDesigner] = $tmpDesigner;
+                                }
+                                $tmpAtt[$keyValue] = $tmpValue;
+                            }
+                            $attsSwatch[$keyAtt] = $tmpAtt;
+                        }
+                    }
+                    ?>
+                    <div class="nbdesigner-container-table nbdesigner-opt-inner nbd-independence nbdesigner-option-color-type-swatch" style="display: <?php echo ($option_color_type == 'swatch') ? 'block' : 'none'?>">
+                        <div class="nbdesigner-option-color-swatch-dropdown" style="margin-bottom: 20px">
+                            <strong>Choose Form Values</strong>
+                            <select class="nbdesigner-color-swatch-attribute" name="nbdesigner-color-swatch-attribute" data-current="">
+                                <option value="" selected="selected"></option>
+                                <?php foreach ($attributes as $key => $value):?>
+                                    <?php $name = wc_attribute_label($key); ?>
+                                    <option value="<?php echo $key; ?>"><?php echo $name;?></option>
+                                <?php endforeach; ?>
+
+                            </select>
+                        </div>
+
+                        <table class="nbdesigner-option-color-swatch nbd_pricing_table" style="display: none">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <?php foreach ($designer_setting as $keyDesign => $designer): ?>
+                                        <td><?php echo $designer['orientation_name'];?></td>
+                                    <?php endforeach; ?>
+                                </tr>
+                            </thead>
+                            <?php
+                            foreach ($attsSwatch as $keyAtt => $values):
+                            ?>
+                            <tbody class="<?php echo $keyAtt;?>" style="display: none">
+                                <?php foreach ($values as $key => $value): ?>
+                                    <tr>
+                                        <td>
+                                            <span><?php echo $value['name']?></span>
+                                            <input type="hidden" name="_nbdesigner_option[color][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][slug]" value="<?php echo $value['slug'];?>">
+                                            <input type="hidden" name="_nbdesigner_option[color][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][name]" value="<?php echo $value['name'];?>">
+                                        </td>
+                                        <?php foreach ($designer_setting as $keyDesign => $designer): ?>
+                                            <?php
+                                                $slugDesigner = ($designer['slug_nbdesigner'] !== '') ? $designer['slug_nbdesigner'] : sanitize_title($designer['orientation_name']);
+                                                $src = wp_get_attachment_image_src($value[$slugDesigner]['image_id'], 'full', '');
+                                            ?>
+                                            <td>
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <td><input type="text" name="_nbdesigner_option[color][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][color]" value="<?php echo $value[$slugDesigner]['color'];?>" class="nbdesigner-option-color-select" /></td>
+                                                            <td>
+                                                                <?php if ($value[$slugDesigner]['image_id']): ?>
+                                                                    <img src="<?php echo $src[0];?>" width="30px" alt="Product" class="nbdesigner-color-add-image" data-designer="<?php echo $slugDesigner;?>" data-slug="<?php echo $value['slug'];?>">
+                                                                    <input type="hidden" name="_nbdesigner_option[color][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][image_id]" value="<?php echo $value[$slugDesigner]['image_id'];?>">
+                                                                <?php else: ?>
+                                                                    <a class="button nbdesigner-button nbdesigner-color-add-image" data-slug="<?php echo $value['slug'];?>" data-designer="<?php echo $slugDesigner;?>">Add image</a>
+                                                                    <input type="hidden" name="_nbdesigner_option[color][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][image_id]" value="0">
+                                                                <?php endif; ?>
+                                                            </td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                </div>
+                <!-- End option color -->
+
+                <!-- Option size -->
+                <div class="nbdesigner-opt-inner">
+                    <label class="nbdesigner-option-label"><?php echo _e('Option size', 'web-to-print-online-designer'); ?></label>
+                    <?php
+                    $option_size = isset($option['size']['show']) ? $option['size']['show'] : 0;
+                    $option_size_type = isset($option['size']['type']) ? $option['size']['type'] : 'setting';
+                    ?>
+
+                    <input name="_nbdesigner_option[size][show]" value="1" type="radio" <?php checked( $option_size, 1); ?> /><?php _e('Yes', 'web-to-print-online-designer'); ?>
+                    <input name="_nbdesigner_option[size][show]" value="0" type="radio" <?php checked( $option_size,0); ?> /><?php _e('No', 'web-to-print-online-designer'); ?>
                 </div>
 
+                <div class="nbdesigner-opt-inner nbd-independence nbdesigner-option-size-type" style="display: <?php echo ($option_size == 0) ? 'none' : 'block';?>" >
+                    <label class="nbdesigner-option-label"><?php echo _e('Size Type', 'web-to-print-online-designer'); ?> <?php echo wc_help_tip( __( 'Require enable "Allow user define demension"', 'web-to-print-online-designer' ) ); ?></label>
+                    <input name="_nbdesigner_option[size][type]" value="setting" type="radio" <?php echo ($option_size_type == 'setting') ? 'checked="checked"' : ''?>  /><?php _e('Setting size', 'web-to-print-online-designer'); ?>
+                    <?php if ($product->is_type('variable')) : ?>
+                        <input name="_nbdesigner_option[size][type]" value="swatch" type="radio" <?php echo ($option_size_type == 'swatch') ? 'checked="checked"' : ''?> /><?php _e('Size swatch', 'web-to-print-online-designer'); ?>
+                    <?php endif; ?>
+
+                    <?php
+                    $size_setting = (isset($option['size']['setting'])) ? $option['size']['setting'] : array();
+                    $size_setting_name = (isset($option['size']['setting']['name'])) ? $option['size']['setting']['name'] : array();
+                    ?>
+                    <div class="nbdesigner-container-table nbdesigner-opt-inner nbdesigner-option-size-type-setting" style="display: <?php echo ($option_size_type == 'setting') ? 'block' : 'none'?>">
+                        <table class="nbdesigner-option-size-setting nbd_pricing_table">
+                            <thead>
+                            <tr>
+                                <td>Name</td>
+                                <?php foreach ($designer_setting as $key => $value) : ?>
+                                    <td><?php echo $value['orientation_name'];?> (unit:px)</td>
+                                <?php endforeach; ?>
+                                <td><a href="#" class="button-secondary" id="nbdesigner-add-size-setting">Add</a></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($size_setting_name as $key => $value):?>
+                                <tr>
+                                    <td>
+                                        <input type="text" name="_nbdesigner_option[size][setting][name][]" style="max-width: 120px" value="<?php echo $value;?>">
+                                    </td>
+                                    <?php foreach ($designer_setting as $keyD => $valueD) : ?>
+                                        <?php $slugD = ($valueD['slug_nbdesigner'] !== '') ? $valueD['slug_nbdesigner'] : sanitize_title($valueD['orientation_name']); ?>
+                                        <td>
+                                            <table>
+                                                <tbody>
+                                                <input type="hidden" name="_nbdesigner_option[size][setting][<?php echo $slugD; ?>][width_pro][]" value="<?php echo $color_setting[$slugD]['width_pro'][$key]; ?>"/>
+                                                <input type="hidden" name="_nbdesigner_option[size][setting][<?php echo $slugD; ?>][height_pro][]" value="<?php echo $color_setting[$slugD]['height_pro'][$key]; ?>"/>
+                                                <tr>
+                                                    <td>
+                                                        <div class="nbdesigner-td-option-size">
+                                                            <span>width</span>
+                                                            <input type="number" min="0" name="_nbdesigner_option[size][setting][<?php echo $slugD; ?>][width_d][]" value="<?php echo $size_setting[$slugD]['width_d'][$key]; ?>"/>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="nbdesigner-td-option-size">
+                                                            <span>height</span>
+                                                            <input type="number" min="0" name="_nbdesigner_option[size][setting][<?php echo $slugD; ?>][height_d][]" value="<?php echo $size_setting[$slugD]['height_d'][$key]; ?>"/>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="nbdesigner-td-option-size">
+                                                            <span>Top</span>
+                                                            <input type="number" min="0" name="_nbdesigner_option[size][setting][<?php echo $slugD; ?>][top_d][]" value="<?php echo $size_setting[$slugD]['top_d'][$key]; ?>"/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="nbdesigner-td-option-size">
+                                                            <span>Left</span>
+                                                            <input type="number" min="0" name="_nbdesigner_option[size][setting][<?php echo $slugD; ?>][left_d][]" value="<?php echo $size_setting[$slugD]['left_d'][$key]; ?>"/>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    <?php endforeach; ?>
+
+                                    <td><a href="#" class="nbdesigner-remove-size-setting">×</a></td>
+                                </tr>
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <?php if ($product->is_type('variable')) : ?>
+
+                    <?php
+                        $attsSizeSwatch = (!empty($option['size']['swatch'])) ? $option['size']['swatch'] : array();
+                        if (empty($attsSizeSwatch) || !isset($attsSizeSwatch)) {
+                        $attsSizeSwatch = [];
+                        foreach ($arrAttr as $keyAtt => $attribute) {
+                            $tmpAtt = [];
+                            foreach ($attribute as $keyValue => $value) {
+                                $tmpValue = [];
+                                $tmpValue['slug'] = $value['slug'];
+                                $tmpValue['name'] = $value['name'];
+                                foreach ($designer_setting as $keyDesign => $designer) {
+                                    $tmpDesigner = [];
+                                    $slugDesigner = ($designer['slug_nbdesigner'] !== '') ? $designer['slug_nbdesigner'] : sanitize_title($designer['orientation_name']);
+                                    $tmpDesigner['width_pro'] = $designer['product_width'];
+                                    $tmpDesigner['height_pro'] = $designer['product_height'];
+                                    $tmpDesigner['width_d'] = $designer['img_src_width'];
+                                    $tmpDesigner['height_d'] = $designer['img_src_height'];
+                                    $tmpDesigner['left_d'] = $designer['img_src_left'];
+                                    $tmpDesigner['top_d'] = $designer['img_src_top'];
+
+                                    $tmpValue[$slugDesigner] = $tmpDesigner;
+                                }
+                                $tmpAtt[$keyValue] = $tmpValue;
+                            }
+                            $attsSizeSwatch[$keyAtt] = $tmpAtt;
+                        }
+                    }
+                    ?>
+                    <div class="nbdesigner-container-table nbdesigner-opt-inner nbd-independence nbdesigner-option-size-type-swatch" style="display: <?php echo ($option_size_type == 'swatch') ? 'block' : 'none'?>">
+                        <div class="nbdesigner-option-size-swatch-dropdown" style="margin-bottom: 20px">
+                            <strong>Choose Form Values</strong>
+                            <select class="nbdesigner-size-swatch-attribute" name="nbdesigner-size-swatch-attribute" data-current="">
+                                <option value="" selected="selected"></option>
+                                <?php foreach ($attributes as $key => $value):?>
+                                    <?php $name = wc_attribute_label($key); ?>
+                                    <option value="<?php echo $key; ?>"><?php echo $name;?></option>
+                                <?php endforeach; ?>
+
+                            </select>
+                        </div>
+
+                        <table class="nbdesigner-option-size-swatch nbd_pricing_table" style="display: none">
+                            <thead>
+                            <tr>
+                                <td>Name</td>
+                                <?php foreach ($designer_setting as $keyDesign => $designer): ?>
+                                    <td><?php echo $designer['orientation_name'];?></td>
+                                <?php endforeach; ?>
+                            </tr>
+                            </thead>
+                            <?php
+                            foreach ($attsSizeSwatch as $keyAtt => $values):
+                                ?>
+                                <tbody class="<?php echo $keyAtt;?>" style="display: none">
+                                <?php foreach ($values as $key => $value): ?>
+                                    <tr>
+                                        <td>
+                                            <span><?php echo $value['name']?></span>
+                                            <input type="hidden" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][slug]" value="<?php echo $value['slug'];?>">
+                                            <input type="hidden" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][name]" value="<?php echo $value['name'];?>">
+                                        </td>
+                                        <?php foreach ($designer_setting as $keyDesign => $designer): ?>
+                                            <?php
+                                            $slugDesigner = ($designer['slug_nbdesigner'] !== '') ? $designer['slug_nbdesigner'] : sanitize_title($designer['orientation_name']);
+                                            ?>
+                                            <td>
+                                                <table>
+                                                    <tbody>
+                                                    <input type="hidden" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][width_pro]" value="<?php echo $value[$slugDesigner]['width_pro']; ?>"/>
+                                                    <input type="hidden" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][height_pro]" value="<?php echo $value[$slugDesigner]['height_pro']; ?>"/>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="nbdesigner-td-option-size">
+                                                                <span>width</span>
+                                                                <input type="number" min="0" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][width_d]" value="<?php echo $value[$slugDesigner]['width_d']; ?>"/>
+                                                                <span style="margin-left: 5px">px</span>
+                                                            </div>
+                                                        </td>
+
+                                                        <td>
+                                                            <div class="nbdesigner-td-option-size">
+                                                                <span>height</span>
+                                                                <input type="number" min="0" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][height_d]" value="<?php echo $value[$slugDesigner]['height_d']; ?>"/>
+                                                                <span style="margin-left: 5px">px</span>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="nbdesigner-td-option-size">
+                                                                <span>Top</span>
+                                                                <input type="number" min="0" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][top_d]" value="<?php echo $value[$slugDesigner]['top_d']; ?>"/>
+                                                                <span style="margin-left: 5px">px</span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="nbdesigner-td-option-size">
+                                                                <span>Left</span>
+                                                                <input type="number" min="0" name="_nbdesigner_option[size][swatch][<?php echo $keyAtt; ?>][<?php echo $value['slug']?>][<?php echo $slugDesigner;?>][left_d]" value="<?php echo $value[$slugDesigner]['left_d']; ?>"/>
+                                                                <span style="margin-left: 5px">px</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        <?php endforeach; ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                    <?php endif; ?>
+                </div>
+                <!-- End option size -->
             </div>
         </div>
         <div id="nbd-upload-design" class="nbd-options-tab" style="padding: 10px;">
@@ -627,9 +964,9 @@
         </div>
     </div>    
 </div>
-<?php
-function  nbd_add_js_code(){
-?><script>
+
+<script type="text/javascript">
+
     jQuery(document).ready( function($) {
         $('.nbd-tabber').click(function() {
             var t = $(this),
@@ -639,13 +976,13 @@ function  nbd_add_js_code(){
             t.addClass("selected");
             $(s.data('target')).fadeOut(0);
             $(t.data('target')).fadeIn(200);
-        });        
+        });
         var direction = "<?php if(is_rtl()) echo 'right'; else echo 'left'; ?>";
         var options = {
             "content":"<h3>" + "<?php _e('Notice', 'web-to-print-online-designer'); ?>" + "<\/h3>" +
-                       "<p>" + "<?php _e('Bellow values must in range from 0 to 500px', 'web-to-print-online-designer'); ?>" + "<\/p>" + 
-                       "<p>" + "<?php _e('There are relative position of design area in bounding box.', 'web-to-print-online-designer'); ?>" + "<\/p>" +
-                       "<p><img style='max-width: 100%;' src='"+"<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/bounding-box.png'; ?>"+"' /><br /><a href='"+"<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/bounding-box.png'; ?>"+"' target='_blank'>" + "<?php  _e('See detail', 'web-to-print-online-designer'); ?>" + "</a></p>",
+            "<p>" + "<?php _e('Bellow values must in range from 0 to 500px', 'web-to-print-online-designer'); ?>" + "<\/p>" +
+            "<p>" + "<?php _e('There are relative position of design area in bounding box.', 'web-to-print-online-designer'); ?>" + "<\/p>" +
+            "<p><img style='max-width: 100%;' src='"+"<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/bounding-box.png'; ?>"+"' /><br /><a href='"+"<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/bounding-box.png'; ?>"+"' target='_blank'>" + "<?php  _e('See detail', 'web-to-print-online-designer'); ?>" + "</a></p>",
             "position": {"edge":direction, "align":"center"}
         };
         if ( ! options ) return;
@@ -660,16 +997,16 @@ function  nbd_add_js_code(){
         });
         var size_options = {
             "content" : "<h3>" + "<?php _e('Notice', 'web-to-print-online-designer'); ?>" + "<\/h3>" +
-                        "<p>"+"<?php _e('Please upload background image with aspect ratio', 'web-to-print-online-designer'); ?>"+": W<sub>p</sub>&timesH<sub>p</sub>.</p>" +
-                        "<p>" + "<?php _e('Make sure setting', 'web-to-print-online-designer'); ?>" + " <span style='font-weight: bold; background: #b8dce8;'>" + "<?php _e('Product size', 'web-to-print-online-designer'); ?>" + "</span> " + "<?php _e('must always be the top priority!', 'web-to-print-online-designer'); ?>" + "</p>" +
-                        "<p>" + "<?php _e('You have two order setting options', 'web-to-print-online-designer'); ?>" + 
-                        ": <br /><strong>1</strong> - <span style='font-weight: bold; background: #b8dce8;'>" + "<?php _e('Product size', 'web-to-print-online-designer'); ?>" + "</span> →"+
-                        " <span style='font-weight: bold; background: #dddacd;'>" + "<?php _e('Design area size', 'web-to-print-online-designer'); ?>" + "</span> "+
-                        " (<span style='font-weight: bold; background: #f0c6f6;'>" + "<?php _e('Relative position', 'web-to-print-online-designer'); ?>" + "</span> "+"<?php _e('will automatic update', 'web-to-print-online-designer'); ?>"+")" +
-                        "<br /><strong>2</strong> - <span style='font-weight: bold; background: #b8dce8;'>" + "<?php _e('Product size', 'web-to-print-online-designer'); ?>" + "</span> →"+
-                        " <span style='font-weight: bold; background: #f0c6f6;'>" + "<?php _e('Relative position', 'web-to-print-online-designer'); ?>" + "</span> → "+  
-                        "<?php _e('click', 'web-to-print-online-designer'); ?>" + "<span class='dashicons dashicons-update'></span> "+"<?php _e('to update', 'web-to-print-online-designer'); ?>"+" <span style='font-weight: bold; background: #f0c6f6;'>" + "<?php _e('Design area size', 'web-to-print-online-designer'); ?>" + "</span>"+ 
-                        "</p>",
+            "<p>"+"<?php _e('Please upload background image with aspect ratio', 'web-to-print-online-designer'); ?>"+": W<sub>p</sub>&timesH<sub>p</sub>.</p>" +
+            "<p>" + "<?php _e('Make sure setting', 'web-to-print-online-designer'); ?>" + " <span style='font-weight: bold; background: #b8dce8;'>" + "<?php _e('Product size', 'web-to-print-online-designer'); ?>" + "</span> " + "<?php _e('must always be the top priority!', 'web-to-print-online-designer'); ?>" + "</p>" +
+            "<p>" + "<?php _e('You have two order setting options', 'web-to-print-online-designer'); ?>" +
+            ": <br /><strong>1</strong> - <span style='font-weight: bold; background: #b8dce8;'>" + "<?php _e('Product size', 'web-to-print-online-designer'); ?>" + "</span> →"+
+            " <span style='font-weight: bold; background: #dddacd;'>" + "<?php _e('Design area size', 'web-to-print-online-designer'); ?>" + "</span> "+
+            " (<span style='font-weight: bold; background: #f0c6f6;'>" + "<?php _e('Relative position', 'web-to-print-online-designer'); ?>" + "</span> "+"<?php _e('will automatic update', 'web-to-print-online-designer'); ?>"+")" +
+            "<br /><strong>2</strong> - <span style='font-weight: bold; background: #b8dce8;'>" + "<?php _e('Product size', 'web-to-print-online-designer'); ?>" + "</span> →"+
+            " <span style='font-weight: bold; background: #f0c6f6;'>" + "<?php _e('Relative position', 'web-to-print-online-designer'); ?>" + "</span> → "+
+            "<?php _e('click', 'web-to-print-online-designer'); ?>" + "<span class='dashicons dashicons-update'></span> "+"<?php _e('to update', 'web-to-print-online-designer'); ?>"+" <span style='font-weight: bold; background: #f0c6f6;'>" + "<?php _e('Design area size', 'web-to-print-online-designer'); ?>" + "</span>"+
+            "</p>",
             "position": {"edge":direction, "align":"center"}
         };
         $('.nbdesign-config-size-tooltip').first().pointer( size_options );
@@ -678,21 +1015,20 @@ function  nbd_add_js_code(){
         });
         var da_option = {
             "content" : "<h3>" + "<?php _e('Notice', 'web-to-print-online-designer'); ?>" + "<\/h3>" +
-                        "<p>"+"<?php _e('After change bellow', 'web-to-print-online-designer'); ?>"+" <span style='background: #dddacd; font-weight: bold;'>"+"<?php _e('values', 'web-to-print-online-designer'); ?>"+"</span>, "+"<span style='background: #f0c6f6; font-weight: bold;'>"+"<?php _e('relative position', 'web-to-print-online-designer'); ?>"+"</span> "+"<?php _e('of design area in bounding box will automatic update.', 'web-to-print-online-designer'); ?>"+"</p>" +
-                        "<p>" + "<?php _e('Notice', 'web-to-print-online-designer'); ?>" + ": W<sub>p</sub> &gt;= W<sub>d</sub> + L<sub>d</sub>" +
-                        " | H<sub>p</sub> &gt;= H<sub>d</sub> + T<sub>d</sub>" +
-                        "<br />"+"<?php _e('If color labels change to ', 'web-to-print-online-designer'); ?>"+"<span style='color: red'>"+"<?php _e('red', 'web-to-print-online-designer'); ?>"+"</span>, "+"<?php _e('check values again.', 'web-to-print-online-designer'); ?>"+"</p>" +                       
-                        "<p>"+"<?php _e('There', 'web-to-print-online-designer'); ?>"+" <span style='background: #dddacd; font-weight: bold;'>"+"<?php _e('values', 'web-to-print-online-designer'); ?>"+"</span> "+"<?php _e('will decide dimensions of output images.', 'web-to-print-online-designer'); ?>"+"</p>" +
-                        "<p>"+"<?php _e('If you modify', 'web-to-print-online-designer'); ?>"+" <span style='background: #f0c6f6; font-weight: bold;'>"+"<?php _e('relative position', 'web-to-print-online-designer'); ?>"+"</span>, "+"<?php _e('click button', 'web-to-print-online-designer'); ?>"+" <span class='dashicons dashicons-update'></span> "+"<?php _e('to update', 'web-to-print-online-designer'); ?>"+"<span style='background: #dddacd; font-weight: bold;'> "+"<?php _e('Design area.', 'web-to-print-online-designer'); ?>"+"</span>"+"</p>" ,
-            "position": {"edge":direction, "align":"center"}            
+            "<p>"+"<?php _e('After change bellow', 'web-to-print-online-designer'); ?>"+" <span style='background: #dddacd; font-weight: bold;'>"+"<?php _e('values', 'web-to-print-online-designer'); ?>"+"</span>, "+"<span style='background: #f0c6f6; font-weight: bold;'>"+"<?php _e('relative position', 'web-to-print-online-designer'); ?>"+"</span> "+"<?php _e('of design area in bounding box will automatic update.', 'web-to-print-online-designer'); ?>"+"</p>" +
+            "<p>" + "<?php _e('Notice', 'web-to-print-online-designer'); ?>" + ": W<sub>p</sub> &gt;= W<sub>d</sub> + L<sub>d</sub>" +
+            " | H<sub>p</sub> &gt;= H<sub>d</sub> + T<sub>d</sub>" +
+            "<br />"+"<?php _e('If color labels change to ', 'web-to-print-online-designer'); ?>"+"<span style='color: red'>"+"<?php _e('red', 'web-to-print-online-designer'); ?>"+"</span>, "+"<?php _e('check values again.', 'web-to-print-online-designer'); ?>"+"</p>" +
+            "<p>"+"<?php _e('There', 'web-to-print-online-designer'); ?>"+" <span style='background: #dddacd; font-weight: bold;'>"+"<?php _e('values', 'web-to-print-online-designer'); ?>"+"</span> "+"<?php _e('will decide dimensions of output images.', 'web-to-print-online-designer'); ?>"+"</p>" +
+            "<p>"+"<?php _e('If you modify', 'web-to-print-online-designer'); ?>"+" <span style='background: #f0c6f6; font-weight: bold;'>"+"<?php _e('relative position', 'web-to-print-online-designer'); ?>"+"</span>, "+"<?php _e('click button', 'web-to-print-online-designer'); ?>"+" <span class='dashicons dashicons-update'></span> "+"<?php _e('to update', 'web-to-print-online-designer'); ?>"+"<span style='background: #dddacd; font-weight: bold;'> "+"<?php _e('Design area.', 'web-to-print-online-designer'); ?>"+"</span>"+"</p>" ,
+            "position": {"edge":direction, "align":"center"}
         };
         $('.nbdesign-config-realsize-tooltip').first().pointer( da_option );
         $('.nbdesign-config-realsize-tooltip').first().on('click', function(){
             $(this).pointer("open")
         });
 
-        // Option color and size
-        var attachment = null;
+        // Option color
         $('input[name="_nbdesigner_option[color][show]"]').on('change', function () {
             if ($(this).val() == '1') {
                 $('.nbdesigner-option-color-type').show();
@@ -700,6 +1036,13 @@ function  nbd_add_js_code(){
                 $('.nbdesigner-option-color-type').hide();
             }
         });
+
+        $('.nbdesigner-option-color-setting-select').wpColorPicker({});
+        $('.nbdesigner-color-setting-add-image').unbind('click').on('click', function (e) {
+            var slugDesigner = $(this).attr('data-designer');
+            addImage($(this), e, slugDesigner);
+        });
+
         $('input[name="_nbdesigner_option[color][type]"]').on('change', function () {
             if ($(this).val() == 'setting') {
                 $('.nbdesigner-option-color-type-setting').show();
@@ -709,47 +1052,50 @@ function  nbd_add_js_code(){
                 $('.nbdesigner-option-color-type-swatch').show();
             }
         });
-
         $('#nbdesigner-add-color-setting').on('click', function (e) {
             e.preventDefault();
-            var $this = $(this),
-                $inputs = $this.closest('tr').find('input[type="text"]');
-            var values = [],itemColor, itemImage = '',itemColor = '';
-            $inputs.each(function(i, item) {
-                values.push(item.value);
+            var designers = <?php echo json_encode($designer_setting);?>;
+            var $trItem = $('<tr></tr>');
+            var $tdAction = $('<td></td>');
+            var $tdName = $('<td></td>');
+
+            itemName = '<input type="text" name="_nbdesigner_option[color][setting][name][]" value="" placeholder="name">';
+            itemAction = '<a href="#" class="nbdesigner-remove-color-setting">×</a>';
+            $itemAction = $(itemAction);
+            $tdName.append(itemName);
+            $trItem.append($tdName);
+            $.each(designers, function (i, val) {
+                var $tmpTable = $('<table><tbody><tr></tr></tbody></table>');
+                var $tdItemColor = $('<td></td>');
+                var $tdItemImage = $('<td></td>');
+                var $tdDesigner = $('<td></td>');
+
+                var itemColor = '<input type="text" name="_nbdesigner_option[color][setting]['+ val.slug_nbdesigner +'][hex][]" value="" class="nbdesigner-option-color-setting-select" />';
+                var itemImage = '<a class="button nbdesigner-button nbdesigner-color-setting-add-image" data-designer="'+ val.slug_nbdesigner +'">Add image</a>' +
+                    '<input type="hidden" name="_nbdesigner_option[color][setting]['+ val.slug_nbdesigner +'][image_id][]" value="0">';
+                var $itemColor = $(itemColor);
+                var $itemImage = $(itemImage);
+                $tdItemColor.append($itemColor);
+                $tdItemImage.append($itemImage);
+                $tmpTable.append($tdItemColor);
+                $tmpTable.append($tdItemImage);
+                $tdDesigner.append($tmpTable);
+                $trItem.append($tdDesigner);
+
+                $itemColor.wpColorPicker({});
+                $itemImage.unbind('click').on('click', function (e) {
+                    addImage($(this), e, val.slug_nbdesigner);
+                });
             });
 
-            itemColor = '<input type="text" name="_nbdesigner_option[color][setting][hex][]" value="" class="nbdesigner-option-color-select" />';
-            if (attachment !== null) {
-                itemImage = '<img src="' + attachment.url + '" width="30px" alt="Product">' +
-                    '<input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="'+ attachment.id +'">';
-                attachment = null;
-            }else {
+            $tdAction.append($itemAction);
+            $trItem.append($tdAction);
+            $('.nbdesigner-option-color-setting > tbody').append($trItem);
 
-                itemImage = '<a class="button nbdesigner-button nbdesigner-color-add-image">Add image</a>' +
-                    '<input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="0">';
-            }
-
-            itemColor = '<tr>' +
-                          '<td>' +
-                                '<input type="text" name="_nbdesigner_option[color][setting][name][]" value="">' +
-                          '</td>' +
-                           '<td>' + itemColor +'</td>' +
-                            '<td>' + itemImage +'</td>' +
-                           '<td>' +
-                                '<a href="#" class="nbdesigner-remove-color-setting">×</a>' +
-                           '</td>' +
-                        '</tr>';
-            $('.nbdesigner-option-color-setting tbody').append(itemColor);
-            $('.nbdesigner-remove-color-setting').on('click', function () {
+            $itemAction.on('click', function () {
                 $(this).closest('tr').remove();
                 return false;
             });
-            $('.nbdesigner-color-add-image').on('click', function (e) {
-                addImage($(this), e);
-            });
-            $('.nbdesigner-option-color-select').wpColorPicker({});
-
             return false;
         });
 
@@ -757,8 +1103,7 @@ function  nbd_add_js_code(){
             $(this).closest('tr').remove();
             return false;
         });
-
-        function addImage(eClick, e) {
+        function addImage(eClick, e, slugDesigner) {
             var $td = eClick.closest('td');
             var sefl = eClick, itemImage = '';
             var image = null;
@@ -772,31 +1117,184 @@ function  nbd_add_js_code(){
                 upload = wp.media.frames.file_frame = wp.media({
                     title: 'Choose Image',
                     button: {
-                        text: 'Choose Image'
+                        text: 'Choose Image',
                     },
                     multiple: false
                 });
             upload.on('select', function () {
                 image = upload.state().get('selection').first().toJSON();
                 $td.empty();
-                itemImage = '<img src="' + image.url + '" width="30px" alt="Product" class="nbdesigner-color-add-image">' +
-                    '<input type="hidden" name="_nbdesigner_option[color][setting][image_id][]" value="'+ image.id +'">';
-                $itemImage = $(itemImage);
+                itemImage = '<img src="' + image.url + '" width="30px" alt="Product" class="nbdesigner-color-setting-add-image">' +
+                    '<input type="hidden" name="_nbdesigner_option[color][setting]['+ slugDesigner +'][image_id][]" value="'+ image.id +'">';
+                var $itemImage = $(itemImage);
                 $td.append($itemImage);
                 sefl.remove();
                 $itemImage.on('click', function (e) {
-                    addImage($(this), e);
+                    addImage($(this), e, slugDesigner);
+                });
+            });
+            upload.open();
+        }
+        function addImageSwatch(eClick, e, attr, slug, slugDesigner) {
+            var $td = eClick.closest('td');
+            var sefl = eClick, itemImage = '';
+            var image = null;
+            var upload;
+            if (upload) {
+                upload.open();
+                return;
+            }
+            var index = $(e).data('index'),
+
+                upload = wp.media.frames.file_frame = wp.media({
+                    title: 'Choose Image',
+                    button: {
+                        text: 'Choose Image',
+                    },
+                    multiple: false
+                });
+            upload.on('select', function () {
+                image = upload.state().get('selection').first().toJSON();
+                $td.empty();
+                itemImage = '<img src="' + image.url + '" width="30px" alt="Product" class="nbdesigner-color-add-image" data-slug="'+ slug +'">' +
+                    '<input type="hidden" name="_nbdesigner_option[color][swatch]['+ attr +'][' + slug + ']['+ slugDesigner +'][image_id]" value="'+ image.id +'">';
+                var $itemImage = $(itemImage);
+                $td.append($itemImage);
+                sefl.remove();
+                $itemImage.on('click', function (e) {
+                    addImageSwatch($(this), e, attr, slug, slugDesigner);
                 });
 
             });
             upload.open();
         }
-    });
+        // dropdown color swatch
+        $('.nbdesigner-color-swatch-attribute').on('change', function () {
+            var $table = $('.nbdesigner-option-color-swatch');
+            var select = $(this).val();
+            var tbody = '<tbody class="'+ select +'"></tbody>';
+            if (select == '') {
+                $table.hide();
+                return;
+            }else {
+                $table.show();
+            }
+            $tbody = $(tbody);
+            if ($table.find('> tbody').hasClass(select)) {
+                $table.find('> tbody').hide();
+                var $attSelect = $table.find('> tbody.' + select);
+                $attSelect.show();
+                $attSelect.find('.nbdesigner-color-add-image').each(function (i) {
+                    $(this).unbind('click').on('click', function (e) {
+                        var slug = $(this).attr('data-slug');
+                        var slugDesigner = $(this).attr('data-designer');
+                        addImageSwatch($(this), e, select, slug, slugDesigner);
+                    });
+                });
+                $('.nbdesigner-option-color-select').wpColorPicker({});
+            }
 
+        });
+
+        // Option size
+        $('input[name="_nbdesigner_option[size][show]"]').on('change', function () {
+            if ($(this).val() == '1') {
+                $('.nbdesigner-option-size-type').show();
+            } else {
+                $('.nbdesigner-option-size-type').hide();
+            }
+        });
+
+        $('input[name="_nbdesigner_option[size][type]"]').on('change', function () {
+            if ($(this).val() == 'setting') {
+                $('.nbdesigner-option-size-type-setting').show();
+                $('.nbdesigner-option-size-type-swatch').hide();
+            }else {
+                $('.nbdesigner-option-size-type-setting').hide();
+                $('.nbdesigner-option-size-type-swatch').show();
+            }
+        });
+
+        $('.nbdesigner-remove-size-setting').on('click', function () {
+            $(this).closest('tr').remove();
+            return false;
+        });
+
+        $('#nbdesigner-add-size-setting').on('click', function (e) {
+
+            var designers = <?php echo json_encode($designer_setting);?>;
+
+            var item = '<tr></tr>';
+            var $item = $(item);
+            var itemName = '<td><input type="text" name="_nbdesigner_option[size][setting][name][]" style="max-width: 120px" value="" placeholder="name"></td>';
+            var itemAction = '<td><a href="#" class="nbdesigner-remove-size-setting">×</a></td>';
+            $item.append(itemName);
+            $.each(designers, function (i, val) {
+                var tmpWidthPro = '<input type="hidden" name="_nbdesigner_option[size][setting][' + val.slug_nbdesigner + '][width_pro][]" value=""/>';
+                var tmpHeightPro = '<input type="hidden" name="_nbdesigner_option[size][setting][' + val.slug_nbdesigner + '][width_pro][]" value=""/>';
+                var tmpTrD1 = '<tr>' +
+                        '<td>' +
+                            '<div class="nbdesigner-td-option-size">' +
+                                '<span>width</span>' +
+                                '<input type="number" min="0" name="_nbdesigner_option[size][setting]['+ val.slug_nbdesigner +'][width_d][]" value=""/>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td>' +
+                            '<div class="nbdesigner-td-option-size">' +
+                                '<span>height</span>' +
+                                '<input type="number" min="0" name="_nbdesigner_option[size][setting]['+ val.slug_nbdesigner +'][height_d][]" value=""/>' +
+                            '</div>' +
+                        '</td>' +
+                    '</tr>';
+                var tmptrD2 = '<tr>' +
+                        '<td>' +
+                            '<div class="nbdesigner-td-option-size">' +
+                                '<span>Top</span>' +
+                                '<input type="number" min="0" name="_nbdesigner_option[size][setting]['+ val.slug_nbdesigner +'][top_d][]" value=""/>' +
+                            '</div>' +
+                        '</td>' +
+                        '<td>' +
+                            '<div class="nbdesigner-td-option-size">' +
+                                '<span>Left</span>' +
+                                '<input type="number" min="0" name="_nbdesigner_option[size][setting]['+ val.slug_nbdesigner +'][left_d][]" value=""/>' +
+                            '</div>' +
+                        '</td>' +
+                    '</tr>';
+
+                var tmpSize = '<td>' +
+                        '<table>' +
+                            '<tbody>' + tmpWidthPro + tmpHeightPro + tmpTrD1 + tmptrD2 + '</tbody>' +
+                        '</table>' +
+                    '</td>';
+                $item.append(tmpSize);
+            });
+
+            $item.append(itemAction);
+            $('.nbdesigner-option-size-setting > tbody').append($item);
+
+            $('.nbdesigner-remove-size-setting').on('click', function () {
+                $(this).closest('tr').remove();
+                return false;
+            });
+
+            return false;
+        });
+
+        var $table = $('.nbdesigner-option-size-swatch');
+        $('.nbdesigner-size-swatch-attribute').on('change', function () {
+            var select = $(this).val();
+            var tbody = '<tbody class="'+ select +'"></tbody>';
+            if (select == '') {
+                $table.hide();
+                return;
+            }else {
+                $table.show();
+            }
+            $tbody = $(tbody);
+            if ($('.nbdesigner-option-size-swatch > tbody').hasClass(select)) {
+                $('.nbdesigner-option-size-swatch > tbody').hide();
+                $('.nbdesigner-option-size-swatch').find('> tbody.' + select).show();
+            }
+        });
+    });
 </script>
-<?php
-}
-if(is_admin()) {
-    add_action("admin_footer", "nbd_add_js_code");
-}
-?>
