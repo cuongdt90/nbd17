@@ -18,7 +18,7 @@
         <div class="nbd-items-dropdown" style="padding:10px;">
             <div>
                 <div class="clipart-wrap">
-                    <div class="clipart-item"  ng-repeat="art in resource.clipart.filteredArts | limitTo: resource.clipart.filter.currentPage * resource.clipart.filter.perPage" repeat-end="onEndRepeat('clipart')">
+                    <div class="clipart-item" nbd-drag="art.url" extenal="false" type="svg"  ng-repeat="art in resource.clipart.filteredArts | limitTo: resource.clipart.filter.currentPage * resource.clipart.filter.perPage" repeat-end="onEndRepeat('clipart')">
                         <img  ng-src="{{art.url}}" ng-click="addArt(art, true, true)" alt="{{art.name}}">
                     </div>
                 </div>

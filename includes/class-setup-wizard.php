@@ -22,10 +22,10 @@ class NBD_Admin_Setup_Wizard {
                 'view'    => array( $this, 'nbd_setup_general_setup' ),
                 'handler' => array( $this, 'nbd_setup_general_setup_save' ),
             ),
-            'data'     => array(
-                'name'    => __( 'NBD Data', 'web-to-print-online-designer' ),
-                'view'    => array( $this, 'nbd_setup_data' ),
-                'handler' => array( $this, 'nbd_setup_data_save' ),
+            'page'     => array(
+                'name'    => __( 'NBD Pages', 'web-to-print-online-designer' ),
+                'view'    => array( $this, 'nbd_setup_page' ),
+                'handler' => array( $this, 'nbd_setup_page_save' ),
             ),
             'overview'     => array(
                 'name'    => __( 'Overview', 'web-to-print-online-designer' ),
@@ -93,6 +93,9 @@ class NBD_Admin_Setup_Wizard {
                 <?php wp_print_scripts( 'nbd-setup' ); ?>
                 <?php do_action( 'admin_print_styles' ); ?>
                 <?php do_action( 'admin_head' ); ?>
+                <script type="text/javascript">
+                    var ajax_url = "<?php echo admin_url('admin-ajax.php'); ?>";
+                </script>
         </head>
         <body class="nbd-setup wp-core-ui">
             <h1 id="nbd-logo"><a href="http://netbaseteam.com/"><img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/logo.svg" alt="NBDesigner" /></a></h1>
@@ -115,21 +118,40 @@ class NBD_Admin_Setup_Wizard {
     public function nbd_setup_general_setup(){
         $dimension_unit = nbdesigner_get_option('nbdesigner_dimensions_unit');
         $default_font_subset = nbdesigner_get_option('nbdesigner_default_font_subset');
-        $license = '';
-        $_license = get_option('nbdesigner_license');
-        if( $_license ){
-            $license = (array) json_decode( $_license );
-        }  
-        $license['key'] = '';
+        $license = nbd_get_license_key();
+        $site_title = get_bloginfo( 'name' );
+        $site_url = base64_encode(rtrim(get_bloginfo('wpurl'), '/'));
         ?>
-        <h1><?php esc_html_e( 'General', 'web-to-print-online-designer' ); ?></h1>  
+        <h1><?php _e( 'General', 'web-to-print-online-designer' ); ?></h1>  
         <form method="post" class="general-step">
             <div class="nbd-setup-shipping-unit">
                 <p><label for="nbdesigner_license"><?php echo sprintf(__( '<strong>License key</strong>—get your <a target="_blank" href="%s">premium license key</a>', 'web-to-print-online-designer'), 'https://cmsmart.net/your-profile/purchase_download?time='.time()); ?></label></p>     
                 <div><input class="full-width" id="nbdesigner_license" name="nbdesigner_license" value="<?php echo $license['key']; ?>"/></div>
                 <?php if( $license['key'] == '' ): ?>
                 <p><label for="nbdesigner_license"><?php _e('<strong>Get free license key</strong>', 'web-to-print-online-designer'); ?></label></p>
-                <div><input id="nbdesigner_license" name="nbdesigner_license" value="<?php echo $license['key']; ?>"/></div>
+                <div class="get-license-container" id="get-license-container">
+                    <div>
+                        <label for="license-name"><?php _e('Name', 'web-to-print-online-designer'); ?></label>
+                        <input id="license-name" name="nbdesigner[name]" value="<?php echo $license['key']; ?>"/>
+                    </div>
+                    <div>
+                        <label for="license-email"><?php _e('Email', 'web-to-print-online-designer'); ?></label>
+                        <input id="license-email" name="nbdesigner[email]" value="<?php echo $license['key']; ?>"/>
+                    </div>
+                    <div>
+                        <input id="license-domain" type="hidden" name="nbdesigner[domain]" value="<?php echo $site_url; ?>"/>
+                        <input id="license-title" type="hidden" name="nbdesigner[title]" value="<?php echo $site_title; ?>"/>
+                        <?php wp_nonce_field('nbdesigner-get-key', 'nbdesigner_getkey_hidden'); ?>                    
+                        <label></label>
+                        <a class="submit_key" onclick="nbdWizard.get_license()"><?php _e('<strong>Get license key</strong>', 'web-to-print-online-designer'); ?></a>
+                    </div>                    
+                </div>
+                <div>
+                    <p>
+                        <span id="license-loading" style="display: none;"><?php _e('Loading...', 'web-to-print-online-designer'); ?></span>
+                        <span  id="license-check-mail" style="display: none;"><?php _e('Check email to get license', 'web-to-print-online-designer'); ?></span>
+                    </p>
+                </div>
                 <?php endif; ?>
                 
                 <p>
@@ -162,11 +184,75 @@ class NBD_Admin_Setup_Wizard {
         <?php            
     }
     public function nbd_setup_general_setup_save(){
+        $license_key        = sanitize_text_field( $_POST['nbdesigner_license'] );
+        $nbdesigner_dimensions_unit        = sanitize_text_field( $_POST['nbdesigner_dimensions_unit'] );
+        $nbdesigner_default_font_subset        = sanitize_text_field( $_POST['nbdesigner_default_font_subset'] );
+        nbd_active_domain($license_key);
+        update_option( 'nbdesigner_dimensions_unit', $nbdesigner_dimensions_unit );
+        update_option( 'nbdesigner_default_font_subset', $nbdesigner_default_font_subset );
         wp_safe_redirect( esc_url_raw( $this->get_next_step_link() ) );
         exit;
     }
-    public function nbd_setup_data(){
-        echo 'data';
+    public function nbd_setup_page(){
+        $pages = nbd_get_pages();
+        $nbdesigner_create_your_own_page_id = nbd_get_page_id( 'create_your_own' );
+        $nbdesigner_designer_page_id = nbd_get_page_id( 'designer' );
+        $nbdesigner_gallery_page_id = nbd_get_page_id( 'gallery' );
+        $nbdesigner_logged_page_id = nbd_get_page_id( 'logged' );
+        ?>
+        <p><?php _e( 'Create default NBDesigner pages', 'web-to-print-online-designer' ); ?></p>  
+        <form method="post" class="page-step">
+            <div>
+                <p><label for="nbdesigner_create_your_own_page_id"><?php _e('<strong>Create your own page</strong>—page contain design editor.', 'web-to-print-online-designer'); ?></label></p>
+                <select id="nbdesigner_create_your_own_page_id" name="nbdesigner_create_your_own_page_id" class="wc-enhanced-select">
+                    <?php foreach( $pages as $key => $page ): ?>
+                    <option value="<?php echo $key ?>" <?php selected( $nbdesigner_create_your_own_page_id, $key ); ?>><?php echo $page; ?></option>
+                    <?php  endforeach; ?>
+                </select>   
+                <p><label for="nbdesigner_designer_page_id"><?php _e('<strong>Designer page</strong>—designer page.', 'web-to-print-online-designer'); ?></label></p>
+                <select id="nbdesigner_designer_page_id" name="nbdesigner_designer_page_id" class="wc-enhanced-select">
+                    <?php foreach( $pages as $key => $page ): ?>
+                    <option value="<?php echo $key ?>" <?php selected( $nbdesigner_designer_page_id, $key ); ?>><?php echo $page; ?></option>
+                    <?php  endforeach; ?>
+                </select>    
+                <p><label for="nbdesigner_gallery_page_id"><?php _e('<strong>Gallery</strong>—The page show all templates.', 'web-to-print-online-designer'); ?></label></p>
+                <select id="nbdesigner_gallery_page_id" name="nbdesigner_gallery_page_id" class="wc-enhanced-select">
+                    <?php foreach( $pages as $key => $page ): ?>
+                    <option value="<?php echo $key ?>" <?php selected( $nbdesigner_gallery_page_id, $key ); ?>><?php echo $page; ?></option>
+                    <?php  endforeach; ?>
+                </select>    
+                <p><label for="nbdesigner_logged_page_id"><?php _e('<strong>Redirect login</strong>', 'web-to-print-online-designer'); ?></label></p>
+                <select id="nbdesigner_logged_page_id" name="nbdesigner_logged_page_id" class="wc-enhanced-select">
+                    <?php foreach( $pages as $key => $page ): ?>
+                    <option value="<?php echo $key ?>" <?php selected( $nbdesigner_logged_page_id, $key ); ?>><?php echo $page; ?></option>
+                    <?php  endforeach; ?>
+                </select>                 
+            </div>
+            <p class="nbd-setup-actions step">
+                <button type="submit" class="button-primary button button-large button-next" value="<?php esc_attr_e( 'Continue', 'web-to-print-online-designer' ); ?>" name="save_step"><?php esc_html_e( 'Continue', 'web-to-print-online-designer' ); ?></button>
+                <?php wp_nonce_field( 'nbd-setup' ); ?>
+            </p>              
+        </form>        
+        <?php
+    }
+    public function nbd_setup_page_save(){
+        $nbdesigner_create_your_own_page_id = sanitize_text_field( $_POST['nbdesigner_create_your_own_page_id'] );
+        $nbdesigner_designer_page_id = sanitize_text_field( $_POST['nbdesigner_designer_page_id'] );
+        $nbdesigner_gallery_page_id = sanitize_text_field( $_POST['nbdesigner_gallery_page_id'] );
+        $nbdesigner_logged_page_id = sanitize_text_field( $_POST['nbdesigner_logged_page_id'] );
+        update_option( 'nbdesigner_create_your_own_page_id', $nbdesigner_create_your_own_page_id );
+        update_option( 'nbdesigner_designer_page_id', $nbdesigner_designer_page_id );
+        update_option( 'nbdesigner_gallery_page_id', $nbdesigner_gallery_page_id );
+        update_option( 'nbdesigner_logged_page_id', $nbdesigner_logged_page_id );
+        wp_safe_redirect( esc_url_raw( $this->get_next_step_link() ) );
+        exit;        
+    }
+    public function nbd_setup_overview(){
+        ?>
+        <p><?php _e( 'Go to product detail to setup custom design or upload design.', 'web-to-print-online-designer' ); ?></p>
+        <p><img class="enable-design" src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/enable_nbdesign.png"/></p>
+        <p><?php echo sprintf(__( '<strong>More Nbdesigner</strong> <a target="_blank" href="%s">settings</a>', 'web-to-print-online-designer'), esc_url(admin_url('admin.php?page=nbdesigner'))); ?></p>
+        <?php
     }
 }
 new NBD_Admin_Setup_Wizard();

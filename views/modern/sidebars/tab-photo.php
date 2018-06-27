@@ -102,7 +102,7 @@
                         </div>
                         <div id="nbd-upload-wrap">
                             <div class="mansory-wrap">
-                                <div class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.upload.data" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
+                                <div nbd-drag="img.url" extenal="false" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url, false)" ng-repeat="img in resource.upload.data track by $index" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
                             </div>                             
                         </div>
                     </div>
@@ -203,7 +203,7 @@
                         <div id="fb-root"></div>
                         <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" data-scope="user_photos" onlogin="nbdOnFBLogin(null)"></div>
                         <div class="mansory-wrap">
-                            <div class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.facebook.data | limitTo: resource.facebook.filter.perPage * resource.facebook.filter.currentPage" repeat-end="onEndRepeat('facebook')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
+                            <div nbd-drag="img.url" extenal="true" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.facebook.data | limitTo: resource.facebook.filter.perPage * resource.facebook.filter.currentPage" repeat-end="onEndRepeat('facebook')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
                         </div>                          
                         <?php endif; ?>
                     </div>
@@ -218,7 +218,7 @@
                             <span><?php _e('Log out','web-to-print-online-designer'); ?></span>
                         </button>                        
                         <div class="mansory-wrap">
-                            <div class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.instagram.data | limitTo: resource.instagram.filter.perPage * resource.instagram.filter.currentPage" repeat-end="onEndRepeat('instagram')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
+                            <div nbd-drag="img.url" extenal="true" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.instagram.data | limitTo: resource.instagram.filter.perPage * resource.instagram.filter.currentPage" repeat-end="onEndRepeat('instagram')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
                         </div>                         
                     </div>
                     <?php endif; ?>
@@ -230,7 +230,7 @@
                         </script>
                         <div id="nbdesigner_dropbox"></div>
                         <div class="mansory-wrap">
-                            <div class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.dropbox.data | limitTo: resource.dropbox.filter.perPage * resource.dropbox.filter.currentPage" repeat-end="onEndRepeat('dropbox')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
+                            <div nbd-drag="img.url" extenal="true" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.dropbox.data | limitTo: resource.dropbox.filter.perPage * resource.dropbox.filter.currentPage" repeat-end="onEndRepeat('dropbox')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
                         </div>                        
                     </div>
                     <?php endif; ?>
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div class="nbdesigner-gallery" id="nbdesigner-gallery">
-                    <div class="nbdesigner-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.photo.data" repeat-end="onEndRepeat('photo')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
+                    <div nbd-drag="img.url" extenal="true" type="image" class="nbdesigner-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.photo.data" repeat-end="onEndRepeat('photo')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
                 </div>
                 <div class="loading-photo" style="width: 40px; height: 40px;">
                     <svg class="circular" viewBox="25 25 50 50">

@@ -14,11 +14,10 @@
                 </ul>
                 <div class="pinned-palette default-palette" style="margin-bottom: 10px">
                     <h3 class="color-palette-label" style="font-size: 11px; text-align: left; margin: 0 0 5px; text-transform: uppercase;"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
-                    <ul class="main-color-palette">
-                        <li ng-repeat="color in __colorPalette track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
-                    </ul>
+                    <ul class="main-color-palette" ng-repeat="palette in resource.defaultPalette" style="margin-bottom: 15px;">
+                        <li ng-class="{'first-left': $first, 'last-right': $last}" ng-repeat="color in palette track by $index" ng-click="changeBackground(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
+                    </ul>   
                 </div>
-
                 <div class="nbd-text-color-picker" id="nbd-bg-color-picker" ng-class="showBgColorPicker ? 'active' : ''" style="z-index: 999;">
                     <spectrum-colorpicker
                         ng-model="currentColor"
@@ -32,15 +31,31 @@
                         }">
                     </spectrum-colorpicker>
                     <div style="text-align: <?php echo (is_rtl()) ? 'right' : 'left'?>">
-                        <button class="nbd-button" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                        <button class="nbd-button" ng-click="addColor();changeBackground(currentColor);"><?php _e('Choose','web-to-print-online-designer'); ?></button>
                     </div>
                 </div>
 
             </div>
-            <div class="nbd-items-dropdown">
+            <div class="nbd-templates">
                 <div class="main-items">
-                    <div class="items">
-                        <div class="item" data-type="business-card" data-api="true" ng-repeat="temp in resource.templates" ng-click="insertTemplate(temp)">
+                    <div class="items" style="text-align: left;">
+                        <p ng-show="resource.myTemplates.length > 0" style="padding: 0 10px;">My designs</p>
+                        <div class="item slideInDown animate300 animated" ng-repeat="temp in resource.myTemplates" ng-click="loadMyDesign(temp.id, false)">
+                            <div class="main-item">
+                                <div class="item-img">
+                                    <img ng-src="{{temp.src}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
+                                </div>
+                            </div>
+                        </div>  
+                        <p ng-show="resource.cartTemplates.length > 0" style="padding: 0 10px;">My designs in cart</p>
+                        <div class="item slideInDown animate300 animated" ng-repeat="temp in resource.cartTemplates" ng-click="loadMyDesign(temp.id, true)">
+                            <div class="main-item">
+                                <div class="item-img">
+                                    <img ng-src="{{temp.src}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
+                                </div>
+                            </div>
+                        </div>                         
+                        <div class="item" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
                             <div class="main-item">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
@@ -50,14 +65,10 @@
                     </div>
                     <div class="pointer"></div>
                 </div>
-                <div class="loading-photo" style="width: 40px; height: 40px;">
+                <div class="loading-photo" style="width: 40px; height: 40px; display: none;">
                     <svg class="circular" viewBox="25 25 50 50">
                         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                     </svg>
-                </div>
-                <div class="result-loaded">
-                    <div class="nbdesigner-gallery">fsdfsdfdsfsf
-                    </div>
                 </div>
             </div>
         </div>

@@ -373,8 +373,14 @@ class My_Design_Endpoint {
         if( $user_id ){
             if( !isset($_POST['did']) ){
                 global $wpdb;
-                $table_name =  $wpdb->prefix . 'nbdesigner_mydesigns';     
-                $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id} ORDER BY created_date DESC" );
+                $table_name =  $wpdb->prefix . 'nbdesigner_mydesigns';   
+                if( isset($_POST['product_id']) ){
+                    $product_id = $_POST['product_id'];
+                    $variation_id = $_POST['variation_id'];
+                    $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id} AND product_id = {$product_id} AND variation_id = {$variation_id} ORDER BY created_date DESC" );
+                }else{
+                    $designs = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}nbdesigner_mydesigns WHERE user_id = {$user_id} ORDER BY created_date DESC" );
+                }
                 foreach( $designs as $design ){
                     $path_preview = NBDESIGNER_CUSTOMER_DIR .'/'.$design->folder. '/preview';
                     $listThumb = Nbdesigner_IO::get_list_images($path_preview);
@@ -556,7 +562,7 @@ class My_Design_Endpoint {
         $product_id = absint($_POST['product_id']);
         $variation_id = absint($_POST['variation_id']);
         $folder = $_POST['folder'];
-        $design_folder = substr(md5(uniqid()),0,10);
+        $design_folder = substr(md5(uniqid()),0,5).rand(1,100).time();
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $folder;
         $design_path = NBDESIGNER_CUSTOMER_DIR . '/' . $design_folder;
         Nbdesigner_IO::copy_dir( $path, $design_path );

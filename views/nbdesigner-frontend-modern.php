@@ -319,6 +319,19 @@
             .design-wrap {
                 position: absolute;
             }
+            .nbd-toasts .toast {
+                -webkit-box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+                box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+            }
+            .nbd-context-menu .main-context .contexts .context-item i {
+                width: 21px;
+            }
+            .nbd-context-menu .main-context .contexts .context-item i sub{
+                right: 5px;
+            }
+            .nbd-context-menu .main-context .contexts .context-item.active i {
+                color: red;
+            }            
             @keyframes timeline {
                 0% {
                     background-position: -350px 0;
@@ -625,6 +638,51 @@
             .fullScreenMode .fullscreen-stage-nav {
                 display: inline-block;
             }
+            .nbd-templates {
+                
+            }
+            .nbd-templates .item .item-img {
+                height: auto;
+            }
+            .nbd-templates .items .item .main-item {
+                border: 1px solid #ebebeb;
+                cursor: pointer;
+            }            
+            .nbd-templates .items .item {
+                width: 50%;
+                box-sizing: border-box;
+                display: inline-block;
+                padding: 10px;
+            }    
+            .nbd-mode-1 .nbd-main-bar .logo {
+                visibility: hidden;
+            }
+            .nbd-popup.popup-share .main-popup .body .share-btn .nbd-button:focus,
+            .nbd-popup.popup-share .main-popup .body .share-btn .nbd-button:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+            .nbd-sidebar #tab-element .nbd-items-dropdown .content-items .content-item.type-draw .brush .nbd-sub-dropdown ul li.active {
+                background-color: #404762;
+            }
+            .nbd-sidebar #tab-element .nbd-items-dropdown .content-items .content-item.type-draw .brush .nbd-sub-dropdown ul li.active span {
+                color: #fff;
+            }
+            .default-palette .first-left {
+                border-top-left-radius: 4px;
+            }
+            .default-palette .first-right {
+                border-top-right-radius: 4px;
+            }
+            .default-palette .last-left {
+                border-bottom-left-radius: 4px;
+            }
+            .default-palette .last-right {
+                border-bottom-right-radius: 4px;
+            }   
+            .nbd-signal .signal-logo {
+                opacity: 0.7;
+            }            
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -724,6 +782,7 @@
                 fonts: <?php echo nbd_get_fonts(); ?>,
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
                 fbID: "<?php echo $fbID; ?>",
+                nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 enable_dropbox: false,
                 default_font: <?php echo nbd_get_default_font(); ?>,
                 templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>
@@ -779,7 +838,7 @@
                             <?php include 'modern/signal.php'?>
                             <?php include 'modern/loading-workflow.php';?>
                         </div>
-                        <?php include 'modern/toollock.php';?>
+                        <?php //include 'modern/toollock.php';?>
                     </div>
                 </div>	
             </div>
@@ -803,6 +862,7 @@
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular.min.js'; ?>"></script>
         <?php endif; ?>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric233.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.unmin.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>

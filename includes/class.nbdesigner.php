@@ -2474,7 +2474,7 @@ class Nbdesigner_Plugin {
         /* Save custom design */
         $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;        
         $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
-        $nbd_item_key = isset($nbd_item_session) ? $nbd_item_session : substr(md5(uniqid()),0,10);  
+        $nbd_item_key = isset($nbd_item_session) ? $nbd_item_session : substr(md5(uniqid()),0,5).rand(1,100).time();
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
         if($variation_id > 0){         
             $product_config = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
@@ -2616,6 +2616,10 @@ class Nbdesigner_Plugin {
         }
         if(false != $save_status){
             /* todo edit $product_config if has custom dimension */
+            if( isset($_POST['share']) ){
+                Nbdesigner_IO::copy_dir( $path, $path.'s' );
+                $result['sfolder'] = $nbd_item_key.'s';
+            }
             $path_config = $path . '/config.json';
             $config = nbd_get_data_from_json($path_config);            
             if( count( $config->product ) ){
