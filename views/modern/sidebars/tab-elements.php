@@ -111,17 +111,17 @@
                     </div>
                     <div class="content-item type-shapes" data-type="shapes" id="nbd-shape-wrap">
                         <div class="mansory-wrap">
-                            <div class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.shape.data" repeat-end="onEndRepeat('shape')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                            <div nbd-drag="art.url" extenal="true" type="svg" class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.shape.data" repeat-end="onEndRepeat('shape')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
                         </div>                        
                     </div>
                     <div class="content-item type-icons" data-type="icons" id="nbd-icon-wrap">
                         <div class="mansory-wrap">
-                            <div class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.icon.data" repeat-end="onEndRepeat('icon')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                            <div nbd-drag="art.url" extenal="true" type="svg" class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.icon.data" repeat-end="onEndRepeat('icon')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
                         </div>                          
                     </div>
                     <div class="content-item type-lines" data-type="lines" id="nbd-line-wrap">
                         <div class="mansory-wrap">
-                            <div class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.line.data" repeat-end="onEndRepeat('line')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                            <div nbd-drag="art.url" extenal="true" type="svg" class="mansory-item" ng-click="addArt(art, true, true)" ng-repeat="art in resource.line.data" repeat-end="onEndRepeat('line')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
                         </div>                          
                     </div>
                     <div class="content-item type-qrcode" data-type="qr-code">

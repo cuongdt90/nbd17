@@ -323,6 +323,15 @@
                 -webkit-box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
                 box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
             }
+            .nbd-context-menu .main-context .contexts .context-item i {
+                width: 21px;
+            }
+            .nbd-context-menu .main-context .contexts .context-item i sub{
+                right: 5px;
+            }
+            .nbd-context-menu .main-context .contexts .context-item.active i {
+                color: red;
+            }            
             @keyframes timeline {
                 0% {
                     background-position: -350px 0;
@@ -829,7 +838,7 @@
                             <?php include 'modern/signal.php'?>
                             <?php include 'modern/loading-workflow.php';?>
                         </div>
-                        <?php include 'modern/toollock.php';?>
+                        <?php //include 'modern/toollock.php';?>
                     </div>
                 </div>	
             </div>
