@@ -300,6 +300,7 @@ function checkMobileDevice(){
                                 // All images loaded, at least one is broken
                             })
                             .progress( function( instance, image ) {
+
                             });
 
                     }else {
