@@ -1605,6 +1605,10 @@ table#nbd-quantity-pricing .nbd_quantity {
     line-height: 30px;
     padding: 0 10px;    
 }
+.nbd-modern-layout .nbdesigner_pp_close {
+    top: 10px;
+    left: 10px;    
+}
 @media (max-width: 768px) {
     .nbd-table-pricing-wrap, .nbd-pricing-description {
         width: 100%;

@@ -659,6 +659,7 @@ function default_frontend_setting(){
         'nbdesigner_default_text' => __('Text here', 'web-to-print-online-designer'),
         'nbdesigner_default_font_subset' => 'all',
         'nbdesigner_enable_curvedtext' => 'yes',
+        'nbdesigner_enable_text_free_transform' => 'no',
         'nbdesigner_enable_textpattern' => 'no',
         
         'nbdesigner_enable_clipart' => 'yes',

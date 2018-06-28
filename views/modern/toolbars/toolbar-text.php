@@ -105,7 +105,7 @@
                     <div class="range range-line-height">
                         <label><?php _e('Line height','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" ng-mouseup="setTextAttribute('lineHeight', stages[currentStage].states.text.lineHeight)" ng-model="stages[currentStage].states.text.lineHeight" type="range" step="0.1" min="0" max="3">
+                            <input class="slide-input" ng-mouseup="setTextAttribute('lineHeight', stages[currentStage].states.text.lineHeight)" ng-model="stages[currentStage].states.text.lineHeight" type="range" step="0.01" min="0" max="3">
                             <span class="range-track"></span>
                         </div>
                         <span class="value-display">{{stages[currentStage].states.text.lineHeight}}</span>

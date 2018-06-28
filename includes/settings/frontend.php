@@ -43,11 +43,23 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'id' 		=> 'nbdesigner_enable_curvedtext',
                         'default'	=> 'yes',
                         'type' 		=> 'radio',
+                        'description'   =>  __('Only available on 1.x versions', 'web-to-print-online-designer'),
                         'options'   => array(
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
                     ),   
+                    array(
+                        'title' => __( 'Enable Text transform unproportionally', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_text_free_transform',
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'description'   =>  __('When true, Text can be transformed unproportionally', 'web-to-print-online-designer'),
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),                     
                     array(
                         'title' => __( 'Enable Text pattern', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_enable_textpattern',

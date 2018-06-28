@@ -271,7 +271,9 @@ class Nbdesigner_Plugin {
         if( is_product() ){
             $product_id = get_the_ID();   
             if( is_nbdesigner_product( $product_id ) ){
+                $layout = nbdesigner_get_option('nbdesigner_design_layout');
                 $classes[] = 'nbd-single-product-page';
+                if( $layout == 'm' ) $classes[] = 'nbd-modern-layout';
             }
         }
 	return $classes;          

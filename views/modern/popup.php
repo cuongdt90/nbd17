@@ -253,6 +253,12 @@
                                 </tr>   
                                 <tr>
                                     <td class="keys">
+                                        <kbd>Alt</kbd> +<kbd><i style="color: #404762" class="icon-nbd icon-nbd-arrows-v rotate-45"></i></kbd>
+                                    </td>
+                                    <td><?php _e('Free transform','web-to-print-online-designer'); ?></td>
+                                </tr>                                 
+                                <tr>
+                                    <td class="keys">
                                         <kbd>Shift</kbd> +<kbd>+</kbd>
                                     </td>
                                     <td><?php _e('Zoom out selected layers','web-to-print-online-designer'); ?></td>
@@ -263,6 +269,18 @@
                                     </td>
                                     <td><?php _e('Zoom in selected layer','web-to-print-online-designer'); ?></td>
                                 </tr>  
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Shift</kbd> +<kbd>-</kbd>
+                                    </td>
+                                    <td><?php _e('Zoom in selected layer','web-to-print-online-designer'); ?></td>
+                                </tr>                                
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Shift</kbd> +<kbd><i style="color: #404762" class="icon-nbd icon-nbd-arrows-v rotate-45"></i></kbd>
+                                    </td>
+                                    <td><?php _e('Centered scaling','web-to-print-online-designer'); ?></td>
+                                </tr>                                
                                 <tr>
                                     <td class="keys">
                                         <kbd>←</kbd>
@@ -305,6 +323,12 @@
                                     </td>
                                     <td><?php _e('Enable drawing mode','web-to-print-online-designer'); ?></td>
                                 </tr>
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Esc</kbd>
+                                    </td>
+                                    <td><?php _e('Quit text editing','web-to-print-online-designer'); ?></td>
+                                </tr>                                
                                 <tr>
                                     <td class="keys">
                                         <kbd>Ctrl</kbd> +<kbd>Shift</kbd> +<kbd>]</kbd>

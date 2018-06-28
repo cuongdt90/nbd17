@@ -1,11 +1,11 @@
 <div class="tab" ng-if="settings['nbdesigner_enable_text'] == 'yes'" id="tab-typography" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-typography" data-type="typography" data-offset="20">
     <div class="tab-main tab-scroll">
         <div class="typography-head">
-            <span ng-click='debug()' class="text-guide" style="color: #4F5467; margin-bottom: 20px;display: block;"><?php _e('Click to add text','nbd-online-design'); ?></span>
+            <span ng-click='debug()' class="text-guide" style="color: #4F5467; margin-bottom: 20px;display: block;"><?php _e('Click to add text','web-to-print-online-designer'); ?></span>
             <div class="head-main">
-                <span class="text-heading" ng-click='addText()' style="color: #4F5467; display: block; font-size: 40px; font-weight: 700"><?php _e('Add heading','web-to-print-online-designer'); ?></span>
-                <span class="text-sub-heading" ng-click="addImage()" style="display: block; font-size: 24px; font-weight: 500; color: #4F5467"><?php _e('Add subheading','nbd-online-design');?></span>
-                <span ng-click="debug2()" class="text-body" style="display: block;color: #4F5467"><?php _e('Add subheading','nbd-online-design'); ?></span>
+                <span class="text-heading" ng-click='addText("<?php _e('Add heading','web-to-print-online-designer'); ?>", "heading")' style="color: #4F5467; display: block; font-size: 42px; font-weight: 700"><?php _e('Add heading','web-to-print-online-designer'); ?></span>
+                <span class="text-sub-heading" ng-click="addText('<?php _e('Add subheading','web-to-print-online-designer');?>', 'subheading')" style="display: block; font-size: 30px; font-weight: 500; color: #4F5467"><?php _e('Add subheading','web-to-print-online-designer');?></span>
+                <span ng-click="addText('<?php _e('Add a little bit of body text','web-to-print-online-designer'); ?>')" class="text-body" style="display: block;color: #4F5467; font-size: 16px;"><?php _e('Add a little bit of body text','web-to-print-online-designer'); ?></span>
             </div>
         </div>
         <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>

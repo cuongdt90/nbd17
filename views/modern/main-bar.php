@@ -91,8 +91,8 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>
                     <div class="hover-sub-menu-item">
                         <ul>
-                            <li><span class="title-menu"><?php _e('Out of stage','web-to-print-online-designer'); ?></span></li>
-                            <li><span class="title-menu"><?php _e('Image low resolution','web-to-print-online-designer'); ?></span></li>
+                            <li ng-click="settings.showWarning.oos = !settings.showWarning.oos" ng-class="settings.showWarning.oos ? 'active' : ''"><span class="title-menu"><?php _e('Out of stage','web-to-print-online-designer'); ?></span></li>
+                            <li ng-click="settings.showWarning.ilr = !settings.showWarning.ilr" ng-class="settings.showWarning.ilr ? 'active' : ''"><span class="title-menu"><?php _e('Image low resolution','web-to-print-online-designer'); ?></span></li>
                         </ul>
                     </div>
                 </li>

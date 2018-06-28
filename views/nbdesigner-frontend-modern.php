@@ -6,6 +6,8 @@
     $locale = substr($lang_code, 0, 2);
     $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
     $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
+    $default_font = nbd_get_default_font();
+    $_default_font = str_replace(" ", "+", json_decode($default_font)->alias);
     if( !nbd_is_product($product_id) ){
         echo sprintf('<p>%s, <a href="%s">%s</a></p>', 
                 __('No product has been selected', 'web-to-print-online-designer'),
@@ -62,9 +64,9 @@
         <?php endif; ?>
         
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/jquery-ui.min.css'; ?>" rel="stylesheet" media="all" />
+        <link href='https://fonts.googleapis.com/css?family=<?php echo $_default_font; ?>:400,400i,700,700i' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Poppins:400,400i,700,700i' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Oswald:400,400i,700,700i' rel='stylesheet' type='text/css'>
-        <link href='https://fonts.googleapis.com/css?family=Poppins:400,100,300italic,300' rel='stylesheet' type='text/css'>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bootstrap.min.css'; ?>" rel="stylesheet" media="all"/>
 <!--        <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/bundle.css'; ?>" rel="stylesheet" media="all"/>-->
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/tooltipster.bundle.min.css'; ?>" rel="stylesheet" media="all"/>
@@ -784,7 +786,7 @@
                 fbID: "<?php echo $fbID; ?>",
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 enable_dropbox: false,
-                default_font: <?php echo nbd_get_default_font(); ?>,
+                default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
@@ -859,7 +861,7 @@
         <?php if(!NBDESIGNER_MODE_DEV): ?>
         <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <?php else: ?>
-        <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular.min.js'; ?>"></script>
+        <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular-1.6.9.min.js'; ?>"></script>
         <?php endif; ?>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric233.js'; ?>"></script>
