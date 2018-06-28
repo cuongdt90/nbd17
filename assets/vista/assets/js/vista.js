@@ -248,8 +248,8 @@ function checkMobileDevice(){
                         });
                         $infoSupport.find('span').empty().text($(this).find('.item-info').text());
 
-                        var src = 'https://media-public.canva.com/MABrm9_5-j0/3/thumbnail_large.jpg';
-                        var item = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>'
+                        // var src = 'https://media-public.canva.com/MABrm9_5-j0/3/thumbnail_large.jpg';
+                        // var item = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>'
 
                         // for (var i=0;i<100;i++) {
                         //     $galleryItem.append(item);
@@ -260,48 +260,48 @@ function checkMobileDevice(){
                         $contentItem.hide();
                         $loadingGif.show();
 
-                        $galleryItem.imagesLoaded()
-                            .always( function( instance ) {
-                                // All images loaded
-                                setTimeout(function () {
-                                    $galleryItem.show();
-                                    $mainItems.addClass('active-expanded');
-                                    $resultLoaded.addClass('loaded');
-                                    $loadingGif.hide();
-
-                                    // if (isMasonry) {
-                                    //     $galleryItem.masonry('destroy');
-                                    // }
-                                    $galleryItem.masonry({
-                                        itemSelector: '.nbdesigner-item'
-                                    });
-                                    $galleryItem.find('.nbdesigner-item').each(function (i) {
-                                        var animate = Math.floor(Math.random() * 10);
-                                        animate = (animate + 1) * 100;
-                                        $(this).addClass('slideInDown animated in-view animate' + animate);
-                                    });
-                                    var resultHeight = $resultLoaded.height();
-                                    var resultOfsetTop = $resultLoaded.offset().top;
-
-                                    $tabScroll.on('scroll', function () {
-                                        var scrollTop = $(this).scrollTop();
-                                        if ((scrollTop > resultOfsetTop + 100) && (scrollTop < (resultOfsetTop+ resultHeight + 100))) {
-                                            $infoSupport.addClass('nbd-show');
-                                        }else {
-                                            $infoSupport.removeClass('nbd-show');
-                                        }
-                                    });
-                                }, 1000);
-                            })
-                            .done( function( instance ) {
-                                // All images successfull loaded
-                            })
-                            .fail( function() {
-                                // All images loaded, at least one is broken
-                            })
-                            .progress( function( instance, image ) {
-
-                            });
+                        // $galleryItem.imagesLoaded()
+                        //     .always( function( instance ) {
+                        //         // All images loaded
+                        //         setTimeout(function () {
+                        //             $galleryItem.show();
+                        //             $mainItems.addClass('active-expanded');
+                        //             $resultLoaded.addClass('loaded');
+                        //             $loadingGif.hide();
+                        //
+                        //             // if (isMasonry) {
+                        //             //     $galleryItem.masonry('destroy');
+                        //             // }
+                        //             $galleryItem.masonry({
+                        //                 itemSelector: '.nbdesigner-item'
+                        //             });
+                        //             $galleryItem.find('.nbdesigner-item').each(function (i) {
+                        //                 var animate = Math.floor(Math.random() * 10);
+                        //                 animate = (animate + 1) * 100;
+                        //                 $(this).addClass('slideInDown animated in-view animate' + animate);
+                        //             });
+                        //             var resultHeight = $resultLoaded.height();
+                        //             var resultOfsetTop = $resultLoaded.offset().top;
+                        //
+                        //             $tabScroll.on('scroll', function () {
+                        //                 var scrollTop = $(this).scrollTop();
+                        //                 if ((scrollTop > resultOfsetTop + 100) && (scrollTop < (resultOfsetTop+ resultHeight + 100))) {
+                        //                     $infoSupport.addClass('nbd-show');
+                        //                 }else {
+                        //                     $infoSupport.removeClass('nbd-show');
+                        //                 }
+                        //             });
+                        //         }, 1000);
+                        //     })
+                        //     .done( function( instance ) {
+                        //         // All images successfull loaded
+                        //     })
+                        //     .fail( function() {
+                        //         // All images loaded, at least one is broken
+                        //     })
+                        //     .progress( function( instance, image ) {
+                        //
+                        //     });
 
                     }else {
                         $(this).css({
