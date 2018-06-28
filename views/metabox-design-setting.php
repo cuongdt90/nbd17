@@ -977,7 +977,6 @@
 </div>
 
 <script type="text/javascript">
-console.log(2344342342);
     jQuery(document).ready( function($) {
         $('.nbd-tabber').click(function() {
             var t = $(this),
@@ -1038,7 +1037,7 @@ console.log(2344342342);
         $('.nbdesign-config-realsize-tooltip').first().on('click', function(){
             $(this).pointer("open")
         });
-console.log($('input[name="_nbdesigner_option[color][show]"]').length);
+
         // Option color
         $('input[name="_nbdesigner_option[color][show]"]').on('change', function () {
             if ($(this).val() == '1') {
