@@ -29,12 +29,21 @@
     }
     .page-toolbar {
       width: 40px;
-      height: 410px;
-      margin-left: 10px;
+      position: absolute;
+      top: calc(50% + 30px);
+      right: -40px;
+      transform: translateY(-50%);
+      height: unset;
+      margin: 0;
       @media screen and (max-width: 767px){
         height: auto;
         width: auto;
         background-color: #fff;
+        transform: none;
+        left: 0;
+        right: 0;
+        bottom: -30px;
+        top: auto;
       }
       .page-main {
         height: 100%;

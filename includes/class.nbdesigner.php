@@ -172,7 +172,8 @@ class Nbdesigner_Plugin {
         add_action( 'woocommerce_cart_item_removed', array($this, 'nbdesigner_remove_cart_item_design'), 10, 2 );
         add_action( 'woocommerce_product_after_variable_attributes', array($this,'nbdesigner_variation_settings_fields'), 10, 3 );
         add_action( 'woocommerce_save_product_variation', array($this,'nbdesigner_save_variation_settings_fields'), 10, 2 );
-        add_filter( 'woocommerce_add_cart_item_data', array($this, 'nbd_add_cart_item_data'), 10, 3 );      
+        add_filter( 'woocommerce_add_cart_item_data', array($this, 'nbd_add_cart_item_data'), 10, 3 );   
+        add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session' ), 1, 2 );
         add_filter( 'woocommerce_add_cart_item', array($this, 'nbd_add_cart_item'), 99999, 1 ); 
         add_filter( 'woocommerce_cart_item_price', array(&$this, 'change_cart_item_prices_text'), 10, 3 );
         add_filter( 'woocommerce_cart_item_subtotal', array(&$this, 'change_cart_item_prices_text'), 10, 3 );
@@ -205,7 +206,7 @@ class Nbdesigner_Plugin {
         if( get_option('nbdesigner_attachment_admin_email', false) == 'yes' ){
             add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email'), 10, 3);
         }
-        add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email2'), 10, 3);
+        //add_filter('woocommerce_email_attachments', array(&$this, 'attach_design_to_admin_email2'), 10, 3);
         /** bulk action **/
         add_action( 'woocommerce_before_add_to_cart_button', array(&$this, 'bulk_variation_field'), 9999 );
         if ( isset( $_POST['nbd-variation-value'] ) && $_POST['nbd-variation-value'] ) {
@@ -270,7 +271,9 @@ class Nbdesigner_Plugin {
         if( is_product() ){
             $product_id = get_the_ID();   
             if( is_nbdesigner_product( $product_id ) ){
+                $layout = nbdesigner_get_option('nbdesigner_design_layout');
                 $classes[] = 'nbd-single-product-page';
+                if( $layout == 'm' ) $classes[] = 'nbd-modern-layout';
             }
         }
 	return $classes;          
@@ -1071,9 +1074,19 @@ class Nbdesigner_Plugin {
             $fonts = json_decode(stripslashes($_POST['fonts']));
             foreach($fonts as $key => $font){
                 $subset = 'all';
+                $file = array('r' => 1);
                 foreach( $all_fonts as $f ){
                     if( $font->name == $f->family ){
                         $subset = $f->subsets[0];
+                        if( isset($f->files->italic) ){
+                            $file['i'] = 1;
+                        }
+                        if( isset($f->files->{"700"}) ){
+                            $file['b'] = 1;
+                        }
+                        if( isset($f->files->{"700italic"}) ){
+                            $file['bi'] = 1;
+                        }
                         break;
                     }
                 }
@@ -1083,6 +1096,7 @@ class Nbdesigner_Plugin {
                     "alias"    =>  $font->name,
                     "type"   =>  "google", 
                     "subset"   =>  $subset, 
+                    "file"   =>  $file, 
                     "cat" => array("99")
                 );             
             }
@@ -2062,9 +2076,9 @@ class Nbdesigner_Plugin {
             }
         }
         $enable = $_POST['_nbdesigner_enable']; 
-        $enable_upload = $_POST['_nbdesigner_enable_upload']; 
+        $enable_upload = $_POST['_nbdesigner_enable_upload'];
         $upload_without_design = $_POST['_nbdesigner_enable_upload_without_design']; 
-        $option = serialize($_POST['_nbdesigner_option']); 
+        $option = serialize($_POST['_nbdesigner_option']);
         $setting_design = serialize($_POST['_designer_setting']);  
         $setting_upload = serialize($_POST['_designer_upload']);  
         if(!$this->nbdesigner_allow_create_product($post_id)) return;
@@ -2462,7 +2476,7 @@ class Nbdesigner_Plugin {
         /* Save custom design */
         $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;        
         $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
-        $nbd_item_key = isset($nbd_item_session) ? $nbd_item_session : substr(md5(uniqid()),0,10);  
+        $nbd_item_key = isset($nbd_item_session) ? $nbd_item_session : substr(md5(uniqid()),0,5).rand(1,100).time();
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
         if($variation_id > 0){         
             $product_config = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
@@ -2577,7 +2591,7 @@ class Nbdesigner_Plugin {
             /* Create new design */
             $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
             if( ($task == 'new' && $task2 == 'update' ) || $task == 'create' || !isset($nbd_item_session) ){
-                $nbd_item_key = substr(md5(uniqid()),0,10);
+                $nbd_item_key = substr(md5(uniqid()),0,5).rand(1,100).time();
             }else {
                 $nbd_item_key = $nbd_item_session;
             }
@@ -2604,6 +2618,10 @@ class Nbdesigner_Plugin {
         }
         if(false != $save_status){
             /* todo edit $product_config if has custom dimension */
+            if( isset($_POST['share']) ){
+                Nbdesigner_IO::copy_dir( $path, $path.'s' );
+                $result['sfolder'] = $nbd_item_key.'s';
+            }
             $path_config = $path . '/config.json';
             $config = nbd_get_data_from_json($path_config);            
             if( count( $config->product ) ){
@@ -2864,7 +2882,7 @@ class Nbdesigner_Plugin {
         $success = file_put_contents($full_name, $data);
         if($success){
             $result['flag'] = 'success';        
-            $result['url'] = wp_convert_path_to_url( $full_name );
+            $result['url'] = Nbdesigner_IO::wp_convert_path_to_url( $full_name );
         }else{
             $result['flag'] = 'false';
         }
@@ -2924,7 +2942,12 @@ class Nbdesigner_Plugin {
             $nbd_session = WC()->session->get($item . '_nbd');
             if(isset($nbd_session)){
                 WC()->session->__unset($item . '_nbd'); 
-                $has_nbd = true;
+                $src = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session;
+                $dst = NBDESIGNER_CUSTOMER_DIR . '/' . $order_id.'_'.$nbd_session;
+                if( $nbd_session != '' && file_exists($src) ){
+                    Nbdesigner_IO::copy_dir($src, $dst);
+                    $has_nbd = true;                    
+                }
             }
             /* upload design */
             $nbu_session = WC()->session->get($item . '_nbu');
@@ -3007,7 +3030,11 @@ class Nbdesigner_Plugin {
     public function render_cart($title = null, $cart_item = null, $cart_item_key = null) {
         if ($cart_item_key && ( is_cart() || is_checkout() )) {
             $nbd_session = WC()->session->get($cart_item_key . '_nbd'); 
-            $nbu_session = WC()->session->get($cart_item_key . '_nbu');   
+            $nbu_session = WC()->session->get($cart_item_key . '_nbu'); 
+            if( isset($cart_item['nbd_item_meta_ds']) ){
+                if( isset($cart_item['nbd_item_meta_ds']['nbd']) ) $nbd_session = $cart_item['nbd_item_meta_ds']['nbd'];
+                if( isset($cart_item['nbd_item_meta_ds']['nbu']) ) $nbu_session = $cart_item['nbd_item_meta_ds']['nbu'];
+            }
             $_show_design = nbdesigner_get_option('nbdesigner_show_in_cart');
             $product_id = $cart_item['product_id'];
             $variation_id = $cart_item['variation_id'];
@@ -3158,7 +3185,7 @@ class Nbdesigner_Plugin {
         }
         /* custom design */
         $nbd_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
-        if(isset($nbd_session)){
+        if(isset($nbd_session) && $nbd_session != ''){
             WC()->session->set($cart_item_key. '_nbd', $nbd_session);
             WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
             
@@ -3167,7 +3194,7 @@ class Nbdesigner_Plugin {
         }
         /* up design */
         $nbu_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);
-        if(isset($nbu_session)){
+        if(isset($nbu_session) && $nbu_session != ''){
             WC()->session->set($cart_item_key. '_nbu', $nbu_session);
             WC()->session->__unset('nbu_item_key_'.$nbd_item_cart_key);
             
@@ -3202,13 +3229,15 @@ class Nbdesigner_Plugin {
     public function nbdesigner_add_new_order_item($item_id, $item, $order_id){
         if (isset($item->legacy_cart_item_key)){
             /* custom design */
-            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbd')) {
+            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbd') || isset($item->legacy_values["nbd_item_meta_ds"]["nbd"])) {
                 $nbd_session = WC()->session->get($item->legacy_cart_item_key. '_nbd');
+                if( isset($item->legacy_values["nbd_item_meta_ds"]["nbd"]) ) $nbd_session = $item->legacy_values["nbd_item_meta_ds"]["nbd"];
                 wc_add_order_item_meta($item_id, "_nbd", $nbd_session);
             }
             /* up design */
-            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbu')) {
+            if (WC()->session->__isset($item->legacy_cart_item_key . '_nbu') || isset($item->legacy_values["nbd_item_meta_ds"]["nbu"])) {
                 $nbu_session = WC()->session->get($item->legacy_cart_item_key. '_nbu');
+                if( isset($item->legacy_values["nbd_item_meta_ds"]["nbu"]) ) $nbu_session = $item->legacy_values["nbd_item_meta_ds"]["nbu"];
                 wc_add_order_item_meta($item_id, "_nbu", $nbu_session);
             }    
             if( WC()->session->__isset($item->legacy_cart_item_key . '_nbd_initial_price') ){
@@ -3654,8 +3683,8 @@ class Nbdesigner_Plugin {
                 $nbu_item_key = $_POST['nbu_item_key'];
             }else {   
                 $nbu_item_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);  
-                $nbu_item_key = isset($nbu_item_session) ? $nbu_item_session : substr(md5(uniqid()),0,10);
-            }             
+                $nbu_item_key = isset($nbu_item_session) ? $nbu_item_session : substr(md5(uniqid()),0,5).rand(1,100).time();
+            }
             $path_dir = NBDESIGNER_UPLOAD_DIR . '/' .$nbu_item_key; 
             $new_name = sanitize_file_name($_FILES['file']["name"]);
             $new_name = nbd_alias($new_name);
@@ -3717,7 +3746,7 @@ class Nbdesigner_Plugin {
     public function nbdesigner_customer_upload(){       
         if (!wp_verify_nonce($_POST['nonce'], 'save-design')) {
             die('Security error');
-        } 
+        }
         $allow_extension = array('jpg','jpeg','png','gif','svg');
         $max_size = nbdesigner_get_option('nbdesigner_maxsize_upload');
         $min_dpi = nbdesigner_get_option('nbdesigner_mindpi_upload');
@@ -4488,8 +4517,16 @@ class Nbdesigner_Plugin {
         if( $nbu_session && isset($_POST['nbd-upload-files']) && $_POST['nbd-upload-files'] != '' ){
             $files = $_POST['nbd-upload-files'];
             $this->update_files_upload( $files, $nbu_session );
-        }       
+        }
+        if( isset($nbd_session) ) $cart_item_data['nbd_item_meta_ds']['nbd'] = $nbd_session;
+        if( isset($nbu_session) ) $cart_item_data['nbd_item_meta_ds']['nbu'] = $nbu_session;
         return $cart_item_data;
+    }
+    public function get_cart_item_from_session($cart_item, $values){
+        if ( isset( $values['nbd_item_meta_ds'] ) ) {
+            $cart_item['nbd_item_meta_ds'] = $values['nbd_item_meta_ds'];
+        }
+        return $cart_item;
     }
     public function update_files_upload( $files, $nbu_session = '' ){
         $files = explode('|', $files);
@@ -4557,8 +4594,8 @@ class Nbdesigner_Plugin {
             /* From svg */
             $path_font = array();
             foreach( $used_font as $font ){
+                $font_name = $font->name;
                 if( $font->type == 'google' ){
-                    $font_name = $font->name;
                     $path_font = nbd_download_google_font($font_name);;
                 }else{
                     $has_custom_font = true;
@@ -4566,7 +4603,7 @@ class Nbdesigner_Plugin {
                         $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
                     }
                 }
-                $true_type = ['Felipa', 'Rammetto One'];
+                $true_type = ['Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail'];                
                 if (in_array($font_name, $true_type)) {
                     foreach($path_font as $pfont){
                         $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);

@@ -5,11 +5,11 @@
     </div>
     <div class="main-preview tab-scroll">
         <div class="preview-body">
-            <div class="main-body">
-                <img src="<?php echo NBDESIGNER_ASSETS_URL . 'images/business.jpg';?>" alt="">
-                <span class="product-name"><?php _e('Business Card','web-to-print-online-designer'); ?></span>
+<!--            <div class="main-body">
+                <img src="" alt="">
+                <span class="product-name"></span>
                 <span class="product-desc">Business cards are cards bearing business information about a company or individual. They are shared during formal introductions as a convenience and a memory aid. A business card typically includes the giver's name, company or business affiliation (usually with a logo) and contact information such as street addresses, telephone number(s), fax number, e-mail addresses and website. Before the advent of electronic communication business cards might also include telex details</span>
-            </div>
+            </div>-->
         </div>
         <div class="preview-footer">
             <div class="main-footer">

@@ -4,7 +4,7 @@
     <span ng-show="langCategories.length > 1" class="fa fa-language shadow translate nbd-tooltip-i18n" data-lang="LANGUAGE" data-placement="left" style="font-size: 18px;"></span>
 <!--    <span id="mobile" ng-show="modeMobile" class="fa fa-eye shadow hover-shadow"></span>-->
     <span id="debug" ng-show="state == 'dev'" class="fa fa-magic shadow hover-shadow" ng-click="debug()"></span>
-    <span id="show_grid" ng-hide="modeMobile" class="fa fa-search shadow hover-shadow nbd-tooltip-i18n" data-lang="PREVIEW" data-placement="left"  data-toggle="modal" data-target="#dg-preview" ng-click="preview()"></span>   
+    <span id="show_grid" ng-hide="modeMobile || state == 'pub'" class="fa fa-search shadow hover-shadow nbd-tooltip-i18n" data-lang="PREVIEW" data-placement="left"  data-toggle="modal" data-target="#dg-preview" ng-click="preview()"></span>   
     <span class="fa fa-plus shadow hover-shadow nbd-tooltip-i18n" aria-hidden="true" data-lang="ZOOM_IN" data-placement="left"  ng-click="zoomIn()"></span>
     <span class="fa fa-minus shadow hover-shadow nbd-tooltip-i18n" aria-hidden="true" data-lang="ZOOM_OUT" data-placement="left"  ng-click="zoomOut()"></span>	   
     <span id="expand_feature" class="fa fa-id-card shadow hover-shadow nbd-tooltip-i18n" data-lang="TEMPLATE" data-placement="left"  data-toggle="modal" data-target="#dg-expand-feature" ng-click="loadAdminListDesign()"></span>

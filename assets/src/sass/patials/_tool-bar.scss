@@ -3,35 +3,31 @@
   background: #fff;
   width: calc(100% - 420px);
   position: fixed;
-  z-index: 10;
   box-sizing: border-box;
   color: #3f4652;
   left: 420px;
   top: 54px;
   white-space: nowrap;
+  height: 50px;
+  z-index: 99;
   .main-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100%;
     padding: 0 24px 0 10px;
+    &.overflow-hidden {
+      @media screen and (max-width: 767px){
+        overflow: hidden;
+      }
+    }
     @media screen and (max-width: 767px){
       overflow-x: auto;
       overflow-y: hidden;
-      -ms-overflow-style: -ms-autohiding-scrollbar;
-      /* For WebKit implementations, provide inertia scrolling */
-      -webkit-overflow-scrolling: touch;
-      /* We don't want internal inline elements to wrap */
-      white-space: nowrap;
-      /* Remove the default scrollbar for WebKit implementations */
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
     li.menu-item{
       @media screen and (max-width: 767px){
         position: static;
-
         .sub-menu{
           left: 50%;
           top: 60px;
@@ -43,7 +39,13 @@
           }
         }
       }
-
+      &.item-color-fill {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2px 5px;
+        margin: 0 5px;
+      }
     }
 
   }
@@ -72,113 +74,12 @@
           font-size: 24px;
           text-align: center;
         }
-
-        &.item-color-fill {
-          .sub-menu {
-            width: 220px;
-            min-width: 220px;
-            top: calc(100% + 10px);
-          }
-          .nbd-color-palette {
-            padding: 10px;
-            position: relative;
-            > div {
-              margin-bottom: 25px;
-            }
-            .color-palette-label {
-              font-size: 12px;
-              font-weight: 500;
-              margin: 0 0 10px 0;
-              text-transform: uppercase;
-            }
-            .main-color-palette {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: flex-start;
-              li {
-                list-style: none;
-                cursor: pointer;
-                width: 40px;
-                height: 40px;
-                box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .05), inset -1px -1px 0 rgba(0, 0, 0, .05);
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                color: transparent;
-                background-color: currentColor;
-                display: inline-block;
-                &:hover {
-                  box-shadow: 0 0 3px 0 rgba(0, 0, 0, .75);
-                }
-                &.color-palette-add {
-                  span {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    .sp-replacer {
-                      padding: 0;
-                      width: 100%;
-                      height: 100%;
-                      border: none;
-                      &:hover, &:active {
-                        border-color: transparent;
-                      }
-                      &:after {
-                        content: '+';
-                        display: block;
-                        top: 2px;
-                        left: 2px;
-                        width: 40px;
-                        height: 40px;
-                        text-indent: 0;
-                        font-size: 28px;
-                        line-height: 38px;
-                        text-align: center;
-                        font-weight: 100;
-                        color: #111;
-                        z-index: 2002;
-                        position: absolute;
-                      }
-                      .sp-preview, .sp-alpha, .sp-thumb-el {
-                        margin-right: 0;
-                        border: none;
-                        width: 100%;
-                        height: 100%;
-                      }
-                      .sp-dd {
-                        display: none;
-                      }
-                    }
-                  }
-                }
-              }
-            }
-
-            &.show-popup {
-              .color-palette-popup {
-                display: block;
-              }
-            }
-
-            .color-palette-popup {
-              min-width: 100px;
-              min-height: 100px;
-              position: absolute;
-              display: none;
-              top: 0;
-              left: -50%;
-            }
-
-          }
-        }
         &.item-stack {
           .sub-menu {
             min-width: 300px;
             ul {
               display: block;
+              margin: 10px 0;
               li {
                 display: flex;
                 justify-content: space-between;
@@ -232,6 +133,7 @@
     align-items: center;
     .nbd-main-menu {
       &.menu-right {
+        border-left: 1px solid #ebebeb;
         .menu-item {
           padding: 2px 7px;
           margin: 0 4px;
@@ -271,6 +173,11 @@
                 font-size: 24px;
               }
             }
+          }
+        }
+        .item-spacing {
+          .sub-menu {
+            min-width: 250px;
           }
         }
       }
@@ -314,6 +221,9 @@
             }
             span {
               font-size: 14px;
+            }
+            .toolbar-label-font {
+              line-height: 1;
             }
           }
           .toolbar-input {
@@ -360,6 +270,9 @@
             }
           }
         }
+      }
+      &.menu-center{
+
       }
     }
     #toolbar-font-size-dropdown {

@@ -20,19 +20,26 @@
 @import "icons/icons";
 
 /*--------------------------------------------------------------
+# Library
+--------------------------------------------------------------*/
+@import "library/animate/index";
+
+/*--------------------------------------------------------------
 # Partials
 --------------------------------------------------------------*/
 @import "patials/global";
-@import "patials/animate";
+//@import "patials/animate";
 @import "patials/main-bar";
 @import "patials/sidebar";
 @import "patials/toolbar-zoom";
 @import "patials/stages";
-@import "patials/workspave";
+@import "patials/workspace";
 @import "patials/tool-bar";
 @import "patials/context-menu";
 @import "patials/warning";
 @import "patials/guide-line";
+@import "patials/toollock";
+@import "patials/signal";
 
 /*--------------------------------------------------------------
 # Mixed
@@ -44,8 +51,11 @@
 @import "mixed/dropdown";
 @import "mixed/toasts";
 @import "mixed/spectrum";
+@import "mixed/color-palette";
+@import "mixed/loading-workflow";
 
 /*--------------------------------------------------------------
 # Component
 --------------------------------------------------------------*/
 @import "component/checkbox";
+@import "component/tabs";

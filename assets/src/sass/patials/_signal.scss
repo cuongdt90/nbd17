@@ -1,0 +1,43 @@
+.nbd-signal{
+  position: absolute;
+  bottom: 15px;
+  left: 5px;
+  height: 20px;
+  @media screen and (max-width: 767px){
+      display: none;
+  }
+  a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration-line: none;
+  }
+  .contents-wrapper{
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    .contents {
+      padding-left: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 20px;
+      white-space: nowrap;
+      width: 0%;
+      -webkit-transition: width 1s ease-in-out, padding-left 1s ease-in-out, padding-right 1s ease-in-out;
+      -moz-transition: width 1s ease-in-out, padding-left 1s ease-in-out, padding-right 1s ease-in-out;
+      -o-transition: width 1s ease-in-out, padding-left 1s ease-in-out, padding-right 1s ease-in-out;
+      transition: width 1s ease-in-out, padding-left 1s ease-in-out, padding-right 1s ease-in-out;
+    }
+  }
+  .signal-logo, .contents {
+    overflow: hidden;
+    height: 20px;
+  }
+  .signal-logo {
+    padding: 0;
+  }
+  .signal-logo:hover + .contents-wrapper .contents {
+    width: 100%;
+  }
+
+}

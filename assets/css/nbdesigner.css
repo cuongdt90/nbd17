@@ -717,7 +717,7 @@ body.nbd-prevent-scroll {
     -webkit-transition: all 0.4s;
     -moz-transition: all 0.4s;
     -ms-transition: all 0.4s;
-    transition: all 0.4s;    
+    transition: all 0.4s;
 }
 .nbd-gallery-item {
     -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
@@ -730,7 +730,7 @@ body.nbd-prevent-scroll {
     transition: all 0.4s;
     position: relative;
     background: #fff;
-    border-radius: 4px;        
+    border-radius: 4px;
 }
 .nbd-gallery-item:hover {
     -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
@@ -738,29 +738,115 @@ body.nbd-prevent-scroll {
     -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
     box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
 }
-.nbd-gallery-item-inner {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    overflow: hidden;
+/*.nbd-gallery-item-inner {*/
+    /*border-top-left-radius: 4px;*/
+    /*border-top-right-radius: 4px;*/
+    /*overflow: hidden;*/
+/*}*/
+/*nbd-gallery-item-inner a {*/
+    /*display: block;*/
+    /*width: 100%;*/
+/*}*/
+/*.nbd-gallery-item-inner img {*/
+    /*-webkit-transition: all 0.4s;*/
+    /*-moz-transition: all 0.4s;*/
+    /*-ms-transition: all 0.4s;*/
+    /*transition: all 0.4s;*/
+    /*width: 100%;*/
+    /*border-radius: 0;*/
+/*}*/
+/*.nbd-gallery-item-inner:hover img {*/
+    /*-webkit-transform: scale(1.1);*/
+    /*-moz-transform: scale(1.1);*/
+    /*-ms-transform: scale(1.1);*/
+    /*transform: scale(1.1);*/
+/*}*/
+
+.nbd-gallery-item-templates{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
-nbd-gallery-item-inner a {
+.nbd-gallery-item-templates .template{
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.nbd-gallery-item-templates .template .main{
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+}
+.nbd-gallery-item-templates .template a{
     display: block;
+    position: relative;
+    outline: none;
+}
+.nbd-gallery-item-templates .template p{
+    padding: 10px;
+    border-top: 1px solid #ebebeb;
+}
+.nbd-gallery-item-templates .template a:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #000;
+    opacity: 0;
+    transition: all .3s
+}
+.nbd-gallery-item-templates .template a:hover:before{
+    opacity: .3;
+}
+.nbd-gallery-item-templates .template span {
+    position: absolute;
+    padding: 5px 10px;
+    background-color: #404762;
+    color: #fff;
+    border-radius: 2px;
+    font-size: 12px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    transition: all .3s;
+    opacity: 0;
+    visibility: hidden;
+}
+.nbd-gallery-item-templates .nbd-col-2 span,.nbd-gallery-item-templates .nbd-col-1 span{
+    font-size: 14px;
+}
+.nbd-gallery-item-templates .nbd-col-5 span{
+    font-size: 10px;
+}
+.nbd-gallery-item-templates .nbd-col-6 span{
+    font-size: 9px;
+}
+.nbd-gallery-item-templates .template a:hover span {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    visibility: visible;
+}
+.nbd-gallery-item-templates .template p{
+    margin-bottom: 0;
+}
+.nbd-gallery-item-templates .nbd-col-1{
     width: 100%;
 }
-.nbd-gallery-item-inner img {
-    -webkit-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    -ms-transition: all 0.4s;
-    transition: all 0.4s; 
-    width: 100%;
-    border-radius: 0;
+.nbd-gallery-item-templates .nbd-col-2{
+    width: 50%;
 }
-.nbd-gallery-item-inner:hover img {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
+.nbd-gallery-item-templates .nbd-col-3{
+    width: 33.33%;
 }
+.nbd-gallery-item-templates .nbd-col-4{
+    width: 25%;
+}
+.nbd-gallery-item-templates .nbd-col-5{
+    width: 20%;
+}
+.nbd-gallery-item-templates .nbd-col-6{
+    width: 16.66%;
+}
+
 .nbd-gallery-item-acction {
     padding: 10px;
     height: 50px;
@@ -1518,6 +1604,10 @@ table#nbd-quantity-pricing .nbd_quantity {
     height: 30px;
     line-height: 30px;
     padding: 0 10px;    
+}
+.nbd-modern-layout .nbdesigner_pp_close {
+    top: 10px;
+    left: 10px;    
 }
 @media (max-width: 768px) {
     .nbd-table-pricing-wrap, .nbd-pricing-description {

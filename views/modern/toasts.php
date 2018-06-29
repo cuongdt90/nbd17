@@ -1,6 +1,6 @@
-<div class="nbd-toasts nbd-show" style="display: none;">
-    <div class="main-toasts">
-        <span>i am a toast</span>
-        <i class="icon-nbd-clear nbd-close-toast"></i>
+<div class="nbd-toasts">
+    <div class="toast animate300 animated">
+        <span><?php _e('All changes saved','web-to-print-online-designer'); ?></span>
+        <i class="nbd-icon icon-nbd-clear nbd-close-toast"></i>
     </div>
 </div>

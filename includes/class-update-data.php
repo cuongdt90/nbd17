@@ -196,9 +196,19 @@ class NBD_Update_Data{
         $gg_fonts_bf = json_decode(file_get_contents($path_gg_font)); 
         foreach($gg_fonts_bf as $key => $font){
             $subset = 'all';
+            $file = array('r' => 1);
             foreach( $all_gg_fonts as $f ){
                 if( $font->name == $f->family ){
                     $subset = $f->subsets[0];
+                    if( isset($f->files->italic) ){
+                        $file['i'] = 1;
+                    }
+                    if( isset($f->files->{"700"}) ){
+                        $file['b'] = 1;
+                    }
+                    if( isset($f->files->{"700italic"}) ){
+                        $file['bi'] = 1;
+                    }                   
                     break;
                 }
             }
@@ -208,9 +218,11 @@ class NBD_Update_Data{
                 "alias"    =>  $font->name,
                 "type"   =>  "google", 
                 "subset"   =>  $subset, 
+                "file"   =>  $file, 
                 "cat" => array("99")
             );             
         };
+        //must add default fotn for each subset
         file_put_contents($path_gg_font, json_encode($gg_fonts));
     }
 }

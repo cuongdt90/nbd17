@@ -21,7 +21,7 @@ body {
     text-align: center;
 }
 #nbd-logo img {
-    max-width: 30%;
+    width: 100px;
 }
 .nbd-setup-steps {
     padding: 0 0 24px;
@@ -46,8 +46,8 @@ body {
     line-height: 1.4em;
 }
 .nbd-setup-steps li.active {
-    border-color: #055b39;
-    color: #055b39;
+    border-color: #404762;
+    color: #404762;
 }
 .nbd-setup-steps li::before {
     content: '';
@@ -63,7 +63,7 @@ body {
     background: #fff;
 }
 .nbd-setup-steps li.active::before {
-    border-color: #055b39;
+    border-color: #404762;
 }
 .nbd-setup-content {
     box-shadow: 0 1px 3px rgba(0,0,0,.13);
@@ -119,16 +119,75 @@ select:focus {
     border-radius: 4px;
 }
 .nbd-setup .nbd-setup-actions .button-primary {
-    background-color: #055b39;
-    border-color: #055b39;
+    background-color: #404762;
+    border-color: #404762;
     margin: 0;
     opacity: 1;
+    text-shadow: none;
 }
 .step {
     text-align: center;
     padding: 0;
 }
 .nbd-setup .nbd-setup-actions .button:hover {
-    background-color: #0f764d;
-    border-color: #0f764d;
+    background-color: #5b6484;
+    border-color: #5b6484;
+}
+input.full-width {
+    border: 1px solid #aaa;
+    border-color: #ddd;
+    border-radius: 4px;
+    height: 30px;
+    width: calc(100% - 8px - 24px - 2px);
+    padding-left: 8px;
+    padding-right: 24px;
+    font-size: 16px;
+    color: #444;
+    background-color: #fff;
+    display: inline-block;    
+}
+.get-license-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.get-license-container div {
+    -webkit-flex-basis: 50%;
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    margin-right: 1em;
+}
+.get-license-container input {
+    border: 1px solid #aaa;
+    border-color: #ddd;
+    border-radius: 4px;
+    height: 30px;
+    width: calc(100% - 8px - 24px - 2px);
+    padding-left: 8px;
+    padding-right: 24px;
+    font-size: 16px;
+    color: #444;
+    background-color: #fff;
+    display: inline-block;
+}
+.submit_key{
+    margin-top: 20px;
+    color: #fff;
+    background: #404762;
+    height: 34px;
+    line-height: 34px;
+    display: inline-block;
+    padding: 0 8px;
+    border-radius: 4px;
+    cursor: pointer;    
+}
+.submit_key:hover {
+    background-color: #5b6484;
+    color: #fff;
+}
+.enable-design {
+    border: 7px solid #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
 }

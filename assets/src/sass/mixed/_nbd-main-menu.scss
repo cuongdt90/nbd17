@@ -15,7 +15,7 @@
       font-size: 14px;
       cursor: pointer;
       user-select: none;
-      color: #666;
+      color: $main-color;
       text-transform: capitalize;
     }
     &.menu-item{
@@ -53,7 +53,7 @@
     padding: 0;
     list-style: none;
     background: #fff;
-    color: #3f4652;
+    color: $main-color;
     border-radius: 2px;
     min-width: 250px;
     box-shadow: 1px 0 20px rgba(0, 0, 0, 0.08);
@@ -72,12 +72,13 @@
       display: block;
       position: relative;
       margin: 0;
-       > .title-menu {
+
+      > .title-menu {
         position: relative;
-         margin-right: 40px;
-        &:before{
-          font-family: online-design!important;
-          content: "\e92c";
+        margin-right: 40px;
+        &:before {
+          font-family: online-design !important;
+          content: "\e92d";
           position: absolute;
           top: 0;
           speak: none;
@@ -92,6 +93,12 @@
           display: none;
         }
       }
+      //.main-hover-menu {
+      //  display: flex;
+      //  justify-content: space-between;
+      //  align-items: center;
+      //  width: 100%;
+      //}
 
       &.active{
         > .title-menu {
@@ -148,6 +155,18 @@
 
     .hover-menu{
       position: relative;
+      @media screen and (max-width: 767px){
+          flex-wrap: wrap;
+        .hover-sub-menu-item {
+          position: static;
+          flex: 1 1 100%;
+          box-shadow: none;
+          opacity: 1;
+          visibility: visible;
+          display: none;
+          transition: unset;
+        }
+      }
       .hover-sub-menu-item {
         position: absolute;
         top: 0;
@@ -161,12 +180,12 @@
         border-radius: 2px;
         font-size: 13px;
         ul{
-          margin: 0;
+          margin: 10px 0;
         }
         @media screen and (max-width: 767px) {
           bottom: 0;
           left: 0;
-          transform: translateY(100%) !important;
+          transform: none !important;
           right: auto;
           top: auto;
         }
