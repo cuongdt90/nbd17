@@ -7,16 +7,16 @@
                     <i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>Layer</span>
                 </li>
                 <?php endif; ?>
-                <li class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="v-design-toolbar">
+                <li class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="tab-design">
                     <i class="nbd-icon-vista nbd-icon-vista-group-work"></i><span>Design</span>
                 </li>
-                <li class="v-tab v-menu-item" data-tab="v-text-toolbar" ng-if="settings['nbdesigner_enable_text'] == 'yes'">
+                <li class="v-tab v-menu-item" data-tab="tab-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'">
                     <i class="nbd-icon-vista nbd-icon-vista-text"></i><span>Text</span>
                 </li>
-                <li ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="v-image-toolbar">
+                <li ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="tab-photo">
                     <i class="nbd-icon-vista nbd-icon-vista-image"></i><span>Image</span>
                 </li>
-                <li class="v-tab v-menu-item" data-tab="v-more-toolbar">
+                <li class="v-tab v-menu-item" data-tab="tab-more">
                     <i class="nbd-icon-vista nbd-icon-vista-more"></i><span>More</span></a>
                 </li>
             </ul>

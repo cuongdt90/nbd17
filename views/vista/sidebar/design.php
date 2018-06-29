@@ -1,7 +1,7 @@
-<div id="v-design-toolbar" class="v-tab-content active">
+<div id="tab-design" class="v-tab-content active">
     <span class="v-title">Design</span>
     <div class="v-content" data-action="no">
-        <div class="v-scrollbar layout">
+        <div class="tab-scroll layout">
             <div class="main-scrollbar">
                 <div class="items">
                     <div class="item">
@@ -33,7 +33,7 @@
         </div>
         <div class="design-color">
             <span class="v-title"><?php _e('Background Colour','web-to-print-online-designer'); ?></span>
-            <div class="v-scrollbar bg-color">
+            <div class="tab-scroll bg-color">
                 <div class="main-scrollbar">
                     <div class="main-color">
                         <ul class="items">

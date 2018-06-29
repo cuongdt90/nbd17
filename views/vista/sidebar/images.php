@@ -1,7 +1,10 @@
-<div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="v-image-toolbar" class="v-tab-content" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
+<?php
+    $dbID = nbdesigner_get_option('nbdesigner_dropbox_app_id');
+?>
+<div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="tab-photo" class="v-tab-content" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
     <span class="v-title">Image</span>
     <div class="v-content">
-        <div class="v-scrollbar">
+        <div class="tab-scroll">
             <div class="main-scrollbar">
                 <div class="v-elements">
                     <div class="main-items">
@@ -97,12 +100,28 @@
                                     <span><?php _e('Login','web-to-print-online-designer'); ?></span>
                                 </button>
                             </div>
-                            <div class="content-item type-dropbox text-center" data-type="dropbox">
-                                <a href="#" class="v-btn v-btn-dropbox">
-                                    <i class="nbd-icon-vista nbd-icon-vista-dropbox-logo"></i>
-                                    <span>Choose from Dropbox</span>
-                                </a>
-                            </div>
+
+                            <?php if($dbID != ''): ?>
+                                <div class="content-item type-dropbox" data-type="dropbox" id="nbd-dropbox-wrap">
+                                    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="<?php echo $dbID; ?>"></script>
+                                    <script type="text/javascript">
+                                        NBDESIGNCONFIG['enable_dropbox'] = true;
+                                    </script>
+                                    <div id="nbdesigner_dropbox" class="text-center" style="margin-bottom: 20px"></div>
+                                    <div class="mansory-wrap">
+                                        <div nbd-drag="img.url" extenal="true" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.dropbox.data | limitTo: resource.dropbox.filter.perPage * resource.dropbox.filter.currentPage" repeat-end="onEndRepeat('dropbox')">
+                                            <img ng-src="{{img.preview}}">
+                                            <span class="photo-desc">{{img.des}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+<!--                            <div class="content-item type-dropbox text-center" data-type="dropbox">-->
+<!--                                <a href="#" class="v-btn v-btn-dropbox">-->
+<!--                                    <i class="nbd-icon-vista nbd-icon-vista-dropbox-logo"></i>-->
+<!--                                    <span>Choose from Dropbox</span>-->
+<!--                                </a>-->
+<!--                            </div>-->
                             <div class="content-item type-webcam" data-type="webcam">
                                 <?php _e('webcam','web-to-print-online-designer'); ?>
                             </div>

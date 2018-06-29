@@ -13,7 +13,7 @@
     .v-dropdown {
       .v-dropdown-menu {
         .items{
-          &.v-scrollbar {
+          &.tab-scroll {
             max-height: 220px;
           }
           .item{
@@ -80,7 +80,7 @@
 
         }
       }
-    .v-scrollbar {
+    .tab-scroll {
       max-height: 220px;
     }
   }

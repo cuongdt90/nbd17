@@ -13,7 +13,7 @@
                         <button class="v-btn btn-font-family v-btn-dropdown" title="Font family"><span>Roboto</span><i
                                     class="nbd-icon-vista nbd-icon-vista-expand-more"></i></button>
                         <div class="v-dropdown-menu">
-                            <ul class="items v-scrollbar">
+                            <ul class="items tab-scroll">
                                 <li class="item">
                                     <span class="font-left">Roboto</span>
                                     <span class="font-right"></span>
@@ -80,7 +80,7 @@
                                 <i class="nbd-icon-vista nbd-icon-vista-arrows"></i>
                             </button>
                             <div class="v-dropdown-menu">
-                                <ul class="items v-scrollbar">
+                                <ul class="items tab-scroll">
                                     <li class="item active"><span>12</span><i
                                                 class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>
                                     <li class="item"><span>13</span><i

@@ -13,6 +13,7 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require('browser-sync').create();
 var minifyCSS = require('gulp-minify-css');
+var uglify = require('gulp-uglify');
 var reload = browserSync.reload;
 
 var onError = function (err) {
@@ -21,7 +22,7 @@ var onError = function (err) {
     this.emit('end');
 };
 
-gulp.task('frontstyle', function() {
+gulp.task('main_style', function() {
     return gulp.src('./src/sass/vista.scss')
         .pipe(plumber({ errorHandler: onError }))
         .pipe(sass())
@@ -31,7 +32,16 @@ gulp.task('frontstyle', function() {
         .pipe(gulp.dest('./css/'))
 });
 
-gulp.task('right-to-left', function() {
+// gulp.task('vista_js', function() {
+//     return gulp.src(['./js/library/*.js'])
+//         .pipe(jshint())
+//         .pipe(jshint.reporter('default'))
+//         .pipe(rename({suffix: '.min'}))
+//         .pipe(uglify())
+//         .pipe(gulp.dest('./js/bundle-vista1'));
+// });
+
+gulp.task('right_to_left', function() {
     return gulp.src('./src/sass/rtl.scss')
         .pipe(plumber({errorHandler: onError}))
         .pipe(sass())
@@ -44,7 +54,8 @@ gulp.task('right-to-left', function() {
 
 
 gulp.task('watch', function() {
-    gulp.watch('src/sass/**/*.scss', ['frontstyle', 'right-to-left']);
+    gulp.watch('src/sass/**/*.scss', ['main_style']);
+    // gulp.watch('js/library/*.js', ['vista_js']);
 });
 
-gulp.task('default', ['frontstyle','right-to-left']);
+gulp.task('default', ['frontstyle']);

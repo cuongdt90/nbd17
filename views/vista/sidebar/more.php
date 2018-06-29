@@ -1,7 +1,7 @@
-<div id="v-more-toolbar" class="v-tab-content">
+<div id="tab-more v-more-toolbar" class="v-tab-content">
     <span class="v-title">More</span>
     <div class="v-content">
-        <div class="v-scrollbar">
+        <div class="tab-scroll">
             <div class="main-scrollbar">
                 <div class="v-elements">
                     <div class="main-items">
@@ -68,7 +68,7 @@
                                             Brush <i class="nbd-icon-vista nbd-icon-vista-arrow-drop-down"></i>
                                         </button>
                                         <div class="v-dropdown-menu" data-pos="left">
-                                            <ul class="v-scrollbar">
+                                            <ul class="tab-scroll">
                                                 <li><span><?php _e('Pencil','web-to-print-online-designer'); ?></span></li>
                                                 <li><span><?php _e('Circle','web-to-print-online-designer'); ?></span></li>
                                                 <li><span><?php _e('Spray','web-to-print-online-designer'); ?></span></li>

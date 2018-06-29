@@ -118,12 +118,9 @@ if(!class_exists('Nbdesigner_Vista')) {
 
                 wp_enqueue_script('jquery-ui');
                 wp_enqueue_script('angular');
-                wp_enqueue_script('app-vista');
                 wp_enqueue_script('bundle-vista');
+                wp_enqueue_script('app-vista');
                 wp_enqueue_script('add-to-cart');
-//                wp_enqueue_script('perfect-scrollbar');
-//                wp_enqueue_script('images-loaded');
-//                wp_enqueue_script('masonry');
                 wp_enqueue_script('vista');
 
                 if (is_rtl()) {
