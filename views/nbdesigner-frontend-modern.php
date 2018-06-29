@@ -684,7 +684,24 @@
             }   
             .nbd-signal .signal-logo {
                 opacity: 0.7;
-            }            
+            }    
+            .nbd-sidebar #tab-element .nbd-items-dropdown {
+                margin-top: 0;
+            }
+            .nbd-warning {
+                position: absolute;
+                top: 60px;                
+            }
+            .nbd-warning .main-warning {
+                box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+                background: #404762;
+                -webkit-transform: unset;
+                transform: unset;
+            }
+            .nbd-warning .main-warning i,
+            .nbd-warning .main-warning span {
+                color: #fff;
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -787,7 +804,10 @@
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 enable_dropbox: false,
                 default_font: <?php echo $default_font; ?>,
-                templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>
+                templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>,
+                nbdlangs: {
+                        alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>"
+                    }
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
             <?php 
@@ -836,6 +856,7 @@
                             <?php include 'modern/toolbar.php'; ?>
                             <?php include 'modern/stages.php';?>
                             <?php include 'modern/toolbar-zoom.php';?>
+                            <?php include 'modern/warning.php'?>
                             <?php include 'modern/context-menu.php'?>
                             <?php include 'modern/signal.php'?>
                             <?php include 'modern/loading-workflow.php';?>

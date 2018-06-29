@@ -210,6 +210,17 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'default'	=> '0',
                         'subfix'        => ' DPI',
                         'type' 		=> 'number'
+                    ),  
+                    array(
+                        'title' => __( 'Enable low resolution image', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_enable_low_resolution_image',
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'description'   =>  __( 'Alert a message to the customer', 'web-to-print-online-designer'),
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
                     ),                    
                     array(
                         'title' => __( 'Enable images from url', 'web-to-print-online-designer'),

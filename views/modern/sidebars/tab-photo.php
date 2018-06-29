@@ -83,28 +83,34 @@
             <div class="result-loaded">
                 <div class="content-items">
                     <div ng-class="settings['nbdesigner_upload_show_term'] !== 'yes' ? 'accept' : '' " class="content-item type-upload" data-type="image-upload">
-                        <div class="form-upload nbd-dnd-file" nbd-dnd-file="uploadFile(files)">
-                            <i class="icon-nbd icon-nbd-cloud-upload"></i>
-                            <span><?php _e('Click or drop images here','web-to-print-online-designer'); ?></span>
-                            <input type="file" accept="image/*" style="display: none;"/>
+                        <div ng-show="settings.nbdesigner_upload_designs_php_logged_in == 'yes' && !settings.is_logged">
+                            <p><?php _e('You need to be logged in to upload images!','web-to-print-online-designer'); ?></p>
+                            <button class="nbd-button nbd-hover-shadow" ng-click="login()"><?php _e('Login','web-to-print-online-designer'); ?></button>
                         </div>
-                        <div class="allow-size">
-                            <span><?php _e('Accept file types','web-to-print-online-designer'); ?>: <strong>png, jpg, gif</strong></span>
-                            <span><?php _e('Max file size','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_maxsize_upload']}} MB</strong></span>
-                            <span><?php _e('Min file size','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_minsize_upload']}} MB</strong></span>
-                        </div>
-                        <div class="nbd-term" ng-if="settings['nbdesigner_upload_show_term'] == 'yes'">
-                            <div class="nbd-checkbox">
-                                <input id="accept-term" type="checkbox">
-                                <label for="accept-term">&nbsp;</label>
+                        <div ng-hide="settings.nbdesigner_upload_designs_php_logged_in == 'yes' && !settings.is_logged">
+                            <div class="form-upload nbd-dnd-file" nbd-dnd-file="uploadFile(files)">
+                                <i class="icon-nbd icon-nbd-cloud-upload"></i>
+                                <span><?php _e('Click or drop images here','web-to-print-online-designer'); ?></span>
+                                <input type="file" accept="image/*" style="display: none;"/>
                             </div>
-                            <span class="term-read"><?php _e('I accept the terms','web-to-print-online-designer'); ?></span>
-                        </div>
-                        <div id="nbd-upload-wrap">
-                            <div class="mansory-wrap">
-                                <div nbd-drag="img.url" extenal="false" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url, false)" ng-repeat="img in resource.upload.data track by $index" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
-                            </div>                             
-                        </div>
+                            <div class="allow-size">
+                                <span><?php _e('Accept file types','web-to-print-online-designer'); ?>: <strong>png, jpg, gif</strong></span>
+                                <span><?php _e('Max file size','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_maxsize_upload']}} MB</strong></span>
+                                <span><?php _e('Min file size','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_minsize_upload']}} MB</strong></span>
+                            </div>
+                            <div class="nbd-term" ng-if="settings['nbdesigner_upload_show_term'] == 'yes'">
+                                <div class="nbd-checkbox">
+                                    <input id="accept-term" type="checkbox">
+                                    <label for="accept-term">&nbsp;</label>
+                                </div>
+                                <span class="term-read"><?php _e('I accept the terms','web-to-print-online-designer'); ?></span>
+                            </div>
+                            <div id="nbd-upload-wrap">
+                                <div class="mansory-wrap">
+                                    <div nbd-drag="img.url" extenal="false" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url, false, img.ilr)" ng-repeat="img in resource.upload.data track by $index" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
+                                </div>                             
+                            </div>
+                        </div>    
                     </div>
                     <div class="content-item type-url" data-type="image-url">
                         <div class="form-group">

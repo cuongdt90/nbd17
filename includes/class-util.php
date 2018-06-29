@@ -699,6 +699,7 @@ function default_frontend_setting(){
         'nbdesigner_maxsize_upload' => nbd_get_max_upload_default(),
         'nbdesigner_minsize_upload' => 0,           
         'nbdesigner_enable_image_url' => 'yes',
+        'nbdesigner_enable_low_resolution_image' => 'no',
         'nbdesigner_enable_image_webcam' => 'yes',
         'nbdesigner_enable_facebook_photo' => 'yes',
         'nbdesigner_enable_instagram_photo' => 'yes',

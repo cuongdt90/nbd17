@@ -2,7 +2,6 @@
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
             <div style="display: inline-block;position: relative;">
-                <?php include 'warning.php'?>
                 <div class="stage-main" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
                     <div class="stage-background" ng-style="{'background-color': stage.config.bgColor}">

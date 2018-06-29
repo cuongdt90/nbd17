@@ -42,7 +42,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                         <span><?php _e('Clear all design','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-E' | keyboardShortcut }}</small>
                     </li>
-                    <li class="sub-menu-item flex space-between" ng-click="saveData('saveforlater')">
+                    <li ng-if="settings.nbdesigner_save_for_later == 'yes'" class="sub-menu-item flex space-between" ng-click="saveData('saveforlater')">
                         <span><?php _e('Save for later','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-S-S' | keyboardShortcut }}</small>
                     </li>                    
@@ -115,7 +115,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
         <li class="menu-item item-title animated slideInDown animate700">
             <input type="text" name="title" class="title" placeholder="Title" ng-model="stages[currentStage].config.name"/>
         </li>
-        <li class="menu-item item-share nbd-show-popup-share animated slideInDown animate800" ng-click="saveData('share')"><i class="icon-nbd icon-nbd-share2"></i></li>
+        <li ng-if="settings.nbdesigner_share_design == 'yes'" class="menu-item item-share nbd-show-popup-share animated slideInDown animate800" ng-click="saveData('share')"><i class="icon-nbd icon-nbd-share2"></i></li>
         <li class="menu-item item-process animated slideInDown animate900" data-overlay="overlay" ng-click="saveData()">
             <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right" style="display: none;">

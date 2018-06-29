@@ -3,7 +3,7 @@
         <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>     
-    <div class="tab-main tab-scroll" style="margin-top: 70px;">
+    <div class="tab-main tab-scroll" style="margin-top: 70px;height: calc(100% - 70px);">
         <div class="nbd-items-dropdown">
             <div class="main-items">
                 <div class="items">
