@@ -702,6 +702,59 @@
             .nbd-warning .main-warning span {
                 color: #fff;
             }
+            .nbd-tip {
+                position: fixed;
+                -webkit-border-radius: 2px;
+                border-radius: 2px;
+                -webkit-box-shadow: 1px 0 10px rgba(0,0,0,.15);
+                box-shadow: 1px 0 10px rgba(0,0,0,.15);
+                top: 110px;
+                right: 0;
+                background: #fff;
+                display: flex;
+                max-width: 265px;
+                -webkit-transition: all 1s;
+                -moz-transition: all 1s;
+                transition: all 1s;
+                transform: translateX(calc(100% - 3px));
+                border-left: 3px solid #404762;
+                cursor: pointer;                
+            }
+            .nbd-tip:hover {
+                transform: translateX(calc(100% - 70px));
+                border-left: none;
+            }
+            .tip-icon {
+                width: 70px;
+                padding: 10px;    
+                display: flex;
+                flex-direction: column;
+                justify-content: center;                
+            }
+            .tip-icon svg{
+                width: 50px;
+                height: 50px;
+            }
+            .tip-content p {
+                font-size: 12px;
+                margin: 0;
+            }
+            .nbd-tip.nbd-show {
+                z-index: 99999999;
+                border-left: none;
+                transform: translateX(0);
+            }
+            .tip-content-inner {
+                position: relative;
+                padding: 10px 10px 10px 0;
+            }
+            .nbd-tip .icon-nbd-clear {
+                cursor: pointer;
+                position: absolute;
+                font-size: 24px;
+                top: 0;
+                right: 0;
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -722,6 +775,9 @@
                 .nbd-stages .stage .page-toolbar {
                     bottom: -44px;
                 }
+                .nbd-tip {
+                    display: none;
+                }                
             }
         </style>        
         <?php 
@@ -866,7 +922,8 @@
                 </div>	
             </div>
             <?php include 'modern/popup.php';?>
-            <?php include 'modern/toasts.php';?>            
+            <?php include 'modern/toasts.php';?>
+            <?php include 'modern/tip.php';?>
         </div>
         <?php include 'modern/loading-page.php';?>
         <?php if(!NBDESIGNER_MODE_DEV): ?>

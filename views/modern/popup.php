@@ -1,13 +1,3 @@
-<!------------------------------------------------------------------------------------
-                data-animate:
-                    + bottom-to-top
-                    + top-to-bottom
-                    + left-to-right
-                    + right-to-left
-                    + scale
-                    + fixed-top
-                    + none
-------------------------------------------------------------------------------------->
 <div class="nbd-popup popup-share" data-animate="scale">
     <div class="overlay-popup"></div>
     <div class="main-popup">
@@ -85,10 +75,6 @@
                         <div id="nbd-keyboard-shortcut" class="nbd-tab-content active">
                             <table class="keyboard-mapping">
                                 <tbody>
-<!--                                <tr>
-                                    <th></th>
-                                    <th><?php _e('Site wide shortcuts','web-to-print-online-designer'); ?></th>
-                                </tr>-->
                                 <tr>
                                     <td class="keys">
                                         <kbd>Ctrl</kbd> +<kbd>A</kbd>
@@ -428,32 +414,20 @@
     </div>
 </div>
 <div class="nbd-popup popup-select clear-stage-alert" data-animate="scale">
-<!--    <div class="overlay-popup"></div>-->
     <div class="main-popup">
         <i class="icon-nbd icon-nbd-clear close-popup"></i>
         <div class="head">
-            Delete All Layers
+            <?php _e('Delete All Layers','web-to-print-online-designer'); ?>
         </div>
         <div class="body">
             <div class="main-body">
-                <span class="title">Are you sure you want to delete all layers?</span>
+                <span class="title"><?php _e('Are you sure you want to delete all layers?','web-to-print-online-designer'); ?></span>
                 <div class="main-select">
-                    <button ng-click="closePopupClearStage()" class="nbd-button select-no"><i class="icon-nbd icon-nbd-clear"></i> No</button>
-                    <button ng-click="clearStage()" class="nbd-button select-yes"><i class="icon-nbd icon-nbd-fomat-done"></i> Yes</button>
+                    <button ng-click="closePopupClearStage()" class="nbd-button select-no"><i class="icon-nbd icon-nbd-clear"></i> <?php _e('No','web-to-print-online-designer'); ?></button>
+                    <button ng-click="clearStage()" class="nbd-button select-yes"><i class="icon-nbd icon-nbd-fomat-done"></i> <?php _e('Yes','web-to-print-online-designer'); ?></button>
                 </div>
             </div>
         </div>
         <div class="footer"></div>
     </div>
 </div>
-<!--<div class="nbd-popup popup-import-file" data-animate="fixed-top">-->
-<!--    <div class="overlay-popup"></div>-->
-<!--    <div class="main-popup">-->
-<!--        <i class="icon-nbd icon-nbd-clear close-popup"></i>-->
-<!--        <div class="head"></div>-->
-<!--        <div class="body">-->
-<!--            -->
-<!--        </div>-->
-<!--        <div class="footer"></div>-->
-<!--    </div>-->
-<!--</div>-->
