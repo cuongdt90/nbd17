@@ -1,4 +1,4 @@
-<div id="tab-more v-more-toolbar" class="v-tab-content">
+<div id="tab-more" class="v-tab-content v-more-toolbar">
     <span class="v-title">More</span>
     <div class="v-content">
         <div class="tab-scroll">

@@ -188,7 +188,7 @@ function checkMobileDevice(){
             var $galleryItem = $(this).find('.nbdesigner-gallery');
             var $contentItem = $(this).find('.result-loaded .content-item');
             var $loadingGif = $(this).find('.loading-photo');
-            var $tabScroll = $(this).closest('.v-scrollbar');
+            var $tabScroll = $(this).closest('.tab-scroll');
             var $infoSupport = $(this).closest('.v-content').find('.info-support');
 
             // ========================= Main================================================
@@ -479,8 +479,6 @@ function checkMobileDevice(){
 
         $('.nbd-vista .v-tabs').nbTab();
         $('.nbd-vista .v-dropdown').nbDropdown();
-
-        // $('.nbd-vista .v-scrollbar').nbPerfectScrollbar();
         $('.nbd-vista .tab-scroll').perfectScrollbar();
 
         $('.nbd-vista .v-elements').nbElDropdown({
