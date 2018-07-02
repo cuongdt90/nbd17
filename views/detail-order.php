@@ -73,9 +73,9 @@
                     <table class="nbd-resource-text">
                         <thead>
                             <tr>
-                                <th>Content</th>
-                                <th>Color</th>
-                                <th>Font</th>
+                                <th><?php _e('Content', 'web-to-print-online-designer') ?></th>
+                                <th><?php _e('Color', 'web-to-print-online-designer') ?></th>
+                                <th><?php _e('Font', 'web-to-print-online-designer') ?></th>
                             </tr>
                         </thead>
                         <tbody>

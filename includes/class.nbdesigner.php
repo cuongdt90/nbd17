@@ -4647,7 +4647,7 @@ class Nbdesigner_Plugin {
             $pdf->setPrintHeader(false);
             $pdf->setPrintFooter(false);       
             $pdf->SetAutoPageBreak(TRUE, 0);   
-            $pdf->SetFont('tahoma', '', 14, '', false);
+            $pdf->SetFont('helvetica', '', 14, '', false);
         }        
         foreach($pdfs as $key => $_pdf){         
             $customer_design = $_pdf['customer-design'];    
@@ -4696,7 +4696,7 @@ class Nbdesigner_Plugin {
                 $pdf->setPrintHeader(false);
                 $pdf->setPrintFooter(false);       
                 $pdf->SetAutoPageBreak(TRUE, 0); 
-                $pdf->SetFont('tahoma', '', 14, '', false);
+                $pdf->SetFont('helvetica', '', 14, '', false);
             }         
             $pdf->AddPage($orientation, $pdf_format);
             
@@ -4997,7 +4997,7 @@ class Nbdesigner_Plugin {
                         }
                     }else{
                         $watermark_text = nbdesigner_get_option('nbdesigner_pdf_watermark_text');
-                        $vfont = "tahoma";
+                        $vfont = "helvetica";
                         $vfontsize = 20;
                         $vfontbold = "B";         
                         $widthtext = $pdf->GetStringWidth(trim($watermark_text), $vfont, $vfontbold, $vfontsize, false );
