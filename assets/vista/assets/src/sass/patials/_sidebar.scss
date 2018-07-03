@@ -1,7 +1,7 @@
 .v-sidebar {
   height: 500px;
   width: 260px;
-  .tab-scroll{
+  #tab-photo .tab-scroll{
     height: calc(100% - 50px);
     .main-scrollbar {
       margin-bottom: 50px;
@@ -47,10 +47,17 @@
           border-color: $main-color;
         }
       }
+      .placeholder-field {
+        font-style: italic;
+        color: #c8cbcc;
+      }
+      .editable-field{
+        background-color: #fff;
+      }
     }
     @import "element";
   }
-  #tab-text, #tab-more {
+  #tab-text, #tab-element {
     .v-content {
       height: calc(100% - 110px);
     }
@@ -58,45 +65,79 @@
   #tab-design {
     .v-content {
       height: 100%;
+      .design-color {
+        height: 100%;
+        .tab-scroll {
+          height: calc(100% - 50px);
+        }
+      }
       .tab-scroll {
         &.layout {
           margin-bottom: 20px;
-          height: calc(100% - 250px);
+          height: calc(100% - 50px);
           background-color: #ebebeb;
           .main-scrollbar {
             margin-bottom: 0;
           }
         }
         &.bg-color {
-          height: 122px;
           .main-color {
-            .items {
-              display: flex;
-              justify-content: flex-start;
-              align-items: center;
-              flex-wrap: wrap;
-              background-color: #fff;
-              .item {
-                height: 32px;
-                width: 32px;
-                border-radius: 50%;
-                margin: 0 5px 10px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                border: 1px solid #ebebeb;
-                cursor: pointer;
-                i {
-                  font-size: 18px;
-                  display: none;
-                }
-                &.active {
-                  i {
-                    display: inline-block;
-                  }
-                }
-              }
+            @import "../component/color-palette";
+            .nbd-color-palette {
+              position: static;
+              border: none;
+              padding: 0;
             }
+            //.items {
+            //  display: flex;
+            //  justify-content: flex-start;
+            //  align-items: center;
+            //  flex-wrap: wrap;
+            //  background-color: #fff;
+            //  .item {
+            //    height: 32px;
+            //    width: 32px;
+            //    border-radius: 50%;
+            //    margin: 0 5px 10px;
+            //    display: flex;
+            //    justify-content: center;
+            //    align-items: center;
+            //    border: 1px solid #ebebeb;
+            //    cursor: pointer;
+            //    position: relative;
+            //    i {
+            //      font-size: 18px;
+            //      display: none;
+            //    }
+            //    &.active {
+            //      i {
+            //        display: inline-block;
+            //      }
+            //    }
+            //
+            //    &.add-color {
+            //      &:after{
+            //        font-family: nbd-vista!important;
+            //        position: absolute;
+            //        content: "\e900";
+            //        top: 0px;
+            //        left: 0;
+            //        width: 32px;
+            //        height: 32px;
+            //        display: inline-block;
+            //        line-height: 32px;
+            //        text-align: center;
+            //        color: #888;
+            //        font-size: 17px;
+            //        speak: none;
+            //        font-style: normal;
+            //        font-weight: 400;
+            //        font-variant: normal;
+            //        text-transform: none;
+            //      }
+            //    }
+            //  }
+            //}
           }
         }
 
@@ -121,4 +162,25 @@
       height: calc(100% - 75px);
     }
   }
+
+  .nbd-nav-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ebebeb;
+    .nbd-nav-tab {
+      margin-right: 5px;
+      cursor: pointer;
+      padding: 0 10px;
+      margin-bottom: -1px;
+      border: 1px solid transparent;
+      &.active{
+        border: 1px solid #ebebeb;
+        border-bottom: 1px solid #fff;
+      }
+    }
+    .v-title {
+      margin-bottom: 0;
+    }
+  }
+
 }

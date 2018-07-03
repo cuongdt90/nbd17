@@ -7,49 +7,49 @@
         <div class="tab-scroll">
             <div class="main-scrollbar">
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Company Name</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Company Name</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Company Message</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Company Message</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Full Name</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Full Name</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
                 <div class="text-editor">
-                    <span contenteditable="true" class="text-field">Job Title</span>
+                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@
                 <li ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="tab-photo">
                     <i class="nbd-icon-vista nbd-icon-vista-image"></i><span>Image</span>
                 </li>
-                <li class="v-tab v-menu-item" data-tab="tab-more">
+                <li class="v-tab v-menu-item" data-tab="tab-element">
                     <i class="nbd-icon-vista nbd-icon-vista-more"></i><span>More</span></a>
                 </li>
             </ul>
@@ -25,7 +25,7 @@
             <ul class="v-main-menu">
                 <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-undo"></i><span>undo</span></li>
                 <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-redo"></i><span>redo</span></li>
-                <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>proof</span></li>
+<!--                <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>proof</span></li>-->
 <!--                                        <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-save"></i><span>save</span></li>-->
             </ul>
         </div>

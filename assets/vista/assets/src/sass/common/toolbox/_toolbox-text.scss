@@ -86,6 +86,9 @@
   }
   .toolbox-color-palette {
       @import "../../component/color-palette";
+    .tab-scroll {
+      max-height: 100px;
+    }
   }
   .toolbox-align{}
   .v-btn {

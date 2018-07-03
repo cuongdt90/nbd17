@@ -13,7 +13,7 @@ function checkMobileDevice(){
      * @version 2.0.0
      * @author Netbase Online Design Team
      */
-    $.fn.nbTab = function () {
+    $.fn.nbVTab = function () {
         return this.each(function () {
             var $tab = $(this).find('.v-tab');
             var $tabContent = $('.v-tab-contents .v-tab-content');
@@ -23,6 +23,20 @@ function checkMobileDevice(){
                 $(this).addClass('active');
                 $tabContent.removeClass('active');
                 $('.v-tab-contents #' + tabId).addClass('active');
+            });
+        });
+    };
+
+    $.fn.nbdTab = function () {
+        return this.each(function () {
+            var $tab = $(this).find('.nbd-nav-tab');
+            var $tabContent = $(this).find('.nbd-tab-contents .nbd-tab-content');
+            $tab.on('click', function () {
+                var tabId = $(this).attr('data-tab');
+                $tab.removeClass('active');
+                $(this).addClass('active');
+                $tabContent.removeClass('active');
+                $('.nbd-tab-contents #' + tabId).addClass('active');
             });
         });
     };
@@ -477,7 +491,8 @@ function checkMobileDevice(){
     $(document).ready(function () {
         nbdVista.init();
 
-        $('.nbd-vista .v-tabs').nbTab();
+        $('.nbd-vista .v-tabs').nbVTab();
+        $('.nbd-vista .nbd-main-tab').nbdTab();
         $('.nbd-vista .v-dropdown').nbDropdown();
         $('.nbd-vista .tab-scroll').perfectScrollbar();
 
@@ -495,17 +510,20 @@ function checkMobileDevice(){
             $('.nbd-vista .v-popup-terms').nbShowPopup();
         });
         $('.nbd-color-palette .color-palette-add').on('click', function () {
-            if ($('.nbd-text-color-picker').hasClass('active')) {
-                $('.nbd-text-color-picker').removeClass('active');
+            var $colorPalette = $(this).closest('.nbd-color-palette');
+            var $colorPicker = $colorPalette.find('.nbd-text-color-picker');
+            if ($colorPicker.hasClass('active')) {
+                $colorPicker.removeClass('active');
             }else {
-                $('.nbd-text-color-picker').addClass('active');
+                $colorPicker.addClass('active');
             }
-            $('.nbd-text-color-picker').nbClickOutSite({
+            $colorPicker.nbClickOutSite({
                 'clickE' : $(this),
                 'activeE' : null,
                 'removeClass' : 'active'
             });
         });
+
 
     });
 })(jQuery);

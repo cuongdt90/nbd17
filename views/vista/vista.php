@@ -1,4 +1,14 @@
 <?php
+
+$hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
+$lang_code = str_replace('-', '_', get_locale());
+$locale = substr($lang_code, 0, 2);
+$product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
+$variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id );
+$default_font = nbd_get_default_font();
+$_default_font = str_replace(" ", "+", json_decode($default_font)->alias);
+
+
 $lang_code = str_replace('-', '_', get_locale());
 $product_id = get_the_ID();
 $enableColor = nbdesigner_get_option('nbdesigner_show_all_color');
@@ -49,6 +59,7 @@ if ( function_exists( 'icl_get_home_url' ) ) {
         art_url    :   "<?php echo NBDESIGNER_ART_URL; ?>",
         is_designer :  <?php if(current_user_can('edit_nbd_template')) echo 1; else echo 0; ?>,
         assets_url  :   "<?php echo NBDESIGNER_PLUGIN_URL . 'assets/'; ?>",
+        plg_url  :   "<?php echo NBDESIGNER_PLUGIN_URL; ?>",
         ajax_url    : "<?php echo admin_url('admin-ajax.php'); ?>",
         nonce   :   "<?php echo wp_create_nonce('save-design'); ?>",
         nonce_get   :   "<?php echo wp_create_nonce('nbdesigner-get-data'); ?>",
@@ -73,6 +84,16 @@ if ( function_exists( 'icl_get_home_url' ) ) {
         login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",
         list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
         product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>,
+        fonts: <?php echo nbd_get_fonts(); ?>,
+        subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
+        fbID: "<?php echo $fbID; ?>",
+        nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
+        enable_dropbox: false,
+        default_font: <?php echo $default_font; ?>,
+        templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>,
+        nbdlangs: {
+            alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>"
+        }
     };
     NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
     <?php
