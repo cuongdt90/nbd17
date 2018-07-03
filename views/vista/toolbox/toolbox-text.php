@@ -5,8 +5,9 @@
     <div class="main-box">
         <div class="toolbox-row toolbox-first toolbox-font-family">
             <div class="v-dropdown">
-                <button class="v-btn btn-font-family v-btn-dropdown" title="Font family"><span>Roboto</span><i
-                        class="nbd-icon-vista nbd-icon-vista-expand-more"></i></button>
+                <button class="v-btn btn-font-family v-btn-dropdown" title="Font family">
+                    <span>Roboto</span>
+                    <i class="nbd-icon-vista nbd-icon-vista-expand-more"></i></button>
                 <div class="v-dropdown-menu">
                     <ul class="items tab-scroll">
                         <li class="item">
