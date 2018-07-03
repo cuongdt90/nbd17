@@ -751,9 +751,16 @@
             .nbd-tip .icon-nbd-clear {
                 cursor: pointer;
                 position: absolute;
-                font-size: 24px;
+                font-size: 20px;
                 top: 0;
                 right: 0;
+            }
+            .nbd-sidebar #tab-photo .result-loaded .content-items div[data-type=image-upload] .form-upload i {
+                cursor: pointer;
+            }
+            .nbd-round {
+                border-radius: 50%;
+                overflow: hidden;
             }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {

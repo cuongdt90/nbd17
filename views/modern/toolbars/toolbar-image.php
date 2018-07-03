@@ -8,7 +8,7 @@
                     <li class="filter-scroll scrollLeft disable"><i class="icon-nbd icon-nbd-arrow-drop-down"></i></li>
                     <li class="container-presets">
                         <ul class="main-presets">
-                            <li class="preset active">
+                            <li class="preset active" ng-click="filterImage()">
                                 <div class="image">
                                     <div class="inner">
                                         <img src="<?php echo NBDESIGNER_PLUGIN_URL;?>assets/images/background/49.png"  alt="imge filter">

@@ -110,6 +110,7 @@
                                     <div nbd-drag="img.url" extenal="false" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url, false, img.ilr)" ng-repeat="img in resource.upload.data track by $index" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
                                 </div>                             
                             </div>
+                            <div style="text-align: left;margin-top: 15px;margin-left: 2px;"><span style="cursor: pointer;font-style: italic;font-size: 11px;" ng-click="_localStorage.delete('nbduploaded')"><?php _e('Clear all uploaded images','web-to-print-online-designer'); ?></span></div>
                         </div>    
                     </div>
                     <div class="content-item type-url" data-type="image-url">
