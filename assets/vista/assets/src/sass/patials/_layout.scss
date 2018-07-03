@@ -1,4 +1,7 @@
 .v-layout{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: calc(100% - 260px);
   @media screen and (max-width: 767px){
     position: relative;
@@ -25,4 +28,5 @@
     }
   }
   @import "../common/toolbox";
+  @import "stages";
 }

@@ -45,23 +45,8 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'version'   => '1.0.0',
                         'depends'  => array('jquery')
                     ),
-                    'perfect-scrollbar' => array(
-                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/perfect-scrollbar.min.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
-                    'images-loaded' => array(
-                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/imagesloaded.min.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
-                    'masonry' => array(
-                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/masonry.min.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
                     'angular' => array(
-                        'link' => NBDESIGNER_PLUGIN_URL .'assets/libs/angular.min.js',
+                        'link' => NBDESIGNER_PLUGIN_URL .'assets/libs/angular-1.6.9.min.js',
                         'version'   => '1.0.0',
                         'depends'  => array('jquery')
                     ),
@@ -82,14 +67,10 @@ if(!class_exists('Nbdesigner_Vista')) {
                     ),
                     'bundle-vista' => array(
                         'link' => NBDESIGNER_ASSETS_URL.'vista/assets/js/bundle-vista.min.js',
+//                        'link' => NBDESIGNER_PLUGIN_URL.'assets/js/bundle-modern.unmin.js',
                         'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
-                    'add-to-cart' => array(
-                        'link' => NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
+                        'depends'  => array('jquery', 'underscore')
+                    )
 
                 );
                 $css_libs = array(

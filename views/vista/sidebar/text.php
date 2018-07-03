@@ -1,7 +1,7 @@
 <div ng-if="settings['nbdesigner_enable_text'] == 'yes'" id="tab-text" class="v-tab-content">
     <span class="v-title">Text</span>
     <div class="v-action">
-        <button class="v-btn waves-effect" style="width: 100%">Add New Text Field</button>
+        <button class="v-btn waves-effect" ng-click="addText('Heading','heading')" style="width: 100%">Add New Text Field</button>
     </div>
     <div class="v-content" data-action="yes">
         <div class="tab-scroll">
