@@ -2974,6 +2974,7 @@ img.pattern_img {
     padding: 0 15px;
     cursor: pointer;
     color: #394264;
+    z-index: 5;
 }
 .toggle-upload:hover {
     box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);    

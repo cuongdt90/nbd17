@@ -29,7 +29,7 @@ body.nbd-prevent-scroll {
     cursor: pointer;   
     font-size: 20px;
     line-height: 30px;
-    z-index: 2;
+    z-index: 3;
 }
 #triggerDesign {
     cursor: pointer;

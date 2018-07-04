@@ -9,20 +9,22 @@ jQuery(document).ready(function () {
     var nbd_append_iframe = false;
     var showDesignFrame = function(){
         jQuery('body').addClass('nbd-prevent-scroll');
-        if( !nbd_append_iframe ){
-            var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
-            if( jQuery('input[name="variation_id"]').length ){
-                iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+        if( nbd_layout == 'c' ){
+            if( !nbd_append_iframe ){
+                var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
+                if( jQuery('input[name="variation_id"]').length ){
+                    iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+                }
+                jQuery('#nbd-custom-design-wrap').prepend('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');
+                nbd_append_iframe = true;
             }
-            jQuery('#container-online-designer').append('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');
-            nbd_append_iframe = true;
         }
         jQuery('#container-online-designer').addClass('show');
         jQuery('#container-online-designer').stop().animate({
             top: 0,
             opacity: 1,
             bottom: 0
-        }, 500);        
+        }, 500);
     };
     jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': '100%'});
     jQuery('#triggerDesign').on('click', function () {
@@ -31,6 +33,24 @@ jQuery(document).ready(function () {
     jQuery('#closeFrameDesign').on('click', function () {
         hideDesignFrame();
     });
+    jQuery('#nbd__content__overlay').on('click', function (event) {
+       if(event.target.id == 'nbd__content__overlay'){
+           hideDesignFrame();
+       }
+    });
+    jQuery('#open_m-custom-design-wrap').on('click', function (event) {
+        jQuery('.nbd-popup-wrap').addClass('is-hidden');
+        var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
+        if( jQuery('input[name="variation_id"]').length ){
+            iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+        }
+        jQuery('#nbd-m-custom-design-wrap').prepend('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');        
+        jQuery('#nbd-m-custom-design-wrap').addClass('is-visible');
+    });    
+    jQuery('#open_m-upload-design-wrap').on('click', function (event) {
+        jQuery('.nbd-popup-wrap').addClass('is-hidden');
+        jQuery('#nbd-m-upload-design-wrap').addClass('is-visible');
+    });  
     hideDesignFrame = function (mes) {
         jQuery('body').removeClass('nbd-prevent-scroll');
         var _h = -jQuery(window).height();
