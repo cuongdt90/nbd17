@@ -209,6 +209,7 @@ function checkMobileDevice(){
             $item.on('click', function () {
                 var indexItem = $(this).index();
                 var indexItemRow = parseInt(indexItem / opts.itemInRow) + 1;
+                var itemName = $(this).find('.item-name').text();
                 var widthItem = $(this).outerWidth();
                 var dataType = $(this).attr('data-type');
                 var dataApi = $(this).attr('data-api');
@@ -217,7 +218,7 @@ function checkMobileDevice(){
                     $('.nbd-vista .v-popup-webcam').nbShowPopup();
                     return;
                 }
-
+                $infoSupport.find('span').text(itemName);
                 $mainItems.find('.pointer').css({
                     'left': ((widthItem) * (indexItem % opts.itemInRow + 1) - widthItem / 2)  + 'px'
                 });
@@ -250,7 +251,7 @@ function checkMobileDevice(){
                         $resultLoaded.removeClass('loaded');
                         $item.show();
                     }
-                    return false;
+                    // return false;
                 }else {
                     if (!$mainItems.hasClass('active-expanded')) {
                         $(this).siblings().css({
@@ -260,7 +261,7 @@ function checkMobileDevice(){
                         $(nextAllItem).each(function () {
                             $(this).hide();
                         });
-                        $infoSupport.find('span').empty().text($(this).find('.item-info').text());
+                        // $infoSupport.find('span').empty().text($(this).find('.item-info').text());
 
                         // var src = 'https://media-public.canva.com/MABrm9_5-j0/3/thumbnail_large.jpg';
                         // var item = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>'
@@ -335,22 +336,22 @@ function checkMobileDevice(){
                         //$loadingGif.hide();
                     }
 
-                    // Event click in close result
-                    $infoSupport.find('.close-result-loaded').on('click', function () {
-                        $infoSupport.removeClass('nbd-show');
-                        $mainItems.removeClass('active-expanded');
-                        // $resultLoaded.find('.nbdesigner-gallery').empty();
-                        $resultLoaded.hide();
-                        $resultLoaded.removeClass('loaded');
-                        $galleryItem.hide();
-                        $item.show();
-                        $loadingGif.hide();
-                        $item.show().css({'opacity' : '1'});
-                        $tabScroll.scrollTop(0);
-                    });
-
                     // return false;
                 }
+
+                // Event click in close result
+                $infoSupport.find('.close-result-loaded').on('click', function () {
+                    $infoSupport.removeClass('nbd-show');
+                    $mainItems.removeClass('active-expanded');
+                    // $resultLoaded.find('.nbdesigner-gallery').empty();
+                    $resultLoaded.hide();
+                    $resultLoaded.removeClass('loaded');
+                    $galleryItem.hide();
+                    $item.show();
+                    $loadingGif.hide();
+                    $item.show().css({'opacity' : '1'});
+                    $tabScroll.scrollTop(0);
+                });
 
             });
         });
@@ -420,6 +421,10 @@ function checkMobileDevice(){
     $.fn.nbToasts = function (text) {
         return this.each(function () {
 
+            if ($(this).find('.toast').length > 0) {
+                return;
+            }
+
             var htmlToast = '<div class="animate300 animated nbSlideInUp toast">' +
                                 '<span>'+ text +'</span>' +
                                 '<i class="nbd-icon-vista nbd-icon-vista-clear nbd-close-toast"></i>' +
@@ -439,7 +444,7 @@ function checkMobileDevice(){
                 $toast.bind('webkitAnimationEnd oanimationend msAnimationEnd animationend', function () {
                     $toast.remove();
                 });
-            }, 10000);
+            }, 3000);
         });
     };
 
