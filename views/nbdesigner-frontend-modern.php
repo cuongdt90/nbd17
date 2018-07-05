@@ -647,15 +647,27 @@
                 height: auto;
             }
             .nbd-templates .items .item .main-item {
-                border: 1px solid #ebebeb;
                 cursor: pointer;
+                -webkit-transform: all 0.4s;
+                -moz-transform: all 0.4s;
+                transform: all 0.4s;
+            }  
+            .nbd-templates .items .item .main-item:hover {
+                -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
+                box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
             }            
             .nbd-templates .items .item {
                 width: 50%;
                 box-sizing: border-box;
                 display: inline-block;
-                padding: 10px;
-            }    
+                padding: 10px 10px 0 10px;
+            }   
+            .nbd-templates .items .item:nth-child(odd) {
+                padding-right: 5px;
+            }            
+            .nbd-templates .items .item:nth-child(even) {
+                padding-left: 5px;
+            }
             .nbd-mode-1 .nbd-main-bar .logo {
                 visibility: hidden;
             }
@@ -761,6 +773,22 @@
             .nbd-round {
                 border-radius: 50%;
                 overflow: hidden;
+            }
+            .nbd-mode-1 .nbd-main-bar .menu-mobile.icon-nbd-menu {
+                padding-left: 45px;
+            }
+            .nbd-sidebar #tab-product-template .tab-main {
+                margin-top: 10px;
+                height: calc(100% - 10px);
+            }    
+            .nbd-template-head{
+                margin: 0;
+                padding: 10px;
+                text-align: left;
+                font-size: 23px;                
+            }
+            .tab-scroll .ps__scrollbar-y-rail {
+                display: none;
             }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
@@ -948,9 +976,7 @@
         <?php else: ?>
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular-1.6.9.min.js'; ?>"></script>
         <?php endif; ?>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/fabric233.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.unmin.js'; ?>"></script>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/add-to-cart-variation.js'; ?>"></script>       
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.min.js'; ?>"></script>   
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
     </body>

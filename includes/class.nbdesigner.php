@@ -3,7 +3,7 @@ if (!function_exists('add_action')) {
     echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
     exit;
 }
-use setasign\Fpdi;
+//use setasign\Fpdi;
 class Nbdesigner_Plugin {
     public $textdomain;
     public $plugin_id;
@@ -674,7 +674,7 @@ class Nbdesigner_Plugin {
             'color' => '<span class="dashicons dashicons-art"></span> '. __('Colors', 'web-to-print-online-designer'),         
             'upload' => '<span class="dashicons dashicons-upload"></span> '. __('Upload design', 'web-to-print-online-designer'),         
             'output' => '<span class="dashicons dashicons-download"></span> '. __('Output', 'web-to-print-online-designer'),         
-            'libraries' => '<span class="dashicons dashicons-paperclip"></span> '. __('Libraries', 'web-to-print-online-designer')         
+            //'libraries' => '<span class="dashicons dashicons-paperclip"></span> '. __('Libraries', 'web-to-print-online-designer')         
         ));
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/general.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/frontend.php');
@@ -716,10 +716,10 @@ class Nbdesigner_Plugin {
             'output' => array(
                 'pdf-settings' =>  __('PDF settings', 'web-to-print-online-designer')
             ),
-            'libraries' => array(
-                'js-settings' =>  __('Javacript settings', 'web-to-print-online-designer'),
-                'css-settings' =>  __('CSS settings', 'web-to-print-online-designer')
-            )             
+//            'libraries' => array(
+//                'js-settings' =>  __('Javacript settings', 'web-to-print-online-designer'),
+//                'css-settings' =>  __('CSS settings', 'web-to-print-online-designer')
+//            )             
         ));  
         $Nbdesigner_Settings->add_blocks($blocks);
         $Nbdesigner_Settings->add_blocks_description(array());
@@ -3095,6 +3095,7 @@ class Nbdesigner_Plugin {
                     foreach ($files as $file) {
                         $ext = pathinfo( $file, PATHINFO_EXTENSION );
                         $src = Nbdesigner_IO::get_thumb_file( pathinfo( $file, PATHINFO_EXTENSION ), '');
+                        $file_url = Nbdesigner_IO::wp_convert_path_to_url( $file );
                         if(  $create_preview == 'yes' && ( $ext == 'png' || $ext == 'jpg' || $ext == 'pdf' ) ){
                             $dir = pathinfo( $file, PATHINFO_DIRNAME );
                             $filename = pathinfo( $file, PATHINFO_BASENAME );
@@ -3108,7 +3109,7 @@ class Nbdesigner_Plugin {
                         }else {
                             $src = Nbdesigner_IO::get_thumb_file( $ext, '' );
                         }					                        
-                        $html .= '<div style="width: 120px;display: inline-block; margin: 0 15px 15px 0; text-align: center; padding: 10px; border: 1px solid #ddd;"><img style="max-width: 100%;" src="' . $src . '"/><p style="width: 100%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: 30px; line-height: 30px;">'. basename($file).'</p></div>';
+                        $html .= '<div style="width: 120px;display: inline-block; margin: 0 15px 15px 0; text-align: center; padding: 10px; border: 1px solid #ddd;"><a target="_blank" href='.$file_url.'><img style="max-width: 100%;" src="' . $src . '"/></a><p style="width: 100%; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: 30px; line-height: 30px;">'. basename($file).'</p></div>';
                     }
                     $link_reup_design = add_query_arg(
                         array(
@@ -4645,8 +4646,9 @@ class Nbdesigner_Plugin {
                     $orientation = "P";
                 }
             }  
-            $pdf = new Fpdi\TcpdfFpdi($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
-            //$pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
+            /* In case edit exist pdf file */
+            //$pdf = new Fpdi\TcpdfFpdi($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
+            $pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
             $pdf->SetMargins($mLeft, $mTop, $mRight, true);     
             $pdf->SetCreator( get_site_url() );
             $pdf->SetTitle(get_bloginfo( 'name' ));
@@ -4694,8 +4696,8 @@ class Nbdesigner_Plugin {
                 }
             }  
             if(!$force){
-                $pdf = new Fpdi\TcpdfFpdi($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
-                //$pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
+                //$pdf = new Fpdi\TcpdfFpdi($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
+                $pdf = new TCPDF($orientation, 'mm', $pdf_format, true, 'UTF-8', false);
                 $pdf->SetMargins($mLeft, $mTop, $mRight, true);     
                 $pdf->SetCreator( get_site_url() );
                 $pdf->SetTitle(get_bloginfo( 'name' ));

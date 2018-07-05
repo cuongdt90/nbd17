@@ -19,14 +19,14 @@ jQuery(document).ready(function () {
                 nbd_append_iframe = true;
             }
         }
-        jQuery('#container-online-designer').addClass('show');
-        jQuery('#container-online-designer').stop().animate({
-            top: 0,
-            opacity: 1,
-            bottom: 0
-        }, 500);
+        jQuery('#container-online-designer').addClass('is-visible');
+//        jQuery('#container-online-designer').stop().animate({
+//            top: 0,
+//            opacity: 1,
+//            bottom: 0
+//        }, 500);
     };
-    jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': '100%'});
+    //jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': '100%'});
     jQuery('#triggerDesign').on('click', function () {
         showDesignFrame();
     });
@@ -53,10 +53,11 @@ jQuery(document).ready(function () {
     });  
     hideDesignFrame = function (mes) {
         jQuery('body').removeClass('nbd-prevent-scroll');
-        var _h = -jQuery(window).height();
-        jQuery('#container-online-designer').stop().animate({
-            top: _h
-        }, 500);
+//        var _h = -jQuery(window).height();
+//        jQuery('#container-online-designer').stop().animate({
+//            top: _h
+//        }, 500);
+        jQuery('#container-online-designer').removeClass('is-visible');
         if (mes != null) {
             setTimeout(function () {
                 alert(mes);

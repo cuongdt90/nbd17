@@ -5,7 +5,7 @@
                 <div class="stage-main" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
                     <div class="stage-background">
-                        <img ng-style="{'background-color': stage.config.bgColor}" ng-if="stage.config.bgType == 'image'" ng-src='{{stage.config.bgImage}}'/>
+                        <img style="width: 100%; height: 100%;" ng-style="{'background-color': stage.config.bgColor}" ng-if="stage.config.bgType == 'image'" ng-src='{{stage.config.bgImage}}'/>
                     </div>
                     <div class="design-wrap" ng-style="{'width' : calcStyle(stage.config.width * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'height' : calcStyle(stage.config.height * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
@@ -55,7 +55,9 @@
                                 <div class="snapline h-snapline" ng-style="stages[currentStage].states.snaplines.heb"></div>
                             </div>                    
                         </div>
-                        <div class="stage-overlay"></div>				
+                        <div class="stage-overlay">
+                            <img style="width: 100%; height: 100%;" ng-if="stage.config.show_overlay == '1'" ng-src='{{stage.config.img_overlay}}'/>
+                        </div>				
                         <div class="stage-guideline">
                             <div style="position: relative; width: 100%; height: 100%;">
                                 <div ng-class="stage.config.area_design_type == '2' ? 'nbd-round' : ''" ng-show="settings.bleedLine" class="bleed-line" ng-style="{'width' : calcStyle(stage.states.scaleRange[stage.states.currentScaleIndex].ratio * (stage.config.width - 2 * stage.config.bleed_lr)),

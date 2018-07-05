@@ -60,26 +60,26 @@ if( !class_exists('Nbdesigner_Appearance_Settings') ) {
                             'no' => __('No', 'web-to-print-online-designer')
                         ) 
                     ),
-                    array(
-                        'title' => __('Show table pricing', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_position_pricing_in_detail_page',
-                        'description' => __( 'Choose position to show table pricing.', 'web-to-print-online-designer'),
-                        'default'	=> '1',
-                        'type' 		=> 'radio',
-                        'options'   => array(
-                            '1' => __('Pricing tab', 'web-to-print-online-designer'),
-                            '2' => __('Short description', 'web-to-print-online-designer')
-                        ) 
-                    ),
-                    array(
-                        'title' => __('Table pricing description', 'web-to-print-online-designer'),
-                        'id' => 'nbdesigner_quantity_pricing_description',
-                        'description' => __( 'Choose position to show table pricing.', 'web-to-print-online-designer'),
-                        'default'	=> 'Table pricing description',
-                        'type' 		=> 'textarea',
-                        'description'      => __('HTML Tags Supported', 'web-to-print-online-designer'),
-                        'css'         => 'width: 50em; height: 15em;'
-                    )                     
+//                    array(
+//                        'title' => __('Show table pricing', 'web-to-print-online-designer'),
+//                        'id' => 'nbdesigner_position_pricing_in_detail_page',
+//                        'description' => __( 'Choose position to show table pricing.', 'web-to-print-online-designer'),
+//                        'default'	=> '1',
+//                        'type' 		=> 'radio',
+//                        'options'   => array(
+//                            '1' => __('Pricing tab', 'web-to-print-online-designer'),
+//                            '2' => __('Short description', 'web-to-print-online-designer')
+//                        ) 
+//                    ),
+//                    array(
+//                        'title' => __('Table pricing description', 'web-to-print-online-designer'),
+//                        'id' => 'nbdesigner_quantity_pricing_description',
+//                        'description' => __( 'Choose position to show table pricing.', 'web-to-print-online-designer'),
+//                        'default'	=> 'Table pricing description',
+//                        'type' 		=> 'textarea',
+//                        'description'      => __('HTML Tags Supported', 'web-to-print-online-designer'),
+//                        'css'         => 'width: 50em; height: 15em;'
+//                    )                     
                 ),
                 'category' => array( 
                     array(

@@ -16372,7 +16372,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
     toSVG: function(reviver) {
       var markup = this._createBaseSVGMarkup(), x = 0, y = 0,
           angle = (this.endAngle - this.startAngle) % ( 2 * pi);
-
+angle = angle > 2 * pi ? 0 : angle;
       if (angle === 0) {
         markup.push(
           '<circle ', this.getSvgId(),
