@@ -3,8 +3,4 @@
 <!--        <div class="main-stage" style="width: 400px; height: 400px; background-color: #ebebeb"></div>-->
 <!--    </div>-->
     <?php include 'stages.php'?>
-    <div class="v-toolbox">
-        <?php include 'toolbox/toolbox-text.php'?>
-        <?php include 'toolbox/toolbox-image.php'?>
-    </div>
 </div>

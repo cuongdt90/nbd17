@@ -131,17 +131,10 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-<!--                            <div class="content-item type-dropbox text-center" data-type="dropbox">-->
-<!--                                <a href="#" class="v-btn v-btn-dropbox">-->
-<!--                                    <i class="nbd-icon-vista nbd-icon-vista-dropbox-logo"></i>-->
-<!--                                    <span>Choose from Dropbox</span>-->
-<!--                                </a>-->
-<!--                            </div>-->
                             <div class="content-item type-webcam" data-type="webcam">
                                 <?php _e('webcam','web-to-print-online-designer'); ?>
                             </div>
                         </div>
-                        <!--                        <div class="nbdesigner-gallery" id="nbdesigner-gallery"></div>-->
                         <div class="nbdesigner-gallery" id="nbdesigner-gallery">
                             <div class="nbdesigner-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.photo.data" repeat-end="onEndRepeat('photo')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
                         </div>
