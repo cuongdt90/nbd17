@@ -646,6 +646,9 @@
             .nbd-templates .item .item-img {
                 height: auto;
             }
+            .nbd-templates .item .item-img img {
+                vertical-align: top;
+            }
             .nbd-templates .items .item .main-item {
                 cursor: pointer;
                 -webkit-transform: all 0.4s;

@@ -6,7 +6,7 @@
     <div class="tab-template show" id="tab-template">
         <!--            <i class="icon-nbd icon-nbd-fomat-highlight-off close-template"></i>-->
         <div class="tab-main tab-scroll">
-            <p class="nbd-template-head"><?php echo $_product->get_title(); ?> <?php _e('designs','web-to-print-online-designer'); ?></p>
+<!--            <p class="nbd-template-head"><?php echo $_product->get_title(); ?> <?php _e('designs','web-to-print-online-designer'); ?></p>-->
             <div class="nbd-templates">
                 <div class="main-items">
                     <div class="items" style="text-align: left;">

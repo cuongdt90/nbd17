@@ -36,7 +36,7 @@ nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
 nbd_define('NBDESIGNER_PLUGIN_URL', $nbd_plugin_dir_url);
 nbd_define('NBDESIGNER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 nbd_define('NBDESIGNER_PLUGIN_BASENAME', plugin_basename(__FILE__));
-nbd_define('NBDESIGNER_MODE_DEV', TRUE);
+nbd_define('NBDESIGNER_MODE_DEV', FALSE);
 nbd_define('NBDESIGNER_MODE_DEBUG', FALSE);
 nbd_define('NBDESIGNER_DATA_DIR', $basedir . '/nbdesigner');
 nbd_define('NBDESIGNER_DATA_URL', $baseurl . '/nbdesigner');
