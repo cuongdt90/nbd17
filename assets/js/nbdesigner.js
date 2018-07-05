@@ -113,25 +113,26 @@ jQuery(document).ready(function () {
         };    
     });
     /* Drag & Drop uplod file */
-        var dropArea = jQuery('label[for="nbd-file-upload"]'),
-        Input = jQuery('#nbd-file-upload');
-        _.each(['dragenter', 'dragover'], function(eventName, key) {
-            dropArea.on(eventName, highlight)
+        var nbdDropArea = jQuery('label[for="nbd-file-upload"]'),
+        nbdInput = jQuery('#nbd-file-upload');
+        var listFileUpload = [];
+        ['dragenter', 'dragover'].forEach(function(eventName){
+            nbdDropArea.on(eventName, highlight)
         });
-        _.each(['dragleave', 'drop'], function(eventName, key) {
-            dropArea.on(eventName, unhighlight)
+        ['dragleave', 'drop'].forEach(function(eventName){
+            nbdDropArea.on(eventName, unhighlight)
         });
         function highlight(e) {
             e.preventDefault();
             e.stopPropagation();
-            dropArea.addClass('highlight');
+            nbdDropArea.addClass('highlight');
         };
         function unhighlight(e) {
             e.preventDefault();
             e.stopPropagation();
-            dropArea.removeClass('highlight');
+            nbdDropArea.removeClass('highlight');
         };
-        dropArea.on('drop', handleDrop);
+        nbdDropArea.on('drop', handleDrop);
         function handleDrop(e) {
             if( jQuery('#accept-term').length && !jQuery('#accept-term').is(':checked') ) {
                 alert(NBDESIGNCONFIG.nbdlangs.alert_upload_term);
@@ -146,10 +147,10 @@ jQuery(document).ready(function () {
                 }                        
             }
         };
-        Input.on('click', function(e){
+        nbdInput.on('click', function(e){
             e.stopPropagation();
         });
-        Input.on('change', function(){
+        nbdInput.on('change', function(){
             handleFiles(this.files);
         });               
         function handleFiles(files) {
@@ -158,6 +159,10 @@ jQuery(document).ready(function () {
         function uploadFile(files){
             var file = files[0],
             type = file.type.toLowerCase();
+            if( listFileUpload.length > (nbd_number-1) ) {
+                alert('Exceed number of upload files!');
+                return;                  
+            }
             type = type == 'image/jpeg' ? 'image/jpg' : type;
             if( nbd_disallow_type != '' ){
                 var nbd_disallow_type_arr = nbd_disallow_type.toLowerCase().split(',');
@@ -193,9 +198,56 @@ jQuery(document).ready(function () {
             }else if(file.size < nbd_minsize * 1024 * 1024){
                 alert('Min file size' + nbd_minsize + " MB");
                 return;
-            };            
-            var ajaxData = new FormData;
-            
+            };
+            var formData = new FormData;
+            formData.append('file', file);
+            jQuery('.nbd-upload-loading').addClass('is-visible');
+            jQuery('.upload-zone label').addClass('is-loading');
+            jQuery('.nbd-m-upload-design-wrap').addClass('is-loading');
+            var first_time = listFileUpload.length > 0 ? 2 : 1;
+            var product_id = jQuery('[name="add-to-cart"]').attr('value');
+            var variation_id = jQuery('[name="variation_id"]').length > 0 ? jQuery('[name="variation_id"]').attr('value') : 0;
+            formData.append('first_time', first_time);
+            formData.append('action', 'nbd_upload_design_file');
+            formData.append('task', 'new');
+            formData.append('product_id', product_id);
+            formData.append('variation_id', variation_id);
+            formData.append('nonce', nbds_frontend.nonce);
+            jQuery.ajax({
+                url: nbds_frontend.url,
+                method: "POST",
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                complete: function() {
+                    jQuery('.nbd-upload-loading').removeClass('is-visible');
+                    jQuery('.upload-zone label').removeClass('is-loading');
+                    jQuery('.nbd-m-upload-design-wrap').removeClass('is-loading');
+                },                
+                success: function(data) {console.log(data);
+                    if( data.flag == 1 ){
+                        listFileUpload.push( { src : data.src, name : data.name } );
+                        buildPreviewUpload();
+                    }else{
+                        alert(data.mes);
+                    }
+                }
+            });
+        }
+        window.removeUploadFile = function(index){console.log(2225);
+            listFileUpload.splice(index, 1);
+            buildPreviewUpload();
+        };
+        function buildPreviewUpload(){
+            show_upload_thumb(listFileUpload);
+            NBDESIGNERPRODUCT.update_nbu_value(listFileUpload);            
+            var html = '';
+            listFileUpload.forEach(function(file, index){
+                html += '<div class="nbd-upload-items"><div class="nbd-upload-items-inner"><img src="'+file.src+'" class="shadow nbd-upload-item"/><p class="nbd-upload-item-title">'+file.name+'</p><span class="shadow" onclick="removeUploadFile('+index+')" >&times;</span></div></div>';
+            });
+            jQuery('.upload-design-preview').html(html);
         }
 });
 var share_image_url = '';

@@ -3659,6 +3659,7 @@ class Nbdesigner_Plugin {
         $allow_ext = explode(',', preg_replace('/\s+/', '', strtolower( $upload_setting['allow_type']) ) );      
         $disallow_ext = explode(',', preg_replace('/\s+/', '', strtolower( $upload_setting['disallow_type']) ) );
         $ext = strtolower( $this->nbdesigner_get_extension( $_FILES['file']["name"] ) );
+        $ext = $ext == 'jpeg' ? 'jpg' : $ext;
         $max_size = $upload_setting['maxsize'] * 1024 * 1024;
         $minsize = $upload_setting['minsize'] * 1024 * 1024;
         $checkSize = $checkExt = $checkDPI = false;
@@ -4240,8 +4241,13 @@ class Nbdesigner_Plugin {
         wp_die();
     }
     public function nbdesigner_editor_html(){
+        $task = (isset($_GET['task']) && $_GET['task'] != '' ) ? $_GET['task'] : '';
         $layout = nbdesigner_get_option('nbdesigner_design_layout');
-        $path = $layout == 'm' ? NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-modern.php' : NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-template.php';
+        if( $layout == 'm' && $task != 'reup'){
+            $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-modern.php';
+        } else {
+            $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-template.php';
+        }
         if(is_nbd_design_page()){
             include($path);exit();              
         }else{
