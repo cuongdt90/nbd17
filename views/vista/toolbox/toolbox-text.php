@@ -1,4 +1,4 @@
-<div class="v-toolbox-text" ng-show="stages[currentStage].states.isActiveLayer">
+<div class="v-toolbox-text" ng-show="stages[currentStage].states.isText">
     <div class="v-triangle">
         <div class="header-box">
             <span>Format Text</span>
@@ -7,48 +7,40 @@
             <div class="toolbox-row toolbox-first toolbox-font-family">
                 <div class="v-dropdown">
                     <button class="v-btn btn-font-family v-btn-dropdown" title="Font family">
-                        <span>Roboto</span>
+                        <span ng-style="{'font-family': stages[currentStage].states.text.font.alias}">{{stages[currentStage].states.text.font.name}}</span>
                         <i class="nbd-icon-vista nbd-icon-vista-expand-more"></i></button>
                     <div class="v-dropdown-menu">
-                        <ul class="items tab-scroll">
-                            <li class="item">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item">
-                                <span class="font-left">Khmer</span>
-                                <span class="font-right">កខគឃង</span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item active">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
-                            </li>
-                            <li class="item">
-                                <span class="font-left">Roboto</span>
-                                <span class="font-right"></span>
+
+                        <div class="toolbar-font-search">
+                            <input type="search" name="font-search" ng-model="resource.font.filter.search" placeholder="<?php _e('Search in','web-to-print-online-designer'); ?> {{resource.font.data.length}} <?php _e('fonts','web-to-print-online-designer'); ?>"/>
+                            <i ng-show="resource.font.filter.search.length > 0" ng-click="resource.font.filter.search = ''" class="nbd-icon-vista nbd-icon-vista-clear"></i>
+                        </div>
+
+                        <ul class="items tab-scroll"
+                            id="toolbar-font-familly-dropdown"
+                            nbd-scroll="scrollLoadMore(container, type)"
+                            data-container="#toolbar-font-familly-dropdown"
+                            data-type="font" data-offset="40">
+                            <div class="toolbar-menu-header">
+                                <div class="toolbar-header-line"></div>
+                                <div class="toolbar-separator">All Fonts</div>
+                                <div class="toolbar-header-line"></div>
+                            </div>
+                            <li class="item"
+                                ng-class="font.alias == stages[currentStage].states.text.fontFamily ? 'active' : ''"
+                                ng-click="setTextAttribute('fontFamily', font.alias)"
+                                ng-repeat="font in resource.font.filteredFonts"
+                                repeat-end="onEndRepeat('font')"
+                                data-font="font"
+                                font-on-load
+                                load-font-fail-action="loadFontFailAction(font)"
+                                data-preview="settings.subsets[font.subset]['preview_text']" >
+                                <span class="font-left"
+                                  style="font-family: '{{font.alias}}',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif; font-size: 14px"
+                                >
+                                    {{font.name}}
+                                </span>
+                                <span class="font-right" ng-if="['all', 'latin', 'latin-ext', 'vietnamese'].indexOf(font.subset) < 0">{{settings.subsets[font.subset]['preview_text']}}</span>
                                 <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
                             </li>
                         </ul>

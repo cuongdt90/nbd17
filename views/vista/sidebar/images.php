@@ -3,19 +3,31 @@
 ?>
 <div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="tab-photo" class="v-tab-content" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
     <span class="v-title">Image</span>
+    <div class="nbd-search">
+        <input ng-class="(resource.personal.status || !resource.photo.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getPhoto(resource.photo.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.photo.photoSearch"/>
+        <i class="nbd-icon-vista nbd-icon-vista-search"></i>
+    </div>
     <div class="v-content">
         <div class="tab-scroll">
             <div class="main-scrollbar">
                 <div class="v-elements">
                     <div class="main-items">
                         <div class="items">
-                            <div class="item" data-type="image-upload" data-api="false">
+                            <div class="item"
+                                 ng-click="onClickTab('upload', 'photo')"
+                                 ng-if="settings['nbdesigner_enable_upload_image'] == 'yes'"
+                                 data-type="image-upload"
+                                 data-api="false">
                                 <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-file-upload"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Image upload"><?php _e('Image Upload','web-to-print-online-designer'); ?></span>
                                 </div>
                             </div>
-                            <div ng-if="settings['nbdesigner_enable_image_url'] == 'yes'" class="item" data-type="image-url" data-api="false">
+                            <div ng-if="settings['nbdesigner_enable_image_url'] == 'yes'"
+                                 ng-click="onClickTab('url', 'photo')"
+                                 class="item"
+                                 data-type="image-url"
+                                 data-api="false">
                                 <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-attachment"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Image url"><?php _e('Image url','web-to-print-online-designer'); ?></span>
@@ -91,9 +103,19 @@
 
                                     <div id="nbd-upload-wrap">
                                         <div class="mansory-wrap">
-                                            <div nbd-drag="img.url" extenal="false" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url, false, img.ilr)" ng-repeat="img in resource.upload.data track by $index" repeat-end="onEndRepeat('upload')"><img ng-src="{{img.url}}"><span class="photo-desc">{{img.des}}</span></div>
+                                            <div nbd-drag="img.url"
+                                                 extenal="false" type="image"
+                                                 class="mansory-item"
+                                                 ng-click="addImageFromUrl(img.url, false, img.ilr)"
+                                                 ng-repeat="img in resource.upload.data track by $index"
+                                                 repeat-end="onEndRepeat('upload')">
+                                                <img ng-src="{{img.url}}">
+                                                <span class="photo-desc">{{img.des}}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div style="text-align: left;margin-top: 15px;margin-left: 2px;"><span style="cursor: pointer;font-style: italic;font-size: 11px;" ng-click="_localStorage.delete('nbduploaded')"><?php _e('Clear all uploaded images','web-to-print-online-designer'); ?></span></div>
+
                                 </div>
 
                             </div>

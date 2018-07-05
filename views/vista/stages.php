@@ -4,10 +4,10 @@
             <div style="display: inline-block;position: relative; height: 100%">
                 <div class="stage-main" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
-                    <div class="stage-background" ng-style="{'background-color': stage.config.bgColor}">
+                    <div class="stage-background" style="background-color: #ebebeb">
                         <img style="" ng-if="stage.config.bgType == 'iimage'" ng-src='{{stage.config.bgImage}}'/>
                     </div>
-                    <div class="design-wrap" ng-style="{'width' : calcStyle(stage.config.width * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
+                    <div class="design-wrap" style="background-color: #fff" ng-style="{'width' : calcStyle(stage.config.width * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'height' : calcStyle(stage.config.height * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'top' : calcStyle(stage.config.top * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'left' : calcStyle(stage.config.left * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div class="v-toolbox">
+                    <div class="v-toolbox" ng-show="stages[currentStage].states.isActiveLayer">
                         <?php include 'toolbox/toolbox-text.php'?>
                         <?php include 'toolbox/toolbox-image.php'?>
                     </div>
@@ -83,7 +83,7 @@
                             <li><span style="font-size: 14px;">{{$index + 1}}/{{stages.length}}</span></li>
                             <li ng-class="$index == (stages.length - 1) ? 'disabled' : ''" ng-click="switchStage($index, 'next')"><i class="nbd-icon-vista nbd-icon-vista-arrow-upward rotate-180" title="<?php _e('Next Page','web-to-print-online-designer'); ?>"></i></li>
 <!--                            <li><i class="icon-nbd icon-nbd-content-copy" title="<?php _e('Copy Design','web-to-print-online-designer'); ?>"></i></li> -->
-                            <li><i class="nbd-icon-vista nbd-icon-vista-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
+                            <li><i class="nbd-icon-vista nbd-icon-vista-refresh click-reset-design" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
                         </ul>
                     </div>
                 </div>

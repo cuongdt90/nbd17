@@ -162,7 +162,6 @@
       height: calc(100% - 75px);
     }
   }
-
   .nbd-nav-tabs {
     display: flex;
     margin-bottom: 20px;
@@ -180,6 +179,30 @@
     }
     .v-title {
       margin-bottom: 0;
+    }
+  }
+  .nbd-search {
+    position: relative;
+    margin-bottom: 15px;
+    width: calc(100% - 5px);
+    input{
+      padding: 5px 35px 5px 10px;
+      width: 100%;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      outline: 0;
+      border: 1px solid #404762;
+      background-color: #fff;
+    }
+    i{
+      position: absolute;
+      font-size: 24px;
+      right: 10px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      color: #ccc;
     }
   }
 

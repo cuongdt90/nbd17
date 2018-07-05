@@ -511,6 +511,9 @@ function checkMobileDevice(){
             $('.nbd-vista .nbd-toasts').nbToasts('I am a toast');
             // $('.nbd-vista .v-popup-terms').nbShowPopup();
         });
+        $('.nbd-vista .click-reset-design').on('click', function () {
+            $('.nbd-vista .v-popup-select').nbShowPopup();
+        });
         $('.nbd-vista .nbd-term .term-read').on('click', function () {
             $('.nbd-vista .v-popup-terms').nbShowPopup();
         });

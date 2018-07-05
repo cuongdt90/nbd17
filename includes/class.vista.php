@@ -69,7 +69,7 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'link' => NBDESIGNER_ASSETS_URL.'vista/assets/js/bundle-vista.min.js',
 //                        'link' => NBDESIGNER_PLUGIN_URL.'assets/js/bundle-modern.unmin.js',
                         'version'   => '1.0.0',
-                        'depends'  => array('jquery', 'underscore')
+                        'depends'  => array('jquery', 'underscore', 'angular')
                     )
 
                 );

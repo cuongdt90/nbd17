@@ -1,5 +1,9 @@
 <div id="tab-element" class="v-tab-content v-more-toolbar" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
     <span class="v-title">More</span>
+    <div class="nbd-search">
+        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
+        <i class="nbd-icon-vista nbd-icon-vista-search"></i>
+    </div>
     <div class="v-content">
         <div class="tab-scroll">
             <div class="main-scrollbar">

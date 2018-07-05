@@ -1,4 +1,4 @@
-<div class="v-toolbox-image" style="display: none">
+<div class="v-toolbox-image" ng-show="stages[currentStage].states.isImage">
     <div class="v-triangle">
         <div class="header-box">
             <span>Image edit</span>
@@ -7,15 +7,15 @@
             <div class="toolbox-row toolbox-first">
                 <div class="toolbox-general">
                     <ul class="v-assets items">
-                        <li class="item">
+                        <li class="item" title="rotate" ng-click="rotateLayer('90cw')">
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-rotate-right"></i></div>
                             <span class="v-asset-title">rotate</span>
                         </li>
-                        <li class="item">
+                        <li class="item" title="reset">
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-refresh"></i></div>
                             <span class="v-asset-title">reset</span>
                         </li>
-                        <li class="item">
+                        <li class="item" title="remove">
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-clear"></i></div>
                             <span class="v-asset-title">remove</span>
                         </li>
