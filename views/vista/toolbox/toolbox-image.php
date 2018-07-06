@@ -15,7 +15,7 @@
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-refresh"></i></div>
                             <span class="v-asset-title">reset</span>
                         </li>
-                        <li class="item" title="remove">
+                        <li class="item" title="remove" ng-click="deleteLayers()">
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-clear"></i></div>
                             <span class="v-asset-title">remove</span>
                         </li>

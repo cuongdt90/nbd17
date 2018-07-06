@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'nbd-vista';
-  src:  url('fonts/nbd-vista.eot?r7jzl1');
-  src:  url('fonts/nbd-vista.eot?r7jzl1#iefix') format('embedded-opentype'),
-  url('fonts/nbd-vista.ttf?r7jzl1') format('truetype'),
-  url('fonts/nbd-vista.woff?r7jzl1') format('woff'),
-  url('fonts/nbd-vista.svg?r7jzl1#nbd-vista') format('svg');
+  src:  url('fonts/nbd-vista.eot?xrk0z7');
+  src:  url('fonts/nbd-vista.eot?xrk0z7#iefix') format('embedded-opentype'),
+  url('fonts/nbd-vista.ttf?xrk0z7') format('truetype'),
+  url('fonts/nbd-vista.woff?xrk0z7') format('woff'),
+  url('fonts/nbd-vista.svg?xrk0z7#nbd-vista') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.nbd-icon-vista-fullscreen:before {
+  content: "\e935";
+}
+.nbd-icon-vista-remove:before {
+  content: "\e933";
+}
+.nbd-icon-vista-add-black:before {
+  content: "\e934";
+}
 .nbd-icon-vista-search:before {
   content: "\e932";
 }

@@ -23,8 +23,14 @@
         </div>
         <div class="v-toolbar-item right-toolbar">
             <ul class="v-main-menu">
-                <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-undo"></i><span>undo</span></li>
-                <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-redo"></i><span>redo</span></li>
+                <li class="v-menu-item" ng-click="undo()" ng-class="stages[currentStage].states.isUndoable ? 'in' : 'nbd-disabled'">
+                    <i class="nbd-icon-vista nbd-icon-vista-undo"></i>
+                    <span>undo</span>
+                </li>
+                <li class="v-menu-item" ng-click="redo()" ng-class="stages[currentStage].states.isRedoable ? 'in' : 'nbd-disabled'">
+                    <i class="nbd-icon-vista nbd-icon-vista-redo"></i>
+                    <span>redo</span>
+                </li>
 <!--                <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>proof</span></li>-->
 <!--                                        <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-save"></i><span>save</span></li>-->
             </ul>

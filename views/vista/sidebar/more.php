@@ -10,7 +10,11 @@
                 <div class="v-elements">
                     <div class="main-items">
                         <div class="items">
-                            <div class="item" data-type="draw" data-api="false">
+                            <div class="item"
+                                 data-type="draw"
+                                 data-api="false"
+                                 ng-click="onClickTab('draw', 'element')"
+                                 ng-if="settings['nbdesigner_enable_draw'] == 'yes'">
                                 <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-drawing"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Draw"><?php _e('Draw','web-to-print-online-designer'); ?></span>
@@ -48,43 +52,98 @@
                         <div class="content-items">
                             <div class="content-item type-draw" data-type="draw">
                                 <div class="main-type">
-                                    <span class="heading-title"><?php _e('Drawing Mode','web-to-print-online-designer'); ?></span>
-                                    <ul class="v-ranges">
-                                        <li class="range range-brightness">
-                                            <label>Brightness</label>
-                                            <div class="main-track">
-                                                <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
-                                                <span class="range-track"></span>
-                                            </div>
-                                            <span class="value-display">50</span>
-                                        </li>
-                                        <li class="range range-brightness">
-                                            <label>Brightness</label>
-                                            <div class="main-track">
-                                                <input class="slide-input" type="range" step="1" min="0" max="100" value="50">
-                                                <span class="range-track"></span>
-                                            </div>
-                                            <span class="value-display">50</span>
-                                        </li>
-                                    </ul>
+                                    <span class="heading-title"><?php _e('Free Drawing Mode','web-to-print-online-designer'); ?></span>
                                     <div class="brush v-dropdown">
                                         <button class="v-btn v-btn-dropdown">
                                             Brush <i class="nbd-icon-vista nbd-icon-vista-arrow-drop-down"></i>
                                         </button>
                                         <div class="v-dropdown-menu" data-pos="left">
                                             <ul class="tab-scroll">
-                                                <li><span><?php _e('Pencil','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Circle','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Spray','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Pattern','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Horizontal line','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Vertical line','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Square','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Diamond','web-to-print-online-designer'); ?></span></li>
-                                                <li><span><?php _e('Textture','web-to-print-online-designer'); ?></span></li>
+                                                <li
+                                                    ng-class="resource.drawMode.brushType == 'Pencil' ? 'active' : ''"
+                                                    ng-click="resource.drawMode.brushType = 'Pencil';changeBush()">
+                                                    <span><?php _e('Pencil','web-to-print-online-designer'); ?></span>
+                                                </li>
+                                                <li
+                                                    ng-class="resource.drawMode.brushType == 'Circle' ? 'active' : ''"
+                                                    ng-click="resource.drawMode.brushType = 'Circle';changeBush()">
+                                                    <span><?php _e('Circle','web-to-print-online-designer'); ?></span>
+                                                </li>
+                                                <li
+                                                    ng-class="resource.drawMode.brushType == 'Spray' ? 'active' : ''"
+                                                    ng-click="resource.drawMode.brushType = 'Spray';changeBush()">
+                                                    <span><?php _e('Spray','web-to-print-online-designer'); ?></span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
+                                    <ul class="v-ranges">
+                                        <li class="range range-brightness">
+                                            <label>Brush Width</label>
+                                            <div class="main-track">
+                                                <input class="slide-input" type="range" step="1" min="1" max="100" value="50"
+                                                   ng-model="resource.drawMode.brushWidth"
+                                                   ng-change="changeBush()">
+                                                <span class="range-track"></span>
+                                            </div>
+                                            <span class="value-display">{{resource.drawMode.brushWidth}}</span>
+                                        </li>
+                                    </ul>
+
+                                    <div class="draw-color">
+                                        <div class="nbd-color-palette show">
+                                            <div class="nbd-color-palette-inner">
+                                                <div class="working-palette">
+                                                    <h3 class="color-palette-label">Set color</h3>
+                                                    <ul class="main-color-palette tab-scroll" style="max-height: 150px">
+                                                        <li class="color-palette-add" ng-style="{'background-color': currentColor}"></li>
+                                                        <li ng-repeat="color in listAddedColor track by $index" class="color-palette-item" data-color="{color}" title="{color}" ng-style="{'background-color': color}"></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="pinned-palette default-palette">
+                                                    <h3 class="color-palette-label">Default color</h3>
+                                                    <ul class="main-color-palette">
+                                                        <li class="color-palette-item ng-scope" data-color="#81d742" style="background: rgb(129, 215, 66);"></li>
+                                                        <li class="color-palette-item ng-scope" data-color="#1e73be" style="background: rgb(30, 115, 190);"></li>
+                                                        <li class="color-palette-item ng-scope" data-color="#dd3333" style="background: rgb(221, 51, 51);"></li>
+                                                        <li class="color-palette-item ng-scope" data-color="#8224e3" style="background: rgb(130, 36, 227);"></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="pinned-palette default-palette">
+                                                    <ul class="main-color-palette">
+                                                        <!--                                        <li ng-repeat="color in listAddedColor track by $index" class="color-palette-item" data-color="{color}" title="{color}" ng-style="{'background-color': color}"></li>-->
+                                                        <li class="color-palette-item" data-color="#333333" title="#333333"
+                                                            style="background-color: #333333;"></li>
+                                                        <li class="color-palette-item" data-color="#666666" title="#666666"
+                                                            style="background-color: #666666;"></li>
+                                                        <li class="color-palette-item" data-color="#a8a8a8" title="#a8a8a8"
+                                                            style="background-color: #a8a8a8;"></li>
+                                                        <li class="color-palette-item" data-color="#d9d9d9" title="#d9d9d9"
+                                                            style="background-color: #d9d9d9;"></li>
+                                                        <li class="color-palette-item" data-color="#ffffff" title="#ffffff"
+                                                            style="background-color: #ffffff;"></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="nbd-text-color-picker" id="nbd-text-color-picker">
+                                                    <spectrum-colorpicker
+                                                            ng-model="currentColor"
+                                                            options="{
+                                                                preferredFormat: 'hex',
+                                                                color: '#fff',
+                                                                flat: true,
+                                                                showButtons: false,
+                                                                showInput: true,
+                                                                containerClassName: 'nbd-sp'
+                                                            }">
+                                                    </spectrum-colorpicker>
+                                                    <div>
+                                                        <button class="v-btn" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="content-item type-shapes" data-type="shapes" id="nbd-shape-wrap">

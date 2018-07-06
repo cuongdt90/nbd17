@@ -1,0 +1,28 @@
+&.fullScreenMode {
+  .design-zone {
+    pointer-events: none;
+  }
+  .page-toolbar {
+    display: none;
+  }
+  .stage {
+    padding: 0;
+  }
+  .nbd-stages {
+    width: 100%;
+    background: #000;
+    .ps__scrollbar-x-rail, .ps__scrollbar-y-rail {
+      display: none;
+    }
+  }
+  .fullscreen-stage-nav {
+    display: inline-block;
+  }
+}
+
+.fullscreen-stage-nav {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  display: none;
+}

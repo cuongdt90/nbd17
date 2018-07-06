@@ -1,43 +1,49 @@
 @import "patials/icons";
-@import "patials/reset";
+.nbd-mode-vista {
+  &.nbd-onloading {
+    pointer-events: none;
+  }
+  @import "patials/full-screen";
+  .nbd-vista {
+    height: 580px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    box-sizing: border-box;
 
-.nbd-vista {
-  height: 580px;
-  margin-bottom: 30px;
-  overflow: hidden;
-  box-sizing: border-box;
+    @import "patials/reset";
+    @import "patials/color-variables";
 
-  @import "patials/color-variables";
+    // Library
+    @import "library/perfect-scrollbar";
+    @import "library/animate/index";
+    @import "library/spectrum";
+    @import "library/jquery-ui.min";
 
-  // Library
-  @import "library/perfect-scrollbar";
-  @import "library/animate/index";
-  @import "library/spectrum";
-  @import "library/jquery-ui.min";
+    // component
+    @import "component/button";
+    @import "component/dropdown";
+    @import "component/checkbox";
+    @import "component/ranges";
+    @import "component/nbd-tab";
 
-  // component
-  @import "component/button";
-  @import "component/dropdown";
-  @import "component/checkbox";
-  @import "component/ranges";
-  @import "component/nbd-tab";
-
-  // patials
-  @import "patials/global";
-  @import "patials/toolbar";
-  @import "patials/scrollbar";
-  @import "patials/popup";
-  @import "patials/context-menu";
-  @import "patials/warning";
-  @import "patials/toollock";
-  @import "patials/toasts";
-  @import "patials/loading";
-  @import "patials/spectrum";
-  @import "patials/loading-workflow";
-  .v-workspace {
-    height: 500px;
-    display: flex;
-    @import "patials/sidebar";
-    @import "patials/layout";
+    // patials
+    @import "patials/global";
+    @import "patials/toolbar";
+    @import "patials/scrollbar";
+    @import "patials/popup";
+    @import "patials/context-menu";
+    @import "patials/warning";
+    @import "patials/toollock";
+    @import "patials/toasts";
+    @import "patials/loading";
+    @import "patials/spectrum";
+    @import "patials/loading-workflow";
+    @import "patials/toolbar-zoom";
+    .v-workspace {
+      height: 500px;
+      display: flex;
+      @import "patials/sidebar";
+      @import "patials/layout";
+    }
   }
 }
