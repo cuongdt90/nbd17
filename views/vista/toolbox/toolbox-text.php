@@ -1,3 +1,4 @@
+<!--<div class="v-toolbox-text" style="transform: translateX(-50%);" ng-show="stages[currentStage].states.isText" ng-style="stages[currentStage].states.toolbarStyle">-->
 <div class="v-toolbox-text" ng-show="stages[currentStage].states.isText">
     <div class="v-triangle">
         <div class="header-box">
