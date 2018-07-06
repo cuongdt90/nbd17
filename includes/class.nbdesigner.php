@@ -398,6 +398,8 @@ class Nbdesigner_Plugin {
     } 
     public function nbdesigner_admin_enqueue_scripts($hook){   
         wp_register_style('nbd-general', NBDESIGNER_CSS_URL . 'nbd-general.css', array('dashicons'), NBDESIGNER_VERSION);
+        wp_register_script('angularjs', "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js", array('jquery'), '1.6.9');    
+        wp_register_script('fontfaceobserver', NBDESIGNER_PLUGIN_URL . 'assets/libs/fontfaceobserver.js', array(), '2.0.13');        
         wp_enqueue_style(array('nbd-general'));     
         if (($hook == 'post.php') || ($hook == 'post-new.php') || ($hook == 'toplevel_page_nbdesigner') ||
                 ($hook == 'nbdesigner_page_nbdesigner_manager_product' ) || ($hook == 'toplevel_page_nbdesigner_shoper') || ($hook == 'nbdesigner_page_nbdesigner_frontend_translate') ||
@@ -824,11 +826,8 @@ class Nbdesigner_Plugin {
         if (current_user_can('manage_nbd_tool')) {    
             add_submenu_page(
                     'nbdesigner', 'NBDesigner Tools', 'Tools', 'manage_nbd_tool', 'nbdesigner_tools', array($this, 'nbdesigner_tools')
-            );  
-            add_submenu_page(
-                    'nbdesigner', 'NBDesigner Analytics', 'Analytics', 'administrator', 'nbdesigner_analytics', array($this, 'nbdesigner_analytics')
-            );            
-        }
+            );          
+        }        
         do_action('nbd_menu');
         $remote = get_transient('nbd_upgrade_news_web-to-print-online-designer');
         if( $remote ){

@@ -41,8 +41,8 @@
                         <a href="<?php echo $val['url']; ?>" class="nbdesigner-product-link"><?php echo $val['img']; ?></a> 
                     </div>
                     <p class="nbdesigner-product-link">
-                        <!-- <a href="<?php echo $val['url'].'#nbdesigner_setting'; ?>" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a> -->
-                        <a href="javascript: void(0)" onclick="openProductConfig( '<?php _e('Edit product', 'web-to-print-online-designer'); ?>', '<?php echo $ajax_product; ?>' )" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a>
+                        <a href="<?php echo $val['url'].'#nbdesigner_setting'; ?>" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a>
+                        <!-- <a href="javascript: void(0)" onclick="openProductConfig( '<?php _e('Edit product', 'web-to-print-online-designer'); ?>', '<?php echo $ajax_product; ?>' )" title="<?php _e('Edit product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-edit"></span></a>-->
                         <a href="<?php echo get_permalink($val['id']); ?>" title="<?php _e('View product', 'web-to-print-online-designer'); ?>"><span class="dashicons dashicons-visibility"></span></a>
                         <?php 
                             $product = wc_get_product($id);
@@ -71,7 +71,7 @@
                                     <select onchange="changeLink(this)" style="padding: 0;">
                                     <?php foreach ($variations as $variation): ?>
                                         <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
-                                        <option value="0">Template apply for all variations</option>
+                                        <option value="0"><?php echo __("Template apply for all variations", 'web-to-print-online-designer'); ?></option>
                                     <?php endforeach; ?>
                                     </select>    
                                 </td>

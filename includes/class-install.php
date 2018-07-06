@@ -164,10 +164,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_mydesigns (
             Nbdesigner_IO::mkdir(NBDESIGNER_LOG_DIR);
             Nbdesigner_IO::mkdir(NBDESIGNER_CUSTOMER_DIR);
             Nbdesigner_IO::mkdir(K_PATH_FONTS);
-            copy(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/fonts/helvetica.php', K_PATH_FONTS. 'helvetica.php');
-            copy(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/fonts/tahoma.ctg.z', K_PATH_FONTS. 'tahoma.ctg.z');
-            copy(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/fonts/tahoma.php', K_PATH_FONTS. 'tahoma.php');
-            copy(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/fonts/tahoma.z', K_PATH_FONTS. 'tahoma.z');            
+            copy(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/fonts/helvetica.php', K_PATH_FONTS. 'helvetica.php');         
         }
     }
 }

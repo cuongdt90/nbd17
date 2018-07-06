@@ -12,7 +12,7 @@ Author URI: http://netbaseteam.com/
 License: GPLv2 or later
 Text Domain: web-to-print-online-designer
 Domain Path: /langs
-WC tested up to: 3.3.5
+WC tested up to: 3.4.3
 */
 
 if ( !function_exists( 'add_action' ) ) {
@@ -88,16 +88,11 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/table/class.product.templates.php
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-install.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.resource.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-updates.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-shortcodes.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-setup-wizard.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/admin-options.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/frontend-options.php');
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );
@@ -111,8 +106,6 @@ $nb_designer = new Nbdesigner_Plugin();
 $nb_designer->init();
 $nb_design_endpoint = new My_Design_Endpoint();
 $nb_design_endpoint->init();
-$nbd_studio = new Nbdesigner_Studio();
-$nbd_studio->init();
 $nb_compatibility = new Nbdesigner_Compatibility();
 $nb_compatibility->init();
 
