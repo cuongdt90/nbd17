@@ -40,17 +40,25 @@ jQuery(document).ready(function () {
     });
     jQuery('#open_m-custom-design-wrap').on('click', function (event) {
         jQuery('.nbd-popup-wrap').addClass('is-hidden');
-        var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
-        if( jQuery('input[name="variation_id"]').length ){
-            iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+        if( !nbd_append_iframe ){
+            var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
+            if( jQuery('input[name="variation_id"]').length ){
+                iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+            }
+            jQuery('#nbd-m-custom-design-wrap').prepend('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');        
+            nbd_append_iframe = true;
         }
-        jQuery('#nbd-m-custom-design-wrap').prepend('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');        
         jQuery('#nbd-m-custom-design-wrap').addClass('is-visible');
     });    
     jQuery('#open_m-upload-design-wrap').on('click', function (event) {
         jQuery('.nbd-popup-wrap').addClass('is-hidden');
         jQuery('#nbd-m-upload-design-wrap').addClass('is-visible');
     });  
+    backtoOption = function(){
+        jQuery('#nbd-m-upload-design-wrap').removeClass('is-visible');
+        jQuery('#nbd-m-custom-design-wrap').removeClass('is-visible');
+        jQuery('.nbd-popup-wrap').removeClass('is-hidden');
+    };
     hideDesignFrame = function (mes) {
         jQuery('body').removeClass('nbd-prevent-scroll');
 //        var _h = -jQuery(window).height();
@@ -58,6 +66,7 @@ jQuery(document).ready(function () {
 //            top: _h
 //        }, 500);
         jQuery('#container-online-designer').removeClass('is-visible');
+        backtoOption();
         if (mes != null) {
             setTimeout(function () {
                 alert(mes);
@@ -227,7 +236,7 @@ jQuery(document).ready(function () {
                     jQuery('.upload-zone label').removeClass('is-loading');
                     jQuery('.nbd-m-upload-design-wrap').removeClass('is-loading');
                 },                
-                success: function(data) {console.log(data);
+                success: function(data) {
                     if( data.flag == 1 ){
                         listFileUpload.push( { src : data.src, name : data.name } );
                         buildPreviewUpload();
