@@ -850,7 +850,8 @@
                 $is_wpml = 1;
                 $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
             };
-            $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');            
+            $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');    
+            $templates = nbd_get_resorce_templates($product_id, $variation_id);
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
@@ -898,7 +899,7 @@
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 enable_dropbox: false,
                 default_font: <?php echo $default_font; ?>,
-                templates: <?php echo json_encode(nbd_get_resorce_templates($product_id, $variation_id)); ?>,
+                templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {
                         alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>"
                     }

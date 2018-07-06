@@ -941,7 +941,8 @@ class Nbdesigner_Plugin {
             }else{
                 $page = 1;
                 if($number_pro > $limit) $products = array_slice($products, ($page-1)*$limit, $limit);	
-            }                
+            }    
+            $pro = array();
             foreach ($products as $product) {
                 $product_id = $product->ID;
                 $_product = wc_get_product( $product_id );
@@ -1272,7 +1273,7 @@ class Nbdesigner_Plugin {
         if (file_exists($fullname)) {
             $list = json_decode(file_get_contents($fullname));           
         } else {
-            $list = '';
+            $list = '[]';
             file_put_contents($fullname, $list);
         }
         return $list;

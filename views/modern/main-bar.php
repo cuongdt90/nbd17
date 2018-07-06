@@ -1,7 +1,7 @@
 <?php
 $custom_logo_id = get_theme_mod( 'custom_logo' );
 $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo-frontend.png';
+$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo.svg';
 $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 ?>
 <div class="nbd-main-bar">

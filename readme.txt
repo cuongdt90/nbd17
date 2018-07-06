@@ -116,7 +116,7 @@ The customer can easily design with power helpdesk.
 
 = 2.0.0 (2018, July 6) - Open beta =
 
-* Add - New design editor layout
+* Add - New design editor layout ( big update )
 * Add - Photo libraries: Pixaby, Unsplash
 * Add - Typography library
 * Add - Clipart libraries: Icons, Shapes
