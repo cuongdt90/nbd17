@@ -793,6 +793,11 @@
             .tab-scroll .ps__scrollbar-y-rail {
                 display: none;
             }
+            .nbd-main-bar .logo img {
+                min-width: 40px;
+                max-width: 140px;
+                width: unset;
+            }                 
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
