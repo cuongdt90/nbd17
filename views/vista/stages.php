@@ -69,12 +69,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="v-toolbox" ng-show="stages[currentStage].states.isActiveLayer">
-                        <?php include 'toolbox/toolbox-text.php'?>
-                        <?php include 'toolbox/toolbox-image.php'?>
-                    </div>
-
                 </div>
                 <div class="page-toolbar">
                     <div class="page-main">

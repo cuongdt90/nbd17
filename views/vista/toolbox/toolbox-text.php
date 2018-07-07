@@ -1,5 +1,5 @@
-<!--<div class="v-toolbox-text" style="transform: translateX(-50%);" ng-show="stages[currentStage].states.isText" ng-style="stages[currentStage].states.toolbarStyle">-->
-<div class="v-toolbox-text" ng-show="stages[currentStage].states.isText">
+<div class="v-toolbox-text" ng-show="stages[currentStage].states.isText || stages[currentStage].states.isGroup" style="transform: translateX(-50%)" ng-style="stages[currentStage].states.toolbarStyle">
+<!--<div class="v-toolbox-text" ng-show="stages[currentStage].states.isText">-->
     <div class="v-triangle">
         <div class="header-box">
             <span>Format Text</span>
@@ -144,7 +144,7 @@
                         <div class="v-dropdown-menu">
                             <div class="nbd-color-palette show">
                                 <div class="nbd-color-palette-inner">
-                                    <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
+                                    <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'" style="margin-bottom: 10px">
                                         <h3 class="color-palette-label">Set color</h3>
                                         <ul class="main-color-palette tab-scroll">
                                             <li class="color-palette-add" ng-style="{'background-color': currentColor}"></li>
@@ -160,7 +160,7 @@
                                     </div>
                                     <div class="pinned-palette default-palette">
                                         <h3 class="color-palette-label"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
-                                        <ul class="main-color-palette" ng-repeat="palette in resource.defaultPalette" style="margin-bottom: 15px;">
+                                        <ul class="main-color-palette tab-scroll" ng-repeat="palette in resource.defaultPalette" style="margin-bottom: 5px; max-height: 80px">
                                             <li ng-class="{'first-left': $first, 'last-right': $last, 'first-right': $index == 4,'last-left': $index == (palette.length - 5)}"
                                                 ng-repeat="color in palette track by $index"
                                                 ng-click="changeFill(color)"

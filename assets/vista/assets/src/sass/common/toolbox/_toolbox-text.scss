@@ -1,7 +1,7 @@
 .v-toolbox-text{
   position: absolute;
   top: 0;
-  right: 0;
+  //right: 0;
   border: 1px solid #ebebeb;
   min-width: 250px;
   border-radius: 2px;
@@ -131,7 +131,7 @@
     }
   }
   .toolbox-color-palette {
-      @import "../../component/color-palette";
+     @import "../../component/color-palette";
     .tab-scroll {
       max-height: 100px;
     }
