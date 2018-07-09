@@ -1,7 +1,7 @@
 <?php
 $custom_logo_id = get_theme_mod( 'custom_logo' );
 $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo-frontend.png';
+$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo.svg';
 $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 ?>
 <div class="nbd-main-bar">
@@ -42,7 +42,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                         <span><?php _e('Clear all design','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-E' | keyboardShortcut }}</small>
                     </li>
-                    <li ng-if="settings.nbdesigner_save_for_later == 'yes'" class="sub-menu-item flex space-between" ng-click="saveData('saveforlater')">
+                    <li ng-if="settings.nbdesigner_save_for_later == 'yes'" class="sub-menu-item flex space-between" ng-click="saveForLater()">
                         <span><?php _e('Save for later','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-S-S' | keyboardShortcut }}</small>
                     </li>                    
