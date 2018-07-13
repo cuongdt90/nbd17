@@ -34,17 +34,19 @@
                             </div>
                         </div>
                         <?php if( $task == 'create_template' ): ?>
-                        <p ng-click="loadTemplateCat()">Load library templates</p>
-                        <select ng-change="loadGlobalTemplate(templateCat)" ng-show="templateCats.length > 0" style="line-height: 30px; width: 200px; height: 30px;" class="process-select" ng-model="templateCat" id="category_template">
-                            <option ng-repeat="cat in templateCats" ng-value="{{cat.id}}"><span>{{cat.name}}</span></option>
-                        </select>
-                        <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(false, temp)">
-                            <div class="main-item">
-                                <div class="item-img">
-                                    <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
+                        <div>
+                            <p ng-click="loadTemplateCat()">Load library templates</p>
+                            <select ng-change="loadGlobalTemplate(templateCat)" ng-show="templateCats.length > 0" style="line-height: 30px; width: 200px; height: 30px;" class="process-select" ng-model="templateCat" id="category_template">
+                                <option ng-repeat="cat in templateCats" ng-value="{{cat.id}}"><span>{{cat.name}}</span></option>
+                            </select>
+                            <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(false, temp)">
+                                <div class="main-item">
+                                    <div class="item-img">
+                                        <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>        
                         <?php endif; ?>
                     </div>
                     <div class="pointer"></div>
