@@ -659,13 +659,15 @@ class My_Design_Endpoint {
         if( $user_id ) $sql .= " AND t.user_id = ".$user_id; 
         if( $cat ) {
             $products  = self::get_all_product_design_in_category( $cat );
-            if(is_array($products) ){
+            if(is_array($products) && count($products) ){
                 $list_product = '';
                 foreach ($products as $pro){
                     $list_product .= ','.$pro->ID;               
                 }
                 $list_product = ltrim($list_product, ',');
                 $sql .= " AND t.product_id IN ($list_product) "; 
+            }else {
+                return 0;
             }
         }        
         $count = $wpdb->get_var($sql);  
@@ -696,8 +698,8 @@ class My_Design_Endpoint {
                         'operator' => 'IN'
                     )                     
                 )
-            );  
-            $products = get_posts($args_query);   
+            );
+            $products = get_posts($args_query);            
             set_transient( 'nbd_design_products_cat_'.$cat_id , $products, DAY_IN_SECONDS );  
         } 
         return $products;    
@@ -714,13 +716,15 @@ class My_Design_Endpoint {
             $sql .= " AND t.product_id = ".$pid;
         }else if( $cat ) {
             $products  = self::get_all_product_design_in_category( $cat );
-            if(is_array($products) ){
+            if(is_array($products) && count($products) ){
                 $list_product = '';
                 foreach ($products as $pro){
                     $list_product .= ','.$pro->ID;               
                 }
                 $list_product = ltrim($list_product, ',');
                 $sql .= " AND t.product_id IN ($list_product) "; 
+            }else {
+                return array();
             }
         }        
         if($pid) $sql .= " AND t.product_id = ".$pid; 

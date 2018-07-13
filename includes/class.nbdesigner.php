@@ -4243,8 +4243,10 @@ class Nbdesigner_Plugin {
     }
     public function nbdesigner_editor_html(){
         $task = (isset($_GET['task']) && $_GET['task'] != '' ) ? $_GET['task'] : '';
+        $task2 = (isset($_GET['task2']) && $_GET['task2'] != '' ) ? $_GET['task2'] : '';
         $layout = nbdesigner_get_option('nbdesigner_design_layout');
-        if( $layout == 'm' && $task != 'reup'){
+        $view = (isset($_GET['view']) && $_GET['view'] != '' ) ? $_GET['view'] : '';
+        if( ($layout == 'm' && ($task != 'reup' || $task2 == 'add_file' )) || $view == 'm'){
             $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-modern.php';
         } else {
             $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-template.php';

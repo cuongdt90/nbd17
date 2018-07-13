@@ -116,8 +116,13 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
             <input type="text" name="title" class="title" placeholder="Title" ng-model="stages[currentStage].config.name"/>
         </li>
         <li ng-if="settings.nbdesigner_share_design == 'yes'" class="menu-item item-share nbd-show-popup-share animated slideInDown animate800" ng-click="saveData('share')"><i class="icon-nbd icon-nbd-share2"></i></li>
+        <?php if( $task == 'create_template' ): ?>
+        <li class="menu-item item-process animated slideInDown animate900" id="save-template" ng-click="loadTemplateCat()">
+            <span><?php _e('Save Template','web-to-print-online-designer'); ?></span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
+        </li>
+        <?php else: ?>        
         <li class="menu-item item-process animated slideInDown animate900" data-overlay="overlay" ng-click="saveData()">
-            <span>Process</span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
+            <span><?php _e('Process','web-to-print-online-designer'); ?></span><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i>
             <div class="sub-menu" data-pos="right" style="display: none;">
                 <div class="main-sub-menu">
                     <div class="sub-header">
@@ -139,6 +144,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                 </div>
             </div>
         </li>
+        <?php endif; ?> 
     </ul>
 
 </div>
