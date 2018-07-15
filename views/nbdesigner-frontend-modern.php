@@ -651,9 +651,10 @@
             }
             .nbd-templates .items .item .main-item {
                 cursor: pointer;
-                -webkit-transform: all 0.4s;
-                -moz-transform: all 0.4s;
-                transform: all 0.4s;
+                -webkit-transition: all 0.4s;
+                -moz-transition: all 0.4s;
+                transition: all 0.4s;
+                background: #fff;
             }  
             .nbd-templates .items .item .main-item:hover {
                 -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
@@ -663,14 +664,14 @@
                 width: 50%;
                 box-sizing: border-box;
                 display: inline-block;
-                padding: 10px 10px 0 10px;
+                padding: 5px;
             }   
-            .nbd-templates .items .item:nth-child(odd) {
+/*            .nbd-templates .items > .item:nth-child(odd) {
                 padding-right: 5px;
             }            
-            .nbd-templates .items .item:nth-child(even) {
+            .nbd-templates .items > .item:nth-child(even) {
                 padding-left: 5px;
-            }
+            }*/
             .nbd-mode-1 .nbd-main-bar .logo {
                 visibility: hidden;
             }
@@ -853,8 +854,11 @@
             $font_url = NBDESIGNER_FONT_URL;
             if ( function_exists( 'icl_get_home_url' ) ) {
                 $icl_home_url = untrailingslashit(icl_get_home_url());
-                $is_wpml = 1;
-                $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
+                if( $wpml_language_negotiation_type == 2 ){
+                    $is_wpml = 1;
+                    $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                }
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');   
             $templates = nbd_get_resorce_templates($product_id, $variation_id);

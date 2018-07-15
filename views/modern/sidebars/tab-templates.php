@@ -9,8 +9,8 @@
 <!--            <p class="nbd-template-head"><?php echo $_product->get_title(); ?> <?php _e('designs','web-to-print-online-designer'); ?></p>-->
             <div class="nbd-templates">
                 <div class="main-items">
-                    <div class="items" style="text-align: left;">
-                        <p ng-show="resource.myTemplates.length > 0" style="padding: 0 10px;">My designs</p>
+                    <div class="items" style="text-align: left; padding-left: 5px; padding-right: 5px;">
+                        <p ng-show="resource.myTemplates.length > 0" style="padding: 0 5px;">My designs</p>
                         <div class="item slideInDown animate300 animated" ng-repeat="temp in resource.myTemplates" ng-click="loadMyDesign(temp.id, false)">
                             <div class="main-item">
                                 <div class="item-img">
@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                         </div>  
-                        <p ng-show="resource.cartTemplates.length > 0" style="padding: 0 10px;">My designs in cart</p>
+                        <p ng-show="resource.cartTemplates.length > 0" style="padding: 0 5px;">My designs in cart</p>
                         <div class="item slideInDown animate300 animated" ng-repeat="temp in resource.cartTemplates" ng-click="loadMyDesign(temp.id, true)">
                             <div class="main-item">
                                 <div class="item-img">
@@ -33,20 +33,20 @@
                                 </div>
                             </div>
                         </div>
-                        <?php if( $task == 'create_template' ): ?>
-                        <div>
-                            <p ng-click="loadTemplateCat()">Load library templates</p>
-                            <select ng-change="loadGlobalTemplate(templateCat)" ng-show="templateCats.length > 0" style="line-height: 30px; width: 200px; height: 30px;" class="process-select" ng-model="templateCat" id="category_template">
+                        <?php if(1): //if( $task == 'create_template' ): ?>
+                        <div style="padding:5px;">
+                            <p style="cursor: pointer;" ng-click="_loadTemplateCat()">Load library templates <i style="font-size: 24px;" class="icon-nbd icon-nbd-refresh" title="Reload tempaltes"></i></p>
+                            <select ng-change="changeGlobalTemplate()" ng-show="templateCats.length > 0" style="line-height: 30px; width: 200px; height: 30px;" class="process-select" ng-model="templateCat" id="category_template">
                                 <option ng-repeat="cat in templateCats" ng-value="{{cat.id}}"><span>{{cat.name}}</span></option>
                             </select>
-                            <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(false, temp)">
-                                <div class="main-item">
-                                    <div class="item-img">
-                                        <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
-                                    </div>
+                        </div>
+                        <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
+                            <div class="main-item">
+                                <div class="item-img">
+                                    <img ng-src="{{temp.thumbnail}}" alt="{{temp.name}}">
                                 </div>
                             </div>
-                        </div>        
+                        </div>    
                         <?php endif; ?>
                     </div>
                     <div class="pointer"></div>

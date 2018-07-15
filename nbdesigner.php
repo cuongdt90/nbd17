@@ -12,7 +12,7 @@ Author URI: http://netbaseteam.com/
 License: GPLv2 or later
 Text Domain: web-to-print-online-designer
 Domain Path: /langs
-WC tested up to: 3.3.5
+WC tested up to: 3.4.3
 */
 
 if ( !function_exists( 'add_action' ) ) {
@@ -26,9 +26,11 @@ $baseurl = $upload_dir['baseurl'];
 
 $nbd_plugin_dir_url = plugin_dir_url(__FILE__);
 if ( function_exists( 'icl_get_home_url' ) ) {
-    $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);
+    $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
+    if( $wpml_language_negotiation_type == 2 ){
+        $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);
+    }
 }
-
 nbd_define('NBDESIGNER_VERSION', '2.0.0');
 nbd_define('NBDESIGNER_NUMBER_VERSION', 200);
 nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
