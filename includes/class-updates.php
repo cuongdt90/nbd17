@@ -234,7 +234,7 @@ if( !class_exists('NBD_Updates') ) {
             $html_installation  = '';
             $html_installation .= '<h4>Minimum Requirements</h4>';
             $html_installation .= '<ul>';
-            $html_installation .=   '<li>PHP 5.6 or greater is recommended</li>';
+            $html_installation .=   '<li>PHP 5.6.x or 7.0.x is required</li>';
             $html_installation .=   '<li>WoooCommerce 3.0.+ is required</li>';
             $html_installation .=   '<li>PHP allow_url_fopen is required</li>';
             $html_installation .=   '<li>MySQL 5.6 or greater is recommended</li>';            

@@ -799,7 +799,10 @@
                 max-width: 140px;
                 max-height: 40px;
                 width: unset;
-            }                 
+            }       
+            .nbd-stages .stage .page-toolbar {
+                top: 50%;                
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -854,6 +857,7 @@
             $font_url = NBDESIGNER_FONT_URL;
             if ( function_exists( 'icl_get_home_url' ) ) {
                 $icl_home_url = untrailingslashit(icl_get_home_url());
+                global $sitepress;
                 $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
                 if( $wpml_language_negotiation_type == 2 ){
                     $is_wpml = 1;

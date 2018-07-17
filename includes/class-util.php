@@ -1104,9 +1104,9 @@ function is_woo_v3(){
     if( version_compare( $woo_ver, "3.0", "<" )) return false;
     return true;
 }
-function is_woo_v31(){
+function is_woo_v305(){
     $woo_ver = nbd_get_woo_version(); 
-    if( version_compare( $woo_ver, "3.1", "<" )) return false;
+    if( version_compare( $woo_ver, "3.0.5", "<" )) return false;
     return true;
 }
 function nbd_get_dpi($filename){

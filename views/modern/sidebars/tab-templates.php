@@ -26,19 +26,28 @@
                                 </div>
                             </div>
                         </div>                         
-                        <div class="item" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
+                        <div ng-style="{'display': settings.task == 'create_template' ? 'none' : 'inline-block' }" class="item" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
                             <div class="main-item">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
                                 </div>
                             </div>
                         </div>
+                        
                         <?php if(1): //if( $task == 'create_template' ): ?>
                         <div style="padding:5px;">
-                            <p style="cursor: pointer;" ng-click="_loadTemplateCat()">Load library templates <i style="font-size: 24px;" class="icon-nbd icon-nbd-refresh" title="Reload tempaltes"></i></p>
-                            <select ng-change="changeGlobalTemplate()" ng-show="templateCats.length > 0" style="line-height: 30px; width: 200px; height: 30px;" class="process-select" ng-model="templateCat" id="category_template">
-                                <option ng-repeat="cat in templateCats" ng-value="{{cat.id}}"><span>{{cat.name}}</span></option>
-                            </select>
+<!--                            <div>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="debug()">Debug</button>
+                            </div>                            -->
+                            <div>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="uploadSvgFile()">Upload SVG</button>
+                            </div>
+                            <div>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="_loadTemplateCat()">Load templates</button>
+                                <select ng-change="changeGlobalTemplate()" ng-show="templateCats.length > 0" style="line-height: 35px; width: 100%; height: 35px;border-radius: 4px;border: 1px solid #404762;" class="process-select" ng-model="templateCat" id="category_template">
+                                    <option ng-repeat="cat in templateCats" ng-value="{{cat.id}}"><span>{{cat.name}}</span></option>
+                                </select>
+                            </div>
                         </div>
                         <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
                             <div class="main-item">
