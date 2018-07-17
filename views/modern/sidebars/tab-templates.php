@@ -41,6 +41,7 @@
                             </div>                            -->
                             <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="uploadSvgFile()">Upload SVG</button>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="addText()">Add Text</button>
                             </div>
                             <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="_loadTemplateCat()">Load templates</button>

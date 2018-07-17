@@ -803,6 +803,16 @@
             .nbd-stages .stage .page-toolbar {
                 top: 50%;                
             }
+            .nbd-popup.popup-share .main-popup .body .share-with ul.socials li.social {
+                opacity: 0.5;
+            } 
+            .nbd-popup.popup-share .main-popup .body .share-with ul.socials li.social.active {
+                opacity: 1;
+            }
+            .nbd-color-palette .nbd-color-palette-inner .main-color-palette li:hover {
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }            
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;

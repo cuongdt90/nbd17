@@ -20,7 +20,7 @@ if( !class_exists('Nbdesigner_Settings_Output') ) {
                     array(
                         'title' => __( 'PDF watermark type', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_pdf_watermark_type',
-                        'default'	=> '1',
+                        'default'	=> '2',
                         'type' 		=> 'radio',
                         'options' => array(
                             '1' => __('Image', 'web-to-print-online-designer'),

@@ -104,12 +104,6 @@
                                         <kbd>Ctrl</kbd> +<kbd>Y</kbd>
                                     </td>
                                     <td><?php _e('Redo changes','web-to-print-online-designer'); ?></td>
-                                </tr>  
-                                <tr>
-                                    <td class="keys">
-                                        <kbd>Ctrl</kbd> +<kbd>G</kbd>
-                                    </td>
-                                    <td><?php _e('Show/hide Grid','web-to-print-online-designer'); ?></td>
                                 </tr>   
                                 <tr>
                                     <td class="keys">
@@ -194,7 +188,13 @@
                                         <kbd>Ctrl</kbd> +<kbd>I</kbd>
                                     </td>
                                     <td><?php _e('Italicize your text','web-to-print-online-designer'); ?></td>
-                                </tr>  
+                                </tr> 
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Ctrl</kbd> +<kbd>G</kbd>
+                                    </td>
+                                    <td><?php _e('Group layers','web-to-print-online-designer'); ?></td>
+                                </tr>                                 
                                 <tr>
                                     <td class="keys">
                                         <kbd>Ctrl</kbd> +<kbd>P</kbd>
@@ -257,9 +257,9 @@
                                 </tr>  
                                 <tr>
                                     <td class="keys">
-                                        <kbd>Shift</kbd> +<kbd>-</kbd>
+                                        <kbd>Shift</kbd> +<kbd>G</kbd>
                                     </td>
-                                    <td><?php _e('Zoom in selected layer','web-to-print-online-designer'); ?></td>
+                                    <td><?php _e('Show/hide Grid','web-to-print-online-designer'); ?></td>
                                 </tr>                                
                                 <tr>
                                     <td class="keys">
@@ -350,7 +350,13 @@
                                         <kbd>Ctrl</kbd> +<kbd>Shift</kbd> +<kbd>O</kbd>
                                     </td>
                                     <td><?php _e('Load Your Design in Cart','web-to-print-online-designer'); ?></td>
-                                </tr>   
+                                </tr>  
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Ctrl</kbd> +<kbd>Shift</kbd> +<kbd>G</kbd>
+                                    </td>
+                                    <td><?php _e('Ungroup','web-to-print-online-designer'); ?></td>
+                                </tr>                                 
                                 <tr>
                                     <td class="keys">
                                         <kbd>Ctrl</kbd> +<kbd>Shift</kbd> +<kbd>L</kbd>

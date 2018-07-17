@@ -3,7 +3,7 @@
         <ul class="contexts">
             <li class="context-item" ng-click="rotateLayer('reflect-hoz')" ng-show="stages[currentStage].states.isLayer"><i class="icon-nbd icon-nbd-reflect-horizontal"></i> <?php _e('Reflect Horizontal','web-to-print-online-designer'); ?></li>
             <li class="context-item" ng-click="rotateLayer('reflect-ver')" ng-show="stages[currentStage].states.isLayer"><i class="icon-nbd icon-nbd-reflect-vertical"></i> <?php _e('Reflect Vertical','web-to-print-online-designer'); ?></li>
-            <li class="separator"></li>
+            <li class="separator" ng-show="stages[currentStage].states.isLayer"></li>
             <li class="context-item" ng-click="setStackPosition('bring-front')" ng-show="stages[currentStage].states.isLayer && !isTemplateMode"><i class="icon-nbd icon-nbd-bring-to-front"></i> <?php _e('Bring to Front','web-to-print-online-designer'); ?></li>
             <li class="context-item" ng-click="setStackPosition('bring-forward')" ng-show="stages[currentStage].states.isLayer && !isTemplateMode"><i class="icon-nbd icon-nbd-bring-forward"></i> <?php _e('Bring Forward','web-to-print-online-designer'); ?></li>
             <li class="context-item" ng-click="setStackPosition('send-backward')" ng-show="stages[currentStage].states.isLayer && !isTemplateMode"><i class="icon-nbd icon-nbd-sent-to-backward"></i> <?php _e('Send to Backward','web-to-print-online-designer'); ?></li>
