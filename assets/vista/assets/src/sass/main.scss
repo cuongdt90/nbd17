@@ -1,30 +1,27 @@
 @import "patials/icons";
+@import "patials/color-variables";
 .nbd-mode-vista {
   &.nbd-onloading {
     pointer-events: none;
   }
   @import "patials/full-screen";
+
+  // component
+  @import "component/button";
+
   .nbd-vista {
     height: 580px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     //overflow: hidden;
     box-sizing: border-box;
 
     @import "patials/reset";
-    @import "patials/color-variables";
 
     // Library
     @import "library/perfect-scrollbar";
     @import "library/animate/index";
     @import "library/spectrum";
     @import "library/jquery-ui.min";
-
-    // component
-    @import "component/button";
-    @import "component/dropdown";
-    @import "component/checkbox";
-    @import "component/ranges";
-    @import "component/nbd-tab";
 
     // patials
     @import "patials/global";
@@ -39,6 +36,13 @@
     @import "patials/spectrum";
     @import "patials/loading-workflow";
     @import "patials/toolbar-zoom";
+
+    // component
+    @import "component/button";
+    @import "component/dropdown";
+    @import "component/checkbox";
+    @import "component/ranges";
+    @import "component/nbd-tab";
     .v-workspace {
       height: 500px;
       display: flex;

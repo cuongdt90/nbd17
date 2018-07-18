@@ -38,6 +38,7 @@
     .text-editor {
       .text-field {
         display: block;
+        width: 100%;
         border: 1px solid #ebebeb;
         padding: 5px 10px;
         border-radius: 2px;
@@ -47,9 +48,11 @@
           border-color: $main-color;
         }
       }
-      .placeholder-field {
-        font-style: italic;
-        color: #c8cbcc;
+      input{
+        &::-moz-placeholder,&:-moz-placeholder,&::-webkit-input-placeholder,&:-ms-input-placeholder{
+          font-style: italic;
+          color: #c8cbcc;
+        }
       }
       .editable-field{
         background-color: #fff;

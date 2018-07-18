@@ -146,6 +146,7 @@ if ( function_exists( 'icl_get_home_url' ) ) {
                     <?php include 'popup.php';?>
                     <?php include 'context-menu.php';?>
                 </div>
+                <?php include 'save-template.php';?>
             </div>
         </div>
     </div>

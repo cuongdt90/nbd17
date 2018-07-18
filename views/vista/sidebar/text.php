@@ -6,52 +6,9 @@
     <div class="v-content" data-action="yes">
         <div class="tab-scroll">
             <div class="main-scrollbar">
-
-                <div class="text-editor">
-                    <span contenteditable="true" class="text-field placeholder-field">Company Name</span>
+                <div class="text-editor" ng-repeat="layer in stages[currentStage].layers">
+                    <input class="text-field" type="text" ng-if="layer.type == 'text'" ng-change="setLayerAttribute('text', layer.text, layer.index, $index)" ng-model="layer.text" />
                 </div>
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Company Message</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Full Name</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
-<!--                <div class="text-editor">-->
-<!--                    <span contenteditable="true" class="text-field placeholder-field">Job Title</span>-->
-<!--                </div>-->
             </div>
         </div>
     </div>

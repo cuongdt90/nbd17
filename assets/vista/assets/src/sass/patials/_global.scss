@@ -35,6 +35,11 @@ input[type=email], input[type=password], input[type=search], input[type=text], i
   opacity: 0.3;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
 .nbd-enable {
   pointer-events: unset;
   opacity: 1;

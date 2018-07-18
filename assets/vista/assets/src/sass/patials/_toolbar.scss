@@ -8,6 +8,8 @@
     justify-content: space-between;
     border: 1px solid #ebebeb;
     border-radius: 2px;
+    position: relative;
+    z-index: 9999;
     @media screen and (max-width: 767px){
       border-color: transparent;
       flex-wrap: wrap;

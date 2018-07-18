@@ -14,7 +14,8 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'options'   => array(
                             'c' => __('Classic', 'web-to-print-online-designer'),
                             'm' => __('Modern', 'web-to-print-online-designer'),
-                        )                        
+                            'l' => __('Lite', 'web-to-print-online-designer'),
+                        )
                     ),                     
                     array(
                         'title' => __( 'Default output resolution - DPI', 'web-to-print-online-designer'),

@@ -1,4 +1,4 @@
-<div class="v-toolbox-image" ng-show="stages[currentStage].states.isImage">
+<div class="v-toolbox-image" ng-show="stages[currentStage].states.isImage" style="transform: translateX(-50%)" ng-style="stages[currentStage].states.toolbarStyle">
     <div class="v-triangle">
         <div class="header-box">
             <span>Image edit</span>

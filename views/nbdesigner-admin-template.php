@@ -4,13 +4,19 @@
         $link_manager_template = add_query_arg(array(
             'pid' => $pid, 
             'view' => 'templates'), 
-             admin_url('admin.php?page=nbdesigner_manager_product'));      
-        $link_add_template = add_query_arg(array(
-                'product_id' => $pid,
-                'task'  =>  'create',
-                'rd'    => urlencode($link_manager_template)
-            ), getUrlPageNBD('create'));           
-    ?>  
+             admin_url('admin.php?page=nbdesigner_manager_product'));
+        $design_layout = get_option('nbdesigner_design_layout', false);
+        $url = ($design_layout == 'l') ? get_permalink($pid) : getUrlPageNBD('create');
+
+        $arrParams = [];
+        $arrParams['task'] = 'create';
+        $arrParams['rd'] = urlencode($link_manager_template);
+        if ($design_layout !== 'l') {
+            $arrParams['product_id'] = $pid;
+        }
+        $link_add_template = add_query_arg($arrParams, $url);
+
+    ?>
     <div class="wrap">
         <h1 class="nbd-title">
             <?php _e('Templates for', 'web-to-print-online-designer'); ?>: <a class="nbd-product-url" href="<?php echo get_edit_post_link($pid); ?>"><?php echo $pro->get_title(); ?></a>
