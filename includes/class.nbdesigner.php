@@ -83,7 +83,8 @@ class Nbdesigner_Plugin {
             'nbd_clear_transients'  =>  false,
             'nbd_create_pages'  =>  false,
             'nbd_get_product_config'  =>  true,
-            'nbd_delete_order_design'  =>  false
+            'nbd_delete_order_design'  =>  false,
+            'nbd_check_use_logged_in'  =>  true
         );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -119,6 +120,15 @@ class Nbdesigner_Plugin {
             case 'frontend':
                 return (!is_admin() || defined('DOING_AJAX') ) && !defined('DOING_CRON');
         }
+    }
+    public function nbd_check_use_logged_in(){
+        wp_send_json(
+            array(
+                'is_login'  =>  nbd_user_logged_in(),
+                'nonce'  =>  wp_create_nonce('save-design'),
+                'nonce_get'  =>  wp_create_nonce('nbdesigner-get-data')
+            )
+        );        
     }
     public function init_session(){
         global $woocommerce;

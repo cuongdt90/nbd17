@@ -11,7 +11,7 @@
         <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
         <div class="typography-body">
             <ul class="typography-items">
-                <li ng-click="insertTypography(typo)" class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.filter.currentPage * resource.typography.filter.perPage" repeat-end="onEndRepeat('typography')">
+                <li nbd-drag="typo.folder" type="typo" ng-click="insertTypography(typo)" class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.filter.currentPage * resource.typography.filter.perPage" repeat-end="onEndRepeat('typography')">
                     <img ng-src="{{generateTypoLink(typo)}}"alt="Typography" />
                 </li>
             </ul>

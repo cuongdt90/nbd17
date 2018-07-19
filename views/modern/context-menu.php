@@ -1,6 +1,7 @@
 <div class="nbd-context-menu" id="nbd-context-menu" ng-style="ctxMenuStyle" ng-click="ctxMenuStyle.visibility = 'hidden'">
     <div class="main-context">
         <ul class="contexts">
+            <li class="context-item" ng-click="setLayerAttribute('excludeFromExport', !stages[currentStage].states.excludeFromExport)" ng-show="settings.task == 'create_template' && !stages[currentStage].states.excludeFromExport"><i class="icon-nbd icon-nbd-clear"></i> <?php _e('Exclude from export','web-to-print-online-designer'); ?></li>
             <li class="context-item" ng-click="rotateLayer('reflect-hoz')" ng-show="stages[currentStage].states.isLayer"><i class="icon-nbd icon-nbd-reflect-horizontal"></i> <?php _e('Reflect Horizontal','web-to-print-online-designer'); ?></li>
             <li class="context-item" ng-click="rotateLayer('reflect-ver')" ng-show="stages[currentStage].states.isLayer"><i class="icon-nbd icon-nbd-reflect-vertical"></i> <?php _e('Reflect Vertical','web-to-print-online-designer'); ?></li>
             <li class="separator" ng-show="stages[currentStage].states.isLayer"></li>

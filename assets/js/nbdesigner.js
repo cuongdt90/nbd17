@@ -28,7 +28,11 @@ jQuery(document).ready(function () {
     };
     //jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': '100%'});
     jQuery('#triggerDesign').on('click', function () {
-        showDesignFrame();
+        if(jQuery(this).hasClass('nbdesigner_disable')){
+            jQuery('.single_add_to_cart_button').trigger('click');
+        }else{
+            showDesignFrame();
+        }
     });
     jQuery('#closeFrameDesign').on('click', function () {
         hideDesignFrame();
@@ -259,6 +263,14 @@ jQuery(document).ready(function () {
             });
             jQuery('.upload-design-preview').html(html);
         }
+    NBDESIGNERPRODUCT.nbdesigner_ready();
+    jQuery('input[name="variation_id"]').on('change', function(){
+        if(jQuery('input[name="variation_id"]').val() != ''){
+            NBDESIGNERPRODUCT.nbdesigner_ready();
+        }else{
+            jQuery('#triggerDesign').addClass('nbdesigner_disable');
+        }
+    });   
 });
 var share_image_url = '';
 var NBDESIGNERPRODUCT = {
@@ -603,15 +615,15 @@ var NBDESIGNERPRODUCT = {
         if(jQuery('input[name="variation_id"]').length > 0){
             var vid = jQuery('input[name="variation_id"]').val();
             if( ( "undefined" != typeof is_nbd_bulk_variation) || ( vid != '' &&  parseInt(vid) > 0 ) ) {
-                jQuery('#triggerDesign').removeClass('nbdesigner-disable');
+                jQuery('#triggerDesign').removeClass('nbdesigner_disable');
             }
         }else{
-            jQuery('#triggerDesign').removeClass('nbdesigner-disable');
+            jQuery('#triggerDesign').removeClass('nbdesigner_disable');
         }
         jQuery('.nbdesigner-img-loading').addClass('hide');
     },
     nbdesigner_unready: function(){
-        jQuery('#triggerDesign').addClass('nbdesigner-disable');
+        jQuery('#triggerDesign').addClass('nbdesigner_disable');
         jQuery('.nbdesigner-img-loading').removeClass('hide');
     },
     get_sugget_design: function(product_id, variation_id){

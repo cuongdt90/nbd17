@@ -1,4 +1,4 @@
-<div class="tab tab-first active" id="tab-product-template">
+<div class="tab tab-first active" id="tab-product-template"  nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-product-template" data-type="globalTemplate" data-offset="30">
 <!--    <div class="nbd-search" ng-if="settings.ui_mode != '1'">
         <input type="search" name="search" placeholder="search"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
@@ -38,7 +38,7 @@
                         <div style="padding:5px;">
 <!--                            <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="debug()">Debug</button>
-                            </div>                            -->
+                            </div>-->
                             <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="uploadSvgFile()">Upload SVG</button>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="addText()">Add Text</button>

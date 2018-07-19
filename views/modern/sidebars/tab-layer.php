@@ -2,7 +2,7 @@
     <div class="tab-main tab-scroll">
         <div class="inner-tab-layer">
             <ul class="menu-layer" nbd-layer="sortLayer(srcIndex, dstIndex)">
-                <li class="menu-item item-layer-text" data-index="{{layer.index}}" ng-click="activeLayer(layer.index)" ng-class="layer.selectable ? '' : 'lock-active'" ng-repeat="layer in stages[currentStage].layers">
+                <li class="menu-item item-layer-text" data-index="{{layer.index}}" ng-click="activeLayer(layer.index)" ng-class="{'lock-active': !layer.selectable, 'active' : stages[currentStage].states.isLayer && stages[currentStage].states.itemId == layer.itemId}" data-id="{{layer.itemId}}" ng-repeat="layer in stages[currentStage].layers">
                     <i ng-if="layer.type == 'text'" class="icon-nbd icon-nbd-text-fields item-left"></i>
                     <i ng-if="layer.type == 'path'" class="icon-nbd icon-nbd-vector item-left"></i>
                     <img ng-if="layer.type == 'image'" style="max-width: 34px; max-height: 34px; display: inline-block; padding: 5px;" ng-src="{{layer.src}}" />

@@ -876,7 +876,7 @@ function nbd_update_hit_template( $template_id = false, $folder = '' ){
         ), array( 'id' => $template_id));         
     }
 }
-function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false ){
+function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false, $start = false ){
     global $wpdb;
     $table_name = $wpdb->prefix . 'nbdesigner_templates';
     if( $template_id != '' ){
@@ -904,9 +904,9 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
 //    }
     return $results;
 }
-function nbd_get_resorce_templates($product_id, $variation_id){
+function nbd_get_resource_templates($product_id, $variation_id, $limit = 20, $start = 0){
     $data = array();
-    $templates = nbd_get_templates($product_id, $variation_id);
+    $templates = nbd_get_templates($product_id, $variation_id, '', false, $limit, $start);
     foreach ($templates as $tem){
         $path_preview = NBDESIGNER_CUSTOMER_DIR .'/'.$tem['folder']. '/preview';
         $listThumb = Nbdesigner_IO::get_list_images($path_preview);

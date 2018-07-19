@@ -812,6 +812,9 @@
             .nbd-color-palette .nbd-color-palette-inner .main-color-palette li:hover {
                 -webkit-box-shadow: none;
                 box-shadow: none;
+            } 
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item.active {
+                border: 2px solid #0e9dde;
             }            
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
@@ -875,7 +878,7 @@
                 }
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');   
-            $templates = nbd_get_resorce_templates($product_id, $variation_id);
+            $templates = nbd_get_resource_templates($product_id, $variation_id);
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
