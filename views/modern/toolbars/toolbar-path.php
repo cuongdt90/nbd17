@@ -1,4 +1,4 @@
-<ul class="nbd-main-menu menu-center tool-path"  ng-show="stages[currentStage].states.isPath || stages[currentStage].states.isNativeGroup">
+<ul class="nbd-main-menu menu-center tool-path"  ng-show="stages[currentStage].states.isPath || stages[currentStage].states.isNativeGroup || stages[currentStage].states.isShape">
     <li ng-click="unGroupLayers()" class="menu-item menu-group" ng-show="stages[currentStage].states.isNativeGroup">
         <i style="border-right: 1px solid #ebebeb;padding-right: 10px;margin-top: 8px;" class="icon-nbd icon-nbd-ungroup nbd-tooltip-hover tooltipstered" title="<?php _e('Ungroup','web-to-print-online-designer'); ?>"></i>
     </li>

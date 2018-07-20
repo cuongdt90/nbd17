@@ -876,6 +876,13 @@ function nbd_update_hit_template( $template_id = false, $folder = '' ){
         ), array( 'id' => $template_id));         
     }
 }
+function nbd_count_total_template( $product_id, $variation_id ){
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'nbdesigner_templates';
+    $sql = "SELECT count(*) as total FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) ORDER BY created_date DESC";
+    $results = $wpdb->get_results($sql, 'ARRAY_A');
+    return $results[0]["total"];
+}
 function nbd_get_templates( $product_id, $variation_id, $template_id = '', $priority = false, $limit = false, $start = false ){
     global $wpdb;
     $table_name = $wpdb->prefix . 'nbdesigner_templates';
@@ -891,6 +898,9 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
                 $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) ORDER BY created_date DESC";                
             }           
         }
+    }
+    if( $start ){
+        $sql .= ' OFFSET ' . $start;
     }
     $results = $wpdb->get_results($sql, 'ARRAY_A');
     if( $priority && count( $results ) == 0 ) {
@@ -972,8 +982,9 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
             $data['fonts'] = nbd_get_data_from_json($template_path . '/used_font.json');
             $data['design'] = nbd_get_data_from_json($template_path . '/design.json'); 
             $data['config'] = nbd_get_data_from_json($template_path . '/config.json');
+            $data['is_template'] = 1;
         }       
-    }    
+    }
     if(  $reference != '' ){
         /* Get reference design, font and reference product setting */
         $ref_path = NBDESIGNER_CUSTOMER_DIR . '/' . $reference;

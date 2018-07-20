@@ -7,7 +7,7 @@
                     <i ng-if="layer.type == 'path'" class="icon-nbd icon-nbd-vector item-left"></i>
                     <img ng-if="layer.type == 'image'" style="max-width: 34px; max-height: 34px; display: inline-block; padding: 5px;" ng-src="{{layer.src}}" />
                     <div ng-if="layer.type == 'text'" class="item-center"><input style="border: none;" ng-change="setLayerAttribute('text', layer.text, layer.index, $index)" ng-model="layer.text" type="text"/></div>
-                    <span ng-if="layer.type == 'path'" class="item-center"><?php _e('Path group','web-to-print-online-designer'); ?></span>
+                    <span ng-if="layer.type == 'path'" class="item-center"><?php _e('Group','web-to-print-online-designer'); ?></span>
                     <span ng-if="layer.type == 'image'" class="item-center"><?php _e('Image','web-to-print-online-designer'); ?></span>
                     <span class="item-right">
                         <i ng-click="setLayerAttribute('visible', !layer.visible, layer.index, $index); $event.stopPropagation();" ng-class="layer.visible ? 'icon-nbd-fomat-visibility' : 'icon-nbd-fomat-visibility-off'" class="icon-nbd icon-visibility" data-active="true" data-act="visibility"></i>

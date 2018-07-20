@@ -265,7 +265,7 @@
                 transition: all .4s;         
             }
             .nbd-color-palette-inner .nbd-perfect-scroll{
-                max-height: 200px;        
+                max-height: 185px;
             }
             .nbd-color-palette.show {
                 opacity: 1;
@@ -800,9 +800,6 @@
                 max-height: 40px;
                 width: unset;
             }       
-            .nbd-stages .stage .page-toolbar {
-                top: 50%;                
-            }
             .nbd-popup.popup-share .main-popup .body .share-with ul.socials li.social {
                 opacity: 0.5;
             } 
@@ -815,7 +812,12 @@
             } 
             .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item.active {
                 border: 2px solid #0e9dde;
-            }            
+            }     
+            @media screen and (min-width: 768px) {
+                .nbd-stages .stage .page-toolbar {
+                    top: 50%;                
+                }                
+            }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
@@ -879,6 +881,7 @@
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');   
             $templates = nbd_get_resource_templates($product_id, $variation_id);
+            $total_template = nbd_count_total_template( $product_id, $variation_id );
         ?>
         <script type="text/javascript">           
             var NBDESIGNCONFIG = {
