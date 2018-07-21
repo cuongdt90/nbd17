@@ -16,15 +16,21 @@
       .v-toolbar-item {
         border: 1px solid #ebebeb;
         overflow-x: auto;
-        &.left-toolbar{
-        }
         &.right-toolbar {
-          margin-top: 20px;
           border: 1px solid #ebebeb;
-          width: 100%;
           .v-main-menu {
             justify-content: center;
           }
+        }
+      }
+    }
+    @media screen and (max-width: 692px){
+      .v-toolbar-item {
+        &.left-toolbar{
+          margin: auto;
+        }
+        &.right-toolbar {
+          margin: 15px auto 0;
         }
       }
     }
@@ -90,6 +96,10 @@
     display: none;
     &.active{
       display: block;
+    }
+
+    @media screen and (max-width: 767px){
+        margin-top: 15px;
     }
   }
 }

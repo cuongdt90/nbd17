@@ -65,7 +65,70 @@
       position: absolute;
       top: -14px;
     }
+    &[data-pos="left"]{
+      &:after, &:before{
+        left: 65%;
+      }
+    }
+    &[data-pos="center"]{
+      &:after, &:before{
+        left: 50%;
+      }
+    }
+  }
+  .toolbox-lock {
+    .items {
+      .item{
+        &.active{
+          i{
+            color: red;
+          }
+        }
+      }
+    }
+  }
+  .v-toolbox-item {
+    position: absolute;
+    top: 250px;
+    border: 1px solid #ebebeb;
+    min-width: 250px;
+    border-radius: 2px;
+    background: #fff;
+    transition: visibility .2s, opacity .2s;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-50%);
+    &.nbd-show{
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  .v-btn {
+    &.btn-color {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      box-shadow: none;
+      padding: 5px;
+      border: 1px solid #ebebeb;
+      .color-selected {
+        width: 85px;
+        height: 24px;
+        background-color: red;
+        line-height: 1;
+        border: 1px solid #e6e6e6;
+      }
+      i{
+        color: $main-color;
+        font-size: 16px;
+        line-height: normal;
+        margin-left: 10px;
+      }
+    }
   }
   @import "toolbox/toolbox-text";
   @import "toolbox/toolbox-image";
+  @import "toolbox/toolbox-group";
+  @import "toolbox/toolbox-path";
 }

@@ -2842,11 +2842,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             border: 1px solid #ebebeb;
             overflow-x: auto; }
             .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar {
-              margin-top: 20px;
-              border: 1px solid #ebebeb;
-              width: 100%; }
+              border: 1px solid #ebebeb; }
               .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar .v-main-menu {
                 justify-content: center; } }
+      @media screen and (max-width: 692px) {
+        .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.left-toolbar {
+          margin: auto; }
+        .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar {
+          margin: 15px auto 0; } }
   .nbd-mode-vista .nbd-vista .v-main-menu {
     display: flex; }
     .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item {
@@ -2889,6 +2892,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display: none; }
     .nbd-mode-vista .nbd-vista .v-tab-contents .v-tab-content.active {
       display: block; }
+    @media screen and (max-width: 767px) {
+      .nbd-mode-vista .nbd-vista .v-tab-contents .v-tab-content {
+        margin-top: 15px; } }
   .nbd-mode-vista .nbd-vista .tab-scroll {
     position: relative;
     overflow: hidden;
@@ -3698,6 +3704,123 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display: none; }
     .nbd-mode-vista .nbd-vista .nbd-tab-contents .nbd-tab-content.active {
       display: block; }
+  .nbd-mode-vista .nbd-vista .nbd-color-palette {
+    min-width: 227px;
+    position: absolute;
+    right: 0;
+    top: calc(100%);
+    background-color: #fff;
+    display: none;
+    border: 1px solid #ebebeb; }
+    .nbd-mode-vista .nbd-vista .nbd-color-palette.show {
+      display: block; }
+    .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner {
+      padding: 10px;
+      position: relative; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner:before {
+        border: 7px solid transparent;
+        border-bottom: 7px solid #ebebeb;
+        content: "";
+        position: absolute;
+        top: -15px;
+        display: none; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner:after {
+        border: 7px solid transparent;
+        border-bottom: 7px solid #fff;
+        content: "";
+        position: absolute;
+        top: -14px;
+        display: none; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner > div {
+        margin-bottom: 25px; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .color-palette-label {
+        font-size: 12px;
+        font-weight: 500;
+        margin: 0 0 10px 0;
+        text-transform: uppercase; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start; }
+        .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li {
+          list-style: none;
+          cursor: pointer;
+          width: 40px;
+          height: 40px;
+          box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset -1px -1px 0 rgba(0, 0, 0, 0.05);
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          color: transparent;
+          background-color: currentColor;
+          display: inline-block; }
+          .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li:hover {
+            box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.75); }
+          .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add {
+            position: relative; }
+            .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%; }
+              .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer {
+                padding: 0;
+                width: 100%;
+                height: 100%;
+                border: none; }
+                .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:hover, .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:active {
+                  border-color: transparent; }
+                .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:after {
+                  content: '+';
+                  display: block;
+                  top: 2px;
+                  left: 2px;
+                  width: 40px;
+                  height: 40px;
+                  text-indent: 0;
+                  font-size: 28px;
+                  line-height: 38px;
+                  text-align: center;
+                  font-weight: 100;
+                  color: #111;
+                  z-index: 2002;
+                  position: absolute; }
+                .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-preview, .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-alpha, .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-thumb-el {
+                  margin-right: 0;
+                  border: none;
+                  width: 100%;
+                  height: 100%; }
+                .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-dd {
+                  display: none; }
+            .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add:after {
+              font-family: 'nbd-vista' !important;
+              position: absolute;
+              content: "\E900";
+              top: 0;
+              left: 0;
+              width: 40px;
+              height: 40px;
+              display: inline-block;
+              line-height: 40px;
+              text-align: center;
+              color: #888888;
+              font-size: 20px;
+              speak: none;
+              font-style: normal;
+              font-weight: normal;
+              font-variant: normal;
+              text-transform: none; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner.show-popup .color-palette-popup {
+        display: block; }
+      .nbd-mode-vista .nbd-vista .nbd-color-palette .nbd-color-palette-inner .color-palette-popup {
+        min-width: 100px;
+        min-height: 100px;
+        position: absolute;
+        display: none;
+        top: 0;
+        left: -50%; }
   .nbd-mode-vista .nbd-vista .v-workspace {
     height: 500px;
     display: flex; }
@@ -3705,7 +3828,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       height: 500px;
       width: 260px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .tab-scroll {
-        height: calc(100% - 50px); }
+        height: calc(100% - 55px); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .tab-scroll .main-scrollbar {
           margin-bottom: 50px; }
       @media screen and (max-width: 767px) {
@@ -3853,6 +3976,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
                 border-right: none;
+                border: 1px solid #26a69a;
                 width: 100%;
                 box-shadow: none; }
               .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="image-url"] .form-group .input-group button {
@@ -4102,6 +4226,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               -webkit-transform: translateY(0);
               -ms-transform: translateY(0);
               transform: translateY(0); }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .type-shapes .mansory-wrap {
+            background-color: #ebebeb; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .loading-photo {
           position: relative;
           margin: auto; }
@@ -4176,137 +4302,20 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               -webkit-transform: translateY(0);
               -ms-transform: translateY(0);
               transform: translateY(0); }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-text .v-content, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-element .v-content {
-        height: calc(100% - 110px); }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .v-content, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-text .v-content, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-element .v-content {
+        height: calc(100% - 105px); }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content {
-        height: 100%; }
+        height: calc(100% - 55px); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .design-color {
           height: 100%; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .design-color .tab-scroll {
-            height: calc(100% - 50px); }
+            height: calc(100% - 55px); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.layout {
           margin-bottom: 20px;
-          height: calc(100% - 50px);
+          height: calc(100% - 55px);
           background-color: #ebebeb; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.layout .main-scrollbar {
             margin-bottom: 0; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette {
-          min-width: 227px;
-          position: absolute;
-          right: 0;
-          top: calc(100%);
-          background-color: #fff;
-          display: none;
-          border: 1px solid #ebebeb; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette.show {
-            display: block; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner {
-            padding: 10px;
-            position: relative; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner:before {
-              border: 7px solid transparent;
-              border-bottom: 7px solid #ebebeb;
-              content: "";
-              position: absolute;
-              top: -15px;
-              display: none; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner:after {
-              border: 7px solid transparent;
-              border-bottom: 7px solid #fff;
-              content: "";
-              position: absolute;
-              top: -14px;
-              display: none; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner > div {
-              margin-bottom: 25px; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .color-palette-label {
-              font-size: 12px;
-              font-weight: 500;
-              margin: 0 0 10px 0;
-              text-transform: uppercase; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: flex-start; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li {
-                list-style: none;
-                cursor: pointer;
-                width: 40px;
-                height: 40px;
-                box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset -1px -1px 0 rgba(0, 0, 0, 0.05);
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                color: transparent;
-                background-color: currentColor;
-                display: inline-block; }
-                .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li:hover {
-                  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.75); }
-                .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add {
-                  position: relative; }
-                  .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%; }
-                    .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer {
-                      padding: 0;
-                      width: 100%;
-                      height: 100%;
-                      border: none; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:hover, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:active {
-                        border-color: transparent; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:after {
-                        content: '+';
-                        display: block;
-                        top: 2px;
-                        left: 2px;
-                        width: 40px;
-                        height: 40px;
-                        text-indent: 0;
-                        font-size: 28px;
-                        line-height: 38px;
-                        text-align: center;
-                        font-weight: 100;
-                        color: #111;
-                        z-index: 2002;
-                        position: absolute; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-preview, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-alpha, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-thumb-el {
-                        margin-right: 0;
-                        border: none;
-                        width: 100%;
-                        height: 100%; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-dd {
-                        display: none; }
-                  .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add:after {
-                    font-family: 'nbd-vista' !important;
-                    position: absolute;
-                    content: "\E900";
-                    top: 0;
-                    left: 0;
-                    width: 40px;
-                    height: 40px;
-                    display: inline-block;
-                    line-height: 40px;
-                    text-align: center;
-                    color: #888888;
-                    font-size: 20px;
-                    speak: none;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-variant: normal;
-                    text-transform: none; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner.show-popup .color-palette-popup {
-              display: block; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette .nbd-color-palette-inner .color-palette-popup {
-              min-width: 100px;
-              min-height: 100px;
-              position: absolute;
-              display: none;
-              top: 0;
-              left: -50%; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette {
           position: static;
           border: none;
@@ -4357,6 +4366,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           -ms-transform: translateY(-50%);
           transform: translateY(-50%);
           color: #ccc; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #nbdesigner_dropbox a {
+        padding: 5px; }
     .nbd-mode-vista .nbd-vista .v-workspace .v-layout {
       display: flex;
       justify-content: center;
@@ -4427,401 +4438,302 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           content: "";
           position: absolute;
           top: -14px; }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text {
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle[data-pos="left"]:after, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle[data-pos="left"]:before {
+          left: 65%; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle[data-pos="center"]:after, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle[data-pos="center"]:before {
+          left: 50%; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .toolbox-lock .items .item.active i {
+        color: red; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item {
         position: absolute;
-        top: 0;
+        top: 250px;
         border: 1px solid #ebebeb;
         min-width: 250px;
         border-radius: 2px;
-        background: #fff; }
-        @media screen and (max-width: 767px) {
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text {
-            display: none; } }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-menu-header {
-          display: flex; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-menu-header .toolbar-header-line {
-            background-color: rgba(63, 70, 82, 0.15);
-            -ms-flex-positive: 1;
-            flex-grow: 1;
-            height: 1px;
-            margin: auto; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-menu-header .toolbar-separator {
-            color: rgba(63, 70, 82, 0.4);
-            font-size: 12px;
-            font-weight: 500;
-            margin: 8px 15px;
-            min-width: 40px;
-            text-align: center;
-            text-transform: uppercase; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-font-search {
-          position: relative;
-          max-height: 220px;
-          overflow: hidden;
-          padding: 10px 15px; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-font-search input {
-            background-color: #fff;
-            width: 100%;
-            -webkit-border-radius: 2px;
-            border-radius: 2px;
-            outline: 0;
-            padding: 5px 20px 5px 5px;
-            border: 1px solid #ebebeb; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-font-search i {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            width: 24px;
-            height: 33px;
-            line-height: 33px;
-            cursor: pointer; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .tab-scroll {
-          max-height: 220px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item {
-          padding: 5px 10px;
+        background: #fff;
+        transition: visibility .2s, opacity .2s;
+        visibility: hidden;
+        opacity: 0;
+        transform: translateX(-50%); }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.nbd-show {
+          visibility: visible;
+          opacity: 1; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-btn.btn-color {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        box-shadow: none;
+        padding: 5px;
+        border: 1px solid #ebebeb; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-btn.btn-color .color-selected {
+          width: 85px;
+          height: 24px;
+          background-color: red;
+          line-height: 1;
+          border: 1px solid #e6e6e6; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-btn.btn-color i {
+          color: #26a69a;
+          font-size: 16px;
+          line-height: normal;
+          margin-left: 10px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-menu-header {
+        display: flex; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-menu-header .toolbar-header-line {
+          background-color: rgba(63, 70, 82, 0.15);
+          -ms-flex-positive: 1;
+          flex-grow: 1;
+          height: 1px;
+          margin: auto; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-menu-header .toolbar-separator {
+          color: rgba(63, 70, 82, 0.4);
+          font-size: 12px;
+          font-weight: 500;
+          margin: 8px 15px;
+          min-width: 40px;
+          text-align: center;
+          text-transform: uppercase; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-font-search {
+        position: relative;
+        max-height: 220px;
+        overflow: hidden;
+        padding: 10px 15px; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-font-search input {
+          background-color: #fff;
+          width: 100%;
+          -webkit-border-radius: 2px;
+          border-radius: 2px;
+          outline: 0;
+          padding: 5px 20px 5px 5px;
+          border: 1px solid #ebebeb; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbar-font-search i {
+          position: absolute;
+          right: 15px;
+          top: 10px;
+          width: 24px;
+          height: 33px;
+          line-height: 33px;
+          cursor: pointer; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .tab-scroll {
+        max-height: 220px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item {
+        padding: 5px 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item .font-right {
+          margin-left: auto; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item i.checked {
+          font-size: 14px;
+          display: none;
+          color: #26a69a;
+          font-weight: bold;
+          margin-left: 10px; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item span {
+          color: #26a69a; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item.active i.checked {
+          display: block; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item.active, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item:hover {
+          background-color: #f6f6f6; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-last {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items {
+        margin: 10px 0; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item {
+          padding: 0 5px;
           display: flex;
           justify-content: space-between;
-          align-items: center;
-          cursor: pointer; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item .font-right {
-            margin-left: auto; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item i.checked {
+          align-items: center; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item:hover, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item.active {
+            background-color: #f6f6f6; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item i.checked {
             font-size: 14px;
             display: none;
             color: #26a69a;
-            font-weight: bold;
-            margin-left: 10px; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item span {
-            color: #26a69a; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item.active i.checked {
-            display: block; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item.active, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item:hover {
-            background-color: #f6f6f6; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-last {
-          display: flex;
-          justify-content: space-between;
-          align-items: center; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items {
-          margin: 10px 0; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item {
-            padding: 0 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item:hover, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item.active {
-              background-color: #f6f6f6; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item i.checked {
-              font-size: 14px;
-              display: none;
-              color: #26a69a;
-              font-weight: bold; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item span {
-              color: #26a69a; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item.active i.checked {
-              display: block; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .tab-scroll {
-          max-height: 220px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette {
-          min-width: 227px;
-          position: absolute;
-          right: 0;
-          top: calc(100%);
-          background-color: #fff;
-          display: none;
-          border: 1px solid #ebebeb; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette.show {
-            display: block; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner {
-            padding: 10px;
-            position: relative; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner:before {
-              border: 7px solid transparent;
-              border-bottom: 7px solid #ebebeb;
-              content: "";
-              position: absolute;
-              top: -15px;
-              display: none; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner:after {
-              border: 7px solid transparent;
-              border-bottom: 7px solid #fff;
-              content: "";
-              position: absolute;
-              top: -14px;
-              display: none; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner > div {
-              margin-bottom: 25px; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .color-palette-label {
-              font-size: 12px;
-              font-weight: 500;
-              margin: 0 0 10px 0;
-              text-transform: uppercase; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette {
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: flex-start; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li {
-                list-style: none;
-                cursor: pointer;
-                width: 40px;
-                height: 40px;
-                box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05), inset -1px -1px 0 rgba(0, 0, 0, 0.05);
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                color: transparent;
-                background-color: currentColor;
-                display: inline-block; }
-                .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li:hover {
-                  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.75); }
-                .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add {
-                  position: relative; }
-                  .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%; }
-                    .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer {
-                      padding: 0;
-                      width: 100%;
-                      height: 100%;
-                      border: none; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:hover, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:active {
-                        border-color: transparent; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer:after {
-                        content: '+';
-                        display: block;
-                        top: 2px;
-                        left: 2px;
-                        width: 40px;
-                        height: 40px;
-                        text-indent: 0;
-                        font-size: 28px;
-                        line-height: 38px;
-                        text-align: center;
-                        font-weight: 100;
-                        color: #111;
-                        z-index: 2002;
-                        position: absolute; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-preview, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-alpha, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-thumb-el {
-                        margin-right: 0;
-                        border: none;
-                        width: 100%;
-                        height: 100%; }
-                      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add span .sp-replacer .sp-dd {
-                        display: none; }
-                  .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .main-color-palette li.color-palette-add:after {
-                    font-family: 'nbd-vista' !important;
-                    position: absolute;
-                    content: "\E900";
-                    top: 0;
-                    left: 0;
-                    width: 40px;
-                    height: 40px;
-                    display: inline-block;
-                    line-height: 40px;
-                    text-align: center;
-                    color: #888888;
-                    font-size: 20px;
-                    speak: none;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-variant: normal;
-                    text-transform: none; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner.show-popup .color-palette-popup {
-              display: block; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .nbd-color-palette .nbd-color-palette-inner .color-palette-popup {
-              min-width: 100px;
-              min-height: 100px;
-              position: absolute;
-              display: none;
-              top: 0;
-              left: -50%; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .tab-scroll {
-          max-height: 100px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-family {
-          width: 100%;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          line-height: 28px;
-          font-size: 14px;
-          text-transform: capitalize;
-          background: #fff;
-          color: #26a69a;
-          box-shadow: none;
-          border: 1px solid #ebebeb;
-          padding: 5px;
-          height: auto; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-family span {
             font-weight: bold; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-family i {
-            font-size: 16px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size {
-          background: #fff;
-          box-shadow: none;
-          border: 1px solid #ebebeb;
-          padding: 5px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          line-height: normal; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size input {
-            padding: 0;
-            max-width: 40px;
-            box-shadow: none;
-            background-color: transparent;
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item span {
             color: #26a69a; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size i {
-            margin-left: 30px;
-            font-size: 12px;
-            color: #26a69a; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size i:before {
-              color: #26a69a; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-color {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background: #fff;
-          box-shadow: none;
-          padding: 5px;
-          border: 1px solid #ebebeb; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-color .color-selected {
-            width: 85px;
-            height: 24px;
-            background-color: red;
-            line-height: 1;
-            border: 1px solid #e6e6e6; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-color i {
-            color: #26a69a;
-            font-size: 16px;
-            line-height: normal;
-            margin-left: 10px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-dropdown .v-dropdown-menu {
-          width: 100%;
-          background: #fff;
-          border: 1px solid #ebebeb;
-          border-top: none; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items {
-          display: flex;
-          justify-content: space-around;
-          align-items: center; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item {
-            flex: 1 1 50%;
-            text-align: center;
-            padding: 5px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item i {
-              color: #26a69a; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item.item-reset {
-              border-right: 1px solid #ebebeb; }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image {
-        position: absolute;
-        top: 250px;
-        right: 0;
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item.active i.checked {
+            display: block; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .tab-scroll {
+        max-height: 220px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-color-palette .tab-scroll {
+        max-height: 100px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-family {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 28px;
+        font-size: 14px;
+        text-transform: capitalize;
+        background: #fff;
+        color: #26a69a;
+        box-shadow: none;
         border: 1px solid #ebebeb;
-        min-width: 250px;
-        border-radius: 2px;
-        background: #fff; }
-        @media screen and (max-width: 767px) {
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image {
-            display: none; } }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first {
-          display: flex;
-          justify-content: space-between;
-          align-items: center; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-general .items .item {
-            margin-right: 10px;
-            text-align: center; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-general .items .item:last-child {
-              margin-right: 0; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional {
-            position: relative;
-            margin: -28px 0 0 20px;
-            display: inline-block;
-            width: 68px;
-            height: 68px; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct {
-              cursor: pointer;
-              position: absolute;
-              width: 26px;
-              height: 22px;
-              text-align: center;
-              border: 1px solid #ebebeb;
-              border-top: none; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct i {
-                font-size: 18px;
-                line-height: normal; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:first-child {
-                top: 0;
-                left: 21px; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:nth-child(2) {
-                top: 23px;
-                right: -3px; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:nth-child(3) {
-                bottom: 0;
-                left: 21px; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:nth-child(4) {
-                top: 23px;
-                left: -3px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-assets .v-asset i {
-          font-size: 28px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges {
-          width: calc(100% - 100px);
-          height: 40px;
-          display: flex;
-          align-items: center; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track {
-            position: relative;
-            width: 100%; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input {
-              background-color: transparent;
-              border: none;
-              height: 7px;
-              outline: none;
-              padding: 0;
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%;
-              z-index: 100;
-              margin-top: -3px;
-              -webkit-appearance: none; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input::-webkit-slider-thumb {
-                appearance: none;
-                width: 7px;
-                height: 20px;
-                background: #26a69a;
-                cursor: pointer; }
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input::-moz-range-thumb {
-                width: 7px;
-                height: 20px;
-                background: #26a69a;
-                cursor: pointer; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .range-track {
-              background-color: #aaa;
-              height: 2px;
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 100%; }
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .snap-guide {
-              position: absolute;
-              border-left: 2px solid #aaa;
-              left: 50%;
-              top: 0;
-              height: 12px;
-              margin-top: 2px;
-              z-index: 90; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .footer-box .main-footer {
+        padding: 5px;
+        height: auto; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-family span {
+          font-weight: bold; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-family i {
+          font-size: 16px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size {
+        background: #fff;
+        box-shadow: none;
+        border: 1px solid #ebebeb;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: normal; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size input {
+          padding: 0;
+          max-width: 40px;
+          box-shadow: none;
+          background-color: transparent;
+          color: #26a69a; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size i {
+          margin-left: 30px;
+          font-size: 12px;
+          color: #26a69a; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size i:before {
+            color: #26a69a; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-dropdown .v-dropdown-menu {
+        width: 100%;
+        background: #fff;
+        border: 1px solid #ebebeb;
+        border-top: none; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items {
+        display: flex;
+        justify-content: space-around;
+        align-items: center; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item {
+          flex: 1 1 50%;
+          text-align: center;
+          padding: 5px;
           cursor: pointer;
           display: flex;
           justify-content: center;
-          align-items: center;
-          padding: 5px; }
+          align-items: center; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item i {
+            color: #26a69a; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item.item-reset {
+            border-right: 1px solid #ebebeb; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-general .items .item {
+          margin-right: 10px;
+          text-align: center; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-general .items .item:last-child {
+            margin-right: 0; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-general .items .item.active .v-asset {
+            background-color: #f6f6f6; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional {
+          position: relative;
+          margin: -28px 0 0 20px;
+          display: inline-block;
+          width: 68px;
+          height: 68px; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct {
+            cursor: pointer;
+            position: absolute;
+            width: 26px;
+            height: 22px;
+            text-align: center;
+            border: 1px solid #ebebeb;
+            border-top: none; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct i {
+              font-size: 18px;
+              line-height: normal; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:first-child {
+              top: 0;
+              left: 21px; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:nth-child(2) {
+              top: 23px;
+              right: -3px; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:nth-child(3) {
+              bottom: 0;
+              left: 21px; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first .toolbox-directional .item-direct:nth-child(4) {
+              top: 23px;
+              left: -3px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-assets .v-asset i {
+        font-size: 28px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges {
+        width: calc(100% - 100px);
+        height: 40px;
+        display: flex;
+        align-items: center; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track {
+          position: relative;
+          width: 100%; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input {
+            background-color: transparent;
+            border: none;
+            height: 7px;
+            outline: none;
+            padding: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            margin-top: -3px;
+            -webkit-appearance: none; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input::-webkit-slider-thumb {
+              appearance: none;
+              width: 7px;
+              height: 20px;
+              background: #26a69a;
+              cursor: pointer; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input::-moz-range-thumb {
+              width: 7px;
+              height: 20px;
+              background: #26a69a;
+              cursor: pointer; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .range-track {
+            background-color: #aaa;
+            height: 2px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .snap-guide {
+            position: absolute;
+            border-left: 2px solid #aaa;
+            left: 50%;
+            top: 0;
+            height: 12px;
+            margin-top: 2px;
+            z-index: 90; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .footer-box .main-footer {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-group .header-box {
+        margin-bottom: 10px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-group .main-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        cursor: pointer; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-path .nbd-color-palette {
+        right: auto;
+        left: 0; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-path .footer-box .main-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        cursor: pointer; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages {
         width: 100%;
         height: 100%; }
@@ -4926,11 +4838,20 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               height: auto;
               width: auto;
               background-color: #fff;
-              transform: none;
-              left: 0;
-              right: 0;
-              bottom: -30px;
+              left: 50%;
+              right: auto;
+              transform: translateX(-50%);
+              bottom: -25px;
               top: auto; } }
+          @media screen and (max-width: 475px) {
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
+              bottom: 40px; } }
+          @media screen and (max-width: 420px) {
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
+              bottom: 75px; } }
+          @media screen and (max-width: 375px) {
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
+              bottom: 110px; } }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main {
             height: 100%;
             text-align: center; }
@@ -4954,6 +4875,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li {
                 padding: 10px 0;
                 cursor: pointer; }
+                @media screen and (max-width: 767px) {
+                  .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li {
+                    padding: 5px 10px; } }
                 .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li:hover i {
                   opacity: 1; }
                 .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li.disabled:hover i {

@@ -12,7 +12,6 @@
   .nbd-vista {
     height: 580px;
     margin-bottom: 10px;
-    //overflow: hidden;
     box-sizing: border-box;
 
     @import "patials/reset";
@@ -43,6 +42,7 @@
     @import "component/checkbox";
     @import "component/ranges";
     @import "component/nbd-tab";
+    @import "component/color-palette";
     .v-workspace {
       height: 500px;
       display: flex;

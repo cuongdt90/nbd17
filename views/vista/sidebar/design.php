@@ -3,35 +3,17 @@
         <li class="nbd-nav-tab active" data-tab="nbd-tab-design-workflow"><span class="v-title">Design</span></li>
         <li class="nbd-nav-tab" data-tab="nbd-tab-bg-color"><span class="v-title">Background</span></li>
     </ul>
-<!--    <span class="v-title">Design</span>-->
 
     <div class="v-content nbd-tab-contents" data-action="no">
         <div class="layout tab-scroll nbd-tab-content active" id="nbd-tab-design-workflow">
             <div class="main-scrollbar">
+                <div class="short-design" style="display: none">
+                    <button class="v-btn btn-svg-upload">Upload Svg</button>
+                    <button class="v-btn btn-add-text">Add Text</button>
+                </div>
                 <div class="items">
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
-                    </div>
-                    <div class="item">
-                        <img src="https://cdn.rendering.documents.cimpress.io/v1/vp/preview?instructions_uri=http%3a%2f%2fservices.vistaprint.com%2fsales%2fdocuments%2fpreviewing%2foriondocsignature.aspx%3ftemplate%3d1186570_B74%26hash%3d641ade%26language_id%3d36&amp;width=175&amp;category=gp&amp;merchant_metadata=B74">
+                    <div class="item" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
+                        <img ng-src="{{temp.thumbnail}}" alt="<?php _e('Template','web-to-print-online-designer'); ?>">
                     </div>
                 </div>
             </div>
@@ -40,19 +22,6 @@
             <div class="tab-scroll bg-color">
                 <div class="main-scrollbar">
                     <div class="main-color">
-<!--                        <ul class="items">-->
-<!--                            <li class="item active" style="background-color: #fff"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #000"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #5E433A"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #D4C89F"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #D3CFD0"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #FFE600"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #398758"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #928C3C"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                            <li class="item" style="background-color: #928C3C"><i class="nbd-icon-vista nbd-icon-vista-done"></i></li>-->
-<!--                        </ul>-->
-
-
                         <div class="nbd-color-palette show">
                             <div class="nbd-color-palette-inner">
                                 <div class="working-palette">

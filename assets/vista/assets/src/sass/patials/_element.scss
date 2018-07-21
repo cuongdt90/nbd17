@@ -133,6 +133,7 @@
               border-top-right-radius: 0;
               border-bottom-right-radius: 0;
               border-right: none;
+              border: 1px solid $main-color;
               width: 100%;
               box-shadow: none;
             }
@@ -323,12 +324,16 @@
         }
       }
     }
+    .type-shapes {
+      .mansory-wrap {
+        background-color: #ebebeb;
+      }
+    }
   }
   .loading-photo {
     position: relative;
     margin: auto;
   }
-
 }
 .info-support {
   position: absolute;
@@ -370,7 +375,6 @@
     margin-right: 9px;
   }
 }
-
 .mansory-wrap {
   margin-top: 15px;
   .mansory-item {

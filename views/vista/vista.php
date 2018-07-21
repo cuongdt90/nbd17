@@ -128,6 +128,7 @@ if ( function_exists( 'icl_get_home_url' ) ) {
     var NBDESIGNLANG = <?php echo json_encode(nbd_get_language( $lang_code ));  ?>
 </script>
 
+<?php $isTask = (isset($_GET['task']) && $_GET['task'] == 'create') ? true : false; ?>
 <div ng-app="nbd-app" class="nbd-mode-vista <?php echo (is_rtl()) ? 'nbd-rlt' : ''?>">
     <div ng-controller="designCtrl" ng-cloak>
         <div id="design-container">
@@ -140,7 +141,6 @@ if ( function_exists( 'icl_get_home_url' ) ) {
                             <?php include "layout.php";?>
                             <?php include "warning.php"; ?>
                             <?php include "toasts.php";?>
-                            <?php include "toollock.php";?>
                         </div>
                     </div>
                     <?php include 'popup.php';?>

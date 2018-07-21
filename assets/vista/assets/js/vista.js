@@ -215,7 +215,7 @@ function checkMobileDevice(){
                 var dataApi = $(this).attr('data-api');
 
                 if (dataType == 'webcam') {
-                    $('.nbd-vista .v-popup-webcam').nbShowPopup();
+                    // $('.nbd-vista .v-popup-webcam').nbShowPopup();
                     return;
                 }
                 $infoSupport.find('span').text(itemName);
@@ -328,12 +328,10 @@ function checkMobileDevice(){
                         });
                         $mainItems.removeClass('active-expanded');
                         $resultLoaded.removeClass('loaded');
-                        // $resultLoaded.find('.nbdesigner-gallery').empty();
                         $resultLoaded.hide();
                         $resultLoaded.removeClass('loaded');
                         $galleryItem.hide();
                         $item.show();
-                        //$loadingGif.hide();
                     }
 
                     // return false;
@@ -343,7 +341,6 @@ function checkMobileDevice(){
                 $infoSupport.find('.close-result-loaded').on('click', function () {
                     $infoSupport.removeClass('nbd-show');
                     $mainItems.removeClass('active-expanded');
-                    // $resultLoaded.find('.nbdesigner-gallery').empty();
                     $resultLoaded.hide();
                     $resultLoaded.removeClass('loaded');
                     $galleryItem.hide();
@@ -351,6 +348,7 @@ function checkMobileDevice(){
                     $loadingGif.hide();
                     $item.show().css({'opacity' : '1'});
                     $tabScroll.scrollTop(0);
+                    $contentItem.hide();
                 });
 
             });
@@ -507,10 +505,7 @@ function checkMobileDevice(){
         $('.nbd-vista .item-reset').on('click', function () {
             $('.nbd-vista .nbd-warning').nbWarning('warning');
         });
-        $('.nbd-vista .item-done').on('click', function () {
-            $('.nbd-vista .nbd-toasts').nbToasts('I am a toast');
-            // $('.nbd-vista .v-popup-terms').nbShowPopup();
-        });
+
         $('.nbd-vista .click-reset-design').on('click', function () {
             $('.nbd-vista .v-popup-select').nbShowPopup();
         });

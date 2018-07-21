@@ -1,14 +1,4 @@
 .v-toolbox-image {
-  position: absolute;
-  top: 250px;
-  right: 0;
-  border: 1px solid #ebebeb;
-  min-width: 250px;
-  border-radius: 2px;
-  background: #fff;
-  @media screen and (max-width: 767px){
-      display: none;
-  }
   .toolbox-first {
     display: flex;
     justify-content: space-between;
@@ -20,6 +10,11 @@
           text-align: center;
           &:last-child {
             margin-right: 0;
+          }
+          &.active{
+            .v-asset {
+              background-color: #f6f6f6;
+            }
           }
         }
       }

@@ -3,7 +3,7 @@
         <div class="v-toolbar-item left-toolbar">
             <ul class="v-tabs tabs-toolbar v-main-menu">
                 <?php if (wp_is_mobile()): ?>
-                <li class="v-tab v-menu-item v-tab-layer active">
+                <li class="v-tab v-menu-item v-tab-layer active" id="design-tab">
                     <i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>Layer</span>
                 </li>
                 <?php endif; ?>

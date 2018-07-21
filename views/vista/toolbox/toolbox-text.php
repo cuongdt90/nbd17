@@ -1,6 +1,8 @@
-<div class="v-toolbox-text" ng-show="stages[currentStage].states.isText || stages[currentStage].states.isGroup" style="transform: translateX(-50%)" ng-style="stages[currentStage].states.toolbarStyle">
-<!--<div class="v-toolbox-text" ng-show="stages[currentStage].states.isText">-->
-    <div class="v-triangle">
+<div class="v-toolbox-text v-toolbox-item"
+     ng-class="stages[currentStage].states.isShowToolBox ? 'nbd-show' : ''"
+     ng-show="stages[currentStage].states.isText"
+     ng-style="stages[currentStage].states.toolboxStyle">
+    <div class="v-triangle" data-pos="{{stages[currentStage].states.toolboxTriangle}}">
         <div class="header-box">
             <span>Format Text</span>
         </div>
@@ -48,7 +50,7 @@
                     </div>
                 </div>
             </div>
-
+            <?php include __DIR__ . '/../toollock.php'?>
             <div class="toolbox-row toolbox-second toolbox-align">
                 <ul class="items v-assets">
                     <li class="item v-asset item-align-left"
@@ -86,15 +88,28 @@
                     </li>
                 </ul>
             </div>
-
+            <div class="toolbox-row toolbox-second toolbox-general">
+                <ul class="items v-assets">
+                    <li class="item v-asset item-reset" title="Reset">
+                        <i class="nbd-icon-vista nbd-icon-vista-refresh"></i>
+                    </li>
+                    <li class="item v-asset item-delete"
+                        ng-click="deleteLayers()"
+                        title="Delete layer">
+                        <i class="nbd-icon-vista nbd-icon-vista-clear"></i>
+                    </li>
+                    <li class="item v-asset" style="visibility: hidden"></li>
+                    <li class="item v-asset" style="visibility: hidden"></li>
+                    <li class="item v-asset" style="visibility: hidden"></li>
+                </ul>
+            </div>
             <div class="toolbox-row toolbox-last">
                 <div class="toolbox-font-size">
                     <div class="v-dropdown">
                         <button class="v-btn btn-font-size v-btn-dropdown" title="Font size">
                             <input class="toolbar-input" type="text" name="font-size" value="12"
                                ng-keyup="$event.keyCode == 13 && setTextAttribute('fontSize', stages[currentStage].states.text.fontSize)"
-                               ng-model="stages[currentStage].states.text.fontSize"
-                            >
+                               ng-model="stages[currentStage].states.text.fontSize"/>
                             <i class="nbd-icon-vista nbd-icon-vista-arrows"></i>
                         </button>
                         <div class="v-dropdown-menu">
@@ -102,35 +117,10 @@
                                 <li class="item"
                                     ng-click="setTextAttribute('fontSize', fontsize)"
                                     ng-class="stages[currentStage].states.text.fontSize == fontsize ? 'active' : ''"
-                                    ng-repeat="fontsize in ['6','8','10','12','14','16','18','21','24','28','32','36','42','48','56','64','72','80','88','96','104','120','144']"
-                                >
+                                    ng-repeat="fontsize in ['6','8','10','12','14','16','18','21','24','28','32','36','42','48','56','64','72','80','88','96','104','120','144']">
                                     <span>{{fontsize}}</span>
                                     <i class="nbd-icon-vista nbd-icon-vista-done checked"></i>
                                 </li>
-<!--                                <li class="item active"><span>13</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>14</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>16</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>18</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>21</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>24</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>28</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>30</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>36</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>40</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>42</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
-<!--                                <li class="item"><span>44</span><i-->
-<!--                                            class="nbd-icon-vista nbd-icon-vista-done checked"></i></li>-->
                             </ul>
                         </div>
                     </div>
@@ -142,58 +132,7 @@
                             <i class="nbd-icon-vista nbd-icon-vista-expand-more"></i>
                         </button>
                         <div class="v-dropdown-menu">
-                            <div class="nbd-color-palette show">
-                                <div class="nbd-color-palette-inner">
-                                    <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'" style="margin-bottom: 10px">
-                                        <h3 class="color-palette-label">Set color</h3>
-                                        <ul class="main-color-palette tab-scroll">
-                                            <li class="color-palette-add" ng-style="{'background-color': currentColor}"></li>
-                                            <li
-                                                ng-repeat="color in listAddedColor track by $index"
-                                                ng-click="changeFill(color)"
-                                                class="color-palette-item"
-                                                data-color="{{color}}"
-                                                title="{{color}}"
-                                                ng-style="{'background-color': color}">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="pinned-palette default-palette">
-                                        <h3 class="color-palette-label"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
-                                        <ul class="main-color-palette tab-scroll" ng-repeat="palette in resource.defaultPalette" style="margin-bottom: 5px; max-height: 80px">
-                                            <li ng-class="{'first-left': $first, 'last-right': $last, 'first-right': $index == 4,'last-left': $index == (palette.length - 5)}"
-                                                ng-repeat="color in palette track by $index"
-                                                ng-click="changeFill(color)"
-                                                class="color-palette-item"
-                                                data-color="{{color}}"
-                                                title="{{color}}"
-                                                ng-style="{'background': color}">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="nbd-text-color-picker"
-                                         ng-class="showTextColorPicker ? 'active' : ''"
-                                         id="nbd-text-color-picker">
-                                        <spectrum-colorpicker
-                                                ng-model="currentColor"
-                                                options="{
-                                                preferredFormat: 'hex',
-                                                color: '#fff',
-                                                flat: true,
-                                                showButtons: false,
-                                                showInput: true,
-                                                containerClassName: 'nbd-sp'
-                                            }">
-                                        </spectrum-colorpicker>
-                                        <div>
-                                            <button class="v-btn"
-                                                ng-click="addColor();changeFill(currentColor);">
-                                                <?php _e('Add color','web-to-print-online-designer'); ?>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php include __DIR__ . '/../color-palette.php'?>
                         </div>
                     </div>
                 </div>
@@ -202,10 +141,10 @@
         <div class="footer-box">
             <div class="main-footer">
                 <ul class="items">
-                    <li class="item item-reset" title="Reset">
-                        <i class="nbd-icon-vista nbd-icon-vista-refresh"></i>
-                    </li>
-                    <li class="item item-done" title="Done">
+<!--                    <li class="item item-reset" title="Reset">-->
+<!--                        <i class="nbd-icon-vista nbd-icon-vista-refresh"></i>-->
+<!--                    </li>-->
+                    <li class="item item-done" title="Done" ng-click="onClickDone()">
                         <i class="nbd-icon-vista nbd-icon-vista-done"></i>
                     </li>
                 </ul>
