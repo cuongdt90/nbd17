@@ -2,7 +2,7 @@
     <span class="v-title">More</span>
     <div class="nbd-search">
         <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
-        <i class="nbd-icon-vista nbd-icon-vista-search"></i>
+        <i class="nbd-icon-vista nbd-icon-vista-search" ng-click="getMedia(resource.element.type, 'search')"></i>
     </div>
     <div class="v-content">
         <div class="tab-scroll">
@@ -14,7 +14,7 @@
                                  data-type="draw"
                                  data-api="false"
                                  ng-click="onClickTab('draw', 'element')"
-                                 ng-if="settings['nbdesigner_enable_draw'] == 'yes'">
+                                 ng-if="settings['nbdesigner_enable_draw'] == 'yes' && !settings.is_mobile">
                                 <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-drawing"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Draw"><?php _e('Draw','web-to-print-online-designer'); ?></span>

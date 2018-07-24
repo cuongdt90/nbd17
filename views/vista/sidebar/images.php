@@ -7,7 +7,7 @@
     <span class="v-title">Image</span>
     <div class="nbd-search">
         <input ng-class="(resource.personal.status || !resource.photo.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getPhoto(resource.photo.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.photo.photoSearch"/>
-        <i class="nbd-icon-vista nbd-icon-vista-search"></i>
+        <i class="nbd-icon-vista nbd-icon-vista-search" ng-click="getPhoto(resource.photo.type, 'search')"></i>
     </div>
     <div class="v-content">
         <div class="tab-scroll">

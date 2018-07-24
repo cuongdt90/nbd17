@@ -2755,6 +2755,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     text-align: center; }
   .nbd-mode-vista .nbd-vista .text-capital {
     text-transform: capitalize !important; }
+  .nbd-mode-vista .nbd-vista .nbd-d-flex {
+    display: flex; }
+  .nbd-mode-vista .nbd-vista .nbd-justify-content-start {
+    justify-content: flex-start !important; }
   .nbd-mode-vista .nbd-vista .nbd-disabled {
     pointer-events: none;
     opacity: 0.3; }
@@ -3480,7 +3484,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom {
     position: absolute;
     bottom: 10px;
-    right: 30px; }
+    right: 30px;
+    z-index: 99; }
     @media screen and (max-width: 767px) {
       .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom {
         bottom: 75px;
@@ -3496,7 +3501,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item {
         padding: 5px;
         display: flex;
-        align-items: center; }
+        align-items: center;
+        cursor: pointer; }
         .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item i {
           font-size: 24px; }
         .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item.zoomer-fullscreen {
@@ -4417,6 +4423,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             background-color: #f6f6f6; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset.active i {
               font-weight: bold; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset-margin {
+          margin-right: 5px; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset-margin:last-child {
+            margin-right: 0; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset-title {
           font-size: 12px;
           display: inline-block;
@@ -4446,7 +4456,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         color: red; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item {
         position: absolute;
-        top: 250px;
         border: 1px solid #ebebeb;
         min-width: 250px;
         border-radius: 2px;
@@ -4454,6 +4463,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         transition: visibility .2s, opacity .2s;
         visibility: hidden;
         opacity: 0;
+        z-index: 9999;
         transform: translateX(-50%); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.nbd-show {
           visibility: visible;
@@ -4749,14 +4759,16 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             padding: 40px 20px 50px;
             position: absolute;
             top: 0;
-            left: 0; }
+            left: 0;
+            z-index: -1; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage.nbd-active {
+              z-index: 9; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage.hidden {
               opacity: 0;
               z-index: 0;
               -webkit-transform: translate3d(0, -100%, 0);
               transform: translate3d(0, -100%, 0); }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main {
-              box-shadow: 1px 0 10px rgba(0, 0, 0, 0.08);
               position: relative;
               background-color: #fff;
               margin: auto 0; }
@@ -4890,7 +4902,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom {
         position: absolute;
         bottom: 10px;
-        right: 30px; }
+        right: 30px;
+        z-index: 99; }
         @media screen and (max-width: 767px) {
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom {
             bottom: 75px;
@@ -4906,7 +4919,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item {
             padding: 5px;
             display: flex;
-            align-items: center; }
+            align-items: center;
+            cursor: pointer; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item i {
               font-size: 24px; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item.zoomer-fullscreen {

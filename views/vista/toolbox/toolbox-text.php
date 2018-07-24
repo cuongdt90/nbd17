@@ -90,7 +90,7 @@
             </div>
             <div class="toolbox-row toolbox-second toolbox-general">
                 <ul class="items v-assets">
-                    <li class="item v-asset item-reset" title="Reset">
+                    <li class="item v-asset item-reset" ng-click="resetLayer()" title="Reset" ng-class="stages[currentStage].states.hasReset ? '' : 'nbd-disabled'">
                         <i class="nbd-icon-vista nbd-icon-vista-refresh"></i>
                     </li>
                     <li class="item v-asset item-delete"

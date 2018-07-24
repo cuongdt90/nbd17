@@ -30,6 +30,13 @@ input[type=email], input[type=password], input[type=search], input[type=text], i
   text-transform: capitalize !important;
 }
 
+.nbd-d-flex {
+  display: flex;
+}
+.nbd-justify-content-start{
+  justify-content: flex-start !important;
+}
+
 .nbd-disabled {
   pointer-events: none;
   opacity: 0.3;

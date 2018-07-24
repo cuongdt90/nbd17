@@ -39,11 +39,21 @@
         }
       }
     }
-    .v-asset-title {
-      font-size: 12px;
-      display: inline-block;
-      color: #bbb;
+
+    .v-asset {
+      &-margin {
+        margin-right: 5px;
+        &:last-child{
+          margin-right: 0;
+        }
+      }
+      &-title {
+        font-size: 12px;
+        display: inline-block;
+        color: #bbb;
+      }
     }
+
   }
   .v-triangle {
     position: relative;
@@ -89,7 +99,7 @@
   }
   .v-toolbox-item {
     position: absolute;
-    top: 250px;
+    //top: 250px;
     border: 1px solid #ebebeb;
     min-width: 250px;
     border-radius: 2px;
@@ -97,10 +107,17 @@
     transition: visibility .2s, opacity .2s;
     visibility: hidden;
     opacity: 0;
+    z-index: 9999;
     transform: translateX(-50%);
     &.nbd-show{
       visibility: visible;
       opacity: 1;
+    }
+    @media screen and (max-width: 475px){
+      //top: auto !important;
+      //bottom: -50px !important;
+      //left: 50% !important;
+      //transform: translateX(-50%) !important;
     }
   }
   .v-btn {

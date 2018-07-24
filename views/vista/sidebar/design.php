@@ -1,4 +1,4 @@
-<div id="tab-design" class="v-tab-content active nbd-main-tab">
+<div id="tab-design" class="v-tab-content active nbd-main-tab" ng-if="resource.templates.length > 0">
     <ul class="nbd-nav-tabs">
         <li class="nbd-nav-tab active" data-tab="nbd-tab-design-workflow"><span class="v-title">Design</span></li>
         <li class="nbd-nav-tab" data-tab="nbd-tab-bg-color"><span class="v-title">Background</span></li>
@@ -24,57 +24,56 @@
                     <div class="main-color">
                         <div class="nbd-color-palette show">
                             <div class="nbd-color-palette-inner">
-                                <div class="working-palette">
+                                <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'" style="margin-bottom: 10px">
                                     <h3 class="color-palette-label">Set color</h3>
-                                    <ul class="main-color-palette tab-scroll" style="max-height: 150px">
+                                    <ul class="main-color-palette tab-scroll">
                                         <li class="color-palette-add" ng-style="{'background-color': currentColor}"></li>
-                                        <li ng-repeat="color in listAddedColor track by $index" class="color-palette-item" data-color="{color}" title="{color}" ng-style="{'background-color': color}"></li>
+                                        <li
+                                            ng-repeat="color in listAddedColor track by $index"
+                                            ng-click="changeBackgroundCanvas(color)"
+                                            class="color-palette-item"
+                                            data-color="{{color}}"
+                                            title="{{color}}"
+                                            ng-style="{'background-color': color}">
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="pinned-palette default-palette">
-                                    <h3 class="color-palette-label">Default color</h3>
-                                    <ul class="main-color-palette">
-                                        <li class="color-palette-item ng-scope" data-color="#81d742" style="background: rgb(129, 215, 66);"></li>
-                                        <li class="color-palette-item ng-scope" data-color="#1e73be" style="background: rgb(30, 115, 190);"></li>
-                                        <li class="color-palette-item ng-scope" data-color="#dd3333" style="background: rgb(221, 51, 51);"></li>
-                                        <li class="color-palette-item ng-scope" data-color="#8224e3" style="background: rgb(130, 36, 227);"></li>
+                                    <h3 class="color-palette-label"><?php _e('Default palette','web-to-print-online-designer'); ?></h3>
+                                    <ul class="main-color-palette tab-scroll" ng-repeat="palette in resource.defaultPalette" style="margin-bottom: 5px; max-height: 80px">
+                                        <li ng-class="{'first-left': $first, 'last-right': $last, 'first-right': $index == 4,'last-left': $index == (palette.length - 5)}"
+                                            ng-repeat="color in palette track by $index"
+                                            ng-click="changeBackgroundCanvas(color)"
+                                            class="color-palette-item"
+                                            data-color="{{color}}"
+                                            title="{{color}}"
+                                            ng-style="{'background': color}">
+                                        </li>
                                     </ul>
                                 </div>
-                                <div class="pinned-palette default-palette">
-                                    <ul class="main-color-palette">
-                                        <!--                                        <li ng-repeat="color in listAddedColor track by $index" class="color-palette-item" data-color="{color}" title="{color}" ng-style="{'background-color': color}"></li>-->
-                                        <li class="color-palette-item" data-color="#333333" title="#333333"
-                                            style="background-color: #333333;"></li>
-                                        <li class="color-palette-item" data-color="#666666" title="#666666"
-                                            style="background-color: #666666;"></li>
-                                        <li class="color-palette-item" data-color="#a8a8a8" title="#a8a8a8"
-                                            style="background-color: #a8a8a8;"></li>
-                                        <li class="color-palette-item" data-color="#d9d9d9" title="#d9d9d9"
-                                            style="background-color: #d9d9d9;"></li>
-                                        <li class="color-palette-item" data-color="#ffffff" title="#ffffff"
-                                            style="background-color: #ffffff;"></li>
-                                    </ul>
-                                </div>
-                                <div class="nbd-text-color-picker" id="nbd-text-color-picker">
+                                <div class="nbd-text-color-picker"
+                                     ng-class="showTextColorPicker ? 'active' : ''"
+                                     id="nbd-text-color-picker">
                                     <spectrum-colorpicker
-                                            ng-model="currentColor"
-                                            options="{
-                                                preferredFormat: 'hex',
-                                                color: '#fff',
-                                                flat: true,
-                                                showButtons: false,
-                                                showInput: true,
-                                                containerClassName: 'nbd-sp'
-                                            }">
+                                        ng-model="currentColor"
+                                        options="{
+                                            preferredFormat: 'hex',
+                                            color: '#fff',
+                                            flat: true,
+                                            showButtons: false,
+                                            showInput: true,
+                                            containerClassName: 'nbd-sp'
+                                        }">
                                     </spectrum-colorpicker>
                                     <div>
-                                        <button class="v-btn" ng-click="addColor()"><?php _e('Add color','web-to-print-online-designer'); ?></button>
+                                        <button class="v-btn"
+                                                ng-click="addColor();changeBackgroundCanvas(currentColor);">
+                                            <?php _e('Add color','web-to-print-online-designer'); ?>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>

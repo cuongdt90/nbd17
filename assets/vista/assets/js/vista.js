@@ -121,10 +121,10 @@ function checkMobileDevice(){
      *
      */
     $.fn.nbElDropdown = function (options) {
+        var sefl = this;
         var defaults = {
             'itemInRow': 3,
         };
-
         var opts = $.extend({}, $.fn.nbDropdown.defaults, options);
         this.initPositionItem = function (items, item, itemInRow, itemDistance) {
 
@@ -193,6 +193,23 @@ function checkMobileDevice(){
             }
             return result;
         };
+        this.getItemInRow = function ($grid, $item) {
+            var itemInRow = opts.itemInRow;
+            if (typeof $grid == null || typeof $item == null) {
+                return itemInRow;
+            }
+            var numberItem = $item.length,
+                widthItem = $item.outerWidth(true),
+                widthGrid = $grid.width();
+
+            itemInRow = Math.min(parseInt(widthGrid / widthItem), numberItem);
+            window.addEventListener('resize', function () {
+                widthGrid = $grid.width();
+                itemInRow = Math.min(parseInt(widthGrid / widthItem), numberItem);
+            });
+
+            return itemInRow;
+        };
 
         return this.each(function () {
             var $items = $(this).find('.items');
@@ -214,13 +231,17 @@ function checkMobileDevice(){
                 var dataType = $(this).attr('data-type');
                 var dataApi = $(this).attr('data-api');
 
+                // =============== Canculate the anoubt of flexbox item in row =================
+                opts.itemInRow = sefl.getItemInRow($items, $item);
+
                 if (dataType == 'webcam') {
                     // $('.nbd-vista .v-popup-webcam').nbShowPopup();
                     return;
                 }
                 $infoSupport.find('span').text(itemName);
                 $mainItems.find('.pointer').css({
-                    'left': ((widthItem) * (indexItem % opts.itemInRow + 1) - widthItem / 2)  + 'px'
+                    // 'left': ((widthItem) * (indexItem % opts.itemInRow + 1) - widthItem / 2)  + 'px'
+                    'left': ($(this).offset().left - $mainItems.offset().left + widthItem / 2)  + 'px'
                 });
 
                 if (dataApi == 'false') {
@@ -410,6 +431,32 @@ function checkMobileDevice(){
         });
     };
 
+    $.fn.nbdColorPalette = function (options) {
+        var defaults = {};
+        var opts = $.extend({}, $.fn.nbdColorPalette.defaults, options);
+        return this.each(function () {
+            var sefl = this;
+            var $colorPalette = $('.nbd-color-palette');
+            $(this).on('click', function (e) {
+                var posL = $(this).offset().left;
+                var toolbarL = $('.nbd-toolbar').offset().left;
+
+                $('.nbd-main-menu .menu-item').removeClass('active');
+                $colorPalette.css({
+                    'left' : (posL - toolbarL) + 'px'
+                });
+                if(!$(this).hasClass('nbd-show')){
+                    $('.nbd-show-color-palette').removeClass('nbd-show');
+                    $colorPalette.addClass('show');
+                    $(this).addClass('nbd-show');
+                }else{
+                    $colorPalette.removeClass('show');
+                    $(this).removeClass('nbd-show');
+                };
+            });
+        });
+    };
+
     /**
      *
      * @param text
@@ -501,9 +548,6 @@ function checkMobileDevice(){
 
         $('.nbd-vista .v-elements').nbElDropdown({
             'itemInRow' : 3
-        });
-        $('.nbd-vista .item-reset').on('click', function () {
-            $('.nbd-vista .nbd-warning').nbWarning('warning');
         });
 
         $('.nbd-vista .click-reset-design').on('click', function () {

@@ -11,7 +11,7 @@
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-rotate-right"></i></div>
                             <span class="v-asset-title">rotate</span>
                         </li>
-                        <li class="item" title="Reset">
+                        <li class="item" ng-click="resetLayer()" title="Reset" ng-class="stages[currentStage].states.hasReset ? '' : 'nbd-disabled'">
                             <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-refresh"></i></div>
                             <span class="v-asset-title">reset</span>
                         </li>

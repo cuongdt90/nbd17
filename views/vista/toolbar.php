@@ -7,10 +7,10 @@
                     <i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>Layer</span>
                 </li>
                 <?php endif; ?>
-                <li class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="tab-design" ng-click="disableDrawMode();">
+                <li ng-if="resource.templates.length > 0" class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="tab-design" ng-click="disableDrawMode();">
                     <i class="nbd-icon-vista nbd-icon-vista-group-work"></i><span>Design</span>
                 </li>
-                <li class="v-tab v-menu-item" data-tab="tab-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'" ng-click="disableDrawMode();">
+                <li ng-class="resource.templates.length < 1 ? 'active' : ''" class="v-tab v-menu-item" data-tab="tab-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'" ng-click="disableDrawMode();">
                     <i class="nbd-icon-vista nbd-icon-vista-text"></i><span>Text</span>
                 </li>
                 <li ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="tab-photo" ng-click="disableDrawMode();">
@@ -32,7 +32,7 @@
                     <span>redo</span>
                 </li>
 <!--                <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-proof"></i><span>proof</span></li>-->
-<!--                                        <li class="v-menu-item"><i class="nbd-icon-vista nbd-icon-vista-save"></i><span>save</span></li>-->
+<!--                <li class="v-menu-item" ng-click="debug()"><i class="nbd-icon-vista nbd-icon-vista-save"></i><span>Debug</span></li>-->
             </ul>
         </div>
     </div>
