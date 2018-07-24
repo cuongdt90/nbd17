@@ -1,6 +1,12 @@
 <div style="width: 1px; height: 30px;"></div>
 <div class="toolbar-common">
     <ul class="nbd-main-menu">
+        <li ng-if="settings.is_mobile" class="menu-item item-opacity" ng-click="copyLayers()">
+            <i class="icon-nbd icon-nbd-content-copy nbd-tooltip-hover" title="<?php _e('Duplicate','web-to-print-online-designer'); ?>"></i>
+        </li>        
+        <li ng-if="settings.is_mobile" class="menu-item item-opacity" ng-click="deleteLayers()">
+            <i class="icon-nbd icon-nbd-delete nbd-tooltip-hover" title="<?php _e('Delete','web-to-print-online-designer'); ?>"></i>
+        </li>         
         <li class="menu-item item-opacity" data-range="true">
             <i class="icon-nbd icon-nbd-opacity nbd-tooltip-hover" title="<?php _e('Opacity','web-to-print-online-designer'); ?>"></i>
             <div class="sub-menu" data-pos="center">
@@ -8,7 +14,7 @@
                     <div class="range range-opacity">
                         <label><?php _e('Opacity','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-mouseup="setTextAttribute('opacity', stages[currentStage].states.opacity / 100)" ng-model="stages[currentStage].states.opacity">
+                            <input class="slide-input" type="range" step="1" min="0" max="100" ng-change="setTextAttribute('opacity', stages[currentStage].states.opacity / 100)" ng-model="stages[currentStage].states.opacity">
                             <span class="range-track"></span>
                         </div>
                         <span class="value-display">{{stages[currentStage].states.opacity}}</span>

@@ -33,8 +33,17 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <?php if(1): //if( $task == 'create_template' ): ?>
+                        <?php if( $task != 'create_template' ): ?>
+                        <hr ng-hide="resource.templates.length == 0" />
+                        <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
+                            <div class="main-item global" image-on-load="temp.thumbnail">
+                                <div class="item-img">
+                                    <img ng-src="{{temp.thumbnail}}" alt="{{temp.name}}">
+                                </div>
+                            </div>
+                        </div>  
+                        <?php endif; ?>
+                        <?php if( $task == 'create_template' ): ?>
                         <div style="padding:5px;">
 <!--                            <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="debug()">Debug</button>
@@ -51,7 +60,7 @@
                             </div>
                         </div>
                         <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
-                            <div class="main-item">
+                            <div class="main-item global" image-on-load="temp.thumbnail">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="{{temp.name}}">
                                 </div>

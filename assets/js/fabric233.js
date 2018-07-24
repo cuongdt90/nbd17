@@ -24656,7 +24656,7 @@ fabric.Image.filters.BaseFilter.fromObject = function(object, callback) {
     calcTextHeight: function() {
       var lineHeight, height = 0;
       for (var i = 0, len = this._textLines.length; i < len; i++) {
-        lineHeight = this.getHeightOfLine(i);
+        lineHeight = this.getHeightOfLine(i);console.log(lineHeight);
         height += (i === len - 1 ? lineHeight / this.lineHeight : lineHeight);
       }
       return height;

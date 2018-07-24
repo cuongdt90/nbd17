@@ -18,15 +18,23 @@ jQuery(document).ready(function () {
                 jQuery('#nbd-custom-design-wrap').prepend('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');
                 nbd_append_iframe = true;
             }
+        }else{
+            if(is_nbd_upload_without_design){
+                jQuery('#nbd-m-upload-design-wrap').addClass('is-visible');
+            }else if( !is_nbd_upload ){
+                if( !nbd_append_iframe ){
+                    var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
+                    if( jQuery('input[name="variation_id"]').length ){
+                        iframe_src = addParameter(iframe_src, 'variation_id', jQuery('input[name="variation_id"]').val(), false);
+                    }
+                    jQuery('#nbd-m-custom-design-wrap').prepend('<iframe id="onlinedesigner-designer"  width="100%" height="100%" scrolling="no" frameborder="0" noresize="noresize" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" src="'+iframe_src+'"></iframe>');        
+                    nbd_append_iframe = true;
+                }
+                jQuery('#nbd-m-custom-design-wrap').addClass('is-visible');
+            }
         }
         jQuery('#container-online-designer').addClass('is-visible');
-//        jQuery('#container-online-designer').stop().animate({
-//            top: 0,
-//            opacity: 1,
-//            bottom: 0
-//        }, 500);
     };
-    //jQuery('#container-online-designer').css({'height': height, 'top': h, 'bottom': 0, 'opacity': 0, 'width': '100%'});
     jQuery('#triggerDesign').on('click', function () {
         if(jQuery(this).hasClass('nbdesigner_disable')){
             jQuery('.single_add_to_cart_button').trigger('click');
@@ -65,10 +73,6 @@ jQuery(document).ready(function () {
     };    
     hideDesignFrame = function (mes) {
         jQuery('body').removeClass('nbd-prevent-scroll');
-//        var _h = -jQuery(window).height();
-//        jQuery('#container-online-designer').stop().animate({
-//            top: _h
-//        }, 500);
         jQuery('#container-online-designer').removeClass('is-visible');
         backtoOption();
         if (mes != null) {
@@ -96,7 +100,7 @@ jQuery(document).ready(function () {
     jQuery(window).on('resize', function () {
         var width = jQuery(window).width(),
                 height = jQuery(window).height();
-        jQuery('#container-online-designer').css({'height': height});
+        //jQuery('#container-online-designer').css({'height': height});
     });  
     jQuery('.nbd-order-download-pdf-action').each(function(index) {
         var download_pdf = jQuery(this),

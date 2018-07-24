@@ -19,7 +19,7 @@ $srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
                         <small>{{ 'M-O' | keyboardShortcut }}</small>
                     </li>
                     <li class="sub-menu-item flex space-between item-import-file" ng-click="loadMyDesign(null, true)">
-                        <span><?php _e('Design in Cart','web-to-print-online-designer'); ?></span>
+                        <span><?php _e('My Design in Cart','web-to-print-online-designer'); ?></span>
                         <small>{{ 'M-S-O' | keyboardShortcut }}</small>
                     </li>                    
                     <li class="sub-menu-item flex space-between item-import-file" ng-click="importDesign()">

@@ -1,6 +1,6 @@
 <div class="tab" ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="tab-photo" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
     <div class="nbd-search">
-        <input ng-class="(resource.personal.status || !resource.photo.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getPhoto(resource.photo.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.photo.photoSearch"/>
+        <input ng-class="(resource.personal.status || !resource.photo.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getPhoto(resource.photo.type, 'search')" type="text" name="search" placeholder="search" ng-model="resource.photo.photoSearch"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>        
     <div class="tab-main tab-scroll">

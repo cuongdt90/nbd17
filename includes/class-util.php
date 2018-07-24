@@ -806,6 +806,8 @@ function nbd_default_product_setting(){
 function nbd_get_default_product_option(){
     return apply_filters('nbdesigner_default_product_option', array(
         'admindesign'   => 0,
+        'global_template'   => 0,
+        'global_template_cat'   => 0,
         'dpi'   => nbdesigner_get_option('nbdesigner_default_dpi'),
         'request_quote' =>  0,
         'allow_specify_dimension'   =>  0,
@@ -829,6 +831,25 @@ function nbd_get_default_upload_setting(){
         'minsize'   => nbdesigner_get_option('nbdesigner_minsize_upload_file'),
         'mindpi'   => nbdesigner_get_option('nbdesigner_mindpi_upload_file')
     ));    
+}
+function nbd_get_global_template_cat(){
+    $cats = get_transient( 'nbd_global_template_cat' );
+    if( false === $cats ){
+        $response = wp_remote_post( 'https://media.printcart.com/v1/template',
+            array(
+                'timeout'     => 120,
+                'body' => array(
+                    'type'  =>  'get_template_cat'
+                )
+            )
+        );
+        $cats = array();
+        if ( !is_wp_error( $response ) ) {
+            $cats = json_decode($response['body'])->data;
+        }
+        set_transient( 'nbd_global_template_cat' , $cats, DAY_IN_SECONDS );
+    }
+    return $cats;
 }
 function nbd_update_config_default($designer_setting) {
     $default =  nbd_default_product_setting();    
@@ -982,8 +1003,8 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
             $data['fonts'] = nbd_get_data_from_json($template_path . '/used_font.json');
             $data['design'] = nbd_get_data_from_json($template_path . '/design.json'); 
             $data['config'] = nbd_get_data_from_json($template_path . '/config.json');
-            $data['is_template'] = 1;
-        }       
+        }
+        $data['is_template'] = 1;
     }
     if(  $reference != '' ){
         /* Get reference design, font and reference product setting */

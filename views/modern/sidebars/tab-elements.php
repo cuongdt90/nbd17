@@ -1,13 +1,13 @@
 <div class="tab" id="tab-element" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
     <div class="nbd-search">
-        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
+        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="text" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>     
     <div class="tab-main tab-scroll" style="margin-top: 70px;height: calc(100% - 70px);">
         <div class="nbd-items-dropdown">
             <div class="main-items">
                 <div class="items">
-                    <div ng-if="settings['nbdesigner_enable_draw'] == 'yes'" class="item" data-type="draw" data-api="false" ng-click="onClickTab('draw', 'element')">
+                    <div ng-if="settings['nbdesigner_enable_draw'] == 'yes' && !settings.is_mobile" class="item" data-type="draw" data-api="false" ng-click="onClickTab('draw', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-drawing"></i></div>
                             <div class="item-info">

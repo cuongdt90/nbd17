@@ -9,20 +9,23 @@
     display: none;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 50px;
     width: 40px;
     height: 40px;
     line-height: 40px;
     overflow: hidden;
     text-align: center;
     background: #404762;
-    z-index: 999;
+    z-index: -999;
     cursor: pointer;
 }
 .hide-tablet i {
     background-color: unset !important;
     color: #fff;
     font-size: 24px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;    
 }
 .hide-tablet:hover i {
     color: #fff;
@@ -49,6 +52,7 @@
     }
     .hide-tablet {
         display: block;
+        z-index: 999;
     }  
     .nbd-sidebar.is_open {
         -webkit-transform: translateX(0);

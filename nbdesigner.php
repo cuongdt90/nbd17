@@ -26,6 +26,7 @@ $baseurl = $upload_dir['baseurl'];
 
 $nbd_plugin_dir_url = plugin_dir_url(__FILE__);
 if ( function_exists( 'icl_get_home_url' ) ) {
+    global $sitepress;
     $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
     if( $wpml_language_negotiation_type == 2 ){
         $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);

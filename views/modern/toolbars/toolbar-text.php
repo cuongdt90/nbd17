@@ -1,6 +1,6 @@
 <div class="toolbar-text" ng-show="stages[currentStage].states.isText">
     <ul class="nbd-main-menu menu-left">
-        <li class="menu-item item-font-familly">
+        <li class="menu-item item-font-familly" ng-click="updateScrollBar('#toolbar-font-familly-dropdown')">
             <button class="toolbar-bottom">
                 <span class="toolbar-label toolbar-label-font" ng-style="{'font-family': stages[currentStage].states.text.font.alias}">{{stages[currentStage].states.text.font.name}}</span>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </li>
-        <li class="menu-item item-font-size">
+        <li class="menu-item item-font-size" ng-click="updateScrollBar('#toolbar-font-size-dropdown')">
             <button class="toolbar-bottom">
                 <input class="toolbar-input" type="text" ng-keyup="$event.keyCode == 13 && setTextAttribute('fontSize', stages[currentStage].states.text.fontSize)" name="font-size" ng-model="stages[currentStage].states.text.fontSize"/>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
@@ -97,7 +97,7 @@
                     <div class="range range-spacing">
                         <label><?php _e('Spacing','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" ng-mouseup="setTextAttribute('charSpacing', stages[currentStage].states.text.charSpacing)" ng-model="stages[currentStage].states.text.charSpacing" type="range" step="1" min="0" max="1000">
+                            <input class="slide-input" ng-change="setTextAttribute('charSpacing', stages[currentStage].states.text.charSpacing)" ng-model="stages[currentStage].states.text.charSpacing" type="range" step="1" min="0" max="1000">
                             <span class="range-track"></span>
                         </div>
                         <span class="value-display">{{stages[currentStage].states.text.charSpacing}}</span>
@@ -105,7 +105,7 @@
                     <div class="range range-line-height">
                         <label><?php _e('Line height','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" ng-mouseup="setTextAttribute('lineHeight', stages[currentStage].states.text.lineHeight)" ng-model="stages[currentStage].states.text.lineHeight" type="range" step="0.01" min="0" max="3">
+                            <input class="slide-input" ng-change="setTextAttribute('lineHeight', stages[currentStage].states.text.lineHeight)" ng-model="stages[currentStage].states.text.lineHeight" type="range" step="0.01" min="0" max="3">
                             <span class="range-track"></span>
                         </div>
                         <span class="value-display">{{stages[currentStage].states.text.lineHeight}}</span>

@@ -646,8 +646,18 @@
             .nbd-templates .item .item-img {
                 height: auto;
             }
+            .nbd-templates .item .main-item.global .item-img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;                
+            }
             .nbd-templates .item .item-img img {
                 vertical-align: top;
+                -webkit-transition: all 0.4s;
+                -moz-transition: all 0.4s;
+                transition: all 0.4s;                
             }
             .nbd-templates .items .item .main-item {
                 cursor: pointer;
@@ -656,6 +666,25 @@
                 transition: all 0.4s;
                 background: #fff;
             }  
+            .nbd-templates .items .item .main-item.global {
+                position: relative;
+                width: 100%;
+                padding-top: 100%;                 
+            }
+            .nbd-templates .items .item .main-item.image-onload {                
+                animation: timeline;
+                animation-duration: 1s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+                background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+                background-size: 800px auto;
+                background-position: 100px 0;
+                pointer-events: none;
+                opacity: 0.7;                  
+            }
+            .nbd-templates .items .item .main-item.image-onload img {
+                opacity: 0;
+            }
             .nbd-templates .items .item .main-item:hover {
                 -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
                 box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
@@ -665,15 +694,11 @@
                 box-sizing: border-box;
                 display: inline-block;
                 padding: 5px;
-            }   
-/*            .nbd-templates .items > .item:nth-child(odd) {
-                padding-right: 5px;
-            }            
-            .nbd-templates .items > .item:nth-child(even) {
-                padding-left: 5px;
-            }*/
+                padding-bottom: 0;
+            }
             .nbd-mode-1 .nbd-main-bar .logo {
                 visibility: hidden;
+                width: 0;
             }
             .nbd-popup.popup-share .main-popup .body .share-btn .nbd-button:focus,
             .nbd-popup.popup-share .main-popup .body .share-btn .nbd-button:hover {
@@ -812,11 +837,18 @@
             } 
             .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item.active {
                 border: 2px solid #0e9dde;
-            }     
+            }   
+            .nbd-load-page {
+                width: 100%;
+                height: 100%;                
+            }
+            .nbd-toolbar .toolbar-text .nbd-main-menu.menu-left .menu-item.item-font-size .sub-menu ul li {
+                cursor: pointer;
+            }
             @media screen and (min-width: 768px) {
                 .nbd-stages .stage .page-toolbar {
                     top: 50%;                
-                }                
+                }
             }
             @media screen and (max-width: 767px) {
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
@@ -840,7 +872,29 @@
                 }
                 .nbd-tip {
                     display: none;
-                }                
+                }  
+                .nbd-main-bar ul.menu-left .item-view>.sub-menu {
+                    -webkit-transform: translateX(-40%);
+                    -moz-transform: translateX(-40%);
+                    transform: translateX(-40%);
+                }
+                .nbd-popup.nb-show {
+                    z-index: 999999999999;
+                }
+                .android .nbd-workspace .main {
+                    height: -webkit-calc(100vh - 192px);
+                    height: calc(100vh - 192px);                    
+                }
+                .nbd-mode-1 .nbd-main-bar .menu-mobile.icon-nbd-clear {
+                    padding-left: 45px;
+                }   
+                .android input[name="search"]:focus {
+                    top: 70px;
+                    left: 10px;
+                    width: calc(100% - 20px);
+                    position: fixed;
+                    z-index: 100000004;
+                }
             }
         </style>        
         <?php 
@@ -879,11 +933,12 @@
                     $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
                 }
             };
-            $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');   
+            $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
             $templates = nbd_get_resource_templates($product_id, $variation_id);
             $total_template = nbd_count_total_template( $product_id, $variation_id );
+            $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference );
         ?>
-        <script type="text/javascript">           
+        <script type="text/javascript">
             var NBDESIGNCONFIG = {
                 lang_code   :   "<?php echo $lang_code; ?>",
                 lang_rtl    :   "<?php if(is_rtl()){ echo 'rtl'; } else {  echo 'ltr';  } ?>",
@@ -922,7 +977,7 @@
 		enable_upload_multiple	:   "<?php echo $enable_upload_multiple; ?>",   
                 login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",  
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
-                product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>,
+                product_data  :   <?php echo json_encode($product_data); ?>,
                 fonts: <?php echo nbd_get_fonts(); ?>,
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>,
                 fbID: "<?php echo $fbID; ?>",
@@ -931,7 +986,16 @@
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {
-                        alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>"
+                        alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>",
+                        path: "<?php _e('Vector', 'web-to-print-online-designer'); ?>",
+                        image: "<?php _e('Image', 'web-to-print-online-designer'); ?>",
+                        rect: "<?php _e('Rectangle', 'web-to-print-online-designer'); ?>",
+                        triangle: "<?php _e('Triangle', 'web-to-print-online-designer'); ?>",
+                        line: "<?php _e('Line', 'web-to-print-online-designer'); ?>",
+                        polygon: "<?php _e('Polygon', 'web-to-print-online-designer'); ?>",
+                        circle: "<?php _e('Circle', 'web-to-print-online-designer'); ?>",
+                        ellipse: "<?php _e('Ellipse', 'web-to-print-online-designer'); ?>",
+                        group: "<?php _e('Group', 'web-to-print-online-designer'); ?>"
                     }
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
@@ -1010,7 +1074,7 @@
         <?php else: ?>
         <script type='text/javascript' src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/libs/angular-1.6.9.min.js'; ?>"></script>
         <?php endif; ?>
-        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.min.js'; ?>"></script>   
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/bundle-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
     </body>
