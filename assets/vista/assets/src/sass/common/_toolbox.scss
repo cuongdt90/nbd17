@@ -86,6 +86,25 @@
       }
     }
   }
+  .v-triangle-box {
+    position: absolute;
+    border: 7px solid transparent;
+    border-bottom: 7px solid #ebebeb;
+    content: "";
+    top: -14px;
+    transform: translateX(-50%);
+    transition: all .3s;
+    &:after{
+      position: absolute;
+      content: '';
+      height: 0;
+      width: 0;
+      border: 7px solid transparent;
+      border-bottom: 7px solid white;
+      top: -6px;
+      left: -7px;
+    }
+  }
   .toolbox-lock {
     .items {
       .item{

@@ -2738,7 +2738,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     font-size: 24px;
     color: #26a69a;
     line-height: normal;
-    display: inline-block; }
+    display: inline-block;
+    cursor: pointer; }
   .nbd-mode-vista .nbd-vista a {
     color: #666; }
   .nbd-mode-vista .nbd-vista img {
@@ -4452,6 +4453,23 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           left: 65%; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle[data-pos="center"]:after, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle[data-pos="center"]:before {
           left: 50%; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle-box {
+        position: absolute;
+        border: 7px solid transparent;
+        border-bottom: 7px solid #ebebeb;
+        content: "";
+        top: -14px;
+        transform: translateX(-50%);
+        transition: all .3s; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-triangle-box:after {
+          position: absolute;
+          content: '';
+          height: 0;
+          width: 0;
+          border: 7px solid transparent;
+          border-bottom: 7px solid white;
+          top: -6px;
+          left: -7px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .toolbox-lock .items .item.active i {
         color: red; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item {
@@ -4735,9 +4753,19 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         align-items: center;
         padding: 5px;
         cursor: pointer; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-path .toolbox-color-palette {
+        position: relative; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-path .nbd-color-palette {
         right: auto;
-        left: 0; }
+        left: 0;
+        position: absolute;
+        top: 47px; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-path .nbd-color-palette .close-block {
+          display: flex;
+          margin-bottom: 0;
+          position: absolute;
+          top: 10px;
+          right: 10px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-path .footer-box .main-footer {
         display: flex;
         justify-content: center;

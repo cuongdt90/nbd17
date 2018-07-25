@@ -1,8 +1,21 @@
 .v-toolbox-path {
+  .toolbox-color-palette {
+    position: relative;
+  }
   .nbd-color-palette {
     right: auto;
     left: 0;
+    position: absolute;
+    top: 47px;
+    .close-block {
+      display: flex;
+      margin-bottom: 0;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
   }
+
   .footer-box {
     .main-footer {
       display: flex;

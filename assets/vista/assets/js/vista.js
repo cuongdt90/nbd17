@@ -436,23 +436,32 @@ function checkMobileDevice(){
         var opts = $.extend({}, $.fn.nbdColorPalette.defaults, options);
         return this.each(function () {
             var sefl = this;
-            var $colorPalette = $('.nbd-color-palette');
             $(this).on('click', function (e) {
-                var posL = $(this).offset().left;
-                var toolbarL = $('.nbd-toolbar').offset().left;
+                var $colorPalette = $(this).closest('.toolbox-color-palette').find('.nbd-color-palette'),
+                    $triangleBox = $colorPalette.find('.v-triangle-box'),
+                    $toolboxPalete = $(this).closest('.toolbox-color-palette'),
+                    $closeColorPalette = $colorPalette.find('.close-block');
+                var posL = 0;
 
-                $('.nbd-main-menu .menu-item').removeClass('active');
-                $colorPalette.css({
-                    'left' : (posL - toolbarL) + 'px'
-                });
-                if(!$(this).hasClass('nbd-show')){
-                    $('.nbd-show-color-palette').removeClass('nbd-show');
+                $toolboxPalete.addClass('nbd-show-palette');
+                if (!$colorPalette.hasClass('show')) {
                     $colorPalette.addClass('show');
-                    $(this).addClass('nbd-show');
-                }else{
+                }
+
+                posL = $(this).offset().left - $colorPalette.offset().left + $(this).outerWidth() / 2;
+                $triangleBox.css({
+                    'left': posL
+                });
+
+                $('.v-toolbox-path .toolbox-color-palette').nbClickOutSite({
+                    'clickE': $colorPalette,
+                    'activeE': $colorPalette,
+                    'removeClass': 'show'
+                });
+                $closeColorPalette.on('click', function () {
+                    $toolboxPalete.removeClass('nbd-show-palette');
                     $colorPalette.removeClass('show');
-                    $(this).removeClass('nbd-show');
-                };
+                });
             });
         });
     };
@@ -571,6 +580,11 @@ function checkMobileDevice(){
             });
         });
 
+        $('.nbd-vista .v-dropdown').each(function (i) {
+            if ($(this).find('.nbd-color-palette').length) {
+                $(this).find('.nbd-color-palette').addClass('show');
+            }
+        });
 
     });
 })(jQuery);

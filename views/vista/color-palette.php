@@ -1,4 +1,4 @@
-<div class="nbd-color-palette show">
+<div class="nbd-color-palette">
     <div class="nbd-color-palette-inner">
         <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'" style="margin-bottom: 10px">
             <h3 class="color-palette-label">Set color</h3>
