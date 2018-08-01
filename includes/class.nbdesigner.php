@@ -84,7 +84,8 @@ class Nbdesigner_Plugin {
             'nbd_create_pages'  =>  false,
             'nbd_get_product_config'  =>  true,
             'nbd_delete_order_design'  =>  false,
-            'nbd_check_use_logged_in'  =>  true
+            'nbd_check_use_logged_in'  =>  true,
+            'nbd_crop_image'  =>  true
         );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -226,6 +227,7 @@ class Nbdesigner_Plugin {
         /** end. bulk action **/
         add_action('woocommerce_order_item_meta_end', array($this, 'woocommerce_order_item_meta_end'), 30, 3);
         add_action('woocommerce_order_details_after_order_table', array($this, 'woocommerce_order_details_after_order_table'), 30, 1);
+        //add_action( 'woocommerce_order_status_completed', array($this, 'update_order_item_meta_data') );
     }    
     public function nbd_order_again_cart_item_data( $arr, $item, $order ){
         $order_items = $order->get_items();
@@ -406,7 +408,9 @@ class Nbdesigner_Plugin {
         }              
         return $cart_item_data;
     } 
-    public function nbdesigner_admin_enqueue_scripts($hook){   
+    public function nbdesigner_admin_enqueue_scripts($hook){
+        wp_register_script('angularjs', NBDESIGNER_PLUGIN_URL . 'assets/libs/angular-1.6.9.min.js', array('jquery'), '1.6.9');    
+        wp_register_script('fontfaceobserver', NBDESIGNER_PLUGIN_URL . 'assets/libs/fontfaceobserver.js', array(), '2.0.13');            
         wp_register_style('nbd-general', NBDESIGNER_CSS_URL . 'nbd-general.css', array('dashicons'), NBDESIGNER_VERSION);
         wp_enqueue_style(array('nbd-general'));     
         if (($hook == 'post.php') || ($hook == 'post-new.php') || ($hook == 'toplevel_page_nbdesigner') ||
@@ -1283,7 +1287,7 @@ class Nbdesigner_Plugin {
         if (file_exists($fullname)) {
             $list = json_decode(file_get_contents($fullname));           
         } else {
-            $list = '';
+            $list = '[]';
             file_put_contents($fullname, $list);
         }
         return $list;
@@ -3441,6 +3445,24 @@ class Nbdesigner_Plugin {
             return false;
         }
     }
+    public function update_order_item_meta_data( $order_id ){
+        $order = new WC_Order($order_id);
+        $order_items = $order->get_items();
+        foreach($order_items AS $order_item_id => $order_item){ 
+            $nbd_item_key = wc_get_order_item_meta($order_item_id, '_nbd');
+            if($nbd_item_key){
+                $watermark = false;
+                $showBleed = false;
+                $force = true;
+                $files = nbd_export_pdfs( $nbd_item_key, $watermark, $force, $showBleed );
+                $urls = '';
+                foreach($files as $key => $file){
+                    $urls .= ($key > 0 ? '|' : '') . Nbdesigner_IO::wp_convert_path_to_url($file);
+                };
+                wc_update_order_item_meta($order_item_id, 'pdfs', $urls);
+            }
+        }        
+    }
     public function attach_design_to_admin_email2($attachments, $type, $object){//return $attachments;
         if( 'new_order' === $type ){
             $products = $object->get_items();
@@ -4261,6 +4283,7 @@ class Nbdesigner_Plugin {
         } else {
             $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-template.php';
         }
+        if( $view == 'c' ) $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-template.php';
         if(is_nbd_design_page()){
             include($path);exit();              
         }else{
@@ -5483,6 +5506,34 @@ class Nbdesigner_Plugin {
     public function nbd_get_product_config(){
         echo 'config';
         wp_die();
+    }
+    public function nbd_crop_image(){
+        if ( !wp_verify_nonce($_POST['nonce'], 'save-design') ) {
+            die('Security error');
+        }
+        $url = $_POST['url'];
+        $startX = $_POST['startX'];
+        $startY = $_POST['startY'];
+        $width = $_POST['width'];
+        $height = $_POST['height'];
+        $path = Nbdesigner_IO::convert_url_to_path($url);
+        $path_parts = pathinfo($path);
+        $new_path = $path_parts['dirname'].'/'.$path_parts['filename'].'_c'.time().'.'.$path_parts['extension'];
+        NBD_Image::crop_image($path, $new_path, $startX, $startY, $width, $height, strtolower($path_parts['extension']));
+        if( file_exists($new_path) ){
+            wp_send_json(
+                array(
+                    'flag'  =>  1,
+                    'url'   =>   Nbdesigner_IO::convert_path_to_url($new_path)
+                )     
+            );
+        }else{
+            wp_send_json(
+                array(
+                    'flag'  =>  0,
+                )     
+            );            
+        }
     }
     public function freedom(){
 

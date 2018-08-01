@@ -380,10 +380,10 @@
                         </div>
                         <div id="nbd-keyboard-about" class="nbd-tab-content">
                             <div class="text-center" style="margin-bottom: 40px; margin-top: 20px">
-                                <img src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/logo.svg'; ?>" alt="Online Design" style="width: 80px">
+                                <img src="<?php echo $srcImage; ?>" alt="Online Design" style="width: 80px">
                             </div>
                             <div class="copy-right">
-                                <p class="text-center">Copyright © <script>document.write(new Date().getFullYear())</script>. NetbaseTeam</p>
+                                <p class="text-center">Copyright © <script>document.write(new Date().getFullYear())</script>. <?php echo get_bloginfo( 'name' ); ?></p>
                                 <p class="text-center">All Rights Reserved</p>
                                 <p class="text-center">Powered by <a href="https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin" target="_blank">NBDesigner</a> version <?php echo NBDESIGNER_VERSION; ?></p>
                             </div>

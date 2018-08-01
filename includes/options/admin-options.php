@@ -56,8 +56,6 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             }    
         }
         public function admin_enqueue_scripts( $hook ){
-            wp_register_script('angularjs', NBDESIGNER_PLUGIN_URL . 'assets/libs/angular-1.6.9.min.js', array('jquery'), '1.6.9');    
-            wp_register_script('fontfaceobserver', NBDESIGNER_PLUGIN_URL . 'assets/libs/fontfaceobserver.js', array(), '2.0.13');    
             if( $hook == 'nbdesigner_page_nbd_printing_options' ){
                 wp_register_style('nbd_options', NBDESIGNER_CSS_URL . 'admin-options.css', array('wp-color-picker'), NBDESIGNER_VERSION);                   
                 wp_register_script('nbd_options', NBDESIGNER_JS_URL . 'admin-options.js', array('jquery', 'jquery-ui-resizable', 'jquery-ui-draggable', 'jquery-ui-autocomplete', 'wp-color-picker', 'angularjs'), NBDESIGNER_VERSION);             
@@ -71,7 +69,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         public function printing_options(){ 
             require_once NBDESIGNER_PLUGIN_DIR . 'includes/options/fields-list-table.php';
             $nbd_options = new NBD_Options_List_Table();       
-            if( isset( $_GET['action'] ) ){    
+            if( isset( $_GET['action'] ) ){
                 if( $_GET['action'] == 'delete' ){
                     wp_redirect(esc_url_raw(add_query_arg(array('paged' => 1), admin_url('admin.php?page=nbd_printing_options'))));
                 }else{
@@ -115,7 +113,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         public function save_option(){
             $nonce = esc_attr($_REQUEST['_wpnonce']);
             if (!wp_verify_nonce($nonce, 'nbd_options_nonce')) {
-                die('Go get a life script kiddies');
+                wp_redirect( esc_url(admin_url('admin.php?page=nbd_printing_options')) );
+                exit;
             }
             $id = absint($_REQUEST['id']);
             $modified_date = new DateTime();
@@ -124,8 +123,25 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'modified'  => $modified_date->format('Y-m-d H:i:s'),
                 'fields'    => serialize($_POST['options'])
             );
+            $arr['fields'] = serialize( $this->validate_option($_POST['options']) );
             global $wpdb;
             $wpdb->update("{$wpdb->prefix}nbdesigner_options", $arr, array( 'id' => $id) );            
+        }
+        private function validate_option( $options ){
+            foreach ( $options["fields"] as $f_index => $field ){
+                $array_price_type = array('f', 'p', 'p+', 'c' );
+                if( !in_array($field["general"]['price_type'], $array_price_type) ){
+                    $options["fields"][$f_index]["general"]['price_type'] = $field["general"]['data_type'] == 'i' ? 'c' : 'f';
+                }
+                if( isset( $field["conditional"]['depend'] ) ){
+                    foreach( $field["conditional"]['depend'] as $d_index => $depend ){
+                        if( ($depend['operator'] == 'i' || $depend['operator'] == 'n') && $depend['val'] == '? string: ?' ){
+                            unset($options["fields"][$f_index]["conditional"]['depend'][$d_index]);
+                        }
+                    }
+                }
+            }
+            return $options;
         }
         public function get_option(){
             global $wpdb;
@@ -222,7 +238,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         public function build_config_general_title( $value = null ){
             if (is_null($value)) $value = __( 'Title', 'web-to-print-online-designer');
             return array(
-                'title' => __( 'Title', 'web-to-print-online-designer'),
+                'title' => __( 'Option', 'web-to-print-online-designer'),
                 'description'   =>  '',
                 'value'	=> $value,
                 'type'  => 'text'              
@@ -304,19 +320,24 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'options' =>    array(
                     array(
                         'key'   =>  'f',
-                        'text'   =>  __( 'Fixed amount', 'web-to-print-online-designer')
+                        'text'   =>  __( 'Fixed amount', 'web-to-print-online-designer')                      
                     ),
                     array(
                         'key'   =>  'p',
-                        'text'   =>  __( 'Percent of the original price', 'web-to-print-online-designer')
+                        'text'   =>  __( 'Percent of the original price', 'web-to-print-online-designer')                     
                     ),
                     array(
                         'key'   =>  'p+',
-                        'text'   =>  __( 'Percent of the original price + options', 'web-to-print-online-designer')
+                        'text'   =>  __( 'Percent of the original price + options', 'web-to-print-online-designer')                       
                     ),
                     array(
                         'key'   =>  'c',
-                        'text'   =>  __( 'Current value * price', 'web-to-print-online-designer')
+                        'text'   =>  __( 'Current value * price', 'web-to-print-online-designer'),
+                        'depend'    => array(
+                            'field' =>  'data_type',
+                            'operator' =>  '=',
+                            'value' =>  'i'                             
+                        )
                     )
                 )               
             );            
@@ -434,8 +455,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         'text'   =>  __( 'Radio button', 'web-to-print-online-designer')
                     ),
                     array(
-                        'key'   =>  'l',
-                        'text'   =>  __( 'Label', 'web-to-print-online-designer')
+                        'key'   =>  's',
+                        'text'   =>  __( 'Swatch', 'web-to-print-online-designer')
                     )                                    
                 ) 			
             );

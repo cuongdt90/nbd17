@@ -218,12 +218,25 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
     }; 
     $scope.init = function(){
         $scope.options = NBDOPTIONS;
+        $scope.option_values = [];
         angular.forEach($scope.options.fields, function(field, key){
             field.isExpand = false;
+            if(field.general.data_type.value == 'i'){
+                $scope.option_values[key] = '';
+            }else{
+                if( field.general.attributes.options.length == 0 ){
+                    $scope.option_values[key] = '';
+                }else{
+                    $scope.option_values[key] = field.general.attributes.options[0].name;
+                    angular.forEach(field.general.attributes.options, function(op, k){
+                        if( op.selected ) $scope.option_values[key] = k;
+                    });
+                }
+            }
         });
     };
     $scope.debug = function(){
-        console.log($scope.options);       
+        console.log($scope.options);
     };
     $scope.check_depend = function( fields, data ){
         if( angular.isUndefined(data.depend) ) return true;
@@ -240,6 +253,15 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             total_check = total_check && c;
         });
         return total_check;
+    };
+    $scope.check_option_depend = function(fieldIndex, depend){
+        if( angular.isUndefined(depend) ) return true;
+        if( depend.operator  == '=' ){
+            if($scope.options['fields'][fieldIndex]['general'][depend.field].value == depend.value) return true;
+        }else{
+            if($scope.options['fields'][fieldIndex]['general'][depend.field].value != depend.value) return true;
+        }
+        return false;
     };
     $scope.remove_attribute = function(fieldIndex, key, $index){
         $scope.options['fields'][fieldIndex]['general'][key]['options'].splice($index, 1);
@@ -291,6 +313,66 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image = 0;
         $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = '';
     }; 
+    $scope.add_condition = function(fieldIndex){
+        $scope.options['fields'][fieldIndex]['conditional'].depend.push({
+            id:  '',
+            operator:  'i',
+            val:  ''            
+        });
+    };
+    $scope.delete_condition = function(fieldIndex, cdIndex){
+        if( $scope.options['fields'][fieldIndex]['conditional'].depend.length == 1 ) return;
+        $scope.options['fields'][fieldIndex]['conditional'].depend.splice(cdIndex, 1);
+    };
+    $scope.update_price_type = function(fieldIndex){
+        if( $scope.options['fields'][fieldIndex]['general'].data_type.value == 'm' && $scope.options['fields'][fieldIndex]['general'].price_type.value == 'c' ){
+            $scope.options['fields'][fieldIndex]['general'].price_type.value = 'f';
+        }
+    };
+    $scope.check_option_visible = function(fieldIndex){
+        if( $scope.options['fields'][fieldIndex]['conditional'].enable == 'n' ) return true;
+        if( angular.isUndefined( $scope.options['fields'][fieldIndex]['conditional'].depend ) ) return true;
+        if( $scope.options['fields'][fieldIndex]['conditional'].depend.length == 0 ) return true;
+        var show = $scope.options['fields'][fieldIndex]['conditional']['show'],
+        logic = $scope.options['fields'][fieldIndex]['conditional']['logic'],
+        check = [];
+        var total_check = logic == 'a' ? true : false;
+        function get_field(fieldId){
+            var field = null;
+            angular.forEach($scope.options['fields'], function(_field, key){
+                if( _field.id == fieldId){
+                    field = _field;
+                    field.index = key;
+                }
+            });
+            return field;
+        };
+        angular.forEach($scope.options['fields'][fieldIndex]['conditional'].depend, function(con, _key){
+            if( con.id != '' ){
+                var field = get_field(con.id);
+                switch(con.operator){
+                    case 'i':
+                        check[_key] = $scope.option_values[field.index] == con.val ? true : false;
+                        break;
+                    case 'n':
+                        check[_key] = $scope.option_values[field.index] != con.val ? true : false;
+                        break;  
+                    case 'e':
+                        check[_key] = $scope.option_values[field.index] == '' ? true : false;
+                        break;
+                    case 'ne':
+                        check[_key] = $scope.option_values[field.index] != '' ? true : false;
+                        break;                     
+                }
+            }else{
+                check[_key] = true;
+            }
+        });
+        angular.forEach(check, function(c, k){
+            total_check = logic == 'a' ? (total_check && c) : (total_check || c);
+        });
+        return show == 'y' ? total_check : !total_check;
+    };
     $scope.init();
 }).directive('stringToNumber', function() {
     return {

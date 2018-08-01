@@ -235,7 +235,7 @@ class Nbdesigner_IO {
         if (file_exists($fullname)) {
             $list = json_decode(file_get_contents($fullname));           
         } else {
-            $list = '';
+            $list = '[]';
             file_put_contents($fullname, $list);
         }
         return $list;
@@ -450,6 +450,31 @@ class NBD_Image {
         } catch( Exception $e ){
             die('Error when creating a thumbnail: ' . $e->getMessage());
         }        
+    }
+    public static function crop_image( $input_file, $ouput_file, $startX, $startY, $width, $height, $ext ){
+        if( is_available_imagick() ){
+            try {          
+                $image = new Imagick( $input_file );
+                $image->cropImage($width, $height, $startX, $startY);          
+                $image->writeImage( $ouput_file );
+                $image->clear(); 
+                $image->destroy();
+            } catch( Exception $e ){
+                die('Error when creating a thumbnail: ' . $e->getMessage());
+            }              
+        }else{
+            $src = $ext == 'png' ? imagecreatefrompng($input_file) : imagecreatefromjpeg($input_file);
+            $dst = imagecrop($src, ['x' => $startX, 'y' => $startY, 'width' => $width, 'height' => $height]);
+            if ($dst !== FALSE) {
+                if($ext == 'png'){
+                    imagepng($dst, $ouput_file );
+                }else{
+                    imagejpeg($dst, $ouput_file );            
+                }
+            }
+            imagedestroy($dst); 
+            imagedestroy($src);
+        }
     }
 }
 function nbd_alias($value) {

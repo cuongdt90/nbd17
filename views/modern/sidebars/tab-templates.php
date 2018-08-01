@@ -36,7 +36,7 @@
                         <?php if( $task != 'create_template' ): ?>
                         <hr ng-hide="resource.templates.length == 0" />
                         <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
-                            <div class="main-item global" image-on-load="temp.thumbnail">
+                            <div class="main-item" image-on-load="temp.thumbnail">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="{{temp.name}}">
                                 </div>
@@ -45,13 +45,32 @@
                         <?php endif; ?>
                         <?php if( $task == 'create_template' ): ?>
                         <div style="padding:5px;">
-<!--                            <div>
-                                <button style="margin-left: 0" class="nbd-button" ng-click="debug()">Debug</button>
-                            </div>-->
+                            <div>
+                                <input placeholder="Width" ng-model="lineConfig.width" style="width: 40px; border: 1px solid #404762;padding: 0px 5px; line-height: 34px;"/>
+                                <input placeholder="Dash" ng-model="lineConfig.dash1" style="width: 40px; border: 1px solid #404762;padding: 0px 5px; line-height: 34px;"/>
+                                <input placeholder="Dash" ng-model="lineConfig.dash2" style="width: 40px; border: 1px solid #404762;padding: 0px 5px; line-height: 34px;"/>
+                                <input placeholder="Stroke color" ng-model="lineConfig.color" style="width: 60px; border: 1px solid #404762;padding: 0px 5px; line-height: 34px;"/>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="addLine()">Add Line</button>
+                            </div>
+                            <hr />
                             <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="uploadSvgFile()">Upload SVG</button>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="addText()">Add Text</button>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="addShape('rect')">Rectangle</button>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="addShape('triangle')">Triangle</button>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="addShape('circle')">Circle</button>
                             </div>
+                            <hr />
+                            <div>
+                                <input placeholder="Width" ng-model="templateSize.width" ng-keyup="$event.keyCode == 13 && changeTemplateDimension()" style="width: 100px; border: 1px solid #404762;padding: 0px 5px; line-height: 34px;"/>
+                                <input placeholder="Height" ng-model="templateSize.height" ng-keyup="$event.keyCode == 13 && changeTemplateDimension()" style="width: 100px; border: 1px solid #404762;padding: 0px 5px; line-height: 34px;"/>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="changeTemplateDimension()">Apply</button>
+                            </div>
+                            <hr />
+                            <div>
+                                <button style="margin-left: 0" class="nbd-button" ng-click="debug()">Debug</button>
+                            </div>
+                            <hr />
                             <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="_loadTemplateCat()">Load templates</button>
                                 <select ng-change="changeGlobalTemplate()" ng-show="templateCats.length > 0" style="line-height: 35px; width: 100%; height: 35px;border-radius: 4px;border: 1px solid #404762;" class="process-select" ng-model="templateCat" id="category_template">
@@ -60,7 +79,7 @@
                             </div>
                         </div>
                         <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
-                            <div class="main-item global" image-on-load="temp.thumbnail">
+                            <div class="main-item" image-on-load="temp.thumbnail">
                                 <div class="item-img">
                                     <img ng-src="{{temp.thumbnail}}" alt="{{temp.name}}">
                                 </div>

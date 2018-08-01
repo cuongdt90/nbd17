@@ -6,7 +6,7 @@
 Plugin Name: NBDesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
 Description: A Woocommerce printing ecosystem.
-Version: 2.0.0
+Version: 2.0.1
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
 License: GPLv2 or later
@@ -32,8 +32,8 @@ if ( function_exists( 'icl_get_home_url' ) ) {
         $nbd_plugin_dir_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $nbd_plugin_dir_url);
     }
 }
-nbd_define('NBDESIGNER_VERSION', '2.0.0');
-nbd_define('NBDESIGNER_NUMBER_VERSION', 200);
+nbd_define('NBDESIGNER_VERSION', '2.0.1');
+nbd_define('NBDESIGNER_NUMBER_VERSION', 201);
 nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
 nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
 nbd_define('NBDESIGNER_PLUGIN_URL', $nbd_plugin_dir_url);

@@ -437,6 +437,30 @@
     line-height: 38px;
     opacity: 1;
 }
+.nbd-option-label input[type="radio"] {
+    display: none;
+}
+.nbd-option-label input {
+    width: 30px;
+    display: block;
+}
+.nbd-inline-option {
+    display: inline-block;
+    margin-right: 15px;
+}
+.nbd-option-label label {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;  
+    display: inline-block;
+    background-size: cover;
+}
+.nbd-option-label input:checked+label {
+    border: 1px solid red;
+}
+.nbd-option-radio label {
+    background: none !important;
+}
 @media (max-width: 768px) {
     .nbd-field-info-1, .nbd-field-info-2 {
         width: 100%;

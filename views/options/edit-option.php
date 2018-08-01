@@ -51,8 +51,8 @@
                                             <div class="misc-pub-section misc-pub-priority" id="priority">
                                                 <?php _e('Priority', 'web-to-print-online-designer'); ?>
                                                 <input type="number" value="<?php echo $options['priority']; ?>" maxlength="3"
-                                                       id="tm_meta_priority" name="priority" class="meta-priority" min="1"
-                                                       step="1"/>                                    
+                                                    id="tm_meta_priority" name="priority" class="meta-priority" min="1"
+                                                    step="1"/>                                    
                                             </div>
                                         </div>
                                         <div class="clear"></div>
@@ -88,16 +88,15 @@
                             <h2><?php _e('Printing fields', 'web-to-print-online-designer'); ?></h2>
                             <div class="inside">
                                 <div class="nbd-fields-picker">
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-editor-textcolor"></span> <?php _e('Text box', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-marker"></span> <?php _e('Radio', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-yes"></span> <?php _e('Check box', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-menu"></span></span> <?php _e('Dropdown', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-admin-settings"></span> <?php _e('Ranger slider', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-art"></span> <?php _e('Color swatch', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-grid-view"></span> <?php _e('Price matrix', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><span class="dashicons dashicons-calendar-alt"></span></span> <?php _e('Date time', 'web-to-print-online-designer'); ?></a>
-                                </div> 
-                            </div>    
+                                    <a class="nbd-field-btn button-primary"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Color', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Size', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('DPI', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Area design shape', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Time delivery', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Other', 'web-to-print-online-designer'); ?></a>
+                                </div>
+                            </div>
                         </div>
                         <div class="postbox">
                             <h2><?php _e('Printing options buider', 'web-to-print-online-designer'); ?></h2>
@@ -116,7 +115,7 @@
         </form> 
         <div class="debug" ng-click="debug()">
             <span class="dashicons dashicons-hammer"></span>
-        </div>
+        </div>       
         <?php include_once('preview.php'); ?>
         <?php include_once('price_matrix.php'); ?>
     </div>    

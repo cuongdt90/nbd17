@@ -395,6 +395,8 @@
             .clipart-wrap .clipart-item img {
                 border: 4px solid rgba(64, 71, 98, 0.08);
                 background: #d0d6dd;
+                width: 100%;
+                min-height: 30px;
             }
             .mansory-wrap .mansory-item.in-view,
             .clipart-wrap .clipart-item.in-view {
@@ -645,6 +647,7 @@
             }
             .nbd-templates .item .item-img {
                 height: auto;
+                text-align: center;
             }
             .nbd-templates .item .main-item.global .item-img {
                 position: absolute;
@@ -664,7 +667,6 @@
                 -webkit-transition: all 0.4s;
                 -moz-transition: all 0.4s;
                 transition: all 0.4s;
-                background: #fff;
             }  
             .nbd-templates .items .item .main-item.global {
                 position: relative;
@@ -685,7 +687,7 @@
             .nbd-templates .items .item .main-item.image-onload img {
                 opacity: 0;
             }
-            .nbd-templates .items .item .main-item:hover {
+            .nbd-templates .items .item .main-item:hover img {
                 -webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
                 box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12);
             }            
@@ -694,7 +696,6 @@
                 box-sizing: border-box;
                 display: inline-block;
                 padding: 5px;
-                padding-bottom: 0;
             }
             .nbd-mode-1 .nbd-main-bar .logo {
                 visibility: hidden;
@@ -973,9 +974,9 @@
                 home_url    :   "<?php echo $home_url; ?>",
                 icl_home_url    :   "<?php echo $icl_home_url; ?>",
                 is_logged    :   <?php echo nbd_user_logged_in(); ?>,
-		is_wpml	:	<?php echo $is_wpml; ?>,     
-		enable_upload_multiple	:   "<?php echo $enable_upload_multiple; ?>",   
-                login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",  
+                is_wpml	:	<?php echo $is_wpml; ?>,
+                enable_upload_multiple	:   "<?php echo $enable_upload_multiple; ?>",
+                login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode($product_data); ?>,
                 fonts: <?php echo nbd_get_fonts(); ?>,
@@ -1047,7 +1048,7 @@
                             <?php include 'modern/toolbar-zoom.php';?>
                             <?php include 'modern/warning.php'?>
                             <?php include 'modern/context-menu.php'?>
-                            <?php include 'modern/signal.php'?>
+                            <?php //include 'modern/signal.php'?>
                             <?php include 'modern/loading-workflow.php';?>
                         </div>
                         <?php //include 'modern/toollock.php';?>
