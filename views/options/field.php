@@ -117,9 +117,11 @@
                     <div class="nbd-table-wrap">
                         <table class="nbd-table">
                             <tr>
+                                <th><?php _e('Quantity', 'web-to-print-online-designer'); ?></th>
                                 <th ng-repeat="break in options.quantity_breaks">{{break.val}}</th>
                             </tr>
                             <tr>
+                                <td><?php _e('Price', 'web-to-print-online-designer'); ?></td>
                                 <td ng-repeat="break in options.quantity_breaks">
                                     <input class="nbd-short-ip" type="text" ng-model="field.general.price_breaks.value[$index]" name="options[fields][{{fieldIndex}}][general][price_breaks][{{$index}}]" />
                                 </td>

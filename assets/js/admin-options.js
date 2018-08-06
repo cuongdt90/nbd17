@@ -197,6 +197,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         field['id'] = '' + d.getTime();
         field.isExpand = true;
         $scope.options.fields.push( field );
+        $scope.initfieldValue();
     };
     $scope.copy_field = function( index ){
         var field = {};
@@ -204,10 +205,12 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         var d = new Date();
         field['id'] = '' + d.getTime();
         field['general']['title']['value'] = field['general']['title']['value'] + ' - Copy';
-        $scope.options.fields.push( field )
+        $scope.options.fields.push( field );
+        $scope.initfieldValue();
     };
     $scope.delete_field = function(index){
         $scope.options.fields.splice(index, 1);
+        $scope.initfieldValue();
     }; 
     $scope.toggleExpandField =  function(index, $event){
         $scope.options.fields[index].isExpand = !$scope.options.fields[index].isExpand;
@@ -216,11 +219,9 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             jQuery('html,body').animate({ scrollTop: parent.offset().top - 50}, 200);
         }, 0);
     }; 
-    $scope.init = function(){
-        $scope.options = NBDOPTIONS;
-        $scope.option_values = [];
+    $scope.initfieldValue = function(){
         angular.forEach($scope.options.fields, function(field, key){
-            field.isExpand = false;
+            $scope.option_values[key] = angular.isDefined($scope.option_values[key]) ? $scope.option_values[key] : '';
             if(field.general.data_type.value == 'i'){
                 $scope.option_values[key] = '';
             }else{
@@ -232,8 +233,16 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                         if( op.selected ) $scope.option_values[key] = k;
                     });
                 }
-            }
+            }            
         });
+    };
+    $scope.init = function(){
+        $scope.options = NBDOPTIONS;
+        $scope.option_values = [];
+        angular.forEach($scope.options.fields, function(field, key){
+            field.isExpand = false;
+        });
+        $scope.initfieldValue();
     };
     $scope.debug = function(){
         console.log($scope.options);
@@ -271,6 +280,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             $scope.options['fields'][fieldIndex]['general'][key]['options'][_key]['selected'] = 0;
         });
         $scope.options['fields'][fieldIndex]['general'][key]['options'][$index]['selected'] = 1;
+        $scope.initfieldValue();
     };
     $scope.add_attribute = function(fieldIndex, key){
         $scope.options['fields'][fieldIndex]['general'][key]['options'].push(

@@ -928,10 +928,12 @@
             if ( function_exists( 'icl_get_home_url' ) ) {
                 $icl_home_url = untrailingslashit(icl_get_home_url());
                 global $sitepress;
-                $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
-                if( $wpml_language_negotiation_type == 2 ){
-                    $is_wpml = 1;
-                    $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                if($sitepress){
+                    $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
+                    if( $wpml_language_negotiation_type == 2 ){
+                        $is_wpml = 1;
+                        $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                    }
                 }
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');

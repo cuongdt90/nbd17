@@ -3459,7 +3459,15 @@ class Nbdesigner_Plugin {
                 foreach($files as $key => $file){
                     $urls .= ($key > 0 ? '|' : '') . Nbdesigner_IO::wp_convert_path_to_url($file);
                 };
-                wc_update_order_item_meta($order_item_id, 'pdfs', $urls);
+                wc_update_order_item_meta($order_item_id, '_pdfs', $urls);
+            }
+            $nbu_item_key = wc_get_order_item_meta($order_item_id, '_nbu');
+            if($nbu_item_key){
+                $files = Nbdesigner_IO::get_list_files(NBDESIGNER_UPLOAD_DIR . '/' . $nbu_item_key);
+                foreach($files as $key => $file){
+                    $urls .= ($key > 0 ? '|' : '') . Nbdesigner_IO::wp_convert_path_to_url($file);
+                };                
+                wc_update_order_item_meta($order_item_id, '_nbd_upload_files', $urls);
             }
         }        
     }
@@ -3670,6 +3678,8 @@ class Nbdesigner_Plugin {
         $order_items[] = '_nbd';
         $order_items[] = '_nbu';
         $order_items[] = '_nbd_extra_price';
+        $order_items[] = '_pdfs';
+        $order_items[] = '_nbd_upload_files';
         return $order_items;
     }
     public function nbd_upload_design_file(){

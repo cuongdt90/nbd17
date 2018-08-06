@@ -299,12 +299,14 @@ get_header(); ?>
 </div>        
 <?php else: ?>
     <div class="nbd-list-designer-template" id="nbd-list-designer-template">
+        <?php if( $current_user_id == $user_id ): ?>
         <span onclick="showPopupCreateTemplate()" class="nbd-add-template-btn">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                 <title>Add template</title>
                 <path fill="#fff" d="M8 7v2h6v-2h-6zM8 11h9v-1h-9v1zM17 12h-8v1h8v-1zM17 15v-1h-7v1h7zM8 14h-3v3h-3v3h3v3h3v-3h3v-3h-3v-3zM4 2v10h2v-8h13v17h-6.643l-1 2h9.643v-21h-17z"></path>
             </svg>            
-        </span>        
+        </span>  
+        <?php endif; ?>
     <?php 
         $row = apply_filters('nbd_artist_designs_row', 5);
         $per_row = intval( apply_filters('nbd_artist_designs_per_row', 4) );

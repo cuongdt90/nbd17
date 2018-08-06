@@ -295,7 +295,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             if (is_null($value)) $value = 'n';
             return array(
                 'title' => __( 'Required', 'web-to-print-online-designer'),
-                'description'   =>  'Choose whether the option is required or not.',
+                'description'   =>  __( 'Choose whether the option is required or not.' ),
                 'value'	=> $value,
                 'type' 		=> 'dropdown',
                 'options' =>    array(
@@ -314,7 +314,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             if (is_null($value)) $value = 'f';
             return array(
                 'title' => __( 'Price type', 'web-to-print-online-designer'),
-                'description'   =>  'Here you can choose how the price is calculated. Depending on the field there various types you can choose.',
+                'description'   =>  __( 'Here you can choose how the price is calculated. Depending on the field there various types you can choose.' ),
                 'value'	=> $value,
                 'type' 		=> 'dropdown',
                 'options' =>    array(
@@ -365,7 +365,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             if (is_null($value)) $value = '';
             return array(
                 'title' => __( 'Price', 'web-to-print-online-designer'),
-                'description'   =>  'Enter the price for this field or leave it blank for no price.',
+                'description'   =>  __( 'Enter the price for this field or leave it blank for no price.' ),
                 'value'	=> $value,
                 'depend'    =>  array(
                     array(
@@ -412,21 +412,28 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     'preview_type'  =>  'i',
                     'image' =>  0,
                     'image_url' =>  '',
+                    'product_image' =>  '',
+                    'product_image_url' =>  '',
                     'color' =>  '#ffffff'                
                 )
             );} else {
                 $options = $attributes['options'];
-            };             
-            foreach( $options as $key => $option){                 
+            };
+            foreach( $options as $key => $option){
                 if( absint($option['image']) != 0 ){
                     $options[$key]['image_url'] = wp_get_attachment_url( absint($option['image']) );
                 }else{
                     $options[$key]['image_url'] = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
                 }
+                if( isset($option['product_image']) && absint($option['product_image']) != 0 ){
+                    $options[$key]['product_image_url'] = wp_get_attachment_url( absint($option['product_image']) );
+                }else{
+                    $options[$key]['product_image_url'] = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
+                }
             }           
             return array(  
                 'title' => __( 'Attributes', 'web-to-print-online-designer'),
-                'description'   =>  'Attributes let you define extra product data, such as size or color.',                                     
+                'description'   =>  __( 'Attributes let you define extra product data, such as size or color.'),                                     
                 'type' 		=> 'attributes',
                 'depend'    =>  array(
                     array(

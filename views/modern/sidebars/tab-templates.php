@@ -67,10 +67,10 @@
                                 <button style="margin-left: 0" class="nbd-button" ng-click="changeTemplateDimension()">Apply</button>
                             </div>
                             <hr />
-                            <div>
+<!--                            <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="debug()">Debug</button>
                             </div>
-                            <hr />
+                            <hr />-->
                             <div>
                                 <button style="margin-left: 0" class="nbd-button" ng-click="_loadTemplateCat()">Load templates</button>
                                 <select ng-change="changeGlobalTemplate()" ng-show="templateCats.length > 0" style="line-height: 35px; width: 100%; height: 35px;border-radius: 4px;border: 1px solid #404762;" class="process-select" ng-model="templateCat" id="category_template">
