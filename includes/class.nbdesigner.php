@@ -480,13 +480,14 @@ class Nbdesigner_Plugin {
         wp_register_style('nbdesigner', NBDESIGNER_CSS_URL . 'nbdesigner.css', array(), NBDESIGNER_VERSION);
         wp_enqueue_style('nbdesigner');              
         wp_register_script('nbdesigner', NBDESIGNER_JS_URL . 'nbdesigner.js', array('jquery', 'jquery-blockui'), NBDESIGNER_VERSION);
-        wp_localize_script('nbdesigner', 'nbds_frontend', array(
+        $args = apply_filters('nbd_js_object', array(
             'url' => admin_url('admin-ajax.php'),
             'sid' => session_id(),
             'nonce' => wp_create_nonce('save-design'),
             'nonce_get' => wp_create_nonce('nbdesigner-get-data'),
             'cart_url'   =>   esc_url( wc_get_cart_url() ),
             'hide_cart_button'  =>  nbdesigner_get_option('nbdesigner_hide_button_cart_in_detail_page')));
+        wp_localize_script('nbdesigner', 'nbds_frontend', $args);
         wp_enqueue_script('nbdesigner');
     }
     public static function plugin_activation() {
@@ -1723,7 +1724,7 @@ class Nbdesigner_Plugin {
             if(! isset($designer_setting[0]['version']) || $_designer_setting[0]['version'] < 180) {
                 $designer_setting = NBD_Update_Data::nbd_update_media_v180($designer_setting);
             }
-        }else {   
+        }else {
             $designer_setting = array();
             $designer_setting[0] = nbd_default_product_setting();           
         }
@@ -2669,13 +2670,14 @@ class Nbdesigner_Plugin {
                 }
             }
             if( $task == 'create' ){
-                if(!current_user_can('edit_nbd_template')){
-                    $result['mes'] = __('You have not permission to create or edit template', 'web-to-print-online-designer'); echo json_encode($result); wp_die();
-                } 
                 if( $design_type == 'art' ){
                     My_Design_Endpoint::nbdesigner_insert_table_my_design($product_id, $variation_id, $nbd_item_key );
                 }else{
-                    $this->nbdesigner_insert_table_templates($product_id, $variation_id, $nbd_item_key, 0, 1, 0);
+                    if(!can_edit_nbd_template()){
+                        $result['mes'] = __('You have not permission to create or edit template', 'web-to-print-online-designer'); echo json_encode($result); wp_die();
+                    }else{          
+                        $this->nbdesigner_insert_table_templates($product_id, $variation_id, $nbd_item_key, 0, 1, 0);
+                    }
                 }
             }
             if( $task == 'new' && $auto_add_to_cart == 'yes' ){
@@ -2800,7 +2802,7 @@ class Nbdesigner_Plugin {
             $nbd_viewer->remove_cap('delete_nbd_language');
             $nbd_viewer->remove_cap('delete_nbd_template');
             $nbd_viewer->remove_cap('update_nbd_data');
-        }      
+        }
     }
     /**
      * Insert table templates

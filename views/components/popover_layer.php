@@ -12,7 +12,7 @@
                 <span>{{layer.name}}</span>
                 <span class="pull-right" ng-hide="layer.isBg != undefined || layer.isOverlay != undefined">
                     <a style="margin-right: 10px;" class="nbdesigner_visible_layer" href="javascript:void(0)" ng-click="toggleVisibleLayer(layer)" title="{{(langs['TOGGLE_VISIBLE']) ? langs['TOGGLE_VISIBLE'] : 'Toggle visible'}}"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-eye-slash' : 'fa-eye'"></i></a>
-                    <a style="margin-right: 10px;" class="nbdesigner_lock_layer" href="javascript:void(0)" ng-click="toggleLockLayer(layer)" title="{{(langs['TOGGLE_LOCK']) ? langs['TOGGLE_LOCK'] : 'Toggle lock'}}"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-lock' : 'fa-unlock-alt'"></i></a> 
+                    <a style="margin-right: 10px;" class="nbdesigner_lock_layer" href="javascript:void(0)" ng-click="toggleLockLayer(layer, $event)" title="{{(langs['TOGGLE_LOCK']) ? langs['TOGGLE_LOCK'] : 'Toggle lock'}}"><i class="fa" aria-hidden="true" ng-class="layer.class === 'lock' ? 'fa-lock' : 'fa-unlock-alt'"></i></a> 
                 </span>
             </li>                                               
         </ul>

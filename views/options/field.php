@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 <div class="nbd-field-wrap" ng-repeat="(fieldIndex, field) in options.fields">
     <div class="nbd-nav">
-        <div ng-dblclick="toggleExpandField($index, $event)">
+        <div ng-dblclick="toggleExpandField($index, $event)" style="cursor: pointer;">
             <ul nbd-tab ng-class="field.isExpand ? '' : 'left'" class="nbd-tab-nav">
                 <li class="nbd-field-tab active" data-target="tab-general"><?php _e('General', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-conditional"><?php _e('Conditinal', 'web-to-print-online-designer') ?></li>
@@ -50,7 +50,46 @@
                         </select>                        
                     </div>
                 </div>
-            </div>     
+            </div>
+            <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.input_type)">
+                <div class="nbd-field-info-1">
+                    <div><label><b>{{field.general.input_type.title}}</b></label></div>
+                </div>
+                <div class="nbd-field-info-2">
+                    <div>
+                        <select name="options[fields][{{fieldIndex}}][general][input_type]" ng-model="field.general.input_type.value" ng-change="update_price_type(fieldIndex)" >
+                            <option ng-repeat="op in field.general.input_type.options" value="{{op.key}}">{{op.text}}</option>
+                        </select>                        
+                    </div>
+                </div>
+            </div> 
+            <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.input_option)">
+                <div class="nbd-field-info-1">
+                    <div><label><b>{{field.general.input_option.title}}</b></label></div>
+                </div>
+                <div class="nbd-field-info-2">
+                    <div>
+                        <table class="nbd-table">
+                            <tr>
+                                <th><?php _e('Min', 'web-to-print-online-designer'); ?></th>
+                                <th><?php _e('Max', 'web-to-print-online-designer'); ?></th>
+                                <th><?php _e('Step', 'web-to-print-online-designer'); ?></th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input class="nbd-short-ip" string-to-number type="number" ng-model="field.general.input_option.value.min" name="options[fields][{{fieldIndex}}][general][input_option][min]"/>
+                                </td>
+                                <td>
+                                    <input class="nbd-short-ip" string-to-number type="number" ng-model="field.general.input_option.value.max" name="options[fields][{{fieldIndex}}][general][input_option][max]"/>
+                                </td>
+                                <td>
+                                    <input class="nbd-short-ip" string-to-number type="number" ng-model="field.general.input_option.value.step" name="options[fields][{{fieldIndex}}][general][input_option][step]"/>
+                                </td>                                
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>            
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
                     <div><label><b>{{field.general.enabled.title}}</b> <nbd-tip data-tip="{{field.general.enabled.description}}" ></nbd-tip></label></div>
@@ -117,11 +156,11 @@
                     <div class="nbd-table-wrap">
                         <table class="nbd-table">
                             <tr>
-                                <th><?php _e('Quantity', 'web-to-print-online-designer'); ?></th>
+                                <th><?php _e('Quantity break', 'web-to-print-online-designer'); ?></th>
                                 <th ng-repeat="break in options.quantity_breaks">{{break.val}}</th>
                             </tr>
                             <tr>
-                                <td><?php _e('Price', 'web-to-print-online-designer'); ?></td>
+                                <td><?php _e('Additional Price', 'web-to-print-online-designer'); ?></td>
                                 <td ng-repeat="break in options.quantity_breaks">
                                     <input class="nbd-short-ip" type="text" ng-model="field.general.price_breaks.value[$index]" name="options[fields][{{fieldIndex}}][general][price_breaks][{{$index}}]" />
                                 </td>
@@ -163,7 +202,7 @@
                                 </div>
                                 <div class="nbd-margin-10"></div>
                                 <div ng-show="field.general.depend_quantity.value != 'y'">
-                                    <div><?php _e('Price', 'web-to-print-online-designer'); ?></div>
+                                    <div><?php _e('Additional Price', 'web-to-print-online-designer'); ?></div>
                                     <div>
                                         <input name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][price][0]" class="nbd-short-ip" type="text" ng-model="op.price[0]"/>
                                     </div>
@@ -171,11 +210,11 @@
                                 <div class="nbd-table-wrap" ng-show="field.general.depend_quantity.value == 'y'" >
                                     <table class="nbd-table">
                                         <tr>
-                                            <th><?php _e('Quantity', 'web-to-print-online-designer'); ?></th>
+                                            <th><?php _e('Quantity break', 'web-to-print-online-designer'); ?></th>
                                             <th ng-repeat="break in options.quantity_breaks">{{break.val}}</th>
                                         </tr>
                                         <tr>
-                                            <td><?php _e('Price', 'web-to-print-online-designer'); ?></td>
+                                            <td><?php _e('Additional Price', 'web-to-print-online-designer'); ?></td>
                                             <td ng-repeat="break in options.quantity_breaks">
                                                 <input name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][price][{{$index}}]" class="nbd-short-ip" type="text" ng-model="op.price[$index]"/>
                                             </td>

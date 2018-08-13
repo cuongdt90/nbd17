@@ -387,7 +387,8 @@
                         $link_manager_template = add_query_arg(array(
                             'pid' => $post_id, 
                             'view' => 'templates'), 
-                             admin_url('admin.php?page=nbdesigner_manager_product'));                 
+                             admin_url('admin.php?page=nbdesigner_manager_product'));
+                        if( !is_admin() ) $link_manager_template = add_query_arg(array('id' => get_current_user_id()), getUrlPageNBD('designer'));
                         $link_create_template = add_query_arg(array(
                                 'product_id' => $post_id,
                                 'task'  =>  'create',
@@ -453,9 +454,9 @@
                     <option value="<?php echo $cat->id; ?>" <?php selected( $option['global_template_cat'], $cat->id ); ?>><?php echo $cat->name; ?></option>
                     <?php endforeach; ?>
                     </select>
-                    <a target="_blank" href="https://media.printcart.com/v1/template?v=1"><?php _e('View list template', 'web-to-print-online-designer'); ?></a>
+                    <a target="_blank" href="https://studio.cmsmart.net/v1/template?v=1"><?php _e('View list template', 'web-to-print-online-designer'); ?></a>
                 </div>
-                <div class="nbdesigner-opt-inner">     
+                <div class="nbdesigner-opt-inner">
                     <div>
                         <label for="nbdesigner_dpi" class="nbdesigner-option-label"><?php echo _e('DPI ( Dots Per Inch )', 'web-to-print-online-designer'); ?></label>
                         <input name="_nbdesigner_option[dpi]" id="nbdesigner_dpi" value="<?php echo $option['dpi'];?>" type="number"  min="0" style="width: 60px;">&nbsp;

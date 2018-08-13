@@ -18,6 +18,61 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             add_action('nbd_menu', array($this, 'tab_menu'));   
             add_action('nbd_create_tables', array($this, 'create_options_table'));  
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'), 30, 1);
+            add_action('add_meta_boxes', array($this, 'add_meta_boxes'), 30);
+            add_action('save_post', array($this, 'save_product_option'));
+        }
+        public function save_product_option($post_id){
+            if (!isset($_POST['nbo_box_nonce']) || !wp_verify_nonce($_POST['nbo_box_nonce'], 'nbo_box')
+                || !(current_user_can('administrator') || current_user_can('shop_manager'))) {
+                return $post_id;
+            }
+            if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+                return $post_id;
+            }
+            if ('page' == $_POST['post_type']) {
+                if (!current_user_can('edit_page', $post_id)) {
+                    return $post_id;
+                }
+            } else {
+                if (!current_user_can('edit_post', $post_id)) {
+                    return $post_id;
+                }
+            }
+            $enable = $_POST['_nbo_enable']; 
+            update_post_meta($post_id, '_nbo_enable', $enable);
+        }
+        public function add_meta_boxes(){
+            add_meta_box('nbo_print_option', __('Print option', 'web-to-print-online-designer'), array($this, 'meta_box'), 'product', 'normal', 'high');
+        }        
+        public function meta_box(){
+            $post_id = get_the_ID();
+            $enable = get_post_meta($post_id, '_nbo_enable', true);
+            $option_id = get_post_meta($post_id, '_nbo_option_id', true);
+            $option_id = $option_id ? $option_id : 0;
+            $link_edit_option = add_query_arg(array(
+                    'product_id' => $post_id, 
+                    'action' => 'edit',
+                    'paged' => 1,
+                    'id' => $option_id
+                ),
+                admin_url('admin.php?page=nbd_printing_options'));
+            ?>
+            <div id="nbo-wraper">
+                <?php wp_nonce_field('nbo_box', 'nbo_box_nonce'); ?>
+                <div>
+                    <p>
+                        <input type="hidden" value="0" name="_nbo_enable"/>
+                        <label style="width: 150px; display: inline-block; margin-right: 10px;" for="_nbo_enable"><?php _e('Enable Print option', 'web-to-print-online-designer'); ?></label>
+                        <input type="checkbox" value="1" name="_nbo_enable" id="_nbo_enable" <?php checked($enable); ?> class="short" />
+                    </p>
+                    <p>
+                        <a class="button" href="<?php echo $link_edit_option; ?>" target="_blank">
+                            <?php if( $option_id != 0 ){ _e('Edit option', 'web-to-print-online-designer'); }else{ _e('Create option', 'web-to-print-online-designer'); }; ?>
+                        </a>
+                    </p>
+                </div>
+            </div>
+            <?php
         }
         public function tab_menu(){
             if(current_user_can('manage_nbd_tool')){  
@@ -67,16 +122,36 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             }
         }
         public function printing_options(){ 
-            require_once NBDESIGNER_PLUGIN_DIR . 'includes/options/fields-list-table.php';
-            $nbd_options = new NBD_Options_List_Table();       
             if( isset( $_GET['action'] ) ){
+                $paged = get_query_var('paged', 1);
+                $message = array('content'  =>  '');
                 if( $_GET['action'] == 'delete' ){
-                    wp_redirect(esc_url_raw(add_query_arg(array('paged' => 1), admin_url('admin.php?page=nbd_printing_options'))));
+                    wp_redirect(esc_url_raw(add_query_arg(array('paged' => $paged), admin_url('admin.php?page=nbd_printing_options'))));
                 }else{
+                    $id = (isset( $_REQUEST['id'] ) && absint($_REQUEST['id']) > 0 ) ? absint($_REQUEST['id']) : 0;
                     if( isset( $_POST['save'] ) ){
-                        $this->save_option();
-                    }                    
-                    $_options = $this->get_option();//$_options = false;
+                        $result = $this->save_option();
+                        if($result['status']){
+                            $message = array(
+                                'flag'  =>  'success',
+                                'content'   =>  __('Option updated.', 'web-to-print-online-designer')
+                            );
+                            if( $id == 0 ){
+                                $id = $result['id'];
+                                wp_redirect(esc_url_raw(add_query_arg(array(
+                                        'paged' => 1,
+                                        'action'    =>  'edit',
+                                        'id'    =>  $id
+                                    ), admin_url('admin.php?page=nbd_printing_options'))));
+                            }
+                        }else{
+                            $message = array(
+                                'flag'  =>  'error',
+                                'content'   =>  ''
+                            );                
+                        }
+                    }
+                    $_options = ($id > 0) ? $this->get_option($id) : false;//$_options = false;
                     if($_options){
                         $options = $this->build_options( unserialize($_options['fields']) );
                         $options['id'] = $_options['id'];
@@ -88,14 +163,27 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options['title'] = '';
                         $options['priority'] = 1;                     
                     }
+                    foreach ( $options["fields"] as $f_index => $field ){
+                        if($field["conditional"]['enable'] == 'n'){
+                            $options["fields"][$f_index]["conditional"]['depend'] = $this->build_config_conditional_depend();
+                            $options["fields"][$f_index]["conditional"]['logic'] = $this->build_config_conditional_logic();
+                            $options["fields"][$f_index]["conditional"]['show'] = $this->build_config_conditional_show();
+                        }
+                    }
                     $default_field = $this->default_config_field();                      
-                    $message = array(
-                        'content' =>    'success',
-                        'flag'  =>  'success'
-                    );
+                    $product_id = ($_options && isset($_options['product_ids'])) ? absint($_options['product_ids']) : 0;
+                    if( isset($_GET['product_id']) && absint($_GET['product_id']) > 0 ){
+                        $product_id = absint($_GET['product_id']);
+                        if( !$_options ){
+                            $product = wc_get_product($product_id);
+                            $options['title'] = $product->get_title() . __(' - Option', 'web-to-print-online-designer');
+                        }
+                    }
                     include_once(NBDESIGNER_PLUGIN_DIR . 'views/options/edit-option.php');
                 }
             }else{
+                require_once NBDESIGNER_PLUGIN_DIR . 'includes/options/fields-list-table.php';
+                $nbd_options = new NBD_Options_List_Table();              
                 include_once(NBDESIGNER_PLUGIN_DIR . 'views/options/options-list-table.php');
             }
         }
@@ -111,11 +199,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             }            
         }
         public function save_option(){
-            $nonce = esc_attr($_REQUEST['_wpnonce']);
-            if (!wp_verify_nonce($nonce, 'nbd_options_nonce')) {
-                wp_redirect( esc_url(admin_url('admin.php?page=nbd_printing_options')) );
-                exit;
-            }
+//            $nonce = esc_attr($_REQUEST['_wpnonce']);
+//            if (!wp_verify_nonce($nonce, 'nbd_options_nonce')) {
+//                wp_redirect( esc_url(admin_url('admin.php?page=nbd_printing_options')) );
+//                exit;
+//            }
             $id = absint($_REQUEST['id']);
             $modified_date = new DateTime();
             $arr = array(
@@ -123,9 +211,31 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'modified'  => $modified_date->format('Y-m-d H:i:s'),
                 'fields'    => serialize($_POST['options'])
             );
+            $is_product_option = false;
+            if( isset($_POST['product_ids']) && absint($_POST['product_ids']) > 0 ) {
+                $arr['product_ids'] = absint($_POST['product_ids']);
+                $is_product_option = true;
+            }
             $arr['fields'] = serialize( $this->validate_option($_POST['options']) );
             global $wpdb;
-            $wpdb->update("{$wpdb->prefix}nbdesigner_options", $arr, array( 'id' => $id) );            
+            $date = new DateTime();
+            if( $id > 0 ){
+                $arr['modified'] = $date->format('Y-m-d H:i:s');
+                $arr['modified_by'] = wp_get_current_user()->ID;
+                $result = $wpdb->update("{$wpdb->prefix}nbdesigner_options", $arr, array( 'id' => $id) );
+            }else{
+                $arr['created'] = $date->format('Y-m-d H:i:s');
+                $arr['created_by'] = wp_get_current_user()->ID;
+                $result = $wpdb->insert("{$wpdb->prefix}nbdesigner_options", $arr);
+                $id = $result ?  $wpdb->insert_id : 0;
+            }
+            if( $result && $is_product_option ){
+                update_post_meta(absint($_POST['product_ids']), '_nbo_option_id', $id);
+            }
+            return array(
+                'status' =>  $result,
+                'id'    =>  $id
+            );
         }
         private function validate_option( $options ){
             foreach ( $options["fields"] as $f_index => $field ){
@@ -143,10 +253,10 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             }
             return $options;
         }
-        public function get_option(){
+        public function get_option($id){
             global $wpdb;
             $sql = "SELECT * FROM {$wpdb->prefix}nbdesigner_options";
-            $sql .= " WHERE id = " . esc_sql($_REQUEST['id']);
+            $sql .= " WHERE id = " . esc_sql($id);
             $result = $wpdb->get_results($sql, 'ARRAY_A');
             return count($result[0]) ? $result[0] : false;
         }
@@ -184,6 +294,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 );
             }
             foreach( $options['fields'] as $f_key => $field ){
+                $field = array_replace_recursive($this->default_field(), $field);
                 foreach ($field as $tab =>  $data){
                     if( $tab != 'id' ){
                         foreach ($data as $key => $f){
@@ -197,11 +308,13 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         }
         public function default_field(){
             return array(
-                'id'    =>  round(microtime(true) * 1000),
+                'id'    =>  'f' . round(microtime(true) * 1000),
                 'general' => array(
                     'title' =>  null,
                     'description' =>  null,
                     'data_type' =>  null,
+                    'input_type' =>  null,
+                    'input_option' =>  null,
                     'enabled' =>  null,
                     'required' =>  null,
                     'price_type' =>  null,
@@ -272,6 +385,56 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 )               
             );            
         } 
+        public function build_config_general_input_type( $value = null ){
+            if (is_null($value)) $value = 't';
+            return array(
+                'title' => __( 'Input type', 'web-to-print-online-designer'),
+                'description'   =>  '',
+                'value'	=> $value,
+                'type' 		=> 'dropdown',
+                'depend'    =>  array(
+                    array(
+                        'field' =>  'data_type',
+                        'operator' =>  '=',
+                        'value' =>  'i'
+                    )                    
+                ),
+                'options' =>    array(
+                    array(
+                        'key'   =>  't',
+                        'text'   =>  __( 'Text', 'web-to-print-online-designer')
+                    ),
+                    array(
+                        'key'   =>  'n',
+                        'text'   =>  __( 'Number', 'web-to-print-online-designer')
+                    ),
+                    array(
+                        'key'   =>  'r',
+                        'text'   =>  __( 'Number range', 'web-to-print-online-designer')
+                    )                    
+                )               
+            );            
+        }
+        public function build_config_general_input_option( $value = null ){
+            if (is_null($value)){$value = array(
+                'min'   =>  1,
+                'max'   =>  100,
+                'step'   =>  1
+            );}
+            return array(
+                'title' => __( 'Input option', 'web-to-print-online-designer'),
+                'description'   =>  '',
+                'value'	=> $value,
+                'type' 		=> 'dropdown',
+                'depend'    =>  array(
+                    array(
+                        'field' =>  'input_type',
+                        'operator' =>  '#',
+                        'value' =>  't'
+                    )                    
+                )              
+            );            
+        }        
         public function build_config_general_enabled( $value = null ){
             if (is_null($value)) $value = 'y';
             return array(
@@ -364,7 +527,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         public function build_config_general_price( $value = null ){
             if (is_null($value)) $value = '';
             return array(
-                'title' => __( 'Price', 'web-to-print-online-designer'),
+                'title' => __( 'Additional Price', 'web-to-print-online-designer'),
                 'description'   =>  __( 'Enter the price for this field or leave it blank for no price.' ),
                 'value'	=> $value,
                 'depend'    =>  array(
@@ -464,7 +627,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     array(
                         'key'   =>  's',
                         'text'   =>  __( 'Swatch', 'web-to-print-online-designer')
-                    )                                    
+                    ),
+                    array(
+                        'key'   =>  'l',
+                        'text'   =>  __( 'Label', 'web-to-print-online-designer')
+                    )                    
                 ) 			
             );
         }    

@@ -17,7 +17,8 @@
                 <input type="number" string-to-number name="nbd-quantity" ng-model="options.quantity_value"/>
             </div>
             <div ng-if="options.quantity_type == 'r'">
-                <input name="nbd-quantity" string-to-number type="range" min="{{options.quantity_min}}" max="{{options.quantity_max}}" step="{{options.quantity_step}}" ng-model="options.quantity_value">
+                <input class="nb_input_slider" name="nbd-quantity" string-to-number type="range" min="{{options.quantity_min}}" max="{{options.quantity_max}}" step="{{options.quantity_step}}" ng-model="options.quantity_value">
+                <input class="nb_input_slider_num" type="number" string-to-number ng-model="options.quantity_value"/>
             </div>
             <div ng-if="options.quantity_type == 's'">
                 <span ng-repeat="break in options.quantity_breaks" class="nbd-quantity-r">
@@ -26,17 +27,19 @@
                 </span>
             </div>
         </div>
-        <div ng-repeat="(fieldIndex, field) in options.fields" ng-if="field.general.enabled.value == 'y'" ng-show="check_option_visible(fieldIndex)">
+        <div class="nbd-option-wrapper" ng-class="$first ? 'first' : ($last ? 'last' : '')" ng-repeat="(fieldIndex, field) in options.fields" ng-if="field.general.enabled.value == 'y'" ng-show="check_option_visible(fieldIndex)">
             <div><label><b>{{field.general.title.value}}</b> </label></div>
-            <div>
+            <div class="nbd-option-field">
                 <input ng-model="option_values[fieldIndex]" name="nbd_field[{{fieldIndex}}]" ng-if="field.general.data_type.value == 'i'" ng-required="field.general.required.value == 'y'"/>
-                <select ng-model="option_values[fieldIndex]" name="nbd_field[{{fieldIndex}}]" ng-if="field.general.data_type.value == 'm' && field.appearance.display_type.value == 'd'">
+                <select class="nbd-dropdown" ng-model="option_values[fieldIndex]" name="nbd_field[{{fieldIndex}}]" ng-if="field.general.data_type.value == 'm' && field.appearance.display_type.value == 'd'">
                     <option ng-value="{{$index}}" ng-repeat="op in field.general.attributes.options" ng-selected="op.selected" >{{op.name}}</option>
                 </select>
-                <span class="nbd-inline-option" ng-class="field.appearance.display_type.value == 's' ? 'nbd-option-label' : 'nbd-option-radio'" ng-if="field.general.data_type.value == 'm' && (field.appearance.display_type.value == 'r' || field.appearance.display_type.value == 's')" 
+                <span class="nbd-inline-option" ng-class="field.appearance.display_type.value == 's' ? 'nbd-swatch' : (field.appearance.display_type.value == 'l' ? 'nbd-label' : 'nbd-radio')" ng-if="field.general.data_type.value == 'm' && (field.appearance.display_type.value != 'd')" 
                     ng-repeat="(opIndex, op) in field.general.attributes.options">
                     <input ng-model="option_values[fieldIndex]" type="radio" id="nbd_field_{{fieldIndex}}_{{opIndex}}" name="nbd_field[{{fieldIndex}}]" value="{{$index}}" ng-checked="op.selected">
-                    <label for="nbd_field_{{fieldIndex}}_{{opIndex}}" ng-style="{'background': op.preview_type == 'i' ? 'url('+op.image_url+') 0% 0% / cover' : op.color}">{{op.name}}</label>
+                    <label ng-if="field.appearance.display_type.value == 'l'" for="nbd_field_{{fieldIndex}}_{{opIndex}}" >{{op.name}}</label>
+                    <label ng-if="field.appearance.display_type.value == 's'" for="nbd_field_{{fieldIndex}}_{{opIndex}}" ng-style="{'background': op.preview_type == 'i' ? 'url('+op.image_url+') 0% 0% / cover' : op.color}" title="{{op.name}}"></label>
+                    <label ng-if="field.appearance.display_type.value == 'r'" for="nbd_field_{{fieldIndex}}_{{opIndex}}" >{{op.name}}</label>
                     <input ng-if="field.appearance.quantity_selector.value == 'y'" name="option_value[{{fieldIndex}}][quantity]"/>
                 </span>
             </div>

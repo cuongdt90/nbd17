@@ -194,7 +194,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         var field = {};
         angular.copy(NBDOPTION_FIELD, field);
         var d = new Date();
-        field['id'] = '' + d.getTime();
+        field['id'] = 'f' + d.getTime();
         field.isExpand = true;
         $scope.options.fields.push( field );
         $scope.initfieldValue();
@@ -203,7 +203,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         var field = {};
         angular.copy($scope.options.fields[index], field);
         var d = new Date();
-        field['id'] = '' + d.getTime();
+        field['id'] = 'f' + d.getTime();
         field['general']['title']['value'] = field['general']['title']['value'] + ' - Copy';
         $scope.options.fields.push( field );
         $scope.initfieldValue();
@@ -228,7 +228,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 if( field.general.attributes.options.length == 0 ){
                     $scope.option_values[key] = '';
                 }else{
-                    $scope.option_values[key] = field.general.attributes.options[0].name;
+                    $scope.option_values[key] = 0;
                     angular.forEach(field.general.attributes.options, function(op, k){
                         if( op.selected ) $scope.option_values[key] = k;
                     });

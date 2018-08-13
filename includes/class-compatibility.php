@@ -5,7 +5,7 @@ class Nbdesigner_Compatibility {
         //toto init something
     }
     public function init(){
-        if(class_exists('WeDevs_Dokan') ){
+        if( is_dokan() ){
             $this->compatibility_dokan();
         }
     }
@@ -25,7 +25,23 @@ class Nbdesigner_Compatibility {
             add_action('wp_ajax_nopriv_download_dokan_product_pdfs', array($this, 'download_dokan_product_pdfs'));
             if ( isset( $_GET['download_nbd_file'] ) && isset( $_GET['order_id'] ) && isset( $_GET['order_item_id'] ) ) {
                 add_action( 'init', array( $this, 'download_dokan_product_designs' ) );
-            }        
+            }
+            add_action( 'dokan_new_seller_created', array($this, 'enable_designer_role'), 10, 1 );
+            add_action( 'dokan_enqueue_scripts', array($this, 'remove_chart_js') );
+        }
+    }
+    public function remove_chart_js(){
+        if( (get_query_var( 'edit' ) && is_singular( 'product' )) || ( dokan_is_seller_dashboard() && isset($_GET['product_id']) && (isset($_GET['action']) && $_GET['action'] == 'edit') ) ){
+            wp_dequeue_script('dokan-chart');
+        }
+    }
+    public function enable_designer_role( $user_id ){
+        $allowed_roles = array( 'customer', 'seller' );
+        $role = ( isset( $_POST['role'] ) && in_array( $_POST['role'], $allowed_roles ) ) ? $_POST['role'] : 'customer';
+        if ( $role == 'seller' ) {	
+            update_user_meta( $user_id, 'nbd_create_design', 'on' );
+            $wp_user_infos = get_user_by('id', $user_id);
+            update_user_meta( $user_id, 'nbd_artist_name', $wp_user_infos->display_name );            
         }
     }
     public function nbd_dokan_product_data_tabs( $tabs ){
@@ -89,8 +105,8 @@ class Nbdesigner_Compatibility {
         echo $nbd_box;
            
     }
-    public function enqueue_scripts(){     
-        if( get_query_var( 'edit' ) && is_singular( 'product' ) ){
+    public function enqueue_scripts(){
+        if(dokan_is_seller_dashboard() || ( get_query_var( 'edit' ) && is_singular( 'product' ) )){
             wp_register_script('nbd-dokan-product', NBDESIGNER_JS_URL . 'dokan.js', array( 'jquery-ui-resizable', 'jquery-ui-draggable' ));
             wp_enqueue_script( array( 'jquery-ui-core', 'nbd-dokan-product' ) );
             wp_enqueue_script(

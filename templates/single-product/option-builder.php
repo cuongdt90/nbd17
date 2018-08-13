@@ -120,7 +120,7 @@
         -webkit-font-smoothing: antialiased;
         text-indent: 0px;
         position: absolute;
-        top: 0px;
+        top: 1px;
         left: 0px;
         width: 100%;
         height: 100%;
@@ -131,7 +131,7 @@
         margin: 0px;
     }
     /* End tipTip */ 
-    /* md-radio */
+    /* nbd-radio */
     @keyframes ripple {
         0% {
             box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0);
@@ -194,6 +194,9 @@
         background: #0c8ea7;
     }    
     /* end. nbd-radio */
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+    }
     .nbd-option-wrapper {
         margin-bottom: 1.1em;
     }
@@ -240,12 +243,27 @@
         display: none;
     }
     .nbd-swatch-wrap input[type="radio"]:checked + label {
-        border: 2px solid rgba(221, 51, 51,0.5);
+        border: 2px solid #0c8ea7;
+        position: relative;
+        display: inline-block;
+    }
+    .nbd-swatch-wrap input[type="radio"]:checked + label:before {
+        display: block;
+        top: 0;
+        left: 0;
+        border: 2px solid #fff;
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        content: '';
+        border-radius: 100%;
+        box-sizing: border-box;
     }
     .nbd-dropdown {
         border: 1px solid #EEE;
-        height: 40px;
-        padding: 3px 40px 3px 8px;
+        height: 36px;
+        padding: 3px 36px 3px 8px;
         background-color: transparent;
         line-height: 100%;
         outline: 0;
@@ -257,11 +275,150 @@
         -webkit-appearance: none;
         -moz-appearance: none;        
     }
+    .nbd-label {
+        border-radius: 36px;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 15PX;
+        background: #ddd;
+        text-transform: uppercase;
+        font-size: 13px;
+        display: inline-block;
+        margin: 0 5px 5px 0;
+        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+        color: #757575;
+        -webkit-transition: all 0.4s;
+        -moz-transition: all 0.4s;
+        -ms-transition: all 0.4s;
+        transition: all 0.4s;
+        background: #eee;       
+    }
+    .nbd-label-wrap input[type="radio"]:checked + label {
+        background: #0c8ea7;
+        color: #fff;
+    }
+    .nbd-label:hover{
+        -webkit-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+        -moz-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+        -ms-box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);
+        box-shadow: 0 3px 10px 0 rgba(75,79,84,.3);        
+    }    
     .nbd-swatch-wrap .nbd-field-content{
         font-size: 0;
     }
+    .nbd-required {
+        color: red;
+    }
+    .nbd-field-input-wrap input[type="number"] {
+        padding: 0.418047em;
+        background-color: #f2f2f2;
+        color: #43454b;
+        outline: 0;
+        border: 0;
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        font-weight: 400;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.125);
+        width: 4.235801032em;
+        text-align: center;        
+    }
+    .nbd-field-content input[type="range"] {
+        margin-left: 0;
+        flex: 1
+    }
+    .nbd-field-content input[type="range"] {
+        padding: 0;
+        -webkit-appearance: none;
+        background: transparent
+    }
+    .nbd-field-content input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        background: #0c8ea7;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        box-sizing: border-box;
+        margin-top: -10px
+    }
+    .nbd-field-content input[type="range"]::-moz-range-thumb {
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        background: #0c8ea7;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        box-sizing: border-box
+    }
+    .nbd-field-content input[type="range"]::-ms-thumb {
+        border-radius: 50%;
+        cursor: pointer;
+        background: #0c8ea7;
+        border: 4px solid transparent;
+        background-clip: padding-box;
+        box-sizing: border-box;
+        margin-top: 0;
+        height: 14px;
+        width: 14px;
+        border: 2px solid transparent
+    }
+    .nbd-field-content input[type="range"]:focus {
+        outline: none
+    }
+    .nbd-field-content input[type="range"]:focus::-webkit-slider-thumb {
+        background-color: #fff;
+        color: #191e23;
+        box-shadow: inset 0 0 0 1px #6c7781,inset 0 0 0 2px #fff;
+        outline: 2px solid transparent;
+        outline-offset: -2px
+    }
+    .nbd-field-content input[type="range"]:focus::-moz-range-thumb {
+        background-color: #fff;
+        color: #191e23;
+        box-shadow: inset 0 0 0 1px #6c7781,inset 0 0 0 2px #fff;
+        outline: 2px solid transparent;
+        outline-offset: -2px
+    }
+    .nbd-field-content input[type="range"]:focus::-ms-thumb {
+        background-color: #fff;
+        color: #191e23;
+        box-shadow: inset 0 0 0 1px #6c7781,inset 0 0 0 2px #fff;
+        outline: 2px solid transparent;
+        outline-offset: -2px
+    }
+    .nbd-field-content input[type="range"]::-webkit-slider-runnable-track {
+        height: 3px;
+        cursor: pointer;
+        background: #e2e4e7;
+        border-radius: 1.5px;
+        margin-top: -4px
+    }
+    .nbd-field-content input[type="range"]::-moz-range-track {
+        height: 3px;
+        cursor: pointer;
+        background: #e2e4e7;
+        border-radius: 1.5px
+    }
+    .nbd-field-content input[type="range"]::-ms-track {
+        margin-top: -4px;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+        height: 3px;
+        cursor: pointer;
+        background: #e2e4e7;
+        border-radius: 1.5px
+    }
+   
 </style>
-<div class="nbd-option-wrapper">
+<div class="nbd-option-wrapper" ng-app="nbo-app">
+    <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
 <?php
 $html_field = '';
 foreach($options["fields"] as $field){
@@ -272,6 +429,9 @@ foreach($options["fields"] as $field){
             case 's':
                 $tempalte = '/options-builder/swatch.php';
                 break;
+            case 'l':
+                $tempalte = '/options-builder/label.php';
+                break;            
             case 'r':
                 $tempalte = '/options-builder/radio.php';
                 break;
@@ -280,10 +440,18 @@ foreach($options["fields"] as $field){
                 break;            
         }
     }
-    include($tempalte);
+    if( $field['general']['enabled'] == 'y' ) include($tempalte);
 }
-?>
-    <p><?php _e('Options: ', 'web-to-print-online-designer'); ?> <span id="nbd-option-total"></span></p>
+?>  
+        <div ng-if="valid_form">
+            <p><b><?php _e('Options: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}}</span></p>
+            <table>
+                <tbody>
+                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}}</td><td>{{field.price}}</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     (function($){
@@ -462,30 +630,253 @@ foreach($options["fields"] as $field){
             });
         }
     })(jQuery);  
-    var tiptip_args = {
-        'attribute': 'data-tip',
-        'fadeIn': 50,
-        'fadeOut': 50,
-        'delay': 200,
-        defaultPosition: "top"
-    };
-    jQuery('.nbd-help-tip').tipTip( tiptip_args );
-    var nbd_form_option = {
-        option: <?php echo json_encode($options["fields"]); ?>,
-        init: function(){
-            
-        },
-        onchange: function(){
-            
-        },
-        validate: function(){
-            
-        },
-        calculate_price: function(){
-            console.log(23);
-        }
-    };
     jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
-        nbd_form_option.calculate_price();
+        var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
+        scope.check_valid();
+        scope.update_app();
+    });
+    jQuery(document).ready(function(){
+        jQuery('input[name="quantity"]').on('input', function(){
+            var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
+            scope.check_valid();
+            scope.update_app();            
+        });        
+    });
+    var nboApp = angular.module('nbo-app', []);
+    nboApp.controller('optionCtrl', ['$scope', '$timeout', function($scope, $timeout){
+        $scope.options = <?php echo json_encode($options); ?>;
+        $scope.fields = $scope.options["fields"];
+        $scope.price = "<?php echo $price; ?>";
+        $scope.type = "<?php echo $type; ?>";
+        $scope.variations = <?php echo $variations; ?>;
+        $scope.is_sold_individually = "<?php echo $is_sold_individually; ?>";
+        $scope.valid_form = false;
+        $scope.check_valid = function(){
+            var check = [], total_check = true;
+            angular.forEach($scope.nbd_fields, function(field, field_id){
+                $scope.check_depend(field_id);
+                check[field_id] = ( field.enable && field.required == 'y' && field.value == '' ) ? false : true;
+            });
+            angular.forEach(check, function(c, k){
+                total_check = total_check && c;
+            });           
+            if(total_check){
+                $scope.calculate_price();
+                $scope.valid_form = true;
+            }else{
+                $scope.valid_form = false;
+            }
+        };
+        $scope.debug = function(){
+            
+        };
+        $scope.get_field = function(field_id){
+            var _field = null;
+            angular.forEach($scope.fields, function(field){
+                if( field.id == field_id ) _field = field;
+            });
+            return _field;
+        };
+        $scope.check_depend = function( field_id ){
+            var field = $scope.get_field(field_id),
+            check = [];
+            $scope.nbd_fields[field_id].enable = true;
+            if( field.conditional.enable == 'n' ) return true;
+            if( angular.isUndefined(field.conditional.depend) ) return true;
+            if( field.conditional.depend.length == 0 ) return true;
+            var show = field.conditional.show,
+            logic = field.conditional.logic,
+            total_check = logic == 'a' ? true : false;
+            angular.forEach(field.conditional.depend, function(con, key){
+                if( con.id != '' ){
+                    switch(con.operator){
+                        case 'i':
+                            check[key] = $scope.nbd_fields[con.id].value == con.val ? true : false;
+                            break;
+                        case 'n':
+                            check[key] = $scope.nbd_fields[con.id].value != con.val ? true : false;
+                            break;  
+                        case 'e':
+                            check[key] = $scope.nbd_fields[con.id].value == '' ? true : false;
+                            break;
+                        case 'ne':
+                            check[key] = $scope.nbd_fields[con.id].value != '' ? true : false;
+                            break;                         
+                    }
+                }else{
+                    check[key] = true;
+                }
+            });
+            angular.forEach(check, function(c){
+                total_check = logic == 'a' ? (total_check && c) : (total_check || c);
+            });
+            $scope.nbd_fields[field_id].enable = show == 'y' ? total_check : !total_check;
+            return $scope.nbd_fields[field_id].enable;
+        };
+        $scope.init = function(){
+            $scope.nbd_fields = {};
+            $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );
+            $scope.total_price = 0;
+            angular.forEach($scope.fields, function(field){
+                if(field.general.enabled == 'y'){
+                    $scope.nbd_fields[field.id] = {
+                        title: field.general.title,
+                        price: $scope.convert_to_wc_price(0),
+                        required: field.general.required
+                    };
+                    if(field.general.data_type == 'i'){
+                        $scope.nbd_fields[field.id].value = '';
+                    }else{
+                        if( field.general.attributes.options.length == 0 ){
+                            $scope.nbd_fields[field.id].value = '0';
+                        }else{
+                            $scope.nbd_fields[field.id].value = '0';
+                            angular.forEach(field.general.attributes.options, function(op, k){
+                                if( op.selected == 'on' ) $scope.nbd_fields[field.id].value = '' + k;
+                            });
+                        }
+                    }
+                }
+            });
+            angular.forEach($scope.fields, function(field){
+                $scope.check_depend(field.id);
+            });
+            $scope.check_valid();
+        };
+        $scope.convert_to_wc_price = function(price){
+            return accounting.formatMoney( price, {
+                symbol: nbds_frontend.currency_format_symbol,
+                decimal: nbds_frontend.currency_format_decimal_sep,
+                thousand: nbds_frontend.currency_format_thousand_sep,
+                precision: nbds_frontend.currency_format_num_decimals,
+                format: nbds_frontend.currency_format
+            });
+        };
+        $scope.convert_wc_price_to_float = function(price){
+            var c = jQuery.trim(nbds_frontend.currency_format_thousand_sep).toString(), 
+                d = jQuery.trim(nbds_frontend.currency_format_decimal_sep).toString();
+            return price = price.replace(/ /g, ""), price = "." === c ? price.replace(/\./g, "") : price.replace(new RegExp(c,"g"), ""), price = price.replace(d, "."), price = parseFloat(price);            
+        };
+        $scope.validate_int = function(input){
+            var output = parseInt(input);
+            if( isNaN(output) ) output = 0;
+            if( output < 0 ) output = 0;
+            return output;
+        };
+        $scope.validate_float = function(input){
+            var output = parseFloat(input);
+            if( isNaN(output) ) output = 0;
+            return output;
+        };
+        $scope.get_quantity_break = function( qty ){
+            var quantity_break = {index: 0, oparator: 'gt'};
+            var quantity_breaks = [];
+            angular.forEach($scope.options.quantity_breaks, function(_break, key){
+                quantity_breaks[key] = $scope.validate_int(_break.val);
+            });
+            angular.forEach(quantity_breaks, function(_break, key){
+                if( quantity_breaks.length == 1 && key == 0 && qty < _break){
+                    quantity_break = {index: 0, oparator: 'lt'};
+                }
+                if( qty >= _break && key < ( quantity_breaks.length - 1 ) ){
+                    quantity_break = {index: key, oparator: 'bw'};
+                }
+                if( key == ( quantity_breaks.length - 1 ) && qty >= _break){
+                    quantity_break = {index: key, oparator: 'gt'};
+                }
+            });
+            return quantity_break;
+        };
+        $scope.calculate_price = function(){
+            $scope.basePrice = $scope.price;
+            if(this.type == 'variable'){
+                var variation_id = jQuery('input[name="variation_id"], input.variation_id').val();
+                $scope.basePrice = (variation_id != '' && variation_id != 0 ) ? $scope.variations[variation_id] : $scope.basePrice;
+            }
+            $scope.basePrice = $scope.convert_wc_price_to_float($scope.basePrice); 
+            $scope.total_price = 0;
+            var qty = 0; 
+            if( $scope.is_sold_individually == 1 ){
+                qty = 1;
+            }else{
+                qty = $scope.validate_int(jQuery('input[name="quantity"]').val());
+            }
+            var quantity_break = $scope.get_quantity_break(qty);
+            var xfactor = 1;
+            angular.forEach($scope.nbd_fields, function(field, field_id){
+                if(field.enable){
+                    var origin_field = $scope.get_field(field_id);
+                    var factor = null;
+                    if( origin_field.general.data_type == 'i' ){
+                        if(origin_field.general.depend_quantity == 'n'){
+                            factor = origin_field.general.price;
+                        }else{
+                            if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                factor = '';
+                            }else{
+                                factor = origin_field.general.price_breaks[quantity_break.index];
+                            }
+                        }
+                    }else{
+                        var option = origin_field.general.attributes.options[field.value];
+                        if(origin_field.general.depend_quantity == 'n'){
+                            factor = option.price[0];
+                        }else{
+                            if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                factor = '';
+                            }else{
+                                factor = option.price[quantity_break.index];
+                            }
+                        }
+                    }
+                    factor = $scope.validate_float(factor) ;
+                    field.is_pp = 0;
+                    switch(origin_field.general.price_type){
+                        case 'f':
+                            field.price = $scope.convert_to_wc_price( factor );
+                            $scope.total_price += factor;
+                            break;
+                        case 'p':
+                            field.price = $scope.convert_to_wc_price( $scope.basePrice * factor / 100 );
+                            $scope.total_price += ($scope.basePrice * factor / 100);
+                            break;
+                        case 'p+':
+                            field.price = factor / 100;
+                            xfactor *= (1 + factor / 100);
+                            field.is_pp = 1;
+                            break;
+                        case 'c':
+                            field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
+                            $scope.total_price += factor * $scope.validate_int( field.value );
+                            break; 
+                    }
+                }
+            });
+            $scope.total_price += ( ($scope.basePrice + $scope.total_price ) * (xfactor - 1 ) );
+            angular.forEach($scope.nbd_fields, function(field){
+                if( field.is_pp == 1 ) field.price = $scope.convert_to_wc_price( field.price * ($scope.basePrice + $scope.total_price ) / ( field.price + 1 ) );
+            });
+            $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
+        };
+        $scope.update_app = function(){
+            if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply(); 
+        };
+        $scope.init();
+    }]).directive( 'nbdHelpTip', function($timeout) {
+        return {
+            restrict: 'C',
+            link: function( scope, element, attrs ) {
+                var tiptip_args = {
+                    'attribute': 'data-tip',
+                    'fadeIn': 50,
+                    'fadeOut': 50,
+                    'delay': 200,
+                    defaultPosition: "top"
+                };
+                $timeout(function() {
+                    jQuery(element).tipTip( tiptip_args );
+                }, 0);
+            }
+        };
     });
 </script>

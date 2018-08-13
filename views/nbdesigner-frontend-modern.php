@@ -989,6 +989,7 @@
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {
+                        cliparts: "<?php _e('Cliparts', 'web-to-print-online-designer'); ?>",
                         alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>",
                         path: "<?php _e('Vector', 'web-to-print-online-designer'); ?>",
                         image: "<?php _e('Image', 'web-to-print-online-designer'); ?>",

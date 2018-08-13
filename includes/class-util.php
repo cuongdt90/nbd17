@@ -539,6 +539,11 @@ function nbd_get_icc_cmyk_list_file(){
     );
 }
 function nbd_file_get_contents($url){
+    $response = wp_remote_get( $url );
+    if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+        $result   = trim($response['body']);
+        return $result;
+    }
     if(ini_get('allow_url_fopen')){
         $checkPHP = version_compare(PHP_VERSION, '5.6.0', '>=');
         if (is_ssl() && $checkPHP) {
@@ -860,7 +865,7 @@ function nbd_get_default_upload_setting(){
 function nbd_get_global_template_cat(){
     $cats = get_transient( 'nbd_global_template_cat' );
     if( false === $cats ){
-        $response = wp_remote_post( 'https://media.printcart.com/v1/template',
+        $response = wp_remote_post( 'https://studio.cmsmart.net/v1/template',
             array(
                 'timeout'     => 120,
                 'body' => array(
@@ -1166,6 +1171,12 @@ function is_woo_v305(){
     if( version_compare( $woo_ver, "3.0.5", "<" )) return false;
     return true;
 }
+function is_dokan(){
+    if(class_exists('WeDevs_Dokan') ){
+        return true;
+    }
+    return false;
+}
 function nbd_get_dpi($filename){
     if( class_exists('Imagick') ){
         $image = new Imagick($filename);
@@ -1384,9 +1395,15 @@ function nbd_check_permission(){
         if ($order->get_user_id() != $uid) return false;
     }
     if( isset($_GET['task']) && $_GET['task'] == "create" ){
-        if( !current_user_can('edit_nbd_template') ) return false;
-    }    
+        if( !can_edit_nbd_template() ) return false;
+    }
     return true;
+}
+function can_edit_nbd_template(){
+    if( current_user_can('edit_nbd_template') ) return true;
+    $is_nbdesigner = get_user_meta( get_current_user_id(), 'nbd_create_design', true );
+    if( $is_nbdesigner == 'on' ) return true;
+    return false;
 }
 function nbd_check_order_permission( $order_id ){
     $order = wc_get_order(absint( $order_id ) ); 
@@ -1531,9 +1548,30 @@ function nbd_get_font_by_alias( $alias ){
     return false;
 }
 function nbd_get_products_has_design(){
-    $nbd_products = get_transient('nbd_frontend_products');
-    if( false === $nbd_products ){
-        $products = nbd_get_all_product_has_design();
+    if( !is_dokan() ){
+        $nbd_products = get_transient('nbd_frontend_products');
+        if( false === $nbd_products ){
+            $products = nbd_get_all_product_has_design();
+            foreach ($products as $pro){
+                $product = wc_get_product($pro->ID);
+                $type = $product->get_type();
+                $image = get_the_post_thumbnail_url($pro->ID, 'post-thumbnail');
+                if( !$image ) $image = wc_placeholder_img_src();            
+                $result[] = array(
+                    'product_id'    =>  $pro->ID,
+                    'name'  => $pro->post_title,
+                    'src'   =>  $image,
+                    'type'  =>  $type,
+                    'url'   => get_permalink($pro->ID)
+                );
+            }
+            set_transient( 'nbd_frontend_products' , $result ); 
+        }else{
+            $result = $nbd_products;
+        }
+    }else{
+        $result = array();
+        $products = nbd_get_all_product_of_vendor_has_design();
         foreach ($products as $pro){
             $product = wc_get_product($pro->ID);
             $type = $product->get_type();
@@ -1547,11 +1585,27 @@ function nbd_get_products_has_design(){
                 'url'   => get_permalink($pro->ID)
             );
         }
-        set_transient( 'nbd_frontend_products' , $result ); 
-    }else{
-        $result = $nbd_products;
-    }     
+    }
     return $result;
+}
+function nbd_get_all_product_of_vendor_has_design(){
+    $args_query = array(
+        'post_type' => 'product',
+        'post_status' => 'publish',
+        'meta_key' => '_nbdesigner_enable',
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'posts_per_page'=> -1,
+        'author'         => get_current_user_id(),
+        'meta_query' => array(
+            array(
+                'key' => '_nbdesigner_enable',
+                'value' => 1,
+            )
+        )
+    ); 
+    $posts = get_posts($args_query);  
+    return $posts;    
 }
 function nbd_get_all_product_has_design(){
     $args_query = array(
