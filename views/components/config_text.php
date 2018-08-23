@@ -196,14 +196,18 @@
         </div>		
     </div>	
     <div id="text-dimension" class="content">
-        <div class="nb-col-4">
+<!--        <div class="nb-col-4">
             <p class="label-config">{{(langs['HEIGHT']) ? langs['HEIGHT'] : "Height"}}</p>
             <input class="input-config shadow hover-shadow" readonly disabled ng-model="editable.height">
         </div>
         <div class="nb-col-4">
             <p class="label-config">{{(langs['WIDTH']) ? langs['WIDTH'] : "Width"}}</p>
             <input class="input-config shadow hover-shadow" readonly disabled ng-model="editable.width">
-        </div>	
+        </div>	-->
+        <div class="nb-col-4">
+            <p class="label-config">Letter spacing</p>
+            <div class="container-dg-slider"><div class="dg-slider" id="letter-spacing"></div></div>            
+        </div>
         <div class="nb-col-4" ng-show="settings['nbdesigner_text_proportion'] == 1">
             <p class="label-config">{{(langs['UNLOCK_PROPORTION']) ? langs['UNLOCK_PROPORTION'] : "Unlock proportion"}}</p>
             <div class="switch">

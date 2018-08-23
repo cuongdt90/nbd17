@@ -97,9 +97,9 @@ if(!class_exists('Nbdesigner_Measurement_Price_Calculator')){
             if ( isset( $cart_item['nbd_item_meta_data']['_price'] )){
                 $measurement = (float) $cart_item['nbd_item_meta_data']['_price'];
                 $cart_item['data']->set_price( $measurement );
-            }          
+            }
             return $cart_item;
-        }  
+        }
         public function add_cart_item_data(  $cart_item_data, $product_id, $variation_id  ){
             $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;
             $nbd_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);            

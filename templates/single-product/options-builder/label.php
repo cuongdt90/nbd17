@@ -12,9 +12,16 @@
     <div class="nbd-field-content">
         <?php 
             foreach ($field['general']['attributes']["options"] as $key => $attr): 
-                $image_url = absint($attr['image']) != 0 ? wp_get_attachment_url( absint($attr['image']) ) : NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
+                //$image_url = absint($attr['image']) != 0 ? wp_get_attachment_url( absint($attr['image']) ) : NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
         ?>
-        <input ng-change="check_valid()" value="<?php echo $key; ?>" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value" name="nbd-field[<?php echo $field['id']; ?>]" type="radio" id='nbd-field-<?php echo $field['id'].'-'.$key; ?>' <?php checked( isset($attr['selected']) ? $attr['selected'] : 'off', 'on' ); ?> />
+        <input ng-change="check_valid()" value="<?php echo $key; ?>" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value" name="nbd-field[<?php echo $field['id']; ?>]" type="radio" id='nbd-field-<?php echo $field['id'].'-'.$key; ?>' 
+            <?php 
+                if( isset($form_values[$field['id']]) ){
+                    checked( $form_values[$field['id']], $key ); 
+                }else{
+                    checked( isset($attr['selected']) ? $attr['selected'] : 'off', 'on' ); 
+                }
+            ?> />
         <label class="nbd-label" for='nbd-field-<?php echo $field['id'].'-'.$key; ?>' >
             <?php echo $attr['name']; ?> 
         </label>

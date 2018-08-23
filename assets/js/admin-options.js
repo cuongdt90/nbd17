@@ -314,7 +314,11 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         file_frame.on( 'select', function() {
             var attachment = file_frame.state().get('selection').first().toJSON();
             $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image = attachment.id;
-            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = attachment.url;
+            var url = attachment.url;
+            if( angular.isDefined(attachment.sizes) && angular.isDefined(attachment.sizes.thumbnail) ){
+                url = attachment.sizes.thumbnail.url;
+            }
+            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = url;
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply();
         });
         file_frame.open(); 

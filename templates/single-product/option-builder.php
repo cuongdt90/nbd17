@@ -201,14 +201,14 @@
         margin-bottom: 1.1em;
     }
     .nbd-option-field {
-        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+/*        -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
         -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
         -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
         box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
-        border-radius: 4px;
+        border-radius: 4px;*/
         background-color: #fff;
         margin-bottom: 1.1em;
-        border: 1px solid #ddd;
+        border: 1px solid #eee;
     }
     .nbd-option-field select,
     .nbd-option-field input[type="text"]{
@@ -216,7 +216,7 @@
     }
     .nbd-field-header {
         padding: 10px;
-        background: #f2f2f2;
+        background: #f8f8f8;
         color: #0c8ea7;
         font-weight: bold;
     }
@@ -442,14 +442,20 @@ foreach($options["fields"] as $field){
     }
     if( $field['general']['enabled'] == 'y' ) include($tempalte);
 }
-?>  
+if( $cart_item_key != ''){
+    ?>
+        <input type="hidden" value="<?php echo $cart_item_key; ?>" name="nbo_cart_item_key"/>
+    <?php    
+}
+?>
         <div ng-if="valid_form">
-            <p><b><?php _e('Options: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}}</span></p>
+            <p><b><?php _e('Options: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></span></p>
             <table>
                 <tbody>
                     <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}}</td><td>{{field.price}}</td></tr>
                 </tbody>
             </table>
+            <p><b><?php _e('Discount: ', 'web-to-print-online-designer'); ?></b> {{discount_by_qty}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></p>
         </div>
     </div>
 </div>
@@ -635,27 +641,41 @@ foreach($options["fields"] as $field){
         scope.check_valid();
         scope.update_app();
     });
+    jQuery('.variations_form').on('wc_variation_form', function(){
+        var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
+        scope.check_valid();
+        scope.update_app();     
+    });
     jQuery(document).ready(function(){
-        jQuery('input[name="quantity"]').on('input', function(){
+        jQuery('input[name="quantity"]').on('input change change.nbo', function(){
             var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
             scope.check_valid();
             scope.update_app();            
         });        
     });
+    jQuery(document).off('click.nbo', '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus')
+            .on('click.nbo', '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus', function(){
+                jQuery('input[name="quantity"]').trigger( 'change.nbo' );
+            });
     var nboApp = angular.module('nbo-app', []);
     nboApp.controller('optionCtrl', ['$scope', '$timeout', function($scope, $timeout){
+        $scope.product_id = <?php echo $product_id; ?>;
         $scope.options = <?php echo json_encode($options); ?>;
         $scope.fields = $scope.options["fields"];
         $scope.price = "<?php echo $price; ?>";
         $scope.type = "<?php echo $type; ?>";
         $scope.variations = <?php echo $variations; ?>;
+        $scope.form_values = <?php echo json_encode($form_values); ?>;
         $scope.is_sold_individually = "<?php echo $is_sold_individually; ?>";
         $scope.valid_form = false;
+        $scope.product_image = [];
+        $scope.product_img = [];
         $scope.check_valid = function(){
             var check = [], total_check = true;
             angular.forEach($scope.nbd_fields, function(field, field_id){
                 $scope.check_depend(field_id);
                 check[field_id] = ( field.enable && field.required == 'y' && field.value == '' ) ? false : true;
+                //check input range min, max
             });
             angular.forEach(check, function(c, k){
                 total_check = total_check && c;
@@ -666,9 +686,117 @@ foreach($options["fields"] as $field){
             }else{
                 $scope.valid_form = false;
             }
+            $scope.may_be_change_product_image();
+        };
+        $scope.set_product_image_attr = function(ele, attr, value, id){
+            if( angular.isUndefined($scope.product_image[id]) || angular.isUndefined($scope.product_image[id][attr]) ){
+                if( angular.isUndefined($scope.product_image[id]) ) $scope.product_image[id] = {};
+                $scope.product_image[id][attr] = ele.attr( attr );
+            }
+            if ( false === value ) {
+                ele.removeAttr( attr );
+            }else{
+                ele.attr( attr, value );
+            }
+        };
+        $scope.reset_product_image_attr = function(ele, attr, id){
+            ele.attr( attr, $scope.product_image[id][attr] );
+            delete $scope.product_image[id][attr];
+        };
+        $scope.may_be_change_product_image = function(){
+            $scope.product_img = [];
+            angular.forEach($scope.nbd_fields, function(_field, field_id){
+                var field = $scope.get_field(field_id);
+                if( field.general.data_type == 'm' && field.appearance.change_image_product == 'y' && field.general.attributes.options[_field.value].imagep == 'y' ){
+                    $scope.product_img.field_id  = field_id;
+                    $scope.product_img.option_index  = _field.value;
+                }
+            });
+            if( angular.isDefined($scope.product_img.field_id) && angular.isDefined($scope.product_img.option_index) ){
+                $scope.change_product_image($scope.product_img.field_id, $scope.product_img.option_index);
+            }
+        };
+        $scope.change_product_image = function( field_id, option_index ){
+            var field = $scope.get_field(field_id);
+            if( field.appearance.change_image_product == 'y' && field.general.attributes.options[option_index].imagep == 'y' ){
+                var product_element = jQuery( '#product-'+ $scope.product_id );
+                var product_image = product_element.find( '.woocommerce-product-gallery__image:not(.clone), .woocommerce-product-gallery__image--placeholder:not(.clone)' ).eq( 0 ).find( '.wp-post-image' ).first();
+                if ( product_image.length === 0 ) {
+                    product_image = product_element.find( "a.woocommerce-main-image img, img.woocommerce-main-image,a img" ).not( '.thumbnails img,.product_list_widget img' ).first();
+                }
+                if ( jQuery( product_image ).length > 1 ) {
+                    product_image = jQuery( product_image ).first();
+                }  
+                var gallery_image = product_element.find( '.flex-control-nav li:eq(0) img' ),
+                gallery_wrapper = product_element.find( '.woocommerce-product-gallery__wrapper ' ),
+                product_image_wrap = gallery_wrapper.find( '.woocommerce-product-gallery__image, .woocommerce-product-gallery__image--placeholder' ).eq( 0 ),
+                product_link = product_image.closest( 'a' );
+                var option_data = field.general.attributes.options[option_index];
+                if( !option_data.full_src ) option_data.full_src = option_data.image_link;
+                if (product_image.length){
+                    if( !option_data.full_src_w ) option_data.full_src = product_image.attr('data-large_image_width');
+                    if( !option_data.full_src_h ) option_data.full_src_h = product_image.attr('data-large_image_height');
+                    $scope.set_product_image_attr(product_image, 'src', option_data.image_link, 0);
+                    $scope.set_product_image_attr(product_image, 'srcset', option_data.image_srcset, 0);
+                    $scope.set_product_image_attr(product_image, 'sizes', option_data.image_sizes, 0);
+                    $scope.set_product_image_attr(product_image, 'title', option_data.image_title, 0);
+                    $scope.set_product_image_attr(product_image, 'alt', option_data.image_alt, 0);
+                    $scope.set_product_image_attr(product_image, 'data-src', option_data.full_src, 0);
+                    $scope.set_product_image_attr(product_image, 'data-large_image', option_data.full_src, 0);
+                    $scope.set_product_image_attr(product_image, 'data-large_image_width', option_data.full_src_w, 0);
+                    $scope.set_product_image_attr(product_image, 'data-large_image_height', option_data.full_src_h, 0);
+
+                    $scope.set_product_image_attr(product_image, 'alt', option_data.alt, 0);
+                    $scope.set_product_image_attr(product_image_wrap, 'data-thumb', option_data.image_link, 1);
+                }
+                if (gallery_image.length){
+                    $scope.set_product_image_attr(gallery_image, 'src', option_data.image_link, 2);
+                }
+                if (product_link.length){
+                    $scope.set_product_image_attr(product_link, 'href', option_data.full_src, 3);
+                    $scope.set_product_image_attr(product_link, 'title', option_data.image_caption, 3);
+                }
+                /*
+                var zoom_images = product_element.find( '.woocommerce-product-gallery__image' ),
+                    galleryWidth = product_element.find( '.woocommerce-product-gallery--with-images' ).width(),
+                    zoomEnabled  = false;
+                jQuery( zoom_images ).each( function( index, target ) {
+                    var image = jQuery( target ).find( 'img.wp-post-image' );
+                    if ( image.attr( 'data-large_image_width' ) > galleryWidth ) {
+                        zoomEnabled = true;
+                        return false;
+                    }
+                } ); 
+                if ( zoomEnabled ){
+                    var zoom_options = {
+                        touch: false
+                    };
+                    if ( 'ontouchstart' in window ) {
+                        zoom_options.on = 'click';
+                    }
+                    zoom_images.trigger( 'zoom.destroy' );
+                    zoom_images.zoom( zoom_options );
+                }else{
+                    zoom_images.trigger( 'zoom.destroy' );
+                }    
+                */
+                $scope.init_product_gallery_and_zoom();
+            }
+        };
+        $scope.init_product_gallery_and_zoom = function(){
+            var product_element = jQuery( '#product-'+ $scope.product_id );
+            var gallery_element = product_element.find( '.woocommerce-product-gallery' );
+            if( gallery_element.length && gallery_element.data( 'flexslider' ) ){
+                gallery_element.flexslider( 0 );
+                window.setTimeout( function () {
+                    gallery_element.trigger( 'woocommerce_gallery_init_zoom' );
+                    jQuery( window ).trigger( 'resize' );
+                }, 10 );
+            }
         };
         $scope.debug = function(){
-            
+            jQuery('input[name="quantity"]').val( 100 );
+            jQuery('input[name="quantity"]').trigger( 'change.nbo' );
         };
         $scope.get_field = function(field_id){
             var _field = null;
@@ -725,7 +853,11 @@ foreach($options["fields"] as $field){
                         required: field.general.required
                     };
                     if(field.general.data_type == 'i'){
-                        $scope.nbd_fields[field.id].value = '';
+                        if( field.general.input_type != 't' ){
+                            $scope.nbd_fields[field.id].value = field.general.input_option != '' ? field.general.input_option.min :  0;
+                        }else{
+                            $scope.nbd_fields[field.id].value = '';
+                        }
                     }else{
                         if( field.general.attributes.options.length == 0 ){
                             $scope.nbd_fields[field.id].value = '0';
@@ -737,6 +869,9 @@ foreach($options["fields"] as $field){
                         }
                     }
                 }
+            });
+            angular.forEach($scope.form_values, function(value, field_id){
+                if(field_id) $scope.nbd_fields[field_id].value = value;
             });
             angular.forEach($scope.fields, function(field){
                 $scope.check_depend(field.id);
@@ -795,6 +930,7 @@ foreach($options["fields"] as $field){
             }
             $scope.basePrice = $scope.convert_wc_price_to_float($scope.basePrice); 
             $scope.total_price = 0;
+            $scope.discount_by_qty = 0;
             var qty = 0; 
             if( $scope.is_sold_individually == 1 ){
                 qty = 1;
@@ -856,13 +992,34 @@ foreach($options["fields"] as $field){
             angular.forEach($scope.nbd_fields, function(field){
                 if( field.is_pp == 1 ) field.price = $scope.convert_to_wc_price( field.price * ($scope.basePrice + $scope.total_price ) / ( field.price + 1 ) );
             });
+            var qty_factor = null;
+            if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                qty_factor = '';
+            }else{
+                qty_factor = $scope.options.quantity_breaks[quantity_break.index].dis;
+            }
+            qty_factor = $scope.validate_float(qty_factor);
+            $scope.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + $scope.total_price ) * qty_factor / 100;
             $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
+            $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
         };
         $scope.update_app = function(){
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply(); 
         };
         $scope.init();
-    }]).directive( 'nbdHelpTip', function($timeout) {
+    }]).directive('stringToNumber', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function(value) {
+                    return '' + value;
+                });
+                ngModel.$formatters.push(function(value) {
+                    return parseFloat(value);
+                });
+            }
+        };
+    }).directive( 'nbdHelpTip', function($timeout) {
         return {
             restrict: 'C',
             link: function( scope, element, attrs ) {

@@ -1,9 +1,9 @@
-<div class="nbd-color-palette">
+<div class="nbd-color-palette" id="nbd-color-palette">
     <div class="nbd-color-palette-inner">
         <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'">
             <h3 class="color-palette-label"><?php _e('Document colors','web-to-print-online-designer'); ?></h3>
             <ul class="main-color-palette nbd-perfect-scroll">
-                <li class="color-palette-add" ng-click="showTextColorPalette()" ng-style="{'background-color': currentColor}"></li>
+                <li class="color-palette-add" ng-click="showTextColorPalette()"></li>
                 <li ng-repeat="color in listAddedColor track by $index" ng-click="changeFill(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background-color': color}"></li>
             </ul>
         </div>
@@ -18,7 +18,6 @@
                 ng-model="currentColor"
                 options="{
                     preferredFormat: 'hex',
-                    color: '#fff',
                     flat: true,
                     showButtons: false,
                     showInput: true,

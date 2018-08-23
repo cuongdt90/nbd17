@@ -833,8 +833,8 @@
                 opacity: 1;
             }
             .nbd-color-palette .nbd-color-palette-inner .main-color-palette li:hover {
-                -webkit-box-shadow: none;
-                box-shadow: none;
+                -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.05), inset -1px -1px 0 rgba(0,0,0,.05);
+                box-shadow: inset 1px 1px 0 rgba(0,0,0,.05), inset -1px -1px 0 rgba(0,0,0,.05);
             } 
             .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item.active {
                 border: 2px solid #0e9dde;
@@ -846,12 +846,25 @@
             .nbd-toolbar .toolbar-text .nbd-main-menu.menu-left .menu-item.item-font-size .sub-menu ul li {
                 cursor: pointer;
             }
+            .nbd-global-color-palette {
+                top: 110px;
+                left: 50%;
+                margin-left: -110px;
+                z-index: 10000002;
+            }
+            .nbd-global-color-palette.nbd-color-palette .nbd-color-palette-inner:before,
+            .nbd-global-color-palette.nbd-color-palette .nbd-color-palette-inner:after {
+                display: none !important;
+            }
             @media screen and (min-width: 768px) {
                 .nbd-stages .stage .page-toolbar {
                     top: 50%;                
                 }
             }
             @media screen and (max-width: 767px) {
+                .nbd-global-color-palette {
+                    margin-left: 0;
+                }
                 .nbd-toolbar .toolbar-common .nbd-main-menu li.menu-item.active > i {
                     color: #404762;
                 }
@@ -979,6 +992,7 @@
                 is_wpml	:	<?php echo $is_wpml; ?>,
                 enable_upload_multiple	:   "<?php echo $enable_upload_multiple; ?>",
                 login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",
+                //login_url   :   "<?php echo get_permalink( get_option('woocommerce_myaccount_page_id') ).'?nbd_redirect=1'; ?>",
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
                 product_data  :   <?php echo json_encode($product_data); ?>,
                 fonts: <?php echo nbd_get_fonts(); ?>,
@@ -1061,6 +1075,7 @@
             <?php include 'modern/popup.php';?>
             <?php include 'modern/toasts.php';?>
             <?php include 'modern/tip.php';?>
+            <?php include 'modern/color-palette.php';?>
         </div>
         <?php include 'modern/loading-page.php';?>
         <?php if(!NBDESIGNER_MODE_DEV): ?>

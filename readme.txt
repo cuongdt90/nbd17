@@ -2,7 +2,7 @@
 Contributors: netbaseteam
 Donate link: http://netbaseteam.com/donate_siteorigin.html
 Tags: product designer,online design,canvas, print, phone case, t-shirt, web to print, woocommerce, web2print
-Requires at least: 4.1
+Requires at least: 4.6
 Tested up to: 4.9.7
 Stable tag: 2.0.0
 License: GPLv3 or later
@@ -83,8 +83,8 @@ The customer can easily design with power helpdesk.
 
 **Minimum Requirements**
 
-- WordPress 4.1 or greater
-- Woocommerce version 2.0 or greater
+- WordPress 4.6 or greater
+- Woocommerce version 3.0 or greater
 - PHP version 5.6.x or greater ( does not support PHP 7.2.x )
 - PHP allow_url_fopen is required
 - PHP Imagick API is recommended

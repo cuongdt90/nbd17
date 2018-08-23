@@ -12,7 +12,8 @@ Author URI: http://netbaseteam.com/
 License: GPLv2 or later
 Text Domain: web-to-print-online-designer
 Domain Path: /langs
-WC tested up to: 3.4.3
+WC requires at least: 3.0.0
+WC tested up to: 3.4.4
 */
 
 if ( !function_exists( 'add_action' ) ) {

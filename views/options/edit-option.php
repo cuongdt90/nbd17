@@ -107,7 +107,6 @@
                             <div class="inside">
                                 <div class="nbd-fields-builder">
                                     <?php include_once('quantity.php'); ?>
-                                    <?php include_once('global_field.php'); ?>
                                     <?php include_once('field.php'); ?>
                                 </div>
                             </div>    

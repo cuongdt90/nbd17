@@ -16,7 +16,7 @@
         <div class="nbd-field-info" ng-show="options.quantity_enable == 'y'">
             <div class="nbd-field-info-1">
                 <label><b><?php _e('Display type', 'web-to-print-online-designer'); ?></b></label>
-            </div>  
+            </div>
             <div class="nbd-field-info-2">
                 <select name="options[quantity_type]" ng-model="options.quantity_type">
                     <option value="i"><?php _e('Input', 'web-to-print-online-designer'); ?></option>

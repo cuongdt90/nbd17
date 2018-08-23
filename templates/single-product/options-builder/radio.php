@@ -11,7 +11,14 @@
     </div>
     <div class="nbd-field-content nbd-radio">
         <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
-        <input ng-change="check_valid()" value="<?php echo $key; ?>" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value" id='nbd-field-<?php echo $field['id'].'-'.$key; ?>' name="nbd-field[<?php echo $field['id']; ?>]" type="radio" ng-checked="<?php echo (isset($attr['selected'])&& $attr['selected'] == 'on' ) ? 1 : 0; ?>" /> <label for='nbd-field-<?php echo $field['id'].'-'.$key; ?>'><?php echo $attr['name']; ?></label>
+        <input ng-change="check_valid()" value="<?php echo $key; ?>" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value" id='nbd-field-<?php echo $field['id'].'-'.$key; ?>' name="nbd-field[<?php echo $field['id']; ?>]" type="radio"
+            <?php
+                if( isset($form_values[$field['id']]) ){
+                    checked( $form_values[$field['id']], $key ); 
+                }else{
+                    checked( isset($attr['selected']) ? $attr['selected'] : 'off', 'on' ); 
+                }
+            ?>/> <label for='nbd-field-<?php echo $field['id'].'-'.$key; ?>'><?php echo $attr['name']; ?></label>
         <?php endforeach; ?>
     </div>
 </div>

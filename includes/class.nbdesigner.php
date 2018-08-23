@@ -98,8 +98,9 @@ class Nbdesigner_Plugin {
     public function hook(){
         add_action('plugins_loaded', array($this, 'translation_load_textdomain'));
         add_filter( 'cron_schedules', array($this, 'set_schedule'));      
-        add_filter( 'query_vars', array($this, 'nbdesigner_add_query_vars_filter') );           
-        add_shortcode( 'nbdesigner_button', array($this,'nbdesigner_button') );
+        add_filter( 'query_vars', array($this, 'nbdesigner_add_query_vars_filter') );
+        $position = nbdesigner_get_option('nbdesigner_position_button_product_detail');
+        if($position == 4) add_shortcode( 'nbdesigner_button', array($this,'nbdesigner_button') );
         add_shortcode( 'nbd_loggin_redirect', array($this,'nbd_loggin_redirect_func') );
         add_action( 'template_redirect', array( $this, 'nbdesigner_editor_html' ) );    
         add_action('admin_head', array($this, 'nbdesigner_add_tinymce_editor'));
@@ -227,8 +228,16 @@ class Nbdesigner_Plugin {
         /** end. bulk action **/
         add_action('woocommerce_order_item_meta_end', array($this, 'woocommerce_order_item_meta_end'), 30, 3);
         add_action('woocommerce_order_details_after_order_table', array($this, 'woocommerce_order_details_after_order_table'), 30, 1);
+        
         //add_action( 'woocommerce_order_status_completed', array($this, 'update_order_item_meta_data') );
+        
+        //add_filter( 'woocommerce_login_redirect', array($this, 'login_redirect'), 10, 1 );
+        //add_action('woocommerce_registration_redirect', array($this, 'login_redirect'), 10, 1 );
     }    
+    public function login_redirect( $redirect ){
+        if( isset( $_GET['nbd_redirect'] ) ) $redirect = getUrlPageNBD('redirect');
+        return $redirect;
+    }
     public function nbd_order_again_cart_item_data( $arr, $item, $order ){
         $order_items = $order->get_items();
         foreach( $order_items AS $order_item_id => $item ){    
@@ -502,8 +511,13 @@ class Nbdesigner_Plugin {
         if (!is_plugin_active('woocommerce/woocommerce.php')) {
             $message = '<div class="error"><p>' . sprintf(__('WooCommerce is not active. Please activate WooCommerce before using %s.', 'web-to-print-online-designer'), '<b>Nbdesigner</b>') . '</p></div>';
             die($message);
-        }               
-
+        }
+        $woocommer_data = get_plugin_data(WP_PLUGIN_DIR .'/woocommerce/woocommerce.php', false, false);
+        if (version_compare ($woocommer_data['Version'] , '3.0', '<')){
+            $message = '<div class="error"><p>' . sprintf(__('WoooCommerce 3.0.0 or greater is required', 'web-to-print-online-designer'), '<b>Nbdesigner</b>') . '</p></div>';
+            die($message);
+        }
+        
         /* Install */
         NBD_Install::create_pages();
         NBD_Install::create_tables();
@@ -808,47 +822,47 @@ class Nbdesigner_Plugin {
         if (current_user_can('manage_nbd_setting')) {
             add_menu_page('Nbdesigner', 'NBDesigner', 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings'), NBDESIGNER_PLUGIN_URL . 'assets/images/logo-icon-r.svg', 26);
             $nbdesigner_manage = add_submenu_page(
-                    'nbdesigner', 'NBDesigner Settings', 'Settings', 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings')
+                    'nbdesigner', __('NBDesigner Settings', 'web-to-print-online-designer'), __('Settings', 'web-to-print-online-designer'), 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings')
             );
             add_action('load-'.$nbdesigner_manage, array('Nbdesigner_Helper', 'settings_helper'));
         }
         if(current_user_can('manage_nbd_product')){
             $product_hook = add_submenu_page(
-                    'nbdesigner', 'Manager Products', 'Products', 'manage_nbd_product', 'nbdesigner_manager_product', array($this, 'nbdesigner_manager_product')
+                    'nbdesigner', __('Manager Products', 'web-to-print-online-designer'), __('Products', 'web-to-print-online-designer'), 'manage_nbd_product', 'nbdesigner_manager_product', array($this, 'nbdesigner_manager_product')
             );
             add_action( "load-$product_hook", array( $this, 'nbdesigner_template_screen_option' ));
             add_submenu_page(
-                    '', 'Detail Design Order', 'Detail Design Order', 'manage_nbd_product', 'nbdesigner_detail_order', array($this, 'nbdesigner_detail_order')
+                    '', __('Detail Design Order', 'web-to-print-online-designer'), __('Detail Design Order', 'web-to-print-online-designer'), 'manage_nbd_product', 'nbdesigner_detail_order', array($this, 'nbdesigner_detail_order')
             );
         }
         if(current_user_can('manage_nbd_art')){    
             add_submenu_page(
-                    'nbdesigner', 'Manager Cliparts', 'Cliparts', 'manage_nbd_art', 'nbdesigner_manager_arts', array($this, 'nbdesigner_manager_arts')
+                    'nbdesigner', __('Manager Cliparts', 'web-to-print-online-designer'), __('Cliparts', 'web-to-print-online-designer'), 'manage_nbd_art', 'nbdesigner_manager_arts', array($this, 'nbdesigner_manager_arts')
             );
         }
         if(current_user_can('manage_nbd_font')){    
             add_submenu_page(
-                    'nbdesigner', 'Manager Fonts', 'Fonts', 'manage_nbd_font', 'nbdesigner_manager_fonts', array($this, 'nbdesigner_manager_fonts')
+                    'nbdesigner', __('Manager Fonts', 'web-to-print-online-designer'), __('Fonts', 'web-to-print-online-designer'), 'manage_nbd_font', 'nbdesigner_manager_fonts', array($this, 'nbdesigner_manager_fonts')
             );
         }
         if(current_user_can('manage_nbd_language')){  
             add_submenu_page(
-                    'nbdesigner', 'Frontend Translate', 'Frontend Translate', 'manage_nbd_language', 'nbdesigner_frontend_translate', array($this, 'nbdesigner_frontend_translate')
+                    'nbdesigner', __('Frontend Translate', 'web-to-print-online-designer'), __('Frontend Translate', 'web-to-print-online-designer'), 'manage_nbd_language', 'nbdesigner_frontend_translate', array($this, 'nbdesigner_frontend_translate')
             );             
         }
         if (current_user_can('manage_nbd_tool')) {    
             add_submenu_page(
-                    'nbdesigner', 'NBDesigner Tools', 'Tools', 'manage_nbd_tool', 'nbdesigner_tools', array($this, 'nbdesigner_tools')
+                    'nbdesigner', __('NBDesigner Tools', 'web-to-print-online-designer'), __('Tools', 'web-to-print-online-designer'), 'manage_nbd_tool', 'nbdesigner_tools', array($this, 'nbdesigner_tools')
             );  
             add_submenu_page(
-                    'nbdesigner', 'NBDesigner Analytics', 'Analytics', 'administrator', 'nbdesigner_analytics', array($this, 'nbdesigner_analytics')
+                    'nbdesigner', __('NBDesigner Analytics', 'web-to-print-online-designer'), __('Analytics', 'web-to-print-online-designer'), 'administrator', 'nbdesigner_analytics', array($this, 'nbdesigner_analytics')
             );            
         }
         do_action('nbd_menu');
         $remote = get_transient('nbd_upgrade_news_web-to-print-online-designer');
         if( $remote ){
             add_submenu_page(
-                'nbdesigner', 'NBDesigner Support', 'About', 'manage_nbd_setting', 'nbd_support', array($this, 'nbd_support')
+                'nbdesigner', __('NBDesigner Support', 'web-to-print-online-designer'), __('About', 'web-to-print-online-designer'), 'manage_nbd_setting', 'nbd_support', array($this, 'nbd_support')
             ); 
         }
     }

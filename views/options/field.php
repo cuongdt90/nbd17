@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 <div class="nbd-field-wrap" ng-repeat="(fieldIndex, field) in options.fields">
     <div class="nbd-nav">
-        <div ng-dblclick="toggleExpandField($index, $event)" style="cursor: pointer;">
+        <div ng-dblclick="toggleExpandField($index, $event)" style="cursor: pointer;" title="<?php _e('Double click to expand option', 'web-to-print-online-designer') ?>">
             <ul nbd-tab ng-class="field.isExpand ? '' : 'left'" class="nbd-tab-nav">
                 <li class="nbd-field-tab active" data-target="tab-general"><?php _e('General', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-conditional"><?php _e('Conditinal', 'web-to-print-online-designer') ?></li>

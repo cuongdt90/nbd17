@@ -416,9 +416,10 @@ class NBD_Image {
     public static function imagick_resample( $input_file, $ouput_file, $dpi ){
         try {
             $image = new Imagick();
-            $image->setResolution($dpi,$dpi);
+            //$image->setResolution($dpi,$dpi);
             $image->readImage($input_file);
             $image->setImageUnits(imagick::RESOLUTION_PIXELSPERINCH);
+            $image->setImageResolution($dpi,$dpi);
             $image->writeImage($ouput_file);
             $image->destroy(); 
         } catch( Exception $e ){
@@ -569,7 +570,7 @@ function nbd_file_get_contents($url){
             curl_close($ch);          
         }
     }
-    return $result;    
+    return $result;
 }
 function hex_code_to_rgb($code){        
     list($r, $g, $b) = sscanf($code, "#%02x%02x%02x");
@@ -1919,6 +1920,7 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
                 $pdf->Line($mLeft + $bgWidth - $bRight, 0, $mLeft + $bgWidth - $bRight, $mTop + $bTop, array('color' => array(0,0,0), 'width' => 0.05));
                 $pdf->Line($mLeft + $bgWidth - $bRight, $mTop + $bgHeight - $bBottom, $mLeft + $bgWidth - $bRight, $mTop + $bgHeight + $mBottom, array('color' => array(0,0,0), 'width' => 0.05));
             }
+             
             if( $watermark ){
                 $watermark_type = nbdesigner_get_option('nbdesigner_pdf_watermark_type');
                 if($watermark_type == 1){
@@ -1941,9 +1943,10 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
                     }
                 }else{
                     $watermark_text = nbdesigner_get_option('nbdesigner_pdf_watermark_text');
-                    $vfont = "freeserif";
+                    $vfont = "helvetica";
                     $vfontsize = 20;
                     $vfontbold = "B";         
+
                     $widthtext = $pdf->GetStringWidth(trim($watermark_text), $vfont, $vfontbold, $vfontsize, false );
                     $widthtextcenter = round(($widthtext * sin(deg2rad(45))) / 2 ,0);
                     $myPageWidth = $pdf->getPageWidth();
@@ -2342,4 +2345,26 @@ function nbd_get_fonts(){
     }
     $fonts = array_merge($gg_fonts,$custom_fonts);
     echo json_encode($fonts);
+}
+function nbd_get_order_object() {
+    global $thepostid, $theorder;
+    if (!is_object($theorder)) {
+        $theorder = wc_get_order($thepostid);
+    }
+    if (!$theorder && isset($_POST['order_id'])) {
+        $order_id = absint($_POST['order_id']);
+        $order = wc_get_order($order_id);
+        return $order;
+    } elseif (!$theorder && isset($_POST['post_ID'])) {
+        $order_id = absint($_POST['post_ID']);
+        $order = wc_get_order($order_id);
+        return $order;
+    }
+    if (!$theorder) {
+        global $post;
+        if ($post) {
+            $theorder = wc_get_order($post->ID);
+        }
+    }
+    return $theorder;
 }

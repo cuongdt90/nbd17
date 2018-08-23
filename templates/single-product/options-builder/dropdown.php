@@ -14,7 +14,14 @@
     <div class="nbd-field-content">
         <select ng-change="check_valid()" name="nbd-field[<?php echo $field['id']; ?>]" class="nbd-dropdown" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value">
         <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
-            <option value="<?php echo $key; ?>" <?php selected( isset($attr['selected']) ? $attr['selected'] : 'off', 'on' ); ?>><?php echo $attr['name']; ?></option>
+            <option value="<?php echo $key; ?>" 
+                <?php 
+                    if( isset($form_values[$field['id']]) ){
+                        selected( $form_values[$field['id']], $key ); 
+                    }else{
+                        selected( isset($attr['selected']) ? $attr['selected'] : 'off', 'on' ); 
+                    }
+                ?>><?php echo $attr['name']; ?></option>
         <?php endforeach; ?>
         </select>  
     </div>

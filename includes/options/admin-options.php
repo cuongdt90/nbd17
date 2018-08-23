@@ -20,6 +20,23 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'), 30, 1);
             add_action('add_meta_boxes', array($this, 'add_meta_boxes'), 30);
             add_action('save_post', array($this, 'save_product_option'));
+            
+            // Alter the product thumbnail in order
+            add_filter( 'woocommerce_admin_order_item_thumbnail', array( $this, 'admin_order_item_thumbnail' ), 50, 3 );            
+        }
+        public function admin_order_item_thumbnail( $image = "", $item_id = "", $item = "" ){
+            $order = nbd_get_order_object();
+            $item_meta = function_exists( 'wc_get_order_item_meta' ) ? wc_get_order_item_meta( $item_id, '', FALSE ) : $order->get_item_meta( $item_id ); 
+            if( isset($item_meta['_nbo_option_price']) ){
+                $option_price = maybe_unserialize( $item_meta['_nbo_option_price'][0] );
+                $size = 'shop_thumbnail';
+                $dimensions = wc_get_image_size( $size );              
+                $image = '<img src="'.$option_price['cart_image']
+                        . '" width="' . esc_attr( $dimensions['width'] )
+                        . '" height="' . esc_attr( $dimensions['height'] )
+                        . '" class="nbo-thumbnail woocommerce-placeholder wp-post-image" />';                
+            }
+            return $image;
         }
         public function save_product_option($post_id){
             if (!isset($_POST['nbo_box_nonce']) || !wp_verify_nonce($_POST['nbo_box_nonce'], 'nbo_box')
@@ -271,26 +288,13 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     'quantity_min' => 1,
                     'quantity_max' => '',
                     'quantity_step' => 1,
-                    'quantity_enable' => 'y', 
-                    'side' => array(
-                        'enable'    =>  'n',
-                        'dynamic'    =>  'n',
-                        'price_type'    =>  'f',
-                        'depend_quantity'   =>  'y',
-                        'options' =>  array(
-                            array(
-                                'name'  =>  '',
-                                'side'  =>  1,
-                                'price' =>  array()
-                            )                       
-                        )
-                    ),
+                    'quantity_enable' => 'y',
                     'quantity_breaks' => array(
                         array('val' =>  1, 'dis'    =>  '')
                     ),  
                     'fields'    => array(
                         0   =>  $this->default_field()                          
-                    )                    
+                    )
                 );
             }
             foreach( $options['fields'] as $f_key => $field ){
@@ -584,7 +588,12 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             };
             foreach( $options as $key => $option){
                 if( absint($option['image']) != 0 ){
-                    $options[$key]['image_url'] = wp_get_attachment_url( absint($option['image']) );
+                    $image = wp_get_attachment_image_src( $option['image'], 'thumbnail' );
+                    if(!$image){
+                        $options[$key]['image_url'] = wp_get_attachment_url($option['image']);
+                    }else{
+                        $options[$key]['image_url'] = $image[0];
+                    }
                 }else{
                     $options[$key]['image_url'] = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
                 }
