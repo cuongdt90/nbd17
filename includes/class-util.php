@@ -583,6 +583,11 @@ function is_nbdesigner_product($id){
     if($check) return true;
     return false;
 }
+function nbd_check_availaible_option( $layout_depend = 'c' ){
+    $layout = nbdesigner_get_option('nbdesigner_design_layout');
+    if($layout_depend == $layout) return true;
+    return false;
+};
 function nbdesigner_get_option($key){
     $option = get_option($key, false);
     if(false === $option) return nbdesigner_get_default_setting($key);
@@ -605,7 +610,7 @@ function nbdesigner_get_all_frontend_setting(){
 function nbdesigner_get_default_setting($key = false){
     $frontend = default_frontend_setting();
     $nbd_setting = apply_filters('nbdesigner_default_settings', array_merge(array(
-        'nbdesigner_design_layout'  =>  'c',
+        'nbdesigner_design_layout'  =>  'm',
         'nbdesigner_position_button_in_catalog' => 1,
         'nbdesigner_position_button_product_detail' => 1,
         'nbdesigner_position_pricing_in_detail_page' => 1,

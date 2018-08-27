@@ -43,6 +43,7 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'id' 		=> 'nbdesigner_enable_curvedtext',
                         'default'	=> 'yes',
                         'type' 		=> 'radio',
+                        'layout' 	=> 'c',
                         'description'   =>  __('Only available on 1.x versions', 'web-to-print-online-designer'),
                         'options'   => array(
                             'yes' => __('Yes', 'web-to-print-online-designer'),
@@ -65,6 +66,7 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'id' 		=> 'nbdesigner_enable_textpattern',
                         'default'	=> 'no',
                         'type' 		=> 'radio',
+                        'layout' 	=> 'c',
                         'options'   => array(
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
@@ -185,6 +187,7 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'description' => __('Allow the customer upload multiple images.', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_upload_multiple_images',
                         'default' => 'no',
+                        'layout' => 'c',
                         'type' => 'checkbox'
                     ),                     
                     array(
@@ -360,6 +363,7 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                             )),
                         'description' 	=> __( 'Show/hide features in frontend', 'web-to-print-online-designer'),
                         'type' 		=> 'multicheckbox',
+                        'layout' 	=> 'c',
                         'class'         => 'regular-text',
                         'options'   => array(
                             'nbdesigner_image_unlock_proportion' => __( 'Unlock proportion', 'web-to-print-online-designer'),        

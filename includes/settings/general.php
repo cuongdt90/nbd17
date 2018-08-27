@@ -9,7 +9,7 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         'title' => __( 'Design layout', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_design_layout',
                         'description' 	=> __('Choose layout for design tool.<br /><b>Note</b>: Modern layout is open beta version. ', 'web-to-print-online-designer').sprintf(__('Report bugs <a href="%s" target="_blank">here</a>','web-to-print-online-designer'), 'https://cmsmart.net/forum/wordpress-plugins_551d1690f9d6ef540e000094'),
-                        'default'	=> 'c',
+                        'default'	=> 'm',
                         'type' 		=> 'radio',
                         'options'   => array(
                             'c' => __('Classic', 'web-to-print-online-designer'),

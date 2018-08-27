@@ -818,7 +818,11 @@ class Nbdesigner_Plugin {
         $site_url = base64_encode(rtrim(get_bloginfo('wpurl'), '/'));   
         require_once(NBDESIGNER_PLUGIN_DIR . 'views/license-form.php');
     }
-    public function nbdesigner_menu() {       
+    public function nbdesigner_menu() { 
+        $layout = nbdesigner_get_option('nbdesigner_design_layout');
+        if( isset($_POST['nbdesigner_design_layout']) ){
+            $layout = $_POST['nbdesigner_design_layout'];
+        };
         if (current_user_can('manage_nbd_setting')) {
             add_menu_page('Nbdesigner', 'NBDesigner', 'manage_nbd_setting', 'nbdesigner', array($this, 'nbdesigner_settings'), NBDESIGNER_PLUGIN_URL . 'assets/images/logo-icon-r.svg', 26);
             $nbdesigner_manage = add_submenu_page(
@@ -845,7 +849,7 @@ class Nbdesigner_Plugin {
                     'nbdesigner', __('Manager Fonts', 'web-to-print-online-designer'), __('Fonts', 'web-to-print-online-designer'), 'manage_nbd_font', 'nbdesigner_manager_fonts', array($this, 'nbdesigner_manager_fonts')
             );
         }
-        if(current_user_can('manage_nbd_language')){  
+        if(current_user_can('manage_nbd_language') && $layout == 'c'){  
             add_submenu_page(
                     'nbdesigner', __('Frontend Translate', 'web-to-print-online-designer'), __('Frontend Translate', 'web-to-print-online-designer'), 'manage_nbd_language', 'nbdesigner_frontend_translate', array($this, 'nbdesigner_frontend_translate')
             );             
@@ -854,9 +858,9 @@ class Nbdesigner_Plugin {
             add_submenu_page(
                     'nbdesigner', __('NBDesigner Tools', 'web-to-print-online-designer'), __('Tools', 'web-to-print-online-designer'), 'manage_nbd_tool', 'nbdesigner_tools', array($this, 'nbdesigner_tools')
             );  
-            add_submenu_page(
-                    'nbdesigner', __('NBDesigner Analytics', 'web-to-print-online-designer'), __('Analytics', 'web-to-print-online-designer'), 'administrator', 'nbdesigner_analytics', array($this, 'nbdesigner_analytics')
-            );            
+//            add_submenu_page(
+//                    'nbdesigner', __('NBDesigner Analytics', 'web-to-print-online-designer'), __('Analytics', 'web-to-print-online-designer'), 'administrator', 'nbdesigner_analytics', array($this, 'nbdesigner_analytics')
+//            );            
         }
         do_action('nbd_menu');
         $remote = get_transient('nbd_upgrade_news_web-to-print-online-designer');
@@ -2297,6 +2301,8 @@ class Nbdesigner_Plugin {
             $data['config'] = nbd_get_data_from_json($path . '/config.json');
             nbd_update_hit_template( false, $template_id );
         }else {
+            if($product_id) $product_id = get_wpml_original_id($product_id);
+            if($variation_id) $variation_id = get_wpml_original_id($variation_id);            
             $data = nbd_get_product_info( $product_id, $variation_id, '', 'new' );  
         } 
         if( isset( $_POST['attach_product_info'] ) && $_POST['attach_product_info'] == 1 ){
@@ -3073,7 +3079,11 @@ class Nbdesigner_Plugin {
             $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);
             $_enable_upload_without_design = get_post_meta($product_id, '_nbdesigner_enable_upload_without_design', true);
             if ($_show_design == 'yes') {
-                $html = is_checkout() ? $title . ' &times; <strong>' . $cart_item['quantity'] .'</strong>' : $title;               
+                if($nbd_session || $nbu_session){
+                    $html = is_checkout() ? $title . ' &times; <strong>' . $cart_item['quantity'] .'</strong>' : $title;         
+                }else{
+                    $html = $title;
+                }
                 if( isset($nbd_session) ){
                     $id = 'nbd' . $cart_item_key;
                     $redirect_url = is_cart() ? wc_get_cart_url().'#'.$id : wc_get_checkout_url().'#'.$id;                     
@@ -4672,7 +4682,7 @@ class Nbdesigner_Plugin {
                         $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
                     }
                 }
-                $true_type = ['Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail'];                
+                $true_type = ['Gudea', 'Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail'];                
                 if (in_array($font_name, $true_type)) {
                     foreach($path_font as $pfont){
                         $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);

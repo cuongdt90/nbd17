@@ -459,7 +459,7 @@
                 <div class="nbdesigner-opt-inner">
                     <div>
                         <label for="nbdesigner_dpi" class="nbdesigner-option-label"><?php echo _e('DPI ( Dots Per Inch )', 'web-to-print-online-designer'); ?></label>
-                        <input name="_nbdesigner_option[dpi]" id="nbdesigner_dpi" value="<?php echo $option['dpi'];?>" type="number"  min="0" style="width: 60px;">&nbsp;
+                        <input name="_nbdesigner_option[dpi]" id="nbdesigner_dpi" value="<?php echo $option['dpi'];?>" type="number"  min="72" style="width: 60px;">&nbsp;
                     </div>   
                 </div>   
                 <div class="nbdesigner-opt-inner">

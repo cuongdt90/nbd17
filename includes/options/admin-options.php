@@ -22,7 +22,16 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             add_action('save_post', array($this, 'save_product_option'));
             
             // Alter the product thumbnail in order
-            add_filter( 'woocommerce_admin_order_item_thumbnail', array( $this, 'admin_order_item_thumbnail' ), 50, 3 );            
+            add_filter( 'woocommerce_admin_order_item_thumbnail', array( $this, 'admin_order_item_thumbnail' ), 50, 3 ); 
+            //Hide some price option data in order
+            add_filter( 'woocommerce_hidden_order_itemmeta', array($this, 'hidden_custom_order_item_metada'));
+        }
+        public function hidden_custom_order_item_metada($order_items){
+            $order_items[] = '_nbo_option_price';
+            $order_items[] = '_nbo_field';
+            $order_items[] = '_nbo_options';
+            $order_items[] = '_nbo_original_price';
+            return $order_items;
         }
         public function admin_order_item_thumbnail( $image = "", $item_id = "", $item = "" ){
             $order = nbd_get_order_object();

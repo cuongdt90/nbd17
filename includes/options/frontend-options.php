@@ -47,10 +47,11 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'order_line_item' ), 50, 3 );
             
             // Alter the product thumbnail in cart
-            add_filter( 'woocommerce_cart_item_thumbnail', array( $this, 'cart_item_thumbnail' ), 50, 2 );     
-            
-            /** Adds options to the array of items/products of an order **/
-            add_filter( 'woocommerce_order_get_items', array( $this, 'order_get_items' ), 10, 2 );            
+            add_filter( 'woocommerce_cart_item_thumbnail', array( $this, 'cart_item_thumbnail' ), 50, 2 );
+            // Remove item quantity in checkout
+            add_filter( 'woocommerce_checkout_cart_item_quantity', array($this, 'remove_cart_item_quantity'), 10, 3);
+            // Adds edit link on product title in cart and item quantity
+            add_filter( 'woocommerce_cart_item_name', array( $this, 'cart_item_name' ), 50, 3 );           
             
             // Add item data to the cart
             add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_cart_item_data' ), 10, 4 );
@@ -60,10 +61,10 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
 
             // on add to cart set the price when needed, and do it first, before any other plugins
             add_filter( 'woocommerce_add_cart_item', array($this, 'set_product_prices'), 1, 1 );   
-
-            // Adds edit link on product title in cart
-            add_filter( 'woocommerce_cart_item_name', array( $this, 'cart_item_name' ), 50, 3 );
-            
+        }
+        public function remove_cart_item_quantity( $quantity_html, $cart_item, $cart_item_key ){
+            if( isset($cart_item['nbo_meta']) ) $quantity_html = '';
+            return $quantity_html;
         }
         public function order_line_item( $item, $cart_item_key, $values ){
             if ( isset( $values['nbo_meta'] ) ) {
@@ -72,16 +73,12 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     $item->add_meta_data( $field['name'], $field['value_name']. '&nbsp;&nbsp;' .$price );
                 }
                 $item->add_meta_data( __('Quantity Discount', 'web-to-print-online-designer'), '-' . wc_price($values['nbo_meta']['option_price']['discount_price']) );
-            
+         
                 $item->add_meta_data('_nbo_option_price', $values['nbo_meta']['option_price']);
                 $item->add_meta_data('_nbo_field', $values['nbo_meta']['field']);
                 $item->add_meta_data('_nbo_options', $values['nbo_meta']['options']);
                 $item->add_meta_data('_nbo_original_price', $values['nbo_meta']['original_price']);
             }
-        }
-        public function order_get_items( $items = array(), $order = FALSE ){
-
-            return $items;
         }
         public function cart_item_thumbnail( $image = "", $cart_item = array() ){
             if( isset($cart_item['nbo_meta']) && $cart_item['nbo_meta']['option_price']['cart_image'] != '' ){
@@ -107,8 +104,8 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     $quantity = $cart_item['quantity'];
                     $option_price = $this->option_processing( $options, $original_price, $fields, $quantity );
                     $adjusted_price = $this->format_price($original_price + $option_price['total_price'] - $option_price['discount_price']);
-                    
                     WC()->cart->cart_contents[ $cart_item_key ]['nbo_meta']['option_price'] = $option_price;
+                    $adjusted_price = apply_filters('nbo_adjusted_price', $adjusted_price, $cart_item, $adjusted_price);
                     WC()->cart->cart_contents[ $cart_item_key ]['nbo_meta']['price'] = $adjusted_price;
                     WC()->cart->cart_contents[ $cart_item_key ]['data']->set_price( $adjusted_price );                    
                 }
@@ -176,6 +173,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             if ( !isset( $cart_item['nbo_meta'] ) ) {
                 return $title;
             }
+            if( is_checkout() ){
+                $title .= ' &times; <strong>' . $cart_item['quantity'] .'</strong>';
+            }
             $product = $cart_item['data'];
             $link = add_query_arg(
                 array(
@@ -183,7 +183,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 )
                 , $product->get_permalink( $cart_item ) ); 
             $link = wp_nonce_url( $link, 'nbo-edit' );
-            $title .= '<p><a href="' . $link . '" class="nbo-cart-edit-options">' . __( 'Edit options', 'web-to-print-online-designer' ) . '</a></p>';
+            $title .= '<br /><a class="nbo-edit-option-cart" href="' . $link . '" class="nbo-cart-edit-options">' . __( 'Edit options', 'web-to-print-online-designer' ) . '</a><br />';
             return $title;
         }
         public function get_item_data( $item_data, $cart_item ){

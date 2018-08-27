@@ -164,7 +164,11 @@ if( !class_exists('Nbdesigner_Settings') ) {
             $custom_attributes = isset($parameters['custom_attributes']) ? $parameters['custom_attributes'] : array();
             $relations = isset($parameters['relations']) ? $parameters['relations'] : array();
             $placeholder = isset($parameters['placeholder']) ? 'placeholder="' . esc_attr($parameters['placeholder']) . '"' : '';
-
+            $show = true;
+            if( isset($parameters['layout']) ){
+                $show = nbd_check_availaible_option( $parameters['layout'] );
+            }
+            
             $input_html = '';
             $input_class = $class;
             $new_line_desc = '<br class="clear" />';
@@ -301,6 +305,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             if ($description !== false) {
                 $description_html = '<label for="' . $id . '"><span class="description">' . wp_kses_post($description) . '</span></label>';
             }
+            if($show):
             ?>
             <tr>
                 <th scope="row" <?php echo $type === 'section_title' ? 'colspan="2" class="nbdesigner-section-title"' : ''; ?>>
@@ -315,6 +320,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             <?php endif; ?>
             </tr>
             <?php
+            endif;
         }
 	private function boolean_string_to_int($value) {
             if ($value === 'yes') {

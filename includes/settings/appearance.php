@@ -19,7 +19,7 @@ if( !class_exists('Nbdesigner_Appearance_Settings') ) {
                     array(
                         'title' => __('Auto add to cart and redirect', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_auto_add_cart_in_detail_page',
-                        'description' => __( 'Auto add to cart and redirect to cart page after save design in product detail page, depend option "Show design tool".', 'web-to-print-online-designer'),
+                        'description' => __( 'Auto add to cart and redirect to cart page after save design in product detail page, depend option "Show design tool: In product detail page".', 'web-to-print-online-designer'),
                         'default'	=> 'no',
                         'type' 		=> 'radio',
                         'options'   => array(
