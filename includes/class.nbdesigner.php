@@ -703,7 +703,8 @@ class Nbdesigner_Plugin {
             'color' => '<span class="dashicons dashicons-art"></span> '. __('Colors', 'web-to-print-online-designer'),         
             'upload' => '<span class="dashicons dashicons-upload"></span> '. __('Upload design', 'web-to-print-online-designer'),         
             'output' => '<span class="dashicons dashicons-download"></span> '. __('Output', 'web-to-print-online-designer'),         
-            //'libraries' => '<span class="dashicons dashicons-paperclip"></span> '. __('Libraries', 'web-to-print-online-designer')         
+            'libraries' => '<span class="dashicons dashicons-paperclip"></span> '. __('Libraries', 'web-to-print-online-designer'),     
+            'printing_option' => '<span class="dashicons dashicons-forms"></span> '. __('Printing Options', 'web-to-print-online-designer')         
         ));
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/general.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/frontend.php');
@@ -712,6 +713,7 @@ class Nbdesigner_Plugin {
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/output.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/libraries.php');
         require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/appearance.php');
+        require_once(NBDESIGNER_PLUGIN_DIR . 'includes/settings/printing_option.php');
         $Nbdesigner_Settings = new Nbdesigner_Settings(array(
             'page_id' => $page_id,
             'tabs' => $tabs    
@@ -745,10 +747,14 @@ class Nbdesigner_Plugin {
             'output' => array(
                 'pdf-settings' =>  __('PDF settings', 'web-to-print-online-designer')
             ),
-//            'libraries' => array(
-//                'js-settings' =>  __('Javacript settings', 'web-to-print-online-designer'),
-//                'css-settings' =>  __('CSS settings', 'web-to-print-online-designer')
-//            )             
+            'libraries' => array(
+                'js-settings' =>  __('Javacript settings', 'web-to-print-online-designer'),
+                'css-settings' =>  __('CSS settings', 'web-to-print-online-designer')
+            ), 
+            'printing_option'   =>  array(
+                'printing-general' => __('General', 'web-to-print-online-designer'),
+                'printing-cart' => __('Cart', 'web-to-print-online-designer')
+            )
         ));  
         $Nbdesigner_Settings->add_blocks($blocks);
         $Nbdesigner_Settings->add_blocks_description(array());
@@ -759,6 +765,7 @@ class Nbdesigner_Plugin {
         $output_options = Nbdesigner_Settings_Output::get_options();
         $libraries_options = Nbdesigner_Libraries::get_options();
         $appearance_options = Nbdesigner_Appearance_Settings::get_options();
+        $printing_options = Nbdesigner_Printing_Options::get_options();
         $options = apply_filters('nbdesigner_settings_options', array(
             'general-settings' => $general_options['general-settings'],
             'admin-notifications' => $general_options['admin-notifications'],
@@ -777,7 +784,9 @@ class Nbdesigner_Plugin {
             'product-settings' => $appearance_options['product'],
             'category-settings' => $appearance_options['category'],
             'cart-checkout-order-settings' => $appearance_options['cart-checkout-order'],
-            'misc-settings' => $appearance_options['misc']
+            'misc-settings' => $appearance_options['misc'],
+            'printing-general'  =>  $printing_options['general'],
+            'printing-cart'  =>  $printing_options['cart']
         ));    
         foreach($options as $key => $option){
             $Nbdesigner_Settings->add_block_options( $key, $option);  

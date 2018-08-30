@@ -111,7 +111,15 @@
                                 </div>
                             </div>    
                         </div>                    
-                    </div>                
+                    </div> 
+                    <div id="postbox-container-3" class="postbox-container">
+                        <div class="postbox">
+                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Appearance', 'web-to-print-online-designer'); ?></h2>
+                            <div class="inside">
+                                <?php include_once('appearance.php'); ?>
+                            </div>
+                        </div>      
+                    </div>    
                 </div>
             </div>
             <div class="clear"></div>
@@ -120,6 +128,5 @@
             <span class="dashicons dashicons-hammer"></span>
         </div>       
         <?php include_once('preview.php'); ?>
-        <?php include_once('price_matrix.php'); ?>
     </div>    
 </div>

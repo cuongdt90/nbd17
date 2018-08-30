@@ -831,7 +831,7 @@ class My_Design_Endpoint {
         wp_send_json($result);       
     }
     public function nbd_get_template_preview( ){
-        if (!wp_verify_nonce($_POST['nonce'], 'nbd_update_favourite_template')) {
+        if (!wp_verify_nonce($_POST['nonce'], 'nbd_update_favourite_template') && is_user_logged_in()) {
             die('Security error');
         }  
         global $wpdb;

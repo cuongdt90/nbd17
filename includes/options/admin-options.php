@@ -300,12 +300,14 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     'quantity_enable' => 'y',
                     'quantity_breaks' => array(
                         array('val' =>  1, 'dis'    =>  '')
-                    ),  
+                    ),
+                    'display_type'  =>  1,
                     'fields'    => array(
                         0   =>  $this->default_field()                          
                     )
                 );
             }
+            if( !isset($options['display_type']) ) $options['display_type'] = 1;
             foreach( $options['fields'] as $f_key => $field ){
                 $field = array_replace_recursive($this->default_field(), $field);
                 foreach ($field as $tab =>  $data){
@@ -438,7 +440,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'title' => __( 'Input option', 'web-to-print-online-designer'),
                 'description'   =>  '',
                 'value'	=> $value,
-                'type' 		=> 'dropdown',
+                'type' 		=> 'table',
                 'depend'    =>  array(
                     array(
                         'field' =>  'input_type',

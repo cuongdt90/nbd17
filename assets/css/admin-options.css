@@ -246,6 +246,7 @@
 }
 .nbd-table {
     border-collapse: collapse;
+    min-width: 300px;
 }
 .nbd-table td, .nbd-table th {
     border: 1px solid #ddd;

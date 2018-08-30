@@ -208,7 +208,7 @@
         border-radius: 4px;*/
         background-color: #fff;
         margin-bottom: 1.1em;
-        border: 1px solid #eee;
+        border: 1px solid #f8f8f8;
     }
     .nbd-option-field select,
     .nbd-option-field input[type="text"]{
@@ -294,7 +294,11 @@
         -moz-transition: all 0.4s;
         -ms-transition: all 0.4s;
         transition: all 0.4s;
-        background: #eee;       
+        background: #eee;  
+        max-width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
     .nbd-label-wrap input[type="radio"]:checked + label {
         background: #0c8ea7;
@@ -415,7 +419,27 @@
         background: #e2e4e7;
         border-radius: 1.5px
     }
-   
+    .nbd-field-content .nbd-invalid-notice {
+        display: none;
+        font-size: 0.75em;
+        color: red;
+    }
+    .nbd-field-content input.ng-invalid-min ~ .nbd-invalid-min {
+        display: inline-block;
+    }
+    .nbd-field-content input.ng-invalid-max ~ .nbd-invalid-max {
+        display: inline-block;
+    } 
+    .nbd-invalid-form {
+        color: red;        
+    }
+    .nbo-disabled {
+        opacity: .5!important;
+        cursor: not-allowed;        
+    }
+    .nbo-hidden {
+        display: none;
+    }
 </style>
 <div class="nbd-option-wrapper" ng-app="nbo-app">
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
@@ -448,6 +472,8 @@ if( $cart_item_key != ''){
     <?php    
 }
 ?>
+        <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
+        <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields!', 'web-to-print-online-designer'); ?></p>
         <div ng-if="valid_form">
             <p><b><?php _e('Options: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></span></p>
             <table>
@@ -651,7 +677,7 @@ if( $cart_item_key != ''){
             var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
             scope.check_valid();
             scope.update_app();            
-        });        
+        });
     });
     jQuery(document).off('click.nbo', '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus')
             .on('click.nbo', '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus', function(){
@@ -671,22 +697,34 @@ if( $cart_item_key != ''){
         $scope.product_image = [];
         $scope.product_img = [];
         $scope.check_valid = function(){
-            var check = [], total_check = true;
-            angular.forEach($scope.nbd_fields, function(field, field_id){
-                $scope.check_depend(field_id);
-                check[field_id] = ( field.enable && field.required == 'y' && field.value == '' ) ? false : true;
-                //check input range min, max
+            $timeout(function(){
+                var check = {}, total_check = true;
+                angular.forEach($scope.nbd_fields, function(field, field_id){
+                    $scope.check_depend(field_id);
+                    check[field_id] = ( field.enable && field.required == 'y' && field.value == '' ) ? false : true;
+                    var origin_field = $scope.get_field(field_id);
+                    if( origin_field.general.data_type == 'i' ){
+                        if( origin_field.general.input_type != 't' ){
+                            if( angular.isUndefined(field.value) ) check[field_id] = false;
+                        }
+                    }
+                });
+                angular.forEach(check, function(c){
+                    total_check = total_check && c;
+                });
+                if(total_check){
+                    $scope.calculate_price();
+                    $scope.valid_form = true;
+                    jQuery('.single_add_to_cart_button').removeClass( "nbo-disabled nbo-hidden");
+                }else{
+                    jQuery('.single_add_to_cart_button').addClass( "nbo-disabled");
+                    if( nbds_frontend.nbdesigner_hide_add_cart_until_form_filled == 'yes' ){
+                        jQuery('.single_add_to_cart_button').addClass( "nbo-hidden");
+                    }                    
+                    $scope.valid_form = false;
+                }
+                $scope.may_be_change_product_image();
             });
-            angular.forEach(check, function(c, k){
-                total_check = total_check && c;
-            });           
-            if(total_check){
-                $scope.calculate_price();
-                $scope.valid_form = true;
-            }else{
-                $scope.valid_form = false;
-            }
-            $scope.may_be_change_product_image();
         };
         $scope.set_product_image_attr = function(ele, attr, value, id){
             if( angular.isUndefined($scope.product_image[id]) || angular.isUndefined($scope.product_image[id][attr]) ){
@@ -854,7 +892,7 @@ if( $cart_item_key != ''){
                     };
                     if(field.general.data_type == 'i'){
                         if( field.general.input_type != 't' ){
-                            $scope.nbd_fields[field.id].value = field.general.input_option != '' ? field.general.input_option.min :  0;
+                            $scope.nbd_fields[field.id].value = field.general.input_option.min != '' ? field.general.input_option.min :  0;
                         }else{
                             $scope.nbd_fields[field.id].value = '';
                         }

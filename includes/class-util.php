@@ -664,8 +664,12 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_pdf_watermark_text' => get_bloginfo('name'),
         
         'nbdesigner_enable_perfect_scrollbar_js'    =>  'yes',
-        'nbdesigner_enable_perfect_angular_js'    =>  'yes',
-        'nbdesigner_enable_perfect_scrollbar_css'    =>  'yes'
+        'nbdesigner_enable_angular_js'    =>  'yes',
+        'nbdesigner_enable_perfect_scrollbar_css'    =>  'yes',
+        
+        'nbdesigner_turn_off_persistent_cart' => 'no',
+        'nbdesigner_hide_add_cart_until_form_filled' => 'no',
+        'nbdesigner_enable_clear_cart_button' => 'no'
     ), $frontend));
     if(!$key) return $nbd_setting;
     return $nbd_setting[$key];

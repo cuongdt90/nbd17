@@ -45,7 +45,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             add_action( 'woocommerce_cart_loaded_from_session', array( $this, 're_calculate_price' ), 1, 1 );
             // Add meta to order
             add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'order_line_item' ), 50, 3 );
-            
+            // Gets saved option when using the order again function
+            add_filter( 'woocommerce_order_again_cart_item_data', array( $this, 'order_again_cart_item_data' ), 50, 3 );
+                
             // Alter the product thumbnail in cart
             add_filter( 'woocommerce_cart_item_thumbnail', array( $this, 'cart_item_thumbnail' ), 50, 2 );
             // Remove item quantity in checkout
@@ -60,7 +62,166 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_from_session' ), 1, 2 ); 
 
             // on add to cart set the price when needed, and do it first, before any other plugins
-            add_filter( 'woocommerce_add_cart_item', array($this, 'set_product_prices'), 1, 1 );   
+            add_filter( 'woocommerce_add_cart_item', array($this, 'set_product_prices'), 1, 1 );
+            // Validate upon adding to cart
+            add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'add_to_cart_validation' ), 1, 6 );       
+            /** Force Select Options **/
+            //add_filter( 'woocommerce_product_add_to_cart_url', array( $this, 'add_to_cart_url' ), 50, 1 );
+            //add_action( 'woocommerce_product_add_to_cart_text', array( $this, 'add_to_cart_text' ), 10, 1 );
+            add_filter( 'woocommerce_cart_redirect_after_error', array( $this, 'cart_redirect_after_error' ), 50, 2 );
+            
+            /* Disables persistent cart **/
+            if( nbdesigner_get_option('nbdesigner_turn_off_persistent_cart') == 'yes' ){
+                add_filter( 'get_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );
+                add_filter( 'update_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );
+                add_filter( 'add_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );                
+            }
+            
+            /** Empty cart button **/
+            if( nbdesigner_get_option('nbdesigner_enable_clear_cart_button') == 'yes' ){
+                add_action( 'woocommerce_cart_actions', array( $this, 'add_empty_cart_button' ) );
+                // check for empty-cart get param to clear the cart
+                add_action( 'init', array( $this, 'clear_cart' ) );      
+            }
+        }
+        public function add_empty_cart_button(){
+            echo '<input type="submit" class="nbo-clear-cart-button button" name="nbo_empty_cart" value="' . __('Empty cart', 'web-to-print-online-designer') . '" />';
+        }
+        public function clear_cart(){
+            if ( isset( $_POST['nbo_empty_cart'] ) ) {
+		if ( !isset( WC()->cart ) || WC()->cart == '' ) {
+                    WC()->cart = new WC_Cart();
+		}
+		WC()->cart->empty_cart( TRUE );
+            }            
+        }        
+        public function turn_off_persistent_cart( $value, $id, $key ){
+            if ($key == '_woocommerce_persistent_cart') {
+                return FALSE;
+            }
+            return $value;
+        }
+        public function cart_redirect_after_error( $url = "", $product_id="" ){
+            $option_id = $this->get_product_option($product_id);
+            if($option_id){
+                $url = get_permalink( $product_id );
+            }
+            return $url;
+        }
+        public function catalog_add_to_cart_text( $text = "" ){
+            
+            return $text;
+        }
+        public function add_to_cart_url( $url = "" ){
+            global $product;
+            if(!is_product() && is_object( $product ) && property_exists( $product, 'id' )){
+                $product_id = $product->get_id();
+                $option_id = $this->get_product_option($product_id);
+                if($option_id){
+                    $url = get_permalink( $product_id );
+                }
+            }
+            return $url;
+        }
+        public function add_to_cart_validation( $passed, $product_id, $qty, $variation_id = '', $variations = array(), $cart_item_data = array() ){
+            if( is_ajax() && !isset($_REQUEST['nbo-add-to-cart']) ){
+                $option_id = $this->get_product_option($product_id);
+                if($option_id){
+                    $_options = $this->get_option($option_id);
+                    if($_options){
+                        $options = unserialize($_options['fields']);
+                        $valid_fields = $this->get_default_option($options);
+                        $required_option = false;
+                        foreach($valid_fields as $field){
+                            if( $field['enable'] && $field['required'] ){
+                                $required_option = true;
+                                wc_add_notice( sprintf( __( '"%s" is a required field.', 'web-to-print-online-designer' ), $field['title'] ), 'error' );
+                            }
+                        }
+                        if( $required_option ){
+                            return FALSE;
+                        }
+                    }
+                }
+            }
+            return $passed;
+        }
+        public function get_default_option($options){
+            $fields = array();
+            foreach ($options['fields'] as $field){
+                if($field['general']['enabled'] == 'y'){
+                    $fields[$field['id']] = array(
+                        'title' =>  $field['general']['title'],
+                        'enable'    =>  true,
+                        'required'    =>  $field['general']['required'] == 'y' ? true : false
+                    );
+                    if($field['general']['data_type'] == 'i'){
+                        $fields[$field['id']]['value'] = $field['general']['input_type'] != 't' ? ( $field['general']['input_option']['min'] != '' ? $field['general']['input_option']['min'] : 0 ) : '';
+                    }else{
+                        $fields[$field['id']]['value'] = 0;
+                        foreach ($field['general']['attributes']['options'] as $key => $op){
+                            if( isset($op['selected']) && $op['selected'] == 'on' ) $fields[$field['id']]['value'] = $key;
+                        }
+                    }
+                }
+            }
+            $valid_fields = $this->validate_field_option($options, $fields);
+            return $valid_fields;
+        }
+        public function validate_field_option( $origin_fields, $fields ){
+            foreach( $fields as $field_id => $f ){
+                $field = $this->get_field_by_id($origin_fields, $field_id);
+                $check = array();
+                if( $field['conditional']['enable'] == 'n' || !isset($field['conditional']['depend']) || count($field['conditional']['depend']) == 0 ){
+                    continue;
+                }
+                $show = $field['conditional']['show'];
+                $logic = $field['conditional']['logic'];
+                $total_check = $logic == 'a' ? true : false;
+                foreach($field['conditional']['depend'] as $key => $con){
+                    $check[$key] = true;
+                    if( $con['id'] != '' ){
+                        switch( $con['operator'] ){
+                            case 'i':
+                                $check[$key] = $fields[$con['id']]['value'] == $con['val'] ? true : false;
+                                break;
+                            case 'n':
+                                $check[$key] = $fields[$con['id']]['value'] != $con['val'] ? true : false;
+                                break;  
+                            case 'e':
+                                $check[$key] = $fields[$con['id']]['value'] == '' ? true : false;
+                                break;
+                            case 'ne':
+                                $check[$key] = $fields[$con['id']]['value'] != '' ? true : false;
+                                break;                             
+                        }
+                    }
+                }
+                foreach ($check as $c){
+                    $total_check = $logic == 'a' ? ($total_check && $c) : ($total_check || $c);
+                }
+                $fields[$field_id]['enable'] = $show == 'y' ? $total_check : !$total_check;
+            }
+            return $fields;
+        }
+        public function order_again_cart_item_data( $arr,  $item,  $order ){
+            $order_items = $order->get_items();
+            foreach( $order_items as $order_item_id => $item ){    
+                if( $option_price = wc_get_order_item_meta($order_item_id, '_nbo_option_price') ){
+                    $arr['nbo_meta']['option_price'] = $option_price;
+                }
+                if( $field = wc_get_order_item_meta($order_item_id, '_nbo_field') ){
+                    $arr['nbo_meta']['field'] = $field;
+                }
+                if( $options = wc_get_order_item_meta($order_item_id, '_nbo_options') ){
+                    $arr['nbo_meta']['options'] = $options;
+                }
+                if( $original_price = wc_get_order_item_meta($order_item_id, '_nbo_original_price') ){
+                    $arr['nbo_meta']['original_price'] = $original_price;
+                    $arr['nbo_meta']['price'] = $this->format_price($original_price + $option_price['total_price'] - $option_price['discount_price']);
+                }              
+            }
+            return $arr;
         }
         public function remove_cart_item_quantity( $quantity_html, $cart_item, $cart_item_key ){
             if( isset($cart_item['nbo_meta']) ) $quantity_html = '';
@@ -89,6 +250,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         . '" height="' . esc_attr( $dimensions['height'] )
                         . '" class="nbo-thumbnail woocommerce-placeholder wp-post-image" />';
             }
+            $image = apply_filters('nbo_cart_item_thumbnail', $image, $cart_item);
             return $image;
         }
         public function re_calculate_price( $cart ){
@@ -105,7 +267,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     $option_price = $this->option_processing( $options, $original_price, $fields, $quantity );
                     $adjusted_price = $this->format_price($original_price + $option_price['total_price'] - $option_price['discount_price']);
                     WC()->cart->cart_contents[ $cart_item_key ]['nbo_meta']['option_price'] = $option_price;
-                    $adjusted_price = apply_filters('nbo_adjusted_price', $adjusted_price, $cart_item, $adjusted_price);
+                    $adjusted_price = apply_filters('nbo_adjusted_price', $adjusted_price, $cart_item);
                     WC()->cart->cart_contents[ $cart_item_key ]['nbo_meta']['price'] = $adjusted_price;
                     WC()->cart->cart_contents[ $cart_item_key ]['data']->set_price( $adjusted_price );                    
                 }
@@ -363,11 +525,14 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             $args['currency_format_decimal_sep'] = stripslashes( wc_get_price_decimal_separator() );
             $args['currency_format_thousand_sep'] = stripslashes( wc_get_price_thousand_separator() );
             $args['currency_format'] = esc_attr( str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), get_woocommerce_price_format()) );
+            $args['nbdesigner_hide_add_cart_until_form_filled'] = nbdesigner_get_option('nbdesigner_hide_add_cart_until_form_filled');
             return $args;
         }
         public function wp_enqueue_scripts(){
             wp_register_script('angularjs', NBDESIGNER_PLUGIN_URL . 'assets/libs/angular-1.6.9.min.js', array('jquery'), '1.6.9');
-            wp_enqueue_script(array('angularjs'));
+            if(nbdesigner_get_option('nbdesigner_enable_angular_js') == 'yes'){
+                wp_enqueue_script(array('angularjs'));
+            }
         }
         public function show_option_fields(){
             $product_id = get_the_ID();

@@ -77,13 +77,13 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input class="nbd-short-ip" string-to-number type="number" ng-model="field.general.input_option.value.min" name="options[fields][{{fieldIndex}}][general][input_option][min]"/>
+                                    <input class="nbd-short-ip" type="text" string-to-number ng-model="field.general.input_option.value.min" name="options[fields][{{fieldIndex}}][general][input_option][min]"/>
                                 </td>
                                 <td>
-                                    <input class="nbd-short-ip" string-to-number type="number" ng-model="field.general.input_option.value.max" name="options[fields][{{fieldIndex}}][general][input_option][max]"/>
+                                    <input class="nbd-short-ip" type="text" string-to-number ng-model="field.general.input_option.value.max" name="options[fields][{{fieldIndex}}][general][input_option][max]"/>
                                 </td>
                                 <td>
-                                    <input class="nbd-short-ip" string-to-number type="number" ng-model="field.general.input_option.value.step" name="options[fields][{{fieldIndex}}][general][input_option][step]"/>
+                                    <input class="nbd-short-ip" type="text" string-to-number ng-model="field.general.input_option.value.step" name="options[fields][{{fieldIndex}}][general][input_option][step]"/>
                                 </td>                                
                             </tr>
                         </table>
