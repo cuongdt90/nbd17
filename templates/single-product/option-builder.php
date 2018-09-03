@@ -440,12 +440,31 @@
     .nbo-hidden {
         display: none;
     }
+    .nbo-price-matrix {
+        max-width: 100%;
+        overflow-x: scroll;
+        overflow: auto;
+    }
+    .nbo-price-matrix table{
+        border-collapse: collapse;
+    }
+    .nbo-price-matrix table, .nbo-price-matrix td, .nbo-price-matrix th {
+        text-align: center;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+    }
+    .nbo-price-matrix td {
+        cursor: pointer;
+    }
 </style>
 <div class="nbd-option-wrapper" ng-app="nbo-app">
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
 <?php
 $html_field = '';
-foreach($options["fields"] as $field){
+$pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
+foreach($options["fields"] as $key => $field){
+    $class = ($options['display_type'] == 2 && !in_array($key, $pm_field_indexes)) ? '' : 'nbo-hidden';
+    //$class = '';
     if( $field['general']['data_type'] == 'i' ){
         $tempalte = '/options-builder/input.php';
     }else{
@@ -465,6 +484,9 @@ foreach($options["fields"] as $field){
         }
     }
     if( $field['general']['enabled'] == 'y' ) include($tempalte);
+}
+if( $options['display_type'] == 2 && count($pm_field_indexes) ){
+    include('/options-builder/price-matrix.php');
 }
 if( $cart_item_key != ''){
     ?>
@@ -1040,6 +1062,9 @@ if( $cart_item_key != ''){
             $scope.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + $scope.total_price ) * qty_factor / 100;
             $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
             $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
+        };
+        $scope.select_price_matrix = function(event){
+            console.log(angular.element(event.target));
         };
         $scope.update_app = function(){
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply(); 

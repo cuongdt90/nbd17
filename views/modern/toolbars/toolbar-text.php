@@ -130,7 +130,7 @@
                     <div class="range range-spacing">
                         <label><?php _e('Width','web-to-print-online-designer'); ?></label>
                         <div class="main-track">
-                            <input class="slide-input" ng-change="setTextAttribute('strokeWidth', stages[currentStage].states.text.strokeWidth)" ng-model="stages[currentStage].states.text.strokeWidth" type="range" step="1" min="0" max="20">
+                            <input class="slide-input" ng-change="setTextAttribute('strokeWidth', stages[currentStage].states.text.strokeWidth)" ng-model="stages[currentStage].states.text.strokeWidth" type="range" step="0.01" min="0" max="5">
                             <span class="range-track"></span>
                         </div>
                         <span class="value-display">{{stages[currentStage].states.text.strokeWidth}}</span>

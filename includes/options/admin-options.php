@@ -264,6 +264,14 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             );
         }
         private function validate_option( $options ){
+            if( $options['display_type'] == 2 ){
+                if( !isset($options['pm_hoz']) ){
+                    $options['pm_hoz'] = array();
+                }
+                if( !isset($options['pm_ver']) ){
+                    $options['pm_ver'] = array();
+                }                
+            }
             foreach ( $options["fields"] as $f_index => $field ){
                 $array_price_type = array('f', 'p', 'p+', 'c' );
                 if( !in_array($field["general"]['price_type'], $array_price_type) ){
@@ -307,7 +315,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     )
                 );
             }
-            if( !isset($options['display_type']) ) $options['display_type'] = 1;
+            if( !isset($options['display_type']) ){
+                $options['display_type'] = 1;
+                $options['pm_hoz'] = array();
+                $options['pm_ver'] = array();
+            }
             foreach( $options['fields'] as $f_key => $field ){
                 $field = array_replace_recursive($this->default_field(), $field);
                 foreach ($field as $tab =>  $data){

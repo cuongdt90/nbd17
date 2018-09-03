@@ -1,5 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div class="nbd-option-field nbd-swatch-wrap" ng-if="nbd_fields['<?php echo $field['id']; ?>'].enable">
+<div class="nbd-option-field nbd-swatch-wrap <?php echo $class; ?>" ng-if="nbd_fields['<?php echo $field['id']; ?>'].enable">
     <div class="nbd-field-header">
         <?php echo $field['general']['title']; ?> 
         <?php if( $field['general']['required'] == 'y' ): ?>

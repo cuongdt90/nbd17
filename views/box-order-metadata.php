@@ -69,14 +69,13 @@
         <input type="checkbox" class="" id="nbdesigner_order_design_check_all" />
         <label for="nbdesigner_order_design_check_all"><small><?php _e('Check all', 'web-to-print-online-designer'); ?></small></label>
     </div>
-        <!--
 	<div class="nbdesigner-right" style="padding: 5px;">
 		<?php  if($count_img_design > 0): ?>
 			<a href="<?php echo add_query_arg(array('download-all' => 'true', 'order_id' => $order_id), admin_url('admin.php?page=nbdesigner_detail_order')); ?>" class="button button-small button-secondary"><?php _e('Download all', 'web-to-print-online-designer'); ?></a>
 		<?php else: ?>
 			<span class="button button-small button-disabled" style="color: #dedede;"><?php _e('Download all', 'web-to-print-online-designer'); ?></span>
 		<?php endif; ?>
-	</div> -->
+	</div>
 	<div class="nbdesigner-clearfix"></div>
 	<div>
 		<?php _e('With selected:', 'web-to-print-online-designer'); ?>

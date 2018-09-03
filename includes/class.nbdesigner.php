@@ -4838,7 +4838,7 @@ class Nbdesigner_Plugin {
                 if(!file_exists($folder)){
                     wp_mkdir_p($folder);
                 }
-                $output_file = $folder .'/' .$_pdf['name']. $key .'.pdf';
+                $output_file = $folder .'/' .sanitize_file_name($_pdf['name']). $key .'.pdf';
                 $pdf->Output($output_file, 'F');              
                 $result[] = array(
                     'link' => Nbdesigner_IO::wp_convert_path_to_url($output_file),

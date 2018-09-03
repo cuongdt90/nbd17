@@ -21,7 +21,7 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[pm_hoz][]" multiple ng-model="options.pm_hoz">
-                    <option value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
                 </select>
             </div>
         </div>    
@@ -33,9 +33,16 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[pm_ver][]" multiple ng-model="options.pm_ver">
-                    <option value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
                 </select>                        
             </div>
         </div>    
-    </div>     
+    </div> 
+    <div class="nbd-field-info">
+        <table>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>    
 </div>
