@@ -14,6 +14,7 @@
     </div>
 </div>
 <div class="nbd-field-info" ng-if="options.display_type == 2">
+    <p><?php _e('Allow fields with options: Data type - Multiple options | Enable - Yes | has at least one attribute | Field Conditional Logic - No', 'web-to-print-online-designer'); ?></p>
     <div class="nbd-field-info">
         <div class="nbd-field-info-1">
             <div><label><b><?php _e('Horizontal field', 'web-to-print-online-designer'); ?></b></label></div>
@@ -21,7 +22,7 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[pm_hoz][]" multiple ng-model="options.pm_hoz">
-                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y' && field.general.attributes.options.length > 0 && field.conditional.enable == 'n'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
                 </select>
             </div>
         </div>    
@@ -33,7 +34,7 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[pm_ver][]" multiple ng-model="options.pm_ver">
-                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y' && field.general.attributes.options.length > 0 && field.conditional.enable == 'n'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
                 </select>                        
             </div>
         </div>    

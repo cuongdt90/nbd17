@@ -814,7 +814,8 @@ class Nbdesigner_Plugin {
             'nbdesigner_page_nbdesigner_manager_arts',
             'nbdesigner_page_nbdesigner_manager_fonts',
             'admin_page_nbdesigner_detail_order',
-            'nbdesigner_page_nbd_support'
+            'nbdesigner_page_nbd_support',
+            'nbdesigner_page_nbd_printing_options'
         );
         if ( isset( $current_screen->id ) && in_array( $current_screen->id, $nbd_pages ) ){
             $footer_text = sprintf( __( 'If you <span style="color: #e25555;">♥</span> <strong>NBDesigner</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thanks in advance!', 'web-to-print-online-designer'), '<a href="https://wordpress.org/support/view/plugin-reviews/web-to-print-online-designer?filter=5#new-post" target="_blank" class="nbd-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'web-to-print-online-designer') . '">', '</a>' );

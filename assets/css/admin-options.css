@@ -740,7 +740,8 @@
     -moz-transition: all 0.4s;
     -ms-transition: all 0.4s;
     transition: all 0.4s;
-    background: #eee;       
+    background: #eee;     
+    margin-bottom: 5px !important;
 }
 .nbd-label input[type="radio"]:checked + label {
     background: #0c8ea7;

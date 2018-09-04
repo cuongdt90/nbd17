@@ -452,9 +452,17 @@
         text-align: center;
         border: 1px solid #ddd;
         vertical-align: middle;
+        padding: 0.75em 0.75em;
     }
     .nbo-price-matrix td {
         cursor: pointer;
+    }
+    .nbo-pm-empty, .nbo-price-matrix th {
+        pointer-events: none;
+    }
+    .nbo-price-matrix td.selected {
+        background: #0c8ea7;
+        color: #fff;        
     }
 </style>
 <div class="nbd-option-wrapper" ng-app="nbo-app">
@@ -464,10 +472,14 @@ $html_field = '';
 $pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
 foreach($options["fields"] as $key => $field){
     $class = ($options['display_type'] == 2 && !in_array($key, $pm_field_indexes)) ? '' : 'nbo-hidden';
-    //$class = '';
+    $class = '';
+    $need_show = true;
     if( $field['general']['data_type'] == 'i' ){
-        $tempalte = '/options-builder/input.php';
+        $tempalte = '/options-builder/input.php'; 
     }else{
+        if( count($field['general']['attributes']["options"]) == 0){
+            $need_show = false;
+        }
         switch($field['appearance']['display_type']){
             case 's':
                 $tempalte = '/options-builder/swatch.php';
@@ -483,7 +495,7 @@ foreach($options["fields"] as $key => $field){
                 break;            
         }
     }
-    if( $field['general']['enabled'] == 'y' ) include($tempalte);
+    if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
 }
 if( $options['display_type'] == 2 && count($pm_field_indexes) ){
     include('/options-builder/price-matrix.php');
@@ -500,10 +512,11 @@ if( $cart_item_key != ''){
             <p><b><?php _e('Options: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></span></p>
             <table>
                 <tbody>
-                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}}</td><td>{{field.price}}</td></tr>
+                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td>{{field.price}}</td></tr>
                 </tbody>
             </table>
-            <p><b><?php _e('Discount: ', 'web-to-print-online-designer'); ?></b> {{discount_by_qty}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></p>
+            <p><b><?php _e('Quantity Discount: ', 'web-to-print-online-designer'); ?></b> {{discount_by_qty}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></p>
+            <p><b><?php _e('Final price: ', 'web-to-print-online-designer'); ?></b> {{final_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></p>
         </div>
     </div>
 </div>
@@ -701,8 +714,9 @@ if( $cart_item_key != ''){
             scope.update_app();            
         });
     });
-    jQuery(document).off('click.nbo', '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus')
-            .on('click.nbo', '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus', function(){
+    var quantity_selector = '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus';
+    jQuery(document).off('click.nbo', quantity_selector)
+            .on('click.nbo', quantity_selector, function(){
                 jQuery('input[name="quantity"]').trigger( 'change.nbo' );
             });
     var nboApp = angular.module('nbo-app', []);
@@ -718,7 +732,8 @@ if( $cart_item_key != ''){
         $scope.valid_form = false;
         $scope.product_image = [];
         $scope.product_img = [];
-        $scope.check_valid = function(){
+        $scope.has_price_matrix = false;
+        $scope.check_valid = function( calculate_pm ){
             $timeout(function(){
                 var check = {}, total_check = true;
                 angular.forEach($scope.nbd_fields, function(field, field_id){
@@ -729,6 +744,9 @@ if( $cart_item_key != ''){
                         if( origin_field.general.input_type != 't' ){
                             if( angular.isUndefined(field.value) ) check[field_id] = false;
                         }
+                        field.value_name = field.value;
+                    }else{
+                        field.value_name = origin_field.general.attributes.options[field.value].name;
                     }
                 });
                 angular.forEach(check, function(c){
@@ -746,6 +764,9 @@ if( $cart_item_key != ''){
                     $scope.valid_form = false;
                 }
                 $scope.may_be_change_product_image();
+                if( $scope.has_price_matrix && angular.isUndefined( calculate_pm ) ){
+                    $scope.calculate_price_matrix();
+                }
             });
         };
         $scope.set_product_image_attr = function(ele, attr, value, id){
@@ -936,8 +957,215 @@ if( $cart_item_key != ''){
             angular.forEach($scope.fields, function(field){
                 $scope.check_depend(field.id);
             });
+            if( $scope.options.display_type == 2 && ( $scope.options.pm_hoz.length > 0 || $scope.options.pm_ver.length > 0 ) ){
+                $scope.init_price_matrix();
+                $scope.has_price_matrix = true;
+            }
             $scope.check_valid();
         };
+        $scope.init_price_matrix = function(){
+            $scope.options.pm_num_col = 1;
+            $scope.options.pm_num_row = 1;
+            $scope.options.pm_hoz_field = [];
+            $scope.options.pm_ver_field = [];
+            $scope.options.pm_hoz.forEach(function(field, index){
+                $scope.options.pm_num_col *= $scope.fields[field].general.attributes.options.length;
+                var colspan = 1;
+                $scope.options.pm_hoz.forEach(function(field, _index){
+                    if(_index > index) colspan *= $scope.fields[field].general.attributes.options.length;
+                });
+                $scope.options.pm_hoz_field.push({field_id: $scope.fields[field].id, colspan: colspan});
+            });
+            $scope.options.pm_ver.forEach(function(field, index){
+                $scope.options.pm_num_row *= $scope.fields[field].general.attributes.options.length;
+                var rowspan = 1;
+                $scope.options.pm_ver.forEach(function(field, _index){
+                    if(_index > index) rowspan *= $scope.fields[field].general.attributes.options.length;
+                });
+                $scope.options.pm_ver_field.push({field_id: $scope.fields[field].id, rowspan: rowspan});                    
+            });
+            var i, j;
+            $scope.options.price_matrix = [];
+            for( i = 0; i < $scope.options.pm_num_row; i++ ){
+                $scope.options.price_matrix[i] = [];
+                for( j = 0; j < $scope.options.pm_num_col; j++ ){
+                    var h_index = j;
+                    $scope.options.price_matrix[i][j] = {
+                        fields: {},
+                        pm_fields: {},
+                        discount_by_qty: 0,
+                        total_price: 0,
+                        class: '',
+                        price: '?'
+                    };
+                    $scope.options.pm_hoz_field.forEach(function(field, index){
+                        var field_val = Math.floor(h_index / field.colspan);
+                        var field_index = $scope.options.pm_hoz[index];
+                        $scope.options.price_matrix[i][j].pm_fields[$scope.fields[field_index].id] = field_val;
+                        $scope.options.price_matrix[i][j].fields[$scope.fields[field_index].id] = {};
+                        $scope.options.price_matrix[i][j].fields[$scope.fields[field_index].id].value = field_val;
+                        h_index = h_index % field.colspan;
+                    });
+                    var v_index = i;
+                    $scope.options.pm_ver_field.forEach(function(field, index){
+                        var field_val = Math.floor(v_index / field.rowspan);
+                        var field_index = $scope.options.pm_ver[index];
+                        $scope.options.price_matrix[i][j].pm_fields[$scope.fields[field_index].id] = field_val;
+                        $scope.options.price_matrix[i][j].fields[$scope.fields[field_index].id] = {};
+                        $scope.options.price_matrix[i][j].fields[$scope.fields[field_index].id].value = field_val;                        
+                        v_index = v_index % field.rowspan;
+                    });
+                }
+            }
+        };
+        $scope.calculate_price_matrix = function(){
+            var i, j;
+            var calculate_price = function( _fields ){
+                var basePrice = $scope.price;
+                if($scope.type == 'variable'){
+                    var variation_id = jQuery('input[name="variation_id"], input.variation_id').val();
+                    basePrice = (variation_id != '' && variation_id != 0 ) ? $scope.variations[variation_id] : basePrice;
+                }
+                basePrice = $scope.convert_wc_price_to_float(basePrice); 
+                var total_price = 0,
+                discount_by_qty = 0,
+                qty = 0;
+                if( $scope.is_sold_individually == 1 ){
+                    qty = 1;
+                }else{
+                    qty = $scope.validate_int(jQuery('input[name="quantity"]').val());
+                }
+                var quantity_break = $scope.get_quantity_break(qty);
+                var xfactor = 1;
+                angular.forEach(_fields, function(field, field_id){
+                    if(field.enable){
+                        var origin_field = $scope.get_field(field_id);
+                        var factor = null;
+                        if( origin_field.general.data_type == 'i' ){
+                            if(origin_field.general.depend_quantity == 'n'){
+                                factor = origin_field.general.price;
+                            }else{
+                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                    factor = '';
+                                }else{
+                                    factor = origin_field.general.price_breaks[quantity_break.index];
+                                }
+                            }
+                        }else{
+                            var option = origin_field.general.attributes.options[field.value];
+                            if(origin_field.general.depend_quantity == 'n'){
+                                factor = option.price[0];
+                            }else{
+                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                    factor = '';
+                                }else{
+                                    factor = option.price[quantity_break.index];
+                                }
+                            }
+                        }
+                        factor = $scope.validate_float(factor) ;
+                        field.is_pp = 0;
+                        switch(origin_field.general.price_type){
+                            case 'f':
+                                field.price = $scope.convert_to_wc_price( factor );
+                                total_price += factor;
+                                break;
+                            case 'p':
+                                field.price = $scope.convert_to_wc_price( basePrice * factor / 100 );
+                                total_price += ($scope.basePrice * factor / 100);
+                                break;
+                            case 'p+':
+                                field.price = factor / 100;
+                                xfactor *= (1 + factor / 100);
+                                field.is_pp = 1;
+                                break;
+                            case 'c':
+                                field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
+                                total_price += factor * $scope.validate_int( field.value );
+                                break; 
+                        }
+                    }
+                });
+                total_price += ( (basePrice + total_price ) * (xfactor - 1 ) );
+                angular.forEach(_fields, function(field){
+                    if( field.is_pp == 1 ) field.price = $scope.convert_to_wc_price( field.price * (basePrice + total_price ) / ( field.price + 1 ) );
+                });
+                var qty_factor = null;
+                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                    qty_factor = '';
+                }else{
+                    qty_factor = $scope.options.quantity_breaks[quantity_break.index].dis;
+                }
+                qty_factor = $scope.validate_float(qty_factor);
+                discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : (basePrice + total_price ) * qty_factor / 100;
+                return basePrice + total_price - discount_by_qty;
+            };  
+            var check_depend = function( field_id, pm_fields ){
+                var field = $scope.get_field(field_id),
+                check = [];
+                pm_fields[field_id].enable = true;
+                if( field.conditional.enable == 'n' ) return true;
+                if( angular.isUndefined(field.conditional.depend) ) return true;
+                if( field.conditional.depend.length == 0 ) return true;
+                var show = field.conditional.show,
+                logic = field.conditional.logic,
+                total_check = logic == 'a' ? true : false;
+                angular.forEach(field.conditional.depend, function(con, key){
+                    if( con.id != '' ){
+                        switch(con.operator){
+                            case 'i':
+                                check[key] = pm_fields[con.id].value == con.val ? true : false;
+                                break;
+                            case 'n':
+                                check[key] = pm_fields[con.id].value != con.val ? true : false;
+                                break;  
+                            case 'e':
+                                check[key] = pm_fields[con.id].value == '' ? true : false;
+                                break;
+                            case 'ne':
+                                check[key] = pm_fields[con.id].value != '' ? true : false;
+                                break;                         
+                        }
+                    }else{
+                        check[key] = true;
+                    }
+                });
+                angular.forEach(check, function(c){
+                    total_check = logic == 'a' ? (total_check && c) : (total_check || c);
+                });
+                pm_fields[field_id].enable = show == 'y' ? total_check : !total_check;
+            };            
+            for( i = 0; i < $scope.options.pm_num_row; i++ ){
+                for( j = 0; j < $scope.options.pm_num_col; j++ ){
+                    angular.forEach($scope.nbd_fields, function(field, field_id){
+                        var val = field.value;
+                        if( angular.isDefined($scope.options.price_matrix[i][j].pm_fields[field_id]) ){
+                            val = $scope.options.price_matrix[i][j].pm_fields[field_id];
+                        }else{
+                            $scope.options.price_matrix[i][j].fields[field_id] = {};
+                        }
+                        angular.copy(field, $scope.options.price_matrix[i][j].fields[field_id]);
+                        $scope.options.price_matrix[i][j].fields[field_id].value = '' + val;
+                    });
+                    angular.forEach($scope.options.price_matrix[i][j].fields, function(field, field_id){
+                        check_depend(field_id, $scope.options.price_matrix[i][j].fields)
+                    });
+                    var total_price = calculate_price( $scope.options.price_matrix[i][j].fields );
+                    $scope.options.price_matrix[i][j].price = $scope.convert_to_wc_price( total_price );
+                }
+            }
+        };
+        $scope.select_price_matrix = function(_i, _j){
+            var i, j;
+            for( i = 0; i < $scope.options.pm_num_row; i++ ){
+                for( j = 0; j < $scope.options.pm_num_col; j++ ){
+                    $scope.options.price_matrix[i][j].class = '';
+                }
+            }
+            $scope.options.price_matrix[_i][_j].class = 'selected';
+            angular.copy($scope.options.price_matrix[_i][_j].fields, $scope.nbd_fields);
+            $scope.check_valid( false );
+        };        
         $scope.convert_to_wc_price = function(price){
             return accounting.formatMoney( price, {
                 symbol: nbds_frontend.currency_format_symbol,
@@ -1060,11 +1288,9 @@ if( $cart_item_key != ''){
             }
             qty_factor = $scope.validate_float(qty_factor);
             $scope.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + $scope.total_price ) * qty_factor / 100;
+            $scope.final_price = $scope.convert_to_wc_price( $scope.total_price + $scope.basePrice - $scope.discount_by_qty );
             $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
             $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
-        };
-        $scope.select_price_matrix = function(event){
-            console.log(angular.element(event.target));
         };
         $scope.update_app = function(){
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply(); 

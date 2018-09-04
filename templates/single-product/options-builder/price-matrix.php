@@ -9,7 +9,7 @@
             ?>
             <tr>
                 <?php if( $key == 0 && count($options['pm_ver']) > 0): ?>
-                <td rowspan="<?php echo count($options['pm_hoz']); ?>" colspan="<?php echo count($options['pm_ver']); ?>"></td>
+                <td class="nbo-pm-empty" rowspan="<?php echo count($options['pm_hoz']); ?>" colspan="<?php echo count($options['pm_ver']); ?>"></td>
                 <?php endif; ?>
                 <?php 
                     $hoz_field = $options["fields"][$hoz_index];
@@ -44,7 +44,7 @@
                     $number_row *= count($ver_field['general']['attributes']["options"]);
                 }
                 for( $i=0; $i < $number_row; $i++ ){ ?>
-            <tr ng-click="select_price_matrix($event)">
+            <tr>
             <?php foreach ($options['pm_ver'] as $key => $ver_index): ?>
                 <?php 
                     $ver_field = $options["fields"][$ver_index];
@@ -73,7 +73,7 @@
                     <?php } ?>
             <?php endforeach; ?>
             <?php 
-                for( $j=0; $j < $number_col; $j++ ){ 
+                for( $j=0; $j < $number_col; $j++ ){
                     $data_hoz = '';
                     $_h_index = $j;
                     foreach( $hoz_fields as $h_index => $h_field ){
@@ -89,7 +89,9 @@
                         $_v_index = $_v_index % $v_field['rowspan'];
                     }                    
             ?>
-                <td data-pm_hoz="<?php echo $data_hoz; ?>" data-pm_ver="<?php echo $data_ver; ?>">X</td>
+                <td  ng-click="select_price_matrix(<?php echo $i; ?>, <?php echo $j; ?>)" class="{{options.price_matrix[<?php echo $i; ?>][<?php echo $j; ?>].class}}" title="<?php _e('Choose', 'web-to-print-online-designer'); ?>">
+                    {{options.price_matrix[<?php echo $i; ?>][<?php echo $j; ?>].price}}
+                </td>
             <?php } ?>
             </tr>
             <?php } ?>
