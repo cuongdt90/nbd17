@@ -74,6 +74,9 @@ function checkMobileDevice(){
      * @desc Ele click out
      * @version 2.0.0
      * @author Netbase Online Design Team
+     * @option - clickE (object: jquery) : Khi click vào sẽ không removeClass
+     *         - activeE (object: jquery): phần tử chứa class remove
+     *         - removeClass (string: ''): Class bị remove
      */
 
     $.fn.nbClickOutSite = function (options) {
