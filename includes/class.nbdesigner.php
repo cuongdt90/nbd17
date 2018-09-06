@@ -3853,9 +3853,9 @@ class Nbdesigner_Plugin {
         if($ext != 'svg' && $min_dpi && $min_dpi > 0) {
             $dpi = nbd_get_dpi($_FILES['file']["tmp_name"]); 
             if($dpi['x'] < $min_dpi) {
-                $result = nbdesigner_get_option('nbdesigner_enable_low_resolution_image') ? true : false;
+                $result = nbdesigner_get_option('nbdesigner_enable_low_resolution_image') == 'yes' ? true : false;
                 $res['mes'] = __('Image resolution too low!', 'web-to-print-online-designer');                
-                $res['ilr'] = 1;                
+                $res['ilr'] = 1;
             }
         }          
         $path = Nbdesigner_IO::create_file_path(NBDESIGNER_TEMP_DIR, $new_name);
@@ -3865,7 +3865,7 @@ class Nbdesigner_Plugin {
             }else{
                 $result = false;
                 $res['mes'] = __('Error occurred with file upload!', 'web-to-print-online-designer');            
-            }                     
+            }
         }
         if($result){
             $res['src'] = NBDESIGNER_TEMP_URL.$path['date_path'];

@@ -69,9 +69,9 @@
                                 <th scope="row" class="titledesc"><?php echo __("Choose variation", 'web-to-print-online-designer'); ?></th>
                                 <td class="forminp-text">
                                     <select onchange="changeLink(this)" style="padding: 0;">
+                                        <option value="0">Template apply for all variations</option>
                                     <?php foreach ($variations as $variation): ?>
                                         <option value="<?php echo $variation['id']; ?>"><?php echo $variation['name']; ?></option>
-                                        <option value="0">Template apply for all variations</option>
                                     <?php endforeach; ?>
                                     </select>    
                                 </td>

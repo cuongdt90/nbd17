@@ -41,14 +41,14 @@
         </li>
         <li class="menu-item item-font-size" ng-click="updateScrollBar('#toolbar-font-size-dropdown')">
             <button class="toolbar-bottom">
-                <input class="toolbar-input" type="text" ng-keyup="$event.keyCode == 13 && setTextAttribute('fontSize', stages[currentStage].states.text.fontSize)" name="font-size" ng-model="stages[currentStage].states.text.fontSize"/>
+                <input class="toolbar-input" type="text" ng-keyup="$event.keyCode == 13 && setTextAttribute('fontSize', stages[currentStage].states.text.ptFontSize)" name="font-size" ng-model="stages[currentStage].states.text.ptFontSize"/>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
                 <div class="sub-menu" data-pos="left">
                     <div id="toolbar-font-size-dropdown">
                         <ul>
-                            <li class="sub-menu-item" ng-click="setTextAttribute('fontSize', fontsize)" ng-class="stages[currentStage].states.text.fontSize == fontsize ? 'chosen' : ''" ng-repeat="fontsize in ['6','8','10','12','14','16','18','21','24','28','32','36','42','48','56','64','72','80','88','96','104','120','144']">
+                            <li class="sub-menu-item" ng-click="setTextAttribute('fontSize', fontsize)" ng-class="stages[currentStage].states.text.ptFontSize == fontsize ? 'chosen' : ''" ng-repeat="fontsize in listFontSizeInPt">
                                 <span>{{fontsize}}</span>
-                                <i class="icon-nbd icon-nbd-fomat-done" ng-if="stages[currentStage].states.text.fontSize == fontsize"></i>
+                                <i class="icon-nbd icon-nbd-fomat-done" ng-if="stages[currentStage].states.text.ptFontSize == fontsize"></i>
                             </li>
                         </ul>
                     </div>

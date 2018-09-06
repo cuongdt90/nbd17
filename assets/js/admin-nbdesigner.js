@@ -859,6 +859,7 @@ var NBDESIGNADMIN = {
     },
     deleteOrientation: function (e) {
         var variantion = jQuery(e).data('variation');
+        console.log(jQuery(e).parents('.nbdesigner-boxes').find('.nbdesigner-box-container').length);
         if((jQuery(e).parents('.nbdesigner-boxes').find('.nbdesigner-box-container').length) > 1){
             jQuery(e).parents('.nbdesigner-box-container').remove();
             this.resetBoxes(variantion);            

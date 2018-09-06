@@ -346,7 +346,11 @@ if( !class_exists('Nbdesigner_Settings') ) {
                 } else if ($this->get_option_type($key) == 'multiselect') {
                     if (isset($_POST[$key])) $post_val = $_POST[$key];
                 } else if( $this->get_option_type($key) != 'multicheckbox' ) {
-                    $post_val = $_POST[$key];
+                    if( !isset($_POST[$key]) ){
+                        $post_val = nbdesigner_get_default_setting($key);
+                    }else{
+                        $post_val = $_POST[$key];
+                    }
                 }
                 update_option($key, $post_val);
             }
