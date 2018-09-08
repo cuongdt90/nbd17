@@ -2,10 +2,7 @@
   height: 500px;
   width: 260px;
   #tab-photo .tab-scroll{
-    height: calc(100% - 55px);
-    .main-scrollbar {
-      margin-bottom: 50px;
-    }
+    height: 100%;
   }
   @media screen and (max-width: 767px) {
     position: relative;
@@ -20,16 +17,21 @@
       z-index: 1;
     }
   }
-  .main-sidebar, .v-tab-contents, .v-tab-content {
+  .v-tab-contents {
+    height: calc(100% - 60px);
+    background: #f4f4f4;
+  }
+  .main-sidebar, .v-tab-content {
     height: 100%;
   }
   .v-title {
-    font-size: 21px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 14px;
+    margin-bottom: 10px;
     display: block;
+    padding: 10px 10px 0;
   }
   .v-action {
+    padding: 0 10px;
     margin-bottom: 20px;
   }
   .v-content {
@@ -39,11 +41,12 @@
       .text-field {
         display: block;
         width: 100%;
-        border: 1px solid #ebebeb;
-        padding: 5px 10px;
+        //border: 1px solid #ebebeb;
+        padding: 8px 10px;
         border-radius: 2px;
         outline: none;
         margin-bottom: 10px;
+        background-color: #ccc;
         &:focus {
           border-color: $main-color;
         }
@@ -60,12 +63,24 @@
     }
     @import "element";
   }
-  #tab-photo, #tab-text, #tab-element {
+  #tab-text {
+    .v-btn {
+      height: 40px;
+      line-height: 40px;
+    }
     .v-content {
-      height: calc(100% - 105px);
+      height: calc(100% - 102px);
+    }
+  }
+  #tab-photo,#tab-element {
+    .v-content {
+      height: calc(100% - 92px);
     }
   }
   #tab-design {
+    .v-title {
+      padding: 0;
+    }
     .v-content {
       height: calc(100% - 55px);
       .design-color {
@@ -77,8 +92,7 @@
       .tab-scroll {
         &.layout {
           margin-bottom: 20px;
-          height: calc(100% - 55px);
-          background-color: #ebebeb;
+          background-color: #f4f4f4;
           .main-scrollbar {
             margin-bottom: 0;
           }
@@ -89,6 +103,7 @@
               position: static;
               border: none;
               padding: 0;
+              background-color: transparent;
             }
           }
         }
@@ -96,15 +111,15 @@
       }
     }
     .items {
+      display: flex;
+      flex-wrap: wrap;
+      //padding: 5px;
       .item {
-        padding: 10px;
+        padding: 5px;
+        flex: 1 1 50%;
         img {
           margin: auto;
-          padding: 10px;
-          border: 1px solid transparent;
-          &:hover {
-            border-color: $main-color;
-          }
+          object-fit: contain;
         }
       }
     }
@@ -116,17 +131,21 @@
   }
   .nbd-nav-tabs {
     display: flex;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid $main-color;
+    min-height: 35px;
+    padding: 10px 10px 0;
+    margin-bottom: 10px;
     .nbd-nav-tab {
       margin-right: 5px;
       cursor: pointer;
-      padding: 0 10px;
+      padding: 5px 10px;
       margin-bottom: -1px;
       border: 1px solid transparent;
       &.active{
-        border: 1px solid #ebebeb;
-        border-bottom: 1px solid #fff;
+        border: 1px solid $main-color;
+        border-bottom: 1px solid #f4f4f4;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
       }
     }
     .v-title {
@@ -136,8 +155,9 @@
   .nbd-search {
     position: relative;
     margin-bottom: 15px;
-    width: calc(100% - 5px);
+    width: 100%;
     input{
+      min-height: 35px;
       padding: 5px 35px 5px 10px;
       width: 100%;
       -webkit-border-radius: 2px;

@@ -1,16 +1,17 @@
 <div class="nbd-stages" id="nbd-stages">
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0, 'nbd-active':$index==currentStage}" >
-            <div style="display: inline-block;position: relative; height: calc(100% - 7px);">
+            <div style="display: inline-block;position: relative;">
                 <div class="stage-main" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
-                    <div class="stage-background" style="background-color: #ebebeb">
+                    <div class="stage-background">
                         <img style="" ng-if="stage.config.bgType == 'iimage'" ng-src='{{stage.config.bgImage}}'/>
                     </div>
                     <div class="design-wrap" style="background-color: #fff" ng-style="{'width' : calcStyle(stage.config.width * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'height' : calcStyle(stage.config.height * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'top' : calcStyle(stage.config.top * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'left' : calcStyle(stage.config.left * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
+<!--                    <div class="design-wrap" style="background-color: #fff; width: 100%; height: 100%; top: 0; left: 0">-->
                         <div class="design-zone">
                             <canvas nbd-canvas stage="stage" ctx="ctxMenuStyle" index="{{$index}}" id="nbd-stage-{{$index}}" last="{{$last ? 1 : 0}}"></canvas>
                         </div>

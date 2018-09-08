@@ -3,8 +3,8 @@ online design
 */
 @font-face {
   font-family: 'nbd-vista';
-  src: url("fonts/nbd-vista.eot?xrk0z7");
-  src: url("fonts/nbd-vista.eot?xrk0z7#iefix") format("embedded-opentype"), url("fonts/nbd-vista.ttf?xrk0z7") format("truetype"), url("fonts/nbd-vista.woff?xrk0z7") format("woff"), url("fonts/nbd-vista.svg?xrk0z7#nbd-vista") format("svg");
+  src: url("fonts/nbd-vista.eot?knsot3");
+  src: url("fonts/nbd-vista.eot?knsot3#iefix") format("embedded-opentype"), url("fonts/nbd-vista.ttf?knsot3") format("truetype"), url("fonts/nbd-vista.woff?knsot3") format("woff"), url("fonts/nbd-vista.svg?knsot3#nbd-vista") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -20,6 +20,21 @@ online design
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+.nbd-icon-vista-headline:before {
+  content: "\E93B"; }
+
+.nbd-icon-vista-opacity:before {
+  content: "\E939"; }
+
+.nbd-icon-vista-apps:before {
+  content: "\E93A"; }
+
+.nbd-icon-vista-center:before {
+  content: "\E936"; }
+
+.nbd-icon-vista-top-left:before {
+  content: "\E937"; }
 
 .nbd-icon-vista-fullscreen:before {
   content: "\E935"; }
@@ -184,6 +199,12 @@ online design
 .nbd-icon-vista-zoom-out:before {
   content: "\E930"; }
 
+.nbd-icon-vista-cog:before {
+  content: "\F013"; }
+
+.nbd-icon-vista-gear:before {
+  content: "\F013"; }
+
 .nbd-icon-vista-lock:before {
   content: "\F023"; }
 
@@ -230,7 +251,7 @@ online design
   text-decoration: none;
   font-size: 14px;
   color: #fff;
-  background-color: #26a69a;
+  background-color: #04b591;
   text-align: center;
   letter-spacing: .5px;
   -webkit-transition: background-color .2s ease-out;
@@ -248,7 +269,7 @@ online design
   -webkit-tap-highlight-color: transparent;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
   .nbd-mode-vista .v-btn:hover {
-    background-color: #2bbbad;
+    background-color: #07d5ab;
     box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2); }
   .nbd-mode-vista .v-btn.waves-effect {
     position: relative;
@@ -313,7 +334,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 * http://jqueryui.com
 * Includes: jquery.ui.core.css, jquery.ui.accordion.css, jquery.ui.autocomplete.css, jquery.ui.button.css, jquery.ui.datepicker.css, jquery.ui.dialog.css, jquery.ui.menu.css, jquery.ui.progressbar.css, jquery.ui.resizable.css, jquery.ui.selectable.css, jquery.ui.slider.css, jquery.ui.spinner.css, jquery.ui.tabs.css, jquery.ui.tooltip.css, jquery.ui.theme.css
 * To view and modify this theme, visit http://jqueryui.com/themeroller/?ffDefault=Verdana%2CArial%2Csans-serif&fwDefault=normal&fsDefault=1.1em&cornerRadius=4px&bgColorHeader=cccccc&bgTextureHeader=highlight_soft&bgImgOpacityHeader=75&borderColorHeader=aaaaaa&fcHeader=222222&iconColorHeader=222222&bgColorContent=ffffff&bgTextureContent=flat&bgImgOpacityContent=75&borderColorContent=aaaaaa&fcContent=222222&iconColorContent=222222&bgColorDefault=e6e6e6&bgTextureDefault=glass&bgImgOpacityDefault=75&borderColorDefault=d3d3d3&fcDefault=555555&iconColorDefault=888888&bgColorHover=dadada&bgTextureHover=glass&bgImgOpacityHover=75&borderColorHover=999999&fcHover=212121&iconColorHover=454545&bgColorActive=ffffff&bgTextureActive=glass&bgImgOpacityActive=65&borderColorActive=aaaaaa&fcActive=212121&iconColorActive=454545&bgColorHighlight=fbf9ee&bgTextureHighlight=glass&bgImgOpacityHighlight=55&borderColorHighlight=fcefa1&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fef1ec&bgTextureError=glass&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=flat&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=flat&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
-* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */ }
+* Copyright 2014 jQuery Foundation and other contributors; Licensed MIT */
+  /* MAD-RIPPLE EFFECT */ }
   .nbd-mode-vista .nbd-vista html, .nbd-mode-vista .nbd-vista body, .nbd-mode-vista .nbd-vista div, .nbd-mode-vista .nbd-vista span, .nbd-mode-vista .nbd-vista applet, .nbd-mode-vista .nbd-vista object, .nbd-mode-vista .nbd-vista iframe,
   .nbd-mode-vista .nbd-vista h1, .nbd-mode-vista .nbd-vista h2, .nbd-mode-vista .nbd-vista h3, .nbd-mode-vista .nbd-vista h4, .nbd-mode-vista .nbd-vista h5, .nbd-mode-vista .nbd-vista h6, .nbd-mode-vista .nbd-vista p, .nbd-mode-vista .nbd-vista blockquote, .nbd-mode-vista .nbd-vista pre,
   .nbd-mode-vista .nbd-vista a, .nbd-mode-vista .nbd-vista abbr, .nbd-mode-vista .nbd-vista acronym, .nbd-mode-vista .nbd-vista address, .nbd-mode-vista .nbd-vista big, .nbd-mode-vista .nbd-vista cite, .nbd-mode-vista .nbd-vista code,
@@ -2736,7 +2758,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     border-radius: 8px; }
   .nbd-mode-vista .nbd-vista .nbd-icon-vista {
     font-size: 24px;
-    color: #26a69a;
+    color: #04b591;
     line-height: normal;
     display: inline-block;
     cursor: pointer; }
@@ -2835,10 +2857,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar {
       display: flex;
       justify-content: space-between;
-      border: 1px solid #ebebeb;
       border-radius: 2px;
       position: relative;
-      z-index: 9999; }
+      z-index: 9999;
+      background-color: #f4f4f4; }
       @media screen and (max-width: 767px) {
         .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar {
           border-color: transparent;
@@ -2858,41 +2880,24 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   .nbd-mode-vista .nbd-vista .v-main-menu {
     display: flex; }
     .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item {
-      padding: 5px 10px;
+      padding: 10px 25px;
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer; }
+      cursor: pointer;
+      transition: all .3s; }
       .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item:last-child:after {
         display: none; }
-      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item:after {
-        position: absolute;
-        content: "";
-        top: 6px;
-        right: 0;
-        height: calc(100% - 12px);
-        width: 2px;
-        background: #ebebeb; }
-      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item:before {
-        position: absolute;
-        content: "";
-        bottom: 0;
-        left: 0;
-        height: 1px;
-        width: 100%;
-        transition: all .3s;
-        background: #26a69a;
-        transform: scale(0); }
-      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item:hover:before {
-        background: #2bbbad; }
-      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item.active:before {
-        height: 2px; }
-      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item:hover:before, .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item.active:before {
-        transform: scale(1); }
+      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item:hover {
+        background-color: rgba(0, 0, 0, 0.2); }
+      .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item.active {
+        background-color: #04b591; }
+        .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item.active span {
+          color: #fff; }
       .nbd-mode-vista .nbd-vista .v-main-menu .v-menu-item i {
         margin-right: 5px;
-        color: #26a69a; }
+        color: #04b591; }
   .nbd-mode-vista .nbd-vista .v-tab-contents .v-tab-content {
     display: none; }
     .nbd-mode-vista .nbd-vista .v-tab-contents .v-tab-content.active {
@@ -2905,8 +2910,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     overflow: hidden;
     height: 100%; }
     .nbd-mode-vista .nbd-vista .tab-scroll > .main-scrollbar {
-      padding-right: 5px;
-      margin-bottom: 10px; }
+      margin-bottom: 10px;
+      padding: 10px; }
   .nbd-mode-vista .nbd-vista .v-popup {
     position: fixed;
     top: 0;
@@ -3100,7 +3105,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           padding: 15px 20px;
           margin: 0;
           color: #fff;
-          background-color: #26a69a; }
+          background-color: #04b591; }
         .nbd-mode-vista .nbd-vista .v-popup.popup-select .main-popup .body {
           padding: 20px; }
           .nbd-mode-vista .nbd-vista .v-popup.popup-select .main-popup .body .title {
@@ -3139,7 +3144,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           padding: 15px 20px;
           margin: 0;
           color: #fff;
-          background-color: #26a69a; }
+          background-color: #04b591; }
         .nbd-mode-vista .nbd-vista .v-popup.v-popup-select .main-popup .body {
           padding: 20px; }
           .nbd-mode-vista .nbd-vista .v-popup.v-popup-select .main-popup .body .title {
@@ -3296,7 +3301,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       bottom: 10px; }
     .nbd-mode-vista .nbd-vista .nbd-toasts .toast {
       margin-bottom: 10px;
-      background: #26a69a;
+      background: #04b591;
       padding: 10px 45px 10px 20px;
       position: relative; }
       .nbd-mode-vista .nbd-vista .nbd-toasts .toast span {
@@ -3450,7 +3455,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       .nbd-mode-vista .nbd-vista .nbd-sp.sp-container .sp-picker-container .sp-choose {
         color: #fff;
         background-image: none;
-        background-color: #26a69a;
+        background-color: #04b591;
         border: none;
         border-radius: 2px;
         transition: box-shadow .3s;
@@ -3546,14 +3551,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                   line-height: 1;
                   -webkit-font-smoothing: antialiased;
                   font-size: 18px;
-                  color: #26a69a; }
+                  color: #04b591; }
               .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item.zoomer-level .zoomer-popover .zoomer-popover-item:hover {
                 background-color: #f6f6f6; }
   .nbd-mode-vista .nbd-vista .v-btn {
     text-decoration: none;
     font-size: 14px;
     color: #fff;
-    background-color: #26a69a;
+    background-color: #04b591;
     text-align: center;
     letter-spacing: .5px;
     -webkit-transition: background-color .2s ease-out;
@@ -3571,7 +3576,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     -webkit-tap-highlight-color: transparent;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
     .nbd-mode-vista .nbd-vista .v-btn:hover {
-      background-color: #2bbbad;
+      background-color: #07d5ab;
       box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2); }
     .nbd-mode-vista .nbd-vista .v-btn.waves-effect {
       position: relative;
@@ -3670,7 +3675,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            background: #26a69a;
+            background: #04b591;
             cursor: pointer; }
             @media screen and (max-width: 767px) {
               .nbd-mode-vista .nbd-vista .v-ranges .range .main-track .slide-input::-webkit-slider-thumb {
@@ -3680,7 +3685,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             width: 15px;
             height: 15px;
             border-radius: 50%;
-            background: #26a69a;
+            background: #04b591;
             cursor: pointer; }
             @media screen and (max-width: 767px) {
               .nbd-mode-vista .nbd-vista .v-ranges .range .main-track .slide-input::-moz-range-thumb {
@@ -3828,6 +3833,56 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         display: none;
         top: 0;
         left: -50%; }
+  .nbd-mode-vista .nbd-vista .nb-ripple {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    -webkit-transform: translateZ(0);
+    /* to contain zoomed ripple */
+    transform: translateZ(0);
+    border-radius: inherit;
+    /* inherit from parent (rounded buttons etc) */
+    pointer-events: none;
+    /* allow user interaction */ }
+  .nbd-mode-vista .nbd-vista .nb-rippleWave {
+    backface-visibility: hidden;
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0.7);
+    -webkit-transform: scale(0.7);
+    background: white;
+    opacity: 0.45;
+    animation: ripple 1s forwards;
+    -webkit-animation: ripple 1s forwards; }
+
+@keyframes ripple-shadow {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+  20% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); }
+  100% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); } }
+
+@-webkit-keyframes ripple-shadow {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+  20% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); }
+  100% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); } }
+
+@keyframes ripple {
+  to {
+    transform: scale(24);
+    opacity: 0; } }
+
+@-webkit-keyframes ripple {
+  to {
+    -webkit-transform: scale(24);
+    opacity: 0; } }
   .nbd-mode-vista .nbd-vista .v-workspace {
     height: 500px;
     display: flex; }
@@ -3835,9 +3890,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       height: 500px;
       width: 260px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .tab-scroll {
-        height: calc(100% - 55px); }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .tab-scroll .main-scrollbar {
-          margin-bottom: 50px; }
+        height: 100%; }
       @media screen and (max-width: 767px) {
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar {
           position: relative;
@@ -3850,14 +3903,18 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             opacity: 1;
             visibility: visible;
             z-index: 1; } }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .main-sidebar, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-contents, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-content {
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-contents {
+        height: calc(100% - 60px);
+        background: #f4f4f4; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .main-sidebar, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-content {
         height: 100%; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-title {
-        font-size: 21px;
-        font-weight: bold;
-        margin-bottom: 20px;
-        display: block; }
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: block;
+        padding: 10px 10px 0; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-action {
+        padding: 0 10px;
         margin-bottom: 20px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content {
         position: relative;
@@ -3865,13 +3922,13 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .text-editor .text-field {
           display: block;
           width: 100%;
-          border: 1px solid #ebebeb;
-          padding: 5px 10px;
+          padding: 8px 10px;
           border-radius: 2px;
           outline: none;
-          margin-bottom: 10px; }
+          margin-bottom: 10px;
+          background-color: #ccc; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .text-editor .text-field:focus {
-            border-color: #26a69a; }
+            border-color: #04b591; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .text-editor input::-moz-placeholder, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .text-editor input:-moz-placeholder, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .text-editor input::-webkit-input-placeholder, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .text-editor input:-ms-input-placeholder {
           font-style: italic;
           color: #c8cbcc; }
@@ -3888,13 +3945,13 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             bottom: -5px;
             height: 10px;
             margin: 14px 0 0 -8px;
-            border-top: 1px solid #ebebeb;
-            border-right: 1px solid #ebebeb;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #ccc;
             transform: rotate(-45deg);
             transition: border-color .3s linear;
-            background-color: #fff; }
+            background-color: #f4f4f4; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items.active-expanded {
-            border-color: #ebebeb; }
+            border-color: #ccc; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items.active-expanded .pointer {
               display: block; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items {
@@ -3906,7 +3963,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               font-size: 40px;
               line-height: 1.5; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items .item {
-              width: 80px;
+              width: 75px;
               margin-bottom: 15px;
               cursor: pointer; }
               @media screen and (max-width: 767px) {
@@ -3914,7 +3971,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                   width: 100px; } }
               @media screen and (max-width: 320px) {
                 .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items .item {
-                  width: 70px; } }
+                  width: 65px; } }
               .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items .item .item-icon {
                 padding: 5px;
                 border-radius: 2px;
@@ -3926,6 +3983,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                 margin-top: 5px;
                 text-align: center; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded {
+          overflow: hidden;
           margin-top: 20px; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items {
             opacity: 0;
@@ -3983,12 +4041,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
                 border-right: none;
-                border: 1px solid #26a69a;
+                border: 1px solid #04b591;
                 width: 100%;
                 box-shadow: none; }
               .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="image-url"] .form-group .input-group button {
                 border: none;
-                background-color: #26a69a;
+                background-color: #04b591;
                 color: #fff;
                 margin: 0;
                 border-radius: 0 3px 3px 0;
@@ -4172,9 +4230,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="draw"] .nbd-color-palette {
               position: static;
               border: none;
-              padding: 0; }
+              padding: 0;
+              background-color: transparent; }
               .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="draw"] .nbd-color-palette .nbd-color-palette-inner {
                 padding: 0; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="draw"] .nbd-text-color-picker {
+              top: 25px; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="qr-code"] .main-type {
               text-align: center; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .content-items div[data-type="qr-code"] .main-input input {
@@ -4233,8 +4294,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               -webkit-transform: translateY(0);
               -ms-transform: translateY(0);
               transform: translateY(0); }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .result-loaded .type-shapes .mansory-wrap {
-            background-color: #ebebeb; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .loading-photo {
           position: relative;
           margin: auto; }
@@ -4309,8 +4368,15 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               -webkit-transform: translateY(0);
               -ms-transform: translateY(0);
               transform: translateY(0); }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .v-content, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-text .v-content, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-element .v-content {
-        height: calc(100% - 105px); }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-text .v-btn {
+        height: 40px;
+        line-height: 40px; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-text .v-content {
+        height: calc(100% - 102px); }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .v-content, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-element .v-content {
+        height: calc(100% - 92px); }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-title {
+        padding: 0; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content {
         height: calc(100% - 55px); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .design-color {
@@ -4319,44 +4385,50 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             height: calc(100% - 55px); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.layout {
           margin-bottom: 20px;
-          height: calc(100% - 55px);
-          background-color: #ebebeb; }
+          background-color: #f4f4f4; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.layout .main-scrollbar {
             margin-bottom: 0; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette {
           position: static;
           border: none;
-          padding: 0; }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .items .item {
-        padding: 10px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .items .item img {
-          margin: auto;
-          padding: 10px;
-          border: 1px solid transparent; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .items .item img:hover {
-            border-color: #26a69a; }
+          padding: 0;
+          background-color: transparent; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .items {
+        display: flex;
+        flex-wrap: wrap; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .items .item {
+          padding: 5px;
+          flex: 1 1 50%; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .items .item img {
+            margin: auto;
+            object-fit: contain; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-image-toolbar .v-content {
         height: calc(100% - 75px); }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-nav-tabs {
         display: flex;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #ebebeb; }
+        border-bottom: 1px solid #04b591;
+        min-height: 35px;
+        padding: 10px 10px 0;
+        margin-bottom: 10px; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-nav-tabs .nbd-nav-tab {
           margin-right: 5px;
           cursor: pointer;
-          padding: 0 10px;
+          padding: 5px 10px;
           margin-bottom: -1px;
           border: 1px solid transparent; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-nav-tabs .nbd-nav-tab.active {
-            border: 1px solid #ebebeb;
-            border-bottom: 1px solid #fff; }
+            border: 1px solid #04b591;
+            border-bottom: 1px solid #f4f4f4;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-nav-tabs .v-title {
           margin-bottom: 0; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-search {
         position: relative;
         margin-bottom: 15px;
-        width: calc(100% - 5px); }
+        width: 100%; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-search input {
+          min-height: 35px;
           padding: 5px 35px 5px 10px;
           width: 100%;
           -webkit-border-radius: 2px;
@@ -4378,8 +4450,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     .nbd-mode-vista .nbd-vista .v-workspace .v-layout {
       display: flex;
       justify-content: center;
-      align-items: center;
-      width: calc(100% - 260px);
+      align-items: flex-start;
+      width: calc(100% - 290px);
+      margin-left: 30px;
+      height: calc(100% - 60px);
       position: relative; }
       @media screen and (max-width: 767px) {
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout {
@@ -4395,9 +4469,34 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             z-index: 1; } }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .header-box {
         padding: 10px; }
-      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .main-box {
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more {
+        display: flex;
+        margin-bottom: 10px; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more .link-breadcrumb {
+          margin-left: auto;
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more .link-breadcrumb .link-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 3px;
+            margin-left: 5px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            width: 28px;
+            height: 28px; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more .link-breadcrumb .link-item i {
+              font-size: 18px;
+              color: #ccc; }
+            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more .link-breadcrumb .link-item.active {
+              background: #ccc; }
+              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more .link-breadcrumb .link-item.active i {
+                color: #fff; }
+      .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .main-box, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .main-box-more {
         padding: 0 10px 10px; }
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .main-box .toolbox-row {
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .main-box .toolbox-row, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .main-box-more .toolbox-row {
           margin-bottom: 10px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .footer-box {
         border-top: 1px solid #ebebeb; }
@@ -4409,14 +4508,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           width: 40px;
           height: 40px;
           line-height: 40px;
-          border: 1px solid #26a69a;
+          border: 1px solid #04b591;
           display: flex;
           justify-content: center;
           align-items: center;
           cursor: pointer;
           border-radius: 2px; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset i {
-            color: #26a69a;
+            color: #04b591;
             font-size: 18px; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset:hover, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset:active, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-assets .v-asset:focus {
             background-color: #f6f6f6; }
@@ -4483,6 +4582,16 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         opacity: 0;
         z-index: 9999;
         transform: translateX(-50%); }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item .link-back {
+          display: none; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.show-box-more .main-box {
+          display: none; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.show-box-more .main-box-more {
+          display: block; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.show-box-more .link-back {
+          display: inline-block; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.show-box-more .link-more {
+          display: none; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-item.nbd-show {
           visibility: visible;
           opacity: 1; }
@@ -4501,7 +4610,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           line-height: 1;
           border: 1px solid #e6e6e6; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-btn.btn-color i {
-          color: #26a69a;
+          color: #04b591;
           font-size: 16px;
           line-height: normal;
           margin-left: 10px; }
@@ -4555,11 +4664,11 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item i.checked {
           font-size: 14px;
           display: none;
-          color: #26a69a;
+          color: #04b591;
           font-weight: bold;
           margin-left: 10px; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item span {
-          color: #26a69a; }
+          color: #04b591; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item.active i.checked {
           display: block; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item.active, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-family .v-dropdown .v-dropdown-menu .items .item:hover {
@@ -4580,10 +4689,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item i.checked {
             font-size: 14px;
             display: none;
-            color: #26a69a;
+            color: #04b591;
             font-weight: bold; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item span {
-            color: #26a69a; }
+            color: #04b591; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .items .item.active i.checked {
             display: block; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .toolbox-font-size .tab-scroll {
@@ -4599,7 +4708,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         font-size: 14px;
         text-transform: capitalize;
         background: #fff;
-        color: #26a69a;
+        color: #04b591;
         box-shadow: none;
         border: 1px solid #ebebeb;
         padding: 5px;
@@ -4622,13 +4731,13 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           max-width: 40px;
           box-shadow: none;
           background-color: transparent;
-          color: #26a69a; }
+          color: #04b591; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size i {
           margin-left: 30px;
           font-size: 12px;
-          color: #26a69a; }
+          color: #04b591; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-btn.btn-font-size i:before {
-            color: #26a69a; }
+            color: #04b591; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .v-dropdown .v-dropdown-menu {
         width: 100%;
         background: #fff;
@@ -4647,7 +4756,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           justify-content: center;
           align-items: center; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item i {
-            color: #26a69a; }
+            color: #04b591; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-text .footer-box .items .item.item-reset {
             border-right: 1px solid #ebebeb; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-first {
@@ -4717,12 +4826,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               appearance: none;
               width: 7px;
               height: 20px;
-              background: #26a69a;
+              background: #04b591;
               cursor: pointer; }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .slide-input::-moz-range-thumb {
               width: 7px;
               height: 20px;
-              background: #26a69a;
+              background: #04b591;
               cursor: pointer; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .v-toolbox-image .toolbox-last .v-ranges .main-track .range-track {
             background-color: #aaa;
@@ -4780,11 +4889,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           width: 100%; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage {
             overflow: hidden;
+            background-color: #fafafa;
             height: 100%;
             width: 100%;
             display: block;
             text-align: center;
-            padding: 40px 20px 50px;
+            padding: 40px 50px 40px 40px;
             position: absolute;
             top: 0;
             left: 0;
@@ -4805,7 +4915,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: 100%; }
+                height: 100%;
+                background-color: #ebebeb; }
               .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap {
                 position: absolute; }
                 .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .design-zone, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .stage-grid, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .bounding-layers, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .stage-snapLines, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .stage-overlay, .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .stage-guideline {
@@ -4856,19 +4967,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                   position: relative;
                   width: 100%;
                   height: 100%; }
-                  .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage .stage-main .design-wrap .stage-snapLines .stage-snapLines-inner .h-snapline {
-                    top: -9999px;
-                    left: -20px;
-                    width: calc(100% + 40px);
-                    height: 3px !important;
-                    background-image: linear-gradient(to right, rgba(214, 96, 96, 0.95) 1px, transparent 1px);
-                    background-size: 2px 1px;
-                    background-repeat: repeat-x;
-                    display: none; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
           width: 40px;
           position: absolute;
-          top: calc(50% - 30px);
+          top: 50%;
           right: -40px;
           transform: translateY(-50%);
           height: unset;
@@ -4927,6 +5029,24 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                   opacity: 0.5; }
                 .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li span {
                   font-size: 18px; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .snapline {
+          position: absolute; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .h-snapline {
+          top: -9999px;
+          left: -20px;
+          width: calc(100% + 40px);
+          height: 3px !important;
+          background-image: linear-gradient(to right, rgba(214, 96, 96, 0.95) 1px, transparent 1px);
+          background-size: 2px 1px;
+          background-repeat: repeat-x; }
+        .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .v-snapline {
+          left: -9999px;
+          top: -20px;
+          height: calc(100% + 40px);
+          width: 3px !important;
+          background-image: linear-gradient(to bottom, rgba(214, 96, 96, 0.95) 1px, transparent 1px);
+          background-size: 1px 2px;
+          background-repeat: repeat-y; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom {
         position: absolute;
         bottom: 10px;
@@ -4991,7 +5111,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                       line-height: 1;
                       -webkit-font-smoothing: antialiased;
                       font-size: 18px;
-                      color: #26a69a; }
+                      color: #04b591; }
                   .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item.zoomer-level .zoomer-popover .zoomer-popover-item:hover {
                     background-color: #f6f6f6; }
 

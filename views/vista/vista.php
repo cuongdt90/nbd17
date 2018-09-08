@@ -43,6 +43,8 @@ if ( function_exists( 'icl_get_home_url' ) ) {
     $is_wpml = 1;
     $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
 }
+
+$fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
 ?>
 <script type="text/javascript">
     var NBDESIGNCONFIG = {

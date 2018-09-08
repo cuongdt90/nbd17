@@ -5,7 +5,7 @@
 ?>
 <div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="tab-photo" class="v-tab-content" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
     <span class="v-title">Image</span>
-    <div class="nbd-search">
+    <div class="nbd-search v-action">
         <input ng-class="(resource.personal.status || !resource.photo.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getPhoto(resource.photo.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.photo.photoSearch"/>
         <i class="nbd-icon-vista nbd-icon-vista-search" ng-click="getPhoto(resource.photo.type, 'search')"></i>
     </div>
@@ -20,7 +20,7 @@
                                  ng-if="settings['nbdesigner_enable_upload_image'] == 'yes'"
                                  data-type="image-upload"
                                  data-api="false">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-file-upload"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-file-upload"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Image upload"><?php _e('Image Upload','web-to-print-online-designer'); ?></span>
                                 </div>
@@ -30,14 +30,14 @@
                                  class="item"
                                  data-type="image-url"
                                  data-api="false">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-attachment"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-attachment"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Image url"><?php _e('Image url','web-to-print-online-designer'); ?></span>
                                 </div>
                             </div>
                             <?php if ($fbID !== ''): ?>
-                            <div ng-if="settings['nbdesigner_enable_facebook_photo'] == 'yes'" class="item" data-type="facebook" data-api="true">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-facebook-logo"></i></div>
+                            <div ng-click="onClickTab('facebook', 'photo')" ng-if="settings['nbdesigner_enable_facebook_photo'] == 'yes'" class="item" data-type="facebook" data-api="false">
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-facebook-logo"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Facebook"><?php _e('Facebook','web-to-print-online-designer'); ?></span>
                                 </div>
@@ -45,7 +45,7 @@
                             <?php endif; ?>
                             <?php if ($ingId !== ''): ?>
                             <div ng-if="settings['nbdesigner_enable_instagram_photo'] == 'yes'" class="item" data-type="instagram" data-api="false">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-instagram-logo"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-instagram-logo"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Instagram"><?php _e('Instagram','web-to-print-online-designer'); ?></span>
                                 </div>
@@ -53,7 +53,7 @@
                             <?php endif; ?>
                             <?php if ($dbID !== ''): ?>
                             <div ng-if="settings['nbdesigner_enable_dropbox_photo'] == 'yes'" class="item" data-type="dropbox" data-api="false">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-dropbox-logo"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-dropbox-logo"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Dropbox"><?php _e('Dropbox','web-to-print-online-designer'); ?></span>
                                 </div>
@@ -63,19 +63,19 @@
                                  ng-click="initWebcam()"
                                  class="item" data-type="webcam"
                                  data-api="false">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-webcam"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-webcam"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Webcam"><?php _e('Webcam','web-to-print-online-designer'); ?></span>
                                 </div>
                             </div>
                             <div ng-click="onClickTab('Pixabay', 'photo')" ng-if="settings['nbdesigner_enable_pixabay'] == 'yes'" class="item" data-type="pixabay" data-api="true">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-pixabay"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-pixabay"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Pixabay"><?php _e('Pixabay','web-to-print-online-designer'); ?></span>
                                 </div>
                             </div>
                             <div ng-click="onClickTab('Unsplash', 'photo')" ng-if="settings['nbdesigner_enable_unsplash'] == 'yes'" class="item" data-type="unsplash" data-api="true">
-                                <div class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-camera-alt"></i></div>
+                                <div data-ripple="rgba(0,0,0, 0.1)" class="item-icon"><i class="nbd-icon-vista nbd-icon-vista-camera-alt"></i></div>
                                 <div class="item-info">
                                     <span class="item-name" title="Unsplash"><?php _e('Unsplash','web-to-print-online-designer'); ?></span>
                                 </div>
@@ -220,16 +220,19 @@
                                     <div class="form-group">
                                         <label><?php _e('SVG Code','web-to-print-online-designer'); ?></label>
                                         <textarea style="max-width: 100%; margin-bottom: 10px" class="form-control hover-shadow nbdesigner_svg_code" rows="10" ng-model="resource.svgCode"  placeholder="<?php _e('Enter svg code','web-to-print-online-designer'); ?>"/></textarea>
-                                        <button ng-class="resource.svgCode !='' ? '' : 'nbd-disabled'" style="margin-left: 0;" class="nbd-button" ng-click="addSvgFromString(resource.svgCode)"><?php _e('Insert SVG','web-to-print-online-designer'); ?></button>
+                                        <button class="v-btn" ng-class="resource.svgCode !='' ? '' : 'nbd-disabled'" style="margin-left: 0;" class="nbd-button" ng-click="addSvgFromString(resource.svgCode)"><?php _e('Insert SVG','web-to-print-online-designer'); ?></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="content-item type-facebook" data-type="facebook" id="nbd-facebook-wrap">
+                            <div class="content-item type-facebook text-center" data-type="facebook" id="nbd-facebook-wrap">
                                 <?php if($fbID != ''): ?>
                                     <div id="fb-root"></div>
                                     <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false" data-scope="user_photos" onlogin="nbdOnFBLogin(null)"></div>
                                     <div class="mansory-wrap">
-                                        <div nbd-drag="img.url" extenal="true" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.facebook.data | limitTo: resource.facebook.filter.perPage * resource.facebook.filter.currentPage" repeat-end="onEndRepeat('facebook')"><img ng-src="{{img.preview}}"><span class="photo-desc">{{img.des}}</span></div>
+                                        <div nbd-drag="img.url" extenal="true" type="image" class="mansory-item" ng-click="addImageFromUrl(img.url)" ng-repeat="img in resource.facebook.data | limitTo: resource.facebook.filter.perPage * resource.facebook.filter.currentPage" repeat-end="onEndRepeat('facebook')">
+                                            <img ng-src="{{img.preview}}">
+                                            <span class="photo-desc">{{img.des}}</span>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                             </div>

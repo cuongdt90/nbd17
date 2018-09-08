@@ -1,15 +1,15 @@
 <div id="tab-design" class="v-tab-content active nbd-main-tab" ng-if="resource.templates.length > 0">
     <ul class="nbd-nav-tabs">
-        <li class="nbd-nav-tab active" data-tab="nbd-tab-design-workflow"><span class="v-title">Design</span></li>
-        <li class="nbd-nav-tab" data-tab="nbd-tab-bg-color"><span class="v-title">Background</span></li>
+        <li class="nbd-nav-tab active" data-tab="nbd-tab-design-workflow"><span class="v-title"><?php _e('Template','web-to-print-online-designer'); ?></span></li>
+        <li class="nbd-nav-tab" data-tab="nbd-tab-bg-color"><span class="v-title"><?php _e('Background','web-to-print-online-designer'); ?></span></li>
     </ul>
 
     <div class="v-content nbd-tab-contents" data-action="no">
         <div class="layout tab-scroll nbd-tab-content active" id="nbd-tab-design-workflow">
             <div class="main-scrollbar">
                 <div class="short-design" style="display: none">
-                    <button class="v-btn btn-svg-upload">Upload Svg</button>
-                    <button class="v-btn btn-add-text">Add Text</button>
+                    <button class="v-btn btn-svg-upload"><?php _e('Upload Svg','web-to-print-online-designer'); ?></button>
+                    <button class="v-btn btn-add-text"><?php _e('Add Text','web-to-print-online-designer'); ?></button>
                 </div>
                 <div class="items">
                     <div class="item" ng-repeat="temp in resource.templates" ng-click="insertTemplate(false, temp)">
@@ -25,11 +25,10 @@
                         <div class="nbd-color-palette show">
                             <div class="nbd-color-palette-inner">
                                 <div class="working-palette" ng-if="settings['nbdesigner_show_all_color'] == 'yes'" style="margin-bottom: 10px">
-                                    <h3 class="color-palette-label">Set color</h3>
+                                    <h3 class="color-palette-label"><?php _e('Set color','web-to-print-online-designer'); ?></h3>
                                     <ul class="main-color-palette tab-scroll">
                                         <li class="color-palette-add" ng-style="{'background-color': currentColor}"></li>
-                                        <li
-                                            ng-repeat="color in listAddedColor track by $index"
+                                        <li ng-repeat="color in listAddedColor track by $index"
                                             ng-click="changeBackgroundCanvas(color)"
                                             class="color-palette-item"
                                             data-color="{{color}}"
@@ -55,7 +54,7 @@
                                      ng-class="showTextColorPicker ? 'active' : ''"
                                      id="nbd-text-color-picker">
                                     <spectrum-colorpicker
-                                        ng-model="currentColor"
+                                        ng-model="bgCurrentColor"
                                         options="{
                                             preferredFormat: 'hex',
                                             color: '#fff',
@@ -67,7 +66,7 @@
                                     </spectrum-colorpicker>
                                     <div>
                                         <button class="v-btn"
-                                                ng-click="addColor();changeBackgroundCanvas(currentColor);">
+                                                ng-click="changeBackgroundCanvas(bgCurrentColor);">
                                             <?php _e('Add color','web-to-print-online-designer'); ?>
                                         </button>
                                     </div>

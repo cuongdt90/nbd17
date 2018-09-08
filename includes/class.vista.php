@@ -40,11 +40,11 @@ if(!class_exists('Nbdesigner_Vista')) {
             add_action('wp_enqueue_scripts', function() {
                 $js_libs = array(
 
-                    'vista' => array(
-                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/vista.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
+//                    'vista' => array(
+//                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/vista.js',
+//                        'version'   => '1.0.0',
+//                        'depends'  => array('jquery')
+//                    ),
                     'angular' => array(
                         'link' => NBDESIGNER_PLUGIN_URL .'assets/libs/angular-1.6.9.min.js',
                         'version'   => '1.0.0',
@@ -55,19 +55,18 @@ if(!class_exists('Nbdesigner_Vista')) {
                         'version'   => '1.0.0',
                         'depends'  => array('jquery')
                     ),
-                    'app-modern' => array(
-                        'link' => NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
-                    'app-vista' => array(
-                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/app-vista.min.js',
-                        'version'   => '1.0.0',
-                        'depends'  => array('jquery')
-                    ),
+//                    'app-modern' => array(
+//                        'link' => NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js',
+//                        'version'   => '1.0.0',
+//                        'depends'  => array('jquery')
+//                    ),
+//                    'app-vista' => array(
+//                        'link'  => NBDESIGNER_ASSETS_URL.'vista/assets/js/app-vista.min.js',
+//                        'version'   => '1.0.0',
+//                        'depends'  => array('jquery')
+//                    ),
                     'bundle-vista' => array(
                         'link' => NBDESIGNER_ASSETS_URL.'vista/assets/js/bundle-vista.min.js',
-//                        'link' => NBDESIGNER_PLUGIN_URL.'assets/js/bundle-modern.unmin.js',
                         'version'   => '1.0.0',
                         'depends'  => array('jquery', 'underscore', 'angular')
                     )
@@ -88,14 +87,16 @@ if(!class_exists('Nbdesigner_Vista')) {
                 );
                 foreach ($js_libs as $key => $js){
                     $link = $js['link'];
-                    wp_register_script($key, $link, $js['depends'], $js['version']);
+                    wp_register_script($key, $link, $js['depends'], $js['version'],false);
                 }
+                wp_register_script('vista', NBDESIGNER_ASSETS_URL.'vista/assets/js/vista.js', array('jquery'), '1.0.0', true);
+                wp_register_script('app-vista', NBDESIGNER_ASSETS_URL.'vista/assets/js/app-vista.min.js', array('jquery'), '1.0.0', true);
+
                 foreach ($css_libs as $key => $css){
                     $link = $css['link'];
                     wp_register_style($key, $link, $css['depends'], $css['version']);
                 }
                 wp_enqueue_style( 'vista');
-//                wp_enqueue_style( 'spectrum');
 
                 wp_enqueue_script('jquery-ui');
                 wp_enqueue_script('angular');

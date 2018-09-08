@@ -7,9 +7,9 @@
         <div class="body"></div>
         <div class="footer">
             <div class="nbd-list-button">
-                <button class="nbd-button">Pause</button>
-                <button class="nbd-button">Stop Webcam</button>
-                <button class="nbd-button">Capture</button>
+                <button class="nbd-button"><?php _e('Pause','web-to-print-online-designer'); ?></button>
+                <button class="nbd-button"><?php _e('Stop Webcam','web-to-print-online-designer'); ?></button>
+                <button class="nbd-button"><?php _e('Capture','web-to-print-online-designer'); ?></button>
             </div>
         </div>
     </div>
@@ -36,9 +36,9 @@
         <div class="body"></div>
         <div class="footer">
             <div class="nbd-list-button">
-                <button class="v-btn">Pause</button>
-                <button class="v-btn">Stop Webcam</button>
-                <button class="v-btn">Capture</button>
+                <button class="v-btn"><?php _e('Pause','web-to-print-online-designer'); ?></button>
+                <button class="v-btn">Stop <?php _e('Webcam','web-to-print-online-designer'); ?></button>
+                <button class="v-btn"><?php _e('Capture','web-to-print-online-designer'); ?></button>
             </div>
         </div>
     </div>

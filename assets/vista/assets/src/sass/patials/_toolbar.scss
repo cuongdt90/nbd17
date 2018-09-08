@@ -6,11 +6,12 @@
   .main-toolbar {
     display: flex;
     justify-content: space-between;
-    border: 1px solid #ebebeb;
+    //border: 1px solid #ebebeb;
     border-radius: 2px;
     position: relative;
     z-index: 9999;
-    @media screen and (max-width: 767px){
+    background-color: #f4f4f4;
+    @media screen and (max-width: 767px) {
       border-color: transparent;
       flex-wrap: wrap;
       .v-toolbar-item {
@@ -24,9 +25,9 @@
         }
       }
     }
-    @media screen and (max-width: 692px){
+    @media screen and (max-width: 692px) {
       .v-toolbar-item {
-        &.left-toolbar{
+        &.left-toolbar {
           margin: auto;
         }
         &.right-toolbar {
@@ -39,52 +40,61 @@
 .v-main-menu {
   display: flex;
   .v-menu-item {
-    padding: 5px 10px;
+    padding: 10px 25px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-
+    transition: all .3s;
     &:last-child {
       &:after {
         display: none;
       }
     }
-    &:after {
-      position: absolute;
-      content: "";
-      top: 6px;
-      right: 0;
-      height: calc(100% - 12px);
-      width: 2px;
-      background: #ebebeb;
+    //&:after {
+      //position: absolute;
+      //content: "";
+      //top: 6px;
+      //right: 0;
+      //height: calc(100% - 12px);
+      //width: 2px;
+      //background: #ebebeb;
+    //}
+    //&:before {
+    //  position: absolute;
+    //  content: "";
+    //  bottom: 0;
+    //  left: 0;
+    //  height: 2px;
+    //  width: 100%;
+    //  transition: all .3s;
+    //  background: $main-color;
+    //  transform: scale(0.5);
+    //  opacity: 0;
+    //  visibility: hidden;
+    //}
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+      //&:before {
+      //  background: $main-hover-color;
+      //}
     }
-    &:before {
-      position: absolute;
-      content: "";
-      bottom: 0;
-      left: 0;
-      height: 1px;
-      width: 100%;
-      transition: all .3s;
-      background: $main-color;
-      transform: scale(0);
-    }
-    &:hover{
-      &:before{
-        background: $main-hover-color;
+    &.active {
+      background-color: $main-color;
+      span{
+        color: #fff;
       }
-    }
-    &.active{
-      &:before {
-        height: 2px;
-      }
-    }
-    &:hover,&.active {
-      &:before {
-        transform: scale(1);
-      }
+      //&:hover {
+      //  &:before {
+      //    transform: scale(1);
+      //  }
+      //}
+      //&:before {
+      //  transform: scale(0.85);
+      //  opacity: 1;
+      //  visibility: visible;
+      //}
     }
     i {
       margin-right: 5px;

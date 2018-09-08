@@ -145,57 +145,6 @@ function checkMobileDevice(){
             });
 
         };
-        this.getApiElement = function (dataType) {
-            var result = '';
-            var src = '';
-            switch (dataType) {
-                case 'shapes':
-                    src = 'https://media-public.canva.com/MABrm9_5-j0/3/thumbnail_large.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'icons':
-                    src = 'https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'lines':
-                    src = 'https://media-public.canva.com/MABKNAgIqvQ/1/thumbnail_large.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'animal':
-                    src = 'https://media-public.canva.com/MABKNAgIqvQ/1/thumbnail_large.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'misc':
-                    src = 'https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'facebook':
-                    src = 'https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'dropbox':
-                    src = 'https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'pixabay':
-                    src = 'https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'unsplash':
-                    src = 'https://media-public.canva.com/MABhGmG8RA8/1/thumbnail.jpg';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                case 'business-card':
-                    src = 'http://demo2.cmsmart.net/web2print/wp-content/uploads/nbdesigner/designs/610bd64612/preview/frame_1.png';
-                    result = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>';
-                    break;
-                default:
-                    alert('bbbb');
-                    break;
-
-            }
-            return result;
-        };
         this.getItemInRow = function ($grid, $item) {
             var itemInRow = opts.itemInRow;
             if (typeof $grid == null || typeof $item == null) {
@@ -285,64 +234,12 @@ function checkMobileDevice(){
                         $(nextAllItem).each(function () {
                             $(this).hide();
                         });
-                        // $infoSupport.find('span').empty().text($(this).find('.item-info').text());
 
-                        // var src = 'https://media-public.canva.com/MABrm9_5-j0/3/thumbnail_large.jpg';
-                        // var item = '<div class="nbdesigner-item"><img src="' + src + '"><span class="photo-desc">xxxxxx</span></div>'
-
-                        // for (var i=0;i<100;i++) {
-                        //     $galleryItem.append(item);
-                        // }
                         $mainItems.addClass('active-expanded');
                         $resultLoaded.addClass('loaded');
                         $resultLoaded.show();
                         $galleryItem.show();
                         $contentItem.hide();
-                        //$loadingGif.show();
-
-                        // $galleryItem.imagesLoaded()
-                        //     .always( function( instance ) {
-                        //         // All images loaded
-                        //         setTimeout(function () {
-                        //             $galleryItem.show();
-                        //             $mainItems.addClass('active-expanded');
-                        //             $resultLoaded.addClass('loaded');
-                        //             $loadingGif.hide();
-                        //
-                        //             // if (isMasonry) {
-                        //             //     $galleryItem.masonry('destroy');
-                        //             // }
-                        //             $galleryItem.masonry({
-                        //                 itemSelector: '.nbdesigner-item'
-                        //             });
-                        //             $galleryItem.find('.nbdesigner-item').each(function (i) {
-                        //                 var animate = Math.floor(Math.random() * 10);
-                        //                 animate = (animate + 1) * 100;
-                        //                 $(this).addClass('slideInDown animated in-view animate' + animate);
-                        //             });
-                        //             var resultHeight = $resultLoaded.height();
-                        //             var resultOfsetTop = $resultLoaded.offset().top;
-                        //
-                        //             $tabScroll.on('scroll', function () {
-                        //                 var scrollTop = $(this).scrollTop();
-                        //                 if ((scrollTop > resultOfsetTop + 100) && (scrollTop < (resultOfsetTop+ resultHeight + 100))) {
-                        //                     $infoSupport.addClass('nbd-show');
-                        //                 }else {
-                        //                     $infoSupport.removeClass('nbd-show');
-                        //                 }
-                        //             });
-                        //         }, 1000);
-                        //     })
-                        //     .done( function( instance ) {
-                        //         // All images successfull loaded
-                        //     })
-                        //     .fail( function() {
-                        //         // All images loaded, at least one is broken
-                        //     })
-                        //     .progress( function( instance, image ) {
-                        //
-                        //     });
-
                     }else {
                         $(this).css({
                             'opacity': '1'
@@ -505,6 +402,69 @@ function checkMobileDevice(){
         });
     };
 
+    $.fn.nbRipple = function (color) {
+        return this.each(function () {
+            $(this).on('mousedown', function (e) {
+                var $self = $(this), colorWave;
+
+                if (typeof color !== 'undefined') {
+                    colorWave = color;
+                }else{
+                    colorWave = $self.data("ripple");
+                }
+                if($self.is(".btn-disabled")) {
+                    return;
+                }
+                if($self.closest("[data-ripple]")) {
+                    e.stopPropagation();
+                }
+
+                var initPos = $self.css("position"),
+                    offs = $self.offset(),
+                    x = e.pageX - offs.left,
+                    y = e.pageY - offs.top,
+                    dia = Math.min(this.offsetHeight, this.offsetWidth, 100), // start diameter
+                    $ripple = $('<div/>', {class : "nb-ripple",appendTo : $self });
+
+                if(!initPos || initPos==="static") {
+                    $self.css({position:"relative"});
+                }
+
+                $('<div/>', {
+                    class : "nb-rippleWave",
+                    css : {
+                        background: colorWave,
+                        width: dia,
+                        height: dia,
+                        left: x - (dia/2),
+                        top: y - (dia/2),
+                    },
+                    appendTo : $ripple,
+                    one : {
+                        animationend : function(){
+                            $ripple.remove();
+                        }
+                    }
+                });
+            });
+        });
+    };
+
+    $.fn.nbShowMoreTool = function () {
+        return this.each(function () {
+            var sefl = $(this);
+            var $btnMore = sefl.find('.link-more'), $btnBack = sefl.find('.link-back'), $mainBox = sefl.find('.main-box'), $boxMore = sefl.find('.main-box-more');
+            $btnMore.on('click', function () {
+                sefl.addClass('show-box-more');
+            });
+            $btnBack.on('click', function () {
+                sefl.removeClass('show-box-more');
+            });
+
+
+        });
+    };
+
     var nbdVista = {
         init : function () {
             if (checkMobileDevice()) {
@@ -583,11 +543,15 @@ function checkMobileDevice(){
             });
         });
 
-        $('.nbd-vista .v-dropdown').each(function (i) {
+        $('.nbd-vista .v-dropdown').each(function (e) {
             if ($(this).find('.nbd-color-palette').length) {
                 $(this).find('.nbd-color-palette').addClass('show');
             }
         });
+        $('[data-ripple],.nbd-vista .color-palette-item, .nbd-vista .v-btn, .nbd-vista .v-assets .v-asset, .nbd-ripple').nbRipple('rgba(0,0,0, 0.1)');
 
+        // $('.v-toolbox .v-toolbox-item').nbShowMoreTool();
     });
+
+
 })(jQuery);

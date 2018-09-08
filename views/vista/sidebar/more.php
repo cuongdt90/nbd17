@@ -1,6 +1,6 @@
 <div id="tab-element" class="v-tab-content v-more-toolbar" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
     <span class="v-title">More</span>
-    <div class="nbd-search">
+    <div class="nbd-search v-action">
         <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
         <i class="nbd-icon-vista nbd-icon-vista-search" ng-click="getMedia(resource.element.type, 'search')"></i>
     </div>
@@ -114,7 +114,7 @@
                                                     </ul>
                                                 </div>
 
-                                                <div class="nbd-text-color-picker" id="nbd-text-color-picker" ng-class="showBrushColorPicker ? 'active' : ''" style="z-index: 999;">
+                                                <div class="nbd-text-color-picker" id="nbd-text-color-picker" style="z-index: 999;">
                                                     <spectrum-colorpicker
                                                             ng-model="currentColor"
                                                             options="{

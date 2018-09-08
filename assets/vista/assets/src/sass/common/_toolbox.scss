@@ -1,8 +1,42 @@
 .v-toolbox {
+
   .header-box {
     padding: 10px;
   }
-  .main-box {
+
+  .has-box-more {
+    display: flex;
+    margin-bottom: 10px;
+    .link-breadcrumb {
+      margin-left: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .link-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 3px;
+        margin-left: 5px;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        width: 28px;
+        height: 28px;
+        i{
+          font-size: 18px;
+          color: #ccc;
+        }
+        &.active{
+          background: #ccc;
+          i{
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .main-box, .main-box-more {
     padding: 0 10px 10px;
     .toolbox-row{
       margin-bottom: 10px;
@@ -128,6 +162,26 @@
     opacity: 0;
     z-index: 9999;
     transform: translateX(-50%);
+    .link-back {
+      display: none;
+    }
+    &.show-box-more {
+
+      .main-box {
+        display: none;
+      }
+      .main-box-more {
+        display: block;
+      }
+
+      .link-back {
+        display: inline-block;
+      }
+      .link-more {
+        display: none;
+      }
+    }
+
     &.nbd-show{
       visibility: visible;
       opacity: 1;

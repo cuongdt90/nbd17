@@ -1,8 +1,10 @@
 .v-layout{
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: calc(100% - 260px);
+  align-items: flex-start;
+  width: calc(100% - 290px);
+  margin-left: 30px;
+  height: calc(100% - 60px);
   @media screen and (max-width: 767px){
     position: relative;
     width: 0;

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'nbd-vista';
-  src:  url('fonts/nbd-vista.eot?xrk0z7');
-  src:  url('fonts/nbd-vista.eot?xrk0z7#iefix') format('embedded-opentype'),
-  url('fonts/nbd-vista.ttf?xrk0z7') format('truetype'),
-  url('fonts/nbd-vista.woff?xrk0z7') format('woff'),
-  url('fonts/nbd-vista.svg?xrk0z7#nbd-vista') format('svg');
+  src:  url('fonts/nbd-vista.eot?knsot3');
+  src:  url('fonts/nbd-vista.eot?knsot3#iefix') format('embedded-opentype'),
+  url('fonts/nbd-vista.ttf?knsot3') format('truetype'),
+  url('fonts/nbd-vista.woff?knsot3') format('woff'),
+  url('fonts/nbd-vista.svg?knsot3#nbd-vista') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.nbd-icon-vista-headline:before {
+  content: "\e93b";
+}
+.nbd-icon-vista-opacity:before {
+  content: "\e939";
+}
+.nbd-icon-vista-apps:before {
+  content: "\e93a";
+}
+.nbd-icon-vista-center:before {
+  content: "\e936";
+}
+.nbd-icon-vista-top-left:before {
+  content: "\e937";
+}
 .nbd-icon-vista-fullscreen:before {
   content: "\e935";
 }
@@ -186,6 +201,12 @@
 }
 .nbd-icon-vista-zoom-out:before {
   content: "\e930";
+}
+.nbd-icon-vista-cog:before {
+  content: "\f013";
+}
+.nbd-icon-vista-gear:before {
+  content: "\f013";
 }
 .nbd-icon-vista-lock:before {
   content: "\f023";
