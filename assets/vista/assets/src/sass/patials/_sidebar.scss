@@ -23,6 +23,13 @@
   }
   .main-sidebar, .v-tab-content {
     height: 100%;
+    &.nbd-left {
+      transform: translateX(-33%);
+    }
+
+    &.nbd-right {
+      transform: translateX(33%);
+    }
   }
   .v-title {
     font-size: 14px;

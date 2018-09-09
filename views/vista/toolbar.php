@@ -2,6 +2,7 @@
     <div class="main-toolbar">
         <div class="v-toolbar-item left-toolbar">
             <ul class="v-tabs tabs-toolbar v-main-menu">
+                <div id="selectedTab"></div>
                 <?php if (wp_is_mobile()): ?>
                 <li class="v-tab v-menu-item v-tab-layer active" id="design-tab">
 <!--                    <i class="nbd-icon-vista nbd-icon-vista-proof"></i>-->
@@ -9,19 +10,15 @@
                 </li>
                 <?php endif; ?>
                 <li data-ripple="rgba(0,0,0, 0.1)" ng-if="resource.templates.length > 0" class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="tab-design" ng-click="disableDrawMode();">
-<!--                    <i class="nbd-icon-vista nbd-icon-vista-group-work"></i>-->
                     <span>Design</span>
                 </li>
                 <li data-ripple="rgba(0,0,0, 0.1)" ng-class="resource.templates.length < 1 ? 'active' : ''" class="v-tab v-menu-item" data-tab="tab-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'" ng-click="disableDrawMode();">
-<!--                    <i class="nbd-icon-vista nbd-icon-vista-text"></i>-->
                     <span>Text</span>
                 </li>
                 <li data-ripple="rgba(0,0,0, 0.1)" ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="tab-photo" ng-click="disableDrawMode();">
-<!--                    <i class="nbd-icon-vista nbd-icon-vista-image"></i>-->
                     <span>Image</span>
                 </li>
                 <li data-ripple="rgba(0,0,0, 0.1)" class="v-tab v-menu-item" data-tab="tab-element" ng-click="disableDrawMode();">
-<!--                    <i class="nbd-icon-vista nbd-icon-vista-more"></i>-->
                     <span>More</span>
                 </li>
             </ul>

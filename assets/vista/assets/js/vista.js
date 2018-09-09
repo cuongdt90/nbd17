@@ -99,10 +99,7 @@ function checkMobileDevice(){
                 }
             });
         });
-    };
-
-
-
+    }
 
     /**
      * @desc Library perfect scroll
@@ -471,6 +468,7 @@ function checkMobileDevice(){
                 this.mobile();
             }
             this.checkTerm();
+            this.animate();
         },
         mobile: function () {
             var $sideBar = $('.nbd-vista .v-sidebar');
@@ -486,7 +484,6 @@ function checkMobileDevice(){
                 }
             });
         },
-
         checkTerm : function () {
             var $termCheck = $('.type-upload .nbd-term .nbd-checkbox input');
             var $formUpload = $('.type-upload .form-upload');
@@ -507,7 +504,33 @@ function checkMobileDevice(){
                     return false;
                 }
             });
+        },
+        animate: function () {
+            // toolbar click
+            var $toolbar = $('.nbd-vista .v-toolbar .left-toolbar .tabs-toolbar'),
+                $toolbarItem = $toolbar.find('.v-tab'), $selectTab = $toolbar.find('#selectedTab');
+
+            // init
+            $selectTab.css({
+                'width': $toolbarItem.filter('.active').outerWidth()
+            });
+            $('.v-tab-contents .v-tab-content.active').prevAll().addClass('nbd-left');
+            $('.v-tab-contents .v-tab-content.active').nextAll().addClass('nbd-right');
+
+            $toolbarItem.on('click', function () {
+                $selectTab.css({
+                    'width': $(this).outerWidth(),
+                    'left': $(this).offset().left - $toolbar.offset().left
+                });
+                var tabId = $(this).data('tab'), $tabContent = $('.v-tab-contents #' + tabId);
+                $('.v-tab-contents .v-tab-content').removeClass('nbd-left nbd-right');
+                $tabContent.prevAll().addClass('nbd-left');
+                $tabContent.nextAll().addClass('nbd-right');
+            });
+
+
         }
+
     };
 
     $(document).ready(function () {
