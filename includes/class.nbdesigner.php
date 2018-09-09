@@ -753,6 +753,7 @@ class Nbdesigner_Plugin {
             ), 
             'printing_option'   =>  array(
                 'printing-general' => __('General', 'web-to-print-online-designer'),
+                'printing-catalog' => __('Catalog', 'web-to-print-online-designer'),
                 'printing-cart' => __('Cart', 'web-to-print-online-designer')
             )
         ));  
@@ -786,6 +787,7 @@ class Nbdesigner_Plugin {
             'cart-checkout-order-settings' => $appearance_options['cart-checkout-order'],
             'misc-settings' => $appearance_options['misc'],
             'printing-general'  =>  $printing_options['general'],
+            'printing-catalog'  =>  $printing_options['catalog'],
             'printing-cart'  =>  $printing_options['cart']
         ));    
         foreach($options as $key => $option){
@@ -932,7 +934,8 @@ class Nbdesigner_Plugin {
     public static function nbdesigner_plugin_row_meta( $links, $file ) {      
         if($file == NBDESIGNER_PLUGIN_BASENAME){           
             $row_meta = array(
-                'upgrade' => '<a href="https://cmsmart.net/support_ticket" target="_blank">Support</a>'
+                'upgrade' => '<a href="https://cmsmart.net/support_ticket" target="_blank">Support</a>',
+                'community' => '<a href="https://cmsmart.net/community/woocommerce-online-product-designer-plugin" target="_blank">Community</a>'
             );
             return array_merge( $links, $row_meta );
         }
@@ -2304,6 +2307,7 @@ class Nbdesigner_Plugin {
         $product_id = (isset($_POST['product_id']) &&  $_POST['product_id'] != '') ? absint($_POST['product_id']) : '';
         $variation_id = (isset($_POST['variation_id']) &&  $_POST['variation_id'] != '') ? absint($_POST['variation_id']) : 0;
         $template_id = (isset($_POST['template_id']) &&  $_POST['template_id'] != '') ? $_POST['template_id'] : '';
+        $need_templates = (isset($_POST['need_templates']) &&  $_POST['need_templates'] != '') ? true : false;
         if( $template_id != '' ){
             $path = NBDESIGNER_CUSTOMER_DIR . '/' . $template_id;
             $data['fonts'] = nbd_get_data_from_json($path . '/used_font.json');
@@ -2313,7 +2317,7 @@ class Nbdesigner_Plugin {
         }else {
             if($product_id) $product_id = get_wpml_original_id($product_id);
             if($variation_id) $variation_id = get_wpml_original_id($variation_id);            
-            $data = nbd_get_product_info( $product_id, $variation_id, '', 'new' );  
+            $data = nbd_get_product_info( $product_id, $variation_id, '', 'new', '', '', $need_templates );  
         } 
         if( isset( $_POST['attach_product_info'] ) && $_POST['attach_product_info'] == 1 ){
             if( isset( $_POST['product_type'] ) && $_POST['product_type'] == 'variable' ){

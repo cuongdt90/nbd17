@@ -80,7 +80,15 @@ if( !class_exists('Nbdesigner_Settings_Upload') ) {
                         'css'         => 'width: 65px',
                         'default'	=> '0',
                         'type' 		=> 'number'
-                    )                      
+                    ),
+                    array(
+                        'title' => __( 'Delete upload files after X days', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_long_time_retain_upload_fies',
+                        'description' 	=> __('Choose how long to retain upload files. Leave the above input blank to retain upload file indefinitely.'),
+                        'css'         => 'width: 65px',
+                        'default'	=> '',
+                        'type' 		=> 'number'
+                    )                    
                 ),
                 'images-settings' => array(    
                     array(

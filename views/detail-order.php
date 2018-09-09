@@ -75,7 +75,8 @@
                             <tr>
                                 <th><?php _e('Content', 'web-to-print-online-designer') ?></th>
                                 <th><?php _e('Color', 'web-to-print-online-designer') ?></th>
-                                <th><?php _e('Font', 'web-to-print-online-designer') ?></th>
+                                <th><?php _e('Font Size', 'web-to-print-online-designer') ?></th>
+                                <th><?php _e('Font Family', 'web-to-print-online-designer') ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,6 +95,7 @@
                                             break;
                                         }
                                     }
+                                    $fontSize = isset( $layer->ptFontSize ) ? $layer->ptFontSize . ' pt' : $layer->fontSize;
                             ?>
                             <tr>
                                 <style type='text/css'>
@@ -113,7 +115,8 @@
                                     </span>
                                     <?php endif; ?>
                                 </td>
-                                <td><a href="<?php echo $fonturl; ?>" <?php if( $is_google_font ) echo 'target="_blank"'; else echo 'download'; ?> title="<?php _e('Download', 'web-to-print-online-designer'); ?>"><?php echo $fontname; ?></a></td>
+                                <td><?php echo $fontSize; ?></td>
+                                <td><a href="<?php echo $fonturl; ?>" <?php if( $is_google_font ) echo 'target="_blank"'; else echo 'download'; ?> title="<?php _e('Download', 'web-to-print-online-designer'); ?>"><?php echo $fontname; ?> <span style="font-size: 13px;" class="dashicons dashicons-external"></span></a></td>
                             </tr>
                             <?php } endforeach; ?>
                         <?php endforeach; ?> 

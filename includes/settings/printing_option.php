@@ -15,8 +15,41 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         )                      
+                    ),
+                    array(
+                        'title' => __( 'Hide summary options', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_hide_summary_options',
+                        'description' 	=> __('Hide summary options in product detail page.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    ) ,
+                    array(
+                        'title' => __( 'jQuery selector for increase/decrease quantity button', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_selector_increase_qty_btn',
+                        'description' 	=> __('This is used to re calculate quantity discount price, example: .quantity-plus, .quantity-minus', 'web-to-print-online-designer'),
+                        'default'	=> '',
+                        'type' 		=> 'text' ,
+                        'class'         => 'regular-text',
+                        'placeholder'   => '.quantity-plus, .quantity-minus'
                     )                    
-                ),                
+                ),
+                'catalog'   => array(
+                    array(
+                        'title' => __( 'Force Select Options', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_force_select_options',
+                        'description' 	=> __('This changes the add to cart button on shop and archive pages to display select options when the product has extra product options.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    )                     
+                ),
                 'cart' => array(
                     array(
                         'title' => __( 'Turn off persistent cart', 'web-to-print-online-designer'),
@@ -33,6 +66,17 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                         'title' => __( 'Clear cart button', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_enable_clear_cart_button',
                         'description' 	=> __('Enables or disables the clear cart button.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    ),
+                    array(
+                        'title' => __( 'Hide options in cart', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_hide_options_in_cart',
+                        'description' 	=> __('Enables or disables the display of options in cart.', 'web-to-print-online-designer'),
                         'default'	=> 'no',
                         'type' 		=> 'radio',
                         'options'   => array(

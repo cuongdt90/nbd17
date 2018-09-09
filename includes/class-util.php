@@ -655,8 +655,9 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_allow_download_file_upload' => 'no',       
         'nbdesigner_create_preview_image_file_upload' => 'no',
         'nbdesigner_file_upload_preview_width' => 200,
+        'nbdesigner_long_time_retain_upload_fies' => '',
         
-        'nbdesigner_enable_download_pdf_before' => 'no',       
+        'nbdesigner_enable_download_pdf_before' => 'no',
         'nbdesigner_enable_download_pdf_after' => 'no',   
         'nbdesigner_enable_pdf_watermark' => 'yes',   
         'nbdesigner_pdf_watermark_type' => 1,
@@ -669,7 +670,11 @@ function nbdesigner_get_default_setting($key = false){
         
         'nbdesigner_turn_off_persistent_cart' => 'no',
         'nbdesigner_hide_add_cart_until_form_filled' => 'no',
-        'nbdesigner_enable_clear_cart_button' => 'no'
+        'nbdesigner_enable_clear_cart_button' => 'no',
+        'nbdesigner_force_select_options' => 'no',
+        'nbdesigner_hide_summary_options' => 'no',
+        'nbdesigner_hide_options_in_cart' => 'no',
+        'nbdesigner_selector_increase_qty_btn' => ''
     ), $frontend));
     if(!$key) return $nbd_setting;
     return $nbd_setting[$key];
@@ -1005,7 +1010,7 @@ function nbd_get_template_by_folder( $folder ){
     $data['config'] = nbd_get_data_from_json($path . '/config.json');
     return $data;
 }
-function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '' ){
+function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '', $need_templates = false ){
     $data = array();
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
     $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
@@ -1060,6 +1065,12 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
     $data['upload']['allow_type'] = preg_replace('/\s+/', '', strtolower( $data['upload']['allow_type']) );
     $data['upload']['disallow_type'] = preg_replace('/\s+/', '', strtolower( $data['upload']['disallow_type']) );
     $data['product'] = nbd_get_media_for_data_product( $data['product'] );
+    if( $need_templates ){
+        $templates = nbd_get_resource_templates( $product_id, $variation_id );
+        if( count($templates) ){
+            $data['templates'] = $templates;
+        }
+    }
     return $data;        
 }
 function nbd_get_media_for_data_product( $data_product ){

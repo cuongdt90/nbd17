@@ -5,13 +5,13 @@ if( !class_exists('NBD_Updates') ) {
         protected static $instance;
         private $_remote_url = 'https://cmsmart.net/index.php?option=com_cmsmart&controller=product_api&task=info';
         private $product_id = 1074;
-        private $tested = "4.9.3";
+        private $tested = "4.9.8";
         private $requires = "4.6";
-        private $version = "1.9.0";
+        private $version = NBDESIGNER_VERSION;
         private $product_name = "Web to Print Online Designer";
         private $slug = "web-to-print-online-designer";
         private $plugin = 'web-to-print-online-designer/nbdesigner.php';
-        private $active_installs = 1000;
+        private $active_installs = 2000;
         private $homepage = 'https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin';
         private $author = '<a href="http://netbaseteam.com/">Netbaseteam</a>';
         private $author_profile = 'https://profiles.wordpress.org/netbaseteam';
@@ -87,7 +87,8 @@ if( !class_exists('NBD_Updates') ) {
                     $last_update = $remote->sections->changelog[0]->created;
                     $res->name = $this->product_name;
                     $res->slug = $this->slug;
-                    $res->version = $this->version;
+                    //$res->version = $this->version;
+                    $res->version = $remote->sections->changelog[0]->version_number;
                     $res->tested = $this->tested;
                     $res->requires = $this->requires;
                     $res->active_installs = $this->active_installs;
@@ -141,7 +142,7 @@ if( !class_exists('NBD_Updates') ) {
             if ($remote) {
                 $remote = json_decode($remote['body']);
                 $plugin_info = get_plugin_data( WP_PLUGIN_DIR . '/' . $this->plugin );
-                if ($remote && $remote->license_validated && version_compare($plugin_info['Version'], $this->version, '<') && version_compare($this->requires, get_bloginfo('version'), '<')) {
+                if ($remote->license_validated && version_compare($plugin_info['Version'], $remote->sections->changelog[0]->version_number, '<') && version_compare($this->requires, get_bloginfo('version'), '<')) {
                     $res = new stdClass();
                     $res->slug = $this->slug;
                     $res->plugin = $this->plugin;

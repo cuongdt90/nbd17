@@ -454,7 +454,7 @@
                     <option value="<?php echo $cat->id; ?>" <?php selected( $option['global_template_cat'], $cat->id ); ?>><?php echo $cat->name; ?></option>
                     <?php endforeach; ?>
                     </select>
-                    <a target="_blank" href="https://studio.cmsmart.net/v1/template?v=1"><?php _e('View list template', 'web-to-print-online-designer'); ?></a>
+                    <a target="_blank" href="https://studio.cmsmart.net/index.php?option=com_nbmedia&view=media&cat=template"><?php _e('View list template', 'web-to-print-online-designer'); ?></a>
                 </div>
                 <div class="nbdesigner-opt-inner">
                     <div>
@@ -524,7 +524,15 @@
                         <label class="nbdesigner-option-label"><?php echo _e('Price per page/side', 'web-to-print-online-designer'); ?></label>
                         <input type="number" step="any" class="short nbdesigner-short-input wc_input_price" name="_nbdesigner_option[price_per_page]" value="<?php if(isset($option['price_per_page'])) echo $option['price_per_page']; else echo '0'; ?>"/>
                     </div>
-                </div>    
+                </div>  
+                <div class="nbdesigner-opt-inner">
+                    <input type="hidden" value="0" name="_nbdesigner_option[bulk_variation]"/>
+                    <?php $bulk_variation = isset($option['bulk_variation']) ? $option['bulk_variation'] : 0; ?>
+                    <label for="_nbd_bulk_variation" class="nbdesigner-option-label"><?php echo _e('Bulk variation', 'web-to-print-online-designer'); ?></label>
+                    <input type="checkbox" value="1" name="_nbdesigner_option[bulk_variation]" id="_nbd_bulk_variation" <?php checked( $bulk_variation ); ?> class="short"/> 
+                    <?php echo __('Enable bulk variation form - add to cart multiple variation with same design', 'web-to-print-online-designer'); ?>
+                </div>            
+                <?php //do_action('nbd_after_option_product_design', $post_id, $option); ?>
             </div>   
         </div>
         <div id="nbd-upload-design" class="nbd-options-tab" style="padding: 10px;">

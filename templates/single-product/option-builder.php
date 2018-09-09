@@ -469,6 +469,11 @@
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
 <?php
 $html_field = '';
+//maybe remove
+$options['pm_hoz'] = isset( $options['pm_hoz'] ) ? $options['pm_hoz'] : array();
+$options['pm_ver'] = isset( $options['pm_ver'] ) ? $options['pm_ver'] : array();
+$options['display_type'] = isset($options['display_type']) ? $options['display_type'] : 1;
+        
 $pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
 foreach($options["fields"] as $key => $field){
     $class = ($options['display_type'] == 2 && !in_array($key, $pm_field_indexes)) ? '' : 'nbo-hidden';
