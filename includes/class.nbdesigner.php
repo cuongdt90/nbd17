@@ -558,7 +558,17 @@ class Nbdesigner_Plugin {
         $recurrence = 'hourly';	        
         if( $timestamp2 == false && $notifications === false){
             wp_schedule_event( time(), $recurrence, 'nbdesigner_admin_notifications_event' );
-        }         
+        }
+        /* Schedule delete upload files */
+        $retain_time = nbdesigner_get_option('nbdesigner_long_time_retain_upload_fies');
+        if( absint($retain_time) > 0 ){
+            $last_check_time = get_transient('nbd_last_time_check_upload_files');
+            if( false === $last_check_time ){
+                $last_check_time = time();
+                set_transient( 'nbd_last_time_check_upload_files' , $last_check_time, DAY_IN_SECONDS );
+                $this->delete_expired_upload_files( $retain_time );
+            }
+        }
     }
     public function nbdesigner_lincense_event_action(){
         $path = NBDESIGNER_PLUGIN_DIR . 'data/license.json';   
@@ -5583,6 +5593,18 @@ class Nbdesigner_Plugin {
                     'flag'  =>  0,
                 )     
             );            
+        }
+    }
+    public function delete_expired_upload_files( $days ){
+        $retain_time = $days * 60 * 60 * 24;
+        $folders = array_diff(scandir(NBDESIGNER_UPLOAD_DIR), array('.', '..'));
+        foreach ($folders as $folder) {
+            $path = NBDESIGNER_UPLOAD_DIR.'/'.$folder;
+            if (is_dir( $path ) === true) {
+                if( (time()-filemtime($path)) > $retain_time ){
+                    Nbdesigner_IO::delete_folder( $path );
+                }
+            }
         }
     }
     public function freedom(){
