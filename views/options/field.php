@@ -280,10 +280,10 @@
         </div>
         <div class="tab-appearance nbd-field-content">
             <div class="nbd-field-info" ng-repeat="(key, data) in field.appearance">
-                <div class="nbd-field-info-1" ng-show="check_depend(field.appearance, data)">
+                <div class="nbd-field-info-1">
                     <div><label><b>{{data.title}}</b> <nbd-tip ng-if="data.description != ''" data-tip="{{data.description}}" ></nbd-tip></label></div>
                 </div> 
-                <div class="nbd-field-info-2" ng-show="check_depend(field.appearance, data)">
+                <div class="nbd-field-info-2">
                     <div ng-if="data.type == 'dropdown'">
                         <select name="options[fields][{{fieldIndex}}][appearance][{{key}}]" ng-model="data.value">
                             <option ng-repeat="op in data.options" value="{{op.key}}">{{op.text}}</option>
@@ -299,6 +299,6 @@
                 </div>
             </div>     
         </div>
-    </div>    
+    </div>
 </div>
 <div><a class="button" ng-click="add_field()"><span class="dashicons dashicons-plus"></span> <?php _e('Add Field', 'web-to-print-online-designer'); ?></a></div>

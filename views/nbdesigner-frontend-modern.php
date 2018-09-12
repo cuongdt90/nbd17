@@ -535,6 +535,7 @@
                 position: absolute;
                 display: block;
                 text-align: center;
+                box-sizing: border-box;
             }  
             .nbd-toolbar-zoom {
                 bottom: 15px;
@@ -862,6 +863,10 @@
                 }
             }
             @media screen and (max-width: 767px) {
+                .safari .nbd-workspace .main {
+                    height: -webkit-calc(100vh - 164px);
+                    height: calc(100vh - 164px);
+                } 
                 .nbd-global-color-palette {
                     margin-left: 0;
                 }

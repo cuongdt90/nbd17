@@ -66,8 +66,10 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             // Validate upon adding to cart
             add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'add_to_cart_validation' ), 1, 6 );       
             /** Force Select Options **/
-            //add_filter( 'woocommerce_product_add_to_cart_url', array( $this, 'add_to_cart_url' ), 50, 1 );
-            //add_action( 'woocommerce_product_add_to_cart_text', array( $this, 'add_to_cart_text' ), 10, 1 );
+            if( nbdesigner_get_option('nbdesigner_force_select_options') == 'yes' ){
+                add_filter( 'woocommerce_product_add_to_cart_url', array( $this, 'add_to_cart_url' ), 50, 1 );
+                //add_action( 'woocommerce_product_add_to_cart_text', array( $this, 'add_to_cart_text' ), 10, 1 );
+            }
             add_filter( 'woocommerce_cart_redirect_after_error', array( $this, 'cart_redirect_after_error' ), 50, 2 );
             
             /* Disables persistent cart **/
@@ -82,6 +84,11 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 add_action( 'woocommerce_cart_actions', array( $this, 'add_empty_cart_button' ) );
                 // check for empty-cart get param to clear the cart
                 add_action( 'init', array( $this, 'clear_cart' ) );      
+            }
+            
+            /* Bulk order */
+            if ( isset( $_POST['nbo-fields'] ) && $_POST['nbo-fields'] ) {
+                add_action( 'wp_loaded', array( $this, 'bulk_order' ), 20 );
             }
         }
         public function add_empty_cart_button(){
@@ -350,19 +357,21 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         }
         public function get_item_data( $item_data, $cart_item ){
             if ( isset( $cart_item['nbo_meta'] ) ) {
-                foreach ($cart_item['nbo_meta']['option_price']['fields'] as $field) {
-                    $price = floatval($field['price']) >= 0 ? '+' . wc_price($field['price']) : wc_price($field['price']);
+                if( nbdesigner_get_option('nbdesigner_hide_options_in_cart') != 'yes' ){
+                    foreach ($cart_item['nbo_meta']['option_price']['fields'] as $field) {
+                        $price = floatval($field['price']) >= 0 ? '+' . wc_price($field['price']) : wc_price($field['price']);
+                        $item_data[] = array(
+                            'name' => $field['name'],
+                            'display' => $field['value_name']. '&nbsp;&nbsp;' .$price,
+                            'hidden' => false                        
+                        );
+                    }
                     $item_data[] = array(
-                        'name' => $field['name'],
-                        'display' => $field['value_name']. '&nbsp;&nbsp;' .$price,
+                        'name' => __('Quantity Discount', 'web-to-print-online-designer'),
+                        'display' => '-' . wc_price($cart_item['nbo_meta']['option_price']['discount_price']),
                         'hidden' => false                        
                     );
                 }
-                $item_data[] = array(
-                    'name' => __('Quantity Discount', 'web-to-print-online-designer'),
-                    'display' => '-' . wc_price($cart_item['nbo_meta']['option_price']['discount_price']),
-                    'hidden' => false                        
-                );                
             }
             return $item_data;
         }
@@ -601,6 +610,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                             $variations[$vid] = $variation->get_price();
                         }
                     }
+                    ob_start();
                     nbdesigner_get_template('single-product/option-builder.php', array(
                         'product_id'  =>   $product_id,
                         'options'   =>  $options,
@@ -627,6 +637,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             $sql .= " WHERE id = " . esc_sql($id);
             $result = $wpdb->get_results($sql, 'ARRAY_A');
             return count($result[0]) ? $result[0] : false;
+        }
+        public function bulk_order(){
+            //todo
         }
     }
 }

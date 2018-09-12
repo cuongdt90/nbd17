@@ -2151,6 +2151,36 @@ class Nbdesigner_Plugin {
         return $file_exten;
     }
     public function nbdesigner_button() {
+        /* Quick view */
+        if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (isset($_REQUEST['action']) && $_REQUEST['action'] == 'yith_load_product_quick_view') ){
+            global $product;
+            $pid = $product->get_id();
+            $is_nbdesign = get_post_meta($pid, '_nbdesigner_enable', true); 
+            if($is_nbdesign){
+                $url = esc_url( get_permalink($pid) );
+                $type = $product->get_type();
+                $_enable_upload = get_post_meta($pid, '_nbdesigner_enable_upload', true);
+                $_enable_upload_without_design = get_post_meta($pid, '_nbdesigner_enable_upload_without_design', true);
+                $label = apply_filters('nbd_start_design_label', __('Start Design', 'web-to-print-online-designer'));
+                if( $_enable_upload ){
+                    $label = apply_filters('nbd_start_design_and_upload_label', __('Start and upload design', 'web-to-print-online-designer'));
+                }
+                if( $_enable_upload_without_design ){
+                    $label = apply_filters('nbd_upload_design_label', __('Upload Design', 'web-to-print-online-designer'));
+                }         
+                $url =  add_query_arg(array(
+                    'product_id'    =>  $pid
+                    ),  getUrlPageNBD('create'));
+                ?>
+                <p>
+                    <a class="button alt nbdesign-button" href="<?php echo $url; ?>" >
+                        <?php echo $label; ?>
+                    </a>
+                </p>
+        <?php
+            }
+            return;
+        }
         if(isset($_POST['action'])) return ''; /*Hidden button Start Design on third-party plugin as Quick view*/
         $pid = get_the_ID();   
         $pid = get_wpml_original_id($pid);       

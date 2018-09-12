@@ -40,7 +40,7 @@
             </div>
         </li>
         <li class="menu-item item-font-size" ng-click="updateScrollBar('#toolbar-font-size-dropdown')">
-            <button class="toolbar-bottom">
+            <div class="toolbar-bottom">
                 <input class="toolbar-input" type="text" ng-keyup="$event.keyCode == 13 && setTextAttribute('fontSize', stages[currentStage].states.text.ptFontSize)" name="font-size" ng-model="stages[currentStage].states.text.ptFontSize"/>
                 <i class="icon-nbd icon-nbd-dropdown-arrows"></i>
                 <div class="sub-menu" data-pos="left">
@@ -53,7 +53,7 @@
                         </ul>
                     </div>
                 </div>
-            </button>
+            </div>
         </li>     
     </ul>
     <ul class="nbd-main-menu menu-center">

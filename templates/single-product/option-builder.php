@@ -1,4 +1,14 @@
-<?php if (!defined('ABSPATH')) exit; ?>
+<?php 
+if (!defined('ABSPATH')) exit; 
+$in_quick_view = false;
+$is_wqv = false;
+if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (isset($_REQUEST['action']) && $_REQUEST['action'] == 'yith_load_product_quick_view') ){
+    $in_quick_view = true;
+    if(isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') $is_wqv = true;
+}
+$appid = "nbo-app-" . time().rand(1,100);
+?>
+<div class="nbo-wrapper <?php if($is_wqv) echo 'nbd-option-in-wqv'; ?>">
 <style>
     /* tipTip */
     #tiptip_holder {
@@ -465,45 +475,49 @@
         color: #fff;        
     }
 </style>
-<div class="nbd-option-wrapper" ng-app="nbo-app">
+<div class="nbd-option-wrapper" <?php if(!$in_quick_view) echo 'ng-app="nboApp"'; ?> id="<?php echo $appid; ?>">
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
 <?php
+
 $html_field = '';
 //maybe remove
 $options['pm_hoz'] = isset( $options['pm_hoz'] ) ? $options['pm_hoz'] : array();
 $options['pm_ver'] = isset( $options['pm_ver'] ) ? $options['pm_ver'] : array();
 $options['display_type'] = isset($options['display_type']) ? $options['display_type'] : 1;
-        
-$pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
-foreach($options["fields"] as $key => $field){
-    $class = ($options['display_type'] == 2 && !in_array($key, $pm_field_indexes)) ? '' : 'nbo-hidden';
-    $class = '';
-    $need_show = true;
-    if( $field['general']['data_type'] == 'i' ){
-        $tempalte = '/options-builder/input.php'; 
-    }else{
-        if( count($field['general']['attributes']["options"]) == 0){
-            $need_show = false;
+if($options['display_type'] != 3){
+    $pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
+    foreach($options["fields"] as $key => $field){
+        $class = ($options['display_type'] == 2 && !in_array($key, $pm_field_indexes)) ? '' : 'nbo-hidden';
+        $class = '';
+        $need_show = true;
+        if( $field['general']['data_type'] == 'i' ){
+            $tempalte = '/options-builder/input.php'; 
+        }else{
+            if( count($field['general']['attributes']["options"]) == 0){
+                $need_show = false;
+            }
+            switch($field['appearance']['display_type']){
+                case 's':
+                    $tempalte = '/options-builder/swatch.php';
+                    break;
+                case 'l':
+                    $tempalte = '/options-builder/label.php';
+                    break;            
+                case 'r':
+                    $tempalte = '/options-builder/radio.php';
+                    break;
+                default:
+                    $tempalte = '/options-builder/dropdown.php';
+                    break;            
+            }
         }
-        switch($field['appearance']['display_type']){
-            case 's':
-                $tempalte = '/options-builder/swatch.php';
-                break;
-            case 'l':
-                $tempalte = '/options-builder/label.php';
-                break;            
-            case 'r':
-                $tempalte = '/options-builder/radio.php';
-                break;
-            default:
-                $tempalte = '/options-builder/dropdown.php';
-                break;            
-        }
+        if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
     }
-    if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
-}
-if( $options['display_type'] == 2 && count($pm_field_indexes) ){
-    include('/options-builder/price-matrix.php');
+    if( $options['display_type'] == 2 && count($pm_field_indexes) ){
+        include('/options-builder/price-matrix.php');
+    }
+}else{
+    include('/options-builder/bulk-options.php');
 }
 if( $cart_item_key != ''){
     ?>
@@ -513,16 +527,19 @@ if( $cart_item_key != ''){
 ?>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields!', 'web-to-print-online-designer'); ?></p>
+        <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' ): ?>
         <div ng-if="valid_form">
-            <p><b><?php _e('Options: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></span></p>
+            <p><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
             <table>
                 <tbody>
                     <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td>{{field.price}}</td></tr>
                 </tbody>
             </table>
+            <p><b><?php _e('Options price: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></span></p>
             <p><b><?php _e('Quantity Discount: ', 'web-to-print-online-designer'); ?></b> {{discount_by_qty}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></p>
             <p><b><?php _e('Final price: ', 'web-to-print-online-designer'); ?></b> {{final_price}} / <?php _e('1 product', 'web-to-print-online-designer'); ?></p>
         </div>
+        <?php endif; ?>
     </div>
 </div>
 <script type="text/javascript">
@@ -701,30 +718,35 @@ if( $cart_item_key != ''){
                 }
             });
         }
-    })(jQuery);  
+    })(jQuery); 
+    var in_quick_view = <?php echo $in_quick_view ? 1 : 0; ?>;
+    var appReady = false;
     jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
-        var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
-        scope.check_valid();
-        scope.update_app();
+        startApp();
     });
     jQuery('.variations_form').on('wc_variation_form', function(){
-        var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
-        scope.check_valid();
-        scope.update_app();     
+        startApp();
     });
     jQuery(document).ready(function(){
         jQuery('input[name="quantity"]').on('input change change.nbo', function(){
-            var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
-            scope.check_valid();
-            scope.update_app();            
+            startApp();
         });
     });
+    function startApp(){
+        if( appReady ){
+            var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
+            scope.check_valid();
+            scope.update_app(); 
+        }
+    };
+    var option_selector = "<?php echo nbdesigner_get_option('nbdesigner_selector_increase_qty_btn'); ?>";
     var quantity_selector = '.quantity:not(.buttons_added) .minus, .quantity:not(.buttons_added) .plus, .quantity-plus, .quantity-minus';
-    jQuery(document).off('click.nbo', quantity_selector)
-            .on('click.nbo', quantity_selector, function(){
+    var qty_selector = option_selector != '' ? quantity_selector + ', ' + option_selector : quantity_selector;
+    jQuery(document).off('click.nbo', qty_selector)
+            .on('click.nbo', qty_selector, function(){
                 jQuery('input[name="quantity"]').trigger( 'change.nbo' );
             });
-    var nboApp = angular.module('nbo-app', []);
+    var nboApp = angular.module('nboApp', []);
     nboApp.controller('optionCtrl', ['$scope', '$timeout', function($scope, $timeout){
         $scope.product_id = <?php echo $product_id; ?>;
         $scope.options = <?php echo json_encode($options); ?>;
@@ -928,6 +950,7 @@ if( $cart_item_key != ''){
             return $scope.nbd_fields[field_id].enable;
         };
         $scope.init = function(){
+            appReady = true;
             $scope.nbd_fields = {};
             $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );
             $scope.total_price = 0;
@@ -1330,4 +1353,11 @@ if( $cart_item_key != ''){
             }
         };
     });
+    if( in_quick_view ){
+        var appEl = document.getElementById('<?php echo $appid; ?>');
+        angular.element(function() {
+            angular.bootstrap(appEl, ['nboApp']);
+        });
+    }
 </script>
+</div>

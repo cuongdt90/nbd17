@@ -274,6 +274,16 @@ jQuery(document).ready(function () {
         }else{
             jQuery('#triggerDesign').addClass('nbdesigner_disable');
         }
+    });
+    jQuery('a.quick-view-button').on('click', function(){
+        var t = setInterval(function(){
+            if( jQuery('.nbd-option-in-wqv').length > 0 ){
+                jQuery(".nbd-option-in-wqv").find("script").each(function(i) {
+                    eval(jQuery(this).text());
+                });                    
+                clearInterval(t);
+            }
+        }, 100);
     });   
 });
 var share_image_url = '';

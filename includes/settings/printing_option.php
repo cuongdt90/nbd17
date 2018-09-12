@@ -26,13 +26,13 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         )                      
-                    ) ,
+                    ),
                     array(
                         'title' => __( 'jQuery selector for increase/decrease quantity button', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_selector_increase_qty_btn',
                         'description' 	=> __('This is used to re calculate quantity discount price, example: .quantity-plus, .quantity-minus', 'web-to-print-online-designer'),
                         'default'	=> '',
-                        'type' 		=> 'text' ,
+                        'type' 		=> 'text',
                         'class'         => 'regular-text',
                         'placeholder'   => '.quantity-plus, .quantity-minus'
                     )                    

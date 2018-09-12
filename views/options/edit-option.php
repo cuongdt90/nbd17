@@ -92,14 +92,16 @@
                             <div class="inside">
                                 <div class="nbd-fields-picker">
                                     <a class="nbd-field-btn button-primary"><?php _e('Quantity', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('Color', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('Size', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('DPI', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('Area design shape', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('Time delivery', 'web-to-print-online-designer'); ?></a>
-                                    <a class="nbd-field-btn button-primary"><?php _e('Other', 'web-to-print-online-designer'); ?></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?> <span style="color: red;">*</span></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Color', 'web-to-print-online-designer'); ?> <span style="color: red;">*</span></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Size', 'web-to-print-online-designer'); ?> <span style="color: red;">*</span></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('DPI', 'web-to-print-online-designer'); ?> <span style="color: red;">*</span></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Area design shape', 'web-to-print-online-designer'); ?> <span style="color: red;">*</span></a>
+                                    <a class="nbd-field-btn button-primary"><?php _e('Orientation', 'web-to-print-online-designer'); ?> <span style="color: red;">*</span></a>
+<!--                                    <a class="nbd-field-btn button-primary"><?php _e('Time delivery', 'web-to-print-online-designer'); ?></a>-->
+                                    <a class="nbd-field-btn button-primary"><?php _e('Default field', 'web-to-print-online-designer'); ?></a>
                                 </div>
+                                <p><span style="color: red;">*</span> <?php _e('Online design fields which effect custom design configuaration.', 'web-to-print-online-designer'); ?></p>
                             </div>
                         </div>
                         <div class="postbox">
