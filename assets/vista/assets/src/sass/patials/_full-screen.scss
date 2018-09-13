@@ -1,4 +1,4 @@
-&.fullScreenMode {
+.fullScreenMode {
   .design-zone {
     pointer-events: none;
   }
@@ -9,7 +9,7 @@
     padding: 0;
   }
   .nbd-stages {
-    width: 100%;
+    width: 100vw;
     background: #000;
     .ps__scrollbar-x-rail, .ps__scrollbar-y-rail {
       display: none;
@@ -17,6 +17,10 @@
   }
   .fullscreen-stage-nav {
     display: inline-block;
+  }
+
+  .nbd-mode-vista .nbd-stages .stages-inner .stage {
+    background-color: #000;
   }
 }
 

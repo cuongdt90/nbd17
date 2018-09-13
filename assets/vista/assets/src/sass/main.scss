@@ -1,58 +1,57 @@
 @import "patials/icons";
 @import "patials/color-variables";
+.nbd-designer #primary {
+  overflow: hidden;
+}
 .nbd-mode-vista {
   &.nbd-onloading {
     pointer-events: none;
   }
-
-  @import "patials/full-screen";
-
   // component
   @import "component/button";
   .nbd-vista {
     height: 580px;
-    margin-bottom: 10px;
     position: relative;
     z-index: 1;
-
-    // Normalize css
-    @import "patials/reset";
-
-    // Library
-    @import "library/perfect-scrollbar";
-    @import "library/animate/index";
-    @import "library/spectrum";
-    @import "library/jquery-ui.min";
-
-    // patials
-    @import "patials/global";
-    @import "patials/toolbar";
-    @import "patials/scrollbar";
-    @import "patials/popup";
-    @import "patials/context-menu";
-    @import "patials/warning";
-    @import "patials/toollock";
-    @import "patials/toasts";
-    @import "patials/loading";
-    @import "patials/spectrum";
-    @import "patials/loading-contain";
-    @import "patials/toolbar-zoom";
-
-    // component
-    @import "component/button";
-    @import "component/dropdown";
-    @import "component/checkbox";
-    @import "component/ranges";
-    @import "component/nbd-tab";
-    @import "component/color-palette";
-    @import "component/ripple";
-    .v-workspace {
-      height: 500px;
-      display: flex;
-      @import "patials/sidebar";
-      @import "patials/layout";
-    }
   }
-}
 
+  // Normalize css
+  @import "patials/reset";
+
+  // Library
+  @import "library/perfect-scrollbar";
+  @import "library/animate/index";
+  @import "library/spectrum";
+  @import "library/jquery-ui.min";
+
+  // patials
+  @import "patials/global";
+  @import "patials/toolbar";
+  @import "patials/scrollbar";
+  @import "patials/popup";
+  @import "patials/context-menu";
+  @import "patials/warning";
+  @import "patials/toollock";
+  @import "patials/toasts";
+  @import "patials/loading";
+  @import "patials/spectrum";
+  @import "patials/loading-contain";
+  @import "patials/toolbar-zoom";
+
+  // component
+  @import "component/button";
+  @import "component/dropdown";
+  @import "component/checkbox";
+  @import "component/ranges";
+  @import "component/nbd-tab";
+  @import "component/color-palette";
+  @import "component/ripple";
+  .v-workspace {
+    height: 500px;
+    display: flex;
+  }
+  @import "patials/sidebar";
+  @import "patials/layout";
+}
+@import "patials/full-screen";
 @import "patials/responsive";

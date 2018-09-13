@@ -3,9 +3,9 @@
         <div class="header-box has-box-more" style="margin-bottom: 20px">
             <span><?php _e('Image edit','web-to-print-online-designer'); ?></span>
             <ul class="link-breadcrumb">
-                <li class="link-item nbd-nav-tab nbd-ripple active" data-tab="tab-main-box"><i class="nbd-icon-vista nbd-icon-vista-cog"></i></li>
-                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-position"><i class="nbd-icon-vista nbd-icon-vista-apps"></i></li>
-                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-opacity"><i class="nbd-icon-vista nbd-icon-vista-opacity"></i></li>
+                <li class="link-item nbd-nav-tab nbd-ripple active" data-tab="tab-main-box" title="<?php _e('Setting','web-to-print-online-designer'); ?>"><i class="nbd-icon-vista nbd-icon-vista-cog"></i></li>
+                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-position" title="<?php _e('Position','web-to-print-online-designer'); ?>"><i class="nbd-icon-vista nbd-icon-vista-apps"></i></li>
+                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-opacity" title="<?php _e('Opacity','web-to-print-online-designer'); ?>"><i class="nbd-icon-vista nbd-icon-vista-opacity"></i></li>
             </ul>
         </div>
         <div class="nbd-tab-contents">
@@ -13,11 +13,11 @@
                 <div class="toolbox-row toolbox-first">
                     <div class="toolbox-general">
                         <ul class="v-assets items">
-                            <li class="item" title="Rotate" ng-click="rotateLayer('90cw')">
+                            <li class="item" title="<?php _e('Rotate','web-to-print-online-designer'); ?>" ng-click="rotateLayer('90cw')">
                                 <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-rotate-right"></i></div>
                                 <span class="v-asset-title"><?php _e('rotate','web-to-print-online-designer'); ?></span>
                             </li>
-                            <li class="item" ng-click="resetLayer()" title="Reset" ng-class="stages[currentStage].states.hasReset ? '' : 'nbd-disabled'">
+                            <li class="item" ng-click="resetLayer()" title="<?php _e('Reset','web-to-print-online-designer'); ?>" ng-class="stages[currentStage].states.hasReset ? '' : 'nbd-disabled'">
                                 <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-refresh"></i></div>
                                 <span class="v-asset-title"><?php _e('reset','web-to-print-online-designer'); ?></span>
                             </li>
@@ -27,13 +27,13 @@
                                         ng-click="setLayerAttribute('elementUpload', !stages[currentStage].states.elementUpload)"
                                         class="item"
                                         ng-show="stages[currentStage].states.isImage && isTemplateMode"
-                                        title="Replace image">
+                                        title="<?php _e('Replace image','web-to-print-online-designer'); ?>">
                                     <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-replace-image"></i></div>
                                     <span class="v-asset-title"><?php _e('replace','web-to-print-online-designer'); ?></span>
                                 </li>
                             <?php endif; ?>
-                            <li class="item" title="Remove" ng-click="deleteLayers()">
-                                <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-clear"></i></div>
+                            <li class="item" title="<?php _e('Remove','web-to-print-online-designer'); ?>" ng-click="deleteLayers()">
+                                <div class="v-asset"><i class="nbd-icon-vista nbd-icon-vista-delete"></i></div>
                                 <span class="v-asset-title"><?php _e('remove','web-to-print-online-designer'); ?></span>
                             </li>
                         </ul>
@@ -54,28 +54,28 @@
                                 ng-class="!stages[currentStage].states.lockMovementX ? '' : 'active'"
                                 ng-click="setLayerAttribute('lockMovementX', !stages[currentStage].states.lockMovementX)"
                                 ng-show="stages[currentStage].states.isLayer && isTemplateMode"
-                                title="Lock horizontal movement">
+                                title="<?php _e('Lock horizontal movement','web-to-print-online-designer'); ?>">
                                 <i class="nbd-icon-vista nbd-icon-vista-arrows-h"></i>
                             </li>
                             <li class="item v-asset item-lock-vertical-movement"
                                 ng-class="!stages[currentStage].states.lockMovementY ? '' : 'active'"
                                 ng-click="setLayerAttribute('lockMovementY', !stages[currentStage].states.lockMovementY)"
                                 ng-show="stages[currentStage].states.isLayer && isTemplateMode"
-                                title="Lock vertical movement">
+                                title="<?php _e('Lock vertical movement','web-to-print-online-designer'); ?>">
                                 <i class="nbd-icon-vista nbd-icon-vista-arrows-v"></i>
                             </li>
                             <li class="item v-asset item-lock-horizontal-scaling"
                                 ng-class="!stages[currentStage].states.lockScalingX ? '' : 'active'"
                                 ng-click="setLayerAttribute('lockScalingX', !stages[currentStage].states.lockScalingX)"
                                 ng-show="stages[currentStage].states.isLayer && isTemplateMode"
-                                title="Lock horizontal scaling">
+                                title="<?php _e('Lock horizontal scaling','web-to-print-online-designer'); ?>">
                                 <i class="nbd-icon-vista nbd-icon-vista-expand horizontal horizontal-x"><sub>x</sub></i>
                             </li>
                             <li class="item v-asset item-lock-vertical-scaling"
                                 ng-class="!stages[currentStage].states.lockScalingY ? '' : 'active'"
                                 ng-click="setLayerAttribute('lockScalingY', !stages[currentStage].states.lockScalingY)"
                                 ng-show="stages[currentStage].states.isLayer && isTemplateMode"
-                                title="Lock vertical scaling">
+                                title="<?php _e('Lock vertical scaling','web-to-print-online-designer'); ?>">
                                 <i class="nbd-icon-vista nbd-icon-vista-expand horizontal horizontal-y"><sub>y</sub></i>
                             </li>
                         </ul>
@@ -84,14 +84,14 @@
 
                 <div class="toolbox-row toolbox-last toolbox-zoom">
                     <div class="v-assets">
-                        <div class="v-asset" title="Zoom out" ng-click="scaleLayer('-')"><i class="nbd-icon-vista nbd-icon-vista-zoom-out"></i></div>
+                        <div class="v-asset" title="<?php _e('Zoom out','web-to-print-online-designer'); ?>" ng-click="scaleLayer('-')"><i class="nbd-icon-vista nbd-icon-vista-zoom-out"></i></div>
                         <div class="v-ranges" style="display: none">
                             <div class="main-track">
                                 <input class="slide-input" type="range" step="1" min="0" max="100">
                                 <span class="range-track"></span>
                             </div>
                         </div>
-                        <div class="v-asset" title="Zoom in" ng-click="scaleLayer('+')"><i class="nbd-icon-vista nbd-icon-vista-zoom-in"></i></div>
+                        <div class="v-asset" title="<?php _e('Zoom in','web-to-print-online-designer'); ?>" ng-click="scaleLayer('+')"><i class="nbd-icon-vista nbd-icon-vista-zoom-in"></i></div>
                     </div>
                 </div>
             </div>
@@ -100,26 +100,26 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('vertical')"
-                            title="Position center horizontal">
+                            title="<?php _e('Position center horizontal','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-vertical-align-center"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('top-left')"
-                            title="Position top right">
+                            title="<?php _e('Position top right','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-90"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('top-center')"
-                            title="Position top center">
+                            title="<?php _e('Position top center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-45"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('top-right')"
-                            title="Position top left">
+                            title="<?php _e('Position top left','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left"></i>
                         </li>
                         <li class="item v-asset item-align-left" ng-click="setStackPosition('bring-front')"
-                            title="Bring to front">
+                            title="<?php _e('Bring to front','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-bring-to-front"></i>
                         </li>
                     </ul>
@@ -128,26 +128,26 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('horizontal')"
-                            title="Position center vertical">
+                            title="<?php _e('Position center vertical','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-vertical-align-center rotate90"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('middle-left')"
-                            title="Position middle right">
+                            title="<?php _e('Position middle right','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-135"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('center')"
-                            title="Position middle center">
+                            title="<?php _e('Position middle center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-center"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('middle-right')"
-                            title="Position middle left">
+                            title="<?php _e('Position middle left','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate45"></i>
                         </li>
                         <li class="item v-asset item-align-left" ng-click="setStackPosition('bring-forward')"
-                            title="Bring forward">
+                            title="<?php _e('Bring forward','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-bring-forward"></i>
                         </li>
                     </ul>
@@ -159,21 +159,21 @@
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('bottom-left')"
-                            title="Position bottom left">
+                            title="<?php _e('Position bottom left','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-180"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('bottom-center')"
-                            title="Position bottom center">
+                            title="<?php _e('Position bottom center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate135"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('bottom-right')"
-                            title="Position bottom right">
+                            title="<?php _e('Position bottom right','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate90"></i>
                         </li>
                         <li class="item v-asset item-align-left" ng-click="setStackPosition('send-backward')"
-                            title="Sent to backward">
+                            title="<?php _e('Sent to backward','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-sent-to-backward"></i>
                         </li>
                     </ul>
@@ -195,7 +195,7 @@
             </div>
         </div>
         <div class="footer-box">
-            <div class="main-footer" title="Done" ng-click="onClickDone()">
+            <div class="main-footer" title="<?php _e('Done','web-to-print-online-designer'); ?>" ng-click="onClickDone()">
                 <i class="nbd-icon-vista nbd-icon-vista-done"></i>
             </div>
         </div>

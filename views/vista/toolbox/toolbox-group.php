@@ -3,9 +3,9 @@
         <div class="header-box has-box-more">
             <span><?php _e('Group','web-to-print-online-designer'); ?></span>
             <ul class="link-breadcrumb">
-                <li class="link-item nbd-nav-tab nbd-ripple active" data-tab="tab-main-box"><i class="nbd-icon-vista nbd-icon-vista-cog"></i></li>
-                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-position"><i class="nbd-icon-vista nbd-icon-vista-apps"></i></li>
-                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-opacity"><i class="nbd-icon-vista nbd-icon-vista-opacity"></i></li>
+                <li class="link-item nbd-nav-tab nbd-ripple active" data-tab="tab-main-box" title="<?php _e('Setting','web-to-print-online-designer'); ?>"><i class="nbd-icon-vista nbd-icon-vista-cog"></i></li>
+                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-position" title="<?php _e('Position','web-to-print-online-designer'); ?>"><i class="nbd-icon-vista nbd-icon-vista-apps"></i></li>
+                <li class="link-item nbd-nav-tab nbd-ripple" data-tab="tab-box-opacity" title="<?php _e('Opacity','web-to-print-online-designer'); ?>"><i class="nbd-icon-vista nbd-icon-vista-opacity"></i></li>
             </ul>
         </div>
         <div class="nbd-tab-contents">
@@ -15,27 +15,27 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-vertical-center"
                             ng-click="alignLayer('vertical')"
-                            title="Align Vertical Center">
+                            title="<?php _e('Align Vertical Center','web-to-print-online-designer'); ?>">
                             <i class="rotate90 nbd-icon-vista nbd-icon-vista-vertical-align-center"></i>
                         </li>
                         <li class="item v-asset item-align-horizontal-center"
                             ng-click="alignLayer('horizontal')"
-                            title="Align Horizontal Center">
+                            title="<?php _e('Align Horizontal Center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-vertical-align-center"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="alignLayer('left')"
-                            title="Align Left">
+                            title="<?php _e('Align Left','web-to-print-online-designer'); ?>">
                             <i class="rotate-90 nbd-icon-vista nbd-icon-vista-vertical-align-top"></i>
                         </li>
                         <li class="item v-asset item-align-right"
                             ng-click="alignLayer('right')"
-                            title="Align Right">
+                            title="<?php _e('Align Right','web-to-print-online-designer'); ?>">
                             <i class="rotate90 nbd-icon-vista nbd-icon-vista-vertical-align-top"></i>
                         </li>
                         <li class="item v-asset item-align-top"
                             ng-click="alignLayer('top')"
-                            title="Align Top">
+                            title="<?php _e('Align Top','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-vertical-align-top"></i>
                         </li>
                     </ul>
@@ -45,17 +45,17 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-bottom"
                             ng-click="alignLayer('bottom')"
-                            title="Align Bottom">
+                            title="<?php _e('Align Bottom','web-to-print-online-designer'); ?>">
                             <i class="rotate180 nbd-icon-vista nbd-icon-vista-vertical-align-top"></i>
                         </li>
                         <li class="item v-asset item-distribute-horizontal"
                             ng-click="alignLayer('dis-horizontal')"
-                            title="Distribute Horizontal">
+                            title="<?php _e('Distribute Horizontal','web-to-print-online-designer'); ?>">
                             <i class="rotate180 nbd-icon-vista nbd-icon-vista-dis-horizontal"></i>
                         </li>
                         <li class="item v-asset item-distribute-vertical"
                             ng-click="alignLayer('dis-vertical')"
-                            title="Distribute-vertical">
+                            title="<?php _e('Distribute-vertical','web-to-print-online-designer'); ?>">
                             <i class="rotate180 nbd-icon-vista nbd-icon-vista-dis-vertical"></i>
                         </li>
                         <li class="item v-asset" style="visibility: hidden"></li>
@@ -67,8 +67,8 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-delete"
                             ng-click="deleteLayers()"
-                            title="Delete all layer">
-                            <i class="nbd-icon-vista nbd-icon-vista-clear"></i>
+                            title="<?php _e('Delete all layer','web-to-print-online-designer'); ?>">
+                            <i class="nbd-icon-vista nbd-icon-vista-delete"></i>
                         </li>
                     </ul>
                 </div>
@@ -78,26 +78,26 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('vertical')"
-                            title="Position center horizontal">
+                            title="<?php _e('Position center horizontal','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-vertical-align-center"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('top-left')"
-                            title="Position top right">
+                            title="<?php _e('Position top right','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-90"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('top-center')"
-                            title="Position top center">
+                            title="<?php _e('Position top center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-45"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('top-right')"
-                            title="Position top left">
+                            title="<?php _e('Position top left','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left"></i>
                         </li>
                         <li class="item v-asset item-align-left" ng-click="setStackPosition('bring-front')"
-                            title="Bring to front">
+                            title="<?php _e('Bring to front','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-bring-to-front"></i>
                         </li>
                     </ul>
@@ -106,26 +106,26 @@
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('horizontal')"
-                            title="Position center vertical">
+                            title="<?php _e('Position center vertical','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-vertical-align-center rotate90"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('middle-left')"
-                            title="Position middle right">
+                            title="<?php _e('Position middle right','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-135"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('center')"
-                            title="Position middle center">
+                            title="<?php _e('Position middle center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-center"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('middle-right')"
-                            title="Position middle left">
+                            title="<?php _e('Position middle left','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate45"></i>
                         </li>
                         <li class="item v-asset item-align-left" ng-click="setStackPosition('bring-forward')"
-                            title="Bring forward">
+                            title="<?php _e('Bring forward','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-bring-forward"></i>
                         </li>
                     </ul>
@@ -137,21 +137,21 @@
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('bottom-left')"
-                            title="Position bottom left">
+                            title="<?php _e('Position bottom left','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate-180"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('bottom-center')"
-                            title="Position bottom center">
+                            title="<?php _e('Position bottom center','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate135"></i>
                         </li>
                         <li class="item v-asset item-align-left"
                             ng-click="translateLayer('bottom-right')"
-                            title="Position bottom right">
+                            title="<?php _e('Position bottom right','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate90"></i>
                         </li>
                         <li class="item v-asset item-align-left" ng-click="setStackPosition('send-backward')"
-                            title="Sent to backward">
+                            title="<?php _e('Sent to backward','web-to-print-online-designer'); ?>">
                             <i class="nbd-icon-vista nbd-icon-vista-sent-to-backward"></i>
                         </li>
                     </ul>
@@ -173,7 +173,7 @@
             </div>
         </div>
         <div class="footer-box">
-            <div class="main-footer" title="Done" ng-click="onClickDone()">
+            <div class="main-footer" title="<?php _e('Done','web-to-print-online-designer'); ?>" ng-click="onClickDone()">
                 <i class="nbd-icon-vista nbd-icon-vista-done"></i>
             </div>
         </div>

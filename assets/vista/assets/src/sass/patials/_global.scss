@@ -6,6 +6,10 @@
   cursor: pointer;
 }
 
+a, span, div, p {
+  font-size: 14px;
+}
+
 a{
   color: $text-color;
 }
@@ -15,7 +19,10 @@ img{
 strong{
   font-weight: bold;
 }
-
+input, input:focus, input:active, input:hover {
+  border-color: transparent !important;
+  outline: none !important;
+}
 input[type=email], input[type=password], input[type=search], input[type=text], input[type=url], textarea {
   box-shadow: none;
   border-radius: 2px;

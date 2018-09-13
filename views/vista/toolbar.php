@@ -3,23 +3,20 @@
         <div class="v-toolbar-item left-toolbar">
             <ul class="v-tabs tabs-toolbar v-main-menu">
                 <div id="selectedTab" style="display: none"></div>
-                <?php if (wp_is_mobile()): ?>
-                <li class="v-tab v-menu-item v-tab-layer active" id="design-tab">
-<!--                    <i class="nbd-icon-vista nbd-icon-vista-proof"></i>-->
-                    <span>Layer</span>
+                <li class="v-tab v-menu-item v-tab-layer" id="design-tab">
+                    <span><?php _e('Layer','web-to-print-online-designer'); ?></span>
                 </li>
-                <?php endif; ?>
-                <li ng-if="resource.templates.length > 0" class="v-tab v-menu-item <?php echo (wp_is_mobile()) ? '' : 'active';?>" data-tab="tab-design" ng-click="disableDrawMode();">
-                    <span>Design</span>
+                <li class="v-tab v-menu-item active" data-tab="tab-design" ng-click="disableDrawMode();">
+                    <span><?php _e('Design','web-to-print-online-designer'); ?></span>
                 </li>
-                <li ng-class="resource.templates.length < 1 ? 'active' : ''" class="v-tab v-menu-item" data-tab="tab-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'" ng-click="disableDrawMode();">
-                    <span>Text</span>
+                <li class="v-tab v-menu-item" data-tab="tab-text" ng-if="settings['nbdesigner_enable_text'] == 'yes'" ng-click="disableDrawMode();">
+                    <span><?php _e('Text','web-to-print-online-designer'); ?></span>
                 </li>
                 <li ng-if="settings['nbdesigner_enable_image'] == 'yes'" class="v-tab v-menu-item" data-tab="tab-photo" ng-click="disableDrawMode();">
-                    <span>Image</span>
+                    <span><?php _e('Image','web-to-print-online-designer'); ?></span>
                 </li>
                 <li class="v-tab v-menu-item" data-tab="tab-element" ng-click="disableDrawMode();">
-                    <span>More</span>
+                    <span><?php _e('More','web-to-print-online-designer'); ?></span>
                 </li>
             </ul>
         </div>

@@ -1,4 +1,5 @@
-<div class="v-layout nbd-layout <?php echo (wp_is_mobile()) ? 'active' : ''?>">
+<!--<div class="v-layout nbd-layout --><?php //echo (wp_is_mobile()) ? 'active' : ''?><!--">-->
+<div class="v-layout nbd-layout">
     <?php include 'stages.php';?>
     <?php include 'toolbar-zoom.php';?>
     <div class="v-toolbox" ng-show="stages[currentStage].states.isActiveLayer">
