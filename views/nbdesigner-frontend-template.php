@@ -110,9 +110,11 @@
                 $icl_home_url = untrailingslashit(icl_get_home_url());
                 $is_wpml = 1;
                 $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
-            }            
+            }         
+            $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference );
+            if( isset($product_data['option']['use_all_color']) ) $enableColor = $product_data['option']['use_all_color'] == 1 ? 'yes' : 'no';
         ?>
-        <script type="text/javascript">           
+        <script type="text/javascript">
             var NBDESIGNCONFIG = {
                 lang_code   :   "<?php echo $lang_code; ?>",
                 lang_rtl    :   "<?php if(is_rtl()){ echo 'rtl'; } else {  echo 'ltr';  } ?>",
@@ -151,7 +153,7 @@
 		enable_upload_multiple	:   "<?php echo $enable_upload_multiple; ?>",   
                 login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",  
                 list_file_upload    :   <?php echo json_encode($list_file_upload); ?>,
-                product_data  :   <?php echo json_encode(nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference )); ?>,
+                product_data  :   <?php echo json_encode($product_data); ?>,
                 subsets: <?php echo json_encode(nbd_font_subsets()); ?>
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
@@ -165,6 +167,17 @@
                 NBDESIGNCONFIG['<?php echo $key; ?>'] = "<?php echo $val; ?>";    
                 <?php endif; ?>    
             <?php endforeach; ?>
+            <?php if( isset($product_data['option']['list_color']) ): ?>
+            var  colorPalette = [], row = [], __colorPalette = [], color = '';
+                <?php foreach($product_data['option']['list_color'] as $cindex => $color): ?>
+                    color = "<?php echo $color['code']; ?>";
+                    row.push(color);
+                    <?php if( $cindex % 10 == 9 ): ?>
+                        colorPalette.push(row);
+                        row = [];                    
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
             var _colors = NBDESIGNCONFIG['nbdesigner_hex_names'].split(','),
             colorPalette = [], row = [];
             for(var i=0; i < _colors.length; ++i) {
@@ -175,6 +188,7 @@
                     row = [];
                 }               
             }
+            <?php endif; ?>
             row.push(NBDESIGNCONFIG['nbdesigner_default_color']);
             colorPalette.push(row);                                  
             <?php if($ui_mode == 1): ?>

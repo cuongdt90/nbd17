@@ -151,13 +151,18 @@
     <div id="text-decoration1" class="content">
         <div class="nb-col-2" ng-show="settings['nbdesigner_text_line_height'] == 1">
             <p class="label-config">{{(langs['LINE_HEIGHT']) ? langs['LINE_HEIGHT'] : "Line height"}}</p>
-            <input type="text" ng-model="lineHeight" ng-change="setLineHeight()" class="input-config shadow hover-shadow" 
+            <input type="text" ng-model="editable.lineHeight" ng-change="setLineHeight()" class="input-config shadow hover-shadow" 
                    data-toggle="tooltip" data-original-title="{{(langs['LINE_HEIGHT_TOOLTIP']) ? langs['LINE_HEIGHT_TOOLTIP'] : 'Line heightChange vertical spacing between text lines'}}"
                    />
         </div>
         <div class="nb-col-2" ng-show="settings['nbdesigner_text_font_size'] == 1">
             <p class="label-config">{{(langs['FONT_SIZE']) ? langs['FONT_SIZE'] : "Font size"}}</p>
-            <input type="text" ng-model="fontSize" ng-change="setFontSize()" class="input-config shadow hover-shadow" />
+            <div class="btn-group dropup">
+                <input type="text" ng-model="editable.ptFontSize" ng-change="setFontSize()" class="input-config shadow hover-shadow" data-toggle="dropdown"/>
+                <ul class="dropdown-menu dropup  shadow hover-shadow" style="height: auto;max-height: 200px;overflow-x: hidden;">
+                    <li ng-repeat="size in listFontSizeInPt"><a href="javascript:void(0);" ng-click="editable.ptFontSize = size;setFontSize()">{{size}}</a></li>
+                </ul>
+            </div>
         </div>		
         <div class="nb-col-30" ng-show="settings['nbdesigner_text_opacity'] == 1">
             <p class="label-config">{{(langs['OPACITY']) ? langs['OPACITY'] : "Opacity"}}</p>
