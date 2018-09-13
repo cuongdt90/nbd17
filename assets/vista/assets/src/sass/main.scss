@@ -4,16 +4,18 @@
   &.nbd-onloading {
     pointer-events: none;
   }
+
   @import "patials/full-screen";
 
   // component
   @import "component/button";
-
   .nbd-vista {
     height: 580px;
     margin-bottom: 10px;
-    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
 
+    // Normalize css
     @import "patials/reset";
 
     // Library
@@ -33,7 +35,7 @@
     @import "patials/toasts";
     @import "patials/loading";
     @import "patials/spectrum";
-    @import "patials/loading-workflow";
+    @import "patials/loading-contain";
     @import "patials/toolbar-zoom";
 
     // component
@@ -52,3 +54,5 @@
     }
   }
 }
+
+@import "patials/responsive";

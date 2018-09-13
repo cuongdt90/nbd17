@@ -9,9 +9,9 @@
   visibility: hidden;
   opacity: 0;
   z-index: -1;
-  @media screen and (max-width: 767px){
-    display: none;
-  }
+  //@media screen and (max-width: 767px){
+  //  display: none;
+  //}
 
   &.nbd-show{
     visibility: visible;

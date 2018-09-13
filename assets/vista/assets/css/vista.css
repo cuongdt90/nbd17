@@ -3,8 +3,8 @@ online design
 */
 @font-face {
   font-family: 'nbd-vista';
-  src: url("fonts/nbd-vista.eot?knsot3");
-  src: url("fonts/nbd-vista.eot?knsot3#iefix") format("embedded-opentype"), url("fonts/nbd-vista.ttf?knsot3") format("truetype"), url("fonts/nbd-vista.woff?knsot3") format("woff"), url("fonts/nbd-vista.svg?knsot3#nbd-vista") format("svg");
+  src: url("fonts/nbd-vista.eot?u6xccv");
+  src: url("fonts/nbd-vista.eot?u6xccv#iefix") format("embedded-opentype"), url("fonts/nbd-vista.ttf?u6xccv") format("truetype"), url("fonts/nbd-vista.woff?u6xccv") format("woff"), url("fonts/nbd-vista.svg?u6xccv#nbd-vista") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -20,6 +20,15 @@ online design
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+.nbd-icon-vista-sent-to-backward:before {
+  content: "\E93C"; }
+
+.nbd-icon-vista-bring-forward:before {
+  content: "\E93D"; }
+
+.nbd-icon-vista-bring-to-front:before {
+  content: "\E93E"; }
 
 .nbd-icon-vista-headline:before {
   content: "\E93B"; }
@@ -289,7 +298,8 @@ online design
 .nbd-mode-vista .nbd-vista {
   height: 580px;
   margin-bottom: 10px;
-  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
   /* HTML5 display-role reset for older browsers */
   /* HTML5 hidden-attribute fix for newer browsers */
   /* perfect-scrollbar v0.8.1 */
@@ -360,6 +370,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display: block; }
   .nbd-mode-vista .nbd-vista *[hidden] {
     display: none; }
+  .nbd-mode-vista .nbd-vista * {
+    box-sizing: border-box; }
   .nbd-mode-vista .nbd-vista body {
     line-height: 1; }
   .nbd-mode-vista .nbd-vista ol, .nbd-mode-vista .nbd-vista ul {
@@ -2778,6 +2790,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     text-align: center; }
   .nbd-mode-vista .nbd-vista .text-capital {
     text-transform: capitalize !important; }
+  .nbd-mode-vista .nbd-vista .nbd-shadow {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 4px rgba(0, 0, 0, 0.24); }
   .nbd-mode-vista .nbd-vista .nbd-d-flex {
     display: flex; }
   .nbd-mode-vista .nbd-vista .nbd-justify-content-start {
@@ -2851,29 +2865,15 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     animation-duration: 1.1s !important; }
   .nbd-mode-vista .nbd-vista .v-toolbar {
     margin-bottom: 30px; }
-    @media screen and (max-width: 767px) {
-      .nbd-mode-vista .nbd-vista .v-toolbar {
-        margin-bottom: 0; } }
     .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar {
       display: flex;
       justify-content: space-between;
       border-radius: 2px;
       position: relative;
-      z-index: 9999;
+      z-index: 1;
       background-color: #f4f4f4; }
       .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-tab span {
         line-height: 26px; }
-      @media screen and (max-width: 767px) {
-        .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar {
-          border-color: transparent;
-          flex-wrap: wrap; }
-          .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item {
-            border: 1px solid #ebebeb;
-            overflow-x: auto; }
-            .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar {
-              border: 1px solid #ebebeb; }
-              .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar .v-main-menu {
-                justify-content: center; } }
       @media screen and (max-width: 692px) {
         .nbd-mode-vista .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.left-toolbar {
           margin: auto; }
@@ -2881,8 +2881,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           margin: 15px auto 0; } }
     .nbd-mode-vista .nbd-vista .v-toolbar .left-toolbar .tabs-toolbar {
       position: relative; }
-    .nbd-mode-vista .nbd-vista .v-toolbar .left-toolbar .v-main-menu .v-menu-item.active {
-      background: transparent; }
     .nbd-mode-vista .nbd-vista .v-toolbar #selectedTab {
       position: absolute;
       left: 0;
@@ -2927,9 +2925,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       .nbd-mode-vista .nbd-vista .v-tab-contents .v-tab-content.active {
         visibility: visible;
         opacity: 1; }
-      @media screen and (max-width: 767px) {
-        .nbd-mode-vista .nbd-vista .v-tab-contents .v-tab-content {
-          margin-top: 15px; } }
   .nbd-mode-vista .nbd-vista .tab-scroll {
     position: relative;
     overflow: hidden;
@@ -3197,9 +3192,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14);
     z-index: 99;
     visibility: visible; }
-    @media screen and (max-width: 767px) {
-      .nbd-mode-vista .nbd-vista .nbd-context-menu {
-        display: none; } }
     .nbd-mode-vista .nbd-vista .nbd-context-menu .main-context .contexts {
       list-style-type: none;
       display: inline-block;
@@ -3238,9 +3230,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     visibility: hidden;
     opacity: 0;
     z-index: -1; }
-    @media screen and (max-width: 767px) {
-      .nbd-mode-vista .nbd-vista .nbd-warning {
-        display: none; } }
     .nbd-mode-vista .nbd-vista .nbd-warning.nbd-show {
       visibility: visible;
       opacity: 1;
@@ -3268,9 +3257,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     position: absolute;
     top: 10px;
     right: 10px; }
-    @media screen and (max-width: 767px) {
-      .nbd-mode-vista .nbd-vista .nbd-tool-lock {
-        display: none; } }
     .nbd-mode-vista .nbd-vista .nbd-tool-lock .main-tool-lock {
       padding: 10px; }
     .nbd-mode-vista .nbd-vista .nbd-tool-lock ul {
@@ -3316,9 +3302,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     z-index: -1;
     transition: all .3s;
     min-width: 250px; }
-    @media screen and (max-width: 767px) {
-      .nbd-mode-vista .nbd-vista .nbd-toasts {
-        display: none; } }
     .nbd-mode-vista .nbd-vista .nbd-toasts.nbd-show {
       opacity: 1;
       visibility: visible;
@@ -3489,7 +3472,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
       .nbd-mode-vista .nbd-vista .nbd-sp.sp-container .sp-picker-container .sp-color, .nbd-mode-vista .nbd-vista .nbd-sp.sp-container .sp-picker-container .sp-hue, .nbd-mode-vista .nbd-vista .nbd-sp.sp-container .sp-picker-container .sp-clear {
         border: none; }
-  .nbd-mode-vista .nbd-vista .loading-workflow {
+  .nbd-mode-vista .nbd-vista .loading-contain {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -3505,22 +3488,20 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     visibility: hidden;
     z-index: -1;
     transition: all .6s; }
-    .nbd-mode-vista .nbd-vista .loading-workflow.nbd-show {
+    .nbd-mode-vista .nbd-vista .loading-contain.nbd-show {
       visibility: visible;
       opacity: 1;
       z-index: 9999; }
-    .nbd-mode-vista .nbd-vista .loading-workflow .circular {
+    .nbd-mode-vista .nbd-vista .loading-contain .circular {
       width: 80px;
       height: 80px; }
+    .nbd-mode-vista .nbd-vista .loading-contain.loading-app {
+      background: white; }
   .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom {
     position: absolute;
     bottom: 10px;
     right: 30px;
     z-index: 99; }
-    @media screen and (max-width: 767px) {
-      .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom {
-        bottom: 75px;
-        display: none; } }
     .nbd-mode-vista .nbd-vista .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer {
       border-radius: 60px;
       background-color: #fff;
@@ -3702,20 +3683,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
             border-radius: 50%;
             background: #04b591;
             cursor: pointer; }
-            @media screen and (max-width: 767px) {
-              .nbd-mode-vista .nbd-vista .v-ranges .range .main-track .slide-input::-webkit-slider-thumb {
-                width: 20px;
-                height: 20px; } }
           .nbd-mode-vista .nbd-vista .v-ranges .range .main-track .slide-input::-moz-range-thumb {
             width: 15px;
             height: 15px;
             border-radius: 50%;
             background: #04b591;
             cursor: pointer; }
-            @media screen and (max-width: 767px) {
-              .nbd-mode-vista .nbd-vista .v-ranges .range .main-track .slide-input::-moz-range-thumb {
-                width: 20px;
-                height: 20px; } }
         .nbd-mode-vista .nbd-vista .v-ranges .range .main-track .range-track {
           background-color: #aaa;
           height: 2px;
@@ -3916,27 +3889,17 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       width: 260px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-photo .tab-scroll {
         height: 100%; }
-      @media screen and (max-width: 767px) {
-        .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar {
-          position: relative;
-          width: 0;
-          opacity: 0;
-          visibility: hidden;
-          z-index: -1; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar.active {
-            width: 100%;
-            opacity: 1;
-            visibility: visible;
-            z-index: 1; } }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-contents {
         height: calc(100% - 60px);
         background: #f4f4f4; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .main-sidebar, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-content {
         height: 100%; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .main-sidebar.nbd-left, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-content.nbd-left {
-          transform: translateX(-33%); }
+          transform: translateX(-33%);
+          z-index: -1; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .main-sidebar.nbd-right, .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-tab-content.nbd-right {
-          transform: translateX(33%); }
+          transform: translateX(33%);
+          z-index: -1; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-title {
         font-size: 14px;
         margin-bottom: 10px;
@@ -3995,9 +3958,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
               width: 75px;
               margin-bottom: 15px;
               cursor: pointer; }
-              @media screen and (max-width: 767px) {
-                .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items .item {
-                  width: 100px; } }
               @media screen and (max-width: 320px) {
                 .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items .item {
                   width: 65px; } }
@@ -4413,8 +4373,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .design-color .tab-scroll {
             height: calc(100% - 55px); }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.layout {
-          margin-bottom: 20px;
-          background-color: #f4f4f4; }
+          margin-bottom: 20px; }
           .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.layout .main-scrollbar {
             margin-bottom: 0; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar #tab-design .v-content .tab-scroll.bg-color .main-color .nbd-color-palette {
@@ -4463,7 +4422,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           -webkit-border-radius: 2px;
           border-radius: 2px;
           outline: 0;
-          border: 1px solid #404762;
+          border: 1px solid #ccc;
           background-color: #fff; }
         .nbd-mode-vista .nbd-vista .v-workspace .v-sidebar .nbd-search i {
           position: absolute;
@@ -4484,18 +4443,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       margin-left: 30px;
       height: calc(100% - 60px);
       position: relative; }
-      @media screen and (max-width: 767px) {
-        .nbd-mode-vista .nbd-vista .v-workspace .v-layout {
-          position: relative;
-          width: 0;
-          opacity: 0;
-          visibility: hidden;
-          z-index: -1; }
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout.active {
-            width: 100%;
-            opacity: 1;
-            visibility: visible;
-            z-index: 1; } }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .header-box {
         padding: 10px; }
       .nbd-mode-vista .nbd-vista .v-workspace .v-layout .v-toolbox .has-box-more {
@@ -5004,16 +4951,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           transform: translateY(-50%);
           height: unset;
           margin: 0; }
-          @media screen and (max-width: 767px) {
-            .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
-              height: auto;
-              width: auto;
-              background-color: #fff;
-              left: 50%;
-              right: auto;
-              transform: translateX(-50%);
-              bottom: -25px;
-              top: auto; } }
           @media screen and (max-width: 475px) {
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
               bottom: 40px; } }
@@ -5026,23 +4963,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
           .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main {
             height: 100%;
             text-align: center; }
-            @media screen and (max-width: 767px) {
-              .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main {
-                background-color: #fff;
-                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); } }
             .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul {
               list-style-type: none;
               height: 100%;
               display: flex;
               flex-direction: column;
               justify-content: center; }
-              @media screen and (max-width: 767px) {
-                .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul {
-                  flex-direction: row;
-                  align-items: center; }
-                  .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li {
-                    display: flex;
-                    padding: 5px 10px; } }
               .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li {
                 padding: 10px 0;
                 cursor: pointer; }
@@ -5081,10 +5007,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         bottom: 10px;
         right: 30px;
         z-index: 99; }
-        @media screen and (max-width: 767px) {
-          .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom {
-            bottom: 75px;
-            display: none; } }
         .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer {
           border-radius: 60px;
           background-color: #fff;
@@ -5143,6 +5065,134 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
                       color: #04b591; }
                   .nbd-mode-vista .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom .zoomer-toolbar .nbd-main-zoomer .zoomer-item.zoomer-level .zoomer-popover .zoomer-popover-item:hover {
                     background-color: #f6f6f6; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-toolbar {
+  margin-bottom: 0;
+  position: relative;
+  z-index: 9; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-toolbar .main-toolbar {
+  border-color: transparent;
+  flex-wrap: wrap; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item {
+  margin: auto;
+  overflow-x: auto; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar .v-main-menu {
+  justify-content: center; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-tab-contents .v-tab-content {
+  margin-top: 15px; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .nbd-context-menu {
+  display: none; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .nbd-warning {
+  display: none; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .nbd-tool-lock {
+  display: none; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .nbd-toasts {
+  display: none; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .nbd-toolbar-zoom {
+  bottom: 75px;
+  display: none; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-ranges .range .main-track .slide-input::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-sidebar {
+  position: relative;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-sidebar.active {
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .items .item {
+  width: 100px; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout {
+  position: relative;
+  width: 0;
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout.active {
+  width: 100%;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar {
+  height: auto;
+  width: auto;
+  background-color: #fff;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  bottom: -25px;
+  top: auto; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main {
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul {
+  flex-direction: row;
+  align-items: center; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li {
+  display: flex;
+  padding: 5px 10px; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-stages .page-toolbar .page-main ul li {
+  padding: 5px 10px; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-toolbar-zoom {
+  bottom: 75px;
+  display: none; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout {
+  margin-left: 0; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-sidebar .v-tab-contents {
+  background: #fafafa; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-sidebar .nbd-nav-tabs .nbd-nav-tab.active {
+  border-bottom: 1px solid #fafafa; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-sidebar .v-content .v-elements .main-items .pointer {
+  background-color: #fafafa; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace .v-layout .nbd-stages .stages-inner .stage {
+  padding: 10px; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-main-menu .v-menu-item:hover {
+  background-color: transparent; }
+
+.nbd-mode-vista.nbd-mobile .nbd-vista .v-main-menu .v-menu-item.active {
+  background-color: #04b591; }
+
+@media screen and (max-width: 475px) {
+  .nbd-mode-vista.nbd-mobile .nbd-vista .v-workspace {
+    height: 440px; } }
+
+@media screen and (max-width: 742px) {
+  .nbd-mode-vista.nbd-mobile .nbd-vista .v-toolbar .left-toolbar {
+    border-bottom: 1px solid #04b591; }
+  .nbd-mode-vista.nbd-mobile .nbd-vista .v-toolbar .main-toolbar .right-toolbar ul li:first-child {
+    border-right: 1px solid #04b591; } }
 
 
 /*# sourceMappingURL=vista.css.map*/

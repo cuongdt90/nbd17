@@ -27,6 +27,11 @@ footer, header, hgroup, main, menu, nav, section {
 *[hidden] {
   display: none;
 }
+
+*{
+  box-sizing: border-box;
+}
+
 body {
   line-height: 1;
 }

@@ -1,35 +1,35 @@
 .v-toolbar {
   margin-bottom: 30px;
-  @media screen and (max-width: 767px) {
-    margin-bottom: 0;
-  }
+  //@media screen and (max-width: 767px) {
+  //  margin-bottom: 0;
+  //}
   .main-toolbar {
     display: flex;
     justify-content: space-between;
     //border: 1px solid #ebebeb;
     border-radius: 2px;
     position: relative;
-    z-index: 9999;
+    z-index: 1;
     background-color: #f4f4f4;
     .v-tab {
       span{
         line-height: 26px;
       }
     }
-    @media screen and (max-width: 767px) {
-      border-color: transparent;
-      flex-wrap: wrap;
-      .v-toolbar-item {
-        border: 1px solid #ebebeb;
-        overflow-x: auto;
-        &.right-toolbar {
-          border: 1px solid #ebebeb;
-          .v-main-menu {
-            justify-content: center;
-          }
-        }
-      }
-    }
+    //@media screen and (max-width: 767px) {
+    //  border-color: transparent;
+    //  flex-wrap: wrap;
+    //  .v-toolbar-item {
+    //    border: 1px solid #ebebeb;
+    //    overflow-x: auto;
+    //    &.right-toolbar {
+    //      border: 1px solid #ebebeb;
+    //      .v-main-menu {
+    //        justify-content: center;
+    //      }
+    //    }
+    //  }
+    //}
     @media screen and (max-width: 692px) {
       .v-toolbar-item {
         &.left-toolbar {
@@ -45,13 +45,6 @@
   .left-toolbar {
     .tabs-toolbar{
       position: relative;
-    }
-    .v-main-menu {
-      .v-menu-item {
-        &.active {
-          background: transparent;
-        }
-      }
     }
   }
 
@@ -148,8 +141,8 @@
       opacity: 1;
     }
 
-    @media screen and (max-width: 767px) {
-      margin-top: 15px;
-    }
+    //@media screen and (max-width: 767px) {
+    //  margin-top: 15px;
+    //}
   }
 }

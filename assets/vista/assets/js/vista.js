@@ -29,14 +29,15 @@ function checkMobileDevice(){
 
     $.fn.nbdTab = function () {
         return this.each(function () {
-            var $tab = $(this).find('.nbd-nav-tab');
-            var $tabContent = $(this).find('.nbd-tab-contents .nbd-tab-content');
+            var $tab = $(this).find('.nbd-nav-tab'), $tabContents = $(this).find('.nbd-tab-contents'),
+                $tabContent = $tabContents.find('.nbd-tab-content');
             $tab.on('click', function () {
-                var tabId = $(this).attr('data-tab');
+                var tabId = $(this).data('tab');
                 $tab.removeClass('active');
                 $(this).addClass('active');
                 $tabContent.removeClass('active');
-                $('.nbd-tab-contents #' + tabId).addClass('active');
+                // $('.nbd-tab-contents #' + tabId).addClass('active');
+                $tabContents.find('[data-tab=' + tabId + ']').addClass('active');
             });
         });
     };
@@ -219,6 +220,7 @@ function checkMobileDevice(){
                         $mainItems.removeClass('active-expanded');
                         $contentItem.hide();
                         $resultLoaded.removeClass('loaded');
+                        $loadingGif.hide();
                         $item.show();
                     }
                     // return false;
@@ -248,6 +250,7 @@ function checkMobileDevice(){
                         $resultLoaded.removeClass('loaded');
                         $resultLoaded.hide();
                         $resultLoaded.removeClass('loaded');
+                        $loadingGif.hide();
                         $galleryItem.hide();
                         $item.show();
                     }
@@ -464,11 +467,45 @@ function checkMobileDevice(){
 
     var nbdVista = {
         init : function () {
+            this.responsive();
             if (checkMobileDevice()) {
                 this.mobile();
             }
             this.checkTerm();
             this.animate();
+        },
+        responsive: function () {
+            var $app = $('.nbd-mode-vista'), appWidth = $app.outerWidth();
+            if (appWidth > 785) {
+                $app.addClass('nbd-desktop');
+            }else {
+                $app.addClass('nbd-mobile');
+            }
+
+            if (checkMobileDevice()) {
+                var $toolbar = $('.nbd-vista .v-toolbar .left-toolbar'), $toolbarItem = $toolbar.find('.v-menu-item');
+                var $tabMainContent = $('.nbd-vista .v-sidebar .v-tab-content');
+                // swipe
+                $tabMainContent.on({
+                    'swiperight': function () {
+                        var $currentBar = $toolbarItem.filter('.active');
+                        var curSl = $toolbar.scrollLeft();
+                        var tabW = $currentBar.width();
+
+                        $currentBar.prev().trigger('click');
+                        $toolbar.animate({scrollLeft: curSl - tabW}, 300);
+
+                    },
+                    'swipeleft': function () {
+                        var $currentBar = $toolbarItem.filter('.active');
+                        var curSl = $toolbar.scrollLeft();
+                        var tabW = $currentBar.width();
+
+                        $currentBar.next().trigger('click');
+                        $toolbar.animate({scrollLeft: curSl + tabW}, 300);
+                    }
+                });
+            }
         },
         mobile: function () {
             var $sideBar = $('.nbd-vista .v-sidebar');
@@ -509,33 +546,34 @@ function checkMobileDevice(){
             // toolbar click
             var $toolbar = $('.nbd-vista .v-toolbar .left-toolbar .tabs-toolbar'),
                 $toolbarItem = $toolbar.find('.v-tab'), $selectTab = $toolbar.find('#selectedTab');
+            // if ($('.nbd-mode-vista').hasClass('nbd-mobile')) {
+            //     $selectTab.hide();
+            // }
 
             // init
-            $selectTab.css({
-                'width': $toolbarItem.filter('.active').outerWidth()
-            });
+            // $selectTab.css({
+            //     'width': $toolbarItem.filter('.active').outerWidth()
+            // });
+
             $('.v-tab-contents .v-tab-content.active').prevAll().addClass('nbd-left');
             $('.v-tab-contents .v-tab-content.active').nextAll().addClass('nbd-right');
 
             $toolbarItem.on('click', function () {
-                $selectTab.css({
-                    'width': $(this).outerWidth(),
-                    'left': $(this).offset().left - $toolbar.offset().left
-                });
+                // $selectTab.css({
+                //     'width': $(this).outerWidth(),
+                //     'left': $(this).offset().left - $toolbar.offset().left
+                // });
                 var tabId = $(this).data('tab'), $tabContent = $('.v-tab-contents #' + tabId);
                 $('.v-tab-contents .v-tab-content').removeClass('nbd-left nbd-right');
                 $tabContent.prevAll().addClass('nbd-left');
                 $tabContent.nextAll().addClass('nbd-right');
             });
-
-
         }
 
     };
 
     $(document).ready(function () {
         nbdVista.init();
-
         $('.nbd-vista .v-tabs').nbVTab();
         $('.nbd-vista .nbd-main-tab').nbdTab();
         $('.nbd-vista .v-dropdown').nbDropdown();
@@ -544,7 +582,6 @@ function checkMobileDevice(){
         $('.nbd-vista .v-elements').nbElDropdown({
             'itemInRow' : 3
         });
-
         $('.nbd-vista .click-reset-design').on('click', function () {
             $('.nbd-vista .v-popup-select').nbShowPopup();
         });
@@ -572,9 +609,16 @@ function checkMobileDevice(){
             }
         });
         $('[data-ripple],.nbd-vista .color-palette-item, .nbd-vista .v-btn, .nbd-vista .v-assets .v-asset, .nbd-ripple').nbRipple('rgba(0,0,0, 0.1)');
-
-        // $('.v-toolbox .v-toolbox-item').nbShowMoreTool();
     });
+    $(window).on('load', function () {
+        $('.nbd-vista .loading-app').removeClass('nbd-show');
+        $('.nbd-vista .v-toolbar .v-menu-item').each(function (i, e) {
+            var animateTime = (i + 4) * 100;
+            $(this).addClass('slideInDown animated animate' + animateTime);
+        });
 
+        $('.nbd-vista .v-sidebar').addClass('animated slideInLeft animate800');
+        $('.nbd-vista .v-layout').addClass('animated slideInRight animate800');
+    });
 
 })(jQuery);

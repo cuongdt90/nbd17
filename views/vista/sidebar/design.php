@@ -5,7 +5,7 @@
     </ul>
 
     <div class="v-content nbd-tab-contents" data-action="no">
-        <div class="layout tab-scroll nbd-tab-content active" id="nbd-tab-design-workflow">
+        <div class="layout tab-scroll nbd-tab-content active" id="nbd-tab-design-workflow" data-tab="nbd-tab-design-workflow">
             <div class="main-scrollbar">
                 <div class="short-design" style="display: none">
                     <button class="v-btn btn-svg-upload"><?php _e('Upload Svg','web-to-print-online-designer'); ?></button>
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="design-color nbd-tab-content" id="nbd-tab-bg-color">
+        <div class="design-color nbd-tab-content" id="nbd-tab-bg-color" data-tab="nbd-tab-bg-color">
             <div class="tab-scroll bg-color">
                 <div class="main-scrollbar">
                     <div class="main-color">

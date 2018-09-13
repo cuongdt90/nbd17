@@ -6,8 +6,6 @@
   background-color: #fff;
   display: none;
   border: 1px solid #ebebeb;
-  @media screen and (max-width: 767px){
-  }
   &.show{
     display: block;
   }
@@ -19,9 +17,6 @@
       position: absolute;
       top: -15px;
       display: none;
-      @media screen and (max-width: 767px){
-
-      }
     }
     &:after{
       border: 7px solid transparent;
@@ -30,8 +25,7 @@
       position: absolute;
       top: -14px;
       display: none;
-      @media screen and (max-width: 767px){
-      }
+
     }
     padding: 10px;
     position: relative;

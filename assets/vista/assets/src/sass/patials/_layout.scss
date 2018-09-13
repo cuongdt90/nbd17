@@ -5,19 +5,19 @@
   width: calc(100% - 290px);
   margin-left: 30px;
   height: calc(100% - 60px);
-  @media screen and (max-width: 767px){
-    position: relative;
-    width: 0;
-    opacity: 0;
-    visibility: hidden;
-    z-index: -1;
-    &.active {
-      width: 100%;
-      opacity: 1;
-      visibility: visible;
-      z-index: 1;
-    }
-  }
+  //@media screen and (max-width: 767px){
+  //  position: relative;
+  //  width: 0;
+  //  opacity: 0;
+  //  visibility: hidden;
+  //  z-index: -1;
+  //  &.active {
+  //    width: 100%;
+  //    opacity: 1;
+  //    visibility: visible;
+  //    z-index: 1;
+  //  }
+  //}
   position: relative;
   @import "../common/toolbox";
   @import "stages";

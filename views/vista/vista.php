@@ -147,6 +147,7 @@ $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
                     </div>
                     <?php include 'popup.php';?>
                     <?php include 'context-menu.php';?>
+                    <?php include 'loading-app.php';?>
                 </div>
                 <?php include 'save-template.php';?>
             </div>

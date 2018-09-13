@@ -6,9 +6,9 @@
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14);
   z-index: 99;
   visibility: visible;
-  @media screen and (max-width: 767px){
-      display: none;
-  }
+  //@media screen and (max-width: 767px){
+  //    display: none;
+  //}
   .main-context {
     .contexts {
       list-style-type: none;

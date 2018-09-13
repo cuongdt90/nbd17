@@ -1,4 +1,4 @@
-<div class="v-toolbox-image v-toolbox-item nbd-main-tab" ng-class="stages[currentStage].states.isShowToolBox ? 'nbd-show' : ''" ng-show="stages[currentStage].states.isImage" ng-style="stages[currentStage].states.toolboxStyle">
+<div class="v-toolbox-image v-toolbox-item nbd-main-tab nbd-shadow" ng-class="stages[currentStage].states.isShowToolBox ? 'nbd-show' : ''" ng-show="stages[currentStage].states.isImage" ng-style="stages[currentStage].states.toolboxStyle">
     <div class="v-triangle" data-pos="{{stages[currentStage].states.toolboxTriangle}}">
         <div class="header-box has-box-more" style="margin-bottom: 20px">
             <span><?php _e('Image edit','web-to-print-online-designer'); ?></span>
@@ -9,7 +9,7 @@
             </ul>
         </div>
         <div class="nbd-tab-contents">
-            <div class="main-box nbd-tab-content active" id="tab-main-box">
+            <div class="main-box nbd-tab-content active" data-tab="tab-main-box">
                 <div class="toolbox-row toolbox-first">
                     <div class="toolbox-general">
                         <ul class="v-assets items">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div class="main-box-more nbd-tab-content" id="tab-box-position">
+            <div class="main-box-more nbd-tab-content" data-tab="tab-box-position">
                 <div class="toolbox-row toolbox-align">
                     <ul class="items v-assets">
                         <li class="item v-asset item-align-left"
@@ -118,8 +118,9 @@
                             title="Position top left">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left"></i>
                         </li>
-                        <li class="item v-asset item-align-left" style="visibility: hidden">
-                            <i class="nbd-icon-vista nbd-icon-vista-top-left"></i>
+                        <li class="item v-asset item-align-left" ng-click="setStackPosition('bring-front')"
+                            title="Bring to front">
+                            <i class="nbd-icon-vista nbd-icon-vista-bring-to-front"></i>
                         </li>
                     </ul>
                 </div>
@@ -145,8 +146,9 @@
                             title="Position middle left">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate45"></i>
                         </li>
-                        <li class="item v-asset item-align-left" style="visibility: hidden">
-                            <i class="nbd-icon-vista nbd-icon-vista-top-left"></i>
+                        <li class="item v-asset item-align-left" ng-click="setStackPosition('bring-forward')"
+                            title="Bring forward">
+                            <i class="nbd-icon-vista nbd-icon-vista-bring-forward"></i>
                         </li>
                     </ul>
                 </div>
@@ -170,13 +172,14 @@
                             title="Position bottom right">
                             <i class="nbd-icon-vista nbd-icon-vista-top-left rotate90"></i>
                         </li>
-                        <li class="item v-asset item-align-left" style="visibility: hidden">
-                            <i class="nbd-icon-vista nbd-icon-vista-top-left"></i>
+                        <li class="item v-asset item-align-left" ng-click="setStackPosition('send-backward')"
+                            title="Sent to backward">
+                            <i class="nbd-icon-vista nbd-icon-vista-sent-to-backward"></i>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="main-box-more nbd-tab-content" id="tab-box-opacity">
+            <div class="main-box-more nbd-tab-content" data-tab="tab-box-opacity">
                 <div class="toolbox-row toolbox-align">
                     <div style="display: flex;justify-content: space-between; align-items: center">
                         <div>Opacity</div>
