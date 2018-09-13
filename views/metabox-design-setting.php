@@ -461,13 +461,7 @@
                         <label for="nbdesigner_dpi" class="nbdesigner-option-label"><?php echo _e('DPI ( Dots Per Inch )', 'web-to-print-online-designer'); ?></label>
                         <input name="_nbdesigner_option[dpi]" id="nbdesigner_dpi" value="<?php echo $option['dpi'];?>" type="number"  min="72" style="width: 60px;">&nbsp;
                     </div>   
-                </div> 
-                <div class="nbdesigner-opt-inner">
-                    <div>
-                        <label for="nbdesigner_font_size" class="nbdesigner-option-label"><?php echo _e('Increment font size(pt) seperated by a comma. Don not use dots or spaces. Example: 12,14,16,18', 'web-to-print-online-designer'); ?></label>
-                        <input name="_nbdesigner_option[listFontSizeInPt]" id="nbdesigner_font_size" value="<?php if(isset($option['listFontSizeInPt'])){ echo $option['listFontSizeInPt']; } else { echo ''; }?>" type="text" style="width: 350px;">&nbsp;
-                    </div>   
-                </div>                
+                </div>            
                 <div class="nbdesigner-opt-inner">
                     <label for="_nbdesigner_customprice" class="nbdesigner-option-label"><?php echo _e('Extra price', 'web-to-print-online-designer'); ?></label>
                     <input type="number" step="any" class="short nbdesigner-short-input wc_input_price" id="_nbdesigner_customprice" name="_nbdesigner_option[extra_price]" value="<?php echo $option['extra_price']; ?>"/>

@@ -116,7 +116,7 @@
                     <button type="button" class="button button-secondary nbd-pricing-table-delete-rules"><?php esc_html_e( 'Delete Selected', 'web-to-print-online-designer' ); ?></button>
                 </th>
             </tr>
-	</tfoot>        
+	</tfoot>
     </table>  
 </div>
 <style>

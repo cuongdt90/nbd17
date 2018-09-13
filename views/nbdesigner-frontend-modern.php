@@ -1032,6 +1032,21 @@
                 NBDESIGNCONFIG['<?php echo $key; ?>'] = "<?php echo $val; ?>";    
                 <?php endif; ?>    
             <?php endforeach; ?>
+            <?php if( isset($product_data['option']['use_all_color']) ): ?>
+                NBDESIGNCONFIG['nbdesigner_show_all_color'] = "<?php echo $product_data['option']['use_all_color'] == 1 ? 'yes' : 'no'; ?>";
+            <?php endif; ?>
+            <?php if( isset($product_data['option']['list_color']) ): ?>
+            var  colorPalette = [], row = [], __colorPalette = [], color = '';
+                <?php foreach($product_data['option']['list_color'] as $cindex => $color): ?>
+                    color = "<?php echo $color['code']; ?>";
+                    row.push(color);
+                    <?php if( $cindex % 10 == 9 ): ?>
+                        colorPalette.push(row);
+                        row = [];                    
+                    <?php endif; ?>
+                    __colorPalette.push(color);
+                <?php endforeach; ?>
+            <?php else: ?>
             var _colors = NBDESIGNCONFIG['nbdesigner_hex_names'].split(','),
             colorPalette = [], row = [];
             __colorPalette = [];
@@ -1044,6 +1059,7 @@
                 }
                 __colorPalette.push(color);
             }
+            <?php endif; ?> 
             row.push(NBDESIGNCONFIG['nbdesigner_default_color']);
             colorPalette.push(row);                                  
             <?php if($ui_mode == 1): ?>

@@ -166,4 +166,4 @@ if(!class_exists('Nbdesigner_Measurement_Price_Calculator')){
     }
 }
 $nbd_price_calculator = Nbdesigner_Measurement_Price_Calculator::instance();
-$nbd_price_calculator->init();
+//$nbd_price_calculator->init();
