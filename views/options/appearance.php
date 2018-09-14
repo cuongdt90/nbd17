@@ -8,7 +8,7 @@
             <select name="options[display_type]" ng-model="options.display_type">
                 <option value="1"><?php _e('Default', 'web-to-print-online-designer'); ?></option>
                 <option value="2"><?php _e('Price Matrix', 'web-to-print-online-designer'); ?></option>
-                <option value="3"><?php _e('Bulk order', 'web-to-print-online-designer'); ?></option>
+                <option value="3"><?php _e('Bulk variation form', 'web-to-print-online-designer'); ?></option>
             </select>                        
         </div>
     </div>
@@ -45,5 +45,20 @@
                 <tr></tr>
             </tbody>
         </table>
+    </div>    
+</div>
+<div class="nbd-field-info" ng-if="options.display_type == 3">
+    <p><?php _e('Allow fields with options: Enable - Yes | Field Conditional Logic - No', 'web-to-print-online-designer'); ?></p>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><label><b><?php _e('Bulk form field', 'web-to-print-online-designer'); ?></b></label></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <div>
+                <select name="options[bulk_fields][]" multiple ng-model="options.bulk_fields">
+                    <option ng-if="field.general.enabled.value == 'y' && field.conditional.enable == 'n'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                </select>
+            </div>
+        </div>    
     </div>    
 </div>

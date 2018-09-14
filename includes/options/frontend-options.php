@@ -87,7 +87,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             }
             
             /* Bulk order */
-            if ( isset( $_POST['nbo-fields'] ) && $_POST['nbo-fields'] ) {
+            if ( isset( $_POST['nbb-fields'] ) ) {
                 add_action( 'wp_loaded', array( $this, 'bulk_order' ), 20 );
             }
         }
@@ -385,17 +385,26 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         }
         public function add_cart_item_data( $cart_item_data, $product_id, $variation_id, $quantity ){
             $post_data = $_POST;
-            $option_id = $this->get_product_option($product_id);
             if( isset($post_data['nbd-field']) ){
+                $option_id = $this->get_product_option($product_id);
                 $options = $this->get_option($option_id);
+                $nbd_field = $post_data['nbd-field'];
+                if( isset($cart_item_data['nbd-field']) ){
+                    ob_start();
+                    var_dump($post_data['nbb-fields']);
+                    error_log(ob_get_clean());
+                    /* Bulk variation */
+                    $nbd_field = $cart_item_data['nbd-field'];
+                    unset($cart_item_data['nbd-field']);
+                }
                 $product = $variation_id ? wc_get_product( $variation_id ) : wc_get_product( $product_id );
                 $original_price = $this->format_price( $product->get_price('edit') );
-                $option_price = $this->option_processing( $options, $original_price, $post_data['nbd-field'], $quantity );
+                $option_price = $this->option_processing( $options, $original_price, $nbd_field, $quantity );
                 $cart_item_data['nbo_meta']['option_price'] = $option_price;
-                $cart_item_data['nbo_meta']['field'] = $post_data['nbd-field'];
+                $cart_item_data['nbo_meta']['field'] = $nbd_field;
                 $cart_item_data['nbo_meta']['options'] = $options;
                 $cart_item_data['nbo_meta']['original_price'] = $original_price;
-                $cart_item_data['nbo_meta']['price'] = $this->format_price($original_price + $option_price['total_price'] - $option_price['discount_price']);
+                $cart_item_data['nbo_meta']['price'] = $this->format_price($original_price + $option_price['total_price'] - $option_price['discount_price']);    
             }
             return $cart_item_data;
         }
@@ -639,7 +648,18 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             return count($result[0]) ? $result[0] : false;
         }
         public function bulk_order(){
-            //todo
+            $bulk_fields = $_POST['nbb-fields'];
+            $nbd_field = $_POST['nbd-field'];
+ob_start();
+var_dump($_POST);
+error_log(ob_get_clean());
+      
+            $product_id     = $_POST['product_id']; 
+            $added_count  = 0;
+            $failed_count = 0;        
+            $success_message = '';
+            $error_message   = '';
+            
         }
     }
 }

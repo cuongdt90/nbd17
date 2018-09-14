@@ -1058,6 +1058,7 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
         $data['fonts'] = nbd_get_data_from_json($ref_path . '/used_font.json');
         $data['ref'] = unserialize(file_get_contents($ref_path . '/product.json'));
         $data['config_ref'] = nbd_get_data_from_json($ref_path . '/config.json');
+        $data['is_reference'] = 1;
         nbd_update_hit_template( false, $reference );
     } 
     if( $data['upload']['allow_type'] == '' ) $data['upload']['allow_type'] = nbdesigner_get_option('nbdesigner_allow_upload_file_type');

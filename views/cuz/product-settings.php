@@ -138,8 +138,8 @@
                 <tfoot>
                     <tr>
                         <th colspan="3">
-                            <button type="button" data-type="quantity" class="button button-primary nbd-setting-table-add-rule"><?php esc_html_e( 'Add Color', 'web-to-print-online-designer' ); ?></button>
-                            <button type="button" class="button button-secondary nbd-setting-table-delete-rules"><?php esc_html_e( 'Delete Selected', 'web-to-print-online-designer' ); ?></button>
+                            <button type="button" data-type="quantity" class="button button-primary nbd-setting-table-add-rule"><?php _e( 'Add Color', 'web-to-print-online-designer' ); ?></button>
+                            <button type="button" class="button button-secondary nbd-setting-table-delete-rules"><?php _e( 'Delete Selected', 'web-to-print-online-designer' ); ?></button>
                         </th>
                     </tr>
                 </tfoot>            
@@ -172,7 +172,7 @@
         jQuery('table .nbd-setting-table-delete-rules').on('click', function(){
             var tb = jQuery(this).parents('table.nbd_setting_table').find('tbody');
             jQuery.each(tb.find('input:checked'), function(){
-                jQuery(this).parents('tr').remove();
+                if( tb.find('tr').length > 1 ) jQuery(this).parents('tr').remove();
             });       
             jQuery(this).parents('table.nbd_setting_table').find('thead input').prop('checked', false);
         });        

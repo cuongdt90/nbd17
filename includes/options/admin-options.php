@@ -271,6 +271,10 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 if( !isset($options['pm_ver']) ){
                     $options['pm_ver'] = array();
                 }                
+            }else if( $options['display_type'] == 3 ){
+                if( !isset($options['bulk_fields']) ){
+                    $options['bulk_fields'] = array();
+                }                
             }
             foreach ( $options["fields"] as $f_index => $field ){
                 $array_price_type = array('f', 'p', 'p+', 'c' );
@@ -310,15 +314,13 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         array('val' =>  1, 'dis'    =>  '')
                     ),
                     'display_type'  =>  1,
+                    'pm_hoz'  =>  array(),
+                    'pm_ver'  =>  array(),
+                    'bulk_fields'  =>  array(),
                     'fields'    => array(
                         0   =>  $this->default_field()                          
                     )
                 );
-            }
-            if( !isset($options['display_type']) ){
-                $options['display_type'] = 1;
-                $options['pm_hoz'] = array();
-                $options['pm_ver'] = array();
             }
             foreach( $options['fields'] as $f_key => $field ){
                 $field = array_replace_recursive($this->default_field(), $field);

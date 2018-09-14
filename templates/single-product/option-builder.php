@@ -450,21 +450,31 @@ $appid = "nbo-app-" . time().rand(1,100);
     .nbo-hidden {
         display: none;
     }
-    .nbo-price-matrix {
+    .nbo-table-wrap {
+        margin: 0 0 1.41575em;
+    }
+    .nbo-price-matrix, .nbo-table-wrap {
         max-width: 100%;
         overflow-x: scroll;
         overflow: auto;
     }
-    .nbo-price-matrix table{
+    .nbo-table-wrap table {
+        margin: 0 !important;
+    }
+    .nbo-table-wrap table input[type="number"]{
+        width: 4em;
+    }    
+    .nbo-price-matrix table, .nbo-table-wrap table{
         border-collapse: collapse;
     }
-    .nbo-price-matrix table, .nbo-price-matrix td, .nbo-price-matrix th {
+    .nbo-price-matrix table, .nbo-price-matrix td, .nbo-price-matrix th,
+    .nbo-table-wrap table, .nbo-table-wrap td, .nbo-table-wrap th {
         text-align: center;
         border: 1px solid #ddd;
         vertical-align: middle;
         padding: 0.75em 0.75em;
     }
-    .nbo-price-matrix td {
+    .nbo-price-matrix td, .nbo-table-wrap td {
         cursor: pointer;
     }
     .nbo-pm-empty, .nbo-price-matrix th {
@@ -478,45 +488,43 @@ $appid = "nbo-app-" . time().rand(1,100);
 <div class="nbd-option-wrapper" <?php if(!$in_quick_view) echo 'ng-app="nboApp"'; ?> id="<?php echo $appid; ?>">
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
 <?php
-
 $html_field = '';
-//maybe remove
-$options['pm_hoz'] = isset( $options['pm_hoz'] ) ? $options['pm_hoz'] : array();
-$options['pm_ver'] = isset( $options['pm_ver'] ) ? $options['pm_ver'] : array();
-$options['display_type'] = isset($options['display_type']) ? $options['display_type'] : 1;
-if($options['display_type'] != 3){
+if( $options['display_type'] == 2 ){
     $pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
-    foreach($options["fields"] as $key => $field){
-        $class = ($options['display_type'] == 2 && !in_array($key, $pm_field_indexes)) ? '' : 'nbo-hidden';
-        $class = '';
-        $need_show = true;
-        if( $field['general']['data_type'] == 'i' ){
-            $tempalte = '/options-builder/input.php'; 
-        }else{
-            if( count($field['general']['attributes']["options"]) == 0){
-                $need_show = false;
-            }
-            switch($field['appearance']['display_type']){
-                case 's':
-                    $tempalte = '/options-builder/swatch.php';
-                    break;
-                case 'l':
-                    $tempalte = '/options-builder/label.php';
-                    break;            
-                case 'r':
-                    $tempalte = '/options-builder/radio.php';
-                    break;
-                default:
-                    $tempalte = '/options-builder/dropdown.php';
-                    break;            
-            }
+}
+foreach($options["fields"] as $key => $field){
+    if( $options['display_type'] == 2 ){
+        $class = !in_array($key, $pm_field_indexes) ? '' : 'nbo-hidden';
+    }else if( $options['display_type'] == 3 ){
+        $class = !in_array($key, $options['bulk_fields']) ? '' : 'nbo-hidden';
+    }
+    $need_show = true;
+    if( $field['general']['data_type'] == 'i' ){
+        $tempalte = '/options-builder/input.php'; 
+    }else{
+        if( count($field['general']['attributes']["options"]) == 0){
+            $need_show = false;
         }
-        if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
+        switch($field['appearance']['display_type']){
+            case 's':
+                $tempalte = '/options-builder/swatch.php';
+                break;
+            case 'l':
+                $tempalte = '/options-builder/label.php';
+                break;            
+            case 'r':
+                $tempalte = '/options-builder/radio.php';
+                break;
+            default:
+                $tempalte = '/options-builder/dropdown.php';
+                break;            
+        }
     }
-    if( $options['display_type'] == 2 && count($pm_field_indexes) ){
-        include('/options-builder/price-matrix.php');
-    }
-}else{
+    if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
+}
+if( $options['display_type'] == 2 && count($pm_field_indexes) ){
+    include('/options-builder/price-matrix.php');
+}else if( $options['display_type'] == 3 && count($options['bulk_fields']) ){
     include('/options-builder/bulk-options.php');
 }
 if( $cart_item_key != ''){
@@ -760,6 +768,8 @@ if( $cart_item_key != ''){
         $scope.product_image = [];
         $scope.product_img = [];
         $scope.has_price_matrix = false;
+        var d = new Date();
+        $scope.nbb_field_set = [d.getTime()];
         $scope.check_valid = function( calculate_pm ){
             $timeout(function(){
                 var check = {}, total_check = true;
@@ -779,6 +789,9 @@ if( $cart_item_key != ''){
                 angular.forEach(check, function(c){
                     total_check = total_check && c;
                 });
+                if( $scope.options.display_type == 3 ){
+                    //todo: validate bulk fields
+                }
                 if(total_check){
                     $scope.calculate_price();
                     $scope.valid_form = true;
@@ -951,6 +964,9 @@ if( $cart_item_key != ''){
         };
         $scope.init = function(){
             appReady = true;
+            <?php if($options['display_type'] == 3): ?>
+            jQuery('input[name="add-to-cart"]').remove();
+            <?php endif; ?>
             $scope.nbd_fields = {};
             $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );
             $scope.total_price = 0;
@@ -990,6 +1006,35 @@ if( $cart_item_key != ''){
                 $scope.has_price_matrix = true;
             }
             $scope.check_valid();
+        };
+        $scope.select_all_variation = function( $event ){
+            var el = angular.element($event.target),
+            list = el.parents('table.nbo-bulk-variation').find('tbody input.nbo-bulk-checkbox'),
+            check = el.prop('checked') ? true : false;
+            jQuery.each(list, function(){
+                jQuery(this).prop('checked', check);
+            });
+        };
+        $scope.add_vairaion = function(){
+            var _d = new Date();
+            $scope.nbb_field_set.push(_d.getTime());
+            console.log($scope.nbb_field_set);
+        };
+        $scope.delete_vairaions = function( $event ){
+            var el = angular.element($event.target),
+            tb = el.parents('table.nbo-bulk-variation').find('tbody');
+            var list = []; var deleted = 0;
+            jQuery.each(tb.find('input.nbo-bulk-checkbox:checked'), function(){
+                list.push(jQuery(this).attr('data-index'));
+            });
+            angular.forEach(list, function(val){
+                if( $scope.nbb_field_set.length > 1 ){
+                    val -= deleted;
+                    $scope.nbb_field_set.splice(val, 1);
+                    deleted++;
+                }
+            });
+            el.parents('table.nbo-bulk-variation').find('input.nbo-bulk-checkbox').prop('checked', false);
         };
         $scope.init_price_matrix = function(){
             $scope.options.pm_num_col = 1;
@@ -1043,6 +1088,13 @@ if( $cart_item_key != ''){
                         $scope.options.price_matrix[i][j].fields[$scope.fields[field_index].id].value = field_val;                        
                         v_index = v_index % field.rowspan;
                     });
+                    if( $scope.form_values ){
+                        var _check_class = true;
+                        angular.forEach($scope.options.price_matrix[i][j].pm_fields, function(value, field_id){
+                            if( value != $scope.form_values[field_id] ) _check_class = false;
+                        });
+                        if( _check_class ) $scope.options.price_matrix[i][j].class = 'selected';
+                    }
                 }
             }
         };

@@ -1,5 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div class="nbd-option-field nbd-field-input-wrap" ng-if="nbd_fields['<?php echo $field['id']; ?>'].enable">
+<div class="nbd-option-field nbd-field-input-wrap <?php echo $class; ?>" ng-if="nbd_fields['<?php echo $field['id']; ?>'].enable">
     <div class="nbd-field-header">
         <label for='nbd-field-<?php echo $field['id']; ?>'>
             <?php echo $field['general']['title']; ?>
