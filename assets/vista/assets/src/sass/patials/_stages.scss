@@ -4,6 +4,9 @@
   .stages-inner {
     height: 100%;
     width: 100%;
+    position: relative;
+    overflow: hidden;
+
     .stage {
       overflow: hidden;
       background-color: #fafafa;

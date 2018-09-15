@@ -59,16 +59,18 @@
       align-items: center;
       cursor: pointer;
       border-radius: 2px;
-      i{
+      margin: 0;
+      padding: 0;
+      i {
         color: $main-color;
         font-size: 18px;
       }
-      &:hover,&:active,&:focus{
+      &:hover, &:active, &:focus {
         background-color: $menu-hover-color;
       }
-      &.active{
+      &.active {
         background-color: $menu-hover-color;
-        i{
+        i {
           font-weight: bold;
         }
       }

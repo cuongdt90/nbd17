@@ -17,7 +17,7 @@
                     <div class="v-dropdown">
                         <button class="v-btn btn-font-family v-btn-dropdown" title="<?php _e('Font family','web-to-print-online-designer'); ?>">
                             <span ng-style="{'font-family': stages[currentStage].states.text.font.alias}">{{stages[currentStage].states.text.font.name}}</span>
-                            <i class="nbd-icon-vista nbd-icon-vista-expand-more"></i></button>
+                            <i class="nbd-icon-vista nbd-icon-vista-expand-more v-dropdown-icon"></i></button>
                         <div class="v-dropdown-menu">
 
                             <div class="toolbar-font-search">
@@ -136,7 +136,7 @@
                         <div class="v-dropdown">
                             <button class="v-btn btn-color v-btn-dropdown" title="<?php _e('Text color','web-to-print-online-designer'); ?>">
                                 <span class="color-selected" ng-style="{'background-color': currentColor}"></span>
-                                <i class="nbd-icon-vista nbd-icon-vista-expand-more"></i>
+                                <i class="nbd-icon-vista nbd-icon-vista-expand-more v-dropdown-icon"></i>
                             </button>
                             <div class="v-dropdown-menu">
                                 <?php include __DIR__ . '/../color-palette.php'?>
@@ -239,7 +239,7 @@
                                 <span class="range-track"></span>
                             </div>
                         </div>
-                        <div>{{stages[currentStage].states.opacity}}</div>
+                        <div class="v-range-model">{{stages[currentStage].states.opacity}}</div>
                     </div>
                 </div>
             </div>

@@ -167,7 +167,7 @@
                                 <span class="range-track"></span>
                             </div>
                         </div>
-                        <div>{{stages[currentStage].states.opacity}}</div>
+                        <div class="v-range-model">{{stages[currentStage].states.opacity}}</div>
                     </div>
                 </div>
             </div>

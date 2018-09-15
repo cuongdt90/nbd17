@@ -1,5 +1,5 @@
 <div id="tab-element" class="v-tab-content v-more-toolbar" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
-    <span class="v-title">More</span>
+    <span class="v-title"><?php _e('More','web-to-print-online-designer'); ?></span>
     <div class="nbd-search v-action">
         <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
         <i class="nbd-icon-vista nbd-icon-vista-search" ng-click="getMedia(resource.element.type, 'search')"></i>
@@ -49,7 +49,8 @@
                                     <span class="heading-title"><?php _e('Free Drawing Mode','web-to-print-online-designer'); ?></span>
                                     <div class="brush v-dropdown">
                                         <button class="v-btn v-btn-dropdown">
-                                            Brush <i class="nbd-icon-vista nbd-icon-vista-arrow-drop-down"></i>
+                                            <?php _e('Brush','web-to-print-online-designer'); ?>
+                                            <i class="nbd-icon-vista nbd-icon-vista-arrow-drop-down v-dropdown-icon"></i>
                                         </button>
                                         <div class="v-dropdown-menu" data-pos="left">
                                             <ul class="tab-scroll">
@@ -73,7 +74,7 @@
                                     </div>
                                     <ul class="v-ranges">
                                         <li class="range range-brightness">
-                                            <label>Brush Width</label>
+                                            <label><?php _e('Brush Width','web-to-print-online-designer'); ?></label>
                                             <div class="main-track">
                                                 <input class="slide-input" type="range" step="1" min="1" max="100" value="50"
                                                    ng-model="resource.drawMode.brushWidth"
@@ -88,7 +89,7 @@
                                         <div class="nbd-color-palette show">
                                             <div class="nbd-color-palette-inner">
                                                 <div class="working-palette">
-                                                    <h3 class="color-palette-label">Set color</h3>
+                                                    <h3 class="color-palette-label"><?php _e('Set color','web-to-print-online-designer'); ?></h3>
                                                     <ul class="main-color-palette tab-scroll" style="max-height: 150px">
                                                         <li class="color-palette-add"
                                                             ng-init="showBrushColorPicker = false"
@@ -171,7 +172,7 @@
             </div>
         </div>
         <div class="info-support">
-            <span>Facebook</span>
+            <span><?php _e('Facebook','web-to-print-online-designer'); ?></span>
             <i class="nbd-icon-vista nbd-icon-vista-clear close-result-loaded" ng-click="onClickTab('', 'element')"></i>
         </div>
     </div>

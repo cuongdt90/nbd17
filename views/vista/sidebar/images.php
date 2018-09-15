@@ -4,7 +4,7 @@
     $ingId = nbdesigner_get_option('nbdesigner_instagram_app_id');
 ?>
 <div ng-if="settings['nbdesigner_enable_image'] == 'yes'" id="tab-photo" class="v-tab-content" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-photo" data-type="photo" data-offset="20">
-    <span class="v-title">Image</span>
+    <span class="v-title"><?php _e('Image','web-to-print-online-designer'); ?></span>
     <div class="nbd-search v-action">
         <input ng-class="(resource.personal.status || !resource.photo.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getPhoto(resource.photo.type, 'search')" type="search" name="search" placeholder="search" ng-model="resource.photo.photoSearch"/>
         <i class="nbd-icon-vista nbd-icon-vista-search" ng-click="getPhoto(resource.photo.type, 'search')"></i>
@@ -143,7 +143,7 @@
                                         <?php if( nbdesigner_get_option('nbdesigner_enable_google_drive') == 'yes'
                                             && nbdesigner_get_option('nbdesigner_google_api_key') != ''
                                             && nbdesigner_get_option('nbdesigner_google_client_id') != '' ): ?>
-                                            <button onclick="onApiLoad()" class="v-btn" style="margin-left: 0;">
+                                            <button onclick="onApiLoad()" class="v-btn" style="margin-left: 0;text-transform: capitalize">
                                                 <svg style="vertical-align: middle; margin-right: 15px;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                                                     <title>drive</title>
                                                     <path fill="#efc75e" d="M14.165 12.423l0.056 0.095h0.111l5.668-0.026-0.166-0.285-6.372-10.969h-0.111l-5.669 0.023 0.166 0.285c0 0 6.317 10.876 6.317 10.876z"></path>
@@ -301,8 +301,8 @@
             </div>
         </div>
         <div class="info-support">
-            <span>Facebook</span>
-            <i class="nbd-icon-vista nbd-icon-vista-clear close-result-loaded"></i>
+            <span><?php _e('Facebook','web-to-print-online-designer'); ?></span>
+            <i class="nbd-icon-vista nbd-icon-vista-clear close-result-loaded" ng-click="onClickTab('', 'photo')"></i>
         </div>
     </div>
 </div>

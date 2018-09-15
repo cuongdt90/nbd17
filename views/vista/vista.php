@@ -131,7 +131,7 @@ $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
 </script>
 
 <?php $isTask = (isset($_GET['task']) && $_GET['task'] == 'create') ? true : false; ?>
-<div ng-app="nbd-app" class="nbd-mode-vista <?php echo (is_rtl()) ? 'nbd-rlt' : ''?>">
+<div ng-app="nbd-app" class="nbd-mode-vista <?php echo (is_rtl()) ? 'nbd-rtl' : ''?>">
     <div ng-controller="designCtrl" ng-cloak>
         <div id="design-container">
             <div class="container-fluid" id="designer-controller">

@@ -8,6 +8,7 @@
 
 a, span, div, p {
   font-size: 14px;
+  color: #666;
 }
 
 a{
@@ -26,7 +27,8 @@ input, input:focus, input:active, input:hover {
 input[type=email], input[type=password], input[type=search], input[type=text], input[type=url], textarea {
   box-shadow: none;
   border-radius: 2px;
-  background-color: #f2f2f2;
+  //background-color: #f2f2f2;
+  background-color: #ccc;
   padding: 5px;
   font-size: 14px;
 }

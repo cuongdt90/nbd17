@@ -1,14 +1,12 @@
 @import "patials/icons";
 @import "patials/color-variables";
-.nbd-designer #primary {
+.nbd-designer #primary,.nbd-designer.woocommerce div.product {
   overflow: hidden;
 }
 .nbd-mode-vista {
   &.nbd-onloading {
     pointer-events: none;
   }
-  // component
-  @import "component/button";
   .nbd-vista {
     height: 580px;
     position: relative;

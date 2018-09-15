@@ -229,7 +229,7 @@ online design
 .nbd-icon-vista-qrcode:before {
   content: "\E938"; }
 
-.nbd-designer #primary {
+.nbd-designer #primary, .nbd-designer.woocommerce div.product {
   overflow: hidden; }
 
 .nbd-mode-vista {
@@ -281,44 +281,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   /* MAD-RIPPLE EFFECT */ }
   .nbd-mode-vista.nbd-onloading {
     pointer-events: none; }
-  .nbd-mode-vista .v-btn {
-    text-decoration: none;
-    font-size: 14px;
-    color: #fff;
-    background-color: #04b591;
-    text-align: center;
-    letter-spacing: .5px;
-    -webkit-transition: background-color .2s ease-out;
-    transition: background-color .2s ease-out;
-    cursor: pointer;
-    outline: 0;
-    border: none;
-    border-radius: 2px;
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    padding: 0 16px;
-    text-transform: uppercase;
-    vertical-align: middle;
-    -webkit-tap-highlight-color: transparent;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
-    .nbd-mode-vista .v-btn:hover {
-      background-color: #07d5ab;
-      box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2); }
-    .nbd-mode-vista .v-btn.waves-effect {
-      position: relative;
-      cursor: pointer;
-      display: inline-block;
-      overflow: hidden;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      vertical-align: middle;
-      z-index: 1;
-      -webkit-transition: .3s ease-out;
-      transition: .3s ease-out; }
   .nbd-mode-vista .nbd-vista {
     height: 580px;
     position: relative;
@@ -2752,7 +2714,8 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     display: inline-block;
     cursor: pointer; }
   .nbd-mode-vista a, .nbd-mode-vista span, .nbd-mode-vista div, .nbd-mode-vista p {
-    font-size: 14px; }
+    font-size: 14px;
+    color: #666; }
   .nbd-mode-vista a {
     color: #666; }
   .nbd-mode-vista img {
@@ -2765,7 +2728,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   .nbd-mode-vista input[type=email], .nbd-mode-vista input[type=password], .nbd-mode-vista input[type=search], .nbd-mode-vista input[type=text], .nbd-mode-vista input[type=url], .nbd-mode-vista textarea {
     box-shadow: none;
     border-radius: 2px;
-    background-color: #f2f2f2;
+    background-color: #ccc;
     padding: 5px;
     font-size: 14px; }
   .nbd-mode-vista .text-center {
@@ -3693,6 +3656,10 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
         padding-left: 10px;
         min-width: 31px;
         font-size: 12px; }
+    .nbd-mode-vista .v-ranges .main-track input {
+      padding: 0; }
+  .nbd-mode-vista .v-range-model {
+    min-width: 25px; }
   .nbd-mode-vista .nbd-tab-contents .nbd-tab-content {
     display: none; }
     .nbd-mode-vista .nbd-tab-contents .nbd-tab-content.active {
@@ -4474,7 +4441,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      border-radius: 2px; }
+      border-radius: 2px;
+      margin: 0;
+      padding: 0; }
       .nbd-mode-vista .v-toolbox .v-assets .v-asset i {
         color: #04b591;
         font-size: 18px; }
@@ -4689,10 +4658,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     line-height: normal; }
     .nbd-mode-vista .v-toolbox .v-toolbox-text .v-btn.btn-font-size input {
       padding: 0;
+      margin: 0;
       max-width: 40px;
       box-shadow: none;
       background-color: transparent;
-      color: #04b591; }
+      color: #04b591;
+      border: none; }
     .nbd-mode-vista .v-toolbox .v-toolbox-text .v-btn.btn-font-size i {
       margin-left: 30px;
       font-size: 12px;
@@ -4847,7 +4818,9 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     height: 100%; }
     .nbd-mode-vista .nbd-stages .stages-inner {
       height: 100%;
-      width: 100%; }
+      width: 100%;
+      position: relative;
+      overflow: hidden; }
       .nbd-mode-vista .nbd-stages .stages-inner .stage {
         overflow: hidden;
         background-color: #fafafa;
@@ -5088,7 +5061,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   flex-wrap: wrap; }
 
 .nbd-mode-vista.nbd-mobile .v-toolbar .main-toolbar .v-toolbar-item {
-  margin: auto;
+  margin: auto 0;
   overflow-x: auto; }
 
 .nbd-mode-vista.nbd-mobile .v-toolbar .main-toolbar .v-toolbar-item.right-toolbar .v-main-menu {
