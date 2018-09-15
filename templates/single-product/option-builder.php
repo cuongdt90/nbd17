@@ -489,6 +489,7 @@ $appid = "nbo-app-" . time().rand(1,100);
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
 <?php
 $html_field = '';
+if( $cart_item_key != '' && $options['display_type'] == 3) $options['display_type'] = 1;
 if( $options['display_type'] == 2 ){
     $pm_field_indexes = array_merge($options['pm_hoz'], $options['pm_ver']);
 }
@@ -497,6 +498,8 @@ foreach($options["fields"] as $key => $field){
         $class = !in_array($key, $pm_field_indexes) ? '' : 'nbo-hidden';
     }else if( $options['display_type'] == 3 ){
         $class = !in_array($key, $options['bulk_fields']) ? '' : 'nbo-hidden';
+    }else{
+        $class = '';
     }
     $need_show = true;
     if( $field['general']['data_type'] == 'i' ){
@@ -535,7 +538,7 @@ if( $cart_item_key != ''){
 ?>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields!', 'web-to-print-online-designer'); ?></p>
-        <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' ): ?>
+        <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
         <div ng-if="valid_form">
             <p><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
             <table>
@@ -768,8 +771,6 @@ if( $cart_item_key != ''){
         $scope.product_image = [];
         $scope.product_img = [];
         $scope.has_price_matrix = false;
-        var d = new Date();
-        $scope.nbb_field_set = [d.getTime()];
         $scope.check_valid = function( calculate_pm ){
             $timeout(function(){
                 var check = {}, total_check = true;
@@ -1015,24 +1016,17 @@ if( $cart_item_key != ''){
                 jQuery(this).prop('checked', check);
             });
         };
-        $scope.add_vairaion = function(){
-            var _d = new Date();
-            $scope.nbb_field_set.push(_d.getTime());
-            console.log($scope.nbb_field_set);
+        $scope.add_vairaion = function( $event ){
+            var el = angular.element($event.target),
+            tb = el.parents('table.nbo-bulk-variation').find('tbody'),
+            row = tb.find('tr').last().clone();
+            tb.append(row);
         };
         $scope.delete_vairaions = function( $event ){
             var el = angular.element($event.target),
             tb = el.parents('table.nbo-bulk-variation').find('tbody');
-            var list = []; var deleted = 0;
             jQuery.each(tb.find('input.nbo-bulk-checkbox:checked'), function(){
-                list.push(jQuery(this).attr('data-index'));
-            });
-            angular.forEach(list, function(val){
-                if( $scope.nbb_field_set.length > 1 ){
-                    val -= deleted;
-                    $scope.nbb_field_set.splice(val, 1);
-                    deleted++;
-                }
+                if( tb.find('tr').length > 1 ) jQuery(this).parents('tr').remove();
             });
             el.parents('table.nbo-bulk-variation').find('input.nbo-bulk-checkbox').prop('checked', false);
         };

@@ -214,7 +214,7 @@
                         </div>                          
                         <?php endif; ?>
                     </div>
-                    <?php if($dbID != ''): ?>
+                    <?php if($insID != ''): ?>
                     <div class="content-item type-instagram button-login" data-type="instagram" id="nbd-instagram-wrap">
                         <button class="nbd-button nbd-hover-shadow" ng-click="authenticateInstagram()" ng-hide="resource.instagram.token != ''">
                             <i class="icon-nbd icon-nbd-instagram-logo"></i>

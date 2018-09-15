@@ -390,11 +390,10 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 $options = $this->get_option($option_id);
                 $nbd_field = $post_data['nbd-field'];
                 if( isset($cart_item_data['nbd-field']) ){
-                    ob_start();
-                    var_dump($post_data['nbb-fields']);
-                    error_log(ob_get_clean());
                     /* Bulk variation */
                     $nbd_field = $cart_item_data['nbd-field'];
+                    $option_fields = unserialize($options['fields']);
+                    $nbd_field = $this->validate_before_processing($option_fields, $nbd_field);
                     unset($cart_item_data['nbd-field']);
                 }
                 $product = $variation_id ? wc_get_product( $variation_id ) : wc_get_product( $product_id );
@@ -421,6 +420,46 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             foreach($option_fields['fields'] as $key => $field){
                 if( $field['id'] == $field_id ) return $field;
             }
+        }
+        public function validate_before_processing($option_fields, $nbd_field){
+            $new_fields = $nbd_field;
+            foreach($nbd_field as $field_id => $field){
+                $origin_field = $this->get_field_by_id( $option_fields, $field_id );
+                if( $origin_field['conditional']['enable'] == 'n' || !isset($origin_field['conditional']['depend']) || count($origin_field['conditional']['depend']) == 0  ) continue;
+                $show = $origin_field['conditional']['show'];
+                $logic = $origin_field['conditional']['logic'];
+                $total_check = $logic == 'a' ? true : false;
+                $check = array();
+                foreach($origin_field['conditional']['depend'] as $key => $con){
+                    $check[$key] = true;
+                    if( $con['id'] != '' ){
+                        if( !isset($new_fields[$con['id']]) ){
+                            $check[$key] = true;
+                        }else{
+                            switch( $con['operator'] ){
+                                case 'i':
+                                    $check[$key] = $nbd_field[$con['id']] == $con['val'] ? true : false;
+                                    break;
+                                case 'n':
+                                    $check[$key] = $nbd_field[$con['id']] != $con['val'] ? true : false;
+                                    break;  
+                                case 'e':
+                                    $check[$key] = $nbd_field[$con['id']] == '' ? true : false;
+                                    break;
+                                case 'ne':
+                                    $check[$key] = $nbd_field[$con['id']] != '' ? true : false;
+                                    break;                             
+                            }
+                        }
+                    }
+                }
+                foreach ($check as $c){
+                    $total_check = $logic == 'a' ? ($total_check && $c) : ($total_check || $c);
+                }
+                $enable = $show == 'y' ? $total_check : !$total_check;
+                if( !$enable ) unset($new_fields[$field_id]);
+            }
+            return $new_fields;
         }
         public function option_processing( $options, $original_price, $fields, $quantity ){
             $option_fields = unserialize($options['fields']);
@@ -648,18 +687,157 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             return count($result[0]) ? $result[0] : false;
         }
         public function bulk_order(){
-            $bulk_fields = $_POST['nbb-fields'];
-            $nbd_field = $_POST['nbd-field'];
-ob_start();
-var_dump($_POST);
-error_log(ob_get_clean());
-      
-            $product_id     = $_POST['product_id']; 
+            $bulk_fields = $_REQUEST['nbb-fields'];
+            if( !is_array($bulk_fields) ) return false;
+            $nbd_field = isset( $_REQUEST['nbd-field'] ) ? $_REQUEST['nbd-field'] : array();
+            $qtys = $_REQUEST['nbb-qty-fields'];
+            $first_field = reset($bulk_fields);
+            // Gather bulk form fields.
+            $nbb_fields = array();
+            for( $i=0; $i < count($first_field); $i++ ){
+                $arr = array();
+                foreach($nbd_field as $field_id => $field_value){
+                    if( !isset($bulk_fields[$field_id]) ){
+                        $arr[$field_id] = $field_value;
+                    }
+                }
+                foreach($bulk_fields as $field_id => $bulk_field){
+                    $arr[$field_id] = $bulk_field[$i];
+                }
+                $nbb_fields[] = $arr;
+            }
+            $product_id = $_REQUEST['product_id']; 
             $added_count  = 0;
             $failed_count = 0;        
             $success_message = '';
             $error_message   = '';
-            
+            $adding_to_cart = wc_get_product( $product_id );
+            if ( ! $adding_to_cart ) {
+                return false;
+            }            
+            if( $adding_to_cart->get_type() == 'variable' ){
+                $variation_id = $_REQUEST['variation_id'];
+                if( $variation_id > 0 ){
+                    $missing_attributes = array();
+                    $variations = array();
+                    try {
+                        // Gather posted attributes.
+                        $posted_attributes = array();
+                        foreach ($adding_to_cart->get_attributes() as $attribute) {
+                            if (!$attribute['is_variation']) {
+                                continue;
+                            }
+                            $attribute_key = 'attribute_' . sanitize_title($attribute['name']);
+                            if (isset($_REQUEST[$attribute_key])) {
+                                if ($attribute['is_taxonomy']) {
+                                    // Don't use wc_clean as it destroys sanitized characters.
+                                    $value = sanitize_title(wp_unslash($_REQUEST[$attribute_key]));
+                                } else {
+                                    $value = html_entity_decode(wc_clean(wp_unslash($_REQUEST[$attribute_key])), ENT_QUOTES, get_bloginfo('charset'));
+                                }
+                                $posted_attributes[$attribute_key] = $value;
+                            }
+                        }
+
+                        // Check the data we have is valid.
+                        $variation_data = wc_get_product_variation_attributes( $variation_id );
+                        foreach ( $adding_to_cart->get_attributes() as $attribute ) {
+                            if ( ! $attribute['is_variation'] ) {
+                                    continue;
+                            }                        
+                            // Get valid value from variation data.
+                            $attribute_key = 'attribute_' . sanitize_title( $attribute['name'] );
+                            $valid_value   = isset( $variation_data[ $attribute_key ] ) ? $variation_data[ $attribute_key ]: '';
+                            /**
+                             * If the attribute value was posted, check if it's valid.
+                             *
+                             * If no attribute was posted, only error if the variation has an 'any' attribute which requires a value.
+                             */                        
+                            if ( isset( $posted_attributes[ $attribute_key ] ) ) {
+                                $value = $posted_attributes[ $attribute_key ];
+                                // Allow if valid or show error.
+                                if ( $valid_value === $value ) {
+                                    $variations[ $attribute_key ] = $value;
+                                } elseif ( '' === $valid_value && in_array( $value, $attribute->get_slugs() ) ) {
+                                    // If valid values are empty, this is an 'any' variation so get all possible values.
+                                    $variations[ $attribute_key ] = $value;
+                                } else {
+                                    throw new Exception( sprintf( __( 'Invalid value posted for %s', 'woocommerce' ), wc_attribute_label( $attribute['name'] ) ) );
+                                }
+                            } elseif ( '' === $valid_value ) {
+                                $missing_attributes[] = wc_attribute_label( $attribute['name'] );
+                            }
+                        }
+			if ( ! empty( $missing_attributes ) ) {
+                            throw new Exception( sprintf( _n( '%s is a required field', '%s are required fields', count( $missing_attributes ), 'woocommerce' ), wc_format_list_of_items( $missing_attributes ) ) );
+			}
+                    } catch ( Exception $e ) {
+			wc_add_notice( $e->getMessage(), 'error' );
+			return false;                        
+                    }
+                    
+                    foreach($nbb_fields as $index => $nbb_field){
+                        $cart_item_data['nbd-field'] = $nbb_field;
+                        $quantity = $qtys[$index];
+                        $passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations );
+                        if( $quantity > 0){
+                            if ( $passed_validation ) {
+                                $added = WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variations, $cart_item_data );
+                                if ( $added ) {
+                                    $added_count ++;
+                                } else {
+                                    $failed_count ++;
+                                }
+                            }else{
+                                $failed_count++;
+                            }
+                        }else{
+                            $failed_count++;
+                            continue;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }else{
+                foreach($nbb_fields as $index => $nbb_field){
+                    $cart_item_data['nbd-field'] = $nbb_field;
+                    $quantity = $qtys[$index];
+                    $passed_validation 	= apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
+                    if( $quantity > 0){
+                        if ( $passed_validation ) {
+                            $added = WC()->cart->add_to_cart( $product_id, $quantity, 0, array(), $cart_item_data );
+                            if ( $added ) {
+                                $added_count ++;
+                            } else {
+                                $failed_count ++;
+                            }
+                        }else{
+                            $failed_count++;
+                        }
+                    }else{
+                        $failed_count++;
+                    }
+                }
+            }
+            if ( $added_count ) {
+                nbd_bulk_variations_add_to_cart_message( $added_count );
+            }
+            if ( $failed_count ) {
+                wc_add_notice( sprintf( __( 'Unable to add %s to the cart.  Please check your quantities and make sure the item is available and in stock', 'web-to-print-online-designer' ), $failed_count ), 'error' );
+            }  
+            if ( ! $added_count && ! $failed_count ) {
+                wc_add_notice( __( 'No product quantities entered.', 'web-to-print-online-designer' ), 'error' );
+            }
+            if ( $failed_count === 0 && wc_notice_count( 'error' ) === 0 ) {
+                if ( $url = apply_filters( 'woocommerce_add_to_cart_redirect', false ) ) {
+                    wp_safe_redirect( $url );
+                    exit;
+                } elseif ( get_option( 'woocommerce_cart_redirect_after_add' ) === 'yes' ) {
+                    wp_safe_redirect( wc_get_cart_url() );
+                    exit;
+                }
+            } 
         }
     }
 }
