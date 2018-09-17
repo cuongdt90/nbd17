@@ -425,7 +425,7 @@ class Nbdesigner_Plugin {
         if (($hook == 'post.php') || ($hook == 'post-new.php') || ($hook == 'toplevel_page_nbdesigner') ||
                 ($hook == 'nbdesigner_page_nbdesigner_manager_product' ) || ($hook == 'toplevel_page_nbdesigner_shoper') || ($hook == 'nbdesigner_page_nbdesigner_frontend_translate') ||
                 ($hook == 'nbdesigner_page_nbdesigner_manager_fonts') || ($hook == 'nbdesigner_page_nbdesigner_manager_arts') 
-                 || ($hook == 'nbdesigner_page_nbdesigner_tools')) {
+                 || ($hook == 'nbdesigner_page_nbdesigner_tools') || ($hook == 'nbdesigner_page_manage_color')) {
             wp_register_style('admin_nbdesigner', NBDESIGNER_CSS_URL . 'admin-nbdesigner.css', array('wp-color-picker'), NBDESIGNER_VERSION);
             wp_register_script('admin_nbdesigner', NBDESIGNER_JS_URL . 'admin-nbdesigner.js', array('jquery', 'jquery-ui-resizable', 'jquery-ui-draggable', 'jquery-ui-autocomplete', 'wp-color-picker'), NBDESIGNER_VERSION);
             wp_localize_script('admin_nbdesigner', 'admin_nbds', array(

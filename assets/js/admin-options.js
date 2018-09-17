@@ -190,12 +190,20 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         $scope.options.quantity_breaks.splice(index, 1);
     };    
     /* end. quantity */
-    $scope.add_field = function(){
+    $scope.add_field = function(type){
         var field = {};
         angular.copy(NBDOPTION_FIELD, field);
         var d = new Date();
         field['id'] = 'f' + d.getTime();
-        field.isExpand = true;
+        field.isExpand = true;console.log(field);
+        if( angular.isDefined( type ) ){
+            $scope.options.fields
+            switch(type){
+                case '':
+                    
+                    break;
+            }
+        }
         $scope.options.fields.push( field );
         $scope.initfieldValue();
     };
