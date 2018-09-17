@@ -380,7 +380,11 @@
                         </div>
                         <div id="nbd-keyboard-about" class="nbd-tab-content">
                             <div class="text-center" style="margin-bottom: 40px; margin-top: 20px">
-                                <img src="<?php echo $srcImage; ?>" alt="Online Design" style="width: 80px">
+                                <?php if(isset($image['0'])): ?>
+                                <img src="<?php echo $image['0'];?>" alt="online design">
+                                <?php else: ?>
+                                <?php echo get_bloginfo( 'name' ); ?>
+                                <?php endif; ?>
                             </div>
                             <div class="copy-right">
                                 <p class="text-center">Copyright © <script>document.write(new Date().getFullYear())</script>. <?php echo get_bloginfo( 'name' ); ?></p>

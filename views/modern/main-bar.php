@@ -1,12 +1,14 @@
 <?php
 $custom_logo_id = get_theme_mod( 'custom_logo' );
 $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-$srcDefault = NBDESIGNER_PLUGIN_URL.'assets/images/logo.svg';
-$srcImage = (isset($image['0'])) ? $image[0] : $srcDefault;
 ?>
 <div class="nbd-main-bar">
     <a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="logo">
-        <img src="<?php echo $srcImage;?>" alt="online design">
+        <?php if(isset($image['0'])): ?>
+        <img src="<?php echo $image['0'];?>" alt="online design">
+        <?php else: ?>
+        <?php _e('Home','web-to-print-online-designer'); ?>
+        <?php endif; ?>
     </a>
     <i class="icon-nbd icon-nbd-menu menu-mobile"></i>
     <ul class="nbd-main-menu menu-left">
