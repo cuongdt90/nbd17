@@ -11,8 +11,8 @@ if(!class_exists('NBD_CUSTOMIZE')){
             }
             return self::$instance;
         }
-        public function init(){	
-            add_action('nbd_menu', 'manage_color_menu', 1000);
+        public function init(){
+            add_action('nbd_menu', array($this, 'manage_color_menu'), 1000);
             add_action('nbd_after_option_product_design', array($this, 'product_design_setting'), 10, 2);
             $this->ajax();
         }
@@ -37,7 +37,7 @@ if(!class_exists('NBD_CUSTOMIZE')){
         }
         public function manage_color_menu(){
             add_submenu_page(
-                'nbdesigner', __('Manage color', 'web-to-print-online-designer'), __('NB manage color', 'web-to-print-online-designer'), 'manage_nbd_setting', 'manage_color', 'manage_color'
+                'nbdesigner', __('NB  manage color', 'web-to-print-online-designer'), __('Manage color', 'web-to-print-online-designer'), 'manage_nbd_tool', 'manage_color', 'manage_color'
             );  
         }
         public function manage_color(){
