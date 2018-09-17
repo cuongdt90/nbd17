@@ -310,7 +310,12 @@ class Nbdesigner_Plugin {
                     'task2'  => 'update',
                     'product_id'    =>  $product_id,
                     'cik'    =>  $cart_item_key
-                    ),  getUrlPageNBD('create'));    
+                    ),  getUrlPageNBD('create'));
+            if( isset( $_REQUEST['nbds-ref'] ) && $_REQUEST['nbds-ref'] != '' ){
+                $url = add_query_arg(array(
+                   'reference'  => $_REQUEST['nbds-ref']
+                   ),  $url); 
+            }
             if( $variation_id > 0 ) $url .= '&variation_id='.$variation_id;
             WC()->session->__unset('nbd_last_item_cart');
             $nbd_item_key = substr(md5(uniqid()),0,10);
@@ -335,7 +340,10 @@ class Nbdesigner_Plugin {
         $is_nbupload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);      
         if( $is_nbupload ){
             echo '<input type="hidden" class="nbd-upload" id="nbd-upload-files" name="nbd-upload-files" value="" />';
-        }       
+        }   
+        if(isset($_GET['nbds-ref']) && $_GET['nbds-ref'] != ''){ ?>
+            <input type="hidden" name="nbds-ref" value="<?php echo $_GET['nbds-ref']; ?>"/>
+        <?php }
     }
     public function nbd_remove_cart_design(){
         if ( !wp_verify_nonce($_POST['nonce'], 'save-design') ) {
@@ -4368,7 +4376,7 @@ class Nbdesigner_Plugin {
         $task2 = (isset($_GET['task2']) && $_GET['task2'] != '' ) ? $_GET['task2'] : '';
         $layout = nbdesigner_get_option('nbdesigner_design_layout');
         $view = (isset($_GET['view']) && $_GET['view'] != '' ) ? $_GET['view'] : '';
-        if( ($layout == 'm' && ($task != 'reup' || $task2 == 'add_file' )) || $view == 'm'){
+        if( ($layout == 'm' && ($task != 'reup' && $task2 != 'add_file' )) || $view == 'm'){
             $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-modern.php';
         } else {
             $path = NBDESIGNER_PLUGIN_DIR . 'views/nbdesigner-frontend-template.php';

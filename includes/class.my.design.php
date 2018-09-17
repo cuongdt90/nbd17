@@ -849,7 +849,8 @@ class My_Design_Endpoint {
             }
             $name = $re->name != '' ? $re->name : get_the_title( $re->product_id );
             $link_detail_design = add_query_arg(array('id' => $re->user_id, 'template_id' => $tid), getUrlPageNBD('designer'));
-            $link_start_design = add_query_arg(array('product_id' => $re->product_id,'variation_id' => $re->variation_id,'reference'  =>  $re->folder ), getUrlPageNBD('create'));             
+            //$link_start_design = add_query_arg(array('product_id' => $re->product_id,'variation_id' => $re->variation_id,'reference'  =>  $re->folder ), getUrlPageNBD('create'));   
+            $link_start_design = add_query_arg(array('nbds-ref'  =>  $re->folder ), get_permalink($re->product_id));   
             nbdesigner_get_template('gallery/popup-preview.php', array(
                 'id' =>  $tid,
                 'name'  =>  $name,
