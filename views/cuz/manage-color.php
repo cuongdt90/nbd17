@@ -4,7 +4,7 @@
     if (!empty($_POST)) {
         $name = $_POST['nbdesigner_color_name'];
         $hex = $_POST['nbdesigner_color_hex'];
-        $cats = isset($_POST['nbdesigner_color_cat']) ? $_POST['nbdesigner_color_cat'] : array(-1);
+        $cats = isset($_POST['nbdesigner_color_cat']) ? $_POST['nbdesigner_color_cat'] : array(0);
         $id = $_POST['nbdesigner_color_id'];
 
         $data = [
@@ -73,7 +73,7 @@
                                         </label>
                                         <span class="nbdesigner-right nbdesigner-delete-item dashicons dashicons-no-alt" onclick="NBDESIGNADMIN.delete_cat_color(this)"></span>
                                         <span class="dashicons dashicons-edit nbdesigner-right nbdesigner-delete-item" onclick="NBDESIGNADMIN.edit_cat_color(this)"></span>
-                                        <a href="<?php echo add_query_arg(array('cat_id' => $val->id), admin_url('admin.php?page=nbdesigner_manager_arts')); ?>" class="nbdesigner-cat-link"><?php echo $val->name; ?></a>
+                                        <a href="<?php echo add_query_arg(array('cat_id' => $val->id), admin_url('admin.php?page=manage_color')); ?>" class="nbdesigner-cat-link"><?php echo $val->name; ?></a>
                                         <input value="<?php echo $val->name; ?>" class="nbdesigner-editcat-name" type="text"/>
                                         <span class="dashicons dashicons-yes nbdesigner-delete-item nbdesigner-editcat-name" onclick="NBDESIGNADMIN.save_cat_color(this)"></span>
                                         <span class="dashicons dashicons-no nbdesigner-delete-item nbdesigner-editcat-name" onclick="NBDESIGNADMIN.remove_action_cat_color(this)"></span>
@@ -160,7 +160,7 @@
                         html += '<input value="' + cat_id + '" type="checkbox" name="nbdesigner_color_cat[]" /></label>';
                         html += '<span class="nbdesigner-right nbdesigner-delete-item dashicons dashicons-no-alt" onclick="NBDESIGNADMIN.delete_cat_color(this)"></span>';
                         html += '<span class="dashicons dashicons-edit nbdesigner-right nbdesigner-delete-item" onclick="NBDESIGNADMIN.edit_cat_color(this)"></span>';
-                        html += '<a href="?page=nbdesigner_manager_colors&cat_id='+cat_id+'" class="nbdesigner-cat-link">'+cat_name+'</a>';
+                        html += '<a href="?page=manage_color&cat_id='+cat_id+'" class="nbdesigner-cat-link">'+cat_name+'</a>';
                         html += '<input value="'+cat_name+'" class="nbdesigner-editcat-name" type="text"/>';
                         html += '<span class="dashicons dashicons-yes nbdesigner-delete-item nbdesigner-editcat-name" onclick="NBDESIGNADMIN.save_cat_color(this)"></span>';
                         html += '<span class="dashicons dashicons-no nbdesigner-delete-item nbdesigner-editcat-name" onclick="NBDESIGNADMIN.remove_action_cat_color(this)"></span>';

@@ -108,14 +108,10 @@ if(!class_exists('NBD_CUSTOMIZE')){
             echo json_encode($data);
             wp_die();
         }
-
-
         public function nbd_add_color_group(){
             
         }
-        public function nbd_add_color(){
-            
-        }
+        public function nbd_add_color(){}
         public function manage_color_menu(){
             add_submenu_page(
                 'nbdesigner', __('NB  manage color', 'web-to-print-online-designer'), __('Manage color', 'web-to-print-online-designer'), 'manage_nbd_tool', 'manage_color', array($this, 'manage_color')
