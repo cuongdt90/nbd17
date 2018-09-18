@@ -2824,7 +2824,11 @@ class Nbdesigner_Plugin {
             24   =>    'delete_nbd_template',
             25   =>    'sell_nbd_design',
             26   =>    'update_nbd_data',
-            27   =>    'manage_nbd_setting'
+            27 => 'manage_nbd_setting',
+            28 => 'edit_nbd_color',
+            29 => 'export_nbd_color',
+            30 => 'delete_nbd_color',
+
         );
         $admin_role = get_role('administrator');
         if (null != $admin_role) {
