@@ -801,7 +801,12 @@ function default_frontend_setting(){
         'nbdesigner_pixabay_api_key' => '27347-23fd1708b1c4f768195a5093b',
         'nbdesigner_unsplash_api_key' => '5746b12f75e91c251bddf6f83bd2ad0d658122676e9bd2444e110951f9a04af8',
         'nbdesigner_enable_pixabay' => 'yes',
-        'nbdesigner_enable_unsplash' => 'yes'
+        'nbdesigner_enable_unsplash' => 'yes',
+        
+        'nbdesigner_show_grid' => 'no',
+        'nbdesigner_show_bleed' => 'no',
+        'nbdesigner_show_warning_oos' => 'no',
+        'nbdesigner_show_warning_ilr' => 'no'
     );
     return $default;
 }

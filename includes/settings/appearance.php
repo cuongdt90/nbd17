@@ -4,6 +4,52 @@ if( !class_exists('Nbdesigner_Appearance_Settings') ) {
     class Nbdesigner_Appearance_Settings {
         public static function get_options() {
             return apply_filters('nbdesigner_appearance_settings', array(
+                'editor' => array( 
+                    array(
+                        'title' => __('Show grid', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_show_grid',
+                        'description' => __( 'Hide/show grid as default in design editor.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),
+                    array(
+                        'title' => __('Show bleed', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_show_bleed',
+                        'description' => __( 'Hide/show bleed, safe zone as default in design editor.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),    
+                    array(
+                        'title' => __('Show warning out of stage', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_show_warning_oos',
+                        'description' => __( 'Hide/show warning out of stage as default in design editor.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),
+                    array(
+                        'title' => __('Show warning image low resolution', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_show_warning_ilr',
+                        'description' => __( 'Hide/show warning image low resolution as default in design editor.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    )
+                ),
                 'product' => array( 
                     array(
                         'title' => __('Show design tool', 'web-to-print-online-designer'),

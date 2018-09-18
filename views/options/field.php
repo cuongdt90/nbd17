@@ -6,6 +6,7 @@
                 <li class="nbd-field-tab active" data-target="tab-general"><?php _e('General', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-conditional"><?php _e('Conditinal', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-appearance"><?php _e('Appearance', 'web-to-print-online-designer') ?></li>
+                <li ng-if="field.is_nbd" class="nbd-field-tab" data-target="tab-online-design"><?php _e('Online design', 'web-to-print-online-designer') ?></li>
             </ul>
             <input ng-hide="true" ng-model="field.id" name="options[fields][{{fieldIndex}}][id]"/>
             <span class="nbd-field-name" ng-class="field.isExpand ? '' : 'left'"><span>{{field.general.title.value}}</span></span>
@@ -299,6 +300,27 @@
                 </div>
             </div>     
         </div>
+        <div class="tab-online-design nbd-field-content" ng-if="field.is_nbd">
+            <ng-include src="field.nbd_template"></ng-include>
+        </div>
     </div>
 </div>
 <div><a class="button" ng-click="add_field()"><span class="dashicons dashicons-plus"></span> <?php _e('Add Field', 'web-to-print-online-designer'); ?></a></div>
+<script type="text/ng-template" id="nbd.page">
+    page
+</script>
+<script type="text/ng-template" id="nbd.color">
+    color
+</script>
+<script type="text/ng-template" id="nbd.size">
+    size
+</script>
+<script type="text/ng-template" id="nbd.dpi">
+    dpi
+</script>
+<script type="text/ng-template" id="nbd.area">
+    area
+</script>
+<script type="text/ng-template" id="nbd.orientation">
+    orientation
+</script>

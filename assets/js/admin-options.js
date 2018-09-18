@@ -195,14 +195,11 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         angular.copy(NBDOPTION_FIELD, field);
         var d = new Date();
         field['id'] = 'f' + d.getTime();
-        field.isExpand = true;console.log(field);
+        field.isExpand = true;
         if( angular.isDefined( type ) ){
-            $scope.options.fields
-            switch(type){
-                case '':
-                    
-                    break;
-            }
+            field.is_nbd = 1;
+            field.nbd_template = 'nbd.' + type;
+            field.general.title.value = nbd_options.nbd_options_lang[type];
         }
         $scope.options.fields.push( field );
         $scope.initfieldValue();
@@ -425,19 +422,21 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             });
         }
     }
-}).directive( 'nbdTab', function() {
+}).directive( 'nbdTab', function($timeout) {
     return {
         restrict: 'A',
         link: function( scope, element ) {
-            jQuery.each( jQuery(element).find('.nbd-field-tab'), function(){
-                jQuery(this).on('click', function(){
-                    var target = jQuery(this).data('target');
-                    jQuery(this).parents('.nbd-field-wrap').find('.nbd-field-content').removeClass('active');
-                    jQuery(this).parent('ul').find('li').removeClass('active');
-                    jQuery(this).parents('.nbd-field-wrap').find('.'+target).addClass('active');
-                    jQuery(this).addClass('active');      
+            $timeout(function() {
+                jQuery.each( jQuery(element).find('.nbd-field-tab'), function(){
+                    jQuery(this).on('click', function(){
+                        var target = jQuery(this).data('target');
+                        jQuery(this).parents('.nbd-field-wrap').find('.nbd-field-content').removeClass('active');
+                        jQuery(this).parent('ul').find('li').removeClass('active');
+                        jQuery(this).parents('.nbd-field-wrap').find('.'+target).addClass('active');
+                        jQuery(this).addClass('active');      
+                    });
                 });
-            });            
+            });
         }
     }
 }).directive( 'nbdTip', function($timeout) {

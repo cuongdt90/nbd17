@@ -731,7 +731,10 @@ if( $cart_item_key != ''){
         }
     })(jQuery); 
     var in_quick_view = <?php echo $in_quick_view ? 1 : 0; ?>;
-    var appReady = false;
+    var nbOption = {
+        status: false,
+        odOption: {pages: 10}
+    };
     jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
         startApp();
     });
@@ -744,7 +747,7 @@ if( $cart_item_key != ''){
         });
     });
     function startApp(){
-        if( appReady ){
+        if( nbOption.status ){
             var scope = angular.element(document.getElementById("nbo-ctrl")).scope();
             scope.check_valid();
             scope.update_app(); 
@@ -797,6 +800,8 @@ if( $cart_item_key != ''){
                     $scope.calculate_price();
                     $scope.valid_form = true;
                     jQuery('.single_add_to_cart_button').removeClass( "nbo-disabled nbo-hidden");
+                    //maybe add conditional to start design
+                    $scope.postOptionsToEditor();
                 }else{
                     jQuery('.single_add_to_cart_button').addClass( "nbo-disabled");
                     if( nbds_frontend.nbdesigner_hide_add_cart_until_form_filled == 'yes' ){
@@ -809,6 +814,13 @@ if( $cart_item_key != ''){
                     $scope.calculate_price_matrix();
                 }
             });
+        };
+        $scope.postOptionsToEditor = function(){
+            var frame = document.getElementById('onlinedesigner-designer');
+            if( frame ){
+                var message = JSON.stringify(nbOption.odOption);
+                frame.contentWindow.postMessage(message, window.location.origin);
+            }
         };
         $scope.set_product_image_attr = function(ele, attr, value, id){
             if( angular.isUndefined($scope.product_image[id]) || angular.isUndefined($scope.product_image[id][attr]) ){
@@ -964,9 +976,10 @@ if( $cart_item_key != ''){
             return $scope.nbd_fields[field_id].enable;
         };
         $scope.init = function(){
-            appReady = true;
+            nbOption.status = true;
             <?php if($options['display_type'] == 3): ?>
             jQuery('input[name="add-to-cart"]').remove();
+            jQuery('input[name="quantity"]').remove();
             <?php endif; ?>
             $scope.nbd_fields = {};
             $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );
@@ -1404,6 +1417,12 @@ if( $cart_item_key != ''){
         angular.element(function() {
             angular.bootstrap(appEl, ['nboApp']);
         });
+    }
+    //window.addEventListener("message", receiveMessage, false);
+    function receiveMessage( event ){
+        if( event.origin == window.location.origin ){
+            console.log(event.data);
+        }
     }
 </script>
 </div>

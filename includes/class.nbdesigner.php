@@ -744,6 +744,7 @@ class Nbdesigner_Plugin {
                 'nbd-pages' => __('NBD Pages', 'web-to-print-online-designer')
             ),
             'appearance' => array(
+                'editor-settings' => __('Design editor', 'web-to-print-online-designer'),
                 'product-settings' => __('Product', 'web-to-print-online-designer'),
                 'category-settings' => __('Category', 'web-to-print-online-designer'),
                 'cart-checkout-order-settings' => __('Cart, order, checkout', 'web-to-print-online-designer'),
@@ -801,6 +802,7 @@ class Nbdesigner_Plugin {
             'js-settings' => $libraries_options['js-settings'],
             'css-settings' => $libraries_options['css-settings'],
             'product-settings' => $appearance_options['product'],
+            'editor-settings' => $appearance_options['editor'],
             'category-settings' => $appearance_options['category'],
             'cart-checkout-order-settings' => $appearance_options['cart-checkout-order'],
             'misc-settings' => $appearance_options['misc'],
@@ -4074,7 +4076,7 @@ class Nbdesigner_Plugin {
                 $zip->addFile($file, $name);
             }
             $zip->close();
-        }else{         
+        }else{
             require_once(ABSPATH . 'wp-admin/includes/class-pclzip.php');
             $archive = new PclZip($archive_file_name);
             foreach($file_names as $file){

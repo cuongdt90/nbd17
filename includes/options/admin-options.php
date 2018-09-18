@@ -733,7 +733,12 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
 }
 function nbd_option_i18n(){
     return array(
-        
+        'page'  =>  __('Number of pages', 'web-to-print-online-designer'),
+        'color'  =>  __('Color', 'web-to-print-online-designer'),
+        'size'  =>  __('Size', 'web-to-print-online-designer'),
+        'dpi'  =>  __('DPI', 'web-to-print-online-designer'),
+        'area'  =>  __('Area design shape', 'web-to-print-online-designer'),
+        'orientation'  =>  __('Orientation', 'web-to-print-online-designer')
     );
 }
 $nbd_printing_options = NBD_ADMIN_PRINTING_OPTIONS::instance();
