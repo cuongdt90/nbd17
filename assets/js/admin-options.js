@@ -197,14 +197,108 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         field['id'] = 'f' + d.getTime();
         field.isExpand = true;
         if( angular.isDefined( type ) ){
-            field.is_nbd = 1;
+            if( angular.isDefined($scope.nbd_options[type]) && $scope.nbd_options[type] == 1 ){
+                alert(nbd_options.nbd_options_lang.option_exist);
+                return;
+            }else{
+                $scope.nbd_options[type] = 1;
+            }
+            field.nbd_type = type;
             field.nbd_template = 'nbd.' + type;
             field.general.title.value = nbd_options.nbd_options_lang[type];
+            switch(type){
+                case 'dpi': 
+                    field.general.input_option.value.min = 72;
+                    field.general.input_option.value.max = 600;
+                    field.general.data_type.value = 'i';
+                    field.general.data_type.hidden = true;
+                    field.general.input_type.value = 'n';
+                    field.general.input_type.hidden = true;
+                    field.general.description.value = nbd_options.nbd_options_lang.dpi_description;
+                    break;
+                case 'page': 
+                    field.general.data_type.value = 'i';
+                    field.general.data_type.hidden = true;
+                    field.general.input_type.value = 'n';
+                    field.general.input_type.hidden = true;
+                    field.general.price_type.value = 'c';
+                    field.general.price_type.hidden = true;
+                    field.general.page_display = '1';
+                    field.general.exclude_page = '0';
+                    break;
+                case 'color':
+                    field.general.data_type.value = 'm';
+                    field.general.data_type.hidden = true;
+                    break;
+                case 'orientation':
+                    field.general.data_type.value = 'm';
+                    field.general.data_type.hidden = true;
+                    field.general.attributes.options[1] = {};
+                    angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
+                    field.general.attributes.options[0].name = nbd_options.nbd_options_lang.vertical;
+                    field.general.attributes.options[1].name = nbd_options.nbd_options_lang.horizontal;
+                    field.general.attributes.add_att = false;
+                    field.general.attributes.remove_att = false;
+                    break;
+                case 'area':
+                    field.general.data_type.value = 'm';
+                    field.general.data_type.hidden = true;
+                    field.general.attributes.options[1] = {};
+                    angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
+                    field.general.attributes.options[0].name = nbd_options.nbd_options_lang.rectangle;
+                    field.general.attributes.options[1].name = nbd_options.nbd_options_lang.rounded;
+                    field.general.attributes.add_att = false;
+                    field.general.attributes.remove_att = false;
+                    break;
+                case 'size':
+                    field.general.data_type.value = 'm';
+                    field.general.data_type.hidden = true;
+                    field.general.attributes.same_size = 'y';
+                    break;
+                case 'dimension':
+                    field.general.data_type.value = 'i';
+                    field.general.data_type.hidden = true;
+                    field.general.input_type.value = 't';
+                    field.general.input_type.hidden = true;
+                    field.general.mesure = 'n';
+                    field.general.mesure_range = [];
+                    break;
+            }
         }
         $scope.options.fields.push( field );
         $scope.initfieldValue();
     };
+    $scope.add_measurement_range = function(fieldIndex){
+        $scope.options['fields'][fieldIndex].general.mesure_range.push([]);
+    };
+    $scope.delete_measurement_ranges = function(fieldIndex, $event){
+        var mesure_range = $scope.options['fields'][fieldIndex].general.mesure_range;
+        if( mesure_range.length ){
+            var need_delete = [];
+            angular.forEach(mesure_range, function(mr, mr_index){
+                if( mr[3] ){
+                    need_delete.push(mr_index);
+                };
+            });
+            for (var i = need_delete.length -1; i >= 0; i--) mesure_range.splice(need_delete[i],1);
+        }
+        angular.element($event.currentTarget).parents('table.nbo-measure-range').find('input.nbo-measure-range-select-all').prop('checked', false);
+    };
+    $scope.select_all_measurement_range = function(fieldIndex, $event){
+        var mesure_range = $scope.options['fields'][fieldIndex].general.mesure_range;
+        var el = angular.element($event.target),
+        check = el.prop('checked') ? true : false;
+        if( mesure_range.length ){
+            angular.forEach(mesure_range, function(mr, mr_index){
+                mr[3] = check;
+            });
+        }
+    };
     $scope.copy_field = function( index ){
+        if(angular.isDefined($scope.options.fields[index].nbd_type)){
+            alert(nbd_options.nbd_options_lang.can_not_copy);
+            return;
+        }
         var field = {};
         angular.copy($scope.options.fields[index], field);
         var d = new Date();
@@ -214,6 +308,10 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         $scope.initfieldValue();
     };
     $scope.delete_field = function(index){
+        var field = $scope.options.fields[index];
+        if( angular.isDefined(field.nbd_type) ){
+            $scope.nbd_options[field.nbd_type] = 0;
+        }
         $scope.options.fields.splice(index, 1);
         $scope.initfieldValue();
     }; 
@@ -238,10 +336,14 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                         if( op.selected ) $scope.option_values[key] = k;
                     });
                 }
-            }            
+            }
+            if( angular.isDefined(field.nbd_type) ){
+                $scope.nbd_options[field.nbd_type] = 1;
+            }
         });
     };
     $scope.init = function(){
+        $scope.nbd_options = {};
         $scope.options = NBDOPTIONS;
         $scope.option_values = [];
         angular.forEach($scope.options.fields, function(field, key){
@@ -253,6 +355,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         console.log($scope.options);
     };
     $scope.check_depend = function( fields, data ){
+        if( angular.isDefined(data.hidden) ) return false;
         if( angular.isUndefined(data.depend) ) return true;
         var check = [], total_check = true;
         angular.forEach(data.depend, function(f, _key){
@@ -278,6 +381,10 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         return false;
     };
     $scope.remove_attribute = function(fieldIndex, key, $index){
+        if( angular.isDefined( $scope.options['fields'][fieldIndex]['general'][key].remove_att ) ){
+            alert(nbd_options.nbd_options_lang.can_not_remove_att);
+            return;
+        }
         $scope.options['fields'][fieldIndex]['general'][key]['options'].splice($index, 1);
     };
     $scope.seleted_attribute = function(fieldIndex, key, $index){
@@ -288,9 +395,13 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         $scope.initfieldValue();
     };
     $scope.add_attribute = function(fieldIndex, key){
+        if( angular.isDefined( $scope.options['fields'][fieldIndex]['general'][key].add_att ) ){
+            alert(nbd_options.nbd_options_lang.can_not_add_att);
+            return;
+        }
         $scope.options['fields'][fieldIndex]['general'][key]['options'].push(
             {
-                name: '',
+                name: nbd_options.nbd_options_lang.attribute_name,
                 price: [],
                 selected: 0,
                 preview_type:  'i',
@@ -300,7 +411,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             }
         );
     };
-    $scope.set_attribute_image = function(fieldIndex, $index){
+    $scope.set_attribute_image = function(fieldIndex, $index, type, type_url){
         var file_frame;
         if ( file_frame ) {
             file_frame.open();
@@ -318,19 +429,19 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         });
         file_frame.on( 'select', function() {
             var attachment = file_frame.state().get('selection').first().toJSON();
-            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image = attachment.id;
+            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type] = attachment.id;
             var url = attachment.url;
             if( angular.isDefined(attachment.sizes) && angular.isDefined(attachment.sizes.thumbnail) ){
                 url = attachment.sizes.thumbnail.url;
             }
-            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = url;
+            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type_url] = url;
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply();
         });
         file_frame.open(); 
     };
-    $scope.remove_attribute_image= function(fieldIndex, $index){
-        $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image = 0;
-        $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index].image_url = '';
+    $scope.remove_attribute_image= function(fieldIndex, $index, type, type_url){
+        $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type] = 0;
+        $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type_url] = '';
     }; 
     $scope.add_condition = function(fieldIndex){
         $scope.options['fields'][fieldIndex]['conditional'].depend.push({
@@ -408,7 +519,11 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
 }).directive( 'nbdColorPicker', function() {
     return {
         restrict: 'A',
+        scope: {
+            value: '=nbdColorPicker'
+        },
         link: function( scope, element ) {
+            jQuery(element).val(scope.value);
             jQuery(element).wpColorPicker({
                 change: function (evt, ui) {
                     var $input = jQuery(this);
@@ -421,7 +536,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 }
             });
         }
-    }
+    };
 }).directive( 'nbdTab', function($timeout) {
     return {
         restrict: 'A',
@@ -438,7 +553,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 });
             });
         }
-    }
+    };
 }).directive( 'nbdTip', function($timeout) {
     return {
         restrict: 'E',
@@ -457,7 +572,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 jQuery(element).find('.woocommerce-help-tip').tipTip( tiptip_args );
             }, 0);
         }
-    }
+    };
 });
 jQuery( document ).ready(function($){
    

@@ -40,7 +40,6 @@
                     <label ng-if="field.appearance.display_type.value == 'l'" for="nbd_field_{{fieldIndex}}_{{opIndex}}" >{{op.name}}</label>
                     <label ng-if="field.appearance.display_type.value == 's'" for="nbd_field_{{fieldIndex}}_{{opIndex}}" ng-style="{'background': op.preview_type == 'i' ? 'url('+op.image_url+') 0% 0% / cover' : op.color}" title="{{op.name}}"></label>
                     <label ng-if="field.appearance.display_type.value == 'r'" for="nbd_field_{{fieldIndex}}_{{opIndex}}" >{{op.name}}</label>
-                    <input ng-if="field.appearance.quantity_selector.value == 'y'" name="option_value[{{fieldIndex}}][quantity]"/>
                 </span>
             </div>
         </div>

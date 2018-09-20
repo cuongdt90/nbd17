@@ -1665,7 +1665,7 @@ function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $
     if(file_exists($archive_file_name)){
         unlink($archive_file_name);
     }        
-    if (class_exists('ZipArchive')) {
+    if (!class_exists('ZipArchive')) {
         $zip = new ZipArchive();
         if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
           exit("cannot open <$archive_file_name>\n");
@@ -2393,4 +2393,17 @@ function nbd_get_order_object() {
         }
     }
     return $theorder;
+}
+function nbd_get_image_thumbnail( $id ){
+    if( absint($id) != 0 ){
+        $image = wp_get_attachment_image_src( $id, 'thumbnail' );
+        if(!$image){
+            $image_url = wp_get_attachment_url($id);
+        }else{
+            $image_url = $image[0];
+        }
+    }else{
+        $image_url = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
+    }
+    return $image_url;
 }

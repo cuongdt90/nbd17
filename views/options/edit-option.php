@@ -88,7 +88,7 @@
                             </div>    
                         </div>                    
                         <div class="postbox nbd-fields-wrap"> 
-                            <h2><?php _e('Printing fields', 'web-to-print-online-designer'); ?></h2>
+                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing fields', 'web-to-print-online-designer'); ?></h2>
                             <div class="inside">
                                 <div>
                                     <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Default fields', 'web-to-print-online-designer'); ?>" readonly=""></p>
@@ -102,6 +102,7 @@
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('page')"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?></a>
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('color')"><?php _e('Color', 'web-to-print-online-designer'); ?></a>
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('size')"><?php _e('Size', 'web-to-print-online-designer'); ?></a>
+                                        <a class="nbd-field-btn button-primary" ng-click="add_field('dimension')"><?php _e('Custom dimension', 'web-to-print-online-designer'); ?></a>
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('dpi')"><?php _e('DPI', 'web-to-print-online-designer'); ?></a>
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('area')"><?php _e('Area design shape', 'web-to-print-online-designer'); ?></a>
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('orientation')"><?php _e('Orientation', 'web-to-print-online-designer'); ?></a>
@@ -111,7 +112,7 @@
                             </div>
                         </div>
                         <div class="postbox">
-                            <h2><?php _e('Printing options buider', 'web-to-print-online-designer'); ?></h2>
+                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing options buider', 'web-to-print-online-designer'); ?></h2>
                             <div class="inside">
                                 <div class="nbd-fields-builder">
                                     <?php include_once('quantity.php'); ?>

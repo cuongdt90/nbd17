@@ -6,7 +6,7 @@
                 <li class="nbd-field-tab active" data-target="tab-general"><?php _e('General', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-conditional"><?php _e('Conditinal', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-appearance"><?php _e('Appearance', 'web-to-print-online-designer') ?></li>
-                <li ng-if="field.is_nbd" class="nbd-field-tab" data-target="tab-online-design"><?php _e('Online design', 'web-to-print-online-designer') ?></li>
+                <li ng-if="field.nbd_type" class="nbd-field-tab" data-target="tab-online-design"><?php _e('Online design', 'web-to-print-online-designer') ?></li>
             </ul>
             <input ng-hide="true" ng-model="field.id" name="options[fields][{{fieldIndex}}][id]"/>
             <span class="nbd-field-name" ng-class="field.isExpand ? '' : 'left'"><span>{{field.general.title.value}}</span></span>
@@ -22,17 +22,17 @@
         <div class="tab-general nbd-field-content active">
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.title.title}}</b></label></div>
+                    <div><label><b><?php _e('Option name', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
-                        <input type="text" name="options[fields][{{fieldIndex}}][general][title]" ng-model="field.general.title.value">
+                        <input required type="text" name="options[fields][{{fieldIndex}}][general][title]" ng-model="field.general.title.value">
                     </div>
                 </div>
             </div>
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.description.title}}</b></label></div>
+                    <div><label><b><?php _e('Description', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -40,9 +40,9 @@
                     </div>
                 </div>
             </div> 
-            <div class="nbd-field-info">
+            <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.data_type)">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.data_type.title}}</b></label></div>
+                    <div><label><b><?php _e('Data type', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -54,7 +54,7 @@
             </div>
             <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.input_type)">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.input_type.title}}</b></label></div>
+                    <div><label><b><?php _e('Input type', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -66,7 +66,7 @@
             </div> 
             <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.input_option)">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.input_option.title}}</b></label></div>
+                    <div><label><b><?php _e('Input option', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -93,7 +93,7 @@
             </div>            
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.enabled.title}}</b> <nbd-tip data-tip="{{field.general.enabled.description}}" ></nbd-tip></label></div>
+                    <div><label><b><?php _e('Enabled', 'web-to-print-online-designer'); ?></b> <nbd-tip data-tip="<?php _e('Choose whether the option is enabled or not.', 'web-to-print-online-designer'); ?>" ></nbd-tip></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -105,7 +105,7 @@
             </div>   
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.required.title}}</b> <nbd-tip data-tip="{{field.general.required.description}}" ></nbd-tip></label></div>
+                    <div><label><b><?php _e('Required', 'web-to-print-online-designer'); ?></b> <nbd-tip data-tip="<?php _e('Choose whether the option is required or not.', 'web-to-print-online-designer'); ?>" ></nbd-tip></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -117,7 +117,7 @@
             </div>
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.price_type.title}}</b> <nbd-tip data-tip="{{field.general.price_type.description}}" ></nbd-tip></label></div>
+                    <div><label><b><?php _e('Price type', 'web-to-print-online-designer'); ?></b> <nbd-tip data-tip="<?php _e('Here you can choose how the price is calculated. Depending on the field there various types you can choose.', 'web-to-print-online-designer'); ?>" ></nbd-tip></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -129,7 +129,7 @@
             </div> 
             <div class="nbd-field-info">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.depend_quantity.title}}</b></label></div>
+                    <div><label><b><?php _e('Depend quantity breaks', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -141,7 +141,7 @@
             </div>            
             <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.price)">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.price.title}}</b> <nbd-tip data-tip="{{field.general.price.description}}" ></nbd-tip></label></div>
+                    <div><label><b><?php _e('Additional Price', 'web-to-print-online-designer'); ?></b> <nbd-tip data-tip="<?php _e('Enter the price for this field or leave it blank for no price.', 'web-to-print-online-designer'); ?>" ></nbd-tip></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div>
@@ -151,7 +151,7 @@
             </div> 
             <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.price_breaks)">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.price_breaks.title}}</b></label></div>
+                    <div><label><b><?php _e('Price depend quantity breaks', 'web-to-print-online-designer'); ?></b></label></div>
                 </div>
                 <div class="nbd-field-info-2">
                     <div class="nbd-table-wrap">
@@ -172,13 +172,13 @@
             </div>  
             <div class="nbd-field-info" ng-show="check_depend(field.general, field.general.attributes)">
                 <div class="nbd-field-info-1">
-                    <div><label><b>{{field.general.attributes.title}}</b> <nbd-tip data-tip="{{field.general.attributes.description}}" ></nbd-tip></label></div>
+                    <div><label><b><?php _e('Attributes', 'web-to-print-online-designer'); ?></b> <nbd-tip data-tip="<?php _e('Attributes let you define extra product data, such as size or color.', 'web-to-print-online-designer'); ?>" ></nbd-tip></label></div>
                 </div>  
                 <div class="nbd-field-info-2">
                     <div>
                         <div ng-repeat="(opIndex, op) in field.general.attributes.options" class="nbd-attribute-wrap">
                             <div class="nbd-attribute-img-wrap">
-                                <div><?php _e('Preview type', 'web-to-print-online-designer'); ?></div>
+                                <div><?php _e('Swatch type', 'web-to-print-online-designer'); ?> <sup class="nbs-sup-des">1</sup></div>
                                 <div>
                                     <select ng-model="op.preview_type" style="width: 110px;" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][preview_type]">
                                         <option value="i"><?php _e('Image', 'web-to-print-online-designer'); ?></option>
@@ -186,19 +186,26 @@
                                     </select>   
                                 </div>
                                 <div class="nbd-attribute-img-inner" ng-show="op.preview_type == 'i'">
-                                    <span class="dashicons dashicons-no remove-attribute-img" ng-click="remove_attribute_image(fieldIndex, $index)"></span>
+                                    <span class="dashicons dashicons-no remove-attribute-img" ng-click="remove_attribute_image(fieldIndex, $index, 'image', 'image_url')"></span>
                                     <input ng-hide="true" ng-model="op.image" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][image]"/>
-                                    <img ng-click="set_attribute_image(fieldIndex, $index)" ng-src="{{op.image != 0 ? op.image_url : '<?php echo NBDESIGNER_ASSETS_URL . 'images/placeholder.png' ?>'}}" />
+                                    <img title="<?php _e('Click to change image', 'web-to-print-online-designer'); ?>" ng-click="set_attribute_image(fieldIndex, $index, 'image', 'image_url')" ng-src="{{op.image != 0 ? op.image_url : '<?php echo NBDESIGNER_ASSETS_URL . 'images/placeholder.png' ?>'}}" />
                                 </div>
                                 <div class="nbd-attribute-color-inner" ng-show="op.preview_type == 'c'">
-                                    <div class="nbd-attribute-color-pre" ng-style="{'background': op.color}"></div>
-                                    <input type="text" name="options[fields][{{fieldIndex}}][general][attributes][options][{{$index}}][color]" ng-model="op.color" class="nbd-color-picker" nbd-color-picker/>
-                                </div>    
+                                    <input type="text" name="options[fields][{{fieldIndex}}][general][attributes][options][{{$index}}][color]" ng-model="op.color" class="nbd-color-picker" nbd-color-picker="op.color"/>
+                                </div>
+                                <div ng-if="field.appearance.change_image_product.value == 'y'">
+                                    <div><?php _e('Product image', 'web-to-print-online-designer'); ?>  <sup class="nbs-sup-des">2</sup></div>
+                                    <div class="nbd-attribute-img-inner">
+                                        <span class="dashicons dashicons-no remove-attribute-img" ng-click="remove_attribute_image(fieldIndex, $index, 'product_image', 'product_image_url')"></span>
+                                        <input ng-hide="true" ng-model="op.product_image" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][product_image]"/>
+                                        <img title="<?php _e('Click to change image', 'web-to-print-online-designer'); ?>" ng-click="set_attribute_image(fieldIndex, $index, 'product_image', 'product_image_url')" ng-src="{{op.product_image_url ? op.product_image_url : '<?php echo NBDESIGNER_ASSETS_URL . 'images/placeholder.png' ?>'}}" />
+                                    </div>
+                                </div>
                             </div>    
                             <div class="nbd-attribute-content-wrap">
                                 <div><?php _e('Title', 'web-to-print-online-designer'); ?></div>
                                 <div class="nbd-attribute-name">
-                                    <input type="text" value="{{op.name}}" ng-model="op.name" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][name]"/>
+                                    <input required type="text" value="{{op.name}}" ng-model="op.name" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][name]"/>
                                     <label><input type="checkbox" name="options[fields][{{fieldIndex}}][general][attributes][options][{{$index}}][selected]" ng-checked="op.selected" ng-click="seleted_attribute(fieldIndex, 'attributes', $index)"/> <?php _e('Selected', 'web-to-print-online-designer'); ?></label>
                                 </div>
                                 <div class="nbd-margin-10"></div>
@@ -300,27 +307,190 @@
                 </div>
             </div>     
         </div>
-        <div class="tab-online-design nbd-field-content" ng-if="field.is_nbd">
+        <div class="tab-online-design nbd-field-content" ng-if="field.nbd_type">
+            <input ng-hide="true" name="options[fields][{{fieldIndex}}][nbd_type]" ng-model="field.nbd_type">
             <ng-include src="field.nbd_template"></ng-include>
         </div>
     </div>
 </div>
 <div><a class="button" ng-click="add_field()"><span class="dashicons dashicons-plus"></span> <?php _e('Add Field', 'web-to-print-online-designer'); ?></a></div>
-<script type="text/ng-template" id="nbd.page">
-    page
-</script>
+<?php echo '<script type="text/ng-template" id="nbd.page">'; ?>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Page display:', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <select name="options[fields][{{fieldIndex}}][general][page_display]" ng-model="field.general.page_display">
+                <option value="1"><?php _e('Each page on a design stage', 'web-to-print-online-designer'); ?></option>
+                <option value="2"><?php _e('Two pages on a design stage', 'web-to-print-online-designer'); ?></option>
+            </select>
+        </div>
+    </div>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Exclude page', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <select name="options[fields][{{fieldIndex}}][general][exclude_page]" ng-model="field.general.exclude_page">
+                <option value="0"><?php _e('None', 'web-to-print-online-designer'); ?></option>
+                <option value="2"><?php _e('Cover pages', 'web-to-print-online-designer'); ?></option>
+            </select>
+        </div>
+    </div>
+<?php echo '</script>'; ?>
 <script type="text/ng-template" id="nbd.color">
-    color
+    color //to do change background
 </script>
-<script type="text/ng-template" id="nbd.size">
-    size
-</script>
+<?php echo '<script type="text/ng-template" id="nbd.size">'; ?>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div>
+                <label>
+                    <b><?php _e('Use a same online design config', 'web-to-print-online-designer'); ?></b>
+                    <nbd-tip data-tip="<?php _e('All attributes have a same online design config ( product width, height, area design width, height, left, top ).', 'web-to-print-online-designer'); ?>" ></nbd-tip>
+                </label>
+            </div>
+        </div>
+        <div class="nbd-field-info-2">
+            <select name="options[fields][{{fieldIndex}}][general][attributes][same_size]" ng-model="field.general.attributes.same_size">
+                <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+            </select>
+        </div>
+    </div>
+    <div class="nbd-field-info" ng-if="field.general.attributes.same_size == 'n'">
+        <div><b><?php _e('Online design config:', 'web-to-print-online-designer'); ?></b></div>
+        <div class="nbd-table-wrap">
+            <table class="nbd-table" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><?php _e('Product width', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Product height', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Design width', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Design height', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Design top', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Design left', 'web-to-print-online-designer'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(opIndex, op) in field.general.attributes.options">
+                        <th>{{op.name}}</th>
+                        <td><input string-to-number required class="nbd-short-ip" ng-model="op.product_width" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][product_width]" /></td>
+                        <td><input string-to-number required class="nbd-short-ip" ng-model="op.product_height" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][product_height]" /></td>
+                        <td><input string-to-number required class="nbd-short-ip" ng-model="op.real_width" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][real_width]" /></td>
+                        <td><input string-to-number required class="nbd-short-ip" ng-model="op.real_height" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][real_height]" /></td>
+                        <td><input string-to-number required class="nbd-short-ip" ng-model="op.real_top" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][real_top]" /></td>
+                        <td><input string-to-number required class="nbd-short-ip" ng-model="op.real_left" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][real_left]" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php echo '</script>'; ?>
 <script type="text/ng-template" id="nbd.dpi">
-    dpi
 </script>
 <script type="text/ng-template" id="nbd.area">
-    area
 </script>
 <script type="text/ng-template" id="nbd.orientation">
-    orientation
 </script>
+<?php echo '<script type="text/ng-template" id="nbd.dimension">'; ?>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Dimension range:', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <table class="nbd-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th><?php _e('Min', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Max', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Step', 'web-to-print-online-designer'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><?php _e('Width', 'web-to-print-online-designer'); ?></th>
+                        <td><input string-to-number class="nbd-short-ip" ng-model="field.general.min_width" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][min_width]" /></td>
+                        <td><input string-to-number class="nbd-short-ip" ng-model="field.general.max_width" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][max_width]" /></td>
+                        <td><input string-to-number class="nbd-short-ip" ng-model="field.general.step_width" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][step_width]" /></td>
+                    </tr>
+                    <tr>
+                        <th><?php _e('Height', 'web-to-print-online-designer'); ?></th>
+                        <td><input string-to-number class="nbd-short-ip" ng-model="field.general.min_height" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][min_height]" /></td>
+                        <td><input string-to-number class="nbd-short-ip" ng-model="field.general.max_height" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][max_height]" /></td>
+                        <td><input string-to-number class="nbd-short-ip" ng-model="field.general.step_height" type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][step_height]" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="nbd-field-info" style="margin-top: 10px;">
+        <div class="nbd-field-info-1">
+            <div>
+                <label>
+                    <b><?php _e('Enable measure price base on design area', 'web-to-print-online-designer'); ?></b>
+                    <nbd-tip data-tip="<?php _e('Measure price base on design area.', 'web-to-print-online-designer'); ?>" ></nbd-tip>
+                </label>
+            </div>
+        </div>
+        <div class="nbd-field-info-2">
+            <select name="options[fields][{{fieldIndex}}][general][mesure]" ng-model="field.general.mesure">
+                <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+            </select>
+        </div>
+    </div>
+    <div class="nbd-field-info" ng-if="field.general.mesure == 'y'">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Price base on design area:', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <table class="nbd-table nbo-measure-range">
+                <thead>
+                    <tr>
+                        <th class="check-column">
+                            <input class="nbo-measure-range-select-all" type="checkbox" ng-click="select_all_measurement_range(fieldIndex, $event)">
+                        </th>
+                        <th class="range-column" style="padding-right: 30px;">
+                            <span class="column-title" data-text="<?php esc_attr_e( 'Measurement Range', 'web-to-print-online-designer' ); ?>"><?php _e( 'Measurement Range', 'web-to-print-online-designer' ); ?></span>
+                            <nbd-tip data-tip="<?php _e( 'Configure the starting-ending range, inclusive, of measurements to match this rule.  The first matched rule will be used to determine the price.  The final rule can be defined without an ending range to match all measurements greater than or equal to its starting range.', 'web-to-print-online-designer'); ?>" ></nbd-tip>
+                        </th>
+                        <th class="price-column">
+                            <span><?php echo _e('Price per Unit', 'web-to-print-online-designer'); ?> <?php echo ' ('.get_woocommerce_currency_symbol() . '/' . nbdesigner_get_option('nbdesigner_dimensions_unit').'<sup>2</sup>)'; ?></span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="(mrIndex, mr) in field.general.mesure_range">
+                        <td>
+                            <input type="checkbox" class="nbo-measure-range-checkbox" ng-model="mr[3]">
+                        </td>                
+                        <td>
+                            <span>
+                                <span class="nbd-table-price-label"><?php echo _e('From', 'web-to-print-online-designer'); ?></span>
+                                <input string-to-number type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][mesure_range][{{mrIndex}}][0]" ng-model="mr[0]" class="nbd-short-ip">
+                            </span>   
+                            <span>
+                                <span class="nbd-table-price-label" style="margin-left: 10px;"><?php echo _e('To', 'web-to-print-online-designer'); ?></span>
+                                <input string-to-number type="number" min="0" step="any" name="options[fields][{{fieldIndex}}][general][mesure_range][{{mrIndex}}][1]" ng-model="mr[1]" class="nbd-short-ip">
+                            </span>                       
+                        </td>
+                        <td>
+                            <input string-to-number type="number" step="any" name="options[fields][{{fieldIndex}}][general][mesure_range][{{mrIndex}}][2]" ng-model="mr[2]" class="nbd-short-ip">
+                        </td>                
+                    </tr> 
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3">
+                            <button ng-click="add_measurement_range(fieldIndex)" style="float: left;" type="button" class="button button-primary nbd-pricing-table-add-rule"><?php _e( 'Add Rule', 'web-to-print-online-designer' ); ?></button>
+                            <button ng-click="delete_measurement_ranges(fieldIndex, $event)" style="float: right;" type="button" class="button button-secondary nbd-pricing-table-delete-rules"><?php _e( 'Delete Selected', 'web-to-print-online-designer' ); ?></button>
+                        </th>
+                    </tr>
+                </tfoot> 
+            </table>
+        </div>
+    </div>
+<?php echo '</script>'; ?>

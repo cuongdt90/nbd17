@@ -3170,7 +3170,7 @@ class Nbdesigner_Plugin {
                     if($cart_item['variation_id'] > 0){
                         $link_edit_design .= '&variation_id=' . $cart_item['variation_id'];
                     }
-                    $html .= '<br /><a href="'.$link_edit_design.'">'. __('Edit design', 'web-to-print-online-designer') .'</a>';
+                    $html .= '<br /><a class="button" href="'.$link_edit_design.'">'. __('Edit design', 'web-to-print-online-designer') .'</a>';
                     $html .= '</div>';
                 }else if( $is_nbdesign && !$_enable_upload_without_design ){
                     $id = 'nbd' . $cart_item_key;
@@ -3226,7 +3226,7 @@ class Nbdesigner_Plugin {
                     if($cart_item['variation_id'] > 0){
                         $link_reup_design .= '&variation_id=' . $cart_item['variation_id'];
                     }                    
-                    $html .= '<br /><a href="'.$link_reup_design.'">'. __('Reupload design', 'web-to-print-online-designer') .'</a>';
+                    $html .= '<br /><a class="button" href="'.$link_reup_design.'">'. __('Reupload design', 'web-to-print-online-designer') .'</a>';
                     $html .= '</div>';
                 }else if( $_enable_upload ){
                     $id = 'nbd' . $cart_item_key;
@@ -4896,6 +4896,9 @@ class Nbdesigner_Plugin {
                     $pdf->Image($_path_cd, $mLeft + $cdLeft, $mTop + $cdTop, $cdWidth,$cdHeight, '', '', '', false, '');  
                 } else if( $from_type == 3 ){
                     $svg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/frame_'. $key .'_svg.svg';
+                    /* Maybe convert url in svg to path */
+                    //$svg = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/svgpath/frame_'. $key .'_svg.svg';
+                    //$this->convert_svg_url(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/', 'frame_'. $key .'_svg.svg');
                     $pdf->ImageSVG($svg, $mLeft + $cdLeft, $mTop + $cdTop, $cdWidth,$cdHeight, '', '', '', 0, true);  
                 }
             }            
@@ -5252,6 +5255,27 @@ class Nbdesigner_Plugin {
             $new_svg = $xdoc->saveXML();
             file_put_contents($new_svg_path, $new_svg);            
         }
+    }
+    public function convert_svg_url($path, $file){
+        $svg_path = $path . '/svgpath';
+        if( !file_exists($svg_path) ) wp_mkdir_p($svg_path);
+        $new_svg_path = $svg_path.'/'.$file;
+        $xdoc = new DomDocument;
+        $xdoc->Load($path.$file);
+        $images = $xdoc->getElementsByTagName('image');
+        for ($i = 0; $i < $images->length; $i++) {
+            $tagName = $xdoc->getElementsByTagName('image')->item($i);
+            $attribNode = $tagName->getAttributeNode('xlink:href');
+            $img_src = $attribNode->value;
+            if(strpos($img_src, "data:image")!==FALSE)
+            continue;
+            $type = pathinfo($img_src, PATHINFO_EXTENSION);
+            $type = ($type =='svg' ) ? 'svg+xml' : $type;
+            $path_image = Nbdesigner_IO::convert_url_to_path($img_src);
+            $tagName->setAttribute('xlink:href', $path_image);
+        }
+        $new_svg = $xdoc->saveXML();
+        file_put_contents($new_svg_path, $new_svg); 
     }
     public function nbd_convert_files(){
         if (!wp_verify_nonce($_POST['_wpnonce'], 'nbd_jpg_nonce') && !wp_verify_nonce($_POST['_wpnonce'], 'nbd_cmyk_nonce')) {

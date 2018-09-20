@@ -1,6 +1,7 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="nbo-bulk-variation-wrap nbo-table-wrap">
     <p><b><?php _e('Bulk form', 'web-to-print-online-designer'); ?></b></p>
+    <?php if( count($options["bulk_fields"]) > 1): ?>
     <table class="nbo-bulk-variation">
         <thead>
             <tr>
@@ -50,4 +51,29 @@
             </tr>            
         </tfoot>        
     </table>
+    <?php else: 
+        $bulk_index = reset($options["bulk_fields"]);
+        $field = $options["fields"][$bulk_index];
+    ?>
+    <table class="nbo-bulk-variation">
+        <tbody>
+            <tr>
+                <th></th>
+                <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
+                <td>
+                    <?php echo $attr['name']; ?>
+                    <input type="hidden" name="nbb-fields[<?php echo $field['id']; ?>][]" value="<?php echo $key; ?>" />
+                </td>
+                <?php endforeach; ?>
+            </tr>
+            <tr>
+                <th><?php echo $field['general']['title']; ?> <?php if( $field['general']['required'] == 'y' ): ?><span class="nbd-required">*</span><?php endif; ?></th>
+                <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
+                <td><input name="nbb-qty-fields[]" type="number" min="1" step="1" value="" required="" style="width: 4em" pattern="[0-9]*"/></td>
+                </td>
+                <?php endforeach; ?>
+            </tr>
+        </tbody>
+    </table>
+    <?php endif; ?>
 </div>

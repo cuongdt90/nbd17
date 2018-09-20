@@ -179,7 +179,12 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     }
                     $_options = ($id > 0) ? $this->get_option($id) : false;//$_options = false;
                     if($_options){
-                        $options = $this->build_options( unserialize($_options['fields']) );
+                        $raw_options = unserialize($_options['fields']);
+                        if( !isset($raw_options["fields"]) ){
+                            $raw_options["fields"] = array();
+                            //$raw_options["fields"][] = $this->default_field();
+                        }
+                        $options = $this->build_options( $raw_options );
                         $options['id'] = $_options['id'];
                         $options['title'] = $_options['title'];
                         $options['priority'] = $_options['priority'];                   
@@ -195,8 +200,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                             $options["fields"][$f_index]["conditional"]['logic'] = $this->build_config_conditional_logic();
                             $options["fields"][$f_index]["conditional"]['show'] = $this->build_config_conditional_show();
                         }
-                    }
-                    $default_field = $this->default_config_field();                      
+                    }    
+                    $default_field = $this->default_config_field();
                     $product_id = ($_options && isset($_options['product_ids'])) ? absint($_options['product_ids']) : 0;
                     if( isset($_GET['product_id']) && absint($_GET['product_id']) > 0 ){
                         $product_id = absint($_GET['product_id']);
@@ -325,10 +330,18 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             foreach( $options['fields'] as $f_key => $field ){
                 $field = array_replace_recursive($this->default_field(), $field);
                 foreach ($field as $tab =>  $data){
-                    if( $tab != 'id' ){
+                    if( $tab != 'id' && $tab != 'nbd_type' ){
                         foreach ($data as $key => $f){
-                            $funcname = "build_config_".$tab.'_'.$key;
-                            $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);                     
+                            if( !in_array($key, array('page_display', 'exclude_page', 'mesure', 'mesure_range', 'min_width', 'max_width', 'step_width', 'min_height', 'max_height', 'step_height')) ){
+                                $funcname = "build_config_".$tab.'_'.$key;
+                                $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);      
+                            }
+                        }
+                    }
+                    if( $tab == 'nbd_type' ){
+                        $options['fields'][$f_key]['nbd_template'] = 'nbd.'.$data;
+                        if( isset($options['fields'][$f_key]['general']['mesure']) && !isset($options['fields'][$f_key]['general']['mesure_range']) ){
+                            $options['fields'][$f_key]['general']['mesure_range'] = array();
                         }
                     }
                 }
@@ -360,8 +373,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 ),
                 'appearance' => array(
                     'display_type' =>  null,
-                    'change_image_product' =>  null,
-                    'quantity_selector' =>  null
+                    'change_image_product' =>  null
                 )                            
             ); 
         }
@@ -380,7 +392,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         public function build_config_general_title( $value = null ){
             if (is_null($value)) $value = __( 'Title', 'web-to-print-online-designer');
             return array(
-                'title' => __( 'Option', 'web-to-print-online-designer'),
+                'title' => __( 'Option name', 'web-to-print-online-designer'),
                 'description'   =>  '',
                 'value'	=> $value,
                 'type'  => 'text'              
@@ -597,41 +609,33 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
         }     
         public function build_config_general_attributes( $attributes = null ){
             if (is_null($attributes)){ $options = array(
-                0 => array(
-                    'name'  => '',
-                    'price'	=> array(),
-                    'selected'  =>  0,
-                    'preview_type'  =>  'i',
-                    'image' =>  0,
-                    'image_url' =>  '',
-                    'product_image' =>  '',
-                    'product_image_url' =>  '',
-                    'color' =>  '#ffffff'                
-                )
-            );} else {
+                    0 => array(
+                        'name'  => __( 'Attribute name', 'web-to-print-online-designer'),
+                        'price'	=> array(),
+                        'selected'  =>  0,
+                        'preview_type'  =>  'i',
+                        'image' =>  0,
+                        'image_url' =>  '',
+                        'product_image' =>  0,
+                        'product_image_url' =>  '',
+                        'color' =>  '#ffffff'
+                    )
+                );
+            } else {
                 $options = $attributes['options'];
             };
             foreach( $options as $key => $option){
-                if( absint($option['image']) != 0 ){
-                    $image = wp_get_attachment_image_src( $option['image'], 'thumbnail' );
-                    if(!$image){
-                        $options[$key]['image_url'] = wp_get_attachment_url($option['image']);
-                    }else{
-                        $options[$key]['image_url'] = $image[0];
-                    }
-                }else{
-                    $options[$key]['image_url'] = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
+                $options[$key]['image_url'] = nbd_get_image_thumbnail( $option['image'] );
+                if( isset($options[$key]['product_image']) ){
+                    $options[$key]['product_image_url'] = nbd_get_image_thumbnail( $option['product_image'] );
                 }
-                if( isset($option['product_image']) && absint($option['product_image']) != 0 ){
-                    $options[$key]['product_image_url'] = wp_get_attachment_url( absint($option['product_image']) );
-                }else{
-                    $options[$key]['product_image_url'] = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
-                }
-            }           
+            }
+            $same_size = isset($attributes['same_size']) ? $attributes['same_size'] : 'y';
             return array(  
                 'title' => __( 'Attributes', 'web-to-print-online-designer'),
                 'description'   =>  __( 'Attributes let you define extra product data, such as size or color.'),                                     
                 'type' 		=> 'attributes',
+                'same_size' =>  $same_size,
                 'depend'    =>  array(
                     array(
                         'field' =>  'data_type',
@@ -738,7 +742,18 @@ function nbd_option_i18n(){
         'size'  =>  __('Size', 'web-to-print-online-designer'),
         'dpi'  =>  __('DPI', 'web-to-print-online-designer'),
         'area'  =>  __('Area design shape', 'web-to-print-online-designer'),
-        'orientation'  =>  __('Orientation', 'web-to-print-online-designer')
+        'orientation'  =>  __('Orientation', 'web-to-print-online-designer'),
+        'dimension'  =>  __('Custom dimension', 'web-to-print-online-designer'),
+        'dpi_description'  =>  __('DPI is used to describe the resolution number of dots per inch in a digital print and the printing resolution of a hard copy print dot gain, which is the increase in the size of the halftone dots during printing.', 'web-to-print-online-designer'),
+        'vertical'  =>  __('Vertical', 'web-to-print-online-designer'),
+        'horizontal'  =>  __('Horizontal', 'web-to-print-online-designer'),
+        'can_not_add_att'  =>  __('Can not add more attribute for this option.', 'web-to-print-online-designer'),
+        'can_not_remove_att'  =>  __('Can not remove this attribute.', 'web-to-print-online-designer'),
+        'rectangle'  =>  __('Rectangle', 'web-to-print-online-designer'),
+        'rounded'  =>  __('Rounded rectangle', 'web-to-print-online-designer'),
+        'attribute_name'  =>  __('Attribute name', 'web-to-print-online-designer'),
+        'can_not_copy'  =>  __('Can not copy this option.', 'web-to-print-online-designer'),
+        'option_exist'  =>  __('This option exist.', 'web-to-print-online-designer')
     );
 }
 $nbd_printing_options = NBD_ADMIN_PRINTING_OPTIONS::instance();

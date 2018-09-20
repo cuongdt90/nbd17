@@ -155,6 +155,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         }
         public function get_default_option($options){
             $fields = array();
+            if( !isset($options['fields']) ) return $fields;
             foreach ($options['fields'] as $field){
                 if($field['general']['enabled'] == 'y'){
                     $fields[$field['id']] = array(
@@ -598,11 +599,16 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 $_options = $this->get_option($option_id);
                 if($_options){
                     $options = unserialize($_options['fields']);
+                    if( !isset($options['fields']) ){
+                        echo ''; 
+                        return;
+                    }
                     foreach ($options['fields'] as $key => $field){
                         if($field['appearance']['change_image_product'] == 'y'){
                             foreach ($field['general']['attributes']['options'] as $op_index => $option ){
-                                $attachment_id = absint($option['image']);
-                                if( $attachment_id != 0 && $option['preview_type'] == 'i' ){
+                                $option['product_image'] = isset($option['product_image']) ? $option['product_image'] : 0;
+                                $attachment_id = absint($option['product_image']);
+                                if( $attachment_id != 0 ){
                                     $image_link = wp_get_attachment_url($attachment_id);
                                     $attachment_object = get_post( $attachment_id );
                                     $full_src = wp_get_attachment_image_src( $attachment_id, 'large' );
@@ -627,7 +633,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                                 }else{
                                     $options['fields'][$key]['general']['attributes']['options'][$op_index]['imagep'] = 'n';
                                 }
-                            }   
+                            }
                         }
                     }
                     $product = wc_get_product($product_id);
