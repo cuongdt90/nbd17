@@ -1414,7 +1414,9 @@ function nbd_get_default_variation_id2( $product_id ){
 }
 function nbd_check_permission(){
     if( isset($_GET['cik']) ){
+        if( isset($_GET['task']) && $_GET['task'] == 'new' ) return true;
         if( !(isset($_GET['task2']) && $_GET['task2'] != '') && !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
+        if( !(isset($_GET['task']) && $_GET['task'] == 'edit') && !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
     }
     if( isset($_GET['oid']) ){
         $order = wc_get_order(absint($_GET['oid']) ); 

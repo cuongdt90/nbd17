@@ -338,9 +338,19 @@
         </div>
     </div>
 <?php echo '</script>'; ?>
-<script type="text/ng-template" id="nbd.color">
-    color //to do change background
-</script>
+<?php echo '<script type="text/ng-template" id="nbd.color">'; ?>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Page display:', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <select name="options[fields][{{fieldIndex}}][general][page_display]" ng-model="field.general.page_display">
+                <option value="1"><?php _e('Each page on a design stage', 'web-to-print-online-designer'); ?></option>
+                <option value="2"><?php _e('Two pages on a design stage', 'web-to-print-online-designer'); ?></option>
+            </select>
+        </div>
+    </div>
+<?php echo '</script>'; ?>
 <?php echo '<script type="text/ng-template" id="nbd.size">'; ?>
     <div class="nbd-field-info">
         <div class="nbd-field-info-1">

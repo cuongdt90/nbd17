@@ -266,7 +266,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 if( isset($cart_item['nbo_meta']) ){
                     //$product = $cart_item['data'];
                     $variation_id = $cart_item['variation_id'];
-                    $variation_id = $cart_item['product_id'];
+                    $product_id = $cart_item['product_id'];
                     $product = $variation_id ? wc_get_product( $variation_id ) : wc_get_product( $product_id );
                     $options = $cart_item['nbo_meta']['options'];
                     $fields = $cart_item['nbo_meta']['field'];
@@ -309,7 +309,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 $cart_item_key = $this->cart_edit_key;
                 $cart_item = WC()->cart->get_cart_item( $cart_item_key );
                 if ( isset( $cart_item["quantity"] ) ) {
-                        $args["input_value"] = $cart_item["quantity"];
+                    $args["input_value"] = $cart_item["quantity"];
                 }
             }
             return $args;
@@ -487,6 +487,10 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                             $factor = $origin_field['general']['price_breaks'][$quantity_break['index']];
                         }
                     }
+                    if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'dimension' && $origin_field['general']['mesure'] == 'y' && count($origin_field['general']['mesure_range']) > 0 ){
+                        $dimension = explode("x",$val);
+                        $factor = $this->calculate_price_base_measurement($origin_field['general']['mesure_range'], $dimension[0], $dimension[1]);
+                    }
                 }else{
                     $option = $origin_field['general']['attributes']['options'][$val];
                     $_fields[$key]['value_name'] = $option['name'];
@@ -526,8 +530,8 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         break;
                     case 'c':
                         $_fields[$key]['price'] = $factor * absint( $val );
-                        $total_price = $factor * absint( $val );
-                        break;       
+                        $total_price += $factor * absint( $val );
+                        break;
                 }
             }
             $total_price += ( ($original_price + $total_price ) * ($xfactor - 1 ) );
@@ -549,6 +553,22 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 'fields'    => $_fields,
                 'cart_image'    =>  $cart_image
             );
+        }
+        public function calculate_price_base_measurement( $mesure_range, $width, $height){
+            $area = floatval($width) * floatval($height);
+            $price_per_unit = $start_range = $end_range = $price_range = 0;
+            foreach($mesure_range as $key => $range){
+                $start_range = floatval($range[0]);
+                $end_range = floatval($range[1]);
+                $price_range = floatval($range[2]);
+                if( $start_range <= $area && ( $area <= $end_range || $end_range == 0 ) ){
+                    $price_per_unit = $price_range;
+                }
+                if( $start_range <= $area && $key == ( count($mesure_range) - 1 ) && $area > $end_range  ){
+                    $price_per_unit = $price_range;
+                }
+            }
+            return $area * $price_per_unit;
         }
         public function get_quantity_break( $options, $quantity ){
             $quantity_break = array('index' =>  0, 'oparator' => 'gt');

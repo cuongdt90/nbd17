@@ -218,13 +218,22 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     break;
                 case 'page': 
                     field.general.data_type.value = 'i';
-                    field.general.data_type.hidden = true;
+                    //field.general.data_type.hidden = true;
                     field.general.input_type.value = 'n';
                     field.general.input_type.hidden = true;
                     field.general.price_type.value = 'c';
                     field.general.price_type.hidden = true;
                     field.general.page_display = '1';
                     field.general.exclude_page = '0';
+                    field.general.attributes.options[1] = {};
+                    field.general.attributes.options[2] = {};
+                    angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
+                    angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
+                    field.general.attributes.options[0].name = nbd_options.nbd_options_lang.front;
+                    field.general.attributes.options[1].name = nbd_options.nbd_options_lang.back;
+                    field.general.attributes.options[2].name = nbd_options.nbd_options_lang.both;
+                    field.general.attributes.add_att = false;
+                    field.general.attributes.remove_att = false;
                     break;
                 case 'color':
                     field.general.data_type.value = 'm';
@@ -339,6 +348,47 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             }
             if( angular.isDefined(field.nbd_type) ){
                 $scope.nbd_options[field.nbd_type] = 1;
+                switch(field.nbd_type){
+                    case 'dpi': 
+                        field.general.data_type.hidden = true;
+                        field.general.input_type.hidden = true;
+                        break;
+                    case 'page': 
+                        field.general.input_type.hidden = true;
+                        field.general.price_type.hidden = true;
+                        if( field.general.data_type.value == 'i' ){
+                            field.general.attributes.options[1] = {};
+                            field.general.attributes.options[2] = {};
+                            angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
+                            angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
+                            field.general.attributes.options[0].name = nbd_options.nbd_options_lang.front;
+                            field.general.attributes.options[1].name = nbd_options.nbd_options_lang.back;
+                            field.general.attributes.options[2].name = nbd_options.nbd_options_lang.both;
+                        }
+                        field.general.attributes.add_att = false;
+                        field.general.attributes.remove_att = false;
+                        break;
+                    case 'color':
+                        field.general.data_type.hidden = true;
+                        break;
+                    case 'orientation':
+                        field.general.data_type.hidden = true;
+                        field.general.attributes.add_att = false;
+                        field.general.attributes.remove_att = false;
+                        break;
+                    case 'area':
+                        field.general.data_type.hidden = true;
+                        field.general.attributes.add_att = false;
+                        field.general.attributes.remove_att = false;
+                        break;
+                    case 'size':
+                        field.general.data_type.hidden = true;
+                        break;
+                    case 'dimension':
+                        field.general.data_type.hidden = true;
+                        field.general.input_type.hidden = true;
+                        break;
+                }
             }
         });
     };

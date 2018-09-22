@@ -753,7 +753,10 @@ function nbd_option_i18n(){
         'rounded'  =>  __('Rounded rectangle', 'web-to-print-online-designer'),
         'attribute_name'  =>  __('Attribute name', 'web-to-print-online-designer'),
         'can_not_copy'  =>  __('Can not copy this option.', 'web-to-print-online-designer'),
-        'option_exist'  =>  __('This option exist.', 'web-to-print-online-designer')
+        'option_exist'  =>  __('This option exist.', 'web-to-print-online-designer'),
+        'front'  =>  __('Front side', 'web-to-print-online-designer'),
+        'back'  =>  __('Back side', 'web-to-print-online-designer'),
+        'both'  =>  __('Both font and back sides', 'web-to-print-online-designer')
     );
 }
 $nbd_printing_options = NBD_ADMIN_PRINTING_OPTIONS::instance();

@@ -733,7 +733,7 @@ if( $cart_item_key != ''){
     var in_quick_view = <?php echo $in_quick_view ? 1 : 0; ?>;
     var nbOption = {
         status: false,
-        odOption: {pages: 10}
+        odOption: {}
     };
     jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
         startApp();
@@ -784,6 +784,10 @@ if( $cart_item_key != ''){
                     if( origin_field.general.data_type == 'i' ){
                         if( origin_field.general.input_type != 't' ){
                             if( angular.isUndefined(field.value) ) check[field_id] = false;
+                        }else{
+                            if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' ){
+                                if( angular.isUndefined(field.width) || angular.isUndefined(field.height) ) check[field_id] = false;
+                            }
                         }
                         field.value_name = field.value;
                     }else{
@@ -816,11 +820,64 @@ if( $cart_item_key != ''){
             });
         };
         $scope.postOptionsToEditor = function(){
+            angular.forEach($scope.nbd_fields, function(field, field_id){
+                if(field.enable){
+                    var origin_field = $scope.get_field(field_id);
+                    if( angular.isDefined(origin_field.nbd_type) ){
+                        switch(origin_field.nbd_type){
+                            case 'dpi':
+                                nbOption.odOption.dpi = $scope.validate_int( field.value );
+                                break;
+                            case 'color':
+                                
+                                break;
+                            case 'page':
+                                var number_page = $scope.validate_int( field.value );
+                                if( origin_field.general.data_type == 'm' ){
+                                    number_page = number_page == 2 ? 2 : 1;
+                                }
+                                nbOption.odOption.page = {
+                                    number: number_page,
+                                    page_display: origin_field.general.page_display,
+                                    exclude_page: origin_field.general.exclude_page
+                                };
+                                break;
+                            case 'size':
+                                var option_size = origin_field.general.attributes.options[field.value];
+                                nbOption.odOption.size = {
+                                    product_width: option_size.product_width,
+                                    product_height: option_size.product_height,
+                                    real_width: option_size.real_width,
+                                    real_height: option_size.real_height,
+                                    real_top: option_size.real_top,
+                                    real_left: option_size.real_left
+                                };
+                                break;
+                            case 'dimension':
+                                nbOption.odOption.dimension = {
+                                    width: field.width,
+                                    height: field.height
+                                };
+                                break;
+                            case 'orientation':
+                                nbOption.odOption.orientation = $scope.validate_int( field.value );
+                                break;
+                            case 'area':
+                                nbOption.odOption.area = $scope.validate_int( field.value );
+                                break;
+                        }
+                    }
+                }
+            });
+            jQuery(document).triggerHandler( 'change.nbo_options' );
             var frame = document.getElementById('onlinedesigner-designer');
             if( frame ){
-                var message = JSON.stringify(nbOption.odOption);
-                frame.contentWindow.postMessage(message, window.location.origin);
+                frame.contentWindow.postMessage('change_nbo_options', window.location.origin);
             }
+        };
+        $scope.update_dimensionvalue = function(field_id){
+            $scope.nbd_fields[field_id].value = $scope.nbd_fields[field_id].width + 'x' + $scope.nbd_fields[field_id].height;
+            $scope.check_valid();
         };
         $scope.set_product_image_attr = function(ele, attr, value, id){
             if( angular.isUndefined($scope.product_image[id]) || angular.isUndefined($scope.product_image[id][attr]) ){
@@ -1011,6 +1068,12 @@ if( $cart_item_key != ''){
             });
             angular.forEach($scope.form_values, function(value, field_id){
                 if(field_id) $scope.nbd_fields[field_id].value = value;
+                var origin_field = $scope.get_field(field_id);
+                if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' ){
+                    var dimension = value.split("x");
+                    $scope.nbd_fields[field_id].width = parseFloat(dimension[0]);
+                    $scope.nbd_fields[field_id].height = parseFloat(dimension[1]);
+                }
             });
             angular.forEach($scope.fields, function(field){
                 $scope.check_depend(field.id);
@@ -1328,6 +1391,10 @@ if( $cart_item_key != ''){
                                 factor = origin_field.general.price_breaks[quantity_break.index];
                             }
                         }
+                        if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
+                                && origin_field.general.mesure == 'y' && origin_field.general.mesure_range.length > 0 ){
+                            factor = $scope.calculate_price_base_measurement(origin_field.general.mesure_range, field.width, field.height);
+                        }
                     }else{
                         var option = origin_field.general.attributes.options[field.value];
                         if(origin_field.general.depend_quantity == 'n'){
@@ -1378,6 +1445,22 @@ if( $cart_item_key != ''){
             $scope.final_price = $scope.convert_to_wc_price( $scope.total_price + $scope.basePrice - $scope.discount_by_qty );
             $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
             $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
+        };
+        $scope.calculate_price_base_measurement = function(mesure_range, width, height){
+            var area = $scope.validate_float(width) * $scope.validate_float(height);
+            var price_per_unit = 0, start_range = 0, end_range = 0, price_range = 0;
+            angular.forEach(mesure_range, function(range, key){
+                start_range = $scope.validate_float(range[0]);
+                end_range = $scope.validate_float(range[1]);
+                price_range = $scope.validate_float(range[2]);
+                if( start_range <= area && ( area <= end_range || end_range == 0 ) ){
+                    price_per_unit = price_range;
+                }
+                if( start_range <= area && key == ( mesure_range.length - 1 ) && area > end_range  ){
+                    price_per_unit = price_range;
+                }
+            });
+            return price_per_unit * area;
         };
         $scope.update_app = function(){
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply(); 

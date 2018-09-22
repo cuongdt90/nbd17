@@ -857,6 +857,9 @@
             .nbd-global-color-palette.nbd-color-palette .nbd-color-palette-inner:after {
                 display: none !important;
             }
+            .nbd-main-bar .logo{
+                color: #404762;
+            }
             @media screen and (min-width: 768px) {
                 .nbd-stages .stage .page-toolbar {
                     top: 50%;                

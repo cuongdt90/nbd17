@@ -28,8 +28,7 @@ class Nbdesigner_Plugin {
             
         } else {    
             $this->frontend_hook();    
-        }    
-        //$this->freedom();
+        }
     }
     public function ajax(){
         // Nbdesigner_EVENT => nopriv
@@ -352,10 +351,16 @@ class Nbdesigner_Plugin {
         $type = $_POST['type'];
         $cart_item_key = $_POST['cart_item_key'];
         if( $type == 'custom' ){
-            WC()->session->__unset($cart_item_key . '_nbd');   
+            WC()->session->__unset($cart_item_key . '_nbd');
+            unset( WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbd'] );
         }else {
-            WC()->session->__unset($cart_item_key . '_nbu');   
+            WC()->session->__unset($cart_item_key . '_nbu');
+            unset( WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbu'] );
         }
+        if( count(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']) == 0 ){
+            unset(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']);
+        }
+        WC()->cart->set_session();
         echo 'success';
         wp_die();
     }    
@@ -2227,6 +2232,9 @@ class Nbdesigner_Plugin {
             if( isset($_GET['nbds-ref']) ){
                 $src .= '&reference='. $_GET['nbds-ref'];
             }
+            if( isset($_GET['nbo_cart_item_key']) && $_GET['nbo_cart_item_key'] !='' ){
+                $src .= '&cik='. $_GET['nbo_cart_item_key'];
+            }
             if( $variation_id != 0 ){
                 $src .= '&variation_id='. $variation_id;
             }
@@ -2631,12 +2639,16 @@ class Nbdesigner_Plugin {
             $cart_item_key = $_POST['cart_item_key'];
             WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
             WC()->session->__unset('nbu_item_key_'.$nbd_item_cart_key);
+            if( isset(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']) ) WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds'] = array();
             if( !$add_file ){
                 WC()->session->set($cart_item_key. '_nbd', $nbd_item_key);
+                WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbd'] = $nbd_item_key;
             }
             if( isset($_POST['nbd_file']) && $_POST['nbd_file'] != '' ){
-                WC()->session->set($cart_item_key. '_nbu', $nbu_item_key);      
+                WC()->session->set($cart_item_key. '_nbu', $nbu_item_key);
+                WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbu'] = $nbu_item_key;
             }
+            WC()->cart->set_session();
         }else {             
             /* Add to cart directly in custom page */
             $quantity = 1;
@@ -2748,6 +2760,9 @@ class Nbdesigner_Plugin {
             if( $task == 'new' ){
                 if( $task2 == 'update' ){
                     WC()->session->set($cart_item_key. '_nbd', $nbd_item_key);
+                    if( isset(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']) ) WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds'] = array();
+                    WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbd'] = $nbd_item_key;
+                    WC()->cart->set_session();
                     WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
                 }else{
                     WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_item_key);
@@ -2916,61 +2931,6 @@ class Nbdesigner_Plugin {
         ));
         return true;
     }
-    /**
-     * Update table templates
-     * @since 1.5.0
-     * 
-     * @global type $wpdb
-     * @param int $product_id product id
-     * @param char $folder folder name
-     * @param int $priority priority ex: primary, extra
-     * @param int $publish publish or unpublish
-     * @param int $private private or publish
-     * @return boolean
-     */
-    private function nbdesigner_update_table_templates($product_id, $folder, $priority = '', $publish = '', $private = ''){
-        global $wpdb;
-        $data = array();
-        if($priority !== '') $data['priority'] = $priority;
-        if($publish !== '') $data['publish'] = $publish;
-        if($private !== '') $data['private'] = $private;
-        $wpdb->update( $wpdb->prefix . 'nbdesigner_templates', $data, array( 'product_id' => $product_id, 'folder' => $folder ) );
-        return true;
-    }
-    private function update_template_hit($pid, $folder){
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'nbdesigner_templates';
-        $sql = "SELECT * FROM $table_name WHERE product_id = '$pid' AND folder = '$folder' ORDER BY created_date DESC";
-        $tem =  $wpdb->get_results($sql, ARRAY_A);
-        $data = array();
-        if(count($tem)){
-            if($tem[0]['hit']){
-                $data['hit'] = $tem[0]['hit'] + 1; 
-            }else{
-                $data['hit'] = 1;
-            }             
-            $wpdb->update( $wpdb->prefix . 'nbdesigner_templates', $data, array( 'product_id' => $pid, 'folder' => $folder ) );
-        }   
-        return true;        
-    }
-    private function nbdesigner_delete_record_templates($product_id, $folder){
-        global $wpdb;
-        $wpdb->delete( $wpdb->prefix . 'nbdesigner_templates', array( 'product_id' => $product_id, 'folder' => $folder ) );
-        return true;
-    }
-    private function nbdesigner_get_template_from_db($product_id, $status = 'publish'){
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'nbdesigner_templates';
-        if($status == 'unpublish'){
-            $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND publish = 0 ORDER BY created_date DESC";
-        }else if($status == 'publish'){
-            $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND publish = 1 ORDER BY created_date DESC";
-        }else {
-            $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND private = 1 ORDER BY created_date DESC";
-        }
-        $results = $wpdb->get_results($sql);
-        return $results;
-    }   
     public function nbdesigner_save_webcam_image(){
         if (!wp_verify_nonce($_POST['nonce'], 'save-design')) {
             die('Security error');
@@ -3065,58 +3025,6 @@ class Nbdesigner_Plugin {
             add_post_meta($order_id, '_nbdesigner_upload_order_changed', 1);
             add_post_meta($order_id, '_nbu', 1);
         }        
-    }
-    public function nbdesigner_copy_dir($src, $dst) {
-        if (file_exists($dst)) $this->nbdesigner_delete_folder($dst);
-        if (is_dir($src)) {
-            wp_mkdir_p($dst);
-            $files = scandir($src);
-            foreach ($files as $file){
-                if ($file != "." && $file != "..") $this->nbdesigner_copy_dir("$src/$file", "$dst/$file");
-            }
-        } else if (file_exists($src)) copy($src, $dst);
-    }
-    public function nbdesigner_list_thumb($path, $level = 2) {
-        $list = array();
-        $_list = $this->nbdesigner_list_files($path, $level);
-        $list = preg_grep('/\.(jpg|jpeg|png|gif)(?:[\?\#].*)?$/i', $_list);
-        return $list;
-    }
-    public function nbdesigner_list_files($folder = '', $levels = 100) {
-        if (empty($folder))
-            return false;
-        if (!$levels)
-            return false;
-        $files = array();
-        if ($dir = @opendir($folder)) {
-            while (($file = readdir($dir) ) !== false) {
-                if (in_array($file, array('.', '..')))
-                    continue;
-                if (is_dir($folder . '/' . $file)) {
-                    $files2 = $this->nbdesigner_list_files($folder . '/' . $file, $levels - 1);
-                    if ($files2)
-                        $files = array_merge($files, $files2);
-                    else
-                        $files[] = $folder . '/' . $file . '/';
-                } else {
-                    $files[] = $folder . '/' . $file;
-                }
-            }
-        }
-        @closedir($dir);
-        return $files;
-    }
-    public function nbdesigner_delete_folder($path) {
-        if (is_dir($path) === true) {
-            $files = array_diff(scandir($path), array('.', '..'));
-            foreach ($files as $file) {
-                $this->nbdesigner_delete_folder(realpath($path) . '/' . $file);
-            }
-            return rmdir($path);
-        } else if (is_file($path) === true) {
-            return unlink($path);
-        }
-        return false;
     }
     public function nbdesigner_display_posts_design($column, $post_id) {
         if ($column == 'design') {
@@ -5681,8 +5589,5 @@ class Nbdesigner_Plugin {
                 }
             }
         }
-    }
-    public function freedom(){
-
     }
 }
