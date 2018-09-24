@@ -238,6 +238,12 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 case 'color':
                     field.general.data_type.value = 'm';
                     field.general.data_type.hidden = true;
+                    field.general.attributes.bg_type = 'i';
+                    field.general.attributes.number_of_sides = 4;
+                    angular.forEach(field.general.attributes.options, function(op){
+                        op.bg_image = [];
+                        op.bg_image_url = [];
+                    });
                     break;
                 case 'orientation':
                     field.general.data_type.value = 'm';
@@ -370,6 +376,12 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                         break;
                     case 'color':
                         field.general.data_type.hidden = true;
+                        if( field.general.attributes.options.bg_type == 'c' ){
+                            angular.forEach(field.general.attributes.options, function(op){
+                                op.bg_image = [];
+                                op.bg_image_url = [];
+                            });
+                        }
                         break;
                     case 'orientation':
                         field.general.data_type.hidden = true;
@@ -457,11 +469,13 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 preview_type:  'i',
                 image:  0,
                 image_url:  '',
-                color:  '#ffffff'                
+                color:  '#ffffff',
+                bg_image: [],
+                bg_image_url: []
             }
         );
     };
-    $scope.set_attribute_image = function(fieldIndex, $index, type, type_url){
+    $scope.set_attribute_image = function(fieldIndex, $index, type, type_url, $bg_index){
         var file_frame;
         if ( file_frame ) {
             file_frame.open();
@@ -479,12 +493,20 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         });
         file_frame.on( 'select', function() {
             var attachment = file_frame.state().get('selection').first().toJSON();
-            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type] = attachment.id;
+            if( angular.isDefined($bg_index) ){
+                $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type][$bg_index] = attachment.id;
+            }else{
+                $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type] = attachment.id;
+            }
             var url = attachment.url;
             if( angular.isDefined(attachment.sizes) && angular.isDefined(attachment.sizes.thumbnail) ){
                 url = attachment.sizes.thumbnail.url;
             }
-            $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type_url] = url;
+            if( angular.isDefined($bg_index) ){
+                $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type_url][$bg_index] = url;
+            }else{
+                $scope.options['fields'][fieldIndex]['general']['attributes']['options'][$index][type_url] = url;
+            }
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply();
         });
         file_frame.open(); 
@@ -622,6 +644,14 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 jQuery(element).find('.woocommerce-help-tip').tipTip( tiptip_args );
             }, 0);
         }
+    };
+}).filter('range', function() {
+    return function (input, total) {
+        total = parseInt(total);
+        for (var i = 0; i < total; i++) {
+            input.push(i);
+        }
+        return input;
     };
 });
 jQuery( document ).ready(function($){

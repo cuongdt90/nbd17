@@ -829,7 +829,12 @@ if( $cart_item_key != ''){
                                 nbOption.odOption.dpi = $scope.validate_int( field.value );
                                 break;
                             case 'color':
-                                
+                                var option_color = origin_field.general.attributes.options[field.value];
+                                nbOption.odOption.color = {
+                                    bg_type: origin_field.general.attributes.bg_type,
+                                    bg_color: option_color.bg_color,
+                                    bg_image: option_color.bg_image_url
+                                };
                                 break;
                             case 'page':
                                 var number_page = $scope.validate_int( field.value );

@@ -629,13 +629,22 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 if( isset($options[$key]['product_image']) ){
                     $options[$key]['product_image_url'] = nbd_get_image_thumbnail( $option['product_image'] );
                 }
+                if( isset($attributes['bg_type']) && $attributes['bg_type'] == 'i' ){
+                    foreach( $option['bg_image'] as $k => $bg ){
+                        $options[$key]['bg_image_url'][$k] = nbd_get_image_thumbnail( $bg );
+                    }
+                }
             }
             $same_size = isset($attributes['same_size']) ? $attributes['same_size'] : 'y';
+            $bg_type = isset($attributes['bg_type']) ? $attributes['bg_type'] : 'i';
+            $number_of_sides = isset($attributes['number_of_sides']) ? $attributes['number_of_sides'] : 4;
             return array(  
                 'title' => __( 'Attributes', 'web-to-print-online-designer'),
                 'description'   =>  __( 'Attributes let you define extra product data, such as size or color.'),                                     
                 'type' 		=> 'attributes',
                 'same_size' =>  $same_size,
+                'bg_type' =>  $bg_type,
+                'number_of_sides' =>  $number_of_sides,
                 'depend'    =>  array(
                     array(
                         'field' =>  'data_type',

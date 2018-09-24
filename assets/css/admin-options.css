@@ -797,3 +797,8 @@
     border-radius: 50%;
     color: #fff;
 }
+.bg_od_preview {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}

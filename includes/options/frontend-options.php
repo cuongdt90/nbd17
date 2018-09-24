@@ -655,6 +655,14 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                                 }
                             }
                         }
+                        if( isset($field['general']['attributes']['bg_type']) && $field['general']['attributes']['bg_type'] == 'i' ){
+                            foreach ($field['general']['attributes']['options'] as $op_index => $option ){
+                                foreach( $option['bg_image'] as $bg_index => $bg ){
+                                    $bg_obj = wp_get_attachment_url( absint($bg) );
+                                    $options['fields'][$key]['general']['attributes']['options'][$op_index]['bg_image_url'][$bg_index] = $bg_obj ? $bg_obj : NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
+                                }
+                            };
+                        }
                     }
                     $product = wc_get_product($product_id);
                     $type = $product->get_type();
