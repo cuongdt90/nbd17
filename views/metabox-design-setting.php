@@ -474,6 +474,10 @@
                     <input type="checkbox" value="1" name="_nbdesigner_option[request_quote]" id="_nbd_request_quote" <?php checked( $option['request_quote'] ); ?> class="short"/> 
                     <?php echo __('Set product price to ', 'web-to-print-online-designer') . wc_price(0); ?>
                 </div>
+                <?php
+                    $layout = nbdesigner_get_option('nbdesigner_design_layout');
+                    if( $layout == 'c' ){
+                ?>
                 <div class="nbdesigner-opt-inner">
                     <input type="hidden" value="0" name="_nbdesigner_option[allow_specify_dimension]"/>
                     <label for="_nbd_allow_specify_dimension" class="nbdesigner-option-label"><?php echo _e('Allow user define demension', 'web-to-print-online-designer'); ?></label>
@@ -525,7 +529,8 @@
                     <label for="_nbd_bulk_variation" class="nbdesigner-option-label"><?php echo _e('Bulk variation', 'web-to-print-online-designer'); ?></label>
                     <input type="checkbox" value="1" name="_nbdesigner_option[bulk_variation]" id="_nbd_bulk_variation" <?php checked( $bulk_variation ); ?> class="short"/> 
                     <?php echo __('Enable bulk variation form - add to cart multiple variation with same design', 'web-to-print-online-designer'); ?>
-                </div>            
+                </div> 
+                <?php }; ?>
                 <?php do_action('nbd_after_option_product_design', $post_id, $option); ?>
             </div>   
         </div>
@@ -557,7 +562,10 @@
                 <input type="number" step="any" class="short nbdesigner-short-input" id="_nbd_mindpi_upload" name="_designer_upload[mindpi]" value="<?php echo $upload_setting['mindpi']; ?>"/>
             </div>   
         </div>
-    </div>    
+    </div> 
+    <div>
+        <?php do_action('nbd_after_option_product', $post_id, $option); ?>
+    </div>
 </div>
 <?php
 function  add_js_code(){

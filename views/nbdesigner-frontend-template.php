@@ -106,11 +106,13 @@
             $home_url = $icl_home_url = untrailingslashit(get_option('home'));
             $is_wpml = 0;
             $font_url = NBDESIGNER_FONT_URL;
-            if ( function_exists( 'icl_get_home_url' ) ) {
-                $icl_home_url = untrailingslashit(icl_get_home_url());
-                $is_wpml = 1;
-                $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
-            }         
+            if ( class_exists( 'SitePress' ) ) {
+                if ( function_exists( 'icl_get_home_url' ) ) {
+                    $icl_home_url = untrailingslashit(icl_get_home_url());
+                    $is_wpml = 1;
+                    $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                }    
+            }
             $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference );
             if( isset($product_data['option']['use_all_color']) ) $enableColor = $product_data['option']['use_all_color'] == 1 ? 'yes' : 'no';
         ?>

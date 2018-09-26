@@ -537,7 +537,7 @@ if( $cart_item_key != ''){
 }
 ?>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
-        <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields!', 'web-to-print-online-designer'); ?></p>
+        <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields and quantity input!', 'web-to-print-online-designer'); ?></p>
         <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
         <div ng-if="valid_form">
             <p><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
@@ -798,7 +798,12 @@ if( $cart_item_key != ''){
                     total_check = total_check && c;
                 });
                 if( $scope.options.display_type == 3 ){
-                    //todo: validate bulk fields
+//                    var check_bulk_quantity = false;
+//                    if( jQuery('.nbb-qty-field').length == 0 ) check_bulk_quantity = true;
+//                    jQuery.each(jQuery('.nbb-qty-field'), function(key, el){
+//                        if(jQuery(el).val() != '') check_bulk_quantity = true;
+//                    });
+//                    total_check = total_check && check_bulk_quantity;
                 }
                 if(total_check){
                     $scope.calculate_price();
@@ -806,12 +811,14 @@ if( $cart_item_key != ''){
                     jQuery('.single_add_to_cart_button').removeClass( "nbo-disabled nbo-hidden");
                     //maybe add conditional to start design
                     $scope.postOptionsToEditor();
+                    jQuery('#triggerDesign').removeClass('nbdesigner_disable');
                 }else{
                     jQuery('.single_add_to_cart_button').addClass( "nbo-disabled");
                     if( nbds_frontend.nbdesigner_hide_add_cart_until_form_filled == 'yes' ){
                         jQuery('.single_add_to_cart_button').addClass( "nbo-hidden");
                     }                    
                     $scope.valid_form = false;
+                    jQuery('#triggerDesign').addClass('nbdesigner_disable');
                 }
                 $scope.may_be_change_product_image();
                 if( $scope.has_price_matrix && angular.isUndefined( calculate_pm ) ){
@@ -874,6 +881,7 @@ if( $cart_item_key != ''){
                     }
                 }
             });
+            /* send option to editor */
             jQuery(document).triggerHandler( 'change.nbo_options' );
             var frame = document.getElementById('onlinedesigner-designer');
             if( frame ){
@@ -1002,6 +1010,7 @@ if( $cart_item_key != ''){
             return _field;
         };
         $scope.check_depend = function( field_id ){
+            if( angular.isUndefined($scope.nbd_fields[field_id]) ) return;
             var field = $scope.get_field(field_id),
             check = [];
             $scope.nbd_fields[field_id].enable = true;
@@ -1039,7 +1048,7 @@ if( $cart_item_key != ''){
         };
         $scope.init = function(){
             nbOption.status = true;
-            <?php if($options['display_type'] == 3): ?>
+            <?php if($options['display_type'] == 3 && count($options['bulk_fields'])): ?>
             jQuery('input[name="add-to-cart"]').remove();
             jQuery('input[name="quantity"]').remove();
             <?php endif; ?>

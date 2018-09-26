@@ -802,3 +802,40 @@
     height: 40px;
     cursor: pointer;
 }
+.nbo-sort-group {
+    width: 30px;
+    height: 28px;
+    position: relative;
+    vertical-align: top;
+    display: inline-block;
+}
+.nbo-sort {
+    width: 100%;
+    position: absolute;
+    color: #555;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cccccc;
+    background: #f7f7f7;
+    box-sizing: border-box;
+    line-height: 12px;
+    text-align: center;
+    cursor: pointer;
+    height: 14px;
+    margin: 0;
+}
+.nbo-sort:hover {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;
+}
+.nbo-sort-up {
+    top: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.nbo-sort-down {
+    top: 15px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}

@@ -223,7 +223,7 @@ jQuery(document).ready(function () {
             jQuery('.upload-zone label').addClass('is-loading');
             jQuery('.nbd-m-upload-design-wrap').addClass('is-loading');
             var first_time = listFileUpload.length > 0 ? 2 : 1;
-            var product_id = jQuery('[name="add-to-cart"]').attr('value');
+            var product_id = jQuery('[name="nbd-add-to-cart"]').attr('value');
             var variation_id = jQuery('[name="variation_id"]').length > 0 ? jQuery('[name="variation_id"]').attr('value') : 0;
             formData.append('first_time', first_time);
             formData.append('action', 'nbd_upload_design_file');
@@ -244,7 +244,7 @@ jQuery(document).ready(function () {
                     jQuery('.upload-zone label').removeClass('is-loading');
                     jQuery('.nbd-m-upload-design-wrap').removeClass('is-loading');
                 },                
-                success: function(data) {console.log(data);
+                success: function(data) {
                     if( data.flag == 1 ){
                         listFileUpload.push( { src : data.src, name : data.name } );
                         buildPreviewUpload();

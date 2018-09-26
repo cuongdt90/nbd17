@@ -748,9 +748,14 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             $adding_to_cart = wc_get_product( $product_id );
             if ( ! $adding_to_cart ) {
                 return false;
-            }            
-            if( $adding_to_cart->get_type() == 'variable' ){
-                $variation_id = $_REQUEST['variation_id'];
+            }   
+            $variation_id = isset($_REQUEST['variation_id']) ? $_REQUEST['variation_id'] : 0;
+            $product_type = $adding_to_cart->get_type();
+            /* Gather online design data */
+            $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;
+            $nbd_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
+            $nbu_session = WC()->session->get('nbu_item_key_'.$nbd_item_cart_key);            
+            if( $product_type == 'variable' ){
                 if( $variation_id > 0 ){
                     $missing_attributes = array();
                     $variations = array();
@@ -812,6 +817,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     
                     foreach($nbb_fields as $index => $nbb_field){
                         $cart_item_data['nbd-field'] = $nbb_field;
+                        /* Add online design data */
+                        if( $nbd_session && ! WC()->session->get('nbd_item_key_'.$nbd_item_cart_key) ) WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_session);
+                        if( $nbu_session && ! WC()->session->get('nbu_item_key_'.$nbd_item_cart_key) ) WC()->session->set('nbu_item_key_'.$nbd_item_cart_key, $nbu_session);
                         $quantity = $qtys[$index];
                         $passed_validation = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variations );
                         if( $quantity > 0){
@@ -836,6 +844,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             }else{
                 foreach($nbb_fields as $index => $nbb_field){
                     $cart_item_data['nbd-field'] = $nbb_field;
+                    /* Add online design data */
+                    if( $nbd_session && ! WC()->session->get('nbd_item_key_'.$nbd_item_cart_key) ) WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_session);
+                    if( $nbu_session && ! WC()->session->get('nbu_item_key_'.$nbd_item_cart_key) ) WC()->session->set('nbu_item_key_'.$nbd_item_cart_key, $nbu_session);
                     $quantity = $qtys[$index];
                     $passed_validation 	= apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity );
                     if( $quantity > 0){

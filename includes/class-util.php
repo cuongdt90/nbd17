@@ -1015,11 +1015,14 @@ function nbd_get_template_by_folder( $folder ){
     $data['config'] = nbd_get_data_from_json($path . '/config.json');
     return $data;
 }
-function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '', $need_templates = false ){
+function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $task, $task2 = '', $reference = '', $need_templates = false, $cart_item_key = '' ){
     $data = array();
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
     $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
     if( $_nbd_item_key && $task2 == '' && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
+    if( $cart_item_key != '' && WC()->session->get($cart_item_key . '_nbd') ) {
+        $nbd_item_key = WC()->session->get($cart_item_key . '_nbd');
+    }
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     /* Path not exist in case add to cart before design, session has been init */  
     if( $nbd_item_key == '' || !file_exists($path) ){

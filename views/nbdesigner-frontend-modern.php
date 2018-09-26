@@ -796,7 +796,7 @@
                 position: absolute;
                 font-size: 20px;
                 top: 0;
-                right: 0;
+                right: 17px;
             }
             .nbd-sidebar #tab-photo .result-loaded .content-items div[data-type=image-upload] .form-upload i {
                 cursor: pointer;
@@ -948,19 +948,21 @@
             $font_url = NBDESIGNER_FONT_URL;
             if ( function_exists( 'icl_get_home_url' ) ) {
                 $icl_home_url = untrailingslashit(icl_get_home_url());
-                global $sitepress;
-                if($sitepress){
-                    $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
-                    if( $wpml_language_negotiation_type == 2 ){
-                        $is_wpml = 1;
-                        $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                if ( class_exists( 'SitePress' ) ) {
+                    global $sitepress;
+                    if($sitepress){
+                        $wpml_language_negotiation_type = $sitepress->get_setting('language_negotiation_type');
+                        if( $wpml_language_negotiation_type == 2 ){
+                            $is_wpml = 1;
+                            $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
+                        }
                     }
                 }
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
             $templates = nbd_get_resource_templates($product_id, $variation_id);
             $total_template = nbd_count_total_template( $product_id, $variation_id );
-            $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference );
+            $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference, false, $cart_item_key );
         ?>
         <script type="text/javascript">
             var NBDESIGNCONFIG = {

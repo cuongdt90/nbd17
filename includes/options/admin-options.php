@@ -68,7 +68,7 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             update_post_meta($post_id, '_nbo_enable', $enable);
         }
         public function add_meta_boxes(){
-            add_meta_box('nbo_print_option', __('Print option', 'web-to-print-online-designer'), array($this, 'meta_box'), 'product', 'normal', 'high');
+            add_meta_box('nbo_print_option', __('Printing option', 'web-to-print-online-designer'), array($this, 'meta_box'), 'product', 'normal', 'high');
         }        
         public function meta_box(){
             $post_id = get_the_ID();
@@ -765,7 +765,8 @@ function nbd_option_i18n(){
         'option_exist'  =>  __('This option exist.', 'web-to-print-online-designer'),
         'front'  =>  __('Front side', 'web-to-print-online-designer'),
         'back'  =>  __('Back side', 'web-to-print-online-designer'),
-        'both'  =>  __('Both font and back sides', 'web-to-print-online-designer')
+        'both'  =>  __('Both font and back sides', 'web-to-print-online-designer'),
+        'want_to_delete'  =>  __('Are you sure you want to delete this item?', 'web-to-print-online-designer')
     );
 }
 $nbd_printing_options = NBD_ADMIN_PRINTING_OPTIONS::instance();

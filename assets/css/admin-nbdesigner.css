@@ -522,7 +522,8 @@ div[aria-describedby="nbdesiger-tiny-mce-dialog"] .ui-dialog-titlebar-close:befo
     opacity: 0.5;
 }
 div[aria-describedby="nbdesiger-tiny-mce-dialog"] .ui-dialog-title {
-    background: url(../images/logo.png) no-repeat;
+    background: url(../images/logo.svg) no-repeat;
+    background-size: contain;
     width: 207px;
     height: 50px;
     top: 0px;

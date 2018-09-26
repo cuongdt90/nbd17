@@ -2233,7 +2233,7 @@ class Nbdesigner_Plugin {
                 $src .= '&reference='. $_GET['nbds-ref'];
             }
             if( isset($_GET['nbo_cart_item_key']) && $_GET['nbo_cart_item_key'] !='' ){
-                $src .= '&cik='. $_GET['nbo_cart_item_key'];
+                $src .= '&task=edit&cik='. $_GET['nbo_cart_item_key'];
             }
             if( $variation_id != 0 ){
                 $src .= '&variation_id='. $variation_id;
@@ -2513,7 +2513,7 @@ class Nbdesigner_Plugin {
                 $design_format = 'jpeg';                
             }           
             if(file_exists($p_img)){
-                $bg_width = $scale + $val["img_src_width"] * $scale;	
+                $bg_width = $val["img_src_width"] * $scale;	
                 $bg_height = $val["img_src_height"] * $scale;
                 $ds_width = $val["area_design_width"] * $scale;
                 $ds_height = $val["area_design_height"] * $scale;

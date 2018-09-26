@@ -323,13 +323,30 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         $scope.initfieldValue();
     };
     $scope.delete_field = function(index){
-        var field = $scope.options.fields[index];
-        if( angular.isDefined(field.nbd_type) ){
-            $scope.nbd_options[field.nbd_type] = 0;
+        var con = confirm(nbd_options.nbd_options_lang.want_to_delete);
+        if( con ){
+            var field = $scope.options.fields[index];
+            if( angular.isDefined(field.nbd_type) ){
+                $scope.nbd_options[field.nbd_type] = 0;
+            }
+            $scope.options.fields.splice(index, 1);
+            $scope.initfieldValue();
         }
-        $scope.options.fields.splice(index, 1);
-        $scope.initfieldValue();
     }; 
+    $scope.sort_field= function(field_index, direction){
+        var dest_index = field_index - 1;
+        if( direction == 'up' ){
+            if( field_index == 0 ) return;
+        }else{
+            if( field_index == ( $scope.options.fields.length - 1 ) ) return;
+            dest_index = field_index + 1;
+        }
+        var temp_field = {};
+        angular.copy($scope.options.fields[field_index], temp_field);
+        angular.copy($scope.options.fields[dest_index ], $scope.options.fields[field_index ]);
+        angular.copy(temp_field, $scope.options.fields[dest_index ]);
+        $scope.initfieldValue();
+    };
     $scope.toggleExpandField =  function(index, $event){
         $scope.options.fields[index].isExpand = !$scope.options.fields[index].isExpand;
         var parent = jQuery($event.target).parents('.nbd-field-wrap');
@@ -448,6 +465,21 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             return;
         }
         $scope.options['fields'][fieldIndex]['general'][key]['options'].splice($index, 1);
+    };
+    $scope.sort_attribute = function(fieldIndex, opIndex, direction){
+        var options = $scope.options['fields'][fieldIndex]['general']['attributes']['options'];
+        var dest_index = opIndex - 1;
+        if( direction == 'up' ){
+            if( opIndex == 0 ) return;
+        }else{
+            if( opIndex == ( options.length - 1 ) ) return;
+            dest_index = opIndex + 1;
+        }
+        var temp_op = {};
+        angular.copy(options[opIndex], temp_op);
+        angular.copy(options[dest_index ], options[opIndex]);
+        angular.copy(temp_op, options[dest_index]);
+        $scope.initfieldValue();
     };
     $scope.seleted_attribute = function(fieldIndex, key, $index){
         angular.forEach($scope.options['fields'][fieldIndex]['general'][key]['options'], function(field, _key){
@@ -595,18 +627,26 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             value: '=nbdColorPicker'
         },
         link: function( scope, element ) {
-            jQuery(element).val(scope.value);
-            jQuery(element).wpColorPicker({
-                change: function (evt, ui) {
-                    var $input = jQuery(this);
-                    setTimeout(function () {
-                        if ($input.wpColorPicker('color') !== $input.data('tempcolor')) {
-                            $input.change().data('tempcolor', $input.wpColorPicker('color'));
-                            $input.val($input.wpColorPicker('color'));
-                        }
-                    }, 10);
+            function init(){
+                jQuery(element).val(scope.value);
+                jQuery(element).wpColorPicker({
+                    change: function (evt, ui) {
+                        var $input = jQuery(this);
+                        setTimeout(function () {
+                            if ($input.wpColorPicker('color') !== $input.data('tempcolor')) {
+                                $input.change().data('tempcolor', $input.wpColorPicker('color'));
+                                $input.val($input.wpColorPicker('color'));
+                            }
+                        }, 10);
+                    }
+                });
+            };
+            scope.$watch('value', function(newValue, oldValue) {
+                if (newValue != oldValue){
+                    jQuery(element).wpColorPicker('color', newValue);
                 }
-            });
+            }, true);
+            init();
         }
     };
 }).directive( 'nbdTab', function($timeout) {

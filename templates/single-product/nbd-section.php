@@ -476,6 +476,7 @@ $layout = nbdesigner_get_option('nbdesigner_design_layout');
     var is_nbd_upload_without_design = <?php echo $_enable_upload_without_design; ?>;
 </script>
 <div class="nbdesigner_frontend_container">
+    <input name="nbd-add-to-cart" type="hidden" value="<?php echo $pid; ?>" />
     <p>
         <a class="button nbdesigner_disable alt nbdesign-button <?php echo $class; ?>" id="triggerDesign" >
             <img class="nbdesigner-img-loading hide" src="<?php echo NBDESIGNER_PLUGIN_URL.'assets/images/loading.gif' ?>"/>

@@ -39,7 +39,7 @@
                     <?php endif; ?>
                 </td>
             <?php endforeach; ?>
-                <td><input name="nbb-qty-fields[]" type="number" min="1" step="1" value="" required="" style="width: 4em" pattern="[0-9]*"/></td>
+                <td><input ng-model="nbd_qty_fields" class="nbb-qty-field" name="nbb-qty-fields[]" type="number" min="1" step="1" value="" style="width: 4em" pattern="[0-9]*"/></td>
             </tr>            
         </tbody>
         <tfoot>
@@ -60,16 +60,16 @@
             <tr>
                 <th></th>
                 <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
-                <td>
+                <th>
                     <?php echo $attr['name']; ?>
                     <input type="hidden" name="nbb-fields[<?php echo $field['id']; ?>][]" value="<?php echo $key; ?>" />
-                </td>
+                </th>
                 <?php endforeach; ?>
             </tr>
             <tr>
                 <th><?php echo $field['general']['title']; ?> <?php if( $field['general']['required'] == 'y' ): ?><span class="nbd-required">*</span><?php endif; ?></th>
                 <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
-                <td><input name="nbb-qty-fields[]" type="number" min="1" step="1" value="" required="" style="width: 4em" pattern="[0-9]*"/></td>
+                <td><input class="nbb-qty-field" name="nbb-qty-fields[]" type="number" min="1" step="1" value="" style="width: 4em" pattern="[0-9]*"/></td>
                 </td>
                 <?php endforeach; ?>
             </tr>
