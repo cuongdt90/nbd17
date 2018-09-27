@@ -7,6 +7,8 @@ if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (i
     if(isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') $is_wqv = true;
 }
 $appid = "nbo-app-" . time().rand(1,100);
+$display_type = nbdesigner_get_option('nbdesigner_option_display');
+$prefix = $display_type == 2 ? '-2' : '';
 ?>
 <div class="nbo-wrapper <?php if($is_wqv) echo 'nbd-option-in-wqv'; ?>">
 <style>
@@ -270,6 +272,20 @@ $appid = "nbo-app-" . time().rand(1,100);
         border-radius: 100%;
         box-sizing: border-box;
     }
+    .nbd-swatch-wrap input[type="radio"]:checked + label:after {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        transform: rotate(45deg);
+        content: "";
+        width: 6px;
+        height: 10px;
+        display: block;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        position: absolute;
+        top: 7px;
+        left: 12px;        
+    }
     .nbd-dropdown {
         border: 1px solid #EEE;
         height: 36px;
@@ -289,7 +305,7 @@ $appid = "nbo-app-" . time().rand(1,100);
         border-radius: 36px;
         height: 36px;
         line-height: 36px;
-        padding: 0 15PX;
+        padding: 0 20px;
         background: #ddd;
         text-transform: uppercase;
         font-size: 13px;
@@ -487,7 +503,10 @@ $appid = "nbo-app-" . time().rand(1,100);
 </style>
 <div class="nbd-option-wrapper" <?php if(!$in_quick_view) echo 'ng-app="nboApp"'; ?> id="<?php echo $appid; ?>">
     <div ng-controller="optionCtrl" ng-form="nboForm" id="nbo-ctrl" ng-cloak>
-<?php
+    <?php if( $display_type == 2 ): ?>
+        <table>
+            <tbody>
+<?php endif; 
 $html_field = '';
 if( $cart_item_key != '' && $options['display_type'] == 3) $options['display_type'] = 1;
 if( $options['display_type'] == 2 ){
@@ -503,28 +522,32 @@ foreach($options["fields"] as $key => $field){
     }
     $need_show = true;
     if( $field['general']['data_type'] == 'i' ){
-        $tempalte = '/options-builder/input.php'; 
+        $tempalte = '/options-builder/input'.$prefix.'.php'; 
     }else{
         if( count($field['general']['attributes']["options"]) == 0){
             $need_show = false;
         }
         switch($field['appearance']['display_type']){
             case 's':
-                $tempalte = '/options-builder/swatch.php';
+                $tempalte = '/options-builder/swatch'.$prefix.'.php';
                 break;
             case 'l':
-                $tempalte = '/options-builder/label.php';
+                $tempalte = '/options-builder/label'.$prefix.'.php';
                 break;            
             case 'r':
-                $tempalte = '/options-builder/radio.php';
+                $tempalte = '/options-builder/radio'.$prefix.'.php';
                 break;
             default:
-                $tempalte = '/options-builder/dropdown.php';
+                $tempalte = '/options-builder/dropdown'.$prefix.'.php';
                 break;            
         }
     }
     if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
 }
+    if( $display_type == 2 ): ?>
+            </tbody>
+        </table> 
+<?php endif;
 if( $options['display_type'] == 2 && count($pm_field_indexes) ){
     include('/options-builder/price-matrix.php');
 }else if( $options['display_type'] == 3 && count($options['bulk_fields']) ){

@@ -252,7 +252,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         public function cart_item_thumbnail( $image = "", $cart_item = array() ){
             if( isset($cart_item['nbo_meta']) && $cart_item['nbo_meta']['option_price']['cart_image'] != '' ){
                 $size = 'shop_thumbnail';
-                $dimensions = wc_get_image_size( $size );              
+                $dimensions = wc_get_image_size( $size ); 
                 $image = '<img src="'.$cart_item['nbo_meta']['option_price']['cart_image']
                         . '" width="' . esc_attr( $dimensions['width'] )
                         . '" height="' . esc_attr( $dimensions['height'] )
@@ -503,12 +503,12 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                             $factor = $option['price'][$quantity_break['index']];
                         }
                     }
-                    if($origin_field['appearance']['change_image_product'] == 'y' && $option['preview_type'] == 'i'){
-                        $image = wp_get_attachment_image_src( $option['image'], 'thumbnail' );
+                    if($origin_field['appearance']['change_image_product'] == 'y' && isset($option['product_image']) && $option['product_image'] > 0){
+                        $image = wp_get_attachment_image_src( $option['product_image'], 'thumbnail' );
                         if($image){
                             $cart_image = $image[0];
                         }else{
-                            $cart_image = wp_get_attachment_url($option['image']);
+                            $cart_image = wp_get_attachment_url($option['product_image']);
                         }
                     }
                 }

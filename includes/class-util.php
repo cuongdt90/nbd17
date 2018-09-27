@@ -669,6 +669,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_enable_perfect_scrollbar_css'    =>  'yes',
         
         'nbdesigner_turn_off_persistent_cart' => 'no',
+        'nbdesigner_option_display' => '1',
         'nbdesigner_hide_add_cart_until_form_filled' => 'no',
         'nbdesigner_enable_clear_cart_button' => 'no',
         'nbdesigner_force_select_options' => 'no',

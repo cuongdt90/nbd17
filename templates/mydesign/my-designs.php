@@ -32,7 +32,10 @@
                         'design_type'  =>  'art',
                         'nbd_item_key'  =>  $design->folder,
                         'rd'    => urlencode(wc_get_endpoint_url( 'my-designs', $current_page, wc_get_page_permalink( 'myaccount' ) ))
-                    ), getUrlPageNBD('create'));                  
+                    ), getUrlPageNBD('create'));  
+                $link_product = add_query_arg(array(
+                    'nbds-ref'  => $design->folder
+                ), get_permalink($design->product_id));
             ?>
             <tr class="order">
                 <td data-title="<?php _e('Preview', 'web-to-print-online-designer'); ?>">
@@ -47,7 +50,8 @@
                     <!-- <a href="<?php echo wc_get_endpoint_url( 'view-design', $design->id, wc_get_page_permalink( 'myaccount' ) ); ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a> -->
                     <a href="<?php echo $link_edit_design; ?>"><?php _e('Edit', 'web-to-print-online-designer'); ?></a><br />
                     <a href="javascript:void(0)" data-design="<?php echo $design->id;  ?>" onclick="NBDESIGNERPRODUCT.delete_my_design( this )"><?php _e('Delete', 'web-to-print-online-designer'); ?></a><br />
-                    <a href="javascript:void(0)" data-design="<?php echo $design->id;  ?>" onclick="NBDESIGNERPRODUCT.add_design_to_cart( this )"><?php _e('Add to cart', 'web-to-print-online-designer'); ?></a>
+                    <!--  <a href="javascript:void(0)" data-design="<?php echo $design->id;  ?>" onclick="NBDESIGNERPRODUCT.add_design_to_cart( this )"><?php _e('Add to cart', 'web-to-print-online-designer'); ?></a>-->
+                    <a href="<?php echo $link_product; ?>"><?php _e('Add to cart', 'web-to-print-online-designer'); ?></a>
                 </td>
             </tr>
             <?php endforeach; ?>

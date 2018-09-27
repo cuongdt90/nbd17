@@ -39,11 +39,13 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             if( isset($item_meta['_nbo_option_price']) ){
                 $option_price = maybe_unserialize( $item_meta['_nbo_option_price'][0] );
                 $size = 'shop_thumbnail';
-                $dimensions = wc_get_image_size( $size );              
-                $image = '<img src="'.$option_price['cart_image']
-                        . '" width="' . esc_attr( $dimensions['width'] )
-                        . '" height="' . esc_attr( $dimensions['height'] )
-                        . '" class="nbo-thumbnail woocommerce-placeholder wp-post-image" />';                
+                $dimensions = wc_get_image_size( $size );  
+                if( isset($option_price['cart_image']) && $option_price['cart_image'] != '' ){
+                    $image = '<img src="'.$option_price['cart_image']
+                            . '" width="' . esc_attr( $dimensions['width'] )
+                            . '" height="' . esc_attr( $dimensions['height'] )
+                            . '" class="nbo-thumbnail woocommerce-placeholder wp-post-image" />';        
+                }
             }
             return $image;
         }

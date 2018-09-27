@@ -6,6 +6,17 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
             return apply_filters('nbdesigner_printing_options_settings', array(
                 'general' => array(
                     array(
+                        'title' => __( 'Options display style', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_option_display',
+                        'description' 	=> __('This controls how options are displayed on the front-end .', 'web-to-print-online-designer'),
+                        'default'	=> '1',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            '1' => __('Style 1', 'web-to-print-online-designer'),
+                            '2' => __('Style 2', 'web-to-print-online-designer')
+                        )                      
+                    ),
+                    array(
                         'title' => __( 'Hide Add to cart button until all required options are chosen', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_hide_add_cart_until_form_filled',
                         'description' 	=> __('Check this to show the add to cart button only when all required options are filled.', 'web-to-print-online-designer'),
