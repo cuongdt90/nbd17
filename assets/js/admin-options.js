@@ -187,6 +187,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         $scope.options.quantity_breaks.push({ val: last + 1 });
     };
     $scope.remove_price_break = function( index ){
+        if( $scope.options.quantity_breaks.length == 1 ) return;
         $scope.options.quantity_breaks.splice(index, 1);
     };    
     /* end. quantity */
@@ -421,14 +422,59 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             }
         });
     };
-    $scope.init = function(){
+    $scope.init = function( fields ){
         $scope.nbd_options = {};
         $scope.options = NBDOPTIONS;
+        if( angular.isDefined(fields) ){
+            $scope.options.fields = fields;
+            if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply(); 
+        }
         $scope.option_values = [];
         angular.forEach($scope.options.fields, function(field, key){
             field.isExpand = false;
         });
         $scope.initfieldValue();
+    };
+    $scope.export = function(){
+        var filename = 'options.json',
+        options = JSON.stringify( $scope.options.fields, function(name, val){
+            if( name == '$$hashKey' ){
+                return undefined;
+            }else{
+                return val;
+            }
+        });
+        var a = document.createElement('a');
+        a.setAttribute('href', 'data:text/plain;charset=utf-u,'+ options);
+        a.setAttribute('download', filename);
+        a.click();
+    };
+    $scope.import = function(){
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'text/json|application/json';
+        input.style.display = 'none';
+        input.addEventListener('change', onChange.bind(input), false);
+        document.body.appendChild(input);
+        input.click();
+        function onChange(){
+            if (this.files.length > 0) {
+                var file = this.files[0],
+                reader = new FileReader();
+                reader.onload = function(event){
+                    if (event.target.readyState === 2) {
+                        var result = JSON.parse(reader.result);
+                        $scope.init(result);
+                        destroy();
+                    }
+                };
+                reader.readAsText(file);                
+            }            
+        }
+        function destroy() {
+            input.removeEventListener('change', onChange.bind(input), false);
+            document.body.removeChild(input);
+        }        
     };
     $scope.debug = function(){
         console.log($scope.options);

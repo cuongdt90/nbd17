@@ -39,6 +39,17 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                         )                      
                     ),
                     array(
+                        'title' => __( 'Hide table pricing', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_hide_table_pricing',
+                        'description' 	=> __('Hide table pricing in product detail page.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    ),
+                    array(
                         'title' => __( 'jQuery selector for increase/decrease quantity button', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_selector_increase_qty_btn',
                         'description' 	=> __('This is used to re calculate quantity discount price, example: .quantity-plus, .quantity-minus', 'web-to-print-online-designer'),

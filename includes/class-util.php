@@ -673,6 +673,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_hide_add_cart_until_form_filled' => 'no',
         'nbdesigner_enable_clear_cart_button' => 'no',
         'nbdesigner_force_select_options' => 'no',
+        'nbdesigner_hide_table_pricing' => 'no',
         'nbdesigner_hide_summary_options' => 'no',
         'nbdesigner_hide_options_in_cart' => 'no',
         'nbdesigner_selector_increase_qty_btn' => ''

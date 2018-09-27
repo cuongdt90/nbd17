@@ -560,4 +560,19 @@
             </table>
         </div>
     </div>
-<?php echo '</script>'; ?>
+    <div class="nbd-field-info" style="margin-top: 10px;" ng-if="field.general.mesure == 'y'">
+        <div class="nbd-field-info-1">
+            <div>
+                <label>
+                    <b><?php _e('Calculate price base on number of sides/pages', 'web-to-print-online-designer'); ?></b>
+                </label>
+            </div>
+        </div>
+        <div class="nbd-field-info-2">
+            <select name="options[fields][{{fieldIndex}}][general][mesure_base_pages]" ng-model="field.general.mesure_base_pages">
+                <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
+                <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
+            </select>
+        </div>
+    </div>
+<?php echo '</script>';

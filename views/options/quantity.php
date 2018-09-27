@@ -59,7 +59,10 @@
         </div>                                                                                       
         <div class="nbd-field-info">
             <div class="nbd-field-info-1">
-                <label><b><?php _e('Quantity breaks', 'web-to-print-online-designer'); ?></b></label>
+                <label>
+                    <b><?php _e('Quantity breaks', 'web-to-print-online-designer'); ?></b>
+                    <nbd-tip data-tip="<?php _e('This option allows you to create different price tiers for product based on the quantity a customer buys. For example, set it so a customer needs to buy 5 or more to get 10% off, buy 10 or  to get 15% off, and so on.', 'web-to-print-online-designer'); ?>"></nbd-tip>
+                </label>
             </div>  
             <div class="nbd-field-info-2">
                 <div class="nbd-table-wrap" style="overflow: hidden;">

@@ -334,7 +334,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 foreach ($field as $tab =>  $data){
                     if( $tab != 'id' && $tab != 'nbd_type' ){
                         foreach ($data as $key => $f){
-                            if( !in_array($key, array('page_display', 'exclude_page', 'mesure', 'mesure_range', 'min_width', 'max_width', 'step_width', 'min_height', 'max_height', 'step_height')) ){
+                            if( !in_array($key, array('page_display', 'exclude_page', 'mesure', 'mesure_range', 'mesure_base_pages', 'min_width', 'max_width', 'step_width', 'min_height', 'max_height', 'step_height')) ){
                                 $funcname = "build_config_".$tab.'_'.$key;
                                 $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);      
                             }
@@ -342,8 +342,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     }
                     if( $tab == 'nbd_type' ){
                         $options['fields'][$f_key]['nbd_template'] = 'nbd.'.$data;
-                        if( isset($options['fields'][$f_key]['general']['mesure']) && !isset($options['fields'][$f_key]['general']['mesure_range']) ){
-                            $options['fields'][$f_key]['general']['mesure_range'] = array();
+                        if( isset($options['fields'][$f_key]['general']['mesure'])){
+                            if( !isset($options['fields'][$f_key]['general']['mesure_range']) ) $options['fields'][$f_key]['general']['mesure_range'] = array();
+                            if( !isset($options['fields'][$f_key]['general']['mesure_base_pages']) ) $options['fields'][$f_key]['general']['mesure_base_pages'] = 'y';
                         }
                     }
                 }
@@ -631,9 +632,14 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 if( isset($options[$key]['product_image']) ){
                     $options[$key]['product_image_url'] = nbd_get_image_thumbnail( $option['product_image'] );
                 }
-                if( isset($attributes['bg_type']) && $attributes['bg_type'] == 'i' ){
-                    foreach( $option['bg_image'] as $k => $bg ){
-                        $options[$key]['bg_image_url'][$k] = nbd_get_image_thumbnail( $bg );
+                if( isset($attributes['bg_type']) ){
+                    if( $attributes['bg_type'] == 'i' ){
+                        foreach( $option['bg_image'] as $k => $bg ){
+                            $options[$key]['bg_image_url'][$k] = nbd_get_image_thumbnail( $bg );
+                        }
+                    }else{
+                        $options[$key]['bg_image'] = array();
+                        $options[$key]['bg_image_url'] = array();
                     }
                 }
             }

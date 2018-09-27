@@ -3005,7 +3005,7 @@ class Nbdesigner_Plugin {
                 $src = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_session;
                 $dst = NBDESIGNER_CUSTOMER_DIR . '/' . $order_id.'_'.$nbd_session;
                 if( $nbd_session != '' && file_exists($src) ){
-                    Nbdesigner_IO::copy_dir($src, $dst);
+                    //Nbdesigner_IO::copy_dir($src, $dst);
                     $has_nbd = true;                    
                 }
             }

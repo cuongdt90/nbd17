@@ -79,11 +79,8 @@
                         <div class="postbox">
                             <div class="inside">
                                 <div class="nbd-option-actions">
-                                    <a class="button-primary"><span class="dashicons dashicons-plus"></span> <?php _e('Add section', 'web-to-print-online-designer'); ?></a>
-                                    <span class="nbdesigner-right">
-                                        <a class="button-primary"><span class="dashicons dashicons-migrate nbd-r180"></span> <?php _e('Import CSV', 'web-to-print-online-designer'); ?></a>
-                                        <a class="button-primary"><span class="dashicons dashicons-migrate"></span> <?php _e('Export CSV', 'web-to-print-online-designer'); ?></a>
-                                    </span>
+                                    <a ng-click="import()" class="button-primary"><span class="dashicons dashicons-migrate nbd-r180"></span> <?php _e('Import', 'web-to-print-online-designer'); ?></a>
+                                    <a ng-click="export()" class="button-primary"><span class="dashicons dashicons-migrate"></span> <?php _e('Export', 'web-to-print-online-designer'); ?></a>
                                 </div> 
                             </div>    
                         </div>                    

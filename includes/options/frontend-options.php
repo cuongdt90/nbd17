@@ -490,6 +490,16 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'dimension' && $origin_field['general']['mesure'] == 'y' && count($origin_field['general']['mesure_range']) > 0 ){
                         $dimension = explode("x",$val);
                         $factor = $this->calculate_price_base_measurement($origin_field['general']['mesure_range'], $dimension[0], $dimension[1]);
+                        if( ($origin_field['general']['price_type'] == 'f' || $origin_field['general']['price_type'] == 'c') && $origin_field['general']['mesure_base_pages'] == 'y' ){
+                            $no_page = 1;
+                            foreach($fields as $_key => $_val){
+                                $_origin_field = $this->get_field_by_id( $option_fields, $_key );
+                                if( isset($_origin_field['nbd_type']) && $_origin_field['nbd_type'] == 'page' ){
+                                    $no_page = $_val;
+                                }
+                            }
+                            $factor *= floor( ($no_page + 1) / 2 );
+                        }
                     }
                 }else{
                     $option = $origin_field['general']['attributes']['options'][$val];
@@ -514,6 +524,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 }
                 $factor = floatval($factor);
                 $_fields[$key]['is_pp'] = 0;
+                if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'dimension' && $origin_field['general']['price_type'] == 'c' ){
+                    $origin_field['general']['price_type'] == 'f';
+                }
                 switch ($origin_field['general']['price_type']){
                     case 'f':
                         $_fields[$key]['price'] = $factor;
