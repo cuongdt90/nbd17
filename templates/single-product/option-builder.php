@@ -581,7 +581,7 @@ if( $cart_item_key != ''){
             <p><b><?php _e('Final price: ', 'web-to-print-online-designer'); ?></b> {{final_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></p>
         </div>
         <?php endif; ?>
-        <?php if( nbdesigner_get_option('nbdesigner_hide_table_pricing') == 'no' ): ?>
+        <?php if( nbdesigner_get_option('nbdesigner_hide_table_pricing') == 'no' && $options['display_type'] != 3 ): ?>
         <table ng-if="valid_form && price_table.length > 1">
             <thead>
                 <tr>

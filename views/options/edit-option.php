@@ -59,8 +59,8 @@
                                     </div>   
                                     <div id="major-publishing-actions">
                                         <div id="delete-action">
-                                            <a class="submitdelete deletion"
-                                               href="<?php echo $link_delete; ?>"><?php _e('Move to Trash', 'web-to-print-online-designer'); ?></a>                                 
+<!--                                            <a class="submitdelete deletion"
+                                               href="<?php //echo $link_delete; ?>"><?php //_e('Move to Trash', 'web-to-print-online-designer'); ?></a>                                 -->
                                         </div>   
                                         <div id="publishing-action">
                                             <?php if( $product_id > 0 ): ?>

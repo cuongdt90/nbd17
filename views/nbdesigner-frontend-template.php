@@ -169,7 +169,36 @@
                 NBDESIGNCONFIG['<?php echo $key; ?>'] = "<?php echo $val; ?>";    
                 <?php endif; ?>    
             <?php endforeach; ?>
-            <?php if( isset($product_data['option']['list_color']) ): ?>
+            <?php 
+            if( isset($product_data['option']['color_cats']) ):
+                $cats = $product_data['option']['color_cats'];
+                $colors = Nbdesigner_IO::read_json_setting(NBDESIGNER_DATA_DIR . '/colors.json');
+                $colors = array_filter($colors, function ($val) use ($cats){
+                    $check = false;
+                    if( sizeof($val->cat) == 0 ){
+                        if( in_array('0', $cats) ) $check = true;
+                    }else{
+                        $intercept = array_intersect($val->cat, $cats);
+                        if( count($intercept) == count($val->cat) )  $check = true;
+                    }
+                    return $check;
+                });
+                $list_color = [];
+                foreach( $colors as $color ){
+                    $list_color[] = $color->hex;
+                }
+                $list_color = array_unique($list_color);
+            ?>
+            var  colorPalette = [], row = [], __colorPalette = [], color = '';
+                <?php foreach($list_color as $cindex => $color): ?>
+                    color = "<?php echo $color; ?>";
+                    row.push(color);
+                    <?php if( $cindex % 10 == 9 ): ?>
+                        colorPalette.push(row);
+                        row = [];                    
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php elseif( isset($product_data['option']['list_color']) ): ?>
             var  colorPalette = [], row = [], __colorPalette = [], color = '';
                 <?php foreach($product_data['option']['list_color'] as $cindex => $color): ?>
                     color = "<?php echo $color['code']; ?>";

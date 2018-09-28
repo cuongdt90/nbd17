@@ -46,9 +46,11 @@
 <?php
     $art_cat_path = NBDESIGNER_DATA_DIR . '/art_cat.json';
     $font_cat_path = NBDESIGNER_DATA_DIR . '/font_cat.json';
+    $color_cat_path = NBDESIGNER_DATA_DIR . '/color_cat.json';
     $list_art_cats = (array)json_decode(file_get_contents($art_cat_path));
     $list_font_cats = (array)json_decode(file_get_contents($font_cat_path));
-    $allow_all_art_cat = $allow_all_font_cat =false;
+    $list_color_cats = (array)json_decode(file_get_contents($color_cat_path));
+    $allow_all_art_cat = $allow_all_font_cat = $allow_all_color_cat = false;
     if( !isset($option['art_cats']) ){
         $allow_all_art_cat = true;
         $option['art_cats'] = array();
@@ -56,6 +58,10 @@
     if( !isset($option['font_cats']) ){
         $allow_all_font_cat = true;
         $option['font_cats'] = array();
+    }
+    if( !isset($option['color_cats']) ){
+        $allow_all_color_cat = true;
+        $option['color_cats'] = array();
     }
     if( !isset($option['use_all_color']) ){
         $option['use_all_color'] = nbdesigner_get_option('nbdesigner_show_all_color') == 'yes' ? 1 : 2;
@@ -107,9 +113,22 @@
         <input name="_nbdesigner_option[use_all_color]" value="1" type="radio" <?php checked( $option['use_all_color'], 1); ?> /><?php _e('Use all colors', 'web-to-print-online-designer'); ?>   
         &nbsp;<input name="_nbdesigner_option[use_all_color]" value="2" type="radio" <?php checked( $option['use_all_color'], 2); ?> /><?php _e('Use colors in list', 'web-to-print-online-designer'); ?>  
     </div>
-</div>    
-<div class="nbdesigner-opt-inner">     
+</div>   
+<div class="nbdesigner-opt-inner">
     <div class="<?php if( $option['use_all_color'] == 1 ) echo 'nbdesigner-disable'; ?>" id="nbd_list_colors_wrap">
+        <label for="nbdesigner_list_color_cats" class="nbdesigner-option-label"><?php echo _e('List colors can use', 'web-to-print-online-designer'); ?></label>
+        <select name="_nbdesigner_option[color_cats][]" multiple="" id="nbdesigner_list_color_cats" class="nbd-slect-woo" style="width: 500px;">
+            <?php 
+                foreach($list_color_cats as $color_cat ): 
+                    $selected = ($allow_all_color_cat || in_array( $color_cat->id, $option['color_cats'] )) ? ' selected="selected" ' : ''; 
+            ?>
+            <option value="<?php echo $color_cat->id; ?>" <?php echo $selected; ?>><?php echo $color_cat->name; ?></option>
+            <?php  endforeach; ?>
+        </select>
+    </div>
+</div>
+<div class="nbdesigner-opt-inner">     
+    <div class="<?php if( $option['use_all_color'] == 1 ) echo 'nbdesigner-disable'; ?>" id="nbd_list_colors_wrap2">
         <label class="nbdesigner-option-label"><?php echo _e('List colors', 'web-to-print-online-designer'); ?></label>
         <div style="display: inline-block; vertical-align: top;">
             <table id="nbd_list_color_table" class="nbd_setting_table">
