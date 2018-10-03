@@ -3,7 +3,7 @@ $custom_logo_id = get_theme_mod( 'custom_logo' );
 $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 ?>
 <div class="nbd-main-bar">
-    <a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="logo">
+    <a href="<?php echo get_permalink( wc_get_page_id( 'shop' ) ); ?>" class="logo <?php if(!isset($image['0'])) echo ' logo-without-image'; ?>">
         <?php if(isset($image['0'])): ?>
         <img src="<?php echo $image['0'];?>" alt="online design">
         <?php else: ?>
@@ -63,16 +63,6 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                     <span class="title-menu"><?php _e('Show grid','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-G' | keyboardShortcut }}</small>
                 </li>
-
-                <!------------------------------------------------------------------------------------
-                data-animate:
-                    + bottom-to-top
-                    + top-to-bottom
-                    + left-to-right
-                    + right-to-left
-                    + scale
-                ------------------------------------------------------------------------------------->
-
                 <li class="sub-menu-item flex space-between" ng-click="settings.bleedLine = !settings.bleedLine" ng-class="settings.bleedLine ? 'active' : ''">
                     <span class="title-menu"><?php _e('Show bleed line','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-L' | keyboardShortcut }}</small>
@@ -101,7 +91,11 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
             </ul>
             <div id="nbd-overlay"></div>
         </li>
-
+        <?php if( $show_nbo_option ): ?>
+        <li class="menu-item item-nbo-options" ng-click="getPrintingOptions()">
+            <span><?php _e('Options','web-to-print-online-designer'); ?></span>
+        </li>
+        <?php endif; ?> 
     </ul>
     <ul class="nbd-main-menu menu-center">
         <li class="menu-item undo-redo" ng-click="undo()" ng-class="stages[currentStage].states.isUndoable ? 'in' : 'nbd-disabled'">
@@ -148,5 +142,4 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
         </li>
         <?php endif; ?> 
     </ul>
-
 </div>

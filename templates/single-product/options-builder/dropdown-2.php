@@ -12,7 +12,7 @@
         <?php endif; ?>
     </td>
     <td class="nbd-field-content">
-        <select ng-change="check_valid()" name="nbd-field[<?php echo $field['id']; ?>]" class="nbd-dropdown" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value">
+        <select ng-change="check_valid()" name="nbd-field[<?php echo $field['id']; ?>]" class="nbo-dropdown" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value">
         <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
             <option value="<?php echo $key; ?>" 
                 <?php 

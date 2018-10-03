@@ -966,9 +966,9 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
             $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) AND priority = 1";
         }else {
             if( $limit ){
-                $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) ORDER BY created_date DESC LIMIT $limit";
+                $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) AND publish = 1 ORDER BY created_date DESC LIMIT $limit";
             }else{
-                $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) ORDER BY created_date DESC";                
+                $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) AND publish = 1 ORDER BY created_date DESC";                
             }           
         }
     }
@@ -977,7 +977,7 @@ function nbd_get_templates( $product_id, $variation_id, $template_id = '', $prio
     }
     $results = $wpdb->get_results($sql, 'ARRAY_A');
     if( $priority && count( $results ) == 0 ) {
-        $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) ORDER BY created_date DESC LIMIT 1";
+        $sql = "SELECT * FROM $table_name WHERE product_id = '$product_id' AND ( variation_id = '$variation_id' || variation_id = 0 ) AND publish = 1 ORDER BY created_date DESC LIMIT 1";
         $results = $wpdb->get_results($sql, ARRAY_A);
     }
     /* Case variation no template */
@@ -1022,9 +1022,9 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id; 
     $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
     if( $_nbd_item_key && $task2 == '' && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
-    if( $cart_item_key != '' && WC()->session->get($cart_item_key . '_nbd') ) {
-        $nbd_item_key = WC()->session->get($cart_item_key . '_nbd');
-    }
+//    if( $cart_item_key != '' && WC()->session->get($cart_item_key . '_nbd') ) {
+//        $nbd_item_key = WC()->session->get($cart_item_key . '_nbd');
+//    }
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     /* Path not exist in case add to cart before design, session has been init */  
     if( $nbd_item_key == '' || !file_exists($path) ){

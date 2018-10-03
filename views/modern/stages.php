@@ -2,7 +2,7 @@
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
             <div style="display: inline-block;position: relative;">
-                <div class="stage-main" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
+                <div class="stage-main" ng-class="stage.config.bgType == 'image' ? 'nbd-without-shadow' : ''" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
                     <div class="stage-background">
                         <img style="width: 100%; height: 100%;" ng-style="{'background-color': stage.config.bgColor}" ng-if="stage.config.bgType == 'image'" ng-src='{{stage.config.bgImage}}'/>

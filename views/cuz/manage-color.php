@@ -31,7 +31,7 @@
     }
 ?>
 
-<h1><?php _e('Manager Color', 'web-to-print-online-designer'); ?></h1>
+<h1><?php _e('Manage Color', 'web-to-print-online-designer'); ?></h1>
 <div class="wrap nbdesigner-container">
     <div class="nbdesigner-content-full">
         <form name="post" action="" method="post" enctype="multipart/form-data" autocomplete="off">

@@ -273,10 +273,14 @@ class Nbdesigner_Plugin {
         global $product;
         if(is_nbdesigner_product($product->get_id())){  
             $label = __('Start Design', 'web-to-print-online-designer');
-            printf( '<a href="%s" rel="nofollow" class="button">%s</a>',
-                esc_url( get_permalink($product->get_id()) ),
-                esc_html( $label )
-            );            
+//            printf( '<a href="%s" rel="nofollow" class="button">%s</a>',
+//                esc_url( get_permalink($product->get_id()) ),
+//                esc_html( $label )
+//            );     
+            ob_start();            
+            nbdesigner_get_template('loop/start-design.php', array('product' => $product, 'label' => $label, 'type' =>  $product->get_type()));
+            $button = ob_get_clean();    
+            echo $button;
         }
     }
     public function check_has_design(){
@@ -2167,6 +2171,9 @@ class Nbdesigner_Plugin {
     }
     public function nbdesigner_button() {
         /* Quick view */
+        if( isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'NBO_Quick_View' ){
+            return '';
+        }
         if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (isset($_REQUEST['action']) && $_REQUEST['action'] == 'yith_load_product_quick_view') ){
             global $product;
             $pid = $product->get_id();
@@ -2211,15 +2218,15 @@ class Nbdesigner_Plugin {
                     if (strpos($key, 'attribute_') === 0) {
                         $attributes[$key] = $value;
                     }
-                    if( count($attributes) ){
-                        if (class_exists('WC_Data_Store')) {
-                            $data_store = WC_Data_Store::load('product');
-                            $variation_id = $data_store->find_matching_product_variation($product, $attributes);
-                        }else{
-                            $variation_id = $product->get_matching_variation($attributes);
-                        }
-                    }
                 }
+                if( count($attributes) ){
+                    if (class_exists('WC_Data_Store')) {
+                        $data_store = WC_Data_Store::load('product');
+                        $variation_id = $data_store->find_matching_product_variation($product, $attributes);
+                    }else{
+                        $variation_id = $product->get_matching_variation($attributes);
+                    }
+                }                
             }           
             $site_url = site_url();
             if ( class_exists('SitePress') ) {
@@ -2233,7 +2240,10 @@ class Nbdesigner_Plugin {
                 $src .= '&reference='. $_GET['nbds-ref'];
             }
             if( isset($_GET['nbo_cart_item_key']) && $_GET['nbo_cart_item_key'] !='' ){
-                $src .= '&task=edit&cik='. $_GET['nbo_cart_item_key'];
+                $nbd_item_key = WC()->session->get($_GET['nbo_cart_item_key'] . '_nbd');
+                if( $nbd_item_key ) {
+                    $src .= '&task=edit&nbd_item_key='. $nbd_item_key . '&cik=' . $_GET['nbo_cart_item_key'];
+                }
             }
             if( $variation_id != 0 ){
                 $src .= '&variation_id='. $variation_id;
@@ -2585,12 +2595,12 @@ class Nbdesigner_Plugin {
         $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);  
         $nbd_item_key = isset($nbd_item_session) ? $nbd_item_session : substr(md5(uniqid()),0,5).rand(1,100).time();
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
-        if($variation_id > 0){         
+        if($variation_id > 0){
             $product_config = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
             $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);              
             if ( !($enable_variation && isset($product_config[0]))){
                 $product_config = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
-            }                   
+            }
         }else {
             $product_config = unserialize(get_post_meta($product_id, '_designer_setting', true)); 
         } 
@@ -2612,7 +2622,7 @@ class Nbdesigner_Plugin {
                     foreach($config->product as $side){
                         $product_config[] = (array)$side;
                     }
-                };             
+                }; 
                 if( isset( $config->custom_dimension ) ){
                     $custom_side = absint( $config->custom_dimension->side );
                     $custom_width = $config->custom_dimension->width;
@@ -2620,6 +2630,7 @@ class Nbdesigner_Plugin {
                     $product_config = $this->merge_product_config( $product_config, $custom_width, $custom_height, $custom_side );
                 }
                 $this->create_preview_design($path, $path.'/preview', $product_config, $width, $width);
+                do_action('after_nbd_create_preview_design', $nbd_item_key);
                 WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_item_key); 
             } else {
                 $result['flag'] = 'failure';
@@ -2709,7 +2720,7 @@ class Nbdesigner_Plugin {
         }              
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
         if( $task == 'new' || $task == 'create' ){
-            if($variation_id > 0){         
+            if($variation_id > 0){
                 $product_config = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
                 $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);              
                 if ( !($enable_variation && isset($product_config[0]))){
@@ -3050,6 +3061,8 @@ class Nbdesigner_Plugin {
             $is_nbdesign = get_post_meta($product_id, '_nbdesigner_enable', true);
             $_enable_upload = get_post_meta($product_id, '_nbdesigner_enable_upload', true);
             $_enable_upload_without_design = get_post_meta($product_id, '_nbdesigner_enable_upload_without_design', true);
+            $_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+            $product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );            
             if ($_show_design == 'yes') {
                 if($nbd_session || $nbu_session){
                     $html = is_checkout() ? $title . ' &times; <strong>' . $cart_item['quantity'] .'</strong>' : $title;         
@@ -3078,6 +3091,10 @@ class Nbdesigner_Plugin {
                     if($cart_item['variation_id'] > 0){
                         $link_edit_design .= '&variation_id=' . $cart_item['variation_id'];
                     }
+                    if( $product_permalink ){
+                        $att_query = parse_url( $product_permalink, PHP_URL_QUERY );
+                        $link_edit_design .= '&'.$att_query;
+                    }                    
                     $html .= '<br /><a class="button" href="'.$link_edit_design.'">'. __('Edit design', 'web-to-print-online-designer') .'</a>';
                     $html .= '</div>';
                 }else if( $is_nbdesign && !$_enable_upload_without_design ){
@@ -3092,6 +3109,10 @@ class Nbdesigner_Plugin {
                             'cik'   =>  $cart_item_key,
                             'rd'    =>  urlencode($redirect_url)), 
                         getUrlPageNBD('create'));
+                    if( $product_permalink ){
+                        $att_query = parse_url( $product_permalink, PHP_URL_QUERY );
+                        $link_create_design .= '&'.$att_query;
+                    }                    
                     $html .= '<div style="display: block;" class="nbd-cart-upload-file">';
                     $html .=    '<a class="button" href="'.$link_create_design.'">'. __('Add design', 'web-to-print-online-designer') .'</a>';
                     $html .= '</div>';

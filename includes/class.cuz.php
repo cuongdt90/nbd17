@@ -14,6 +14,7 @@ if(!class_exists('NBD_CUSTOMIZE')){
         public function init(){
             add_action('nbd_menu', array($this, 'manage_color_menu'), 1000);
             add_action('nbd_after_option_product_design', array($this, 'product_design_setting'), 10, 2);
+            add_action('after_nbd_create_preview_design', array($this, 'make_etsy_order'), 10, 1);
             $this->ajax();
         }
         public function ajax(){
@@ -93,6 +94,9 @@ if(!class_exists('NBD_CUSTOMIZE')){
         public function etsy_order(){
             include_once(NBDESIGNER_PLUGIN_DIR . 'views/cuz/etsy-order.php');
         }
+        public function make_etsy_order( $nbd_item_key ){
+            //todo
+        }
         public function manage_color(){
             include_once(NBDESIGNER_PLUGIN_DIR . 'views/cuz/manage-color.php');
         }
@@ -103,4 +107,22 @@ if(!class_exists('NBD_CUSTOMIZE')){
 }
 $nbd_cuz = NBD_CUSTOMIZE::instance();
 $nbd_cuz->init();
-
+if ( ! class_exists( 'WP_List_Table' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+}
+class Etsy_Order_List_Table extends WP_List_Table {
+    public function __construct() {
+        parent::__construct(array(
+            'singular' => __('Order', 'web-to-print-online-designer'), 
+            'plural' => __('Orders', 'web-to-print-online-designer'), 
+            'ajax' => false 
+        ));
+    }
+    function get_columns() {
+        $columns = array(          
+            'order' => __('Order', 'web-to-print-online-designer'),
+            'link' => __('Start design link', 'web-to-print-online-designer')
+        );
+        return $columns;
+    }
+}

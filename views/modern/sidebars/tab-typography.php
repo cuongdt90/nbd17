@@ -12,7 +12,7 @@
         <div class="typography-body">
             <ul class="typography-items">
                 <li nbd-drag="typo.folder" type="typo" ng-click="insertTypography(typo)" class="typography-item" ng-repeat="typo in resource.typography.data | limitTo: resource.typography.filter.currentPage * resource.typography.filter.perPage" repeat-end="onEndRepeat('typography')">
-                    <img ng-src="{{generateTypoLink(typo)}}"alt="Typography" />
+                    <img ng-src="{{generateTypoLink(typo)}}" alt="Typography" />
                 </li>
             </ul>
             <div class="loading-photo" style="width: 40px; height: 40px;">

@@ -90,6 +90,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             if ( isset( $_POST['nbb-fields'] ) ) {
                 add_action( 'wp_loaded', array( $this, 'bulk_order' ), 20 );
             }
+            
+            /* Quick view */
+            add_action( 'woocommerce_api_nbo_quick_view', array( $this, 'quick_view' ) );
         }
         public function add_empty_cart_button(){
             echo '<input type="submit" class="nbo-clear-cart-button button" name="nbo_empty_cart" value="' . __('Empty cart', 'web-to-print-online-designer') . '" />';
@@ -288,6 +291,11 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     if ( $this->new_add_to_cart_key == $cart_item_key && isset( $_POST['quantity'] ) ) {
                         WC()->cart->set_quantity( $this->new_add_to_cart_key, $_POST['quantity'], TRUE );
                     } else {
+                        $nbd_session = WC()->session->get($cart_item_key. '_nbd');
+                        if( $nbd_session ){
+                            WC()->session->set('nbd_session_removed', $nbd_session);
+                            WC()->session->__unset($cart_item_key. '_nbd');
+                        }                        
                         WC()->cart->remove_cart_item( $cart_item_key );
                         unset( WC()->cart->removed_cart_contents[ $cart_item_key ] );
                     }
@@ -298,8 +306,8 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         public function add_to_cart_redirect( $url = "" ){
             if ( empty( $_REQUEST['add-to-cart'] ) || !is_numeric( $_REQUEST['add-to-cart'] ) ) {
                 return $url;
-            }  
-            if ( $this->cart_edit_key ) {
+            }
+            if ( $this->cart_edit_key || isset( $_REQUEST['submit_form_mode2'] ) ) {
                 $url = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : WC()->cart->get_cart_url();
             }
             return $url;
@@ -323,6 +331,11 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         public function add_to_cart( $cart_item_key = "", $product_id = "", $quantity = "", $variation_id = "", $variation = "", $cart_item_data = "" ){
             if ( $this->cart_edit_key ) {
                 $this->new_add_to_cart_key = $cart_item_key;
+                $nbd_session = WC()->session->get('nbd_session_removed');               
+                if( $nbd_session ){
+                    WC()->session->set($cart_item_key. '_nbd', $nbd_session);
+                    WC()->session->__unset('nbd_session_removed');
+                }
             }else{
                 if (is_array($cart_item_data) && isset($cart_item_data['nbo_meta'])) {
                     $cart_contents = WC()->cart->cart_contents;
@@ -896,6 +909,20 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     exit;
                 }
             } 
+        }
+        public function quick_view(){
+            global $woocommerce, $post;
+            $product_id = absint($_GET['product']);
+            if ($product_id) {
+                $post = get_post($product_id);
+                setup_postdata($post);
+//                wc_get_template(
+//                    'quick-view.php', array(), 'web-to-print-online-designer', NBDESIGNER_PLUGIN_DIR . '/templates/'
+//                );
+                nbdesigner_get_template('quick-view.php', array());
+                exit;
+            }
+            exit;
         }
     }
 }

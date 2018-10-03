@@ -230,7 +230,7 @@
             var NBDESIGNLANG = <?php echo json_encode(nbd_get_language( $lang_code ));  ?>  
         </script>
     </head>
-    <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">      
+    <body ng-app="app" class="nbd-mode-<?php echo $ui_mode; ?>">
         <div style="width: 100%; height: 100%;overflow: hidden;" ng-controller="DesignerController" ng-cloak>
             <div id="design-container" class="design-mode" ng-class="designMode == 'custom' ? 'active' : ''">
                 <div class="container-fluid" id="designer-controller">

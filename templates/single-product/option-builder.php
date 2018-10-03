@@ -18,7 +18,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 99999;
+        z-index: 9999999999;
     }
     #tiptip_holder.tip_top {
         padding-bottom: 5px;
@@ -167,7 +167,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         }
     } 
     .nbd-radio input[type="radio"]:checked + label:before {
-        border-color: #0c8ea7;
+        border-color: #404762;
         animation: ripple 0.2s linear forwards;
     }
     .nbd-radio input[type="radio"]:checked + label:after {
@@ -203,7 +203,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         width: 10px;
         height: 10px;
         transform: scale(0);
-        background: #0c8ea7;
+        background: #404762;
     }    
     /* end. nbd-radio */
     [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -229,7 +229,7 @@ $prefix = $display_type == 2 ? '-2' : '';
     .nbd-field-header {
         padding: 10px;
         background: #f8f8f8;
-        color: #0c8ea7;
+        color: #404762;
         font-weight: bold;
     }
     .nbd-field-header label {
@@ -255,7 +255,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         display: none;
     }
     .nbd-swatch-wrap input[type="radio"]:checked + label {
-        border: 2px solid #0c8ea7;
+        border: 2px solid #404762;
         position: relative;
         display: inline-block;
     }
@@ -286,7 +286,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         top: 7px;
         left: 12px;        
     }
-    .nbd-dropdown {
+    .nbo-dropdown {
         border: 1px solid #EEE;
         height: 36px;
         padding: 3px 36px 3px 8px;
@@ -327,7 +327,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         overflow: hidden;
     }
     .nbd-label-wrap input[type="radio"]:checked + label {
-        background: #0c8ea7;
+        background: #404762;
         color: #fff;
     }
     .nbd-label:hover{
@@ -370,7 +370,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         width: 24px;
         border-radius: 50%;
         cursor: pointer;
-        background: #0c8ea7;
+        background: #404762;
         border: 4px solid transparent;
         background-clip: padding-box;
         box-sizing: border-box;
@@ -381,7 +381,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         width: 18px;
         border-radius: 50%;
         cursor: pointer;
-        background: #0c8ea7;
+        background: #404762;
         border: 4px solid transparent;
         background-clip: padding-box;
         box-sizing: border-box
@@ -389,7 +389,7 @@ $prefix = $display_type == 2 ? '-2' : '';
     .nbd-field-content input[type="range"]::-ms-thumb {
         border-radius: 50%;
         cursor: pointer;
-        background: #0c8ea7;
+        background: #404762;
         border: 4px solid transparent;
         background-clip: padding-box;
         box-sizing: border-box;
@@ -497,8 +497,11 @@ $prefix = $display_type == 2 ? '-2' : '';
         pointer-events: none;
     }
     .nbo-price-matrix td.selected {
-        background: #0c8ea7;
-        color: #fff;        
+        background: #404762 !important;
+        color: #fff !important;
+    }
+    .nbo-dimension {
+        width: 5em;
     }
     @media (max-width:768px){
         .nbd-tb-options td {
@@ -570,34 +573,48 @@ if( $cart_item_key != ''){
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields and quantity input!', 'web-to-print-online-designer'); ?></p>
         <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
         <div ng-if="valid_form">
-            <p><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
-            <table>
+            <p class="nbo-summary-title"><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
+            <table class="nbo-summary-table">
                 <tbody>
                     <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td>{{field.price}}</td></tr>
                 </tbody>
+                <tfoot style="border-top: 1px solid #404762;">
+                    <tr>
+                        <td><b><?php _e('Options price', 'web-to-print-online-designer'); ?></b></td>
+                        <td><span id="nbd-option-total">{{total_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><b><?php _e('Quantity Discount', 'web-to-print-online-designer'); ?></b></td>
+                        <td><span id="nbd-option-total">{{discount_by_qty}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
+                    </tr>
+                    <tr>
+                        <td><b><?php _e('Final price', 'web-to-print-online-designer'); ?></b></td>
+                        <td><span id="nbd-option-total">{{final_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
+                    </tr>                    
+                </tfoot>
             </table>
-            <p><b><?php _e('Options price: ', 'web-to-print-online-designer'); ?></b> <span id="nbd-option-total">{{total_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></p>
-            <p><b><?php _e('Quantity Discount: ', 'web-to-print-online-designer'); ?></b> {{discount_by_qty}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></p>
-            <p><b><?php _e('Final price: ', 'web-to-print-online-designer'); ?></b> {{final_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></p>
         </div>
         <?php endif; ?>
         <?php if( nbdesigner_get_option('nbdesigner_hide_table_pricing') == 'no' && $options['display_type'] != 3 ): ?>
-        <table ng-if="valid_form && price_table.length > 1">
-            <thead>
-                <tr>
-                    <th><?php _e('From', 'web-to-print-online-designer'); ?></th>
-                    <th><?php _e('Up to', 'web-to-print-online-designer'); ?></th>
-                    <th><?php _e('Price / 1 item', 'web-to-print-online-designer'); ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="pt in price_table">
-                    <td>{{pt.from}}</td>
-                    <td>{{pt.up != '**' ? pt.up : '<?php echo 'or more'; ?>'}}</td>
-                    <td>{{pt.final_price}}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div ng-if="valid_form && price_table.length > 1">
+            <p class="nbo-table-pricing-title"><b><?php _e('Table pricing', 'web-to-print-online-designer'); ?></b></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th><?php _e('From', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Up to', 'web-to-print-online-designer'); ?></th>
+                        <th><?php _e('Price / 1 item', 'web-to-print-online-designer'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pt in price_table">
+                        <td>{{pt.from}}</td>
+                        <td>{{pt.up != '**' ? pt.up : '<?php echo 'or more'; ?>'}}</td>
+                        <td>{{pt.final_price}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <?php endif; ?>
     </div>
 </div>
@@ -808,7 +825,11 @@ if( $cart_item_key != ''){
             .on('click.nbo', qty_selector, function(){
                 jQuery('input[name="quantity"]').trigger( 'change.nbo' );
             });
+    <?php if( isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'NBO_Quick_View') : ?>
+    var nboApp = nbdApp;
+    <?php else: ?>
     var nboApp = angular.module('nboApp', []);
+    <?php endif; ?>
     nboApp.controller('optionCtrl', ['$scope', '$timeout', function($scope, $timeout){
         $scope.product_id = <?php echo $product_id; ?>;
         $scope.options = <?php echo json_encode($options); ?>;
@@ -862,6 +883,7 @@ if( $cart_item_key != ''){
                     jQuery('.single_add_to_cart_button').removeClass( "nbo-disabled nbo-hidden");
                     jQuery('#triggerDesign').removeClass('nbdesigner_disable');
                 }else{
+                    jQuery(document).triggerHandler( 'invalid_nbo_options' );
                     jQuery('.single_add_to_cart_button').addClass( "nbo-disabled");
                     if( nbds_frontend.nbdesigner_hide_add_cart_until_form_filled == 'yes' ){
                         jQuery('.single_add_to_cart_button').addClass( "nbo-hidden");
@@ -931,7 +953,7 @@ if( $cart_item_key != ''){
                 }
             });
             /* send option to editor */
-            jQuery(document).triggerHandler( 'change.nbo_options' );
+            jQuery(document).triggerHandler( 'change_nbo_options' );
             var frame = document.getElementById('onlinedesigner-designer');
             if( frame ){
                 frame.contentWindow.postMessage('change_nbo_options', window.location.origin);
@@ -1099,7 +1121,7 @@ if( $cart_item_key != ''){
             nbOption.status = true;
             <?php if($options['display_type'] == 3 && count($options['bulk_fields'])): ?>
             jQuery('input[name="add-to-cart"]').remove();
-            jQuery('input[name="quantity"]').remove();
+            jQuery('input[name="quantity"], .quantity .screen-reader-text').remove();
             <?php endif; ?>
             $scope.nbd_fields = {};
             $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );

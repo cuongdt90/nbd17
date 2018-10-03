@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 <tr class="nbd-option-field nbd-swatch-wrap <?php echo $class; ?>" ng-if="nbd_fields['<?php echo $field['id']; ?>'].enable">
     <td>
-        <?php echo $field['general']['title']; ?> 
+        <label><?php echo $field['general']['title']; ?></label> 
         <?php if( $field['general']['required'] == 'y' ): ?>
         <span class="nbd-required">*</span>
         <?php endif; ?>        
