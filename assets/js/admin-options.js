@@ -262,7 +262,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     field.general.attributes.options[1] = {};
                     angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
                     field.general.attributes.options[0].name = nbd_options.nbd_options_lang.rectangle;
-                    field.general.attributes.options[1].name = nbd_options.nbd_options_lang.rounded;
+                    field.general.attributes.options[1].name = nbd_options.nbd_options_lang.ellipse;
                     field.general.attributes.add_att = false;
                     field.general.attributes.remove_att = false;
                     break;

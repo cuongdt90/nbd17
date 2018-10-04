@@ -503,6 +503,16 @@ $prefix = $display_type == 2 ? '-2' : '';
     .nbo-dimension {
         width: 5em;
     }
+    .nbd-input-range {
+        margin-left: 5px;
+        background: #404762;
+        padding: 0 15px;
+        line-height: 20px;
+        vertical-align: middle;
+        color: #fff;
+        border-radius: 20px;
+        display: inline-block;
+    }    
     @media (max-width:768px){
         .nbd-tb-options td {
             display: inline-block !important;
@@ -946,7 +956,7 @@ if( $cart_item_key != ''){
                                 nbOption.odOption.orientation = $scope.validate_int( field.value );
                                 break;
                             case 'area':
-                                nbOption.odOption.area = $scope.validate_int( field.value );
+                                nbOption.odOption.area = $scope.validate_int( parseInt(field.value) + 1 );
                                 break;
                         }
                     }

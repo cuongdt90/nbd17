@@ -767,7 +767,7 @@ function nbd_option_i18n(){
         'can_not_add_att'  =>  __('Can not add more attribute for this option.', 'web-to-print-online-designer'),
         'can_not_remove_att'  =>  __('Can not remove this attribute.', 'web-to-print-online-designer'),
         'rectangle'  =>  __('Rectangle', 'web-to-print-online-designer'),
-        'rounded'  =>  __('Rounded rectangle', 'web-to-print-online-designer'),
+        'ellipse'  =>  __('Ellipse', 'web-to-print-online-designer'),
         'attribute_name'  =>  __('Attribute name', 'web-to-print-online-designer'),
         'can_not_copy'  =>  __('Can not copy this option.', 'web-to-print-online-designer'),
         'option_exist'  =>  __('This option exist.', 'web-to-print-online-designer'),

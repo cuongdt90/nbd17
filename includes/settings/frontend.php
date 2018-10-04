@@ -187,9 +187,16 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                         'description' => __('Allow the customer upload multiple images.', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_upload_multiple_images',
                         'default' => 'no',
-                        'layout' => 'c',
                         'type' => 'checkbox'
-                    ),                     
+                    ),    
+                    array(
+                        'title' => __('Max upload files at once', 'web-to-print-online-designer'),
+                        'description' => '',
+                        'id' => 'nbdesigner_max_upload_files_at_once',
+                        'default' => 5,
+                        'css'         => 'width: 65px',
+                        'type' => 'number'
+                    ),                    
                     array(
                         'title' => __( 'Max upload size', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_maxsize_upload',

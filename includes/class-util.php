@@ -754,6 +754,7 @@ function default_frontend_setting(){
         'nbdesigner_enable_google_drive' => 'yes',
         'nbdesigner_enable_svg_code' => 'no',
         'nbdesigner_upload_show_term' => 'no',                
+        'nbdesigner_max_upload_files_at_once' => 5,
         
         'nbdesigner_enable_draw' => 'yes',
         'nbdesigner_draw_brush' => 1,          

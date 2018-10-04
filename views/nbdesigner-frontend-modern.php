@@ -881,6 +881,11 @@
                 -webkit-box-shadow: none !important;
                 box-shadow: none !important;
             }
+/*            .stage-background {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }*/
             @media screen and (max-width: 767px) {
                 .safari .nbd-workspace .main {
                     height: -webkit-calc(100vh - 164px);

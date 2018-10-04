@@ -81,7 +81,7 @@
                             <?php if( $task == 'create_template' ): ?>
                             <li ng-click="addStage()"><i class="icon-nbd icon-nbd-content-copy" title="<?php _e('Add page','web-to-print-online-designer'); ?>"></i></li>
                             <?php endif; ?>
-                            <li><i class="icon-nbd icon-nbd-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
+                            <li><i nbd-clear-stage class="icon-nbd icon-nbd-refresh" title="<?php _e('Clear Design','web-to-print-online-designer'); ?>"></i></li>
                         </ul>
                     </div>
                 </div>

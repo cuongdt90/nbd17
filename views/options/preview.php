@@ -11,7 +11,7 @@
     </div>
     <div ng-show="showPreview" class="frontend-prview-content">
         <!-- show field -->
-        <div class="nbd-quantity preview-wrap">
+        <div class="nbd-quantity preview-wrap" style="display: none;">
             <div><b><?php _e('Quantity', 'web-to-print-online-designer'); ?></b></div>
             <div ng-if="options.quantity_type == 'i'">
                 <input type="number" string-to-number name="nbd-quantity" ng-model="options.quantity_value"/>

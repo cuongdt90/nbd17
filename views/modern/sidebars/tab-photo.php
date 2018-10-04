@@ -91,12 +91,13 @@
                             <div class="form-upload nbd-dnd-file" nbd-dnd-file="uploadFile(files)">
                                 <i class="icon-nbd icon-nbd-cloud-upload"></i>
                                 <span><?php _e('Click or drop images here','web-to-print-online-designer'); ?></span>
-                                <input type="file" accept="image/*" style="display: none;"/>
+                                <input type="file" accept="image/*" style="display: none;" <?php if($settings['nbdesigner_upload_multiple_images'] == 'yes') echo 'multiple'; ?>/>
                             </div>
                             <div class="allow-size">
-                                <span><?php _e('Accept file types','web-to-print-online-designer'); ?>: <strong>png, jpg, gif</strong></span>
+                                <span><?php _e('Accept file types','web-to-print-online-designer'); ?>: <strong>png, jpg, svg</strong></span>
                                 <span><?php _e('Max file size','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_maxsize_upload']}} MB</strong></span>
                                 <span><?php _e('Min file size','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_minsize_upload']}} MB</strong></span>
+                                <span ng-if="settings.nbdesigner_upload_multiple_images == 'yes'"><?php _e('Max upload files','web-to-print-online-designer'); ?>: <strong>{{settings['nbdesigner_max_upload_files_at_once']}}</strong></span>
                             </div>
                             <div class="nbd-term" ng-if="settings['nbdesigner_upload_show_term'] == 'yes'">
                                 <div class="nbd-checkbox">

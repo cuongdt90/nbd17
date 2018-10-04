@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 <div class="nbd-option-field nbd-field-radio-wrap <?php echo $class; ?>" ng-if="nbd_fields['<?php echo $field['id']; ?>'].enable">
     <div class="nbd-field-header">
-        <?php echo $field['general']['title']; ?> 
+        <label><?php echo $field['general']['title']; ?></label> 
         <?php if( $field['general']['required'] == 'y' ): ?>
         <span class="nbd-required">*</span>
         <?php endif; ?>
