@@ -479,6 +479,17 @@ $prefix = $display_type == 2 ? '-2' : '';
     }
     .nbo-table-wrap table input[type="number"]{
         width: 4em;
+        padding: 0.418047em;
+        background-color: #f2f2f2;
+        color: #43454b;
+        outline: 0;
+        border: 0;
+        -webkit-appearance: none;
+        box-sizing: border-box;
+        font-weight: 400;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.125);
+        width: 4.235801032em;
+        text-align: center;        
     }    
     .nbo-price-matrix table, .nbo-table-wrap table{
         border-collapse: collapse;

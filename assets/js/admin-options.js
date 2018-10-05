@@ -173,9 +173,9 @@ var AD_NBD_OPTIONS = {
         
     }
 };
-angular.module('optionApp', []).controller('optionCtrl', function( $scope, $timeout ) {
+angular.module('optionApp', []).controller('optionCtrl', function( $scope, $timeout, pmFieldFilter, bulkFieldFilter ) {
     /* init parameters */
-    $scope.showPreview = true;
+    $scope.showPreview = false;
     $scope.previewWide = false;
     /* end init parameters */
     /* quantity */
@@ -434,6 +434,19 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             field.isExpand = false;
         });
         $scope.initfieldValue();
+        $scope.options.pm_ver = $scope.options.pm_ver ? $scope.options.pm_ver : [];
+        $scope.options.pm_hoz = $scope.options.pm_hoz ? $scope.options.pm_hoz : [];
+        $scope.$watchCollection('options.fields', function(newVal, oldVal){
+            $scope.availablePmHozFileds = pmFieldFilter($scope.options.fields, $scope.options.pm_ver);
+            $scope.availablePmVerFileds = pmFieldFilter($scope.options.fields, $scope.options.pm_hoz);
+            $scope.availableBulkFileds = bulkFieldFilter($scope.options.fields);
+        }, true);
+        $scope.$watchCollection('options.pm_ver', function(newVal, oldVal){
+            $scope.availablePmHozFileds = pmFieldFilter($scope.options.fields, $scope.options.pm_ver);
+        }, true);    
+        $scope.$watchCollection('options.pm_hoz', function(newVal, oldVal){
+            $scope.availablePmVerFileds = pmFieldFilter($scope.options.fields, $scope.options.pm_hoz);
+        }, true);         
     };
     $scope.export = function(){
         var filename = 'options.json',
@@ -739,7 +752,62 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         }
         return input;
     };
+}).filter('pmField', function(){
+    return function(fields, usedFields){
+        var filtered_fileds = [];
+        angular.forEach(fields, function(field, field_index){
+            if( usedFields.indexOf(''+field_index) < 0 && field.general.data_type.value == 'm' && field.general.enabled.value == 'y' && field.general.attributes.options.length > 0 && field.conditional.enable == 'n' ){
+                var _field = {};
+                angular.copy(field, _field);
+                _field.field_index = field_index;
+                filtered_fileds.push(_field);
+            }
+        });
+        return filtered_fileds;
+    }
+}).filter('bulkField', function(){
+    return function(fields){
+        var filtered_fileds = [];
+        angular.forEach(fields, function(field, field_index){
+            var exclude = ['dpi', 'page', 'orientation', 'area', 'dimension'];
+            var check_od = true;
+            if( angular.isDefined(field.nbd_type) && exclude.indexOf(field.nbd_type) > -1 ){
+                check_od = false;
+            }
+            if( check_od && field.general.data_type.value == 'm' && field.general.enabled.value == 'y' && field.general.attributes.options.length > 0 && field.conditional.enable == 'n' ){
+                var _field = {};
+                angular.copy(field, _field);
+                _field.field_index = field_index;
+                filtered_fileds.push(_field);
+            }
+        });
+        return filtered_fileds;
+    }
 });
 jQuery( document ).ready(function($){
-   
+    $(".nbo-dates input:not(.hasDatepicker)").datepicker({
+        defaultDate: "",
+        dateFormat: "yy-mm-dd",
+        numberOfMonths: 1,
+        showButtonPanel: true,
+        showOn: "button",
+        buttonImage: nbd_options.calendar_image,
+        buttonImageOnly: true,
+        onSelect: function (selectedDate) {
+            var option = $(this).is('.date_from') ? "minDate" : "maxDate";
+            var instance = $(this).data("datepicker"),
+                date = $.datepicker.parseDate(
+                    instance.settings.dateFormat ||
+                    $.datepicker._defaults.dateFormat,
+                    selectedDate, instance.settings);
+            var dates = $(this).parents('.pricing-rule-date-fields').find('input');
+            dates.not(this).datepicker("option", option, date);
+        }
+   });
+    $('.nbo-toggle-nav').on('click', function(){
+        $('.nbo-toggle').removeClass('active');
+        if( $(this).is(':checked') ){
+            $($(this).data('toggle')).addClass('active');
+        }
+    });
 });

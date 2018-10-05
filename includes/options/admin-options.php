@@ -125,6 +125,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
  priority  TINYINT(1) NOT NULL default 0, 
  product_ids text NULL, 
  product_cats text NULL,  
+ date_from TINYTEXT NULL,  
+ date_to TINYTEXT NULL,  
+ apply_for TINYTEXT NULL,  
  enabled_roles text NULL,  
  disabled_roles text NULL,  
  created datetime NOT NULL default '0000-00-00 00:00:00',
@@ -136,17 +139,21 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
 ) $collate; 
                 ";
                 @dbDelta($tables);                
-            }    
+            }
         }
         public function admin_enqueue_scripts( $hook ){
             if( $hook == 'nbdesigner_page_nbd_printing_options' ){
                 wp_register_style('nbd_options', NBDESIGNER_CSS_URL . 'admin-options.css', array('wp-color-picker'), NBDESIGNER_VERSION);                   
-                wp_register_script('nbd_options', NBDESIGNER_JS_URL . 'admin-options.js', array('jquery', 'jquery-ui-resizable', 'jquery-ui-draggable', 'jquery-ui-autocomplete', 'wp-color-picker', 'angularjs'), NBDESIGNER_VERSION);             
+                wp_register_script('nbd_options', NBDESIGNER_JS_URL . 'admin-options.js', array('jquery', 'jquery-ui-resizable', 'jquery-ui-draggable', 'jquery-ui-datepicker', 'jquery-ui-autocomplete', 'wp-color-picker', 'angularjs', 'wc-enhanced-select'), NBDESIGNER_VERSION);             
                 wp_localize_script('nbd_options', 'nbd_options', array(
-                    'nbd_options_lang' => nbd_option_i18n()
+                    'nbd_options_lang' => nbd_option_i18n(),
+                    'calendar_image'    =>  NBDESIGNER_PLUGIN_URL.'assets/images/calendar.png',
+                    'search_products_nonce'    =>  wp_create_nonce( "search-products" ),
                 ));   
                 wp_enqueue_style(array('wp-jquery-ui-dialog', 'wp-color-picker', 'nbd_options'));
                 wp_enqueue_script(array('wpdialogs', 'nbd_options'));   	
+                $jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
+                wp_enqueue_style( 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.css' );
             }
         }
         public function printing_options(){ 
@@ -154,6 +161,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 $paged = get_query_var('paged', 1);
                 $message = array('content'  =>  '');
                 if( $_GET['action'] == 'delete' ){
+                    //todo delete
                     wp_redirect(esc_url_raw(add_query_arg(array('paged' => $paged), admin_url('admin.php?page=nbd_printing_options'))));
                 }else{
                     $id = (isset( $_REQUEST['id'] ) && absint($_REQUEST['id']) > 0 ) ? absint($_REQUEST['id']) : 0;
@@ -189,12 +197,22 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options = $this->build_options( $raw_options );
                         $options['id'] = $_options['id'];
                         $options['title'] = $_options['title'];
-                        $options['priority'] = $_options['priority'];                   
+                        $options['priority'] = $_options['priority'];
+                        $options['date_from'] = isset($_options['date_from']) ? $_options['date_from'] : '';
+                        $options['date_to'] = isset($_options['date_to']) ? $_options['date_to'] : '';
+                        $options['apply_for'] = isset($_options['apply_for']) ? $_options['apply_for'] : 'p';
+                        $options['product_cats'] = isset($_options['product_cats']) ? unserialize($_options['product_cats']) : array();
+                        $options['product_ids'] = isset($_options['product_ids']) ? unserialize($_options['product_ids']) : array();
                     }else{
                         $options = $this->build_options();
                         $options['id'] = 0;
                         $options['title'] = '';
+                        $options['date_from'] = '';
+                        $options['date_to'] = '';
                         $options['priority'] = 1;                     
+                        $options['apply_for'] = 'p';                    
+                        $options['product_cats'] = array();               
+                        $options['product_ids'] = array();               
                     }
                     foreach ( $options["fields"] as $f_index => $field ){
                         if($field["conditional"]['enable'] == 'n'){
@@ -241,14 +259,15 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             $modified_date = new DateTime();
             $arr = array(
                 'title' =>  $_POST['title'],
+                'priority' =>  $_POST['priority'],
+                'date_from' =>  $_POST['date_from'],
+                'date_to' =>  $_POST['date_to'],
+                'apply_for' =>  $_POST['apply_for'],
+                'product_cats' =>  serialize($_POST['product_cats']),
+                'product_ids' =>  serialize($_POST['product_ids']),
                 'modified'  => $modified_date->format('Y-m-d H:i:s'),
                 'fields'    => serialize($_POST['options'])
             );
-            $is_product_option = false;
-            if( isset($_POST['product_ids']) && absint($_POST['product_ids']) > 0 ) {
-                $arr['product_ids'] = absint($_POST['product_ids']);
-                $is_product_option = true;
-            }
             $arr['fields'] = serialize( $this->validate_option($_POST['options']) );
             global $wpdb;
             $date = new DateTime();
@@ -262,13 +281,16 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 $result = $wpdb->insert("{$wpdb->prefix}nbdesigner_options", $arr);
                 $id = $result ?  $wpdb->insert_id : 0;
             }
-            if( $result && $is_product_option ){
-                update_post_meta(absint($_POST['product_ids']), '_nbo_option_id', $id);
-            }
+            $this->clear_transients();
             return array(
                 'status' =>  $result,
                 'id'    =>  $id
             );
+        }
+        private function clear_transients(){
+            global $wpdb;
+            $sql = "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_nbo_product_%' OR option_name LIKE '_transient_timeout_nbo_product_%'";   
+            $wpdb->query( $sql );
         }
         private function validate_option( $options ){
             if( $options['display_type'] == 2 ){
@@ -281,7 +303,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             }else if( $options['display_type'] == 3 ){
                 if( !isset($options['bulk_fields']) ){
                     $options['bulk_fields'] = array();
-                }                
+                }
+            }else{
+                $options['display_type'] = 1;
             }
             foreach ( $options["fields"] as $f_index => $field ){
                 $array_price_type = array('f', 'p', 'p+', 'c' );
@@ -741,7 +765,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             return $value;
         } 
         public function build_config_conditional_depend( $value = null ){
-            if (is_null($value)) $value = array(
+            if (is_null($value) || count($value) == 0) $value = array(
                 0   =>  array(
                     'id'    => '',
                     'operator'  =>  'i',

@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <div class="nbo-bulk-variation-wrap nbo-table-wrap">
-    <p><b><?php _e('Bulk form', 'web-to-print-online-designer'); ?></b></p>
+    <p class="nbo-bulk-title"><b><?php _e('Bulk variation', 'web-to-print-online-designer'); ?></b></p>
     <?php if( count($options["bulk_fields"]) > 1): ?>
     <table class="nbo-bulk-variation">
         <thead>
@@ -39,7 +39,7 @@
                     <?php endif; ?>
                 </td>
             <?php endforeach; ?>
-                <td><input ng-model="nbd_qty_fields" class="nbb-qty-field" name="nbb-qty-fields[]" type="number" min="1" step="1" value="" style="width: 4em" pattern="[0-9]*"/></td>
+                <td><input ng-model="nbd_qty_fields" class="nbb-qty-field" name="nbb-qty-fields[]" type="number" min="1" step="1" value="1" style="width: 4em" pattern="[0-9]*"/></td>
             </tr>            
         </tbody>
         <tfoot>
@@ -69,7 +69,7 @@
             <tr>
                 <th><?php echo $field['general']['title']; ?> <?php if( $field['general']['required'] == 'y' ): ?><span class="nbd-required">*</span><?php endif; ?></th>
                 <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
-                <td><input class="nbb-qty-field" name="nbb-qty-fields[]" type="number" min="1" step="1" value="" style="width: 4em" pattern="[0-9]*"/></td>
+                <td><input class="nbb-qty-field" name="nbb-qty-fields[]" type="number" min="1" step="1" value="1" style="width: 4em" pattern="[0-9]*"/></td>
                 </td>
                 <?php endforeach; ?>
             </tr>

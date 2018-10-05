@@ -880,6 +880,7 @@
             .nbd-stages .stage .stage-main.nbd-without-shadow {
                 -webkit-box-shadow: none !important;
                 box-shadow: none !important;
+                background: transparent !important;
             }
 /*            .stage-background {
                 display: flex;
@@ -1198,7 +1199,7 @@
                 display: table-cell;
                 vertical-align: middle;                
             }
-            .nbo-summary-title, .nbo-table-pricing-title {
+            .nbo-summary-title, .nbo-table-pricing-title, .nbo-bulk-title {
                 margin-top: 15px;
             }
             .nbd-field-input-wrap input[type="number"] {
@@ -1254,6 +1255,10 @@
                 box-sizing: border-box;
                 border-radius: 18px;
                 color: #ef5350 !important;
+            }
+            .woocommerce-variation-price ins {
+                font-weight: bold;
+                text-decoration: none;                
             }
             @media only screen and (max-width: 768px) {
                 div.quick-view div.quick-view-image,

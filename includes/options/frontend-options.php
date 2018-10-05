@@ -735,8 +735,62 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             }
         }
         public function get_product_option($product_id){
-            $option_id = get_post_meta($product_id, '_nbo_option_id', true);
-            //todo option category
+            $enable = get_post_meta($product_id, '_nbo_enable', true);
+            if( !$enable ) return false;
+            $option_id = get_transient( 'nbo_product_'.$product_id );
+            if( false === $option_id ){
+                global $wpdb;
+                $sql = "SELECT id, priority, apply_for, product_ids, product_cats, date_from, date_to  FROM {$wpdb->prefix}nbdesigner_options";
+                $options = $wpdb->get_results($sql, 'ARRAY_A');
+                if($options){
+                    $_options = array();
+                    foreach( $options as $option ){
+                        $execute_option = true;
+                        $from_date = false;
+                        if( isset($option['date_from']) ){
+                            $from_date = empty( $option['date_from'] ) ? false : strtotime( date_i18n( 'Y-m-d 00:00:00', strtotime( $option['date_from'] ), false ) );
+                        }
+                        $to_date = false;
+                        if( isset($option['date_to']) ){
+                            $to_date = empty( $option['date_to'] ) ? false : strtotime( date_i18n( 'Y-m-d 00:00:00', strtotime( $option['date_to'] ), false ) );
+                        }
+                        $now  = current_time( 'timestamp' );
+			if ( $from_date && $to_date && !( $now >= $from_date && $now <= $to_date ) ) {
+                            $execute_option = false;
+			} elseif ( $from_date && !$to_date && !( $now >= $from_date ) ) {
+                            $execute_option = false;
+			} elseif ( $to_date && !$from_date && !( $now <= $to_date ) ) {
+                            $execute_option = false;
+			}
+                        if( $execute_option ){
+                            if( $option['apply_for'] == 'p' ){
+                                $products = unserialize($option['product_ids']);
+                                $execute_option = in_array($product_id, $products) ? true : false;
+                            }else {
+                                $categories = $option['product_cats'] ? unserialize($option['product_cats']) : array();
+                                $product = wc_get_product($product_id);
+                                $product_categories = $product->get_category_ids();
+                                $intersect = array_intersect($product_categories, $categories);
+                                $execute_option = ( count($intersect) > 0 ) ? true : false;
+                            }
+                        }
+                        if( $execute_option ){
+                            $_options[] = $option;
+                        }
+                    }
+                    $_options = array_reverse( $_options );
+                    $option_priority = 0;
+                    foreach( $_options as $_option ){
+                        if( $_option['priority'] > $option_priority ){
+                            $option_priority = $_option['priority'];
+                            $option_id = $_option['id'];
+                        }
+                    }
+                    if( $option_id ){
+                        set_transient( 'nbo_product_'.$product_id , $option_id );
+                    }
+                }
+            } 
             return $option_id;
         }
         public function get_option( $id ){

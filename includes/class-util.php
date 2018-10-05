@@ -682,7 +682,7 @@ function nbdesigner_get_default_setting($key = false){
     return $nbd_setting[$key];
 }
 function default_frontend_setting(){
-    $default = array(
+    return apply_filters('nbdesigner_default_frontend_settings', array(
         'nbdesigner_enable_text' => 'yes',
         'nbdesigner_text_change_font' => 1,
         'nbdesigner_text_italic' => 1,
@@ -810,8 +810,7 @@ function default_frontend_setting(){
         'nbdesigner_show_bleed' => 'no',
         'nbdesigner_show_warning_oos' => 'no',
         'nbdesigner_show_warning_ilr' => 'no'
-    );
-    return $default;
+    ));
 }
 function nbd_get_value_from_serialize_data( $str, $key ){
     $arr = array();

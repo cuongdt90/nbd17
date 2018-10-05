@@ -5,10 +5,10 @@
     </div>
     <div class="nbd-field-info-2">
         <div>
-            <select name="options[display_type]" ng-model="options.display_type">
-                <option value="1"><?php _e('Default', 'web-to-print-online-designer'); ?></option>
-                <option value="2"><?php _e('Price Matrix', 'web-to-print-online-designer'); ?></option>
-                <option value="3"><?php _e('Bulk variation form', 'web-to-print-online-designer'); ?></option>
+            <select string-to-number name="options[display_type]" ng-model="options.display_type">
+                <option ng-value="1"><?php _e('Default', 'web-to-print-online-designer'); ?></option>
+                <option ng-value="2"><?php _e('Price Matrix', 'web-to-print-online-designer'); ?></option>
+                <option ng-value="3"><?php _e('Bulk variation', 'web-to-print-online-designer'); ?></option>
             </select>                        
         </div>
     </div>
@@ -22,7 +22,7 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[pm_hoz][]" multiple ng-model="options.pm_hoz">
-                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y' && field.general.attributes.options.length > 0 && field.conditional.enable == 'n'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option value="{{field.field_index}}" ng-repeat="(fieldIndex, field) in availablePmHozFileds">{{field.general.title.value}}</option>
                 </select>
             </div>
         </div>    
@@ -34,7 +34,7 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[pm_ver][]" multiple ng-model="options.pm_ver">
-                    <option ng-if="field.general.data_type.value == 'm' && field.general.enabled.value == 'y' && field.general.attributes.options.length > 0 && field.conditional.enable == 'n'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option  value="{{field.field_index}}" ng-repeat="(fieldIndex, field) in availablePmVerFileds">{{field.general.title.value}}</option>
                 </select>                        
             </div>
         </div>    
@@ -56,7 +56,7 @@
         <div class="nbd-field-info-2">
             <div>
                 <select name="options[bulk_fields][]" multiple ng-model="options.bulk_fields">
-                    <option ng-if="field.general.enabled.value == 'y' && field.conditional.enable == 'n'" value="{{fieldIndex}}" ng-repeat="(fieldIndex, field) in options.fields">{{field.general.title.value}}</option>
+                    <option value="{{field.field_index}}" ng-repeat="(fieldIndex, field) in availableBulkFileds">{{field.general.title.value}}</option>
                 </select>
             </div>
         </div>    

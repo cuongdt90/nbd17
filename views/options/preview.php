@@ -1,5 +1,5 @@
 <?php if (!defined('ABSPATH')) exit; ?>
-<div class="frontend-prview" ng-class="previewWide ? 'wide' : ''">
+<div class="frontend-prview" ng-class="previewWide ? 'wide' + (!showPreview ? 'off-preview' : '') : (!showPreview ? 'off-preview' : '')">
     <div class="frontend-prview-header">
         <?php _e('Frontend Preview', 'web-to-print-online-designer'); ?>
         <span class="nbdesigner-right" style="margin-top: -4px;">

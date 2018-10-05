@@ -31,7 +31,10 @@ class NBD_Options_List_Table extends WP_List_Table {
             'cb' => '<input type="checkbox" />',            
             'title' => __('Title', 'web-to-print-online-designer'),
             'priority' => __('Priority', 'web-to-print-online-designer'),
-            'created' => __('Created', 'web-to-print-online-designer')
+            'apply_for' => __('Applied for', 'web-to-print-online-designer'),
+            'product_ids' => __('Products', 'web-to-print-online-designer'),
+            'product_cats' => __('Categories', 'web-to-print-online-designer'),
+            'created' => __('Date', 'web-to-print-online-designer')
         );
         return $columns;
     }    
@@ -83,14 +86,28 @@ class NBD_Options_List_Table extends WP_List_Table {
             'edit' => sprintf('<a href="?page=%s&action=%s&id=%s&paged=%s&_wpnonce=%s">'.__('Edit', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'edit', absint($item['id']), $this->get_pagenum(), $_nonce)
         );
         return $title . $this->row_actions($actions);
+    } 
+    function column_apply_for($item) {
+        return $item['apply_for'] == 'p' ? __('Products', 'web-to-print-online-designer') : __('Categories', 'web-to-print-online-designer');
     }
-    function column_priority($item){
-        if($item['priority']){
-            return '<span class="primary">&#9733;</span>';
-        }else{
-            return '<span>&#9734;</span>';
-        }     
-    }   
+    function column_product_cats($item) {
+        $return = __('No category', 'web-to-print-online-designer');
+        if( !$item['product_cats'] ) return $return;
+        $cats = unserialize($item['product_cats']);
+        if( count($cats) ){
+            $links = array();
+            foreach ( $cats as $cat_id ) {
+                $category = get_term_by( 'id', $cat_id, 'product_cat' );
+                $link = get_term_link( $category, 'product_cat' );
+                if ( !is_wp_error( $link ) ) {
+                    $links[] = '<a href="' . esc_url( $link ) . '" rel="tag">' . $category->name . '</a>';
+                }
+            }
+            $sep = ' , ';
+            $return = join( $sep, $links );            
+        }
+        return $return;
+    }
     function column_default($item, $column_name){
         return $item[$column_name];
     }   

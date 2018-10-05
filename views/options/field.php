@@ -182,7 +182,7 @@
                     <div>
                         <div ng-repeat="(opIndex, op) in field.general.attributes.options" class="nbd-attribute-wrap">
                             <div class="nbd-attribute-img-wrap">
-                                <div><?php _e('Swatch type', 'web-to-print-online-designer'); ?> <sup class="nbs-sup-des">1</sup></div>
+                                <div><?php _e('Swatch type', 'web-to-print-online-designer'); ?> <!--<sup class="nbs-sup-des">1</sup>--></div>
                                 <div>
                                     <select ng-model="op.preview_type" style="width: 110px;" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][preview_type]">
                                         <option value="i"><?php _e('Image', 'web-to-print-online-designer'); ?></option>
@@ -198,7 +198,7 @@
                                     <input type="text" name="options[fields][{{fieldIndex}}][general][attributes][options][{{$index}}][color]" ng-model="op.color" class="nbd-color-picker" nbd-color-picker="op.color"/>
                                 </div>
                                 <div ng-if="field.appearance.change_image_product.value == 'y'">
-                                    <div><?php _e('Product image', 'web-to-print-online-designer'); ?>  <sup class="nbs-sup-des">2</sup></div>
+                                    <div><?php _e('Product image', 'web-to-print-online-designer'); ?>  <!--<sup class="nbs-sup-des">2</sup>--></div>
                                     <div class="nbd-attribute-img-inner">
                                         <span class="dashicons dashicons-no remove-attribute-img" ng-click="remove_attribute_image(fieldIndex, $index, 'product_image', 'product_image_url')"></span>
                                         <input ng-hide="true" ng-model="op.product_image" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][product_image]"/>

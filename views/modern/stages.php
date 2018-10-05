@@ -5,7 +5,7 @@
                 <div class="stage-main" ng-class="stage.config.bgType == 'image' ? 'nbd-without-shadow' : ''" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                     'height' : calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}">
                     <div class="stage-background">
-                        <img style="width: 100%; height: 100%;" ng-style="{'background-color': stage.config.bgColor}" ng-if="stage.config.bgType == 'image'" ng-src='{{stage.config.bgImage}}'/>
+                        <img style="width: 100%; height: 100%;" ng-if="stage.config.bgType == 'image'" ng-src='{{stage.config.bgImage}}'/>
                     </div>
                     <div class="design-wrap" ng-style="{'width' : calcStyle(stage.config.width * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
                         'height' : calcStyle(stage.config.height * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
