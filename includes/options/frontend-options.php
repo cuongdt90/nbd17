@@ -740,7 +740,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             $option_id = get_transient( 'nbo_product_'.$product_id );
             if( false === $option_id ){
                 global $wpdb;
-                $sql = "SELECT id, priority, apply_for, product_ids, product_cats, date_from, date_to  FROM {$wpdb->prefix}nbdesigner_options";
+                $sql = "SELECT id, priority, apply_for, product_ids, product_cats, date_from, date_to FROM {$wpdb->prefix}nbdesigner_options WHERE published = 1";
                 $options = $wpdb->get_results($sql, 'ARRAY_A');
                 if($options){
                     $_options = array();

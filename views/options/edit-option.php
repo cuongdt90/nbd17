@@ -7,8 +7,9 @@
             'action' => 'update',
             'id'  =>  $options['id'],
         ), admin_url('admin.php?page=nbd_printing_options')); 
-    $link_delete = add_query_arg(array(
-            'action' => 'delete'
+    $link_unpublish = add_query_arg(array(
+            'id' => $_GET['id'],
+            'action' => 'unpublish'
         ), $link);  
     $link_create_option = add_query_arg(array(
             'action' => 'edit',
@@ -42,7 +43,7 @@
                     <div id="post-body-content">
                         <div id="titlediv">
                             <div id="titlewrap">
-                                <label class="screen-reader-text" id="title-prompt-text" for="title">Enter title here</label>
+                                <label class="screen-reader-text" id="title-prompt-text" for="title"><?php _e('Enter title here', 'web-to-print-online-designer'); ?></label>
                                 <input required="required" ng-model="options.title" type="text" name="title" size="30" value="<?php echo $options['title']; ?>" id="title" autocomplete="off">
                                 <span style="color: red;" ng-show="nboForm.title.$invalid">* <small><i><?php _e('required', 'web-to-print-online-designer'); ?></i></small></span>
                             </div>
@@ -72,19 +73,21 @@
                                             </div>
                                             <div>
                                                 <label for="date_to"><?php _e('To', 'web-to-print-online-designer'); ?></label>
-                                                <input class="date_to" id="date_to" name="date_to" value="<?php echo $options['date_to']; ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php _e('From YYYY-MM-DD', 'web-to-print-online-designer'); ?>" title="<?php _e( 'Leave both fields blank to not restrict this options to a date range', 'web-to-print-online-designer' ); ?>"/>
+                                                <input class="date_to" id="date_to" name="date_to" value="<?php echo $options['date_to']; ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php _e('To YYYY-MM-DD', 'web-to-print-online-designer'); ?>" title="<?php _e( 'Leave both fields blank to not restrict this options to a date range', 'web-to-print-online-designer' ); ?>"/>
                                             </div>    
                                         </div>  
                                         <div class="clear"></div>
                                     </div>
                                     <div id="major-publishing-actions">
                                         <div id="delete-action">
+                                            <?php if($options['published'] == 1): ?>
                                             <a class="submitdelete deletion"
-                                               href="<?php echo $link_delete; ?>"><?php _e('Move to Trash', 'web-to-print-online-designer'); ?></a>
+                                               href="<?php echo $link_unpublish; ?>"><?php _e('Move to Trash', 'web-to-print-online-designer'); ?></a>
+                                            <?php endif; ?>
                                         </div>   
                                         <div id="publishing-action">
                                             <input ng-disabled="!nboForm.$valid" name="save" type="submit" class="button button-primary button-large" id="publish"
-                                                accesskey="p" value="<?php if($id != 0){ esc_attr_e( 'Update' ); }else{ esc_attr_e( 'Publish' ); }; ?>"/>                                        
+                                                accesskey="p" value="<?php if($id != 0){ if($options['published'] == 1) esc_attr_e( 'Update' ); else esc_attr_e( 'Publish' ); }else{ esc_attr_e( 'Publish' ); }; ?>"/>                                        
                                         </div>
                                         <div class="clear"></div>
                                     </div>
@@ -94,10 +97,12 @@
                         <div id="product_catdiv" class="postbox">
                             <h2 class="hndle ui-sortable-handle"><span><?php _e('Apply for', 'web-to-print-online-designer'); ?></span></h2>
                             <div class="inside">
-                                <label for="apply_product"><?php _e('Products', 'web-to-print-online-designer'); ?></label>
-                                <input class="nbo-toggle-nav" data-toggle="#nbo-products-wrap" type="radio" id="apply_product" name="apply_for" value="p" <?php checked($options['apply_for'], 'p') ?>/>
-                                <label for="apply_categories"><?php _e('Categories', 'web-to-print-online-designer'); ?></label>
-                                <input class="nbo-toggle-nav" data-toggle="#nbo-categories-wrap" type="radio" id="apply_categories" name="apply_for" value="c" <?php checked($options['apply_for'], 'c') ?>/>                                        
+                                <label for="apply_product"><?php _e('Products', 'web-to-print-online-designer'); ?>
+                                    <input class="nbo-toggle-nav" data-toggle="#nbo-products-wrap" type="radio" id="apply_product" name="apply_for" value="p" <?php checked($options['apply_for'], 'p') ?>/>
+                                </label>
+                                <label for="apply_categories"><?php _e('Categories', 'web-to-print-online-designer'); ?>
+                                    <input class="nbo-toggle-nav" data-toggle="#nbo-categories-wrap" type="radio" id="apply_categories" name="apply_for" value="c" <?php checked($options['apply_for'], 'c') ?>/>  
+                                </label>
                             </div>
                             <div class="inside nbo-toggle <?php if($options['apply_for'] == 'p') echo 'active'; ?>" id="nbo-products-wrap">
                                 <label for="product_ids" style="display: inline-block;margin-bottom: 10px;"><?php _e('Select the Products to apply the options', 'web-to-print-online-designer') ?></label>

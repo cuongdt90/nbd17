@@ -75,7 +75,7 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
         public function meta_box(){
             $post_id = get_the_ID();
             $enable = get_post_meta($post_id, '_nbo_enable', true);
-            $option_id = get_post_meta($post_id, '_nbo_option_id', true);
+            $option_id = get_transient( 'nbo_product_'.$post_id );
             $option_id = $option_id ? $option_id : 0;
             $link_edit_option = add_query_arg(array(
                     'product_id' => $post_id, 
@@ -160,8 +160,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             if( isset( $_GET['action'] ) ){
                 $paged = get_query_var('paged', 1);
                 $message = array('content'  =>  '');
-                if( $_GET['action'] == 'delete' ){
-                    //todo delete
+                if( $_GET['action'] == 'unpublish' ){
+                    $this->unpublish_option( $_REQUEST['id'] );
                     wp_redirect(esc_url_raw(add_query_arg(array('paged' => $paged), admin_url('admin.php?page=nbd_printing_options'))));
                 }else{
                     $id = (isset( $_REQUEST['id'] ) && absint($_REQUEST['id']) > 0 ) ? absint($_REQUEST['id']) : 0;
@@ -198,6 +198,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options['id'] = $_options['id'];
                         $options['title'] = $_options['title'];
                         $options['priority'] = $_options['priority'];
+                        $options['published'] = $_options['published'];
                         $options['date_from'] = isset($_options['date_from']) ? $_options['date_from'] : '';
                         $options['date_to'] = isset($_options['date_to']) ? $_options['date_to'] : '';
                         $options['apply_for'] = isset($_options['apply_for']) ? $_options['apply_for'] : 'p';
@@ -210,6 +211,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options['date_from'] = '';
                         $options['date_to'] = '';
                         $options['priority'] = 1;                     
+                        $options['published'] = 1;                     
                         $options['apply_for'] = 'p';                    
                         $options['product_cats'] = array();               
                         $options['product_ids'] = array();               
@@ -222,12 +224,10 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         }
                     }    
                     $default_field = $this->default_config_field();
-                    $product_id = ($_options && isset($_options['product_ids'])) ? absint($_options['product_ids']) : 0;
-                    if( isset($_GET['product_id']) && absint($_GET['product_id']) > 0 ){
-                        $product_id = absint($_GET['product_id']);
+                    $product_id = (isset($_GET['product_id']) && absint($_GET['product_id']) > 0) ? absint($_GET['product_id']) : 0;
+                    if( $product_id ){
                         if( !$_options ){
-                            $product = wc_get_product($product_id);
-                            $options['title'] = $product->get_title() . __(' - Option', 'web-to-print-online-designer');
+                            $options['product_ids'] = array( 0 => $product_id);
                         }
                     }
                     include_once(NBDESIGNER_PLUGIN_DIR . 'views/options/edit-option.php');
@@ -259,6 +259,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             $modified_date = new DateTime();
             $arr = array(
                 'title' =>  $_POST['title'],
+                'published' =>  1,
                 'priority' =>  $_POST['priority'],
                 'date_from' =>  $_POST['date_from'],
                 'date_to' =>  $_POST['date_to'],
@@ -329,8 +330,19 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             $result = $wpdb->get_results($sql, 'ARRAY_A');
             return count($result[0]) ? $result[0] : false;
         }
-        public function delete_options(){
-
+        public function delete_option( $id ){
+            global $wpdb;
+            $sql = "DELETE FROM {$wpdb->prefix}nbdesigner_options";
+            $sql .= " WHERE id = " . esc_sql($id);
+            $result = $wpdb->query( $sql );
+            if( $result ) $this->clear_transients();
+        }
+        public function unpublish_option( $id ){
+            global $wpdb;
+            $result = $wpdb->update($wpdb->prefix . 'nbdesigner_options', array(
+                'published' => 0
+            ), array( 'id' => esc_sql($id))); 
+            if( $result ) $this->clear_transients();
         }
         public function build_options( $options = null ){
             if( is_null($options) ){
@@ -417,7 +429,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             return $field;
         }
         public function build_config_general_title( $value = null ){
-            if (is_null($value)) $value = __( 'Title', 'web-to-print-online-designer');
+            if (is_null($value)) $value = __( 'Option name', 'web-to-print-online-designer');
             return array(
                 'title' => __( 'Option name', 'web-to-print-online-designer'),
                 'description'   =>  '',
@@ -426,7 +438,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             );
         }
         public function build_config_general_description( $value = null ){
-            if (is_null($value)) $value = __( 'Description', 'web-to-print-online-designer');
+            if (is_null($value)) $value = __( 'Option description', 'web-to-print-online-designer');
             return array(
                 'title' => __( 'Description', 'web-to-print-online-designer'),
                 'description'   =>  '',

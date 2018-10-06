@@ -30,18 +30,18 @@ class NBD_Options_List_Table extends WP_List_Table {
         $columns = array(
             'cb' => '<input type="checkbox" />',            
             'title' => __('Title', 'web-to-print-online-designer'),
+            'published' => __('Status', 'web-to-print-online-designer'),
             'priority' => __('Priority', 'web-to-print-online-designer'),
             'apply_for' => __('Applied for', 'web-to-print-online-designer'),
             'product_ids' => __('Products', 'web-to-print-online-designer'),
             'product_cats' => __('Categories', 'web-to-print-online-designer'),
-            'created' => __('Date', 'web-to-print-online-designer')
+            'date' => __('Date', 'web-to-print-online-designer')
         );
         return $columns;
     }    
     public function get_sortable_columns() {
         $sortable_columns = array(
-            'priority' => array('priority', true),
-            'created' => array('created_date', true)
+            'priority' => array('priority', true)
         );
         return $sortable_columns;
     }
@@ -60,19 +60,74 @@ class NBD_Options_List_Table extends WP_List_Table {
         return $result;        
     }
     public function process_bulk_action() {
-        if ('delete' === $this->current_action()) {    
+        if ('delete' === $this->current_action()) {
             $nonce = esc_attr($_REQUEST['_wpnonce']);
-            if (!wp_verify_nonce($nonce, 'nbdesigner_template_nonce')) {
+            if (!wp_verify_nonce($nonce, 'nbd_options_nonce')) {
                 die('Go get a life script kiddies');
             }            
-            //deleete option
+            $this->delete_option(absint($_GET['id']));
             wp_redirect(esc_url_raw(add_query_arg(array('paged' => $this->get_pagenum()), admin_url('admin.php?page=nbdesigner_options'))));
             exit;
         }  
+        if (( isset($_POST['action']) && $_POST['action'] == 'bulk-publish' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-publish' )) {
+            if( isset( $_POST['bulk-delete'] ) ){
+                $bulk_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($bulk_ids as $id) {
+                    $this->publish_option( $id );
+                }
+            }
+            wp_redirect(esc_url_raw(add_query_arg('','')));              
+        }
+        if (( isset($_POST['action']) && $_POST['action'] == 'bulk-unpublish' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-unpublish' )) {
+            if( isset( $_POST['bulk-delete'] ) ){
+                $bulk_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($bulk_ids as $id) {
+                    $this->unpublish_option( $id );
+                }
+            }
+            wp_redirect(esc_url_raw(add_query_arg('','')));            
+        }        
+        if (( isset($_POST['action']) && $_POST['action'] == 'bulk-delete' ) || ( isset($_POST['action2']) && $_POST['action2'] == 'bulk-delete' )) {
+            if( isset( $_POST['bulk-delete'] ) ){
+                $bulk_ids = esc_sql($_POST['bulk-delete']);
+                foreach ($bulk_ids as $id) {
+                    $this->delete_option( $id );
+                }
+            }
+            wp_redirect(esc_url_raw(add_query_arg('','')));             
+        }        
+    }
+    public function delete_option( $id ){
+        global $wpdb;
+        $sql = "DELETE FROM {$wpdb->prefix}nbdesigner_options";
+        $sql .= " WHERE id = " . esc_sql($id);
+        $result = $wpdb->query( $sql );
+        if( $result ) $this->clear_transients();        
+    }
+    public function unpublish_option( $id ){
+        global $wpdb;
+        $result = $wpdb->update($wpdb->prefix . 'nbdesigner_options', array(
+            'published' => 0
+        ), array( 'id' => esc_sql($id))); 
+        if( $result ) $this->clear_transients();
+    }
+    public function publish_option( $id ){
+        global $wpdb;
+        $result = $wpdb->update($wpdb->prefix . 'nbdesigner_options', array(
+            'published' => 1
+        ), array( 'id' => esc_sql($id))); 
+        if( $result ) $this->clear_transients();
+    }        
+    private function clear_transients(){
+        global $wpdb;
+        $sql = "DELETE FROM $wpdb->options WHERE option_name LIKE '_transient_nbo_product_%' OR option_name LIKE '_transient_timeout_nbo_product_%'";   
+        $wpdb->query( $sql );
     }
     public function get_bulk_actions() {
         $actions = array(            
             'bulk-delete' => __('Delete', 'web-to-print-online-designer'),
+            'bulk-publish' => __('Publish', 'web-to-print-online-designer'),
+            'bulk-unpublish' => __('Unpublish', 'web-to-print-online-designer'),
         );
         return $actions;
     }    
@@ -87,11 +142,33 @@ class NBD_Options_List_Table extends WP_List_Table {
         );
         return $title . $this->row_actions($actions);
     } 
+    function column_published($item){
+        return $item['published'] == 1 ? __('Publish', 'web-to-print-online-designer') : __('Unpublish', 'web-to-print-online-designer');
+    }
+    function column_date($item){
+        return (!empty($item['modified']) && $item['modified'] != '0000-00-00 00:00:00') ? $item['modified'] : $item['created'];
+    }
     function column_apply_for($item) {
-        return $item['apply_for'] == 'p' ? __('Products', 'web-to-print-online-designer') : __('Categories', 'web-to-print-online-designer');
+        return '<span class="nbo_color_emerald">' . ($item['apply_for'] == 'p' ? __('Products', 'web-to-print-online-designer') : __('Categories', 'web-to-print-online-designer')) . '</span>';
+    }
+    function column_product_ids($item) {
+        if($item['apply_for'] == 'c') return '<span class="nbo_color_pomegranate">'. __('Disabled', 'web-to-print-online-designer') .'</span>';
+        $return = __('None', 'web-to-print-online-designer');
+        if( !$item['product_ids'] ) return $return;
+        $products = unserialize($item['product_ids']);
+        if( count($products) ){
+            $links = array();
+            foreach ( $products as $pid ) {
+                $title = get_the_title( $pid );
+                $links[] = '<a title="' . esc_attr( $title ) . '" href="' . esc_url( admin_url( 'post.php?action=edit&post=' . $pid ) ) . '" rel="tag">' . $title . '</a>';
+            }
+            $return = implode( ' , ', $links ); 
+        }
+        return $return;
     }
     function column_product_cats($item) {
-        $return = __('No category', 'web-to-print-online-designer');
+        if($item['apply_for'] == 'p') return '<span class="nbo_color_pomegranate">'. __('Disabled', 'web-to-print-online-designer') .'</span>';
+        $return = __('None', 'web-to-print-online-designer');
         if( !$item['product_cats'] ) return $return;
         $cats = unserialize($item['product_cats']);
         if( count($cats) ){
@@ -110,10 +187,10 @@ class NBD_Options_List_Table extends WP_List_Table {
     }
     function column_default($item, $column_name){
         return $item[$column_name];
-    }   
+    }
     function column_cb($item) {
         return sprintf( '<input type="checkbox" name="bulk-delete[]" value="%s" />', $item['id'] );
-    }    
+    }
     function extra_tablenav( $which ) {
         
     }
