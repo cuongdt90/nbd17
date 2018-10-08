@@ -1354,7 +1354,8 @@ if( $cart_item_key != ''){
                 }
                 qty_factor = $scope.validate_float(qty_factor);
                 discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : (basePrice + total_price ) * qty_factor / 100;
-                return basePrice + total_price - discount_by_qty;
+                var final_price = basePrice + total_price - discount_by_qty;
+                return final_price > 0 ? final_price : 0;
             };  
             var check_depend = function( field_id, pm_fields ){
                 var field = $scope.get_field(field_id),
@@ -1558,7 +1559,9 @@ if( $cart_item_key != ''){
             }
             qty_factor = $scope.validate_float(qty_factor);
             $scope.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + $scope.total_price ) * qty_factor / 100;
-            $scope.final_price = $scope.convert_to_wc_price( $scope.total_price + $scope.basePrice - $scope.discount_by_qty );
+            $scope.final_price = $scope.total_price + $scope.basePrice - $scope.discount_by_qty;
+            $scope.final_price = $scope.final_price > 0 ? $scope.final_price : 0;
+            $scope.final_price = $scope.convert_to_wc_price( $scope.final_price );
             $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
             $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
         };
@@ -1679,7 +1682,9 @@ if( $cart_item_key != ''){
                 }
                 qty_factor = $scope.validate_float(qty_factor);
                 pt.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + pt.total_price ) * qty_factor / 100;
-                pt.final_price = $scope.convert_to_wc_price( pt.total_price + $scope.basePrice - pt.discount_by_qty );
+                pt.final_price = pt.total_price + $scope.basePrice - pt.discount_by_qty;
+                pt.final_price = pt.final_price > 0 ? pt.final_price : 0;
+                pt.final_price = $scope.convert_to_wc_price( pt.final_price );
                 pt.total_price = $scope.convert_to_wc_price( pt.total_price );
                 pt.discount_by_qty = $scope.convert_to_wc_price( pt.discount_by_qty );
             });

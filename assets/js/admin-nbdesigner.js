@@ -502,7 +502,7 @@ jQuery(document).ready(function ($) {
         if(!status){
             jQuery('.nbd-price-per-page').addClass('nbdesigner-disable');
         };
-    });
+    });  
 });
 jQuery(window).on('scroll', function () {
     nbdScrollEffect();

@@ -107,8 +107,8 @@
                 <?php if(is_array($list_color) && (count($list_color) > 0)): ?>
                     <?php foreach($list_color as $val):?>
                         <div class="nbdesigner_color_wrap" style="display: inline-block; margin: 0 5px 10px 0;">
-                            <div class="nbdesigner_art_link" style="margin: 0;height: 30px;background-color: <?php echo $val->hex;?>">
-                                <span class="nbdesigner_action_delete_color" data-index="<?php echo $val->id; ?>" onclick="NBDESIGNADMIN.delete_color(this)">&times;</span>
+                            <div class="nbdesigner_art_link" style="margin: 0;height: 30px;background-color: <?php echo $val->hex;?>;color: #fff;text-align: center;text-shadow: 1px 1px 1px #000;line-height: 30px;">
+                                <?php echo $val->hex;?><span class="nbdesigner_action_delete_color" data-index="<?php echo $val->id; ?>" onclick="NBDESIGNADMIN.delete_color(this)">&times;</span>
                             </div>
                             <p class="nbdesigner_color_name" style="margin: 0; text-align: center"><?php echo $val->name;?></p>
                         </div>

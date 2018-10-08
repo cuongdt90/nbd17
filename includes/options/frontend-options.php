@@ -276,7 +276,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     $original_price = $this->format_price( $product->get_price('edit') );
                     $quantity = $cart_item['quantity'];
                     $option_price = $this->option_processing( $options, $original_price, $fields, $quantity );
-                    $adjusted_price = $this->format_price($original_price + $option_price['total_price'] - $option_price['discount_price']);
+                    $adjusted_price = $original_price + $option_price['total_price'] - $option_price['discount_price'];
+                    $adjusted_price = $adjusted_price > 0 ? $adjusted_price : 0;
+                    $adjusted_price = $this->format_price($adjusted_price);
                     WC()->cart->cart_contents[ $cart_item_key ]['nbo_meta']['option_price'] = $option_price;
                     $adjusted_price = apply_filters('nbo_adjusted_price', $adjusted_price, $cart_item);
                     WC()->cart->cart_contents[ $cart_item_key ]['nbo_meta']['price'] = $adjusted_price;
@@ -633,7 +635,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             return $args;
         }
         public function wp_enqueue_scripts(){
-            wp_register_script('angularjs', NBDESIGNER_PLUGIN_URL . 'assets/libs/angular-1.6.9.min.js', array('jquery'), '1.6.9');
+            wp_register_script('angularjs', NBDESIGNER_PLUGIN_URL . 'assets/libs/angular-1.6.9.min.js', array('jquery', 'accounting'), '1.6.9');
             if(nbdesigner_get_option('nbdesigner_enable_angular_js') == 'yes'){
                 wp_enqueue_script(array('angularjs'));
             }

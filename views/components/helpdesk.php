@@ -3,11 +3,13 @@
     <h3>{{(langs['HELPDESK']) ? langs['HELPDESK'] : "Helpdesk"}}</h3>
     <div class="od_tabs inner-help">
         <ul>
+            <?php do_action('nbd_classic_helpdesk_nav'); ?>
             <li><a href="#general-help">{{(langs['GENERAL']) ? langs['GENERAL'] : "General"}}</a></li>
             <li><a href="#design-help">{{(langs['DESIGN']) ? langs['DESIGN'] : "Design"}}</a></li>
-            <li><a href="#tool-help">{{(langs['TOOL_LAYER']) ? langs['TOOL_LAYER'] : "Tool-Layer"}}</a></li>
+<!--            <li><a href="#tool-help">{{(langs['TOOL_LAYER']) ? langs['TOOL_LAYER'] : "Tool-Layer"}}</a></li>-->
             <li><a href="#shortcuts">{{(langs['HOTKEYS']) ? langs['HOTKEYS'] : "Hot Keys"}}</a></li>
         </ul>
+        <?php do_action('nbd_classic_helpdesk_content'); ?>
         <div id="general-help">
             <img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk01.jpg'; ?>" />
             <img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk02.jpg'; ?>" />
@@ -16,10 +18,10 @@
             <img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk04.jpg'; ?>" />
             <img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk05.jpg'; ?>" />
         </div>	
-        <div id="tool-help">           
-            <img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk06.jpg'; ?>" />
-            <img src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk03.jpg'; ?>" />
-        </div>	
+<!--        <div id="tool-help">           
+            <img src="<?php //echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk06.jpg'; ?>" />
+            <img src="<?php //echo NBDESIGNER_PLUGIN_URL .'assets/images/helpdesk03.jpg'; ?>" />
+        </div>	-->
         <div id="shortcuts">    
             <p><span class="shortkey left"><span class="key nbd-icon-mouse"></span></span><span class="shortkey right">{{(langs['SELECT_LAYER']) ? langs['SELECT_LAYER'] : "Select layer (item)"}}</span></p>
             <p><span class="shortkey left"><span class="key">&larr;</span></span><span class="shortkey right">{{(langs['MOVE_LEFT']) ? langs['MOVE_LEFT'] : "Move left"}}</span></p>

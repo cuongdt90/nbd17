@@ -21,8 +21,8 @@ class NBD_Options_List_Table extends WP_List_Table {
         $current_page = $this->get_pagenum();
         $total_items = self::record_count();
         $this->set_pagination_args(array(
-            'total_items' => $total_items, //WE have to calculate the total number of items
-            'per_page' => $per_page //WE have to determine how many items to show on a page
+            'total_items' => $total_items, 
+            'per_page' => $per_page 
         ));
         $this->items = self::get_options($per_page, $current_page);
     }  
@@ -51,7 +51,7 @@ class NBD_Options_List_Table extends WP_List_Table {
         //filter
         return $wpdb->get_var($sql);
     }
-    public function get_options($per_page = 5, $page_number = 1){
+    public function get_options($per_page = 10, $page_number = 1){
         global $wpdb;
         $sql = "SELECT * FROM {$wpdb->prefix}nbdesigner_options";
         $sql .= " LIMIT $per_page";

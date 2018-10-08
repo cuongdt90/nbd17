@@ -531,7 +531,7 @@
                     <?php echo __('Enable bulk variation form - add to cart multiple variation with same design', 'web-to-print-online-designer'); ?>
                 </div> 
                 <?php }; ?>
-                <?php do_action('nbd_after_option_product_design', $post_id, $option); ?>
+                <?php do_action('nbd_after_option_product_design', $post_id, $option, $designer_setting); ?>
             </div>   
         </div>
         <div id="nbd-upload-design" class="nbd-options-tab" style="padding: 10px;">
@@ -564,7 +564,7 @@
         </div>
     </div> 
     <div>
-        <?php do_action('nbd_after_option_product', $post_id, $option); ?>
+        <?php do_action('nbd_after_option_product', $post_id, $option, $designer_setting); ?>
     </div>
 </div>
 <?php

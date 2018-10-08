@@ -4249,6 +4249,10 @@ img.pattern_img {
 .gg-font-preview:nth-child(4n+1) {
     clear: both;
 }
+.nbd-swatch {
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
 @media (max-width: 767px) {
     .gg-font-preview {
         width: 50%;

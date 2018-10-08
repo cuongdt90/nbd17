@@ -19,7 +19,8 @@
             </g>
         </svg>      
     </span>
-    <span ng-show="state == 'dev'" class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true" ng-click="showBackgroundOption()"></span>    
+<!--    <span ng-show="state == 'dev'" class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true" ng-click="showBackgroundOption()"></span>    -->
+    <span ng-show="settings.product_data.option.swatch_preview !== undefined" class="background-opt shadow hover-shadow nbd-tooltip-i18n" data-lang="BACKGROUND" data-placement="left" aria-hidden="true" ng-click="showBackgroundOption()"></span>    
 </div>
 <div class="first_message hover-shadow">
     {{(langs['HI_THERE']) ? langs['HI_THERE'] : "Hi there"}}, <br />

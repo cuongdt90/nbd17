@@ -1082,6 +1082,7 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
             $data['templates'] = $templates;
         }
     }
+    $data = apply_filters('nbd_product_info', $data);
     return $data;        
 }
 function nbd_get_media_for_data_product( $data_product ){

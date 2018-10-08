@@ -500,7 +500,10 @@ class Nbdesigner_Plugin {
         }
         if(is_rtl()){
             wp_enqueue_style('nbd-rtl',NBDESIGNER_CSS_URL . 'nbd-rtl.css',array(), NBDESIGNER_VERSION);   
-        }   
+        }  
+        if( $hook == 'toplevel_page_nbdesigner' ){
+            //wp_enqueue_script( 'nbo-tinymce', 'https://cloud.tinymce.com/stable/tinymce.min.js' , array());
+        }        
     }
     public function frontend_enqueue_scripts(){
         wp_register_style('nbdesigner', NBDESIGNER_CSS_URL . 'nbdesigner.css', array(), NBDESIGNER_VERSION);
@@ -2586,7 +2589,7 @@ class Nbdesigner_Plugin {
         $result = array(
             'flag'  =>  'success'
         );
-        do_action('before_nbd_save_cart_design');
+        do_action('before_nbd_save_cart_design', $_POST);
         $product_id = absint($_POST['product_id']);    
         $variation_id = (isset($_POST['variation_id']) && $_POST['variation_id'] != '') ? absint($_POST['variation_id']) : 0;  
         $enable_upload_without_design = (isset($_POST['enable_upload_without_design']) && $_POST['enable_upload_without_design'] != '') ? absint($_POST['enable_upload_without_design']) : 1; 
@@ -2647,19 +2650,21 @@ class Nbdesigner_Plugin {
         }
         if( isset($_POST['task2']) && $_POST['task2'] != '' ){          
             /* Destroy nbd_item session and init cart session */
-            $cart_item_key = $_POST['cart_item_key'];
-            WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
-            WC()->session->__unset('nbu_item_key_'.$nbd_item_cart_key);
-            if( isset(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']) ) WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds'] = array();
-            if( !$add_file ){
-                WC()->session->set($cart_item_key. '_nbd', $nbd_item_key);
-                WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbd'] = $nbd_item_key;
+            if( $_POST['task2'] != 'cuz' ){
+                $cart_item_key = $_POST['cart_item_key'];
+                WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
+                WC()->session->__unset('nbu_item_key_'.$nbd_item_cart_key);
+                if( isset(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']) ) WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds'] = array();
+                if( !$add_file ){
+                    WC()->session->set($cart_item_key. '_nbd', $nbd_item_key);
+                    WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbd'] = $nbd_item_key;
+                }
+                if( isset($_POST['nbd_file']) && $_POST['nbd_file'] != '' ){
+                    WC()->session->set($cart_item_key. '_nbu', $nbu_item_key);
+                    WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbu'] = $nbu_item_key;
+                }
+                WC()->cart->set_session();
             }
-            if( isset($_POST['nbd_file']) && $_POST['nbd_file'] != '' ){
-                WC()->session->set($cart_item_key. '_nbu', $nbu_item_key);
-                WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbu'] = $nbu_item_key;
-            }
-            WC()->cart->set_session();
         }else {             
             /* Add to cart directly in custom page */
             $quantity = 1;
@@ -2671,7 +2676,7 @@ class Nbdesigner_Plugin {
                 $result['mes'] = __('Error adding to the cart', 'web-to-print-online-designer');
             }              
         }
-        do_action('after_nbd_save_cart_design', $result);
+        do_action('after_nbd_save_cart_design', $_POST, $result);
         echo json_encode($result);
         wp_die();         
     }
@@ -2732,6 +2737,8 @@ class Nbdesigner_Plugin {
         }else{
             $product_config = unserialize(file_get_contents($path . '/product.json'));
         }   
+        $att_swatch = (isset($_POST['att_swatch']) && $_POST['att_swatch'] != '') ? $_POST['att_swatch'] : '';
+        $product_config = apply_filters('nbd_save_customer_design_product_config', $product_config, $product_option, $att_swatch);
         $product_upload = get_post_meta($product_id, '_nbdesigner_upload', true);        
         $save_status = $this->store_design_data($nbd_item_key, $_FILES, $product_config, $product_option, $product_upload);     
         $width = absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) ? absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) : 300; 

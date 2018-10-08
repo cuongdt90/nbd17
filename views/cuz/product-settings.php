@@ -36,6 +36,22 @@
         height: 30px;
         width: 50px;        
     }
+    .nbd_table {
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        background: #fff;        
+    }  
+    .nbd_table td, .nbd_table th {
+        padding: 8px 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    .nbd_table th {
+        border-bottom: 1px solid #ddd;
+    }
+    .nbd_table tfoot th {
+        border-top: 1px solid #ddd;
+    }    
 </style>
 <div class="nbdesigner-opt-inner">
     <div>
@@ -83,7 +99,7 @@
 ?>
 <div class="nbdesigner-opt-inner">
     <div>
-        <label for="nbdesigner_list_art_cats" class="nbdesigner-option-label"><?php echo _e('Clipart categories can use', 'web-to-print-online-designer'); ?></label>
+        <label for="nbdesigner_list_art_cats" class="nbdesigner-option-label"><?php _e('Clipart categories can use', 'web-to-print-online-designer'); ?></label>
         <select name="_nbdesigner_option[art_cats][]" multiple="" id="nbdesigner_list_art_cats" class="nbd-slect-woo" style="width: 500px;">
             <?php 
                 foreach($list_art_cats as $art_cat ): 
@@ -96,7 +112,7 @@
 </div>    
 <div class="nbdesigner-opt-inner">
     <div>
-        <label for="nbdesigner_list_font_cats" class="nbdesigner-option-label"><?php echo _e('Font categories can use', 'web-to-print-online-designer'); ?></label>
+        <label for="nbdesigner_list_font_cats" class="nbdesigner-option-label"><?php _e('Font categories can use', 'web-to-print-online-designer'); ?></label>
         <select name="_nbdesigner_option[font_cats][]" multiple="" id="nbdesigner_list_font_cats" class="nbd-slect-woo" style="width: 500px;">
             <?php 
                 foreach($list_font_cats as $font_cat ): 
@@ -109,7 +125,7 @@
 </div>
 <div class="nbdesigner-opt-inner">
     <div>
-        <label for="nbdesigner_use_all_color" class="nbdesigner-option-label"><?php echo _e('Colors can use', 'web-to-print-online-designer'); ?></label>
+        <label for="nbdesigner_use_all_color" class="nbdesigner-option-label"><?php _e('Colors can use', 'web-to-print-online-designer'); ?></label>
         <input name="_nbdesigner_option[use_all_color]" value="1" type="radio" <?php checked( $option['use_all_color'], 1); ?> /><?php _e('Use all colors', 'web-to-print-online-designer'); ?>   
         &nbsp;<input name="_nbdesigner_option[use_all_color]" value="2" type="radio" <?php checked( $option['use_all_color'], 2); ?> /><?php _e('Use colors in list', 'web-to-print-online-designer'); ?>  
     </div>
@@ -166,8 +182,110 @@
         </div>
     </div>
 </div> 
+<?php
+    $product = wc_get_product($post_id);
+    $product_type       =  $product->get_type();
+    if ( $product_type == 'variable' ) :
+    $product = new WC_Product_Variable( $post_id );
+    $attributes = $product->get_variation_attributes();
+?>
+<hr />
+<div class="nbdesigner-opt-inner">
+    <label class="nbdesigner-option-label"><?php _e('Use attribute as color swatch', 'web-to-print-online-designer'); ?></label>
+    <?php if ((!empty($attributes)) && (sizeof($attributes) >0)) : ?>
+    <select name="_nbdesigner_option[att_swatch]">
+        <?php foreach ($attributes as $key => $values) : ?>
+        <option value="<?php echo $key; ?>" <?php if (isset($option['att_swatch']) && ($option['att_swatch'] == $key)) { echo 'selected'; } ?>><?php echo wc_attribute_label( $key ); ?></option>
+        <?php endforeach; ?>
+    </select>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+<?php
+    if(isset($option['att_swatch'])):
+    $values = $attributes[$option['att_swatch']];
+    $number_side = count($designer_setting);
+?>
+<div class="nbdesigner-opt-inner">
+    <label class="nbdesigner-option-label"><?php _e('Attribute value background', 'web-to-print-online-designer'); ?></label>
+    <table class="nbd_table">
+        <thead>
+            <tr>
+                <th rowspan="2"><?php _e('Attribute value', 'web-to-print-online-designer'); ?></th>
+                <th rowspan="2"><?php _e('Preview', 'web-to-print-online-designer'); ?></th>
+                <?php foreach($designer_setting as $s_index => $side): ?>
+                <th><?php echo $side['orientation_name']; ?></th>
+                <?php endforeach; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($values as $value): ?>
+            <tr>
+                <td><?php echo $value; ?></td>
+                <td>
+                    <?php 
+                        $att_img_preview_id = (isset($option['swatch_preview']) && isset($option['swatch_preview'][$value])) ? $option['swatch_preview'][$value] : 0;    
+                    ?>
+                    <input type="hidden" name="_nbdesigner_option[swatch_preview][<?php echo $value; ?>]" value="<?php echo $att_img_preview_id; ?>" id="att_img_preview<?php echo $value; ?>"/>
+                    <img id="att_img_src_preview<?php echo $value; ?>" onclick="nbd_cuz_wp_media(this, 'att_img_preview<?php echo $value; ?>')" style="max-width : 30px; max-height: 30px; background: #ddd; border: 1px silid #ddd;" src="<?php echo wp_get_attachment_thumb_url($att_img_preview_id); ?>" />
+                    <a href="javascript:void(0)" onclick="nbd_cuz_wp_media(this, 'att_img_preview<?php echo $value; ?>', 'att_img_src_preview<?php echo $value; ?>')" ><?php _e('Select image', 'web-to-print-online-designer'); ?></a>
+                </td>
+                    <?php foreach($designer_setting as $s_index => $side): ?>
+                    <td>
+                        <?php 
+                            $att_img_src_id = (isset($option['swatches']) && isset($option['swatches'][$value]) && isset($option['swatches'][$value][$s_index]) && isset($option['swatches'][$value][$s_index]['image'])) ? $option['swatches'][$value][$s_index]['image'] : $side['img_src'];
+                            $att_img_src = wp_get_attachment_url( $att_img_src_id );
+                        ?>
+                        <span style="<?php if($side['bg_type'] == 'image') echo 'display: none;'; ?>"><input class="nbd_cuz_wp_color" value="<?php if(isset($option['swatches']) && isset($option['swatches'][$value]) && isset($option['swatches'][$value][$s_index]) && isset($option['swatches'][$value][$s_index]['color'])) echo $option['swatches'][$value][$s_index]['color'];else echo $side['bg_color_value']; ?>" name="_nbdesigner_option[swatches][<?php echo $value; ?>][<?php echo $s_index; ?>][color]"/></span>
+                        <input id="att_img_src<?php echo $value.'_'.$s_index; ?>" type="hidden" value="<?php echo $att_img_src_id; ?>" name="_nbdesigner_option[swatches][<?php echo $value; ?>][<?php echo $s_index; ?>][image]"/>
+                        <img alt="<?php _e('Click to change image', 'web-to-print-online-designer'); ?>" src="<?php echo $att_img_src; ?>" style="max-width : 30px; max-height: 30px;<?php if($side['bg_type'] == 'color') echo 'display: none;'; ?>" onclick="nbd_cuz_wp_media(this, 'att_img_src<?php echo $value.'_'.$s_index; ?>')"/>
+                    </td>
+                    <?php endforeach; ?>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<?php endif; ?>
 <script>
+    function nbd_cuz_wp_media(e, input_id, image_id){
+        var upload;
+        if (upload) {
+            upload.open();
+            return;
+        }
+        var index = jQuery(e).data('index'),
+            _img = image_id ? jQuery('#'+image_id) : jQuery(e),
+            _input = jQuery('#'+input_id);
+        upload = wp.media.frames.file_frame = wp.media({
+            title: 'Choose Image',
+            button: {
+                text: 'Choose Image'
+            },
+            multiple: false
+        });
+        upload.on('select', function () {
+            attachment = upload.state().get('selection').first().toJSON();
+            _img.attr('src', attachment.url);
+            _img.show();
+            _input.val(attachment.id);
+        });
+        upload.open();        
+    }
     jQuery(document).ready(function(){
+        jQuery.each(jQuery('.nbd_cuz_wp_color'), function () {
+            jQuery(this).wpColorPicker({
+                change: function (evt, ui) {
+                    var $input = jQuery(this);
+                    setTimeout(function () {
+                        if ($input.wpColorPicker('color') !== $input.data('tempcolor')) {
+                            $input.change().data('tempcolor', $input.wpColorPicker('color'));
+                            $input.val($input.wpColorPicker('color'));
+                        }
+                    }, 10);
+                }
+            });    
+        });          
         jQuery('.nbd-slect-woo').selectWoo();
         jQuery('input[name="_nbdesigner_option[use_all_color]"]').on('change', function(){
             if(jQuery(this).is(':checked') && jQuery(this).val() == 2) {

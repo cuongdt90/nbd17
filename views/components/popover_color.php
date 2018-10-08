@@ -3,13 +3,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 ?>
-<div class="pop-bg-color shadow">
+<div class="pop-bg-color shadow active">
     <h2><b>{{(langs['BACKGROUND']) ? langs['BACKGROUND'] : "Background"}}</b></h2>
     <div class="background-options">
         <div class="pre-color">
+            <span ng-repeat="(sIndex, swatch) in settings.product_data.option.swatch_preview" ng-click="changeSwatch( sIndex )" class="nbd-color-item hover-shadow nbd-swatch" ng-style="{'background-image': 'url('+swatch+')'}">{{swatch}}</span>
+        </div>
+        <div class="pre-color" style="display: none">
             <span ng-repeat="color in backgroundPalette" ng-click="addBackground( color )" class="nbd-color-item hover-shadow" ng-style="{'background': color}"></span>
         </div>
-        <div class="nbd-bg-colr-picker-wrap">
+        <div class="nbd-bg-colr-picker-wrap" style="display: none">
             <?php  if($enableColor == 'yes'): ?>
             <spectrum-colorpicker
                 ng-model="colorBackground" 
