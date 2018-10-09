@@ -219,14 +219,16 @@ if(!class_exists('NBD_CUSTOMIZE')){
             include_once(NBDESIGNER_PLUGIN_DIR . 'views/cuz/product-settings.php');
         }
         public function color_swatch($pid, $option){
-            if( isset($option['att_swatch']) ){?>
+            if( isset($option['att_swatch']) ){
+                $att_swatch = '#' . str_replace(' ', '-', strtolower($option['att_swatch']));
+            ?>
             <script type="text/javascript">
                 NBDESIGNERPRODUCT = NBDESIGNERPRODUCT || {};
-                jQuery('#<?php echo $option['att_swatch']; ?>').on('change', function(){
+                jQuery('<?php echo $att_swatch; ?>').on('change', function(){
                     NBDESIGNERPRODUCT.att_swatch = jQuery(this).val();
                 });
                 jQuery(document).ready(function(){
-                    if(jQuery('#<?php echo $option['att_swatch']; ?>').val() != ''){
+                    if(jQuery('<?php echo $att_swatch; ?>').val() != ''){
                         NBDESIGNERPRODUCT.att_swatch = jQuery(this).val();
                     }
                 });
@@ -235,8 +237,8 @@ if(!class_exists('NBD_CUSTOMIZE')){
                     if(typeof event.data == 'string'){                      
                         if( event.origin == window.location.origin && event.data.indexOf('change_nbd_swatch') > -1  ){
                             var data = event.data.split("---");console.log(data[1]);
-                            jQuery('#<?php echo $option['att_swatch']; ?>').val(data[1]);
-                            jQuery('#<?php echo $option['att_swatch']; ?>').trigger('change');
+                            jQuery('<?php echo $att_swatch; ?>').val(data[1]);
+                            jQuery('<?php echo $att_swatch; ?>').trigger('change');
                         };
                     }
                 };                

@@ -219,7 +219,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($values as $value): ?>
+            <?php foreach($values as $v_key => $value): ?>
             <tr>
                 <td><?php echo $value; ?></td>
                 <td>
@@ -227,8 +227,8 @@
                         $att_img_preview_id = (isset($option['swatch_preview']) && isset($option['swatch_preview'][$value])) ? $option['swatch_preview'][$value] : 0;    
                     ?>
                     <input type="hidden" name="_nbdesigner_option[swatch_preview][<?php echo $value; ?>]" value="<?php echo $att_img_preview_id; ?>" id="att_img_preview<?php echo $value; ?>"/>
-                    <img id="att_img_src_preview<?php echo $value; ?>" onclick="nbd_cuz_wp_media(this, 'att_img_preview<?php echo $value; ?>')" style="max-width : 30px; max-height: 30px; background: #ddd; border: 1px silid #ddd;" src="<?php echo wp_get_attachment_thumb_url($att_img_preview_id); ?>" />
-                    <a href="javascript:void(0)" onclick="nbd_cuz_wp_media(this, 'att_img_preview<?php echo $value; ?>', 'att_img_src_preview<?php echo $value; ?>')" ><?php _e('Select image', 'web-to-print-online-designer'); ?></a>
+                    <img id="att_img_src_preview<?php echo $v_key; ?>" onclick="nbd_cuz_wp_media(this, 'att_img_preview<?php echo $v_key; ?>')" style="max-width : 30px; max-height: 30px; background: #ddd; border: 1px silid #ddd;" src="<?php echo wp_get_attachment_thumb_url($att_img_preview_id); ?>" />
+                    <a href="javascript:void(0)" onclick="nbd_cuz_wp_media(this, 'att_img_preview<?php echo $v_key; ?>', 'att_img_src_preview<?php echo $v_key; ?>')" ><?php _e('Select image', 'web-to-print-online-designer'); ?></a>
                 </td>
                     <?php foreach($designer_setting as $s_index => $side): ?>
                     <td>
@@ -237,8 +237,8 @@
                             $att_img_src = wp_get_attachment_url( $att_img_src_id );
                         ?>
                         <span style="<?php if($side['bg_type'] == 'image') echo 'display: none;'; ?>"><input class="nbd_cuz_wp_color" value="<?php if(isset($option['swatches']) && isset($option['swatches'][$value]) && isset($option['swatches'][$value][$s_index]) && isset($option['swatches'][$value][$s_index]['color'])) echo $option['swatches'][$value][$s_index]['color'];else echo $side['bg_color_value']; ?>" name="_nbdesigner_option[swatches][<?php echo $value; ?>][<?php echo $s_index; ?>][color]"/></span>
-                        <input id="att_img_src<?php echo $value.'_'.$s_index; ?>" type="hidden" value="<?php echo $att_img_src_id; ?>" name="_nbdesigner_option[swatches][<?php echo $value; ?>][<?php echo $s_index; ?>][image]"/>
-                        <img alt="<?php _e('Click to change image', 'web-to-print-online-designer'); ?>" src="<?php echo $att_img_src; ?>" style="max-width : 30px; max-height: 30px;<?php if($side['bg_type'] == 'color') echo 'display: none;'; ?>" onclick="nbd_cuz_wp_media(this, 'att_img_src<?php echo $value.'_'.$s_index; ?>')"/>
+                        <input id="att_img_src<?php echo $v_key.'_'.$s_index; ?>" type="hidden" value="<?php echo $att_img_src_id; ?>" name="_nbdesigner_option[swatches][<?php echo $value; ?>][<?php echo $s_index; ?>][image]"/>
+                        <img alt="<?php _e('Click to change image', 'web-to-print-online-designer'); ?>" src="<?php echo $att_img_src; ?>" style="max-width : 30px; max-height: 30px;<?php if($side['bg_type'] == 'color') echo 'display: none;'; ?>" onclick="nbd_cuz_wp_media(this, 'att_img_src<?php echo $v_key.'_'.$s_index; ?>')"/>
                     </td>
                     <?php endforeach; ?>
             </tr>
