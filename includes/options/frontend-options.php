@@ -517,8 +517,15 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         }
                     }
                 }else{
-                    $option = $origin_field['general']['attributes']['options'][$val];
+                    $select_val = is_array($val) ? $val[0] : $val;
+                    $option = $origin_field['general']['attributes']['options'][$select_val];
                     $_fields[$key]['value_name'] = $option['name'];
+                    if(is_array($val)){
+                        $_fields[$key]['value_name'] = '';
+                        foreach($val as $k => $v){
+                            $_fields[$key]['value_name'] .= ($k == 0 ? '' : ', ') . $origin_field['general']['attributes']['options'][$v]['name'];
+                        }
+                    }
                     if($origin_field['general']['depend_quantity'] == 'n'){
                         $factor = $option['price'][0];
                     }else{
@@ -537,29 +544,51 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         }
                     }
                 }
-                $factor = floatval($factor);
                 $_fields[$key]['is_pp'] = 0;
                 if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'dimension' && $origin_field['general']['price_type'] == 'c' ){
                     $origin_field['general']['price_type'] == 'f';
                 }
-                switch ($origin_field['general']['price_type']){
-                    case 'f':
-                        $_fields[$key]['price'] = $factor;
-                        $total_price += $factor;
-                        break;
-                    case 'p':
-                        $_fields[$key]['price'] = $original_price * $factor / 100;
-                        $total_price += $original_price * $factor / 100;
-                        break;    
-                    case 'p+':
-                        $_fields[$key]['price'] = $factor / 100;
-                        $_fields[$key]['is_pp'] = 1;
-                        $xfactor *= (1 + $factor / 100);
-                        break;
-                    case 'c':
-                        $_fields[$key]['price'] = $factor * absint( $val );
-                        $total_price += $factor * absint( $val );
-                        break;
+                if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'page' && $origin_field['general']['data_type'] == 'm' ){
+                    $factor = array();
+                    foreach($val as $k => $v){
+                        $option = $origin_field['general']['attributes']['options'][$v];
+                        if($origin_field['general']['depend_quantity'] == 'n'){
+                            $factor[$k] = $option['price'][0];
+                        }else{
+                            if( $quantity_break['index'] == 0 && $quantity_break['oparator'] == 'lt' ){
+                                $factor[$k] = '';
+                            }else{
+                                $factor[$k] = $option['price'][$quantity_break['index']];
+                            }
+                        }            
+                    }
+                    $_fields[$key]['price'] = 0;
+                    foreach($factor as $fac){
+                        $fac = floatval($fac);
+                        $total_price += $fac;
+                        $_fields[$key]['price'] += $fac;
+                    }
+                }else{
+                    $factor = floatval($factor);
+                    switch ($origin_field['general']['price_type']){
+                        case 'f':
+                            $_fields[$key]['price'] = $factor;
+                            $total_price += $factor;
+                            break;
+                        case 'p':
+                            $_fields[$key]['price'] = $original_price * $factor / 100;
+                            $total_price += $original_price * $factor / 100;
+                            break;    
+                        case 'p+':
+                            $_fields[$key]['price'] = $factor / 100;
+                            $_fields[$key]['is_pp'] = 1;
+                            $xfactor *= (1 + $factor / 100);
+                            break;
+                        case 'c':
+                            $_fields[$key]['price'] = $factor * absint( $val );
+                            $total_price += $factor * absint( $val );
+                            break;
+                    }
                 }
             }
             $total_price += ( ($original_price + $total_price ) * ($xfactor - 1 ) );

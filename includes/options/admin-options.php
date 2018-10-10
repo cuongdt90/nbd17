@@ -123,6 +123,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
  id bigint(20) unsigned NOT NULL auto_increment,
  title text NOT NULL,
  priority  TINYINT(1) NOT NULL default 0, 
+ published  TINYINT(1) NOT NULL default 1, 
  product_ids text NULL, 
  product_cats text NULL,  
  date_from TINYTEXT NULL,  
@@ -202,8 +203,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options['date_from'] = isset($_options['date_from']) ? $_options['date_from'] : '';
                         $options['date_to'] = isset($_options['date_to']) ? $_options['date_to'] : '';
                         $options['apply_for'] = isset($_options['apply_for']) ? $_options['apply_for'] : 'p';
-                        $options['product_cats'] = isset($_options['product_cats']) ? unserialize($_options['product_cats']) : array();
-                        $options['product_ids'] = isset($_options['product_ids']) ? unserialize($_options['product_ids']) : array();
+                        $options['product_cats'] = isset($_options['product_cats']) ? ( !is_null(unserialize($_options['product_cats'])) ? unserialize($_options['product_cats']) : array()) : array();
+                        $options['product_ids'] = isset($_options['product_ids']) ? ( !is_null(unserialize($_options['product_ids'])) ? unserialize($_options['product_ids']) : array()) : array();
                     }else{
                         $options = $this->build_options();
                         $options['id'] = 0;
@@ -211,7 +212,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options['date_from'] = '';
                         $options['date_to'] = '';
                         $options['priority'] = 1;                     
-                        $options['published'] = 1;                     
+                        $options['published'] = 1; 
                         $options['apply_for'] = 'p';                    
                         $options['product_cats'] = array();               
                         $options['product_ids'] = array();               
@@ -372,7 +373,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         foreach ($data as $key => $f){
                             if( !in_array($key, array('page_display', 'exclude_page', 'mesure', 'mesure_range', 'mesure_base_pages', 'min_width', 'max_width', 'step_width', 'min_height', 'max_height', 'step_height')) ){
                                 $funcname = "build_config_".$tab.'_'.$key;
-                                $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);      
+                                $options['fields'][$f_key][$tab][$key] = $this->$funcname($f);
                             }
                         }
                     }

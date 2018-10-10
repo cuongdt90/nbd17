@@ -182,6 +182,14 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
     $scope.validate_quantity_break = function(){
         
     };
+    $scope.excludeField = function(actual, expected){
+        var _field = null;
+        angular.forEach($scope.options.fields, function(field){
+            if( field.id == actual ) _field = field;
+        });
+        if( _field.nbd_type == 'page' ) return false;
+        return actual != expected;
+    };
     $scope.add_price_break = function(){
         var last =  $scope.options.quantity_breaks.length > 0 ? $scope.options.quantity_breaks[$scope.options.quantity_breaks.length - 1].val : 0; 
         $scope.options.quantity_breaks.push({ val: last + 1 });
@@ -227,14 +235,14 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     field.general.page_display = '1';
                     field.general.exclude_page = '0';
                     field.general.attributes.options[1] = {};
-                    field.general.attributes.options[2] = {};
+                    //field.general.attributes.options[2] = {};
                     angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
-                    angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
+                    //angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
                     field.general.attributes.options[0].name = nbd_options.nbd_options_lang.front;
                     field.general.attributes.options[1].name = nbd_options.nbd_options_lang.back;
-                    field.general.attributes.options[2].name = nbd_options.nbd_options_lang.both;
-                    field.general.attributes.add_att = false;
-                    field.general.attributes.remove_att = false;
+                    //field.general.attributes.options[2].name = nbd_options.nbd_options_lang.both;
+                    //field.general.attributes.add_att = false;
+                    //field.general.attributes.remove_att = false;
                     break;
                 case 'color':
                     field.general.data_type.value = 'm';
@@ -253,8 +261,8 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
                     field.general.attributes.options[0].name = nbd_options.nbd_options_lang.vertical;
                     field.general.attributes.options[1].name = nbd_options.nbd_options_lang.horizontal;
-                    field.general.attributes.add_att = false;
-                    field.general.attributes.remove_att = false;
+                    //field.general.attributes.add_att = false;
+                    //field.general.attributes.remove_att = false;
                     break;
                 case 'area':
                     field.general.data_type.value = 'm';
@@ -384,13 +392,13 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                             field.general.attributes.options[1] = {};
                             field.general.attributes.options[2] = {};
                             angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
-                            angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
+                            //angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
                             field.general.attributes.options[0].name = nbd_options.nbd_options_lang.front;
                             field.general.attributes.options[1].name = nbd_options.nbd_options_lang.back;
-                            field.general.attributes.options[2].name = nbd_options.nbd_options_lang.both;
+                            //field.general.attributes.options[2].name = nbd_options.nbd_options_lang.both;
                         }
-                        field.general.attributes.add_att = false;
-                        field.general.attributes.remove_att = false;
+                        //field.general.attributes.add_att = false;
+                        //field.general.attributes.remove_att = false;
                         break;
                     case 'color':
                         field.general.data_type.hidden = true;

@@ -251,10 +251,18 @@ $prefix = $display_type == 2 ? '-2' : '';
         cursor: pointer;
         border: 2px solid #fff;
     }
-    .nbd-option-wrapper input[type="radio"] {
+    .nbd-checkbox {
+        width: 36px;
+        height: 36px;
+        display: inline-block;
+        cursor: pointer;
+        border: 2px solid #ddd;        
+    }
+    .nbd-option-wrapper input[type="radio"], .nbd-checkbox-wrap input[type="checkbox"] {
         display: none;
     }
-    .nbd-swatch-wrap input[type="radio"]:checked + label {
+    .nbd-swatch-wrap input[type="radio"]:checked + label,
+    .nbd-checkbox-wrap input[type="checkbox"]:checked + label {
         border: 2px solid #404762;
         position: relative;
         display: inline-block;
@@ -272,7 +280,8 @@ $prefix = $display_type == 2 ? '-2' : '';
         border-radius: 100%;
         box-sizing: border-box;
     }
-    .nbd-swatch-wrap input[type="radio"]:checked + label:after {
+    .nbd-swatch-wrap input[type="radio"]:checked + label:after, 
+    .nbd-checkbox-wrap input[type="checkbox"]:checked + label:after {
         -webkit-transform: rotate(45deg);
         -moz-transform: rotate(45deg);
         transform: rotate(45deg);
@@ -553,24 +562,28 @@ foreach($options["fields"] as $key => $field){
     }
     $need_show = true;
     if( $field['general']['data_type'] == 'i' ){
-        $tempalte = '/options-builder/input'.$prefix.'.php'; 
+        $tempalte = NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/input'.$prefix.'.php'; 
     }else{
         if( count($field['general']['attributes']["options"]) == 0){
             $need_show = false;
         }
-        switch($field['appearance']['display_type']){
-            case 's':
-                $tempalte = '/options-builder/swatch'.$prefix.'.php';
-                break;
-            case 'l':
-                $tempalte = '/options-builder/label'.$prefix.'.php';
-                break;            
-            case 'r':
-                $tempalte = '/options-builder/radio'.$prefix.'.php';
-                break;
-            default:
-                $tempalte = '/options-builder/dropdown'.$prefix.'.php';
-                break;            
+        if(isset($field['nbd_type']) && $field['nbd_type'] == 'page' && $field['general']['data_type'] == 'm'){
+            $tempalte = NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/page'.$prefix.'.php';
+        }else{
+            switch($field['appearance']['display_type']){
+                case 's':
+                    $tempalte = NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/swatch'.$prefix.'.php';
+                    break;
+                case 'l':
+                    $tempalte = NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/label'.$prefix.'.php';
+                    break;            
+                case 'r':
+                    $tempalte = NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/radio'.$prefix.'.php';
+                    break;
+                default:
+                    $tempalte = NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/dropdown'.$prefix.'.php';
+                    break;            
+            }
         }
     }
     if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
@@ -580,9 +593,9 @@ foreach($options["fields"] as $key => $field){
         </table> 
 <?php endif;
 if( $options['display_type'] == 2 && count($pm_field_indexes) ){
-    include('/options-builder/price-matrix.php');
+    include(NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/price-matrix.php');
 }else if( $options['display_type'] == 3 && count($options['bulk_fields']) ){
-    include('/options-builder/bulk-options.php');
+    include(NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/bulk-options.php');
 }
 if( $cart_item_key != ''){
     ?>
@@ -882,7 +895,14 @@ if( $cart_item_key != ''){
                         }
                         field.value_name = field.value;
                     }else{
-                        field.value_name = origin_field.general.attributes.options[field.value].name;
+                        if( angular.isDefined(field.values) ){
+                            field.value_name = '';
+                            angular.forEach(field.values, function(val, index){
+                                field.value_name += (index == 0 ? '' : ', ') + origin_field.general.attributes.options[val].name;
+                            });
+                        }else{
+                            field.value_name = origin_field.general.attributes.options[field.value].name;
+                        }
                     }
                 });
                 angular.forEach(check, function(c){
@@ -937,25 +957,27 @@ if( $cart_item_key != ''){
                                 break;
                             case 'page':
                                 var number_page = $scope.validate_int( field.value );
-                                if( origin_field.general.data_type == 'm' ){
-                                    number_page = number_page == 2 ? 2 : 1;
-                                }
                                 nbOption.odOption.page = {
                                     number: number_page,
                                     page_display: origin_field.general.page_display,
                                     exclude_page: origin_field.general.exclude_page
                                 };
+                                if( origin_field.general.data_type == 'm' ){
+                                    nbOption.odOption.page.list_page = field.values;
+                                }                                
                                 break;
                             case 'size':
-                                var option_size = origin_field.general.attributes.options[field.value];
-                                nbOption.odOption.size = {
-                                    product_width: option_size.product_width,
-                                    product_height: option_size.product_height,
-                                    real_width: option_size.real_width,
-                                    real_height: option_size.real_height,
-                                    real_top: option_size.real_top,
-                                    real_left: option_size.real_left
-                                };
+                                if(origin_field.general.attributes.same_size == 'n'){
+                                    var option_size = origin_field.general.attributes.options[field.value];
+                                    nbOption.odOption.size = {
+                                        product_width: option_size.product_width,
+                                        product_height: option_size.product_height,
+                                        real_width: option_size.real_width,
+                                        real_height: option_size.real_height,
+                                        real_top: option_size.real_top,
+                                        real_left: option_size.real_left
+                                    };
+                                }
                                 break;
                             case 'dimension':
                                 nbOption.odOption.dimension = {
@@ -979,6 +1001,16 @@ if( $cart_item_key != ''){
             if( frame ){
                 frame.contentWindow.postMessage('change_nbo_options', window.location.origin);
             }
+        };
+        $scope.updateMultiselectValue = function(field_id){
+            $scope.nbd_fields[field_id].values = [];
+            angular.forEach($scope.nbd_fields[field_id]._values, function(val, index){
+                if(val){
+                    $scope.nbd_fields[field_id].values.push(index);
+                }
+            });
+            $scope.nbd_fields[field_id].value = $scope.nbd_fields[field_id].values[0];
+            $scope.check_valid();
         };
         $scope.update_dimensionvalue = function(field_id){
             $scope.nbd_fields[field_id].value = $scope.nbd_fields[field_id].width + 'x' + $scope.nbd_fields[field_id].height;
@@ -1168,6 +1200,13 @@ if( $cart_item_key != ''){
                             angular.forEach(field.general.attributes.options, function(op, k){
                                 if( op.selected == 'on' ) $scope.nbd_fields[field.id].value = '' + k;
                             });
+                            if( $scope.isMultipleSelectPage( field ) ){
+                                $scope.nbd_fields[field.id].values = [parseInt($scope.nbd_fields[field.id].value)];
+                                $scope.nbd_fields[field.id]._values = [];
+                                angular.forEach(field.general.attributes.options, function(op, k){
+                                    $scope.nbd_fields[field.id]._values[k] = k == 0 ? true : false;
+                                });
+                            }
                         }
                     }
                 }
@@ -1179,6 +1218,13 @@ if( $cart_item_key != ''){
                     var dimension = value.split("x");
                     $scope.nbd_fields[field_id].width = parseFloat(dimension[0]);
                     $scope.nbd_fields[field_id].height = parseFloat(dimension[1]);
+                }
+                if( $scope.isMultipleSelectPage( origin_field ) ){
+                    $scope.nbd_fields[field_id].value = value[0];
+                    $scope.nbd_fields[field_id].values = value;
+                    angular.forEach(value, function(val){
+                        $scope.nbd_fields[origin_field.id]._values[val] = true;
+                    });                    
                 }
             });
             angular.forEach($scope.fields, function(field){
@@ -1319,26 +1365,49 @@ if( $cart_item_key != ''){
                                 }
                             }
                         }
-                        factor = $scope.validate_float(factor) ;
-                        field.is_pp = 0;
-                        switch(origin_field.general.price_type){
-                            case 'f':
-                                field.price = $scope.convert_to_wc_price( factor );
-                                total_price += factor;
-                                break;
-                            case 'p':
-                                field.price = $scope.convert_to_wc_price( basePrice * factor / 100 );
-                                total_price += ($scope.basePrice * factor / 100);
-                                break;
-                            case 'p+':
-                                field.price = factor / 100;
-                                xfactor *= (1 + factor / 100);
-                                field.is_pp = 1;
-                                break;
-                            case 'c':
-                                field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
-                                total_price += factor * $scope.validate_int( field.value );
-                                break; 
+                        if( $scope.isMultipleSelectPage( origin_field ) ){
+                            factor = [];
+                            angular.forEach(field.values, function(val, v_index){
+                                var option = origin_field.general.attributes.options[val];
+                                if(origin_field.general.depend_quantity == 'n'){
+                                    factor[v_index] = option.price[0];
+                                }else{
+                                    if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                        factor[v_index] = '';
+                                    }else{
+                                        factor[v_index] = option.price[quantity_break.index];
+                                    }
+                                }                            
+                            });
+                            field.price = 0;
+                            angular.forEach(factor, function(fac){
+                                fac = $scope.validate_float(fac);
+                                total_price += fac;
+                                field.price += fac;
+                            });
+                            field.price = $scope.convert_to_wc_price( field.price );                            
+                        }else{
+                            factor = $scope.validate_float(factor) ;
+                            field.is_pp = 0;
+                            switch(origin_field.general.price_type){
+                                case 'f':
+                                    field.price = $scope.convert_to_wc_price( factor );
+                                    total_price += factor;
+                                    break;
+                                case 'p':
+                                    field.price = $scope.convert_to_wc_price( basePrice * factor / 100 );
+                                    total_price += ($scope.basePrice * factor / 100);
+                                    break;
+                                case 'p+':
+                                    field.price = factor / 100;
+                                    xfactor *= (1 + factor / 100);
+                                    field.is_pp = 1;
+                                    break;
+                                case 'c':
+                                    field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
+                                    total_price += factor * $scope.validate_int( field.value );
+                                    break; 
+                            }
                         }
                     }
                 });
@@ -1520,30 +1589,53 @@ if( $cart_item_key != ''){
                             }
                         }
                     }
-                    factor = $scope.validate_float(factor) ;
-                    field.is_pp = 0;
-                    if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
-                            && origin_field.general.price_type == 'c' ){
-                        origin_field.general.price_type == 'f';
-                    }
-                    switch(origin_field.general.price_type){
-                        case 'f':
-                            field.price = $scope.convert_to_wc_price( factor );
-                            $scope.total_price += factor;
-                            break;
-                        case 'p':
-                            field.price = $scope.convert_to_wc_price( $scope.basePrice * factor / 100 );
-                            $scope.total_price += ($scope.basePrice * factor / 100);
-                            break;
-                        case 'p+':
-                            field.price = factor / 100;
-                            xfactor *= (1 + factor / 100);
-                            field.is_pp = 1;
-                            break;
-                        case 'c':
-                            field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
-                            $scope.total_price += factor * $scope.validate_int( field.value );
-                            break; 
+                    if( $scope.isMultipleSelectPage( origin_field ) ){
+                        factor = [];
+                        angular.forEach(field.values, function(val, v_index){
+                            var option = origin_field.general.attributes.options[val];
+                            if(origin_field.general.depend_quantity == 'n'){
+                                factor[v_index] = option.price[0];
+                            }else{
+                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                    factor[v_index] = '';
+                                }else{
+                                    factor[v_index] = option.price[quantity_break.index];
+                                }
+                            }                            
+                        });
+                        field.price = 0;
+                        angular.forEach(factor, function(fac){
+                            fac = $scope.validate_float(fac);
+                            $scope.total_price += fac;
+                            field.price += fac;
+                        });
+                        field.price = $scope.convert_to_wc_price( field.price );
+                    }else{
+                        factor = $scope.validate_float(factor) ;
+                        field.is_pp = 0;
+                        if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
+                                && origin_field.general.price_type == 'c' ){
+                            origin_field.general.price_type == 'f';
+                        }
+                        switch(origin_field.general.price_type){
+                            case 'f':
+                                field.price = $scope.convert_to_wc_price( factor );
+                                $scope.total_price += factor;
+                                break;
+                            case 'p':
+                                field.price = $scope.convert_to_wc_price( $scope.basePrice * factor / 100 );
+                                $scope.total_price += ($scope.basePrice * factor / 100);
+                                break;
+                            case 'p+':
+                                field.price = factor / 100;
+                                xfactor *= (1 + factor / 100);
+                                field.is_pp = 1;
+                                break;
+                            case 'c':
+                                field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
+                                $scope.total_price += factor * $scope.validate_int( field.value );
+                                break; 
+                        }
                     }
                 }
             });
@@ -1643,30 +1735,53 @@ if( $cart_item_key != ''){
                                 }
                             }
                         }
-                        factor = $scope.validate_float(factor) ;
-                        field.is_pp = 0;
-                        if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
-                            && origin_field.general.price_type == 'c' ){
-                            origin_field.general.price_type == 'f';
-                        }
-                        switch(origin_field.general.price_type){
-                            case 'f':
-                                field.price = $scope.convert_to_wc_price( factor );
-                                pt.total_price += factor;
-                                break;
-                            case 'p':
-                                field.price = $scope.convert_to_wc_price( $scope.basePrice * factor / 100 );
-                                pt.total_price += ($scope.basePrice * factor / 100);
-                                break;
-                            case 'p+':
-                                field.price = factor / 100;
-                                xfactor *= (1 + factor / 100);
-                                field.is_pp = 1;
-                                break;
-                            case 'c':
-                                field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
-                                pt.total_price += factor * $scope.validate_int( field.value );
-                                break; 
+                        if( $scope.isMultipleSelectPage( origin_field ) ){
+                            factor = [];
+                            angular.forEach(field.values, function(val, v_index){
+                                var option = origin_field.general.attributes.options[val];
+                                if(origin_field.general.depend_quantity == 'n'){
+                                    factor[v_index] = option.price[0];
+                                }else{
+                                    if( pt.quantity_break.index == 0 && pt.quantity_break.oparator == 'lt' ){
+                                        factor[v_index] = '';
+                                    }else{
+                                        factor[v_index] = option.price[pt.quantity_break.index];
+                                    }
+                                }                            
+                            });
+                            field.price = 0;
+                            angular.forEach(factor, function(fac){
+                                fac = $scope.validate_float(fac);
+                                pt.total_price += fac;
+                                field.price += fac;
+                            });
+                            field.price = $scope.convert_to_wc_price( field.price );                            
+                        }else{
+                            factor = $scope.validate_float(factor) ;
+                            field.is_pp = 0;
+                            if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
+                                && origin_field.general.price_type == 'c' ){
+                                origin_field.general.price_type == 'f';
+                            }
+                            switch(origin_field.general.price_type){
+                                case 'f':
+                                    field.price = $scope.convert_to_wc_price( factor );
+                                    pt.total_price += factor;
+                                    break;
+                                case 'p':
+                                    field.price = $scope.convert_to_wc_price( $scope.basePrice * factor / 100 );
+                                    pt.total_price += ($scope.basePrice * factor / 100);
+                                    break;
+                                case 'p+':
+                                    field.price = factor / 100;
+                                    xfactor *= (1 + factor / 100);
+                                    field.is_pp = 1;
+                                    break;
+                                case 'c':
+                                    field.price = $scope.convert_to_wc_price( factor * $scope.validate_int( field.value ) );
+                                    pt.total_price += factor * $scope.validate_int( field.value );
+                                    break; 
+                            }
                         }
                     }
                 });
@@ -1688,7 +1803,13 @@ if( $cart_item_key != ''){
                 pt.total_price = $scope.convert_to_wc_price( pt.total_price );
                 pt.discount_by_qty = $scope.convert_to_wc_price( pt.discount_by_qty );
             });
-        };	        
+        };
+        $scope.isMultipleSelectPage = function(field){
+            if( angular.isDefined(field.nbd_type) && field.nbd_type == 'page' && field.general.data_type == 'm' ){
+                return true;
+            }
+            return false;
+        };
         $scope.calculate_price_base_measurement = function(mesure_range, width, height){
             var area = $scope.validate_float(width) * $scope.validate_float(height);
             var price_per_unit = 0, start_range = 0, end_range = 0, price_range = 0;
@@ -1743,12 +1864,6 @@ if( $cart_item_key != ''){
         angular.element(function() {
             angular.bootstrap(appEl, ['nboApp']);
         });
-    }
-    //window.addEventListener("message", receiveMessage, false);
-    function receiveMessage( event ){
-        if( event.origin == window.location.origin ){
-            console.log(event.data);
-        }
     }
 </script>
 </div>

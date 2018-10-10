@@ -276,7 +276,8 @@
                         <div style="margin-top: 10px;">
                             <div ng-repeat="(cdIndex, con) in field.conditional.depend">
                                 <select ng-model="con.id" style="width: 200px;" name="options[fields][{{fieldIndex}}][conditional][depend][{{cdIndex}}][id]">
-                                    <option ng-repeat="cf in options.fields | filter: { id: '!' + field.id }" value="{{cf.id}}">{{cf.general.title.value}}</option>
+<!--                                    <option ng-repeat="cf in options.fields | filter: { id: '!' + field.id }" value="{{cf.id}}">{{cf.general.title.value}}</option>-->
+                                    <option ng-repeat="cf in options.fields | filter: { id: field.id }:excludeField" value="{{cf.id}}">{{cf.general.title.value}}</option>
                                 </select>
                                 <select ng-model="con.operator" style="width: 120px;" name="options[fields][{{fieldIndex}}][conditional][depend][{{cdIndex}}][operator]">
                                     <option value="i"><?php _e('is', 'web-to-print-online-designer'); ?></option>
@@ -327,7 +328,7 @@
 <?php echo '<script type="text/ng-template" id="nbd.page">'; ?>
     <div class="nbd-field-info">
         <div class="nbd-field-info-1">
-            <div><b><?php _e('Page display:', 'web-to-print-online-designer'); ?></b></div>
+            <div><b><?php _e('Page display', 'web-to-print-online-designer'); ?></b></div>
         </div>
         <div class="nbd-field-info-2">
             <select name="options[fields][{{fieldIndex}}][general][page_display]" ng-model="field.general.page_display">

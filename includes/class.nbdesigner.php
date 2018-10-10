@@ -2722,7 +2722,7 @@ class Nbdesigner_Plugin {
             }else {
                 $nbd_item_key = $nbd_item_session;
             }
-        }              
+        }
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
         if( $task == 'new' || $task == 'create' ){
             if($variation_id > 0){
