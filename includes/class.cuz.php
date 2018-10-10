@@ -109,7 +109,7 @@ if(!class_exists('NBD_CUSTOMIZE')){
             wp_die();
         }
         public function nbd_add_color_group(){
-            
+
         }
         public function nbd_add_color(){}
         public function manage_color_menu(){
@@ -125,7 +125,6 @@ if(!class_exists('NBD_CUSTOMIZE')){
         public function product_design_setting( $post_id, $option ){
             include_once(NBDESIGNER_PLUGIN_DIR . 'views/cuz/product-settings.php');
         }
-
     }
 }
 $nbd_cuz = NBD_CUSTOMIZE::instance();

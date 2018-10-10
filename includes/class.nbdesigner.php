@@ -1548,7 +1548,8 @@ class Nbdesigner_Plugin {
                                 $art['file'] = $new_path_art['date_path'];
                                 $art['url'] = $new_path_art['date_path'];
                                 //$art['url'] = NBDESIGNER_ART_URL . $new_path_art['date_path'];
-                            }                                               
+                            }
+                            echo '<pre>'; print_r($art); echo '</pre>'; echo __FILE__; die();
                             if ($update) {
                                 $this->nbdesigner_update_list_arts($art, $art_id);
                             } else {
