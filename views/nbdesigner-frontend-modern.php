@@ -26,7 +26,7 @@
     if( !nbd_check_permission() ):
     nbdesigner_get_template('permission.php');    
     else:    
-    $option_id = get_post_meta($product_id, '_nbo_option_id', true);
+    $option_id = get_transient( 'nbo_product_'.$product_id );
     $show_nbo_option =  (($option_id || $product_type == 'variable') && $ui_mode == 2 && $task == 'new' ) ? true : false;
 ?>
 <html lang="<?php echo $lang_code; ?>">

@@ -249,14 +249,14 @@ $prefix = $display_type == 2 ? '-2' : '';
         display: inline-block;
         border-radius: 50%; 
         cursor: pointer;
-        border: 2px solid #fff;
+        border: 2px solid #ddd;
     }
     .nbd-checkbox {
         width: 36px;
         height: 36px;
         display: inline-block;
         cursor: pointer;
-        border: 2px solid #ddd;        
+        border: 2px solid #ddd;
     }
     .nbd-option-wrapper input[type="radio"], .nbd-checkbox-wrap input[type="checkbox"] {
         display: none;
@@ -997,10 +997,10 @@ if( $cart_item_key != ''){
             });
             /* send option to editor */
             jQuery(document).triggerHandler( 'change_nbo_options' );
-            var frame = document.getElementById('onlinedesigner-designer');
-            if( frame ){
-                frame.contentWindow.postMessage('change_nbo_options', window.location.origin);
-            }
+//            var frame = document.getElementById('onlinedesigner-designer');
+//            if( frame ){
+//                frame.contentWindow.postMessage('change_nbo_options', window.location.origin);
+//            }
         };
         $scope.updateMultiselectValue = function(field_id){
             $scope.nbd_fields[field_id].values = [];
@@ -1174,6 +1174,7 @@ if( $cart_item_key != ''){
             nbOption.status = true;
             <?php if($options['display_type'] == 3 && count($options['bulk_fields'])): ?>
             jQuery('input[name="add-to-cart"]').remove();
+            jQuery('button[name="add-to-cart"]').attr('name', 'nbo-add-to-cart');
             jQuery('input[name="quantity"], .quantity .screen-reader-text').remove();
             <?php endif; ?>
             $scope.nbd_fields = {};

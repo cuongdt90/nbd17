@@ -290,6 +290,11 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             }
         }
         $scope.options.fields.push( field );
+        $timeout(function(){
+            jQuery('html,body').animate({
+                scrollTop: jQuery("#" + field['id']).offset().top
+            }, 'slow');            
+        });
         $scope.initfieldValue();
     };
     $scope.add_measurement_range = function(fieldIndex){

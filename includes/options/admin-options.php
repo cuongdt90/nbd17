@@ -265,8 +265,8 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'date_from' =>  $_POST['date_from'],
                 'date_to' =>  $_POST['date_to'],
                 'apply_for' =>  $_POST['apply_for'],
-                'product_cats' =>  serialize($_POST['product_cats']),
-                'product_ids' =>  serialize($_POST['product_ids']),
+                'product_cats' =>  isset($_POST['product_cats']) ? serialize($_POST['product_cats']) : serialize(array()),
+                'product_ids' =>  isset($_POST['product_ids']) ? serialize($_POST['product_ids']) : serialize(array()),
                 'modified'  => $modified_date->format('Y-m-d H:i:s'),
                 'fields'    => serialize($_POST['options'])
             );

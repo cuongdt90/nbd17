@@ -5,10 +5,10 @@
     </div>
     <div class="nbd-field-info-2">
         <div>
-            <select string-to-number name="options[display_type]" ng-model="options.display_type">
-                <option ng-value="1"><?php _e('Default', 'web-to-print-online-designer'); ?></option>
-                <option ng-value="2"><?php _e('Price Matrix', 'web-to-print-online-designer'); ?></option>
-                <option ng-value="3"><?php _e('Bulk variation', 'web-to-print-online-designer'); ?></option>
+            <select name="options[display_type]" ng-model="options.display_type">
+                <option <?php selected( $options['display_type'], 1 ); ?> value="1"><?php _e('Default', 'web-to-print-online-designer'); ?></option>
+                <option <?php selected( $options['display_type'], 2 ); ?> value="2"><?php _e('Price Matrix', 'web-to-print-online-designer'); ?></option>
+                <option <?php selected( $options['display_type'], 3 ); ?> value="3"><?php _e('Bulk variation', 'web-to-print-online-designer'); ?></option>
             </select>                        
         </div>
     </div>

@@ -851,7 +851,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 }
                 $nbb_fields[] = $arr;
             }
-            $product_id = $_REQUEST['product_id']; 
+            $product_id = isset($_REQUEST['product_id']) ? $_REQUEST['product_id'] : $_REQUEST['nbo-add-to-cart']; 
             $added_count  = 0;
             $failed_count = 0;        
             $success_message = '';

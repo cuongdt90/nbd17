@@ -40,6 +40,10 @@ jQuery(document).ready(function () {
             jQuery('.single_add_to_cart_button').trigger('click');
         }else{
             showDesignFrame();
+            var frame = document.getElementById('onlinedesigner-designer');
+            if( frame ){
+                frame.contentWindow.postMessage('change_nbo_options', window.location.origin);
+            }            
         }
     });
     jQuery('#closeFrameDesign').on('click', function () {
