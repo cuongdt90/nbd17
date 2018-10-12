@@ -20,11 +20,23 @@ if ( !function_exists( 'add_action' ) ) {
     echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
     exit;
 }
-
 $upload_dir = wp_upload_dir();
 $basedir = $upload_dir['basedir'];
 $baseurl = $upload_dir['baseurl'];
-
+if( is_multisite() ){
+    if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+        require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+    }   
+    if(in_array('wordpress-mu-domain-mapping/domain_mapping.php', apply_filters('active_plugins', get_option('active_plugins')))
+        || is_plugin_active_for_network( 'wordpress-mu-domain-mapping/domain_mapping.php' ) ){ 
+        $dm_domain = $_SERVER[ 'HTTP_HOST' ];
+        $baseurl_arr = explode('wp-content', $baseurl);
+        if( isset($baseurl_arr[1]) ){
+            $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
+            $baseurl = $protocol . $dm_domain .'/wp-content'. $baseurl_arr[1];
+        }
+    }
+}
 $nbd_plugin_dir_url = plugin_dir_url(__FILE__);
 if ( function_exists( 'icl_get_home_url' ) ) {
     if ( class_exists( 'SitePress' ) ) {

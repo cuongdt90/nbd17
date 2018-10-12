@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
-<div class="nbo-bulk-variation-wrap nbo-table-wrap">
-    <p class="nbo-bulk-title"><b><?php _e('Bulk variation', 'web-to-print-online-designer'); ?></b></p>
+<p class="nbo-bulk-title"><b><?php _e('Bulk variation', 'web-to-print-online-designer'); ?></b></p>
+<div class="nbo-bulk-variation-wrap nbo-table-wrap">    
     <?php if( count($options["bulk_fields"]) > 1): ?>
     <table class="nbo-bulk-variation">
         <thead>

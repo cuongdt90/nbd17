@@ -168,7 +168,7 @@
                                     </div>
                                 </div>
                                 <div style="margin-top: 10px;">
-                                    <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Onlinde design fields', 'web-to-print-online-designer'); ?>" readonly=""></p>
+                                    <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Online design fields', 'web-to-print-online-designer'); ?>" readonly=""></p>
                                     <div class="nbd-section-wrap">
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('page')"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?></a>
                                         <a class="nbd-field-btn button-primary" ng-click="add_field('color')"><?php _e('Color', 'web-to-print-online-designer'); ?></a>

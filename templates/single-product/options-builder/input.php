@@ -27,8 +27,11 @@
         <span><?php echo nbdesigner_get_option('nbdesigner_dimensions_unit'); ?></span>
         <br /><small class="nbo-dimension-width"><?php echo sprintf(__('Width: min %s - max %s', 'web-to-print-online-designer'), $field['general']['min_width'], $field['general']['max_width']); ?></small>
         <br /><small class="nbo-dimension-width"><?php echo sprintf(__('Height: min %s - max %s', 'web-to-print-online-designer'), $field['general']['min_height'], $field['general']['max_height']); ?></small>        
+        <br /><span class="nbd-invalid-notice nbd-invalid-min nbd-invalid-max"><?php echo __('Invalid value', 'web-to-print-online-designer'); ?></span>
         <?php endif; ?>
+        <?php if( !(isset($field['nbd_type']) && $field['nbd_type'] == 'dimension') ): ?>
         <span class="nbd-invalid-notice nbd-invalid-min"><?php echo __('Invalid value, min: ', 'web-to-print-online-designer') . $field['general']['input_option']['min']; ?></span>
         <span class="nbd-invalid-notice nbd-invalid-max"><?php echo __('Invalid value, max: ', 'web-to-print-online-designer') . $field['general']['input_option']['max']; ?></span>
+        <?php endif; ?>
     </div>
 </div>

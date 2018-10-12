@@ -2585,7 +2585,7 @@ class Nbdesigner_Plugin {
     public function nbd_save_cart_design(){
         if (!wp_verify_nonce($_POST['nonce'], 'save-design') || !isset($_POST['product_id'])) {
             die('Security error');
-        }       
+        }
         $result = array(
             'flag'  =>  'success'
         );
@@ -2665,7 +2665,7 @@ class Nbdesigner_Plugin {
                 }
                 WC()->cart->set_session();
             }
-        }else {             
+        }else {
             /* Add to cart directly in custom page */
             $quantity = 1;
             $product_status    = get_post_status( $product_id );
