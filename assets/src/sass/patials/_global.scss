@@ -178,6 +178,51 @@ img{
   }
 }
 
+.nbd-triangle{
+  &:before,&:after{
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -14px;
+    border: 7px solid transparent;
+  }
+  &:before{
+    border-bottom: 7px solid #ebebeb;
+  }
+  &:after{
+    border-bottom: 7px solid #fff;
+  }
+
+  &[data-pos="left"]{
+    &:before, &:after{
+      top: 20px;
+      left: -14px;
+      border-bottom-color: transparent;
+    }
+    &:before{
+      border-right: 7px solid #ebebeb;
+    }
+    &:after{
+      border-right: 7px solid #fff;
+    }
+  }
+
+  &[data-pos="right"]{
+    &:before, &:after{
+      top: 20px;
+      right: -14px;
+      left: auto;
+      border-bottom-color: transparent;
+    }
+    &:before{
+      border-left: 7px solid #ebebeb;
+    }
+    &:after{
+      border-left: 7px solid #fff;
+    }
+  }
+}
+
 .nbd-button{
   color: #fff;
   background: $main-color;
@@ -238,6 +283,13 @@ img{
 
 .overflow-visible {
   overflow: visible !important;
+}
+
+.nbd-notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }
 
 .title{

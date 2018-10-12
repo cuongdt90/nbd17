@@ -1,35 +1,34 @@
 {
-  "name": "jewelry-gup",
+  "name": "extract-webpack",
   "version": "1.0.0",
-  "description": "Jewelry WordPress Gulp Folder",
   "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack --config webpack.config.js",
+    "watch": "webpack --watch"
   },
-  "author": "netbaseteam",
-  "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^7.1.2",
-    "browser-sync": "^2.18.8",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.2",
-    "gulp-group-css-media-queries": "^1.2.0",
-    "gulp-jshint": "^2.0.4",
-    "gulp-plumber": "^1.1.0",
-    "gulp-postcss": "^7.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-rtlcss": "^1.0.0",
-    "gulp-sass": "^2.3.2",
-    "gulp-minify-css": "*",
-    "gulp-sourcemaps": "^2.4.1",
-    "gulp-uglify": "^2.0.1",
-    "gulp-util": "^3.0.7",
-    "jshint": "^2.9.4"
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.9.0",
+    "optimize-css-assets-webpack-plugin": "^4.0.3",
+    "postcss-loader": "^2.1.5",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.5"
   },
-  "browserslist": [
-    "> 0.05%",
-    "last 15 versions"
-  ]
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-router-dom": "^4.2.2"
+  }
 }

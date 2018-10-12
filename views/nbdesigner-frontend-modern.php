@@ -880,7 +880,7 @@
             .nbd-stages .stage .stage-main.nbd-without-shadow {
                 -webkit-box-shadow: none !important;
                 box-shadow: none !important;
-                background: transparent !important;
+                background: transparent;
             }
 /*            .stage-background {
                 display: flex;
@@ -1511,6 +1511,7 @@
             <?php include 'modern/toasts.php';?>
             <?php include 'modern/tip.php';?>
             <?php include 'modern/color-palette.php';?>
+            <?php include 'modern/tour-guide.php';?>
         </div>
         <?php include 'modern/loading-page.php';?>
         <?php if(!NBDESIGNER_MODE_DEV): ?>
