@@ -69,11 +69,11 @@
                                         <div class="misc-publishing-actions nbo-dates" >
                                             <div style="margin-bottom: 15px;">
                                                 <label for="date_from"><?php _e('From', 'web-to-print-online-designer'); ?></label>
-                                                <input type="text" class="date_from" id="date_from" name="date_from" value="<?php echo $options['date_from']; ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php _e('From YYYY-MM-DD', 'web-to-print-online-designer'); ?>" title="<?php _e( 'Leave both fields blank to not restrict this options to a date range', 'web-to-print-online-designer' ); ?>"/>
+                                                <input type="text" class="date_from" id="date_from" name="date_from" value="<?php echo $options['date_from']; ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php _e('YYYY-MM-DD', 'web-to-print-online-designer'); ?>" title="<?php _e( 'Leave both fields blank to not restrict this options to a date range', 'web-to-print-online-designer' ); ?>"/>
                                             </div>
                                             <div>
                                                 <label for="date_to"><?php _e('To', 'web-to-print-online-designer'); ?></label>
-                                                <input class="date_to" id="date_to" name="date_to" value="<?php echo $options['date_to']; ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php _e('To YYYY-MM-DD', 'web-to-print-online-designer'); ?>" title="<?php _e( 'Leave both fields blank to not restrict this options to a date range', 'web-to-print-online-designer' ); ?>"/>
+                                                <input class="date_to" id="date_to" name="date_to" value="<?php echo $options['date_to']; ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" placeholder="<?php _e('YYYY-MM-DD', 'web-to-print-online-designer'); ?>" title="<?php _e( 'Leave both fields blank to not restrict this options to a date range', 'web-to-print-online-designer' ); ?>"/>
                                             </div>    
                                         </div>  
                                         <div class="clear"></div>

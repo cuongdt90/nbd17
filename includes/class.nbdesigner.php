@@ -963,11 +963,13 @@ class Nbdesigner_Plugin {
         );
         return array_merge($mylinks, $links);
     }
-    public static function nbdesigner_plugin_row_meta( $links, $file ) {      
-        if($file == NBDESIGNER_PLUGIN_BASENAME){           
+    public static function nbdesigner_plugin_row_meta( $links, $file ) {
+        if($file == NBDESIGNER_PLUGIN_BASENAME){
             $row_meta = array(
-                'upgrade' => '<a href="https://cmsmart.net/support_ticket" target="_blank">Support</a>',
-                'community' => '<a href="https://cmsmart.net/community/woocommerce-online-product-designer-plugin" target="_blank">Community</a>'
+                'livedemo' => '<a href="https://nbdesigner.cmsmart.net" target="_blank"><span class="dashicons  dashicons-laptop"></span>Live Demo</a>',
+                'document' => '<a href="https://nbdesigner.cmsmart.net" target="_blank"><span class="dashicons dashicons-book-alt"></span>Document</a>',
+                'support' => '<a href="https://cmsmart.net/support_ticket" target="_blank"><span class="dashicons  dashicons-businessman"></span>Support</a>',
+                'community' => '<a href="https://cmsmart.net/community/woocommerce-online-product-designer-plugin" target="_blank"><span class="dashicons dashicons-groups"></span>Community</a>'
             );
             return array_merge( $links, $row_meta );
         }
@@ -4653,7 +4655,7 @@ class Nbdesigner_Plugin {
             die('Security error');
         }   
         require_once(NBDESIGNER_PLUGIN_DIR.'includes/tcpdf/tcpdf.php');     
-        require_once(NBDESIGNER_PLUGIN_DIR.'includes/fpdi/autoload.php');  
+        //require_once(NBDESIGNER_PLUGIN_DIR.'includes/fpdi/autoload.php');  
         $pdfs = $_POST['pdf'];
         $force = $_POST['force_same_format'];
         $from_type = $_POST['from_type'];
@@ -4837,7 +4839,7 @@ class Nbdesigner_Plugin {
                     //$this->convert_svg_url(NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key .'/', 'frame_'. $key .'_svg.svg');
                     $pdf->ImageSVG($svg, $mLeft + $cdLeft, $mTop + $cdTop, $cdWidth,$cdHeight, '', '', '', 0, true);  
                 }
-            }            
+            }
             if(!$force){
                 $folder = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/pdfs';
                 if(!file_exists($folder)){

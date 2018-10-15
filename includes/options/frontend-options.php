@@ -76,7 +76,8 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             if( nbdesigner_get_option('nbdesigner_turn_off_persistent_cart') == 'yes' ){
                 add_filter( 'get_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );
                 add_filter( 'update_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );
-                add_filter( 'add_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );                
+                add_filter( 'add_user_metadata', array( $this, 'turn_off_persistent_cart' ), 10, 3 );  
+                add_filter( 'woocommerce_persistent_cart_enabled', '__return_false' );
             }
             
             /** Empty cart button **/
@@ -106,7 +107,8 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             }            
         }        
         public function turn_off_persistent_cart( $value, $id, $key ){
-            if ($key == '_woocommerce_persistent_cart') {
+            $blog_id = get_current_blog_id();
+            if ($key == '_woocommerce_persistent_cart' || $key == '_woocommerce_persistent_cart_' . $blog_id) {
                 return FALSE;
             }
             return $value;

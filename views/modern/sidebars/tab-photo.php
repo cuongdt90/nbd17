@@ -61,6 +61,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php if( $valid_license ): ?>
                     <div class="item" ng-click="onClickTab('Pixabay', 'photo')" ng-if="settings['nbdesigner_enable_pixabay'] == 'yes'" data-type="pixabay" data-api="true">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-pixabay"></i></div>
@@ -77,6 +78,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
                 </div>
                 <div class="pointer"></div>
             </div>

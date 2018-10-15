@@ -438,8 +438,12 @@
                             <?php _e('Manage Templates', 'web-to-print-online-designer'); ?>
                         </a>            
                     <?php endif; ?>
-                </div> 
-                <div id="nbd-global-template" class="nbdesigner-opt-inner nbd-independence <?php if (!$option['admindesign']) echo 'nbdesigner-disable'; ?>">
+                </div>
+                <?php 
+                    $valid_license = nbd_check_license(); 
+                    if( $valid_license ):
+                ?>
+                <div  id="nbd-global-template" class="nbdesigner-opt-inner nbd-independence <?php if (!$option['admindesign']) echo 'nbdesigner-disable'; ?>">
                     <label for="_nbdesigner_option[global_template]" class="nbdesigner-option-label"><?php _e('Use global template store', 'web-to-print-online-designer'); ?></label>
                     <input type="hidden" value="0" name="_nbdesigner_option[global_template]"/>
                     <input type="checkbox" value="1" name="_nbdesigner_option[global_template]" id="_nbdesigner_option[global_template]" <?php checked( $option['global_template'] ); ?> class="short nbd-dependence" data-target="#nbd-global-template-cat"/>
@@ -456,6 +460,12 @@
                     </select>
                     <a target="_blank" href="https://studio.cmsmart.net/index.php?option=com_nbmedia&view=media&cat=template"><?php _e('View list template', 'web-to-print-online-designer'); ?></a>
                 </div>
+                <?php else: ?>
+                <div style="display: none;" id="nbd-global-template" class="nbdesigner-opt-inner nbd-independence <?php if (!$option['admindesign']) echo 'nbdesigner-disable'; ?>">
+                    <label for="_nbdesigner_option[global_template]" class="nbdesigner-option-label"><?php _e('Use global template store', 'web-to-print-online-designer'); ?></label>
+                    <input type="hidden" value="0" name="_nbdesigner_option[global_template]" checked/>
+                </div>                
+                <?php endif; ?>
                 <div class="nbdesigner-opt-inner">
                     <div>
                         <label for="nbdesigner_dpi" class="nbdesigner-option-label"><?php echo _e('DPI ( Dots Per Inch )', 'web-to-print-online-designer'); ?></label>

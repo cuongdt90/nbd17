@@ -89,6 +89,7 @@ nbd_define('NBDESIGNER_SKU', 'WPP1074');
 nbd_define('NBDESIGNER_PAGE_STUDIO', 'designer-studio');
 nbd_define('NBDESIGNER_PAGE_CREATE_YOUR_OWN', 'create-your-own');
 nbd_define('K_PATH_FONTS', NBDESIGNER_DATA_DIR . '/php-fonts/');
+//nbd_define('PCLZIP_TEMPORARY_DIR', NBDESIGNER_DATA_DIR);
 function nbd_define( $name, $value ) {
     if ( ! defined( $name ) ) {
         define( $name, $value );

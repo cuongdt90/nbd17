@@ -180,7 +180,7 @@ $faqs = $nbd_news->sections->faq;
         <ul>
             <li><a href="https://cmsmart.net/support_ticket" target="_blank"><?php esc_attr_e( 'Support', 'web-to-print-online-designer' ); ?></a></li>
             <li><a href="http://document.netbaseteam.com/guide/wp-online-design/" target="_blank"><?php esc_attr_e( 'Documentation', 'web-to-print-online-designer' ); ?></a></li>
-            <li><a href="https://cmsmart.net/forum/wordpress-plugins_551d1690f9d6ef540e000094" target="_blank"><?php esc_attr_e( 'Forum', 'web-to-print-online-designer' ); ?></a></li>
+            <li><a href="https://cmsmart.net/community/woocommerce-online-product-designer-plugin" target="_blank"><?php esc_attr_e( 'Community', 'web-to-print-online-designer' ); ?></a></li>
         </ul>        
     </section>
     <div class="nbd-logo">
@@ -223,10 +223,10 @@ $faqs = $nbd_news->sections->faq;
         </div>
         <div class="nbd-enhance__column nbd-other-product">
             <h3><?php esc_attr_e( 'Printing solution', 'web-to-print-online-designer' ); ?></h3>
-            <a href="https://cmsmart.net/tshirt-printing-store-ecommerce-website-with-online-designer" target="_blank"><img src="https://cmsmart.net/components/com_cmsmart/views/tee_pro/images/ps-slide2.jpg" /></a>
+            <a href="https://cmsmart.net/tshirt-printing-store-ecommerce-website-with-online-designer" target="_blank"><img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/t-shirt.jpg" /></a>
             <h4><a href="https://cmsmart.net/tshirt-printing-store-ecommerce-website-with-online-designer" target="_blank">T-SHIRT PRINTING SOLUTION</a></h4>
             <p><?php _e( 'You have a T-shirt printing business and you want your customers to have a great experience at your site.', 'web-to-print-online-designer' ); ?></p>
-            <a href="https://cmsmart.net/wordpress-themes/wordpress-printshop-website-templates-with-online-design-packages" target="_blank"><img src="https://cmsmart.net/components/com_cmsmart/views/wpprintshop/images/ps-slide3.jpg" /></a>
+            <a href="https://cmsmart.net/wordpress-themes/wordpress-printshop-website-templates-with-online-design-packages" target="_blank"><img src="<?php echo NBDESIGNER_PLUGIN_URL; ?>/assets/images/print-solution.jpg" /></a>
             <h4><a href="https://cmsmart.net/wordpress-themes/wordpress-printshop-website-templates-with-online-design-packages" target="_blank">PRINTING ECOMMERCE SOLUTION</a></h4>
             <p><?php _e( 'You got a big printing business and you want to manage all things clean and clear.', 'web-to-print-online-designer' ); ?></p>            
         </div>      

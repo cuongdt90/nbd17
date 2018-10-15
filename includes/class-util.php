@@ -1348,6 +1348,23 @@ function nbd_get_license_key(){
     }
     return $license;
 }
+function nbd_check_license(){
+    $license = nbd_get_license_key();
+    $result = false;
+    if( $license['key'] != '' ){
+        $code = (isset($license["code"])) ? $license["code"] : 10;
+        if(($code == 5) || ($code == 6)){
+            $now = strtotime("now");
+            $expiry_date = (isset($license["expiry-date"])) ? $license["expiry-date"] : 0;         
+            if($expiry_date > $now){
+                $salt = (isset($license['salt'])) ? $license['salt'] : 'somethingiswrong';
+                $new_salt = md5($license['key'].'pro');
+                if($salt == $new_salt) $result = true;
+            }
+        }
+    }
+    return $result;
+}
 function nbd_active_domain($license_key){
     $url = 'https://cmsmart.net/activedomain/netbase/WPP1074/'.$license_key.'/'.base64_encode(rtrim(get_bloginfo('wpurl'), '/'));
     $result = nbd_file_get_contents($url);

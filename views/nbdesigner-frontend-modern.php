@@ -28,6 +28,7 @@
     else:    
     $option_id = get_transient( 'nbo_product_'.$product_id );
     $show_nbo_option =  (($option_id || $product_type == 'variable') && $ui_mode == 2 && $task == 'new' ) ? true : false;
+    $valid_license = nbd_check_license();
 ?>
 <html lang="<?php echo $lang_code; ?>">
     <head>

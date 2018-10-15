@@ -23,6 +23,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php if( $valid_license ): ?>
                     <div ng-if="settings['nbdesigner_enable_clipart'] == 'yes'" class="item" data-type="icons" data-api="false" ng-click="onClickTab('icon', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-diamond"></i></div>
@@ -31,6 +32,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php endif; ?>
 <!--                    <div class="item" data-type="lines" data-api="false" ng-click="onClickTab('line', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-line"></i></div>

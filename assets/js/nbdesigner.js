@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
     var h = -height;
     var nbd_append_iframe = false;
     var showDesignFrame = function(){
-        jQuery('body').addClass('nbd-prevent-scroll');
+        jQuery('body, html').addClass('nbd-prevent-scroll');
         if( nbd_layout == 'c' ){
             if( !nbd_append_iframe ){
                 var iframe_src = jQuery('#container-online-designer').attr('data-iframe');
@@ -76,7 +76,7 @@ jQuery(document).ready(function () {
         jQuery('.nbd-popup-wrap').removeClass('is-hidden');
     };    
     hideDesignFrame = function (mes) {
-        jQuery('body').removeClass('nbd-prevent-scroll');
+        jQuery('body, html').removeClass('nbd-prevent-scroll');
         jQuery('#container-online-designer').removeClass('is-visible');
         backtoOption();
         if (mes != null) {

@@ -1,4 +1,4 @@
-body.nbd-prevent-scroll {
+body.nbd-prevent-scroll, html.nbd-prevent-scroll {
     overflow: hidden;
 }
 #nbdesigner_frontend_area .img-con {

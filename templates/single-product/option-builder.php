@@ -533,6 +533,11 @@ $prefix = $display_type == 2 ? '-2' : '';
         border-radius: 20px;
         display: inline-block;
     }    
+    .nbo-final-price {
+        background: #eee;
+        color: #404762;
+        font-weight: bold;        
+    }
     @media (max-width:768px){
         .nbd-tb-options td {
             display: inline-block !important;
@@ -621,7 +626,7 @@ if( $cart_item_key != ''){
                         <td><b><?php _e('Quantity Discount', 'web-to-print-online-designer'); ?></b></td>
                         <td><span id="nbd-option-total">{{discount_by_qty}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
                     </tr>
-                    <tr>
+                    <tr class="nbo-final-price">
                         <td><b><?php _e('Final price', 'web-to-print-online-designer'); ?></b></td>
                         <td><span id="nbd-option-total">{{final_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
                     </tr>                    
