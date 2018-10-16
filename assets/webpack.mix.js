@@ -11,7 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('./')
-	// .js('resources/js/app.js', 'js')
-	// .js('resources/js/app-modern.min.js', 'js')
+mix.setPublicPath('./').js('resources/js/app-product-builder.js','js')
    .sass('resources/sass/modern.scss', 'css').options({processCssUrls: false});

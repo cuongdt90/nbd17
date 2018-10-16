@@ -1,3 +1,5 @@
 {
-    "/css/modern.css": "/css/modern.css"
+    "/js/app-product-builder.js": "/js/app-product-builder.js",
+    "/css/modern.css": "/css/modern.css",
+    "/js/bundle-product-builder.js": "/js/bundle-product-builder.js"
 }
