@@ -14,6 +14,10 @@
             foreach ($field['general']['attributes']["options"] as $key => $attr): 
                 $image_url = nbd_get_image_thumbnail( $attr['image'] );
         ?>
+        <?php if($hide_swatch_label == 'no'): ?>
+        <div class="nbd-swatch-label-wrap">
+            <div class="nbd-swatch-value">
+        <?php endif; ?>
         <input ng-change="check_valid()" value="<?php echo $key; ?>" ng-model="nbd_fields['<?php echo $field['id']; ?>'].value" name="nbd-field[<?php echo $field['id']; ?>]" type="radio" id='nbd-field-<?php echo $field['id'].'-'.$key; ?>' 
             <?php 
                 if( isset($form_values[$field['id']]) ){
@@ -25,6 +29,16 @@
         <label class="nbd-swatch" style="<?php if( $attr['preview_type'] == 'i' ){echo 'background: url('.$image_url . ') 0% 0% / cover';}else{ echo 'background: '.$attr['color']; }; ?>" 
             title="<?php echo $attr['name']; ?>" for='nbd-field-<?php echo $field['id'].'-'.$key; ?>'>
         </label>
+        <?php if($hide_swatch_label == 'no'): ?>
+            </div>
+            <div class="nbd-swatch-description">
+                <div class="nbd-swatch-title"><b><?php echo $attr['name']; ?></b></div>
+                <?php if(isset($attr['des'])): ?>
+                <div class="nbd-swatch-title"><?php echo $attr['des']; ?></div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>        
         <?php endforeach; ?>
     </div>
 </div>

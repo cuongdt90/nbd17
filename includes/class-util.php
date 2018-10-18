@@ -674,8 +674,10 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_enable_clear_cart_button' => 'no',
         'nbdesigner_force_select_options' => 'no',
         'nbdesigner_hide_table_pricing' => 'no',
+        'nbdesigner_hide_option_swatch_label' => 'yes',
         'nbdesigner_hide_summary_options' => 'no',
         'nbdesigner_hide_options_in_cart' => 'no',
+        'nbdesigner_hide_option_price_in_cart' => 'no',
         'nbdesigner_selector_increase_qty_btn' => ''
     ), $frontend));
     if(!$key) return $nbd_setting;
@@ -1437,7 +1439,7 @@ function nbd_get_default_variation_id2( $product_id ){
 }
 function nbd_check_permission(){
     if( isset($_GET['cik']) ){
-        if( isset($_GET['task']) && $_GET['task'] == 'new' ) return true;
+        if( (isset($_GET['task']) && $_GET['task'] == 'new') || (isset($_GET['task2']) && $_GET['task2'] == 'update') ) return true;
         if( !(isset($_GET['task2']) && $_GET['task2'] != '') && !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
         if( !(isset($_GET['task']) && $_GET['task'] == 'edit') && !WC()->session->get($_GET['cik'] . '_nbd') && !WC()->session->get($_GET['cik'] . '_nbu')) return false;
     }

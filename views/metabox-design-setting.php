@@ -451,7 +451,7 @@
                 <div id="nbd-global-template-cat" class="nbdesigner-opt-inner nbd-independence <?php if (!$option['global_template']) echo 'nbdesigner-disable'; ?>">
                     <label for="_nbdesigner_option[global_template_cat]" class="nbdesigner-option-label"><?php _e('Template type', 'web-to-print-online-designer'); ?></label>
                     <select name="_nbdesigner_option[global_template_cat]">
-                    <?php 
+                    <?php
                         $cats = nbd_get_global_template_cat();
                         foreach ($cats as $cat):
                     ?>

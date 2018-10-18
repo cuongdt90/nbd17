@@ -376,11 +376,12 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         public function get_item_data( $item_data, $cart_item ){
             if ( isset( $cart_item['nbo_meta'] ) ) {
                 if( nbdesigner_get_option('nbdesigner_hide_options_in_cart') != 'yes' ){
+                    $hide_option_price = nbdesigner_get_option('nbdesigner_hide_option_price_in_cart');
                     foreach ($cart_item['nbo_meta']['option_price']['fields'] as $field) {
                         $price = floatval($field['price']) >= 0 ? '+' . wc_price($field['price']) : wc_price($field['price']);
                         $item_data[] = array(
                             'name' => $field['name'],
-                            'display' => $field['value_name']. '&nbsp;&nbsp;' .$price,
+                            'display' => $hide_option_price == 'yes' ? $field['value_name'] : $field['value_name']. '&nbsp;&nbsp;' .$price,
                             'hidden' => false                        
                         );
                     }
@@ -504,7 +505,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                             $factor = $origin_field['general']['price_breaks'][$quantity_break['index']];
                         }
                     }
-                    if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'dimension' && $origin_field['general']['mesure'] == 'y' && count($origin_field['general']['mesure_range']) > 0 ){
+                    if( isset($origin_field['nbd_type']) && $origin_field['nbd_type'] == 'dimension' && $origin_field['general']['mesure'] == 'y' && isset($origin_field['general']['mesure_range']) && count($origin_field['general']['mesure_range']) > 0 ){
                         $dimension = explode("x",$val);
                         $factor = $this->calculate_price_base_measurement($origin_field['general']['mesure_range'], $dimension[0], $dimension[1]);
                         if( ($origin_field['general']['price_type'] == 'f' || $origin_field['general']['price_type'] == 'c') && $origin_field['general']['mesure_base_pages'] == 'y' ){

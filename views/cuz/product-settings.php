@@ -202,7 +202,7 @@
 </div>
 <?php endif; ?>
 <?php
-    if(isset($option['att_swatch'])):
+    if($product_type == 'variable' && isset($option['att_swatch'])):
     $values = $attributes[$option['att_swatch']];
     $number_side = count($designer_setting);
 ?>

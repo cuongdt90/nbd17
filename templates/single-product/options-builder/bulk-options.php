@@ -31,7 +31,7 @@
                     ?>
                     <input name="nbb-fields[<?php echo $field['id']; ?>][]" type="<?php echo $input_type; ?>"/>
                     <?php else: ?>
-                    <select name="nbb-fields[<?php echo $field['id']; ?>][]" class="nbd-dropdown">
+                    <select name="nbb-fields[<?php echo $field['id']; ?>][]" class="nbo-dropdown">
                         <?php foreach ($field['general']['attributes']["options"] as $key => $attr): ?>
                         <option value="<?php echo $key; ?>" <?php selected( isset($attr['selected']) ? $attr['selected'] : 'off', 'on' ); ?>><?php echo $attr['name']; ?></option>
                         <?php endforeach; ?>

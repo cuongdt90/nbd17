@@ -3892,6 +3892,7 @@ img.pattern_img {
     display: inline-block;
     border-radius: 50%; 
     cursor: pointer;
+    border: 1px solid #ddd;
 }
 .nbd-color-item:nth-child(5n){
     margin-right: 0;

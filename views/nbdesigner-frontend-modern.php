@@ -1261,6 +1261,25 @@
                 font-weight: bold;
                 text-decoration: none;                
             }
+            .nbo-bulk-variation tfoot button {
+                border: 0;
+                background: none;
+                background-color: #404762;
+                border-color: #43454b;
+                color: #fff;
+                cursor: pointer;
+                padding: 0.6180469716em 1.41575em;
+                text-decoration: none;
+                font-weight: 600;
+                text-shadow: none;
+                display: inline-block;
+                outline: none;
+                -webkit-appearance: none;
+                border-radius: 2px;
+                box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+                line-height: inherit;
+                display: inline-block;                
+            }
             @media only screen and (max-width: 768px) {
                 div.quick-view div.quick-view-image,
                 div.quick-view div.quick-view-content {

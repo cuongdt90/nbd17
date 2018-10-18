@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <h2><b>{{(langs['BACKGROUND']) ? langs['BACKGROUND'] : "Background"}}</b></h2>
     <div class="background-options">
         <div class="pre-color">
-            <span ng-repeat="(sIndex, swatch) in settings.product_data.option.swatch_preview" ng-click="changeSwatch( sIndex )" class="nbd-color-item hover-shadow nbd-swatch" ng-style="{'background-image': 'url('+swatch+')'}">{{swatch}}</span>
+            <span ng-repeat="swatch in settings.swatch_preview" title="{{swatch.i}}" ng-click="changeSwatch( swatch.i )" class="nbd-color-item hover-shadow nbd-swatch" ng-style="{'background-image': 'url('+swatch.s+')'}"></span>
         </div>
         <div class="pre-color" style="display: none">
             <span ng-repeat="color in backgroundPalette" ng-click="addBackground( color )" class="nbd-color-item hover-shadow" ng-style="{'background': color}"></span>

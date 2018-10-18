@@ -213,6 +213,11 @@
                                     <label><input type="checkbox" name="options[fields][{{fieldIndex}}][general][attributes][options][{{$index}}][selected]" ng-checked="op.selected" ng-click="seleted_attribute(fieldIndex, 'attributes', $index)"/> <?php _e('Selected', 'web-to-print-online-designer'); ?></label>
                                 </div>
                                 <div class="nbd-margin-10"></div>
+                                <div><?php _e('Description', 'web-to-print-online-designer'); ?></div>
+                                <div class="nbd-attribute-name">
+                                    <textarea placeholder="<?php _e('Description', 'web-to-print-online-designer'); ?>" value="{{op.des}}" ng-model="op.des" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][des]"></textarea>
+                                </div>
+                                <div class="nbd-margin-10"></div>                                
                                 <div ng-show="field.general.depend_quantity.value != 'y'">
                                     <div><?php _e('Additional Price', 'web-to-print-online-designer'); ?></div>
                                     <div>

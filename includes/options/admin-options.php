@@ -651,6 +651,7 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             if (is_null($attributes)){ $options = array(
                     0 => array(
                         'name'  => __( 'Attribute name', 'web-to-print-online-designer'),
+                        'des'  => '',
                         'price'	=> array(),
                         'selected'  =>  0,
                         'preview_type'  =>  'i',

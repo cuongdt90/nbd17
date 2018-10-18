@@ -3742,7 +3742,7 @@ class Nbdesigner_Plugin {
                 || (count($disallow_ext) && $disallow_ext[0] != '' && in_array(strtolower($ext), $disallow_ext)) ) {
             $checkExt = true;
         }
-        if( $minsize > $_FILES['file']["size"] || $max_size < $_FILES['file']["size"] ){
+        if( $minsize > $_FILES['file']["size"] || ($max_size != 0 && $max_size < $_FILES['file']["size"]) ){
             $checkSize = true;
         }
         if( $checkSize || $checkExt || $checkDPI ){

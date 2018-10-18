@@ -224,8 +224,12 @@ if(!class_exists('NBD_CUSTOMIZE')){
             ?>
             <script type="text/javascript">
                 NBDESIGNERPRODUCT = NBDESIGNERPRODUCT || {};
+                NBDESIGNERPRODUCT.att_swatches = [];
                 jQuery('<?php echo $att_swatch; ?>').on('change', function(){
                     NBDESIGNERPRODUCT.att_swatch = jQuery(this).val();
+                });
+                jQuery.each(jQuery('<?php echo $att_swatch; ?> option'), function(){
+                    if( jQuery(this).val() != '') NBDESIGNERPRODUCT.att_swatches.push(jQuery(this).val());
                 });
                 jQuery(document).ready(function(){
                     if(jQuery('<?php echo $att_swatch; ?>').val() != ''){
@@ -236,7 +240,7 @@ if(!class_exists('NBD_CUSTOMIZE')){
                 function receiveMessage(event){
                     if(typeof event.data == 'string'){                      
                         if( event.origin == window.location.origin && event.data.indexOf('change_nbd_swatch') > -1  ){
-                            var data = event.data.split("---");console.log(data[1]);
+                            var data = event.data.split("---");
                             jQuery('<?php echo $att_swatch; ?>').val(data[1]);
                             jQuery('<?php echo $att_swatch; ?>').trigger('change');
                         };

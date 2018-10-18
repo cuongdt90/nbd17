@@ -9,6 +9,7 @@ if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (i
 $appid = "nbo-app-" . time().rand(1,100);
 $display_type = nbdesigner_get_option('nbdesigner_option_display');
 $prefix = $display_type == 2 ? '-2' : '';
+$hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label');
 ?>
 <div class="nbo-wrapper <?php if($is_wqv) echo 'nbd-option-in-wqv'; ?>">
 <style>
@@ -251,18 +252,18 @@ $prefix = $display_type == 2 ? '-2' : '';
         cursor: pointer;
         border: 2px solid #ddd;
     }
-    .nbd-checkbox {
+    .nbo-checkbox {
         width: 36px;
         height: 36px;
         display: inline-block;
         cursor: pointer;
         border: 2px solid #ddd;
     }
-    .nbd-option-wrapper input[type="radio"], .nbd-checkbox-wrap input[type="checkbox"] {
+    .nbd-option-wrapper input[type="radio"], .nbo-checkbox-wrap input[type="checkbox"] {
         display: none;
     }
     .nbd-swatch-wrap input[type="radio"]:checked + label,
-    .nbd-checkbox-wrap input[type="checkbox"]:checked + label {
+    .nbo-checkbox-wrap input[type="checkbox"]:checked + label {
         border: 2px solid #404762;
         position: relative;
         display: inline-block;
@@ -281,7 +282,7 @@ $prefix = $display_type == 2 ? '-2' : '';
         box-sizing: border-box;
     }
     .nbd-swatch-wrap input[type="radio"]:checked + label:after, 
-    .nbd-checkbox-wrap input[type="checkbox"]:checked + label:after {
+    .nbo-checkbox-wrap input[type="checkbox"]:checked + label:after {
         -webkit-transform: rotate(45deg);
         -moz-transform: rotate(45deg);
         transform: rotate(45deg);
@@ -538,6 +539,17 @@ $prefix = $display_type == 2 ? '-2' : '';
         color: #404762;
         font-weight: bold;        
     }
+    .nbd-swatch-label-wrap {
+        display: flex;
+        align-items: center;
+    }
+    .nbd-swatch-label-wrap:not(:last-child){
+        margin-bottom: 10px;  
+    }
+    .nbd-swatch-description {
+        font-size: 14px;
+        margin-left: 10px;        
+    }
     @media (max-width:768px){
         .nbd-tb-options td {
             display: inline-block !important;
@@ -648,7 +660,7 @@ if( $cart_item_key != ''){
                 <tbody>
                     <tr ng-repeat="pt in price_table">
                         <td>{{pt.from}}</td>
-                        <td>{{pt.up != '**' ? pt.up : '<?php echo 'or more'; ?>'}}</td>
+                        <td>{{pt.up != '**' ? pt.up : '<?php echo _e('or more', 'web-to-print-online-designer'); ?>'}}</td>
                         <td>{{pt.final_price}}</td>
                     </tr>
                 </tbody>
@@ -1507,7 +1519,7 @@ if( $cart_item_key != ''){
                 format: nbds_frontend.currency_format
             });
         };
-        $scope.convert_wc_price_to_float = function(price){
+        $scope.convert_wc_price_to_float = function(price){ return $scope.validate_float(price);
             var c = jQuery.trim(nbds_frontend.currency_format_thousand_sep).toString(), 
                 d = jQuery.trim(nbds_frontend.currency_format_decimal_sep).toString();
             return price = price.replace(/ /g, ""), price = "." === c ? price.replace(/\./g, "") : price.replace(new RegExp(c,"g"), ""), price = price.replace(d, "."), price = parseFloat(price);            
@@ -1574,7 +1586,7 @@ if( $cart_item_key != ''){
                             }
                         }
                         if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
-                                && origin_field.general.mesure == 'y' && origin_field.general.mesure_range.length > 0 ){
+                                && origin_field.general.mesure == 'y' && angular.isDefined(origin_field.general.mesure_range) && origin_field.general.mesure_range.length > 0 ){
                             factor = $scope.calculate_price_base_measurement(origin_field.general.mesure_range, field.width, field.height);
                             if( (origin_field.general.price_type == 'f' || origin_field.general.price_type == 'c')
                                     && origin_field.general.mesure_base_pages == 'y' ){
@@ -1720,7 +1732,7 @@ if( $cart_item_key != ''){
                                 }
                             }
                             if( angular.isDefined(origin_field.nbd_type) && origin_field.nbd_type == 'dimension' 
-                                    && origin_field.general.mesure == 'y' && origin_field.general.mesure_range.length > 0 ){
+                                    && origin_field.general.mesure == 'y' && angular.isDefined(origin_field.general.mesure_range) && origin_field.general.mesure_range.length > 0 ){
                                 factor = $scope.calculate_price_base_measurement(origin_field.general.mesure_range, field.width, field.height);
                                 if( (origin_field.general.price_type == 'f' || origin_field.general.price_type == 'c')
                                         && origin_field.general.mesure_base_pages == 'y' ){
