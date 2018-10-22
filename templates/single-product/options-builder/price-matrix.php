@@ -90,7 +90,7 @@
                     }                    
             ?>
                 <td  ng-click="select_price_matrix(<?php echo $i; ?>, <?php echo $j; ?>)" class="{{options.price_matrix[<?php echo $i; ?>][<?php echo $j; ?>].class}}" title="<?php _e('Choose', 'web-to-print-online-designer'); ?>">
-                    {{options.price_matrix[<?php echo $i; ?>][<?php echo $j; ?>].price}}
+                    <span ng-bind-html="options.price_matrix[<?php echo $i; ?>][<?php echo $j; ?>].price | to_trusted"></span>
                 </td>
             <?php } ?>
             </tr>

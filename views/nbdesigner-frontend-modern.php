@@ -1409,6 +1409,7 @@
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 link_get_options: "<?php echo $link_get_options; ?>",
                 enable_dropbox: false,
+                user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {

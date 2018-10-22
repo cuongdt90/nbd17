@@ -108,7 +108,47 @@ class Nbdesigner_Plugin {
         add_filter( 'body_class', array($this, 'add_body_class'), 10, 1 );
         add_filter( 'display_post_states', array( $this, 'add_display_post_states' ), 10, 2 );
         
+        /* REST API */
         //add_action( 'rest_api_init', array( $this, 'freedom' ) );
+        
+        /* Force login */
+        if( 'yes' == nbdesigner_get_option('nbdesigner_site_force_login') ){
+            add_action( 'template_redirect', array( $this, 'force_login' ), 1 );
+            add_filter( 'rest_authentication_errors', 'forcelogin_rest_access', 99 );
+        }
+    }
+    public function forcelogin_rest_access( $result ){
+        if ( null === $result && ! is_user_logged_in() ) {
+            return new WP_Error( 'rest_unauthorized', __( "Only authenticated users can access the REST API.", 'web-to-print-online-designer' ), array( 'status' => rest_authorization_required_code() ) );
+        }
+        return $result;        
+    }
+    public function force_login( ){
+        // Exceptions for AJAX, Cron, or WP-CLI requests
+        if ( ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
+            return;
+        } 
+        // Redirect unauthorized visitors
+        if ( ! is_user_logged_in() ) {
+            $url  = isset( $_SERVER['HTTPS'] ) && 'on' === $_SERVER['HTTPS'] ? 'https' : 'http';
+            $url .= '://' . $_SERVER['HTTP_HOST'];
+            if ( strpos( $_SERVER['HTTP_HOST'], ':' ) === FALSE ) {
+                $url .= in_array( $_SERVER['SERVER_PORT'], array('80', '443') ) ? '' : ':' . $_SERVER['SERVER_PORT'];
+            }
+            $url .= $_SERVER['REQUEST_URI'];  
+            $bypass = apply_filters( 'nbd_forcelogin_bypass', false, $url );
+            $whitelist = apply_filters( 'nbd_forcelogin_whitelist', array(), $url );  
+            if (preg_replace('/\?.*/', '', $url) != preg_replace('/\?.*/', '', wp_login_url()) && !in_array($url, $whitelist) && !$bypass) {
+                $redirect_url = apply_filters('nbd_forcelogin_redirect', $url);
+                wp_safe_redirect(wp_login_url($redirect_url), 302);
+                exit;
+            }
+        }else{
+            // Only allow Multisite users access to their assigned sites
+            if ( ! is_user_member_of_blog() && ! current_user_can('setup_network') ) {
+                wp_die( __( "You're not authorized to access this site.", 'web-to-print-online-designer' ), get_option('blogname') . ' &rsaquo; ' . __( "Error", 'web-to-print-online-designer' ) );
+            }            
+        }
     }
     private function is_request($type) {
         switch ($type) {
@@ -4669,7 +4709,7 @@ class Nbdesigner_Plugin {
         
         /* Add custom font */
         $used_font_path = NBDESIGNER_CUSTOMER_DIR .'/'. $nbd_item_key. '/used_font.json';
-        $used_font = json_decode( file_get_contents($used_font_path) ); 
+        $used_font = json_decode( file_get_contents($used_font_path) );
         $has_custom_font = false;
         if( $from_type == 3 ){
             /* From svg */
@@ -4680,15 +4720,16 @@ class Nbdesigner_Plugin {
                     $path_font = nbd_download_google_font($font_name);;
                 }else{
                     $has_custom_font = true;
-                    foreach( $font->file as $key => $font_file ){
-                        $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
+                    $_font = nbd_get_font_by_alias($font->alias);
+                    foreach( $_font->file as $key => $font_file ){
+                        $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;                       
                     }
                 }
-                $true_type = ['Gudea', 'Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail'];                
+                $true_type = nbd_get_truetype_fonts();
                 if (in_array($font_name, $true_type)) {
                     foreach($path_font as $pfont){
                         $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);
-                    }          
+                    }
                 }else{
                     foreach($path_font as $pfont){
                         $fontname = TCPDF_FONTS::addTTFfont($pfont, '', '', 32);
@@ -4898,11 +4939,12 @@ class Nbdesigner_Plugin {
                     $path_font = nbd_download_google_font($font_name);;
                 }else{
                     $has_custom_font = true;
-                    foreach( $font->file as $key => $font_file ){
-                        $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
+                    $_font = nbd_get_font_by_alias($font->alias);
+                    foreach( $_font->file as $key => $font_file ){
+                        $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;                       
                     }
                 }
-                $true_type = ['Felipa', 'Rammetto One'];
+                $true_type = nbd_get_truetype_fonts();
                 if (in_array($font_name, $true_type)) {
                     foreach($path_font as $pfont){
                         $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);

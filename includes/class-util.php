@@ -678,7 +678,8 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_hide_summary_options' => 'no',
         'nbdesigner_hide_options_in_cart' => 'no',
         'nbdesigner_hide_option_price_in_cart' => 'no',
-        'nbdesigner_selector_increase_qty_btn' => ''
+        'nbdesigner_selector_increase_qty_btn' => '',
+        'nbdesigner_site_force_login' => 'no'
     ), $frontend));
     if(!$key) return $nbd_setting;
     return $nbd_setting[$key];
@@ -1809,11 +1810,12 @@ function nbd_export_pdfs( $nbd_item_key, $watermark = true, $force = false, $sho
                 $path_font = nbd_download_google_font($font_name);;
             }else{
                 $has_custom_font = true;
-                foreach( $font->file as $key => $font_file ){
-                    $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;
+                $_font = nbd_get_font_by_alias($font->alias);
+                foreach( $_font->file as $key => $font_file ){
+                    $path_font[$key] = NBDESIGNER_FONT_DIR . '/' . $font_file;                       
                 }
             }
-            $true_type = ['Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail'];            
+            $true_type = nbd_get_truetype_fonts();
             if (in_array($font_name, $true_type)) {
                 foreach($path_font as $pfont){
                     $fontname = TCPDF_FONTS::addTTFfont($pfont, 'TrueType', '', 32);
@@ -2433,4 +2435,106 @@ function nbd_get_image_thumbnail( $id ){
         $image_url = NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
     }
     return $image_url;
+}
+function nbd_get_truetype_fonts(){
+    $true_type = array('DIN Next LT Pro Light', 'DIN Next LT Pro Medium', 'DIN Next LT Pro Regular', 'Gudea', 'Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail');                
+    return $true_type;
+}
+function nbd_get_user_information(){
+    $infos = array();
+    $current_user = wp_get_current_user();
+    $id = $current_user->ID;
+    if( 0 != $id ){
+        $customer = new WC_Customer( $id );
+        $customer_data = array(
+            'email'            => $customer->get_email(),
+            'first_name'       => $customer->get_first_name(),
+            'last_name'        => $customer->get_last_name(),
+            'username'         => $customer->get_username(),
+            'avatar_url'       => $customer->get_avatar_url(),
+            'website'          => get_the_author_meta( 'url', $id ),
+            'billing_address'  => array(
+                'first_name' => $customer->get_billing_first_name(),
+                'last_name'  => $customer->get_billing_last_name(),
+                'company'    => $customer->get_billing_company(),
+                'address_1'  => $customer->get_billing_address_1(),
+                'address_2'  => $customer->get_billing_address_2(),
+                'city'       => $customer->get_billing_city(),
+                'state'      => $customer->get_billing_state(),
+                'postcode'   => $customer->get_billing_postcode(),
+                'country'    => $customer->get_billing_country(),
+                'email'      => $customer->get_billing_email(),
+                'phone'      => $customer->get_billing_phone(),
+            ),
+            'shipping_address' => array(
+                'first_name' => $customer->get_shipping_first_name(),
+                'last_name'  => $customer->get_shipping_last_name(),
+                'company'    => $customer->get_shipping_company(),
+                'address_1'  => $customer->get_shipping_address_1(),
+                'address_2'  => $customer->get_shipping_address_2(),
+                'city'       => $customer->get_shipping_city(),
+                'state'      => $customer->get_shipping_state(),
+                'postcode'   => $customer->get_shipping_postcode(),
+                'country'    => $customer->get_shipping_country(),
+            ),
+            'title' =>  get_the_author_meta( 'acf[field_5b98eb8deeedc]', $id ),
+            'mobile' =>  get_the_author_meta( 'acf[field_5b98eceeac859]', $id )
+        );
+        $customer_data = apply_filters('nbd_customer_data', $customer_data);
+        /* Validate data */
+        $infos['full_name'] = array(
+            'title' =>  __('Full name', 'web-to-print-online-designer'),
+            'value' => ($customer_data['shipping_address']['first_name'] == '' ? ($customer_data['billing_address']['first_name'] != '' ? $customer_data['billing_address']['first_name'] : $customer_data['first_name']) : $customer_data['shipping_address']['first_name']) . ' ' . ($customer_data['shipping_address']['last_name'] == '' ? ($customer_data['billing_address']['last_name'] != '' ? $customer_data['billing_address']['last_name'] : $customer_data['last_name']) : $customer_data['shipping_address']['last_name'])
+        );        
+        $infos['first_name'] = array(
+            'title' =>  __('First name', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['first_name'] == '' ? ($customer_data['billing_address']['first_name'] != '' ? $customer_data['billing_address']['first_name'] : $customer_data['first_name']) : $customer_data['shipping_address']['first_name']
+        );
+        $infos['last_name'] = array(
+            'title' =>  __('Last name', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['last_name'] == '' ? ($customer_data['billing_address']['last_name'] != '' ? $customer_data['billing_address']['last_name'] : $customer_data['last_name']) : $customer_data['shipping_address']['last_name']
+        );
+        $infos['company'] = array(
+            'title' =>  __('Company', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['company'] == '' ? ($customer_data['billing_address']['company'] != '' ? $customer_data['billing_address']['company'] : __('Company', 'web-to-print-online-designer')) : $customer_data['shipping_address']['company']
+        );
+        $infos['address'] = array(
+            'title' =>  __('Address', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['address_1'] == '' ? ($customer_data['billing_address']['address_1'] != '' ? $customer_data['billing_address']['address_1'] : __('Address', 'web-to-print-online-designer')) : $customer_data['shipping_address']['address_1']
+        );
+        $infos['postcode'] = array(
+            'title' =>  __('Postcode', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['postcode'] == '' ? ($customer_data['billing_address']['postcode'] != '' ? $customer_data['billing_address']['postcode'] : __('12345', 'web-to-print-online-designer')) : $customer_data['shipping_address']['postcode']
+        );
+        $infos['city'] = array(
+            'title' =>  __('City', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['city'] == '' ? ($customer_data['billing_address']['city'] != '' ? $customer_data['billing_address']['city'] : __('City Name', 'web-to-print-online-designer')) : $customer_data['shipping_address']['city']
+        );
+        $infos['phone'] = array(
+            'title' =>  __('Phone', 'web-to-print-online-designer'),
+            'value' => $customer_data['billing_address']['phone'] != '' ? $customer_data['billing_address']['phone'] : __('+012 346 6789', 'web-to-print-online-designer')
+        );
+        $infos['email'] = array(
+            'title' =>  __('Email', 'web-to-print-online-designer'),
+            'value' => $customer_data['billing_address']['email'] != '' ? $customer_data['billing_address']['email'] : __('example@website.com', 'web-to-print-online-designer')
+        );
+        $infos['mobile'] = array(
+            'title' =>  __('Mobile', 'web-to-print-online-designer'),
+            'value' => $customer_data['mobile'] != '' ? $customer_data['mobile'] : __('+012 346 6789', 'web-to-print-online-designer')
+        );
+        $infos['website'] = array(
+            'title' =>  __('Website', 'web-to-print-online-designer'),
+            'value' => $customer_data['website'] != '' ? $customer_data['website'] : __('website.com', 'web-to-print-online-designer')
+        );
+        $infos['title'] = array(
+            'title' =>  __('Title', 'web-to-print-online-designer'),
+            'value' => $customer_data['title'] != '' ? $customer_data['title'] : __('Title', 'web-to-print-online-designer')
+        ); 
+        $infos['country'] = array(
+            'title' =>  __('Country', 'web-to-print-online-designer'),
+            'value' => $customer_data['shipping_address']['country'] == '' ? ($customer_data['billing_address']['country'] != '' ? $customer_data['billing_address']['country'] : __('Country', 'web-to-print-online-designer')) : $customer_data['shipping_address']['country']
+        );
+        $infos = apply_filters('nbd_customer_infos', $infos);        
+    }
+    return $infos;
 }

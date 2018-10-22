@@ -94,6 +94,12 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             
             /* Quick view */
             add_action( 'woocommerce_api_nbo_quick_view', array( $this, 'quick_view' ) );
+            
+            //add_filter( 'woocommerce_get_price_html', array( $this, 'change_product_price_display'), 10, 2 );
+        }
+        public function change_product_price_display( $price, $product ){
+            $price .= ' per package';
+            return $price;
         }
         public function add_empty_cart_button(){
             echo '<input type="submit" class="nbo-clear-cart-button button" name="nbo_empty_cart" value="' . __('Empty cart', 'web-to-print-online-designer') . '" />';

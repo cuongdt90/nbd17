@@ -632,15 +632,15 @@ if( $cart_item_key != ''){
                 <tfoot style="border-top: 1px solid #404762;">
                     <tr>
                         <td><b><?php _e('Options price', 'web-to-print-online-designer'); ?></b></td>
-                        <td><span id="nbd-option-total">{{total_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
+                        <td><span id="nbd-option-total"><span ng-bind-html="total_price | to_trusted"></span> / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
                     </tr>
                     <tr>
                         <td><b><?php _e('Quantity Discount', 'web-to-print-online-designer'); ?></b></td>
-                        <td><span id="nbd-option-total">{{discount_by_qty}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
+                        <td><span id="nbd-option-total"><span ng-bind-html="discount_by_qty | to_trusted"></span> / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
                     </tr>
                     <tr class="nbo-final-price">
                         <td><b><?php _e('Final price', 'web-to-print-online-designer'); ?></b></td>
-                        <td><span id="nbd-option-total">{{final_price}} / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
+                        <td><span id="nbd-option-total"><span ng-bind-html="final_price | to_trusted"></span> / <?php _e('1 item', 'web-to-print-online-designer'); ?></span></td>
                     </tr>                    
                 </tfoot>
             </table>
@@ -661,7 +661,7 @@ if( $cart_item_key != ''){
                     <tr ng-repeat="pt in price_table">
                         <td>{{pt.from}}</td>
                         <td>{{pt.up != '**' ? pt.up : '<?php echo _e('or more', 'web-to-print-online-designer'); ?>'}}</td>
-                        <td>{{pt.final_price}}</td>
+                        <td ng-bind-html="pt.final_price | to_trusted"></td>
                     </tr>
                 </tbody>
             </table>
@@ -1876,7 +1876,11 @@ if( $cart_item_key != ''){
                 }, 0);
             }
         };
-    });
+    }).filter('to_trusted', ['$sce', function($sce){
+        return function(text) {
+            return $sce.trustAsHtml(text);
+        };            
+    }]);
     if( in_quick_view ){
         var appEl = document.getElementById('<?php echo $appid; ?>');
         angular.element(function() {

@@ -177,8 +177,17 @@ if( !class_exists('Nbdesigner_Appearance_Settings') ) {
                     
                 ),
                 'misc' => array( 
-                   
-                    
+                    array(
+                        'title' => __( 'Site force login', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_site_force_login',
+                        'description' 	=> __('Require user log in first.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                        
+                    )
                 )               
             ));
         }

@@ -8,6 +8,11 @@
                 <span ng-click="addText('<?php _e('Add a little bit of body text','web-to-print-online-designer'); ?>')" class="text-body" style="display: block;color: #4F5467; font-size: 16px;"><?php _e('Add a little bit of body text','web-to-print-online-designer'); ?></span>
             </div>
         </div>
+        <hr ng-show="isTemplateMode" style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
+        <div ng-show="isTemplateMode" class="user-infos" style="text-align: left; margin-bottom: 20px;">
+            <button ng-repeat="(iIndex, info) in settings.user_infos" ng-click="addUserInfo(iIndex)" class="nbd-button">{{info.title}}</button>
+            <button ng-click="buildVcart()" class="nbd-button"><?php _e('Vcard','web-to-print-online-designer'); ?></button>
+        </div>
         <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
         <div class="typography-body">
             <ul class="typography-items">
