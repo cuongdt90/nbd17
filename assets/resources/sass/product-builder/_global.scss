@@ -1,0 +1,153 @@
+a, span, div, p {
+  font-size: 14px !important;
+  color: #666;
+}
+@media screen and (max-width: 991px){
+  a, span, div, p{
+      font-size: 12px !important;
+    }
+}
+
+.nbdpb-no-overflow {
+    overflow: hidden !important;
+}
+
+.icon-nbd {
+  font-size: 24px !important;
+  cursor: pointer;
+}
+
+.nbdpb-full-contain {
+  width: 100%;
+  height: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.nbdpb-hide {
+  display: none !important;
+}
+.nbdpb-show{
+  display: block !important;
+}
+
+.nbdpb-disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.rotate-45{
+  display: inline-block;
+  transform: rotate(-45deg);
+}
+.rotate45{
+  display: inline-block;
+  transform: rotate(45deg);
+}
+.rotate30{
+  display: inline-block;
+  transform: rotate(30deg);
+}
+.rotate-30{
+  display: inline-block;
+  transform: rotate(-30deg);
+}
+.rotate-60{
+  display: inline-block;
+  transform: rotate(-60deg);
+}
+.rotate60{
+  display: inline-block;
+  transform: rotate(60deg);
+}
+.rotate90{
+  display: inline-block;
+  transform: rotate(90deg);
+}
+.rotate-90{
+  display: inline-block;
+  transform: rotate(-90deg);
+}
+.rotate135{
+  display: inline-block;
+  transform: rotate(135deg);
+}
+.rotate-135{
+  display: inline-block;
+  transform: rotate(-135deg);
+}
+.rotate-180{
+  display: inline-block;
+  transform: rotate(-180deg);
+}
+.rotate180{
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.animate100 {
+  animation-duration: 0.1s !important;
+}
+
+.animate200 {
+  animation-duration: 0.2s !important;
+}
+
+.animate300 {
+  animation-duration: 0.3s !important;
+}
+.animate400 {
+  animation-duration: 0.4s !important;
+}
+.animate500 {
+  animation-duration: 0.5s !important;
+}
+.animate600 {
+  animation-duration: 0.6s !important;
+}
+.animate700 {
+  animation-duration: 0.7s !important;
+}
+.animate800 {
+  animation-duration: 0.8s !important;
+}
+.animate900 {
+  animation-duration: 0.9s !important;
+}
+.animate1000 {
+  animation-duration: 1s !important;
+}
+.animate1100 {
+  animation-duration: 1.1s !important;
+}
+
+.nbdpbSlide {
+  animation-timing-function: cubic-bezier(0.52, 0.99, 0.57, 1);
+  animation-fill-mode: forwards;
+  animation-duration: 800ms;
+  animation-delay: 0.2s;
+  animation-name: slideInKeyframes;
+}
+
+@keyframes slideInKeyframes {
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+
+  55% {
+    transform: translateX(-28px);
+  }
+
+  60% {
+    transform: translateX(-28px);
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

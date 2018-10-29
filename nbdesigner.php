@@ -95,6 +95,7 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-install.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.product-builder.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.resource.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');

@@ -1,0 +1,32 @@
+.nbdpb-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .6);
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+  //transition: all .3s;
+  &.nbdpb-show {
+    opacity: 1;
+    visibility: visible;
+    z-index: 99999;
+  }
+  .close-popup {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    z-index: 99999;
+  }
+  &.popup-design {
+    background-color: #f7f7f7;
+  }
+  &.is-admin-bar {
+    top: 32px;
+    @media screen and (max-width: 782px) {
+      top: 46px;
+    }
+  }
+}

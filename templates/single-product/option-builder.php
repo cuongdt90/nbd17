@@ -864,6 +864,7 @@ if( $cart_item_key != ''){
     <?php else: ?>
     var nboApp = angular.module('nboApp', []);
     <?php endif; ?>
+    nbOption.options = <?php echo json_encode($options); ?>;
     nboApp.controller('optionCtrl', ['$scope', '$timeout', function($scope, $timeout){
         $scope.product_id = <?php echo $product_id; ?>;
         $scope.options = <?php echo json_encode($options); ?>;

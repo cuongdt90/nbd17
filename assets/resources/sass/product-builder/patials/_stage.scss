@@ -1,0 +1,23 @@
+.stage {
+  height: 100%;
+  width: 100%;
+  background: #f7f7f7;
+  .stage-main {
+    width: 100%;
+    height: calc(100% - 52px);
+    @media screen and (max-width: 991px){
+       height: calc(100% - 30px);
+    }
+  }
+
+  .attr-name {
+    margin-bottom: 30px;
+    text-align: center;
+    height: 22px;
+  }
+  @media screen and (max-width: 991px){
+      .attr-name {
+        display: none;
+      }
+  }
+}
