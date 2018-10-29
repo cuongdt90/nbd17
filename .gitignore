@@ -1,1 +1,3 @@
 /includes/_tcpdf/nbproject/private/
+/assets/node_modules
+.gitignore
