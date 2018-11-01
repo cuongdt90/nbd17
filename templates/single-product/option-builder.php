@@ -627,7 +627,7 @@ if( $cart_item_key != ''){
             <p class="nbo-summary-title"><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
             <table class="nbo-summary-table">
                 <tbody>
-                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td>{{field.price}}</td></tr>
+                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td ng-bind-html="field.price | to_trusted"></td></tr>
                 </tbody>
                 <tfoot style="border-top: 1px solid #404762;">
                     <tr>
@@ -851,11 +851,13 @@ if( $cart_item_key != ''){
         status: false,
         odOption: {}
     };
-    jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
+    jQuery('.variations_form').on('woocommerce_variation_has_changed wc_variation_form', function(){
         startApp();
     });
-    jQuery('.variations_form').on('wc_variation_form', function(){
-        startApp();
+    jQuery('.variations_form').on('found_variation', function(){
+        setTimeout(function(){
+            startApp();
+        }, 100);
     });
     jQuery(document).ready(function(){
         jQuery('input[name="quantity"]').on('input change change.nbo', function(){
@@ -987,12 +989,12 @@ if( $cart_item_key != ''){
                                 if(origin_field.general.attributes.same_size == 'n'){
                                     var option_size = origin_field.general.attributes.options[field.value];
                                     nbOption.odOption.size = {
-                                        product_width: option_size.product_width,
-                                        product_height: option_size.product_height,
-                                        real_width: option_size.real_width,
-                                        real_height: option_size.real_height,
-                                        real_top: option_size.real_top,
-                                        real_left: option_size.real_left
+                                        product_width: $scope.validate_float( option_size.product_width ),
+                                        product_height: $scope.validate_float( option_size.product_height ),
+                                        real_width: $scope.validate_float( option_size.real_width ),
+                                        real_height: $scope.validate_float( option_size.real_height ),
+                                        real_top: $scope.validate_float( option_size.real_top ),
+                                        real_left: $scope.validate_float( option_size.real_left )
                                     };
                                 }
                                 break;

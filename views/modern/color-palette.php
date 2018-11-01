@@ -16,7 +16,7 @@
         <div class="pinned-palette default-palette" ng-if="settings['nbdesigner_show_all_color'] == 'no'">
             <h3 class="color-palette-label"><?php _e('Color palette','web-to-print-online-designer'); ?></h3>
             <ul class="main-color-palette" style="margin-bottom: 15px;">
-                <li ng-repeat="color in __colorPalette track by $index" ng-class="{'first-left': $first, 'last-right': $last, 'first-right': $index == 4,'last-left': $index == (palette.length - 5)}" ng-click="changeFill(color);addColor(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
+                <li ng-repeat="color in __colorPalette track by $index" ng-class="{'first-left': $first, 'last-right': $last, 'first-right': $index == 4,'last-left': $index == (palette.length - 5)}" ng-click="selectGlobalPicker(color)" class="color-palette-item" data-color="{{color}}" title="{{color}}" ng-style="{'background': color}"></li>
             </ul>   
         </div> 
         <div class="nbd-text-color-picker" id="nbd-global-color-picker" ng-class="globalPicker.active ? 'active' : ''">

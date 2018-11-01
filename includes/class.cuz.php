@@ -13,7 +13,7 @@ if(!class_exists('NBD_CUSTOMIZE')){
         }
         public function init(){
             add_action('nbd_menu', array($this, 'manage_color_menu'), 1000);
-            add_action('nbd_after_option_product_design', array($this, 'product_design_setting'), 10, 3);
+            //add_action('nbd_after_option_product_design', array($this, 'product_design_setting'), 10, 3);
             //add_filter('nbdesigner_appearance_settings', array($this, 'appearance_settings'), 10, 1);
             //add_filter('nbdesigner_default_frontend_settings', array($this, 'default_frontend_settings'), 10, 1);
             add_action('nbd_classic_helpdesk_nav', array($this, 'nbd_classic_helpdesk_nav'), 30);
@@ -228,13 +228,21 @@ if(!class_exists('NBD_CUSTOMIZE')){
                 jQuery('<?php echo $att_swatch; ?>').on('change', function(){
                     NBDESIGNERPRODUCT.att_swatch = jQuery(this).val();
                 });
-                jQuery.each(jQuery('<?php echo $att_swatch; ?> option'), function(){
-                    if( jQuery(this).val() != '') NBDESIGNERPRODUCT.att_swatches.push(jQuery(this).val());
-                });
                 jQuery(document).ready(function(){
-                    if(jQuery('<?php echo $att_swatch; ?>').val() != ''){
-                        NBDESIGNERPRODUCT.att_swatch = jQuery(this).val();
-                    }
+                    setTimeout(function(){
+                        jQuery.each(jQuery('<?php echo $att_swatch; ?> option'), function(){
+                           if( jQuery(this).val() != '')  NBDESIGNERPRODUCT.att_swatches.push(jQuery(this).val());
+                        });						
+                        if(jQuery('<?php echo $att_swatch; ?>').val() != ''){
+                            NBDESIGNERPRODUCT.att_swatch = jQuery(this).val();
+                        }
+                    }, 100);
+                    jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
+                        NBDESIGNERPRODUCT.att_swatches = [];
+                        jQuery.each(jQuery('<?php echo $att_swatch; ?> option'), function(){
+                           if( jQuery(this).val() != '')  NBDESIGNERPRODUCT.att_swatches.push(jQuery(this).val());
+                        });							
+                    });					
                 });
                 window.addEventListener("message", receiveMessage, false);
                 function receiveMessage(event){

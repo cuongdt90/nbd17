@@ -11,7 +11,7 @@
     $_product = wc_get_product( $product_id );
     $product_type = $_product->get_type();  
     $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
-    $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';    
+    $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
     $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
     if( !nbd_is_product($product_id) ){
         echo sprintf('<p>%s, <a href="%s">%s</a></p>', 
@@ -873,6 +873,12 @@
                 border-radius: 4px;
                 padding: 5px;
             }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item {
+                border: 2px solid #fff;
+                -moz-transition: all 0.4s;
+                -webkit-transition: all 0.4s;
+                transition: all 0.4s;
+            }
             @media screen and (min-width: 768px) {
                 .nbd-stages .stage .page-toolbar {
                     top: 50%;                
@@ -1348,6 +1354,7 @@
                     }		
                 }
             }
+            $link_edit_option = '';
             if( isset($_GET['cik']) && $_GET['cik'] != '' ){
                 $link_get_options .= '&nbo_cart_item_key=' . $_GET['cik'];
                 if( $task2 != '' ){
@@ -1588,12 +1595,17 @@
             });            
         </script>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/accounting/accounting.min.js'; ?>"></script>
+        <?php if($product_type == 'variable'): ?>
+        <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/jquery-blockui/jquery.blockUI.min.js'; ?>"></script>
+        <?php endif; ?>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/frontend/add-to-cart.min.js'; ?>"></script>
+        <?php if($product_type == 'variable'): ?>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/frontend/add-to-cart-variation.min.js'; ?>"></script>
+        <?php endif; ?>
         <?php endif; ?>
         <!-- End. NBO  -->
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
     </body>
 </html>
-<?php endif; endif;?>
+<?php endif; endif;

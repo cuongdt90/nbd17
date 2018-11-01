@@ -638,6 +638,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_google_api_key' => '',   
         'nbdesigner_google_client_id' => '',   
         'nbdesigner_enable_log' => 'no',
+        'nbdesigner_cron_job_clear_w3_cache' => 'no',
         'nbdesigner_page_design_tool' => 1,
         'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
         'nbdesigner_create_your_own_page_id'	=>	nbd_get_page_id( 'create_your_own' ),
@@ -1693,7 +1694,7 @@ function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $
     if(file_exists($archive_file_name)){
         unlink($archive_file_name);
     }        
-    if (!class_exists('ZipArchive')) {
+    if (class_exists('ZipArchive')) {
         $zip = new ZipArchive();
         if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
           exit("cannot open <$archive_file_name>\n");
@@ -2537,4 +2538,25 @@ function nbd_get_user_information(){
         $infos = apply_filters('nbd_customer_infos', $infos);        
     }
     return $infos;
+}
+function nbd_convert_svg_url($path, $file){
+    $svg_path = $path . '/svgpath';
+    if( !file_exists($svg_path) ) wp_mkdir_p($svg_path);
+    $new_svg_path = $svg_path.'/'.$file;
+    $xdoc = new DomDocument;
+    $xdoc->Load($path.$file);
+    $images = $xdoc->getElementsByTagName('image');
+    for ($i = 0; $i < $images->length; $i++) {
+        $tagName = $xdoc->getElementsByTagName('image')->item($i);
+        $attribNode = $tagName->getAttributeNode('xlink:href');
+        $img_src = $attribNode->value;
+        if(strpos($img_src, "data:image")!==FALSE)
+        continue;
+        $type = pathinfo($img_src, PATHINFO_EXTENSION);
+        $type = ($type =='svg' ) ? 'svg+xml' : $type;
+        $path_image = Nbdesigner_IO::convert_url_to_path($img_src);
+        $tagName->setAttribute('xlink:href', $path_image);
+    }
+    $new_svg = $xdoc->saveXML();
+    file_put_contents($new_svg_path, $new_svg); 
 }

@@ -349,7 +349,18 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer'),
                         )
-                    )                     
+                    ),
+                    array(
+                        'title' => __( 'Cron job flush W3 Total cache', 'web-to-print-online-designer'),
+                        'description'   => '',
+                        'id' 		=> 'nbdesigner_cron_job_clear_w3_cache',
+                        'default' => 'no',
+                        'type' => 'radio',
+                        'options' => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer'),
+                        )
+                    ),                    
                 )
             ));
         }

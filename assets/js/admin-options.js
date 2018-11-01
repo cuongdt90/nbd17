@@ -825,7 +825,7 @@ jQuery( document ).ready(function($){
                     instance.settings.dateFormat ||
                     $.datepicker._defaults.dateFormat,
                     selectedDate, instance.settings);
-            var dates = $(this).parents('.pricing-rule-date-fields').find('input');
+            var dates = $(this).parents('.nbo-dates').find('input');
             dates.not(this).datepicker("option", option, date);
         }
    });

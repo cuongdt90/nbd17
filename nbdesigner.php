@@ -13,7 +13,7 @@ License: GPLv2 or later
 Text Domain: web-to-print-online-designer
 Domain Path: /langs
 WC requires at least: 3.0.0
-WC tested up to: 3.4.4
+WC tested up to: 3.5.0
 */
 
 if ( !function_exists( 'add_action' ) ) {
@@ -114,7 +114,11 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-cal
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-updates.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-shortcodes.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-setup-wizard.php');
+if ( ! empty( $_GET['page'] ) ) {
+    if ( $_GET['page'] == 'nbd-setup' ) {
+        require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-setup-wizard.php');
+    }
+}
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/admin-options.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/frontend-options.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.cuz.php');
