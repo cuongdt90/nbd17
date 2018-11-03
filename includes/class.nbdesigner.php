@@ -69,6 +69,8 @@ class Nbdesigner_Plugin {
             'nbdesigner_delete_language' => false,
             'nbdesigner_update_all_product' => false,
             'nbd_save_customer_design' => true,
+            'nbd_save_product_builder_design' => true,
+            'nbd_after_save_product_builder_design' => true,
             'nbd_update_customer_upload' => true,
             'nbd_save_cart_design' => true,
             'nbd_get_nbd_products' => true,
@@ -2512,6 +2514,29 @@ class Nbdesigner_Plugin {
         }
         return true;
     }
+    private function store_product_builder_design_data($nbd_item_key, $data, $product_config){
+        $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+        if(file_exists($path.'_old')) Nbdesigner_IO::delete_folder($path.'_old');
+        if(file_exists($path)) rename($path, $path.'_old');
+        if ( wp_mkdir_p($path) ) {
+            file_put_contents($path . '/product.json', serialize($product_config));
+            foreach ($data as $key => $val) {
+                if($key == 'design'){
+                    $full_name = $path . '/design.json';
+                }else if($key == 'config'){
+                    $full_name = $path . '/config.json';
+                }
+                if ( !move_uploaded_file($val["tmp_name"],$full_name) ) {
+                    return false;
+                }
+            }
+        } else {
+            Nbdesigner_DebugTool::wirite_log('Your server not allow creat folder', 'save design');
+            rename($path.'_old', $path);
+            return false;
+        }
+        return true;
+    }
     private function create_preview_design($path_src, $path_dst, $product_config, $width, $height, $limit = false){
         if(!file_exists($path_dst)){
             wp_mkdir_p($path_dst);
@@ -2681,6 +2706,8 @@ class Nbdesigner_Plugin {
         wp_die();         
     }
     public function nbd_save_customer_design(){
+
+
         if (!wp_verify_nonce($_POST['nonce'], 'save-design') || !isset($_POST['product_id'])) {
             die('Security error');
         }       
@@ -2811,6 +2838,139 @@ class Nbdesigner_Plugin {
         echo json_encode($result);
         wp_die();   
     }
+    public function nbd_save_product_builder_design()
+    {
+        if (!wp_verify_nonce($_POST['nonce'], 'save-design') || !isset($_POST['product_id'])) {
+            die('Security error');
+        }
+        $result = array(
+            'flag'  =>  'failure',
+            'link'  =>  '',
+            'folder' => ''
+        );
+        do_action('before_nbd_save_product_builder_design');
+        /* Get data from $_POST */
+        $product_id = absint($_POST['product_id']);
+        $product = wc_get_product($product_id);
+        $product_option = get_post_meta($product_id, '_nbdesigner_option', true);
+        $variation_id = (isset($_POST['variation_id']) && $_POST['variation_id'] != '') ? absint($_POST['variation_id']) : 0;
+        $cart_item_key = (isset($_POST['cart_item_key']) && $_POST['cart_item_key'] != '') ? $_POST['cart_item_key'] : '';
+        $task = (isset($_POST['task']) && $_POST['task'] != '') ? $_POST['task'] : 'new';
+        $auto_add_to_cart = (isset($_POST['auto_add_to_cart']) && $_POST['auto_add_to_cart'] != '') ? $_POST['auto_add_to_cart'] : 'no';
+        $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;
+
+        if(isset($_POST['nbd_item_key']) && $_POST['nbd_item_key'] != ''){
+            /* Edit design
+             * In case edit template, $design_type = 'template'
+             */
+            $nbd_item_key = $_POST['nbd_item_key'];
+            if( ( !nbd_check_cart_item_exist($cart_item_key) || !WC()->session->__isset($cart_item_key.'_nbd') ) ) {
+                $result['mes'] = 'Item not exist in cart';
+                nbd_die( $result );
+            }
+        }else {
+            /* Create new design */
+            $nbd_item_session = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
+            if( $task == 'create' || !isset($nbd_item_session) ){
+                $nbd_item_key = substr(md5(uniqid()),0,5).rand(1,100).time();
+            }else {
+                $nbd_item_key = $nbd_item_session;
+            }
+        }
+        $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+//        if( $task == 'create' ){
+//            if($variation_id > 0){
+//                $product_config = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
+//                $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);
+//                if ( !($enable_variation && isset($product_config[0]))){
+//                    $product_config = unserialize(get_post_meta($product_id, '_designer_setting', true));
+//                }
+//            }else {
+//                $product_config = unserialize(get_post_meta($product_id, '_designer_setting', true));
+//            }
+//        }else{
+//            $product_config = unserialize(file_get_contents($path . '/product.json'));
+//        }
+        $att_swatch = (isset($_POST['att_swatch']) && $_POST['att_swatch'] != '') ? $_POST['att_swatch'] : '';
+//        $product_config = apply_filters('nbd_save_customer_design_product_config', $product_config, $product_option, $att_swatch);
+
+        if( $task == 'new' || $task == 'create' ){
+            if($variation_id > 0){
+                $product_config = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
+                $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);
+                if ( !($enable_variation && isset($product_config[0]))){
+                    $product_config = unserialize(get_post_meta($product_id, '_designer_setting', true));
+                }
+            }else {
+                $product_config = unserialize(get_post_meta($product_id, '_designer_setting', true));
+            }
+        }else{
+            $product_config = unserialize(file_get_contents($path . '/product.json'));
+        }
+        $product_config = apply_filters('nbd_save_customer_design_product_config', $product_config, $product_option, $att_swatch);
+        $save_status = $this->store_product_builder_design_data($nbd_item_key, $_FILES, $product_config);
+
+        $width = absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) ? absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) : 300;
+        if( $task == 'create' || $design_type = 'template' ){
+            $width = absint(nbdesigner_get_option('nbdesigner_template_width')) ? absint(nbdesigner_get_option('nbdesigner_template_width')) : 300;
+        }
+
+        if(false != $save_status){
+            /* todo edit $product_config if has custom dimension */
+            $path_config = $path . '/config.json';
+            $config = nbd_get_data_from_json($path_config);
+            if( count( $config->product ) ){
+                $product_config = array();
+                foreach($config->product as $side){
+                    $product_config[] = (array)$side;
+                }
+            };
+            $this->create_preview_design($path, $path.'/preview', $product_config, $width, $width);
+            $result['image'] = array();
+            $images = Nbdesigner_IO::get_list_images($path.'/preview', 1);
+            foreach($images as $image){
+                $filename = pathinfo($image, PATHINFO_FILENAME);
+                $result['image'][$filename] = Nbdesigner_IO::wp_convert_path_to_url($image);
+                ksort($result['image']);
+            }
+            $result['flag'] = 'success';
+            $result['folder'] = $nbd_item_key;
+//            if( $task == 'new' ){
+//                if( $task2 == 'update' ){
+//                    WC()->session->set($cart_item_key. '_nbd', $nbd_item_key);
+//                    if( isset(WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']) ) WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds'] = array();
+//                    WC()->cart->cart_contents[ $cart_item_key ]['nbd_item_meta_ds']['nbd'] = $nbd_item_key;
+//                    WC()->cart->set_session();
+//                    WC()->session->__unset('nbd_item_key_'.$nbd_item_cart_key);
+//                }else{
+//                    WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_item_key);
+//                }
+//            }
+            if( $task == 'create' ){
+                if( $design_type == 'art' ){
+                    My_Design_Endpoint::nbdesigner_insert_table_my_design($product_id, $variation_id, $nbd_item_key );
+                }else{
+                    if(!can_edit_nbd_template()){
+                        $result['mes'] = __('You have not permission to create or edit template', 'web-to-print-online-designer'); echo json_encode($result); wp_die();
+                    }else{
+                        $this->nbdesigner_insert_table_templates($product_id, $variation_id, $nbd_item_key, 0, 1, 0);
+                    }
+                }
+            }
+
+            // update post meta
+            update_post_meta($product_id, 'product_builder', $nbd_item_key);
+
+        }
+        do_action('after_nbd_save_product_builder_design', $result);
+        echo json_encode($result);
+        wp_die();
+    }
+
+    public function product_builder_html(){
+        echo 'aaa';
+    }
+
     public function merge_product_config( $product_config, $width, $height, $number_side ){
         foreach ( $product_config as $key => $side ) {
             $product_config[$key]["real_width"] = $product_config[$key]["product_width"] = $width;
@@ -3433,7 +3593,7 @@ class Nbdesigner_Plugin {
                 wc_get_template('emails/notify-admin-when-approve-design.php', array(
                     'order_number' => $order->get_order_number(),
                     'order_id' => $order->get_id()
-                )); 
+                ));
                 $subject = __('Approve designs - Order ','web-to-print-online-designer') . $order->get_order_number();
                 $owner_email = get_option('nbdesigner_admin_emails', false);
                 $emails = new WC_Emails();	

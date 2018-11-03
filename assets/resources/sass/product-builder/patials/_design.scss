@@ -5,10 +5,7 @@
 
 .design-layer {
   width: 75%;
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
-  //flex-direction: column;
+  position: relative;
   @media screen and (max-width: 991px) {
     width: 100%;
     height: calc(100% - 180px);
@@ -59,3 +56,30 @@
   }
 }
 
+.design-admin-tool {
+  position: absolute;
+  background-color: #fff;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transition: all .3s;
+  &.nbdpb-show {
+    opacity: 1;
+    visibility: visible;
+    z-index: 9999;
+  }
+  .tools {
+    display: flex;
+    .tool-item {
+      line-height: normal;
+      padding: 5px 15px;
+      border-right: 1px solid #ebebeb;
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}

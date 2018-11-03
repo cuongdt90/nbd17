@@ -5,576 +5,952 @@ window.$ = window.jQuery = require('jquery');
 require('jquery-touchswipe');
 
 var nbdpbApp = angular.module('nbdpb-app', []);
-nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeout', '$http', '$document', '$interval',
-    function ($scope, FabricWindow, $window, $timeout, $http, $document, $interval) {
+nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '$window', '$timeout', '$http', '$document', '$interval',
+    function ($scope, FabricWindow, NBDDataFactory, $window, $timeout, $http, $document, $interval) {
         // init
-        $scope.settings = {};
-        $scope.stages = [];
-        $scope.resource = {
-            proAttrs: [
-                {
-                    name: 'Base',
-                    alias: 'base',
-                    img:'assets/images/shoes.png',
-                    stage: [],
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'quarter',
-                    alias: 'quarter',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
-                            color: '#000'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'Swoosh',
-                    alias: 'swoosh',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'Tongue Style',
-                    alias: 'tongue-style',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'laces',
-                    alias: 'laces',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'additional laces',
-                    alias: 'additional-laces',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'Sidewall',
-                    alias: 'sidewall',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'toe cap',
-                    alias: 'toe-cap',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-                {
-                    name: 'outsole',
-                    alias: 'outsole',
-                    stage: [],
-                    img:'assets/images/shoes.png',
-                    proValue: [
-                        {
-                            name: 'Black Suede',
-                            alias: 'black-suede',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Summit White Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Pale Grey Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Trooper Suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'Light Armor blue suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'plum fog suede',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white perforated leather',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'black canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-                        {
-                            name: 'white canvas',
-                            alias: '',
-                            img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
-                        },
-
-                    ]
-                },
-
-            ],
-            showValue: false,
-            proAttrActive: 0
-
-        };
+        console.log(NBDESIGNCONFIG);
         $scope.isStartDesign = false;
+        $scope.showAdminTool = false;
         $scope.init = function () {
             $scope.initSettings();
         };
         $scope.defaultStageStates = {};
         $scope.initSettings = function () {
+            $scope.settings = {};
+            $scope.stages = [];
+            $scope.side = [0,1];
+            $scope.resource = {
+                proAttrs: [
+                    {
+                        name: 'Base',
+                        alias: 'base',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'quarter',
+                        alias: 'quarter',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'Swoosh',
+                        alias: 'swoosh',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'Tongue Style',
+                        alias: 'tongue-style',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'laces',
+                        alias: 'laces',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'additional laces',
+                        alias: 'additional-laces',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'Sidewall',
+                        alias: 'sidewall',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'toe cap',
+                        alias: 'toe-cap',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                    '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg',
+                                ]
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
+                                color: '#000',
+                                src: [
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                    'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png',
+                                ]
+                            },
+
+                        ]
+                    },
+                    {
+                        name: 'outsole',
+                        alias: 'outsole',
+                        img:'assets/images/shoes.png',
+                        proValue: [
+                            {
+                                name: 'Black Suede',
+                                alias: 'black-suede',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'Summit White Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'Pale Grey Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'Trooper Suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'Light Armor blue suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'plum fog suede',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'black perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'white perforated leather',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'black canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+                            {
+                                name: 'white canvas',
+                                alias: '',
+                                img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png'
+                            },
+
+                        ]
+                    },
+
+                ],
+                showValue: false,
+                proAttrActive: 0,
+                jsonDesign: {},
+                config: {}
+
+            };
             angular.copy(NBDESIGNCONFIG, $scope.settings);
             angular.extend($scope.settings, {
                 showRuler: false,
@@ -586,10 +962,14 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
             $scope.rateConvertCm2Px96dpi = 37.795275591;
             $scope.currentStage = 0;
             $scope.tempStageDesign = null;
+            $scope.includeExport = ['itemId', 'selectable', 'lockMovementX', 'lockMovementY','lockScalingX', 'lockScalingY', 'lockRotation', 'rtl', 'elementUpload', 'forceLock', 'isBg','is_uppercase','available_color','available_color_list','color_link_group','isOverlay', 'isAlwaysOnTop', 'ilr', 'oos', 'evented', 'ptFontSize'];
             $scope.processProductSettings();
         };
         $scope.processProductSettings = function(){
+            // console.log($scope.settings);
+            // debugger;
             var unitRatio = $scope.settings.nbdesigner_dimensions_unit == 'mm' ? 0.1 : ($scope.settings.nbdesigner_dimensions_unit == 'in' ? 2.54 : 1);
+            // TODO init stage with slide
             $scope.rateConvert2Px = $scope.rateConvertCm2Px96dpi * unitRatio * parseFloat($scope.settings.product_data.option.dpi) / 96;
             _.each($scope.settings.product_data.product, function(side, index){
                 $scope.stages[index] = {
@@ -604,6 +984,9 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
                 var _state = $scope.stages[index].states;
                 angular.copy($scope.defaultStageStates, _state);
             });
+
+            // console.log($scope.stages);
+            // debugger;
         };
         $scope.initStageSetting = function( id ){
             $scope.setStageDimension(id);
@@ -626,14 +1009,10 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
             $scope.showValue.showValue = false;
         };
         $scope.addProValue = function (index) {
-            var stage = $scope.stages[$scope.currentStage], _canvas = stage.canvas;
-            fabric.Image.fromURL('//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-2-324x324.jpg', function (obj) {
-                // check exits Attribute
-                var proAttrActive = $scope.resource.proAttrs[$scope.resource.proAttrActive];
-                if (proAttrActive.stage[$scope.currentStage]) {
-                    var _item = $scope.getLayerById(proAttrActive.stage[$scope.currentStage]),
-                        url = '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/belt-2-324x324.jpg',
-                        element = _item.getElement();
+            var proAttrActive = $scope.resource.proAttrs[$scope.resource.proAttrActive];
+            if (!angular.isUndefined(proAttrActive.itemId)) {
+                _.each(proAttrActive.proValue[index].src, function (url, stage) {
+                    var _item = $scope.getLayerById(proAttrActive.itemId, stage), element = _item.getElement();
                     element.setAttribute("src", url);
                     _item.set({
                         dirty: true,
@@ -642,34 +1021,53 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
                         scaleX: _item.scaleX,
                         scaleY: _item.scaleY
                     });
-                    _item.setCoords();
-                    $scope.deactiveAllLayer();
+                    $scope.deactiveAllLayer(stage);
                     $scope.renderStage();
-                }else {
-                    var max_width = _canvas.width * .9,
-                        max_height = _canvas.height * .9,
-                        new_width = max_width;
-                    if (obj.width < max_width) new_width = obj.width;
-                    var width_ratio = new_width / obj.width,
-                        new_height = obj.height * width_ratio;
-                    if (new_height > max_height) {
-                        new_height = max_height;
-                        var height_ratio = new_height / obj.height;
-                        new_width = obj.width * height_ratio;
-                    }
-                    obj.set({
-                        fill: '#ff0000',
-                        scaleX: new_width / obj.width,
-                        scaleY: new_height / obj.height
+                });
+            }else{
+                var newItemId = '';
+                _.each(proAttrActive.proValue[index].src, function (url, stage) {
+                    fabric.Image.fromURL(url, function (obj) {
+                        var _stage = $scope.stages[stage], _canvas = _stage.canvas;
+                        var max_width = _canvas.width * .9,
+                            max_height = _canvas.height * .9,
+                            new_width = max_width;
+                        if (obj.width < max_width) new_width = obj.width;
+                        var width_ratio = new_width / obj.width,
+                            new_height = obj.height * width_ratio;
+                        if (new_height > max_height) {
+                            new_height = max_height;
+                            var height_ratio = new_height / obj.height;
+                            new_width = obj.width * height_ratio;
+                        }
+
+                        obj.set({
+                            fill: '#ff0000',
+                            scaleX: new_width / obj.width,
+                            scaleY: new_height / obj.height
+                        });
+                        _canvas.add(obj);
+                        if (newItemId == '') {
+                            newItemId = obj.get('itemId');
+
+                        }else{
+                            obj.set({'itemId': newItemId});
+                        }
+                        proAttrActive.itemId = newItemId;
+                        $scope.deactiveAllLayer(stage);
+                        $scope.renderStage();
                     });
-                    _canvas.add(obj);
-                    proAttrActive.stage[$scope.currentStage] = obj.get('itemId');
-                }
-                $scope.renderStage();
-            });
+                });
+            }
+
         };
-        $scope.getLayerById = function(itemId){
-            var _canvas = $scope.stages[$scope.currentStage].canvas;
+        $scope.getLayerById = function(itemId, stage=null){
+            var _canvas = null;
+            if (!angular.isUndefined(stage)) {
+                _canvas = $scope.stages[stage].canvas;
+            }else {
+                _canvas = $scope.stages[$scope.currentStage].canvas;
+            }
             var _object = null;
             _canvas.forEachObject(function(obj, index) {
                 if(obj.get('itemId') == itemId) _object = obj;
@@ -691,6 +1089,108 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
         $scope.updateApp = function(){
             if ($scope.$root.$$phase !== "$apply" && $scope.$root.$$phase !== "$digest") $scope.$apply();
         };
+        $scope.setStackPosition = function(command, _item){
+            var item = _item ? _item : $scope.stages[$scope.currentStage]['canvas'].getActiveObject();
+            switch(command){
+                case 'bring-front':
+                    item.bringToFront();
+                    $scope.setStackLayerAlwaysOnTop();
+                    break;
+                case 'bring-forward':
+                    item.bringForward();
+                    break;
+                case 'send-backward':
+                    item.sendBackwards();
+                    break;
+                case 'send-back':
+                    item.sendToBack();
+                    break;
+                default:
+                    var index = parseInt(command);
+                    item.moveTo(index);
+            }
+            $scope.renderStage();
+        };
+        $scope.calcViewport = function(){
+            var _offsetWidth = checkMobileDevice() ? 20 : 100,
+                _offsetHeight = checkMobileDevice() ? 70 : 100,
+                _width = $('.design-stages').width() - _offsetWidth,
+                _height = $('.design-stages').height() - _offsetHeight;
+
+            if(navigator.userAgent.indexOf("Safari")!=-1 && navigator.userAgent.indexOf("CriOS") ==-1 && $scope.theFirstCalcViewport){
+                if( checkMobileDevice() ) _height -= 50;
+            }
+            return {width: _width, height: _height};
+        };
+        $scope.makeblob = function (dataURL) {
+            var BASE64_MARKER = ';base64,';
+            if (dataURL.indexOf(BASE64_MARKER) == -1) {
+                var parts = dataURL.split(',');
+                var contentType = parts[0].split(':')[1];
+                var raw = decodeURIComponent(parts[1]);
+                return new Blob([raw], { type: contentType });
+            }
+            var parts = dataURL.split(BASE64_MARKER);
+            var contentType = parts[0].split(':')[1];
+            var raw = window.atob(parts[1]);
+            var rawLength = raw.length;
+            var uInt8Array = new Uint8Array(rawLength);
+            for (var i = 0; i < rawLength; ++i) {
+                uInt8Array[i] = raw.charCodeAt(i);
+            }
+            return new Blob([uInt8Array], { type: contentType });
+        };
+        $scope.saveData = function () {
+            // show loading
+            $('.nbdpb-load-page').addClass('nbdpb-show');
+            $('body').addClass('nbdpb-no-overflow');
+            $scope.saveDesign();
+            $scope.resource.config.viewport = $scope.calcViewport();
+            var dataObj = {};
+            dataObj.design = new Blob([JSON.stringify($scope.resource.jsonDesign)], {type: "application/json"});
+            _.each($scope.stages, function(stage, index){
+                var key = 'frame_' + index,
+                    svg_key = 'frame_' + index + '_svg';
+                dataObj[key] = $scope.makeblob(stage.design);
+            });
+            ['product_id', 'variation_id', 'task', 'task2', 'design_type', 'nbd_item_key', 'cart_item_key', 'order_id', 'enable_upload_without_design', 'auto_add_to_cart'].forEach(function(key){
+                dataObj[key] = NBDESIGNCONFIG[key];
+            });
+
+            dataObj.config = new Blob([JSON.stringify($scope.resource.config)], {type: "application/json"});
+            var action = 'nbd_save_product_builder_design';
+            NBDDataFactory.get(action, dataObj, function(data){
+                $('.nbdpb-load-page').removeClass('nbdpb-show');
+                console.log(data);
+                debugger;
+                // data = JSON.parse(data);
+                if(data.flag == 'success'){
+                    _.each(data.image, function (image, frame) {
+                        var item = '<div class="item">' +
+                                '<img src="' + image + '" alt="Custom Design"/>' +
+                            '</div>';
+                        $('.nbdpb-custom-design').append(item);
+                    });
+                    $('.close-popup').triggerHandler('click');
+                }else{
+                    alert('Oops! Design has not been saved!');
+                    console.log('Oops! Design has not been saved!');
+                    // $scope.toggleStageLoading();
+                }
+            });
+        };
+
+        $scope.saveDesign = function () {
+            _.each($scope.stages, function (stage, index) {
+                $scope.deactiveAllLayer(index);
+                var _canvas = stage.canvas,
+                    key = 'frame_' + index;
+                $scope.renderStage(index);
+                $scope.resource.jsonDesign[key] = _canvas.toJSON($scope.includeExport);
+                stage.svg = _canvas.toSVG();
+                stage.design = _canvas.toDataURL();
+            });
+        };
 
         $scope.onObjectAdded = function (id, options) {
             var _stage = $scope.stages[$scope.currentStage],
@@ -700,7 +1200,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
                 itemId = d.getTime() + Math.floor(Math.random() * 1000);
 
             item.set({"itemId" : itemId});
-            item.setCoords();
             _canvas.viewportCenterObject(item);
 
             var top = item.get('top'), left = item.get('left');
@@ -712,11 +1211,58 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
                     $scope.renderStage();
                 },
                 onComplete: function(){
-                    _canvas.setActiveObject(item);
                     $scope.renderStage();
                 },
                 easing: FabricWindow.util.ease['easeInQuad']
             });
+        };
+        $scope.onMouseOver = function (id, options) {
+            var _stage = $scope.stages[$scope.currentStage],
+                _canvas = _stage['canvas'],
+                item = options.target;
+            if (item) {
+                item.set('opacity', '0.5');
+            }
+            _canvas.renderAll();
+        };
+        $scope.onMouseOut = function (id, options) {
+            var _stage = $scope.stages[$scope.currentStage],
+                _canvas = _stage['canvas'],
+                item = options.target, itemId = '', proAttr = null;
+            if (item) {
+                item.set('opacity', '1');
+            }
+            _canvas.renderAll();
+        };
+        $scope.onMouseDown = function (id, options) {
+            var _stage = $scope.stages[$scope.currentStage],
+                _canvas = _stage['canvas'],
+                item = options.target, itemId = '', proAttr = null;
+            if (item) {
+                if (!angular.isUndefined(item.get('itemId'))) itemId = item.get('itemId');
+                // get product attribute match with key
+                proAttr = _.pickBy($scope.resource.proAttrs, function (value, key) {
+                    return value.itemId == itemId;
+                });
+                if (!angular.isUndefined(_.keys(proAttr)[0])) {
+                    $scope.resource.showValue = true;
+                    $scope.resource.proAttrActive = _.keys(proAttr)[0];
+                    $scope.updateApp();
+                }
+            }
+        };
+
+        $scope.onSelectionCreated = function (id, options) {
+            if (options.target) {
+                $scope.showAdminTool = true;
+                $scope.updateApp();
+            }
+
+        };
+
+        $scope.onSelectionCleared = function (id, options) {
+            $scope.showAdminTool = false;
+            $scope.updateApp();
         };
 
         /*
@@ -730,10 +1276,27 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', '$window', '$timeou
             var _canvas = $scope.stages[id].canvas;
 
             /* Listen canvas events */
+            _canvas.on('mouse:over', function (options) {
+                $scope.onMouseOver(id, options);
+            });
+            _canvas.on('mouse:out', function (options) {
+                $scope.onMouseOut(id, options);
+            });
+            _canvas.on('mouse:down', function (options) {
+                $scope.onMouseDown(id, options);
+            });
+
             _canvas.on('object:added', function (options) {
                 $scope.onObjectAdded(id, options);
             });
+            _canvas.on('selection:created', function(options){
+                $scope.onSelectionCreated(id, options);
+            });
+            _canvas.on('selection:cleared', function (options) {
+                $scope.onSelectionCleared(id, options);
+            });
         });
+
         $scope.$watch('isStartDesign', function () {
             var _stages = $scope.stages;
             if ($scope.isStartDesign) {
@@ -823,6 +1386,47 @@ nbdpbApp.directive('nbdCanvas', ['FabricWindow', '$timeout', '$rootScope', funct
     }
 }]);
 
+nbdpbApp.factory('NBDDataFactory', function($http){
+    return {
+        get : function(action, data, callback) {
+            var formData = new FormData();
+            formData.append("action", action);
+            var nonce = action == 'nbd_get_resource' ? NBDESIGNCONFIG['nonce_get'] : NBDESIGNCONFIG['nonce'];
+            formData.append("nonce", nonce);
+            angular.forEach(data, function (value, key) {
+                var keepDefault = ['file', 'design', 'config', 'product', 'upload', 'used_font', 'option'];
+                if( typeof value != 'object' || _.includes(keepDefault, key) || key.indexOf("frame") > -1 ){
+                    formData.append(key, value);
+                }else{
+                    var keyName;
+                    for (var k in value) {
+                        if (value.hasOwnProperty(k)) {
+                            keyName = [key, '[', k, ']'].join('');
+                            formData.append(keyName, value[k]);
+                        }
+                    }
+                }
+            });
+            var config = {
+                transformRequest: angular.identity,
+                transformResponse: angular.identity,
+                headers: {
+                    'Content-Type': undefined
+                }
+            };
+            var url = NBDESIGNCONFIG['ajax_url'];
+            $http.post(url, formData, config).then(
+                function(response) {
+                    callback(response.data);
+                },
+                function(response) {
+                    console.log(response);
+                }
+            );
+        }
+    }
+});
+
 function checkMobileDevice(){
     var isMobile = false;
     if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
@@ -838,6 +1442,7 @@ $.fn.nbShowPopup = function () {
         }
         $close.on('click', function () {
             $(sefl).removeClass('nbdpb-show');
+            $('body').removeClass('nbdpb-no-overflow');
             var $scope = angular.element(document.getElementById("design-container")).scope();
             $scope.isStartDesign = false;
             $scope.updateApp();
@@ -940,7 +1545,7 @@ function getTransform(el) {
     return results.slice(5, 8);
 }
 $(document).ready(function ($) {
-    $('#start-design').on('click', function () {
+    $('#nbdpb-start-design').on('click', function () {
         $('body').addClass('nbdpb-no-overflow');
         $('.nbdpb-popup.popup-design').nbShowPopup().addClass('nbdpb-no-overflow');
         $('.nbdpb-carousel').nbdpbCarousel();
@@ -958,7 +1563,7 @@ $(document).ready(function ($) {
                 if (direction == 'left') $('.nbdpb-carousel-outer .nbdpb-owl-prev').triggerHandler('click');
                 if (direction == 'right') $('.nbdpb-carousel-outer .nbdpb-owl-next').triggerHandler('click');
             },
-            //Default is 75px, set to 0 for demo so any distance triggers swipe
+            // Default is 75px, set to 0 for demo so any distance triggers swipe
             threshold: 0
         });
     }

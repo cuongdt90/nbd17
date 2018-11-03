@@ -1085,6 +1085,38 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
     $data = apply_filters('nbd_product_info', $data);
     return $data;        
 }
+
+function nbd_get_product_builder_info($product_id,$variation_id,$nbd_item_key = '',$task){
+    $data = array();
+    $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;
+    $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
+    if( $_nbd_item_key && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
+
+    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+    /* Path not exist in case add to cart before design, session has been init */
+    if( $nbd_item_key == '' || !file_exists($path) ){
+        if($variation_id > 0){
+            $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);
+            $data['product'] = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
+            if ( !($enable_variation && isset($data['product'][0]))){
+                $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true));
+            }
+        }else {
+            $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true));
+        }
+    }else {
+        $data['product'] = unserialize(file_get_contents($path . '/product.json'));
+        $data['config'] = nbd_get_data_from_json($path . '/config.json');
+        if(isset($data['config']->product)){
+            $data['product'] = $data['config']->product;
+        }
+        $data['design'] = nbd_get_data_from_json($path . '/design.json');
+    }
+
+    $data = apply_filters('nbd_product_info', $data);
+
+    return $data;
+}
 function nbd_get_media_for_data_product( $data_product ){
     foreach ( $data_product as $key => $data ){
         $data_product[$key] = $_data = (array) $data;

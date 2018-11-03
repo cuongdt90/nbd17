@@ -15,7 +15,6 @@
         "browser-sync": "^2.26.3",
         "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^5.1",
-        "jquery": "^3.3.1",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "popper.js": "^1.12"
@@ -24,6 +23,7 @@
         "angular": "^1.6.9",
         "detect_swipe": "^2.1.4",
         "fabric": "^2.3.3",
+        "jquery": "^3.3.1",
         "jquery-touchswipe": "^1.6.19"
     }
 }

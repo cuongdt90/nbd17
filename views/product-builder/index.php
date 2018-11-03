@@ -1,4 +1,5 @@
 <?php include 'nbdesignconfig.php';?>
+<?php include "loading-app.php"; ?>
 <div class="nbdpb-popup popup-design <?php echo (is_admin_bar_showing()) ? 'is-admin-bar' : ''; ?>" data-animate="scale">
     <i class="icon-nbd icon-nbd-clear close-popup"></i>
     <div id="nbdpb-app" class="nbdpb-product-builder nbdpb-full-contain" ng-app="nbdpb-app">
@@ -34,7 +35,15 @@
 <!--                            </div>-->
                         </div>
                         <div class="design-finish">
-                            <button class="nbdpb-btn btn-finish">Done</button>
+                            <button class="nbdpb-btn btn-finish" ng-click="saveData()">Done</button>
+                        </div>
+                        <div class="design-admin-tool" ng-class="showAdminTool ? 'nbdpb-show' : ''">
+                            <div class="tools">
+<!--                                <div class="tool-item" title="Bring To Front" ng-click="setStackPosition('bring-front')"><i class="icon-nbd icon-nbd-bring-to-front"></i></div>-->
+                                <div class="tool-item" title="Bring Forward" ng-click="setStackPosition('bring-forward')"><i class="icon-nbd icon-nbd icon-nbd-bring-forward"></i></div>
+                                <div class="tool-item" title="Send To Backward" ng-click="setStackPosition('send-backward')"><i class="icon-nbd icon-nbd-sent-to-backward"></i></div>
+<!--                                <div class="tool-item" title="Send To Back" ng-click="setStackPosition('send-back')"><i class="icon-nbd icon-nbd-send-to-back"></i></div>-->
+                            </div>
                         </div>
                     </div>
                     <div class="design-sidebar">

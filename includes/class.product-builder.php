@@ -27,6 +27,7 @@ if(!class_exists('Nbdesigner_Product_Builder')) {
         {
             $this->frontend_enqueue_scripts();
             add_action('woocommerce_before_single_product', array(&$this, 'before_product_container'), 1);
+//            $this->before_product_container();
             add_action('wp_footer', array(&$this, 'nbd_modal_product_builder'), 1);
         }
 
@@ -35,8 +36,9 @@ if(!class_exists('Nbdesigner_Product_Builder')) {
         {
             $pid = get_the_ID();
             if (is_nbdesigner_product($pid)) {
-                add_action('woocommerce_before_single_product_summary', array(&$this, 'product_builder_html'), 1);
-                remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
+//                add_action('woocommerce_before_single_product_summary', array(&$this, 'product_builder_html'), 1);
+                add_action('woocommerce_before_add_to_cart_form', array(&$this, 'product_builder_html'), 1);
+//                remove_action('woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20);
             }
 
         }

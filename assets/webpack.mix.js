@@ -11,8 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.setPublicPath('./').js('resources/js/app-product-builder.js', 'js');
-mix.setPublicPath('./').sass('resources/sass/product-builder/style.scss', 'css/app-product-builder.css').options({processCssUrls: false}).sourceMaps();
+mix.setPublicPath('./').js('resources/js/app-product-builder.js', 'js')
+    .sass('resources/sass/product-builder/style.scss', 'css/app-product-builder.css').options({processCssUrls: false});
 // mix.browserSync({
 //     proxy: 'http://dev.cmsmart.net:3001'
 // });

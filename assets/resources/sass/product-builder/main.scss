@@ -36,12 +36,12 @@
   @import "component/reset";
   @import "component/buttom";
   @import "component/scrollbar";
-  @import "component/carousel";
-
-  /*--------------------------------------------------------------
+  @import "component/carousel"; /*--------------------------------------------------------------
   # Patials
   --------------------------------------------------------------*/
   @import "patials/design";
   @import "patials/stage";
   @import "patials/sidebar";
 }
+@import "patials/custom-design";
+@import "patials/loading";
