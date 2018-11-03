@@ -55,13 +55,13 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
         <li class="menu-item item-view">
             <span><?php _e('View','web-to-print-online-designer'); ?></span>
             <ul class="sub-menu" data-pos="left">
-<!--                <li class="sub-menu-item flex space-between">
-                    <span class="title-menu"><?php _e('Rule','web-to-print-online-designer'); ?></span>
+                <li class="sub-menu-item flex space-between" ng-click="settings.showRuler = !settings.showRuler" ng-class="settings.showRuler ? 'active' : ''">
+                    <span class="title-menu"><?php _e('Ruler','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-R' | keyboardShortcut }}</small>
-                </li>-->
+                </li>
                 <li class="sub-menu-item flex space-between" ng-click="settings.showGrid = !settings.showGrid" ng-class="settings.showGrid ? 'active' : ''">
                     <span class="title-menu"><?php _e('Show grid','web-to-print-online-designer'); ?></span>
-                    <small>{{ 'M-G' | keyboardShortcut }}</small>
+                    <small>{{ 'S-G' | keyboardShortcut }}</small>
                 </li>
                 <li class="sub-menu-item flex space-between" ng-click="settings.bleedLine = !settings.bleedLine" ng-class="settings.bleedLine ? 'active' : ''">
                     <span class="title-menu"><?php _e('Show bleed line','web-to-print-online-designer'); ?></span>

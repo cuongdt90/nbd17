@@ -6,6 +6,17 @@ if( !class_exists('Nbdesigner_Appearance_Settings') ) {
             return apply_filters('nbdesigner_appearance_settings', array(
                 'editor' => array( 
                     array(
+                        'title' => __('Show ruler', 'web-to-print-online-designer'),
+                        'id' => 'nbdesigner_show_ruler',
+                        'description' => __( 'Hide/show ruler as default in design editor.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        ) 
+                    ),
+                    array(
                         'title' => __('Show grid', 'web-to-print-online-designer'),
                         'id' => 'nbdesigner_show_grid',
                         'description' => __( 'Hide/show grid as default in design editor.', 'web-to-print-online-designer'),

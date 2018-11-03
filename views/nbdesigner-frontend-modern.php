@@ -91,6 +91,37 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->	
         <style type="text/css">
+            .nbd-hoz-ruler {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 40px;
+                text-align: left;
+            }
+            .nbd-ver-ruler {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 40px;
+                text-align: left;
+                margin-left: 5px;
+            } 
+            .nbd-hoz-ruler svg{
+                height: 100%;
+            }
+            .nbd-ver-ruler svg {
+                width: 100%;
+            }
+            .rulez-text {
+                font-size: 10px;
+                fill: #888;
+            }
+            .rulez-rect{
+                fill:grey
+            }
+            .nbd-hide {
+                opacity: 0;
+            }
             .stage-background, .design-zone, .stage-grid, .bounding-layers, .stage-snapLines, .stage-overlay, .stage-guideline {
                 position: absolute;
                 top: 0;

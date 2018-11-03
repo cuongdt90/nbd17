@@ -13,7 +13,7 @@ if(!class_exists('NBD_CUSTOMIZE')){
         }
         public function init(){
             add_action('nbd_menu', array($this, 'manage_color_menu'), 1000);
-            //add_action('nbd_after_option_product_design', array($this, 'product_design_setting'), 10, 3);
+            add_action('nbd_after_option_product_design', array($this, 'product_design_setting'), 10, 3);
             //add_filter('nbdesigner_appearance_settings', array($this, 'appearance_settings'), 10, 1);
             //add_filter('nbdesigner_default_frontend_settings', array($this, 'default_frontend_settings'), 10, 1);
             add_action('nbd_classic_helpdesk_nav', array($this, 'nbd_classic_helpdesk_nav'), 30);

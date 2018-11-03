@@ -805,7 +805,7 @@ class My_Design_Endpoint {
     public function nbd_update_my_template(){
         if (!wp_verify_nonce($_POST['_wpnonce'], 'nbd_edit_template_nonce') || !user_can_edit_template( $_POST['user_id'] ) ) {
             die('Security error');
-        }  
+        }
         global $wpdb;
         $table_name =  $wpdb->prefix . 'nbdesigner_templates';
         $re = $wpdb->update($table_name, array(

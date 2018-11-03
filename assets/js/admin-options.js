@@ -395,7 +395,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                         field.general.price_type.hidden = true;
                         if( field.general.data_type.value == 'i' ){
                             field.general.attributes.options[1] = {};
-                            field.general.attributes.options[2] = {};
+                            //field.general.attributes.options[2] = {};
                             angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
                             //angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
                             field.general.attributes.options[0].name = nbd_options.nbd_options_lang.front;
