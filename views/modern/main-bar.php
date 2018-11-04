@@ -67,6 +67,9 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                     <span class="title-menu"><?php _e('Show bleed line','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-L' | keyboardShortcut }}</small>
                 </li>
+                <li class="sub-menu-item flex space-between" ng-click="clearGuides()">
+                    <span class="title-menu"><?php _e('Clear Guides','web-to-print-online-designer'); ?></span>
+                </li>
 <!--                <li class="sub-menu-item flex space-between hover-menu active" data-animate="bottom-to-top">
                     <span class="title-menu"><?php _e('Snap to','web-to-print-online-designer'); ?></span>
                     <i class="icon-nbd icon-nbd-arrow-drop-down rotate-90"></i>

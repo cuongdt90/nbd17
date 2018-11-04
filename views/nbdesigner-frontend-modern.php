@@ -97,6 +97,7 @@
                 left: 0;
                 height: 40px;
                 text-align: left;
+                cursor: pointer;
             }
             .nbd-ver-ruler {
                 position: absolute;
@@ -105,6 +106,7 @@
                 width: 40px;
                 text-align: left;
                 margin-left: 5px;
+                cursor: pointer;
             } 
             .nbd-hoz-ruler svg{
                 height: 100%;
@@ -118,6 +120,35 @@
             }
             .rulez-rect{
                 fill:grey
+            }
+            .ruler-guideline-hor {
+                border-bottom: 1px solid #3BB7C7;
+                z-index: 99;
+                width: 100%;
+                height: 3px;
+                background: transparent;
+                position: absolute;
+                left: 0;
+                cursor: ns-resize;
+            }
+            .ruler-guideline-ver {
+                border-right: 1px solid #3BB7C7;
+                z-index: 99;
+                height: 100%;
+                width: 3px;
+                position: absolute;
+                top: 0;
+                cursor: ew-resize;
+            }
+            .guide-backdrop {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .nbd-prevent-event {
+                pointer-events: none;
             }
             .nbd-hide {
                 opacity: 0;
