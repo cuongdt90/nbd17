@@ -1095,15 +1095,21 @@ function nbd_get_product_builder_info($product_id,$variation_id,$nbd_item_key = 
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     /* Path not exist in case add to cart before design, session has been init */
     if( $nbd_item_key == '' || !file_exists($path) ){
-        if($variation_id > 0){
-            $enable_variation = get_post_meta($variation_id, '_nbdesigner_variation_enable', true);
-            $data['product'] = unserialize(get_post_meta($variation_id, '_designer_variation_setting', true));
-            if ( !($enable_variation && isset($data['product'][0]))){
-                $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true));
-            }
-        }else {
-            $data['product'] = unserialize(get_post_meta($product_id, '_designer_setting', true));
-        }
+        // TODO get option product side
+        $data['product'] = [
+            [
+                'img_src_width' => '300',
+                'img_src_height' => '400',
+                'area_design_width' => '400',
+                'area_design_height' => '300',
+            ],
+            [
+                'img_src_width' => '300',
+                'img_src_height' => '400',
+                'area_design_width' => '400',
+                'area_design_height' => '300',
+            ]
+        ];
     }else {
         $data['product'] = unserialize(file_get_contents($path . '/product.json'));
         $data['config'] = nbd_get_data_from_json($path . '/config.json');

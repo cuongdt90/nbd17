@@ -10493,9 +10493,9 @@ __webpack_require__(18);
 var nbdpbApp = angular.module('nbdpb-app', []);
 nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '$window', '$timeout', '$http', '$document', '$interval', function ($scope, FabricWindow, NBDDataFactory, $window, $timeout, $http, $document, $interval) {
     // init
-    console.log(NBDESIGNCONFIG);
     $scope.isStartDesign = false;
     $scope.showAdminTool = false;
+    $scope.side = [0, 1];
     $scope.init = function () {
         $scope.initSettings();
     };
@@ -10514,61 +10514,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'quarter',
@@ -10579,61 +10579,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'Swoosh',
@@ -10644,61 +10644,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'Tongue Style',
@@ -10709,61 +10709,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'laces',
@@ -10774,61 +10774,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'additional laces',
@@ -10839,61 +10839,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'Sidewall',
@@ -10904,61 +10904,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'toe cap',
@@ -10969,61 +10969,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg', '//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-logo-2-324x324.jpg']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/plugins/web-to-print-online-designer/assets/images/shoes.png']
+                    src: ['http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg', 'http://localhost/online-design/wp-content/uploads/2018/10/beanie-2-324x324.jpg']
                 }]
             }, {
                 name: 'outsole',
@@ -11096,8 +11096,9 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         // debugger;
         var unitRatio = $scope.settings.nbdesigner_dimensions_unit == 'mm' ? 0.1 : $scope.settings.nbdesigner_dimensions_unit == 'in' ? 2.54 : 1;
         // TODO init stage with slide
-        $scope.rateConvert2Px = $scope.rateConvertCm2Px96dpi * unitRatio * parseFloat($scope.settings.product_data.option.dpi) / 96;
+        // $scope.rateConvert2Px = $scope.rateConvertCm2Px96dpi * unitRatio * parseFloat($scope.settings.product_data.option.dpi) / 96;
         _.each($scope.settings.product_data.product, function (side, index) {
+            // _.each($scope.side, function(side, index){
             $scope.stages[index] = {
                 config: {},
                 states: {},
@@ -11129,9 +11130,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
     $scope.showValue = function (index) {
         $scope.resource.showValue = !$scope.resource.showValue;
         if (index) $scope.resource.proAttrActive = index;
-    };
-    $scope.saveDesign = function () {
-        $scope.showValue.showValue = false;
     };
     $scope.addProValue = function (index) {
         var proAttrActive = $scope.resource.proAttrs[$scope.resource.proAttrActive];
@@ -11273,6 +11271,8 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         $('body').addClass('nbdpb-no-overflow');
         $scope.saveDesign();
         $scope.resource.config.viewport = $scope.calcViewport();
+        $scope.resource.config.product = $scope.settings.product_data.product;
+        // $scope.resource.config.dpi = $scope.settings.product_data.option.dpi;
         var dataObj = {};
         dataObj.design = new Blob([JSON.stringify($scope.resource.jsonDesign)], { type: "application/json" });
         _.each($scope.stages, function (stage, index) {
@@ -11280,7 +11280,7 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                 svg_key = 'frame_' + index + '_svg';
             dataObj[key] = $scope.makeblob(stage.design);
         });
-        ['product_id', 'variation_id', 'task', 'task2', 'design_type', 'nbd_item_key', 'cart_item_key', 'order_id', 'enable_upload_without_design', 'auto_add_to_cart'].forEach(function (key) {
+        ['product_id', 'variation_id', 'task', 'nbd_item_key', 'cart_item_key', 'order_id', 'auto_add_to_cart'].forEach(function (key) {
             dataObj[key] = NBDESIGNCONFIG[key];
         });
 
