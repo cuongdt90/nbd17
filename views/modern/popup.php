@@ -111,12 +111,12 @@
                                     </td>
                                     <td><?php _e('Show/hide Bleed line','web-to-print-online-designer'); ?></td>
                                 </tr> 
-<!--                                <tr>
+                                <tr>
                                     <td class="keys">
                                         <kbd>Ctrl</kbd> +<kbd>R</kbd>
                                     </td>
                                     <td><?php _e('Show/hide Ruler','web-to-print-online-designer'); ?></td>
-                                </tr>                                 -->
+                                </tr>
                                 <tr>
                                     <td class="keys">
                                         <kbd>Ctrl</kbd> +<kbd>H</kbd>
@@ -260,7 +260,13 @@
                                         <kbd>Shift</kbd> +<kbd>G</kbd>
                                     </td>
                                     <td><?php _e('Show/hide Grid','web-to-print-online-designer'); ?></td>
-                                </tr>                                
+                                </tr>    
+                                <tr>
+                                    <td class="keys">
+                                        <kbd>Shift</kbd> +<kbd>L</kbd>
+                                    </td>
+                                    <td><?php _e('Clear all guidelines','web-to-print-online-designer'); ?></td>
+                                </tr>
                                 <tr>
                                     <td class="keys">
                                         <kbd>Shift</kbd> +<kbd><i style="color: #404762" class="icon-nbd icon-nbd-arrows-v rotate-45"></i></kbd>

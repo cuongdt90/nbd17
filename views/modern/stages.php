@@ -1,10 +1,10 @@
 <div class="nbd-stages" id="nbd-stages">
     <div class="stages-inner">
-        <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-click="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
-            <div ng-mousedown="addRulerGuideLine( $event, 'hors' ); $event.stopPropagation()" ng-style="{'padding-left': calcRulerPaddingLeft(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}" ng-class="settings.showRuler ? '' : 'nbd-hide'" class="nbd-hoz-ruler">
+        <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-mousedown="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
+            <div ng-click="addRulerGuideLine( $event, 'hors' );$event.stopPropagation();" ng-style="{'padding-left': calcRulerPaddingLeft(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}" ng-class="settings.showRuler ? '' : 'nbd-hide'" class="nbd-hoz-ruler">
                 <svg ng-style="{'width': calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 30)}" id="hoz-ruler-{{$index}}" xmlns="http://www.w3.org/2000/svg"></svg>
             </div>
-            <div ng-mousedown="addRulerGuideLine( $event, 'vers' ); $event.stopPropagation()" ng-style="{'padding-top': calcRulerPaddingTop(stage.config)}" ng-class="settings.showRuler ? '' : 'nbd-hide'" class="nbd-ver-ruler">
+            <div ng-click="addRulerGuideLine( $event, 'vers' ); $event.stopPropagation()" ng-style="{'padding-top': calcRulerPaddingTop(stage.config)}" ng-class="settings.showRuler ? '' : 'nbd-hide'" class="nbd-ver-ruler">
                 <svg ng-style="{'height': calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 30)}" id="ver-ruler-{{$index}}" xmlns="http://www.w3.org/2000/svg"></svg>
             </div>
             <div style="display: inline-block;position: relative;">
@@ -93,8 +93,8 @@
                 </div>
             </div> 
             <div class="nbd-prevent-event guide-backdrop"></div>
-            <div ng-repeat="line in stage.rulerLines.hors" ng-style="{'top': line.top * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 'px'}" data-offset="line.top" class="ruler-guideline-hor" ruler-guideline="hor"></div>
-            <div ng-repeat="line in stage.rulerLines.vers" ng-style="{'left': line.left * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 'px'}" data-offset="line.left" class="ruler-guideline-ver" ruler-guideline="ver"></div>            
+            <div ng-repeat="line in stage.rulerLines.hors" ng-style="calcStyleGuideline(line, stage.config, stage.states.scaleRange[stage.states.currentScaleIndex].ratio, 'hor')" data-cwidth="{{stage.config.cwidth}}" data-ratio="{{stage.states.scaleRange[stage.states.currentScaleIndex].ratio}}" data-offset="line.top" class="ruler-guideline-hor" ruler-guideline="hor"></div>
+            <div ng-repeat="line in stage.rulerLines.vers" ng-style="calcStyleGuideline(line, stage.config, stage.states.scaleRange[stage.states.currentScaleIndex].ratio, 'ver')" data-cwidth="{{stage.config.cwidth}}" data-ratio="{{stage.states.scaleRange[stage.states.currentScaleIndex].ratio}}" data-offset="line.left" class="ruler-guideline-ver" ruler-guideline="ver"></div>            
         </div>
     </div>
     <div class="nbd-toolbar-zoom fullscreen-stage-nav">

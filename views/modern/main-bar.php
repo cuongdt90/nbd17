@@ -69,6 +69,7 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
                 </li>
                 <li class="sub-menu-item flex space-between" ng-click="clearGuides()">
                     <span class="title-menu"><?php _e('Clear Guides','web-to-print-online-designer'); ?></span>
+                    <small>{{ 'S-L' | keyboardShortcut }}</small>
                 </li>
 <!--                <li class="sub-menu-item flex space-between hover-menu active" data-animate="bottom-to-top">
                     <span class="title-menu"><?php _e('Snap to','web-to-print-online-designer'); ?></span>

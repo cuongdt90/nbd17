@@ -110,9 +110,11 @@
             } 
             .nbd-hoz-ruler svg{
                 height: 100%;
+                pointer-events: none;
             }
             .nbd-ver-ruler svg {
                 width: 100%;
+                pointer-events: none;
             }
             .rulez-text {
                 font-size: 10px;
@@ -124,7 +126,6 @@
             .ruler-guideline-hor {
                 border-bottom: 1px solid #3BB7C7;
                 z-index: 99;
-                width: 100%;
                 height: 3px;
                 background: transparent;
                 position: absolute;
@@ -134,7 +135,6 @@
             .ruler-guideline-ver {
                 border-right: 1px solid #3BB7C7;
                 z-index: 99;
-                height: 100%;
                 width: 3px;
                 position: absolute;
                 top: 0;
@@ -149,6 +149,7 @@
             }
             .nbd-prevent-event {
                 pointer-events: none;
+                z-index: 98;
             }
             .nbd-hide {
                 opacity: 0;
