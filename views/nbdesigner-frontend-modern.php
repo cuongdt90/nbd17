@@ -1480,6 +1480,8 @@
                 link_get_options: "<?php echo $link_get_options; ?>",
                 enable_dropbox: false,
                 user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
+                /* customize */
+                contact_sheet: <?php echo json_encode(nbd_get_user_contact_sheet()); ?>,
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {

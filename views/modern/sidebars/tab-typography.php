@@ -12,6 +12,8 @@
         <div ng-show="isTemplateMode" class="user-infos" style="text-align: left; margin-bottom: 20px;">
             <button ng-repeat="(iIndex, info) in settings.user_infos" ng-click="addUserInfo(iIndex)" class="nbd-button">{{info.title}}</button>
             <button ng-click="buildVcart()" class="nbd-button"><?php _e('Vcard','web-to-print-online-designer'); ?></button>
+            <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
+            <button ng-repeat="(index, info) in settings.contact_sheet" ng-click="addContactSheet(index)" class="nbd-button">{{index}}</button>
         </div>
         <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
         <div class="typography-body">

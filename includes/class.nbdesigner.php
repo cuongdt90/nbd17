@@ -386,7 +386,7 @@ class Nbdesigner_Plugin {
             }
             if( $variation_id > 0 ) $url .= '&variation_id='.$variation_id;
             WC()->session->__unset('nbd_last_item_cart');
-            $nbd_item_key = substr(md5(uniqid()),0,10);
+            $nbd_item_key = substr(md5(uniqid()),0,5).rand(1,100).time();
             WC()->session->set('nbd_item_key_'.$nbd_item_cart_key, $nbd_item_key); 
             WC()->session->set('nbu_item_key_'.$nbd_item_cart_key, $nbd_item_key); 
         }

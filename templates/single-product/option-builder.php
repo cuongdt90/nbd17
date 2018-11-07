@@ -620,6 +620,7 @@ if( $cart_item_key != ''){
     <?php    
 }
 ?>
+        <div style="text-align: right;"><a class="button" ng-click="reset_options()"><?php _e('Clear selection', 'web-to-print-online-designer'); ?></a></div>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields and quantity input!', 'web-to-print-online-designer'); ?></p>
         <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
@@ -1165,19 +1166,23 @@ if( $cart_item_key != ''){
             total_check = logic == 'a' ? true : false;
             angular.forEach(field.conditional.depend, function(con, key){
                 if( con.id != '' ){
-                    switch(con.operator){
-                        case 'i':
-                            check[key] = $scope.nbd_fields[con.id].value == con.val ? true : false;
-                            break;
-                        case 'n':
-                            check[key] = $scope.nbd_fields[con.id].value != con.val ? true : false;
-                            break;  
-                        case 'e':
-                            check[key] = $scope.nbd_fields[con.id].value == '' ? true : false;
-                            break;
-                        case 'ne':
-                            check[key] = $scope.nbd_fields[con.id].value != '' ? true : false;
-                            break;                         
+                    if( con.id != '' && !$scope.nbd_fields[con.id].enable ){
+                        check[key] = false;
+                    }else{
+                        switch(con.operator){
+                            case 'i':
+                                check[key] = $scope.nbd_fields[con.id].value == con.val ? true : false;
+                                break;
+                            case 'n':
+                                check[key] = $scope.nbd_fields[con.id].value != con.val ? true : false;
+                                break;  
+                            case 'e':
+                                check[key] = $scope.nbd_fields[con.id].value == '' ? true : false;
+                                break;
+                            case 'ne':
+                                check[key] = $scope.nbd_fields[con.id].value != '' ? true : false;
+                                break;                         
+                        }
                     }
                 }else{
                     check[key] = true;
@@ -1256,6 +1261,9 @@ if( $cart_item_key != ''){
             }
             $scope.check_valid();
         };
+        $scope.reset_options = function(){
+            $scope.init();
+        };
         $scope.select_all_variation = function( $event ){
             var el = angular.element($event.target),
             list = el.parents('table.nbo-bulk-variation').find('tbody input.nbo-bulk-checkbox'),
@@ -1264,13 +1272,13 @@ if( $cart_item_key != ''){
                 jQuery(this).prop('checked', check);
             });
         };
-        $scope.add_vairaion = function( $event ){
+        $scope.add_variaion = function( $event ){
             var el = angular.element($event.target),
             tb = el.parents('table.nbo-bulk-variation').find('tbody'),
             row = tb.find('tr').last().clone();
             tb.append(row);
         };
-        $scope.delete_vairaions = function( $event ){
+        $scope.delete_variaions = function( $event ){
             var el = angular.element($event.target),
             tb = el.parents('table.nbo-bulk-variation').find('tbody');
             jQuery.each(tb.find('input.nbo-bulk-checkbox:checked'), function(){
@@ -1880,6 +1888,7 @@ if( $cart_item_key != ''){
         };
     }).filter('to_trusted', ['$sce', function($sce){
         return function(text) {
+            text += '';
             return $sce.trustAsHtml(text);
         };            
     }]);

@@ -55,7 +55,7 @@ $image = wp_get_attachment_image_src( $custom_logo_id , 'full' );
         <li class="menu-item item-view">
             <span><?php _e('View','web-to-print-online-designer'); ?></span>
             <ul class="sub-menu" data-pos="left">
-                <li class="sub-menu-item flex space-between" ng-click="settings.showRuler = !settings.showRuler" ng-class="settings.showRuler ? 'active' : ''">
+                <li class="sub-menu-item flex space-between" ng-click="toggleRuler()" ng-class="settings.showRuler ? 'active' : ''">
                     <span class="title-menu"><?php _e('Ruler','web-to-print-online-designer'); ?></span>
                     <small>{{ 'M-R' | keyboardShortcut }}</small>
                 </li>
