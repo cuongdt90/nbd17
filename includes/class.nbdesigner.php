@@ -2714,7 +2714,6 @@ class Nbdesigner_Plugin {
     }
     public function nbd_save_customer_design(){
 
-
         if (!wp_verify_nonce($_POST['nonce'], 'save-design') || !isset($_POST['product_id'])) {
             die('Security error');
         }       
@@ -2940,7 +2939,7 @@ class Nbdesigner_Plugin {
             }
 
             // update post meta
-            update_post_meta($product_id, 'product_builder', $nbd_item_pb_key);
+            update_post_meta($product_id, 'product_builder_key', $nbd_item_pb_key);
 
         }
         do_action('after_nbd_save_product_builder_design', $result);

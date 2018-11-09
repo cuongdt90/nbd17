@@ -1026,6 +1026,7 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
 //        $nbd_item_key = WC()->session->get($cart_item_key . '_nbd');
 //    }
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+
     /* Path not exist in case add to cart before design, session has been init */  
     if( $nbd_item_key == '' || !file_exists($path) ){
         $data['upload'] = unserialize(get_post_meta($product_id, '_nbdesigner_upload', true));
@@ -1091,6 +1092,10 @@ function nbd_get_product_builder_info($product_id,$variation_id,$nbd_item_key = 
     $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;
     $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
     if( $_nbd_item_key && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
+
+    $product_builder_key = get_post_meta($product_id, 'product_builder_key');
+
+    $data['product_builder_key'] = $product_builder_key;
 
     $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
     /* Path not exist in case add to cart before design, session has been init */
