@@ -83,7 +83,7 @@
                         <?php foreach( $resources as $resource ): ?>
                             <?php 
                                 foreach( $resource->objects as $layer ): 
-                                if( $layer->type == 'text' || $layer->type == 'i-text' || $layer->type == 'curvedText' ){ 
+                                if( $layer->type == 'text' || $layer->type == 'i-text' || $layer->type == 'curvedText' || $layer->type == 'textbox' ){ 
                                     $alias = $fontname = $layer->fontFamily;
                                     $fonturl = 'https://fonts.google.com/specimen/'.$fontname;
                                     $is_google_font = true;

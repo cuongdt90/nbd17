@@ -27,6 +27,9 @@
                         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                     </svg>
                 </div>
+                <div class="tab-load-more" style="display: none;" ng-show="!resource.clipart.onload && resource.clipart.filteredArts.length && resource.clipart.filter.currentPage * resource.clipart.filter.perPage < resource.clipart.filter.total">
+                    <a class="nbd-button" ng-click="scrollLoadMore('#tab-svg', 'clipart')"><?php _e('Load more','web-to-print-online-designer'); ?></a>
+                </div>
             </div>
         </div>
     </div>

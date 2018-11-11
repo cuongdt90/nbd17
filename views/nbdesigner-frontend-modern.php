@@ -99,6 +99,10 @@
                 text-align: left;
                 cursor: pointer;
             }
+            .nbd-button:hover {
+                color: #fff;
+                text-decoration: none;
+            }
             .nbd-ver-ruler {
                 position: absolute;
                 top: 0;
@@ -150,6 +154,9 @@
             .nbd-prevent-event {
                 pointer-events: none;
                 z-index: 98;
+            }
+            .nbd-disable-event {
+                pointer-events: none;
             }
             .nbd-hide {
                 opacity: 0;
@@ -1399,7 +1406,7 @@
                 }
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
-            $templates = nbd_get_resource_templates($product_id, $variation_id);
+            $templates = nbd_get_resource_templates($product_id, $variation_id, 100);
             $total_template = nbd_count_total_template( $product_id, $variation_id );
             $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference, false, $cart_item_key );
             
@@ -1479,8 +1486,8 @@
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 link_get_options: "<?php echo $link_get_options; ?>",
                 enable_dropbox: false,
-                user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
                 /* customize */
+                user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
                 contact_sheet: <?php echo json_encode(nbd_get_user_contact_sheet()); ?>,
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
@@ -1669,6 +1676,7 @@
         <?php endif; ?>
         <?php endif; ?>
         <!-- End. NBO  -->
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/curved-text.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
     </body>

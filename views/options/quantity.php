@@ -2,7 +2,7 @@
 <div class="section-container">
     <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Quantity', 'web-to-print-online-designer'); ?>" readonly=""></p>
     <div class="nbd-section-wrap">
-        <div class="nbd-field-info" style="display: none;">
+        <div class="nbd-field-info">
             <div class="nbd-field-info-1">
                 <label><b><?php _e('Replace default quantity input', 'web-to-print-online-designer'); ?></b></label>
             </div>  
@@ -13,19 +13,19 @@
                 </select>
             </div>                                                    
         </div>      
-        <div class="nbd-field-info" ng-show="options.quantity_enable == 'y'" style="display: none;">
+        <div class="nbd-field-info" ng-show="options.quantity_enable == 'y'">
             <div class="nbd-field-info-1">
                 <label><b><?php _e('Display type', 'web-to-print-online-designer'); ?></b></label>
             </div>
             <div class="nbd-field-info-2">
                 <select name="options[quantity_type]" ng-model="options.quantity_type">
-                    <option value="i"><?php _e('Input', 'web-to-print-online-designer'); ?></option>
-                    <option value="r"><?php _e('Ranger slider', 'web-to-print-online-designer'); ?></option>
+                    <option value="r"><?php _e('Range slider', 'web-to-print-online-designer'); ?></option>
+                    <option value="d"><?php _e('Dropdown', 'web-to-print-online-designer'); ?></option>
                     <option value="s"><?php _e('Select box', 'web-to-print-online-designer'); ?></option>
                 </select>
             </div>      
         </div>   
-        <div class="nbd-field-info" ng-show="options.quantity_type == 'r' && options.quantity_enable == 'y'" style="display: none;">
+        <div class="nbd-field-info" ng-show="options.quantity_type == 'r' && options.quantity_enable == 'y'">
             <div class="nbd-field-info-1">
                 <p><label><b><?php _e('Step value', 'web-to-print-online-designer'); ?></b><nbd-tip data-tip="<?php _e('Enter the step for the handle.', 'web-to-print-online-designer'); ?>" ></nbd-tip></label></p>                                              
             </div>  
@@ -38,9 +38,9 @@
                             <th><?php _e('Step', 'web-to-print-online-designer'); ?></th>
                         </tr>   
                         <tr>
-                            <td><input type="number" string-to-number name="options[quantity_min]" class="nbd-short-ip" ng-model="options.quantity_min" ng-min="1"/></td>
-                            <td><input type="number" string-to-number name="options[quantity_max]" class="nbd-short-ip" ng-model="options.quantity_max" ng-min="1"/></td>
-                            <td><input type="number" string-to-number name="options[quantity_step]" class="nbd-short-ip" ng-model="options.quantity_step" ng-min="1"/></td>
+                            <td><input type="text" name="options[quantity_min]" class="nbd-short-ip" ng-model="options.quantity_min"/></td>
+                            <td><input type="text" name="options[quantity_max]" class="nbd-short-ip" ng-model="options.quantity_max"/></td>
+                            <td><input type="text" name="options[quantity_step]" class="nbd-short-ip" ng-model="options.quantity_step"/></td>
                         </tr>
                     </table>
                 </div>    

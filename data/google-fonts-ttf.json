@@ -2708,22 +2708,6 @@
   },
   {
    "kind": "webfonts#webfont",
-   "family": "Buda",
-   "category": "display",
-   "variants": [
-    "300"
-   ],
-   "subsets": [
-    "latin"
-   ],
-   "version": "v8",
-   "lastModified": "2017-10-10",
-   "files": {
-    "300": "http://fonts.gstatic.com/s/buda/v8/GFDqWAN8mnyIJSSrG7U.ttf"
-   }
-  },
-  {
-   "kind": "webfonts#webfont",
    "family": "Buenard",
    "category": "serif",
    "variants": [
@@ -3693,25 +3677,6 @@
    "lastModified": "2017-10-10",
    "files": {
     "regular": "http://fonts.gstatic.com/s/clickerscript/v5/raxkHiKPvt8CMH6ZWP8PdlEq72rY.ttf"
-   }
-  },
-  {
-   "kind": "webfonts#webfont",
-   "family": "Coda",
-   "category": "display",
-   "variants": [
-    "regular",
-    "800"
-   ],
-   "subsets": [
-    "latin",
-    "latin-ext"
-   ],
-   "version": "v13",
-   "lastModified": "2017-10-10",
-   "files": {
-    "regular": "http://fonts.gstatic.com/s/coda/v13/SLXHc1jY5nQ8JUI.ttf",
-    "800": "http://fonts.gstatic.com/s/coda/v13/SLXIc1jY5nQ8HeIgTp4.ttf"
    }
   },
   {
@@ -10664,23 +10629,6 @@
   },
   {
    "kind": "webfonts#webfont",
-   "family": "Molle",
-   "category": "handwriting",
-   "variants": [
-    "italic"
-   ],
-   "subsets": [
-    "latin",
-    "latin-ext"
-   ],
-   "version": "v6",
-   "lastModified": "2017-11-21",
-   "files": {
-    "italic": "http://fonts.gstatic.com/s/molle/v6/E21n_dL5hOXFhWEsXzg.ttf"
-   }
-  },
-  {
-   "kind": "webfonts#webfont",
    "family": "Monda",
    "category": "sans-serif",
    "variants": [
@@ -12021,32 +11969,6 @@
     "700italic": "http://fonts.gstatic.com/s/opensans/v15/memnYaGs126MiZpBA-UFUKWiUOhs.ttf",
     "800": "http://fonts.gstatic.com/s/opensans/v15/mem5YaGs126MiZpBA-UN8rs-VQ.ttf",
     "800italic": "http://fonts.gstatic.com/s/opensans/v15/memnYaGs126MiZpBA-UFUKW-U-hs.ttf"
-   }
-  },
-  {
-   "kind": "webfonts#webfont",
-   "family": "Open Sans Condensed",
-   "category": "sans-serif",
-   "variants": [
-    "300",
-    "300italic",
-    "700"
-   ],
-   "subsets": [
-    "latin",
-    "greek-ext",
-    "latin-ext",
-    "cyrillic-ext",
-    "greek",
-    "cyrillic",
-    "vietnamese"
-   ],
-   "version": "v12",
-   "lastModified": "2017-10-11",
-   "files": {
-    "300": "http://fonts.gstatic.com/s/opensanscondensed/v12/z7NFdQDnbTkabZAIOl9il_O6KJj73e7Ff1GhPuI.ttf",
-    "300italic": "http://fonts.gstatic.com/s/opensanscondensed/v12/z7NHdQDnbTkabZAIOl9il_O6KJj73e7Fd_-7suDMQg.ttf",
-    "700": "http://fonts.gstatic.com/s/opensanscondensed/v12/z7NFdQDnbTkabZAIOl9il_O6KJj73e7Ff0GmPuI.ttf"
    }
   },
   {
@@ -16345,27 +16267,6 @@
   },
   {
    "kind": "webfonts#webfont",
-   "family": "Sunflower",
-   "category": "sans-serif",
-   "variants": [
-    "300",
-    "500",
-    "700"
-   ],
-   "subsets": [
-    "korean",
-    "latin"
-   ],
-   "version": "v3",
-   "lastModified": "2018-04-04",
-   "files": {
-    "300": "http://fonts.gstatic.com/s/sunflower/v3/RWmPoKeF8fUjqIj7Vc-06MfiqQ.ttf",
-    "500": "http://fonts.gstatic.com/s/sunflower/v3/RWmPoKeF8fUjqIj7Vc-0sMbiqQ.ttf",
-    "700": "http://fonts.gstatic.com/s/sunflower/v3/RWmPoKeF8fUjqIj7Vc-0-MDiqQ.ttf"
-   }
-  },
-  {
-   "kind": "webfonts#webfont",
    "family": "Sunshiney",
    "category": "handwriting",
    "variants": [
@@ -17177,22 +17078,6 @@
    "lastModified": "2017-10-10",
    "files": {
     "regular": "http://fonts.gstatic.com/s/unicaone/v5/DPEuYwWHyAYGVTSmalshdg.ttf"
-   }
-  },
-  {
-   "kind": "webfonts#webfont",
-   "family": "UnifrakturCook",
-   "category": "display",
-   "variants": [
-    "700"
-   ],
-   "subsets": [
-    "latin"
-   ],
-   "version": "v9",
-   "lastModified": "2017-10-10",
-   "files": {
-    "700": "http://fonts.gstatic.com/s/unifrakturcook/v9/IurA6Yli8YOdcoky-0PTTdkm56n05Uw1.ttf"
    }
   },
   {

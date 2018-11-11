@@ -208,7 +208,7 @@ if( !class_exists('Nbdesigner_Settings') ) {
             }
             //textarea
             else if ($type == 'textarea') {
-                $input_html = '<textarea id="' . esc_attr($id) . '" name="' . esc_attr($id) . '" class="' . esc_attr($class) . '" style="' . esc_attr($css) . '">' . stripslashes(esc_textarea($current_value)) . '</textarea>' . $new_line_desc;
+                $input_html = '<textarea id="' . esc_attr($id) . '" name="' . esc_attr($id) . '" '. $placeholder .' class="' . esc_attr($class) . '" style="' . esc_attr($css) . '">' . stripslashes(esc_textarea($current_value)) . '</textarea>' . $new_line_desc;
             }
             //select
             else if ($type == 'select' || $type == 'multiselect') {
@@ -353,6 +353,9 @@ if( !class_exists('Nbdesigner_Settings') ) {
                     }
                 }
                 update_option($key, $post_val);
+                if( $key == 'nbdesigner_truetype_fonts' ){
+                    $this->remove_truetype_php_fonts($post_val);
+                }
             }
             $this->setting_cron_job($latest_recurrence);
             $this->update_option_frontend();
@@ -382,7 +385,35 @@ if( !class_exists('Nbdesigner_Settings') ) {
             }else{            
                 wp_clear_scheduled_hook( 'nbdesigner_admin_notifications_event' );    
             }
-        }        
+        } 
+        public function remove_truetype_php_fonts( $truetype_list ){
+            if($truetype_list != ''){
+                $fonts = preg_split('/\r\n|[\r\n]/', $truetype_list);
+                if( count($fonts) ){
+                    $all_fonts = nbd_get_fonts( true );
+                    $need_remove = array();
+                    foreach($fonts as $font){
+                        $font = str_replace(' ', '', strtolower(trim($font)));
+                        foreach($all_fonts as $afont){
+                            $afont_name = str_replace(' ', '', strtolower(trim($afont->name)));
+                            if( $font == $afont_name ){
+                                $need_remove[] = str_replace(' ', '', strtolower(trim($afont->alias)));
+                            }
+                        }
+                    }
+                    foreach($need_remove as $rfont){
+                        $variations = array('', 'b', 'i', 'bi');
+                        $exts = array('.php', '.z', '.ctg.z');
+                        foreach($variations as $variation){
+                            foreach($exts as $ext){
+                                $path = K_PATH_FONTS . $rfont . $variation . $ext;
+                                if( file_exists($path) ) unlink ($path);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public function reset_options(){
             $options_in_tab = $this->get_options_by_tab($this->current_tab);
             foreach( $options_in_tab as $key => $value ) {

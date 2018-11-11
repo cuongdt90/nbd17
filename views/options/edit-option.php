@@ -58,7 +58,7 @@
                                         <div id="misc-publishing-actions">
                                             <div class="misc-pub-section misc-pub-priority" id="priority">
                                                 <?php _e('Priority', 'web-to-print-online-designer'); ?>
-                                                <input type="number" value="<?php echo $options['priority']; ?>" maxlength="3"
+                                                <input type="number" value="<?php echo $options['priority']; ?>" maxlength="3" max="127"
                                                     id="nbo_meta_priority" name="priority" class="meta-priority" min="1"
                                                     step="1"/>                                    
                                             </div>

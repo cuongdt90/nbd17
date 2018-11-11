@@ -505,9 +505,9 @@ jQuery(document).ready(function ($) {
     });  
     jQuery(".nbd-temp-date").datepicker({
         dateFormat: 'yy-mm-dd',
-        onSelect: function (selectedDate) {console.log(jQuery(this));
+        onSelect: function (selectedDate) {
             var date = encodeURI(selectedDate);
-            var href = jQuery('.nbd-temp-date-update').attr('href');
+            var href = jQuery(this).next('.nbd-temp-date-update').attr('href');
             href = addParameter(href, 'created_date', date, false);
             jQuery('.nbd-temp-date-update').hide();
             jQuery(this).next('.nbd-temp-date-update').show().attr('href', href);

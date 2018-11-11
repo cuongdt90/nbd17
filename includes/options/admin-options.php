@@ -309,15 +309,17 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
             }else{
                 $options['display_type'] = 1;
             }
-            foreach ( $options["fields"] as $f_index => $field ){
-                $array_price_type = array('f', 'p', 'p+', 'c' );
-                if( !in_array($field["general"]['price_type'], $array_price_type) ){
-                    $options["fields"][$f_index]["general"]['price_type'] = $field["general"]['data_type'] == 'i' ? 'c' : 'f';
-                }
-                if( isset( $field["conditional"]['depend'] ) ){
-                    foreach( $field["conditional"]['depend'] as $d_index => $depend ){
-                        if( ($depend['operator'] == 'i' || $depend['operator'] == 'n') && $depend['val'] == '? string: ?' ){
-                            unset($options["fields"][$f_index]["conditional"]['depend'][$d_index]);
+            if( isset($options["fields"]) ){
+                foreach ( $options["fields"] as $f_index => $field ){
+                    $array_price_type = array('f', 'p', 'p+', 'c' );
+                    if( !in_array($field["general"]['price_type'], $array_price_type) ){
+                        $options["fields"][$f_index]["general"]['price_type'] = $field["general"]['data_type'] == 'i' ? 'c' : 'f';
+                    }
+                    if( isset( $field["conditional"]['depend'] ) ){
+                        foreach( $field["conditional"]['depend'] as $d_index => $depend ){
+                            if( ($depend['operator'] == 'i' || $depend['operator'] == 'n') && $depend['val'] == '? string: ?' ){
+                                unset($options["fields"][$f_index]["conditional"]['depend'][$d_index]);
+                            }
                         }
                     }
                 }
@@ -351,9 +353,9 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                     'quantity_type' => 'r',
                     'quantity_discount_type' => 'p',
                     'quantity_min' => 1,
-                    'quantity_max' => '',
+                    'quantity_max' => 100,
                     'quantity_step' => 1,
-                    'quantity_enable' => 'y',
+                    'quantity_enable' => 'n',
                     'quantity_breaks' => array(
                         array('val' =>  1, 'dis'    =>  '')
                     ),

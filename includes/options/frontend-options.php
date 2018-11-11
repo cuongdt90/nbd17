@@ -410,10 +410,10 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         }
         public function add_cart_item_data( $cart_item_data, $product_id, $variation_id, $quantity ){
             $post_data = $_POST;
-            if( isset($post_data['nbd-field']) ){
+            if( isset($post_data['nbd-field']) || isset($post_data['nbo-add-to-cart']) ){
                 $option_id = $this->get_product_option($product_id);
                 $options = $this->get_option($option_id);
-                $nbd_field = $post_data['nbd-field'];
+                $nbd_field = isset($post_data['nbd-field']) ? $post_data['nbd-field'] : array();
                 if( isset($cart_item_data['nbd-field']) ){
                     /* Bulk variation */
                     $nbd_field = $cart_item_data['nbd-field'];
@@ -686,8 +686,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                 if($_options){
                     $options = unserialize($_options['fields']);
                     if( !isset($options['fields']) ){
-                        echo ''; 
-                        return;
+                        //echo ''; 
+                        //return;
+                        $options['fields'] = array();
                     }
                     foreach ($options['fields'] as $key => $field){
                         if($field['appearance']['change_image_product'] == 'y'){
@@ -735,13 +736,18 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                     $variations = array();
                     $form_values = array();
                     $cart_item_key = '';
+                    $quantity = 1;
                     if( isset($_POST['nbd-field']) ){
                         $form_values = $_POST['nbd-field'];
+                        $quantity = $_POST["nbo-quantity"];
                     }else if( isset($_GET['nbo_cart_item_key']) && $_GET['nbo_cart_item_key'] != '' ){
                         $cart_item_key = $_GET['nbo_cart_item_key'];
                         $cart_item = WC()->cart->get_cart_item( $cart_item_key );
                         if( isset($cart_item['nbo_meta']) ){
                             $form_values = $cart_item['nbo_meta']['field'];
+                        }
+                        if ( isset( $cart_item["quantity"] ) ) {
+                            $quantity = $cart_item["quantity"];
                         }
                     }
                     if( $type == 'variable' ){
@@ -763,14 +769,15 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         'product_id'  =>   $product_id,
                         'options'   =>  $options,
                         'type'  => $type,
+                        'quantity'  => $quantity,
                         'price'  =>  $product->get_price(),
                         'is_sold_individually'  =>  $product->is_sold_individually(),
                         'variations'  => json_encode( (array) $variations ),
                         'form_values'  => $form_values,
                         'cart_item_key'  => $cart_item_key
                     ));
-                    $bulk_variation_form = ob_get_clean();
-                    echo $bulk_variation_form;
+                    $options_form = ob_get_clean();
+                    echo $options_form;
                 }
             }
         }

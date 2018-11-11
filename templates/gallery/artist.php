@@ -6,6 +6,12 @@ get_header(); ?>
 <?php 
     do_action( 'nbd_before_designer_page_content' ); 
     $user_id = (isset($_GET['id']) && $_GET['id'] != '' ) ? intval( $_GET['id'] ) : 0;
+    if($user_id == 0){
+        global $wp_query;
+        $wp_query->set_404();
+        status_header( 404 );
+        get_template_part( 404 ); exit();
+    }
     $user_infos = nbd_get_artist_info($user_id);
     $wp_user_infos = get_user_by('id', $user_id);
     $banner_url = wp_get_attachment_url( $user_infos['nbd_artist_banner'] );

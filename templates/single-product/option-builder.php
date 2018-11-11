@@ -109,6 +109,10 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
             border-top-color: rgba(20,20,20,0.92);
         }
     }
+    .nbo-disabled {
+        opacity: 0.3;
+        pointer-events: none;
+    }
     .nbd-help-tip {
         vertical-align: middle;
         cursor: help;
@@ -242,7 +246,7 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
     .nbd-option-wrapper label {
         cursor: pointer;
         margin: 0 !important;
-        margin-right: 5px !important;
+        margin: 0px 4px 2px!important;
     }
     .nbd-swatch {
         width: 36px;
@@ -605,6 +609,11 @@ foreach($options["fields"] as $key => $field){
     }
     if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
 }
+    $disable_quantity_input = false;
+    if( $options['quantity_enable'] == 'y' && !$is_sold_individually ){
+        $disable_quantity_input = true;
+        include(NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/quantity'.$prefix.'.php');
+    }
     if( $display_type == 2 ): ?>
             </tbody>
         </table> 
@@ -620,7 +629,7 @@ if( $cart_item_key != ''){
     <?php    
 }
 ?>
-        <div style="text-align: right;"><a class="button" ng-click="reset_options()"><?php _e('Clear selection', 'web-to-print-online-designer'); ?></a></div>
+        <div ng-if="fields.length" style="text-align: right;"><a class="button nbd-button" ng-click="reset_options()"><?php _e('Clear selection', 'web-to-print-online-designer'); ?></a></div>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields and quantity input!', 'web-to-print-online-designer'); ?></p>
         <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
@@ -1166,7 +1175,7 @@ if( $cart_item_key != ''){
             total_check = logic == 'a' ? true : false;
             angular.forEach(field.conditional.depend, function(con, key){
                 if( con.id != '' ){
-                    if( con.id != '' && !$scope.nbd_fields[con.id].enable ){
+                    if( !$scope.nbd_fields[con.id].enable ){
                         check[key] = false;
                     }else{
                         switch(con.operator){
@@ -1200,6 +1209,10 @@ if( $cart_item_key != ''){
             jQuery('input[name="add-to-cart"]').remove();
             jQuery('button[name="add-to-cart"]').attr('name', 'nbo-add-to-cart');
             jQuery('input[name="quantity"], .quantity .screen-reader-text').remove();
+            <?php endif; ?>
+            <?php if($disable_quantity_input): ?>
+                $scope.quantity = $scope.validate_int("<?php echo $quantity; ?>");
+                jQuery(qty_selector + ', input[name="quantity"]').addClass('nbo-disabled');
             <?php endif; ?>
             $scope.nbd_fields = {};
             $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );
@@ -1263,6 +1276,9 @@ if( $cart_item_key != ''){
         };
         $scope.reset_options = function(){
             $scope.init();
+        };
+        $scope.change_quantity = function(){
+            jQuery('input[name="quantity"]').val($scope.quantity).trigger( 'change.nbo' );
         };
         $scope.select_all_variation = function( $event ){
             var el = angular.element($event.target),
@@ -1867,6 +1883,18 @@ if( $cart_item_key != ''){
                 });
                 ngModel.$formatters.push(function(value) {
                     return parseFloat(value);
+                });
+            }
+        };
+    }).directive('convertToNumber', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function(val) {
+                    return val != null ? parseInt(val, 10) : null;
+                });
+                ngModel.$formatters.push(function(val) {
+                    return val != null ? '' + val : null;
                 });
             }
         };
