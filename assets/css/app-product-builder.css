@@ -3889,7 +3889,7 @@ img {
   text-align: center;
   -webkit-tap-highlight-color: transparent;
   position: absolute;
-  bottom: 0;
+  bottom: 15px;
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);

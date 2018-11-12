@@ -13,21 +13,21 @@
                                     <div class="stage nbdpb-full-contain" id='stage-{{$index}}' data-stage="{{$index}}">
                                         <div class="stage-main">
                                             <div class="design-zone nbdpb-full-contain">
-                                                <canvas nbd-canvas class="nbdpb-full-contain" stage="stage" index="{{$index}}" id="canvas-{{$index}}"></canvas>
+                                                <canvas nbd-canvas class="nbdpb-full-contain" stage="stage" index="{{$index}}" id="canvas-{{$index}}" last="{{$last ? 1 : 0}}"></canvas>
                                             </div>
                                         </div>
-                                        <div class="attr-name"><span>Base</span></div>
+                                        <div class="attr-name" style="display: none"><span>{{resource.proAttrs[resource.proAttrActive].name}}</span></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="nbdpb-owl-nav">
-                                <button type="button" role="presentation" class="nbdpb-owl-prev js-nav-item">
-                                    <i aria-label="Previous" class="icon-nbd icon-nbd-chevron-right rotate180"></i>
-                                </button>
-                                <button type="button" role="presentation" class="nbdpb-owl-next js-nav-item">
-                                    <i aria-label="Next" class="icon-nbd icon-nbd-chevron-right"></i>
-                                </button>
-                            </div>
+<!--                            <div class="nbdpb-owl-nav">-->
+<!--                                <button type="button" role="presentation" class="nbdpb-owl-prev js-nav-item">-->
+<!--                                    <i aria-label="Previous" class="icon-nbd icon-nbd-chevron-right rotate180"></i>-->
+<!--                                </button>-->
+<!--                                <button type="button" role="presentation" class="nbdpb-owl-next js-nav-item">-->
+<!--                                    <i aria-label="Next" class="icon-nbd icon-nbd-chevron-right"></i>-->
+<!--                                </button>-->
+<!--                            </div>-->
 <!--                            <div class="nbdpb-owl-dots">-->
 <!--                                <button role="button" class="nbdpb-owl-dot nbdpb-active"><span></span></button>-->
 <!--                                <button role="button" class="nbdpb-owl-dot"><span></span></button>-->

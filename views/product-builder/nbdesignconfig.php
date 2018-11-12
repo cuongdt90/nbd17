@@ -53,8 +53,7 @@ $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
         is_logged    :   <?php echo nbd_user_logged_in(); ?>,
         is_wpml	:	<?php echo $is_wpml; ?>,
         login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",
-        product_data  :   <?php echo json_encode(nbd_get_product_builder_info( $product_id, $variation_id, $nbd_item_key, $task)); ?>,
-        templates: <?php echo json_encode(nbd_get_resource_templates($product_id, $variation_id)); ?>,
+        product_data : <?php echo json_encode(nbd_get_product_builder_info( $product_id, $variation_id, $nbd_item_key, $task)); ?>,
         nbdlangs: {
             alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>"
         }

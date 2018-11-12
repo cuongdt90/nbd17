@@ -2514,12 +2514,11 @@ class Nbdesigner_Plugin {
         }
         return true;
     }
-    private function store_product_builder_design_data($nbd_item_key, $data, $product_config){
+    private function store_product_builder_design_data($nbd_item_key, $data){
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
         if(file_exists($path.'_old')) Nbdesigner_IO::delete_folder($path.'_old');
         if(file_exists($path)) rename($path, $path.'_old');
         if ( wp_mkdir_p($path) ) {
-            file_put_contents($path . '/product.json', serialize($product_config));
             foreach ($data as $key => $val) {
                 if($key == 'design'){
                     $full_name = $path . '/design.json';
@@ -2883,50 +2882,12 @@ class Nbdesigner_Plugin {
             }
         }
         $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_pb_key;
-        if( $task == 'create' ){
-            $product_config = [
-                [
-                    'img_src_width' => '300',
-                    'img_src_height' => '400',
-                    'area_design_width' => '400',
-                    'area_design_height' => '300',
-                ],
-                [
-                    'img_src_width' => '300',
-                    'img_src_height' => '400',
-                    'area_design_width' => '400',
-                    'area_design_height' => '300',
-                ]
-            ];
-        }else{
-            $product_config = unserialize(file_get_contents($path . '/product.json'));
-        }
 
-//        $att_swatch = (isset($_POST['att_swatch']) && $_POST['att_swatch'] != '') ? $_POST['att_swatch'] : '';
-//        $product_config = apply_filters('nbd_save_customer_design_product_config', $product_config, $product_option, $att_swatch);
-
-//        $product_config = apply_filters('nbd_save_customer_design_product_config', $product_config, $product_option, $att_swatch);
-        $save_status = $this->store_product_builder_design_data($nbd_item_pb_key, $_FILES, $product_config);
-
-        $width = absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) ? absint(nbdesigner_get_option('nbdesigner_thumbnail_width')) : 300;
-        if( $task == 'create' ){
-            $width = absint(nbdesigner_get_option('nbdesigner_template_width')) ? absint(nbdesigner_get_option('nbdesigner_template_width')) : 300;
-        }
-
+        $save_status = $this->store_product_builder_design_data($nbd_item_pb_key, $_FILES);
         if(false != $save_status){
             /* todo edit $product_config if has custom dimension */
-            $path_config = $path . '/config.json';
-            $config = nbd_get_data_from_json($path_config);
-            if( count( $config->product ) ){
-                $product_config = array();
-                foreach($config->product as $side){
-                    $product_config[] = (array)$side;
-                }
-            };
-
-            $this->create_preview_design($path, $path.'/preview', $product_config, $width, $width);
             $result['image'] = array();
-            $images = Nbdesigner_IO::get_list_images($path.'/preview', 1);
+            $images = Nbdesigner_IO::get_list_images($path.'/', 1);
             foreach($images as $image){
                 $filename = pathinfo($image, PATHINFO_FILENAME);
                 $result['image'][$filename] = Nbdesigner_IO::wp_convert_path_to_url($image);
@@ -2938,17 +2899,14 @@ class Nbdesigner_Plugin {
                 WC()->session->set('nbd_item_pb_key_'.$nbd_item_cart_key, $nbd_item_pb_key);
             }
 
-            // update post meta
-            update_post_meta($product_id, 'product_builder_key', $nbd_item_pb_key);
-
+            if ($task == 'create') {
+                // update post meta
+                update_post_meta($product_id, 'product_builder_key', $nbd_item_pb_key);
+            }
         }
         do_action('after_nbd_save_product_builder_design', $result);
         echo json_encode($result);
         wp_die();
-    }
-
-    public function product_builder_html(){
-        echo 'aaa';
     }
 
     public function merge_product_config( $product_config, $width, $height, $number_side ){

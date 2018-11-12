@@ -1089,34 +1089,16 @@ function nbd_get_product_info( $product_id, $variation_id, $nbd_item_key = '', $
 
 function nbd_get_product_builder_info($product_id,$variation_id,$nbd_item_key = '',$task){
     $data = array();
-    $nbd_item_cart_key = ($variation_id > 0) ? $product_id . '_' . $variation_id : $product_id;
-    $_nbd_item_key = WC()->session->get('nbd_item_key_'.$nbd_item_cart_key);
-    if( $_nbd_item_key && $nbd_item_key == '' ) $nbd_item_key = $_nbd_item_key;
+    $product_builder_key = get_post_meta($product_id, 'product_builder_key')[0];
+    $data['folder_product_builder'] = $product_builder_key;
 
-    $product_builder_key = get_post_meta($product_id, 'product_builder_key');
-
-    $data['product_builder_key'] = $product_builder_key;
-
-    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $nbd_item_key;
+    $path = NBDESIGNER_CUSTOMER_DIR . '/' . $product_builder_key;
     /* Path not exist in case add to cart before design, session has been init */
-    if( $nbd_item_key == '' || !file_exists($path) ){
-        // TODO get option product side
-        $data['product'] = [
-            [
-                'img_src_width' => '300',
-                'img_src_height' => '400',
-                'area_design_width' => '400',
-                'area_design_height' => '300',
-            ],
-            [
-                'img_src_width' => '300',
-                'img_src_height' => '400',
-                'area_design_width' => '400',
-                'area_design_height' => '300',
-            ]
-        ];
-    }else {
-        $data['product'] = unserialize(file_get_contents($path . '/product.json'));
+    if ( !isset($product_builder_key) || !file_exists($path)) {
+        // TODO : set data when init product buider
+        $data['config'] = null;
+        $data['design'] = null;
+    }else{
         $data['config'] = nbd_get_data_from_json($path . '/config.json');
         if(isset($data['config']->product)){
             $data['product'] = $data['config']->product;
