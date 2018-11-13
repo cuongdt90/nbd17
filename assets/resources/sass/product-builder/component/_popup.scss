@@ -26,7 +26,8 @@
   &.is-admin-bar {
     top: 32px;
     @media screen and (max-width: 782px) {
-      top: 46px;
+      //top: 46px;
+      top: 0;
     }
   }
 }

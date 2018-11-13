@@ -12,7 +12,10 @@
                                 <div ng-repeat="stage in stages" ng-class="{'nbdpb-active': $index == 0}" class="nbdpb-carousel-item nbdpb-full-contain">
                                     <div class="stage nbdpb-full-contain" id='stage-{{$index}}' data-stage="{{$index}}">
                                         <div class="stage-main">
-                                            <div class="design-zone nbdpb-full-contain">
+                                            <div class="design-zone nbdpb-full-contain" ng-style="{'width': stage.config.width,
+                                            'height': stage.config.height,
+                                            'top': calcStyle(stage.config.top),
+                                            'left': calcStyle(stage.config.left)}">
                                                 <canvas nbd-canvas class="nbdpb-full-contain" stage="stage" index="{{$index}}" id="canvas-{{$index}}" last="{{$last ? 1 : 0}}"></canvas>
                                             </div>
                                         </div>
@@ -60,7 +63,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="design-finish">
+                            <div class="design-finish" ng-click="saveData()">
                                 <span>Done</span>
                             </div>
                         </div>
@@ -72,7 +75,7 @@
                                 <div class="product-value-main">
                                     <div class="nbdpb-scroll">
                                         <div class="values">
-                                            <div ng-repeat="proValue in resource.proAttrs[resource.proAttrActive].proValue" ng-click="addProValue($index)" class="value-item">
+                                            <div ng-repeat="proValue in resource.proAttrs[resource.proAttrActive].proValue" ng-click="addProValue($index)" ng-class="($index == resource.proAttrs[resource.proAttrActive].proValueActive) ? 'active' : ''" class="value-item">
                                                 <div class="value-color"></div>
                                                 <span class="value-name">{{proValue.name}}</span>
                                             </div>
@@ -82,7 +85,7 @@
 
                                 <div class="product-value-act">
                                     <div class="value-act-close value-act-item" ng-click="showValue()"><i class="icon-nbd icon-nbd-clear"></i></div>
-                                    <div class="value-act-finish value-act-item" ng-click="saveDesign()"><i class="icon-nbd icon-nbd-fomat-done"></i></div>
+                                    <div class="value-act-finish value-act-item" ng-click="saveLayer()"><i class="icon-nbd icon-nbd-fomat-done"></i></div>
                                 </div>
                             </div>
 

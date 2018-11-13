@@ -10495,8 +10495,6 @@ var appConfig = {
 };
 var nbdpbApp = angular.module('nbdpb-app', []);
 nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '$window', '$timeout', '$http', '$document', '$interval', function ($scope, FabricWindow, NBDDataFactory, $window, $timeout, $http, $document, $interval) {
-
-    console.log(NBDESIGNCONFIG);
     // debugger;
 
     // init
@@ -10505,6 +10503,8 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
     $scope.onloadTemplate = false;
     $scope.side = [0, 1];
     $scope.init = function () {
+        // if ($scope.isStartDesign) $scope.initSettings();
+        // console.log(NBDESIGNCONFIG);
         $scope.initSettings();
     };
     $scope.defaultStageStates = {};
@@ -10520,17 +10520,11 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             config: {}
         };
         angular.copy(NBDESIGNCONFIG, $scope.settings);
-        angular.extend($scope.settings, {
-            showRuler: false,
-            showGrid: false,
-            bleedLine: false,
-            snapMode: { status: false, type: 'layer' },
-            showWarning: { oos: false, ilr: false }
-        });
+        angular.extend($scope.settings, {});
         $scope.rateConvertCm2Px96dpi = 37.795275591;
         $scope.currentStage = 0;
         $scope.tempStageDesign = null;
-        $scope.includeExport = ['itemId', 'opIndex', 'selectable', 'lockMovementX', 'lockMovementY', 'lockScalingX', 'lockScalingY', 'evented'];
+        $scope.includeExport = ['itemId', 'opIndex', 'lockMovementX', 'lockMovementY', 'lockScalingX', 'lockScalingY', 'evented'];
         $scope.processProductSettings();
     };
     $scope.processProductSettings = function () {
@@ -10538,7 +10532,12 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             var indexSide = 0;
             _.each($scope.settings.product_data.design, function (side, index) {
                 $scope.stages[indexSide] = {
-                    config: {},
+                    config: {
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%'
+                    },
                     states: {},
                     undos: [],
                     redos: [],
@@ -11134,8 +11133,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                 }]
             }];
         }
-
-        console.log($scope.stages);
     };
     $scope.initStageSetting = function (id) {
         $scope.setStageDimension(id);
@@ -11145,14 +11142,26 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
     $scope.setStageDimension = function (id) {
         id = angular.isDefined(id) ? id : $scope.currentStage;
         var _stage = $scope.stages[id];
-        var currentWidth = $('#stage-' + id + ' .stage-main').outerWidth(),
-            currentHeight = $('#stage-' + id + ' .stage-main').outerHeight();
-        $scope.stages[id]['canvas'].setDimensions({ 'width': currentWidth, 'height': currentHeight });
-    };
+        $timeout(function () {
+            var currentWidth = $('#stage-' + id + ' .stage-main').outerWidth(),
+                currentHeight = $('#stage-' + id + ' .stage-main').outerHeight();
+            $scope.stages[id]['canvas'].setDimensions({ 'width': currentWidth, 'height': currentHeight });
 
+            // set config with, height
+            $scope.stages[id].config.width = currentWidth;
+            $scope.stages[id].config.height = currentHeight;
+        });
+    };
     $scope.showValue = function (index) {
         $scope.resource.showValue = !$scope.resource.showValue;
         if (index) $scope.resource.proAttrActive = index;
+    };
+    $scope.saveLayer = function () {
+        $scope.resource.showValue = false;
+        $scope.deactiveAllLayer();
+    };
+    $scope.calcStyle = function (value) {
+        return value + 'px';
     };
     $scope.addProValue = function (index) {
         var proAttrActive = $scope.resource.proAttrs[$scope.resource.proAttrActive];
@@ -11161,15 +11170,18 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                 var _item = $scope.getLayerById(proAttrActive.itemId, stage),
                     element = _item.getElement();
                 element.setAttribute("src", url);
-                _item.set({
-                    dirty: true,
-                    width: _item.width,
-                    height: _item.height,
-                    scaleX: _item.scaleX,
-                    scaleY: _item.scaleY
+                fabric.Image.fromURL(url, function (obj) {
+                    _item.set({
+                        dirty: true,
+                        width: obj.width,
+                        height: obj.height,
+                        scaleX: _item.scaleX * _item.width / obj.width,
+                        scaleY: _item.scaleY * _item.height / obj.height
+                    });
+                    _item.setCoords();
+                    $scope.deactiveAllLayer(stage);
+                    $scope.renderStage();
                 });
-                $scope.deactiveAllLayer(stage);
-                $scope.renderStage();
             });
         } else {
             var newItemId = '';
@@ -11206,6 +11218,9 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                 });
             });
         }
+
+        // set proValue Active
+        proAttrActive.proValueActive = index;
     };
     $scope.getLayerById = function (itemId) {
         var stage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -11222,7 +11237,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         });
         return _object;
     };
-
     $scope.deactiveAllLayer = function (stage_id) {
         stage_id = stage_id ? stage_id : $scope.currentStage;
         $scope.stages[stage_id]['canvas'].discardActiveObject();
@@ -11333,7 +11347,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             }
         });
     };
-
     $scope.saveDesign = function () {
         _.each($scope.stages, function (stage, index) {
             $scope.deactiveAllLayer(index);
@@ -11345,7 +11358,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             stage.design = _canvas.toDataURL();
         });
     };
-
     $scope.onObjectAdded = function (id, options) {
         var _stage = $scope.stages[$scope.currentStage],
             _canvas = _stage['canvas'],
@@ -11411,14 +11423,12 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             }
         }
     };
-
     $scope.onSelectionCreated = function (id, options) {
         if (options.target) {
             $scope.showAdminTool = true;
             $scope.updateApp();
         }
     };
-
     $scope.onSelectionCleared = function (id, options) {
         $scope.showAdminTool = false;
         $scope.updateApp();
@@ -11456,8 +11466,11 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         });
         /* Load template after render canvas */
         if (last == '1') {
+            // console.log(appConfig.ready);
+            // if (!appConfig.ready) $scope.loadTemplateAfterRenderCanvas();
             appConfig.ready = true;
             $scope.loadTemplateAfterRenderCanvas();
+            // alert('aa');
         }
     });
     $scope.loadTemplateAfterRenderCanvas = function () {
@@ -11475,7 +11488,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             loadTemplate();
         });
     };
-
     $scope.insertTemplate = function (local, temp) {
         $scope.onloadTemplate = true;
         if (angular.isUndefined(temp.doNotShowLoading)) {
@@ -11510,6 +11522,19 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                                 _.each($scope.stages, function (_stage, index) {
                                     $scope.renderStage(index);
                                     $scope.onloadTemplate = false;
+                                    $scope.deactiveAllLayer();
+                                    $scope.renderStage(index);
+                                    $timeout(function () {
+                                        $scope.deactiveAllLayer();
+                                        $scope.renderStage(index);
+                                        if (index == $scope.stages.length - 1) {
+                                            $scope.onloadTemplate = false;
+                                            if (angular.isDefined(viewport)) {
+                                                $scope.resizeStages(viewport);
+                                            }
+                                        }
+                                    });
+
                                     // var layers = _stage.canvas.getObjects();
                                     // $scope.renderTextAfterLoadFont(layers, function(){
                                     //     $scope.deactiveAllLayer();
@@ -11537,6 +11562,8 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                             type = item.type;
                         if (type == 'image' || type == 'custom-image') {
                             fabric.Image.fromObject(item, function (_image) {
+                                //check task
+                                // _image.selectable = false;
                                 _canvas.add(_image);
                                 continueLoadLayer();
                             });
@@ -11553,11 +11580,75 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             loadDesign(temp.design, temp.viewport);
         }
     };
-
-    $scope.toggleStageLoading = function () {
-        alert('toogleStageLoading');
+    $scope.resizeStages = function (viewport) {
+        _.each($scope.stages, function (stage, index) {
+            // console.log(stage.config);
+            var currentViewport = $scope.calcViewport();
+            var newFitRec = $scope.fitRectangle(viewport.width, viewport.height, stage.config._width, stage.config._height, true);
+            // console.log(newFitRec);
+            var oldFitRec = $scope.fitRectangle(currentViewport.width, currentViewport.height, stage.config._width, stage.config._height, true);
+            var factor = oldFitRec.width / newFitRec.width;
+            if (factor != 1) {
+                stage.canvas.forEachObject(function (obj) {
+                    var scaleX = obj.scaleX,
+                        scaleY = obj.scaleY,
+                        left = obj.left,
+                        top = obj.top,
+                        tempScaleX = scaleX * factor,
+                        tempScaleY = scaleY * factor,
+                        tempLeft = left * factor,
+                        tempTop = top * factor;
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+                });
+                stage.canvas.calcOffset();
+                $scope.renderStage(index);
+            }
+            if (index == $scope.stages.length - 1) {
+                $scope.toggleStageLoading();
+            }
+        });
     };
-
+    $scope.fitRectangle = function (x1, y1, x2, y2, fill) {
+        var rec = {};
+        if (x2 < x1 && y2 < y1) {
+            if (fill) {
+                if (x1 / y1 > x2 / y2) {
+                    rec.width = x2 * y1 / y2;
+                    rec.height = y1;
+                    rec.top = 0;
+                    rec.left = (x1 * y2 - x2 * y1) / y2 / 2;
+                } else {
+                    rec.width = x1;
+                    rec.height = x1 * y2 / x2;
+                    rec.top = (x2 * y1 - x1 * y2) / x2 / 2;
+                    rec.left = 0;
+                }
+            } else {
+                rec.top = (x1 - x2) / 2;
+                rec.left = (y1 - y2) / 2;
+                rec.width = x2;
+                rec.height = y2;
+            }
+        } else if (x1 / y1 > x2 / y2) {
+            rec.width = x2 * y1 / y2;
+            rec.height = y1;
+            rec.top = 0;
+            rec.left = (x1 * y2 - x2 * y1) / y2 / 2;
+        } else {
+            rec.width = x1;
+            rec.height = x1 * y2 / x2;
+            rec.top = (x2 * y1 - x1 * y2) / x2 / 2;
+            rec.left = 0;
+        }
+        return rec;
+    };
+    $scope.toggleStageLoading = function () {
+        // alert('toogleStageLoading');
+    };
     $scope.$watch('isStartDesign', function () {
         var _stages = $scope.stages;
         if ($scope.isStartDesign) {
@@ -11568,7 +11659,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
     });
     $scope.init();
 }]);
-
 nbdpbApp.factory('FabricWindow', ['$window', function ($window) {
     /* Fabric configuration */
     $window.fabric.Object.prototype.set({
@@ -11581,7 +11671,8 @@ nbdpbApp.factory('FabricWindow', ['$window', function ($window) {
         cornerStrokeColor: 'rgba(63, 70, 82,1)',
         fill: NBDESIGNCONFIG.nbdesigner_default_color,
         hoverCursor: 'pointer',
-        borderOpacityWhenMoving: 0
+        borderOpacityWhenMoving: 0,
+        selectable: false
     });
     if (checkMobileDevice()) $window.fabric.Object.prototype.set({ cornerSize: 17 });
     $window.fabric.IText.prototype.set({
@@ -11645,7 +11736,6 @@ nbdpbApp.directive('nbdCanvas', ['FabricWindow', '$timeout', '$rootScope', funct
         }
     };
 }]);
-
 nbdpbApp.factory('NBDDataFactory', function ($http) {
     return {
         get: function get(action, data, callback) {
@@ -11683,7 +11773,6 @@ nbdpbApp.factory('NBDDataFactory', function ($http) {
         }
     };
 });
-
 function checkMobileDevice() {
     var isMobile = false;
     if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) isMobile = true;
@@ -11813,27 +11902,32 @@ function getTransform(el) {
 }
 $(document).ready(function ($) {
     $('#nbdpb-start-design').on('click', function () {
-        $('body').addClass('nbdpb-no-overflow');
-        $('.nbdpb-popup.popup-design').nbShowPopup().addClass('nbdpb-no-overflow');
-        $('.nbdpb-carousel').nbdpbCarousel();
-
         // console.log(angular);
         var $scope = angular.element(document.getElementById("design-container")).scope();
         $scope.isStartDesign = true;
         $scope.updateApp();
+
+        // console.log($('#stage-0 .stage-main').outerWidth());
+
+        $('body').addClass('nbdpb-no-overflow');
+        $('.nbdpb-popup.popup-design').nbShowPopup().addClass('nbdpb-no-overflow');
+        $('.nbdpb-carousel').nbdpbCarousel();
     });
 
     // swipe
     if (checkMobileDevice()) {
-        $("#nbdpb-app .stage").swipe({
-            //Generic swipe handler for all directions
-            swipe: function swipe(event, direction, distance, duration, fingerCount, fingerData) {
-                if (direction == 'left') $('.nbdpb-carousel-outer .nbdpb-owl-prev').triggerHandler('click');
-                if (direction == 'right') $('.nbdpb-carousel-outer .nbdpb-owl-next').triggerHandler('click');
-            },
-            // Default is 75px, set to 0 for demo so any distance triggers swipe
-            threshold: 0
-        });
+        if (NBDESIGNCONFIG.is_edit_pb) {
+            $("#nbdpb-app .stage").swipe({
+                //Generic swipe handler for all directions
+                swipe: function swipe(event, direction, distance, duration, fingerCount, fingerData) {
+                    // console.log(duration);
+                    if (direction == 'left') $('.nbdpb-carousel-outer .nbdpb-owl-prev').triggerHandler('click');
+                    if (direction == 'right') $('.nbdpb-carousel-outer .nbdpb-owl-next').triggerHandler('click');
+                },
+                // Default is 75px, set to 0 for demo so any distance triggers swipe
+                threshold: 0
+            });
+        }
     }
 });
 

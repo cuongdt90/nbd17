@@ -5,9 +5,14 @@
   .stage-main {
     width: 100%;
     height: calc(100% - 52px);
+    position: relative;
     @media screen and (max-width: 991px){
        height: calc(100% - 30px);
     }
+  }
+
+  .design-zone {
+    position: absolute;
   }
 
   .attr-name {

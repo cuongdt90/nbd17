@@ -3715,7 +3715,7 @@ img {
 
 @media screen and (max-width: 782px) {
   .nbdpb-popup.is-admin-bar {
-    top: 46px;
+    top: 0;
   }
 }
 
@@ -4058,12 +4058,17 @@ img {
 .nbdpb-product-builder .stage .stage-main {
   width: 100%;
   height: calc(100% - 52px);
+  position: relative;
 }
 
 @media screen and (max-width: 991px) {
   .nbdpb-product-builder .stage .stage-main {
     height: calc(100% - 30px);
   }
+}
+
+.nbdpb-product-builder .stage .design-zone {
+  position: absolute;
 }
 
 .nbdpb-product-builder .stage .attr-name {
@@ -4253,6 +4258,10 @@ img {
   cursor: pointer;
   min-width: 140px;
   min-height: 120px;
+}
+
+.nbdpb-product-builder .product-value .value-item.active {
+  background-color: #e2eff1;
 }
 
 @media screen and (max-width: 991px) {

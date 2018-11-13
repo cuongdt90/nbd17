@@ -25,7 +25,8 @@ if ( function_exists( 'icl_get_home_url' ) ) {
     $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
 }
 
-$fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
+$is_edit_pb = ($task == 'create') ? '1' : '0';
+
 ?>
 
 <script type="text/javascript">
@@ -34,6 +35,7 @@ $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
         lang_rtl    :   "<?php if(is_rtl()){ echo 'rtl'; } else {  echo 'ltr';  } ?>",
         is_mobile   :   "<?php echo wp_is_mobile(); ?>",
         ui_mode   :   "<?php echo $ui_mode; ?>",
+        is_edit_pb : "<?php echo $is_edit_pb;?>",
         stage_dimension :   {'width' : 500, 'height' : 500},
         is_designer :  <?php if(current_user_can('edit_nbd_template')) echo 1; else echo 0; ?>,
         assets_url  :   "<?php echo NBDESIGNER_PLUGIN_URL . 'assets/'; ?>",
