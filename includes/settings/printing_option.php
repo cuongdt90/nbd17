@@ -59,7 +59,31 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                             'yes' => __('Yes', 'web-to-print-online-designer'),
                             'no' => __('No', 'web-to-print-online-designer')
                         )                      
-                    ),                    
+                    ),   
+                    array(
+                        'title' => __( 'Change base price', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_change_base_price_html',
+                        'description' 	=> __('Change base price html on product detail.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    ),
+                    array(
+                        'title' => __( 'Tooltip position', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_tooltip_position',
+                        'description' 	=> '',
+                        'default'	=> 'top',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'top' => __('Top', 'web-to-print-online-designer'),
+                            'right' => __('Right', 'web-to-print-online-designer'),
+                            'bottom' => __('Bottom', 'web-to-print-online-designer'),
+                            'left' => __('Left', 'web-to-print-online-designer'),
+                        )                      
+                    ),
                     array(
                         'title' => __( 'jQuery selector for increase/decrease quantity button', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_selector_increase_qty_btn',

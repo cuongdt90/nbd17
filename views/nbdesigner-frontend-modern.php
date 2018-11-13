@@ -91,6 +91,26 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->	
         <style type="text/css">
+            .nbd-pro-mark-wrap {
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                display: inline-block;
+                background: #15171b;
+                height: 15px;
+                border-radius: 3px;
+                color: #fff !important;
+                text-transform: uppercase;
+                line-height: 15px;
+                font-size: 10px !important;
+                padding: 0 2px;
+            }
+            .nbd-pro-mark {
+                height: 12px;
+                width: 13px;
+                display: inline-block;
+                vertical-align: middle;
+            }
             .nbd-hoz-ruler {
                 position: absolute;
                 top: 0;
@@ -1436,7 +1456,7 @@
                     );
                     $link_edit_option = wp_nonce_url( $link_edit_option, 'nbo-edit' );
                 }                
-            }
+            };
         ?>
         <script type="text/javascript">
             var NBDESIGNCONFIG = {
@@ -1485,10 +1505,11 @@
                 fbID: "<?php echo $fbID; ?>",
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 link_get_options: "<?php echo $link_get_options; ?>",
+                valid_license: "<?php echo $valid_license ? 1 : 0; ?>",
                 enable_dropbox: false,
                 /* customize */
                 user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
-                contact_sheet: <?php echo json_encode(nbd_get_user_contact_sheet()); ?>,
+                contact_sheets: <?php echo json_encode(nbd_get_user_contact_sheet()); ?>,
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {
@@ -1502,7 +1523,8 @@
                         polygon: "<?php _e('Polygon', 'web-to-print-online-designer'); ?>",
                         circle: "<?php _e('Circle', 'web-to-print-online-designer'); ?>",
                         ellipse: "<?php _e('Ellipse', 'web-to-print-online-designer'); ?>",
-                        group: "<?php _e('Group', 'web-to-print-online-designer'); ?>"
+                        group: "<?php _e('Group', 'web-to-print-online-designer'); ?>",
+                        pro_license_alert: "<?php _e('This item is not available in Lite version!', 'web-to-print-online-designer'); ?>"
                     }
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];

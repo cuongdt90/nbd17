@@ -410,7 +410,7 @@
                 var ajaxurl = "<?php echo admin_url('admin-ajax.php');  ?>"
                 jQuery('#create_pdf').on('click', function(e){
                     e.preventDefault();
-                    <?php if(0): ?>
+                    <?php $valid_license = nbd_check_license();if(!$valid_license): ?>
                     swal({
                       title: "Oops!",
                       text: "This feature only available in PRO version.",

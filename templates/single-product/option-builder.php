@@ -1697,6 +1697,12 @@ if( $cart_item_key != ''){
             $scope.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + $scope.total_price ) * qty_factor / 100;
             $scope.final_price = $scope.total_price + $scope.basePrice - $scope.discount_by_qty;
             $scope.final_price = $scope.final_price > 0 ? $scope.final_price : 0;
+            <?php if($change_base == 'yes'): ?>
+            $scope.total_cart_price = $scope.final_price * qty;
+            $scope.total_cart_price = $scope.convert_to_wc_price( $scope.total_cart_price );
+            jQuery('.woocommerce-Price-amount').html($scope.total_cart_price);
+            jQuery('.nbo-base-price-html').html(nbds_frontend.total);
+            <?php endif; ?>
             $scope.final_price = $scope.convert_to_wc_price( $scope.final_price );
             $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
             $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
@@ -1901,13 +1907,16 @@ if( $cart_item_key != ''){
     }).directive( 'nbdHelpTip', function($timeout) {
         return {
             restrict: 'C',
+            scope: {
+                position: '@position'
+            },
             link: function( scope, element, attrs ) {
                 var tiptip_args = {
                     'attribute': 'data-tip',
                     'fadeIn': 50,
                     'fadeOut': 50,
                     'delay': 200,
-                    defaultPosition: "top"
+                    defaultPosition: scope.position ? scope.position : "top"
                 };
                 $timeout(function() {
                     jQuery(element).tipTip( tiptip_args );

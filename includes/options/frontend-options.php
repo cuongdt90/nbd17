@@ -95,10 +95,12 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             /* Quick view */
             add_action( 'woocommerce_api_nbo_quick_view', array( $this, 'quick_view' ) );
             
-            //add_filter( 'woocommerce_get_price_html', array( $this, 'change_product_price_display'), 10, 2 );
+            if( nbdesigner_get_option('nbdesigner_change_base_price_html') == 'yes' ){
+                add_filter( 'woocommerce_get_price_html', array( $this, 'change_product_price_display'), 10, 2 );
+            }
         }
         public function change_product_price_display( $price, $product ){
-            $price .= ' per package';
+            $price = '<span class="nbo-base-price-html">'. __('From', 'web-to-print-online-designer') .'</span> ' . $price;
             return $price;
         }
         public function add_empty_cart_button(){
@@ -569,7 +571,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                             }else{
                                 $factor[$k] = $option['price'][$quantity_break['index']];
                             }
-                        }            
+                        }
                     }
                     $_fields[$key]['price'] = 0;
                     foreach($factor as $fac){
@@ -670,6 +672,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             $args['currency_format_thousand_sep'] = stripslashes( wc_get_price_thousand_separator() );
             $args['currency_format'] = esc_attr( str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), get_woocommerce_price_format()) );
             $args['nbdesigner_hide_add_cart_until_form_filled'] = nbdesigner_get_option('nbdesigner_hide_add_cart_until_form_filled');
+            $args['total'] = __('Total', 'web-to-print-online-designer');
             return $args;
         }
         public function wp_enqueue_scripts(){
@@ -774,7 +777,9 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         'is_sold_individually'  =>  $product->is_sold_individually(),
                         'variations'  => json_encode( (array) $variations ),
                         'form_values'  => $form_values,
-                        'cart_item_key'  => $cart_item_key
+                        'cart_item_key'  => $cart_item_key,
+                        'change_base'  => nbdesigner_get_option('nbdesigner_change_base_price_html'),
+                        'tooltip_position'  => nbdesigner_get_option('nbdesigner_tooltip_position')
                     ));
                     $options_form = ob_get_clean();
                     echo $options_form;

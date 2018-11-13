@@ -441,6 +441,7 @@
                 </div>
                 <?php 
                     $valid_license = nbd_check_license(); 
+                    $valid_license = true;
                     if( $valid_license ):
                 ?>
                 <div  id="nbd-global-template" class="nbdesigner-opt-inner nbd-independence <?php if (!$option['admindesign']) echo 'nbdesigner-disable'; ?>">

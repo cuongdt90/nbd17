@@ -108,7 +108,7 @@ class Nbdesigner_IO {
             fclose($f);
         }        
     }
-    public static function create_file_path($upload_path, $filename, $ext=''){
+    public static function create_file_path($upload_path, $filename, $ext='', $force_override = false){
 	$date_path = '';
         if (!file_exists($upload_path))
             mkdir($upload_path);
@@ -127,10 +127,14 @@ class Nbdesigner_IO {
         $file_path = $upload_path . $date_path . $filename;
         $file_counter = 1;
         $real_filename = $filename;
-        while (file_exists($file_path . '.' . $ext)) {
-            $real_filename = $file_counter . '-' . $filename;
-            $file_path = $upload_path . $date_path . $real_filename;
-            $file_counter++;
+        if($force_override){
+            if(file_exists($file_path . '.' . $ext) ) unlink($file_path . '.' . $ext);
+        }else{
+            while (file_exists($file_path . '.' . $ext)) {
+                $real_filename = $file_counter . '-' . $filename;
+                $file_path = $upload_path . $date_path . $real_filename;
+                $file_counter++;
+            }
         }
         return array(
             'full_path' => $file_path,
@@ -677,6 +681,8 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_force_select_options' => 'no',
         'nbdesigner_hide_table_pricing' => 'no',
         'nbdesigner_hide_option_swatch_label' => 'yes',
+        'nbdesigner_change_base_price_html' => 'no',
+        'nbdesigner_tooltip_position' => 'top',
         'nbdesigner_hide_summary_options' => 'no',
         'nbdesigner_hide_options_in_cart' => 'no',
         'nbdesigner_hide_option_price_in_cart' => 'no',
@@ -2586,19 +2592,30 @@ function nbd_get_user_contact_sheet( $id = false ){
         'contact'   =>  array(),
         'avatar'    =>  nbd_convert_tif_to_png($user_infos['email']['value'] . '.tif')
     );
-    if( isset( $acf_fields['related_contact'] ) && count($acf_fields['related_contact']['value']) ){
-        foreach ($acf_fields['related_contact']['value'] as $key => $cid){
-            $contact_infos = nbd_get_user_information($cid);
-            $contact_acf_fields = get_field_objects('user_' . $cid);
-            $infos['contact'][$key] = array(
-                'c_full_name' =>  $contact_infos['full_name']['value'],
-                'c_title' =>  isset( $contact_acf_fields['user_title'] ) ? $contact_acf_fields['user_title']['value'] : __('Title', 'web-to-print-online-designer'),
-                'c_mobile' =>  'Mob ' . isset( $contact_acf_fields['user_mobile'] ) ? $contact_acf_fields['user_mobile']['value'] : __('0123456789', 'web-to-print-online-designer'),
-                'c_phone' => 'Tel ' . $contact_infos['phone']['value'],
-                'c_email' =>  $contact_infos['email']['value'],
-                'c_avatar'    =>  nbd_convert_tif_to_png($contact_infos['email']['value'] . '.tif', 'small')
-            );
+    $contactsheet = isset( $acf_fields['contactsheet'] ) ? $acf_fields['contactsheet']['value'] : array();
+    $infos['first_con'] = 'sv';
+    $infos['contactsheet'] = $contactsheet;
+    foreach($contactsheet as $con){
+        $infos['contact'][$con] = array();
+        if( isset( $acf_fields[$con . '_contact'] ) && count($acf_fields[$con . '_contact']['value']) ){
+            foreach ($acf_fields[$con . '_contact']['value'] as $key => $cid){
+                $contact_infos = nbd_get_user_information($cid);
+                $contact_acf_fields = get_field_objects('user_' . $cid);
+                $infos['contact'][$con][$key] = array(
+                    'c_full_name' =>  $contact_infos['full_name']['value'],
+                    'c_title' =>  (isset( $contact_acf_fields['user_title'] ) && $contact_acf_fields['user_title']['value'] != '') ? $contact_acf_fields['user_title']['value'] : __('Title', 'web-to-print-online-designer'),
+                    'c_mobile' =>  isset( $contact_acf_fields['user_mobile'] ) ? 'Mob ' . $contact_acf_fields['user_mobile']['value'] : 'Mob ' . __('0123456789', 'web-to-print-online-designer'),
+//                    'c_phone' => 'Tel ' . $contact_infos['phone']['value'],
+                    'c_email' =>  $contact_infos['email']['value'],
+                    'c_avatar'    =>  nbd_convert_tif_to_png($contact_infos['email']['value'] . '.tif', 'small')
+                );
+            }
         }
+    }
+    if( count($contactsheet) ){
+        $infos['first_con'] = $contactsheet[0];
+    }else{
+        $infos['contact'][$infos['first_con']] = array();
     }
     $infos['avatar'] = nbd_convert_tif_to_png($user_infos['email']['value'] . '.tif');
     return $infos;
@@ -2622,4 +2639,18 @@ function nbd_convert_tif_to_png( $file, $type = 'big' ){
         return $png_url;
     }
     return WP_CONTENT_URL . '/images/personalbilder/default_avatar.png';
+}
+function nbd_admin_pages(){
+    return array(
+        'toplevel_page_nbdesigner', 
+        'nbdesigner_page_nbdesigner_manager_product', 
+        'toplevel_page_nbdesigner_shoper',
+        'nbdesigner_page_nbdesigner_frontend_translate',
+        'nbdesigner_page_nbdesigner_tools',
+        'nbdesigner_page_nbdesigner_manager_arts',
+        'nbdesigner_page_nbdesigner_manager_fonts',
+        'admin_page_nbdesigner_detail_order',
+        'nbdesigner_page_nbd_support',
+        'nbdesigner_page_nbd_printing_options'
+    );
 }

@@ -209,6 +209,7 @@ class Nbdesigner_Plugin {
         add_filter( 'views_edit-product', array( $this, 'nbdesigner_product_sorting_nbd' ),30 );
         add_action('admin_enqueue_scripts', array($this, 'nbdesigner_admin_enqueue_scripts'), 30, 1);
         add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), 1 );
+        add_filter( 'admin_footer', array( $this, 'footer_notice' ), 1 );
         add_action( 'admin_init', array( $this, 'admin_redirects' ) );
     }
     public function frontend_hook(){
@@ -288,7 +289,13 @@ class Nbdesigner_Plugin {
         
         //add_filter( 'woocommerce_login_redirect', array($this, 'login_redirect'), 10, 1 );
         //add_action('woocommerce_registration_redirect', array($this, 'login_redirect'), 10, 1 );
-    }    
+    } 
+    public function footer_notice(){
+        $valid_license = nbd_check_license();
+        if( !$valid_license ){
+            include(NBDESIGNER_PLUGIN_DIR .'views/license-notice.php');
+        }
+    }
     public function login_redirect( $redirect ){
         if( isset( $_GET['nbd_redirect'] ) ) $redirect = getUrlPageNBD('redirect');
         return $redirect;
@@ -586,7 +593,7 @@ class Nbdesigner_Plugin {
             $message = sprintf(__('<p>Plugin <strong>not compatible</strong> with WordPress %s. Requires WordPress %s to use this Plugin.</p>', 'web-to-print-online-designer'), $GLOBALS['wp_version'], NBDESIGNER_MINIMUM_WP_VERSION);
             die($message);
         }
-        if(version_compare(PHP_VERSION, '5.4.0', '<=')){
+        if(version_compare(PHP_VERSION, NBDESIGNER_MINIMUM_PHP_VERSION, '<')){
             $message = sprintf(__('<p>Plugin <strong>not compatible</strong> with PHP %s. Requires PHP %s to use this Plugin.</p>', 'web-to-print-online-designer'), PHP_VERSION, NBDESIGNER_MINIMUM_PHP_VERSION);
             die($message);            
         }
@@ -595,8 +602,8 @@ class Nbdesigner_Plugin {
             die($message);
         }
         $woocommer_data = get_plugin_data(WP_PLUGIN_DIR .'/woocommerce/woocommerce.php', false, false);
-        if (version_compare ($woocommer_data['Version'] , '3.0', '<')){
-            $message = '<div class="error"><p>' . sprintf(__('WoooCommerce 3.0.0 or greater is required', 'web-to-print-online-designer'), '<b>Nbdesigner</b>') . '</p></div>';
+        if (version_compare ($woocommer_data['Version'] , NBDESIGNER_MINIMUM_WC_VERSION, '<')){
+            $message = '<div class="error"><p>' . sprintf(__('WoooCommerce %s or greater is required', 'web-to-print-online-designer'), NBDESIGNER_MINIMUM_WC_VERSION) . '</p></div>';
             die($message);
         }
         
@@ -766,9 +773,12 @@ class Nbdesigner_Plugin {
             add_action( 'admin_notices', array( $this, 'nbdesigner_lincense_notices_content' ) );     
         } 
     }
-    public function nbdesigner_lincense_notices_content(){     
-        $mes = nbd_custom_notices('notices', 'You\'re using NBDesigner free version (full features and function but for max 5 products) or expired pro version. <br /><a class="nbd-notice-action" href="http://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin" target="_blank">Please buy the Premium version here to use for all product </a>');
-        printf($mes);
+    public function nbdesigner_lincense_notices_content(){
+        //$mes = nbd_custom_notices('notices', 'You\'re using NBDesigner free version (full features and function but for max 5 products) or expired pro version. <br /><a class="nbd-notice-action" href="http://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin" target="_blank">Please buy the Premium version here to use for all product </a>');
+        $mes = nbd_custom_notices('notices', '<a class="nbd-license-notice" href="https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin" target="_blank"><img src="'.NBDESIGNER_ASSETS_URL . 'images/lite_version.jpg" alt="Lite version"/></a>');
+        $current_screen = get_current_screen();
+        $nbd_pages = nbd_admin_pages();
+        if ( isset( $current_screen->id ) && in_array( $current_screen->id, $nbd_pages ) ) printf($mes);
     }
     public function translation_load_textdomain() {	 
         load_plugin_textdomain('web-to-print-online-designer', false, dirname(dirname( plugin_basename( __FILE__ ))) . '/langs/');
@@ -901,18 +911,7 @@ class Nbdesigner_Plugin {
     }
     public function admin_footer_text($footer_text){
         $current_screen = get_current_screen();
-        $nbd_pages = array(
-            'toplevel_page_nbdesigner', 
-            'nbdesigner_page_nbdesigner_manager_product', 
-            'toplevel_page_nbdesigner_shoper',
-            'nbdesigner_page_nbdesigner_frontend_translate',
-            'nbdesigner_page_nbdesigner_tools',
-            'nbdesigner_page_nbdesigner_manager_arts',
-            'nbdesigner_page_nbdesigner_manager_fonts',
-            'admin_page_nbdesigner_detail_order',
-            'nbdesigner_page_nbd_support',
-            'nbdesigner_page_nbd_printing_options'
-        );
+        $nbd_pages = nbd_admin_pages();
         if ( isset( $current_screen->id ) && in_array( $current_screen->id, $nbd_pages ) ){
             $footer_text = sprintf( __( 'If you <span style="color: #e25555;">♥</span> <strong>NBDesigner</strong> please leave us a %s&#9733;&#9733;&#9733;&#9733;&#9733;%s rating. A huge thanks in advance!', 'web-to-print-online-designer'), '<a href="https://wordpress.org/support/view/plugin-reviews/web-to-print-online-designer?filter=5#new-post" target="_blank" class="nbd-rating-link" data-rated="' . esc_attr__( 'Thanks :)', 'web-to-print-online-designer') . '">', '</a>' );
         }       
@@ -1308,7 +1307,7 @@ class Nbdesigner_Plugin {
                                     $f_index = 'r';
                             }                            
                             $prefix = $key ? $f_index : '';
-                            $new_path_font = Nbdesigner_IO::create_file_path(NBDESIGNER_FONT_DIR, $font['alias'].$prefix, $font['type']);
+                            $new_path_font = Nbdesigner_IO::create_file_path(NBDESIGNER_FONT_DIR, $font['alias'].$prefix, $font['type'], true);
                             if(move_uploaded_file($_FILES['font']["tmp_name"][$key], $new_path_font['full_path'].'.'.$font['type'])){
                                 if( !$key ){
                                     $font['url'] = $new_path_font['date_path'] .'.'. $font['type'];                                
@@ -2609,15 +2608,18 @@ class Nbdesigner_Plugin {
                         $image_product = NBD_Image::nbdesigner_resize_imagepng($path_img_src, $bg_width, $bg_height);
                     }else{
                         $image_product = NBD_Image::nbdesigner_resize_imagejpg($path_img_src, $bg_width, $bg_height);
-                    }     
+                    }
                 }
                 if( $val["show_overlay"] == '1' ){
                     $path_img_overlay  = Nbdesigner_IO::convert_url_to_path($val["img_overlay"]);
                     $overlay_ext = pathinfo($val["img_overlay"]);
-                    if($overlay_ext['extension'] == "png"){
+                    $over_ext = strtolower($overlay_ext['extension']);
+                    if($over_ext == "png"){
                         $image_overlay = NBD_Image::nbdesigner_resize_imagepng($path_img_overlay, $ds_width, $ds_height);
-                    }else{
+                    }else if($over_ext == "jpg" || $over_ext == "jpeg"){
                         $image_overlay = NBD_Image::nbdesigner_resize_imagejpg($path_img_overlay, $ds_width, $ds_height);
+                    }else{
+                        $val["show_overlay"] == '0';
                     }
                 }
                 if($design_format == 'png'){
@@ -2641,7 +2643,7 @@ class Nbdesigner_Plugin {
                     imagefilledrectangle($image, 0, 0, $bg_width, $bg_height, $color);                    
                 }
                 imagecopy($image, $image_design, ($val["area_design_left"]-$val["img_src_left"]) * $scale, ($val["area_design_top"]-$val["img_src_top"]) * $scale, 0, 0, $ds_width, $ds_height);
-                if( $val["show_overlay"] == '1' ){
+                if( $val["show_overlay"] == '1' && $image_overlay ){
                     imagecopy($image, $image_overlay, ($val["area_design_left"]-$val["img_src_left"]) * $scale, ($val["area_design_top"]-$val["img_src_top"]) * $scale, 0, 0, $ds_width, $ds_height);
                 }
                 if($design_format == 'png'){

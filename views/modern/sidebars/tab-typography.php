@@ -10,10 +10,21 @@
         </div>
         <hr ng-show="isTemplateMode" style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
         <div ng-show="isTemplateMode" class="user-infos" style="text-align: left; margin-bottom: 20px;">
+            <p style="margin-left: 7px;"><?php _e('Business card','web-to-print-online-designer'); ?></p>
             <button ng-repeat="(iIndex, info) in settings.user_infos" ng-click="addUserInfo(iIndex)" class="nbd-button">{{info.title}}</button>
             <button ng-click="buildVcart()" class="nbd-button"><?php _e('Vcard','web-to-print-online-designer'); ?></button>
             <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
-            <button ng-repeat="(index, info) in settings.contact_sheet" ng-click="addContactSheet(index)" class="nbd-button">{{index}}</button>
+            <p style="margin-left: 7px;"><?php _e('Contact sheet','web-to-print-online-designer'); ?></p>
+            <button ng-if="index != 'contact' && index != 'currentContactIndex' && index != 'contactsheet' && index != 'first_con'" ng-repeat="(index, info) in settings.contact_sheets" ng-click="addContactSheet(index)" class="nbd-button">{{index}}</button>
+            <p style="margin-left: 7px;"><?php _e('Choose contact','web-to-print-online-designer'); ?></p>
+            <select style="margin-left: 7px;" ng-model="settings.contact_sheets.first_con" ng-change="changeContact()">
+                <option ng-repeat="con in settings.contact_sheets.contactsheet" value="{{con}}">{{con}}</option>
+            </select>
+            <p style="margin-left: 7px;"><?php _e('Related Contacts','web-to-print-online-designer'); ?></p>
+            <select convert-to-number style="margin-left: 7px;" ng-model="settings.contact_sheets.currentContactIndex">
+                <option ng-repeat="(conIndex, _con) in settings.contact_sheets.contact[settings.contact_sheets.first_con]" value="{{conIndex}}">{{_con.c_full_name}}</option>
+            </select><br />
+            <button ng-repeat="(cIndex, c) in settings.contact_sheet[settings.contact_sheets.currentContactIndex]" ng-click="addContactSheet('contact', cIndex)" class="nbd-button">{{cIndex}}: {{c}}</button>
         </div>
         <hr style="border-top: 1px solid rgba(255,255,255,0.5);margin: 0 10px 20px;"/>
         <div class="typography-body">
