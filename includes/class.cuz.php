@@ -23,7 +23,17 @@ if(!class_exists('NBD_CUSTOMIZE')){
             add_action('nbd_after_single_product_design_section', array($this, 'color_swatch'), 30, 2);
             add_action('nbd_save_customer_design_product_config', array($this, 'product_config'), 30, 3);
             add_filter('nbd_product_info', array($this, 'nbd_product_info'), 10, 1);
+            add_filter('nbd_post_settings', array($this, 'nbd_post_settings'), 10, 1);
             $this->ajax();
+        }
+        public function nbd_post_settings($post){
+            if(!isset($post['_nbdesigner_option']['art_cats'])){
+                $post['_nbdesigner_option']['art_cats'] = array();
+            }
+            if(!isset($post['_nbdesigner_option']['font_cats'])){
+                $post['_nbdesigner_option']['font_cats'] = array();
+            }
+            return $post;
         }
         public function before_nbd_save_cart_design( $post ){
             if( isset($post['task2']) && $post['task2'] == 'cuz' ){

@@ -75,9 +75,7 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
         public function meta_box(){
             $post_id = get_the_ID();
             $enable = get_post_meta($post_id, '_nbo_enable', true);
-            if( $enable  ){
-                $option_id = $this->get_product_option( $post_id );
-            }
+            $option_id = $this->get_product_option( $post_id );
             $option_id = $option_id ? $option_id : 0;
             $link_edit_option = add_query_arg(array(
                     'product_id' => $post_id, 
@@ -105,8 +103,6 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
             <?php
         }
         public function get_product_option($product_id){
-            $enable = get_post_meta($product_id, '_nbo_enable', true);
-            if( !$enable ) return false;
             $option_id = get_transient( 'nbo_product_'.$product_id );
             if( false === $option_id ){
                 global $wpdb;

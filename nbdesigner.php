@@ -122,7 +122,7 @@ if ( ! empty( $_GET['page'] ) ) {
 }
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/admin-options.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/frontend-options.php');
-//require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.cuz.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.cuz.php');
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );

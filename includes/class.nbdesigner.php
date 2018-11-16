@@ -2199,7 +2199,7 @@ class Nbdesigner_Plugin {
         }
         return $result;
     }
-    public function save_settings($post_id) {   
+    public function save_settings($post_id) {
         if (!isset($_POST['nbdesigner_setting_box_nonce']) || !wp_verify_nonce($_POST['nbdesigner_setting_box_nonce'], 'nbdesigner_setting_box')
             || !(current_user_can('administrator') || current_user_can('shop_manager'))) {
             return $post_id;
@@ -2216,12 +2216,14 @@ class Nbdesigner_Plugin {
                 return $post_id;
             }
         }
-        $enable = $_POST['_nbdesigner_enable']; 
-        $enable_upload = $_POST['_nbdesigner_enable_upload'];
-        $upload_without_design = $_POST['_nbdesigner_enable_upload_without_design']; 
-        $option = serialize($_POST['_nbdesigner_option']);
-        $setting_design = serialize($_POST['_designer_setting']);  
-        $setting_upload = serialize($_POST['_designer_upload']);  
+        $post = $_POST;
+        $post = apply_filters('nbd_post_settings', $post);
+        $enable = $post['_nbdesigner_enable']; 
+        $enable_upload = $post['_nbdesigner_enable_upload'];
+        $upload_without_design = $post['_nbdesigner_enable_upload_without_design']; 
+        $option = serialize($post['_nbdesigner_option']);
+        $setting_design = serialize($post['_designer_setting']);  
+        $setting_upload = serialize($post['_designer_upload']);  
         if(!$this->nbdesigner_allow_create_product($post_id)) return;
         update_post_meta($post_id, '_designer_setting', $setting_design);
         update_post_meta($post_id, '_nbdesigner_option', $option);
@@ -5406,11 +5408,14 @@ class Nbdesigner_Plugin {
         $product_id = get_wpml_original_id($product_id);
         $is_nbdesign = get_post_meta($product_id, '_nbdesigner_enable', true); 
         if($is_nbdesign){
-            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
-            $product = wc_get_product($product_id);
-            $type = $product->get_type();
-            if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
-                $classes[] = 'nbd_bulk_variation';
+            $layout = nbdesigner_get_option('nbdesigner_design_layout');
+            if($layout == 'c'){
+                $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
+                $product = wc_get_product($product_id);
+                $type = $product->get_type();
+                if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
+                    $classes[] = 'nbd_bulk_variation';
+                }
             }
         }   
         return $classes;
@@ -5422,19 +5427,22 @@ class Nbdesigner_Plugin {
         if(!$is_nbdesign){
             return;
         } else {
-            $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
-            $product = wc_get_product($product_id);
-            $type = $product->get_type();
-            if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
-                $variations = get_nbd_variations( $product_id, true );
-                if( count($variations) ){
-                    $atts = array(
-                        'variations'    =>  $variations
-                    );
-                    ob_start();
-                    nbdesigner_get_template('single-product/variation-bulk.php', $atts);
-                    $bulk_variation_form = ob_get_clean();                      
-                    echo $bulk_variation_form;
+            $layout = nbdesigner_get_option('nbdesigner_design_layout');
+            if( $layout == 'c' ){
+                $option = unserialize(get_post_meta($product_id, '_nbdesigner_option', true));
+                $product = wc_get_product($product_id);
+                $type = $product->get_type();
+                if( $type == 'variable' && isset($option['bulk_variation']) && $option['bulk_variation'] == 1 ){
+                    $variations = get_nbd_variations( $product_id, true );
+                    if( count($variations) ){
+                        $atts = array(
+                            'variations'    =>  $variations
+                        );
+                        ob_start();
+                        nbdesigner_get_template('single-product/variation-bulk.php', $atts);
+                        $bulk_variation_form = ob_get_clean();                      
+                        echo $bulk_variation_form;
+                    }
                 }
             }
         }       
