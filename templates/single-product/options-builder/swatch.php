@@ -31,12 +31,14 @@
         </label>
         <?php if($hide_swatch_label == 'no'): ?>
             </div>
-            <div class="nbd-swatch-description">
-                <div class="nbd-swatch-title"><b><?php echo $attr['name']; ?></b></div>
-                <?php if(isset($attr['des'])): ?>
-                <div class="nbd-swatch-title"><?php echo $attr['des']; ?></div>
-                <?php endif; ?>
-            </div>
+            <label for='nbd-field-<?php echo $field['id'].'-'.$key; ?>'>
+                <div class="nbd-swatch-description">
+                    <div class="nbd-swatch-title"><b><?php echo $attr['name']; ?></b></div>
+                    <?php if(isset($attr['des'])): ?>
+                    <div class="nbd-swatch-title"><?php echo $attr['des']; ?></div>
+                    <?php endif; ?>
+                </div>
+            </label>
         </div>
         <?php endif; ?>        
         <?php endforeach; ?>

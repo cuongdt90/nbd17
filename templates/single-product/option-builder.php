@@ -9,6 +9,7 @@ if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (i
 $appid = "nbo-app-" . time().rand(1,100);
 $display_type = nbdesigner_get_option('nbdesigner_option_display');
 $prefix = $display_type == 2 ? '-2' : '';
+$style_class = $display_type == 2 ? 'nbo-style-2' : 'nbo-style-1';
 $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label');
 ?>
 <div class="nbo-wrapper <?php if($is_wqv) echo 'nbd-option-in-wqv'; ?>">
@@ -554,6 +555,38 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
         font-size: 14px;
         margin-left: 10px;        
     }
+    .nbo-clear-option-wrap {
+        text-align: right;
+        margin-bottom: 1em;
+    }
+    .nbo-style-1 {
+        border: 1px solid #f8f8f8;
+        margin-bottom: 1em;
+    }
+    .nbo-style-1 .nbo-summary-title,
+    .nbo-style-1 .nbo-table-pricing-title{
+        padding: 10px;
+        background: #f8f8f8;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    .nbo-style-1 .nbo-summary-title:after {
+        clear: both;
+    }
+    .nbo-style-1 .nbo-summary-table ,
+    .nbo-style-1 .nbo-table-pricing {
+        margin: 0;
+        padding: 3px;
+    }
+    .nbo-toggle {
+        text-align: center;
+        cursor: pointer;
+    }
+    .nbo-toggle svg {
+        vertical-align: top;
+        height: 100%;
+    }
     @media (max-width:768px){
         .nbd-tb-options td {
             display: inline-block !important;
@@ -629,13 +662,23 @@ if( $cart_item_key != ''){
     <?php    
 }
 ?>
-        <div ng-if="fields.length" style="text-align: right;"><a class="button nbd-button" ng-click="reset_options()"><?php _e('Clear selection', 'web-to-print-online-designer'); ?></a></div>
+        <div ng-if="fields.length" class="nbo-clear-option-wrap"><a class="button nbd-button" ng-click="reset_options()"><?php _e('Clear selection', 'web-to-print-online-designer'); ?></a></div>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields and quantity input!', 'web-to-print-online-designer'); ?></p>
         <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
-        <div ng-if="valid_form">
-            <p class="nbo-summary-title"><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
-            <table class="nbo-summary-table">
+        <div ng-if="valid_form" class="<?php echo $style_class; ?>">
+            <p class="nbo-summary-title" ng-init="showNboSummary = true">
+                <b><?php _e('Summary options', 'web-to-print-online-designer'); ?></b>
+                <?php if( $display_type == 1 ): ?>
+                <span class="nbo-minus nbo-toggle" ng-show="showNboSummary" ng-click="showNboSummary = !showNboSummary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <span class="nbo-plus nbo-toggle" ng-show="!showNboSummary" ng-click="showNboSummary = !showNboSummary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <?php endif; ?>
+            </p>
+            <table class="nbo-summary-table" ng-show="showNboSummary">
                 <tbody>
                     <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td ng-bind-html="field.price | to_trusted"></td></tr>
                 </tbody>
@@ -657,9 +700,19 @@ if( $cart_item_key != ''){
         </div>
         <?php endif; ?>
         <?php if( nbdesigner_get_option('nbdesigner_hide_table_pricing') == 'no' && $options['display_type'] != 3 ): ?>
-        <div ng-if="valid_form && price_table.length > 1">
-            <p class="nbo-table-pricing-title"><b><?php _e('Table pricing', 'web-to-print-online-designer'); ?></b></p>
-            <table>
+        <div ng-if="valid_form && price_table.length > 1" class="<?php echo $style_class; ?>">
+            <p class="nbo-table-pricing-title" ng-init="showNboTablePricing = true">
+                <b><?php _e('Table pricing', 'web-to-print-online-designer'); ?></b>
+                <?php if( $display_type == 1 ): ?>
+                <span class="nbo-minus nbo-toggle" ng-show="showNboTablePricing" ng-click="showNboTablePricing = !showNboTablePricing">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <span class="nbo-plus nbo-toggle" ng-show="!showNboTablePricing" ng-click="showNboTablePricing = !showNboTablePricing">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <?php endif; ?>
+            </p>
+            <table class="nbo-table-pricing" ng-show="showNboTablePricing">
                 <thead>
                     <tr>
                         <th><?php _e('From', 'web-to-print-online-designer'); ?></th>
@@ -933,6 +986,7 @@ if( $cart_item_key != ''){
                             field.value_name = origin_field.general.attributes.options[field.value].name;
                         }
                     }
+                    if( !field.enable ) check[field_id] = true;
                 });
                 angular.forEach(check, function(c){
                     total_check = total_check && c;
@@ -968,6 +1022,7 @@ if( $cart_item_key != ''){
             });
         };
         $scope.postOptionsToEditor = function(){
+            nbOption.odOption = {};
             angular.forEach($scope.nbd_fields, function(field, field_id){
                 if(field.enable){
                     var origin_field = $scope.get_field(field_id);
@@ -1536,7 +1591,11 @@ if( $cart_item_key != ''){
             angular.copy($scope.options.price_matrix[_i][_j].fields, $scope.nbd_fields);
             $scope.check_valid( false );
         };        
-        $scope.convert_to_wc_price = function(price){
+        $scope.convert_to_wc_price = function(price, required){
+            <?php if( $hide_zero_price == 'yes' ): ?> 
+            var precision = parseInt(nbds_frontend.currency_format_num_decimals);
+            if( price.toFixed(precision) == 0 && angular.isUndefined(required) ) return '';
+            <?php endif; ?>
             return accounting.formatMoney( price, {
                 symbol: nbds_frontend.currency_format_symbol,
                 decimal: nbds_frontend.currency_format_decimal_sep,
@@ -1703,9 +1762,9 @@ if( $cart_item_key != ''){
             jQuery('.woocommerce-Price-amount').html($scope.total_cart_price);
             jQuery('.nbo-base-price-html').html(nbds_frontend.total);
             <?php endif; ?>
-            $scope.final_price = $scope.convert_to_wc_price( $scope.final_price );
-            $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
-            $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
+            $scope.final_price = $scope.convert_to_wc_price( $scope.final_price, true );
+            $scope.total_price = $scope.convert_to_wc_price( $scope.total_price, true );
+            $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty, true );
         };
         $scope.calculate_price_table = function(){
             $scope.price_table = [];
@@ -1849,9 +1908,9 @@ if( $cart_item_key != ''){
                 pt.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + pt.total_price ) * qty_factor / 100;
                 pt.final_price = pt.total_price + $scope.basePrice - pt.discount_by_qty;
                 pt.final_price = pt.final_price > 0 ? pt.final_price : 0;
-                pt.final_price = $scope.convert_to_wc_price( pt.final_price );
-                pt.total_price = $scope.convert_to_wc_price( pt.total_price );
-                pt.discount_by_qty = $scope.convert_to_wc_price( pt.discount_by_qty );
+                pt.final_price = $scope.convert_to_wc_price( pt.final_price, true );
+                pt.total_price = $scope.convert_to_wc_price( pt.total_price, true );
+                pt.discount_by_qty = $scope.convert_to_wc_price( pt.discount_by_qty, true );
             });
         };
         $scope.isMultipleSelectPage = function(field){

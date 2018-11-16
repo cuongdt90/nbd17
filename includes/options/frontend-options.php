@@ -383,10 +383,13 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
         }
         public function get_item_data( $item_data, $cart_item ){
             if ( isset( $cart_item['nbo_meta'] ) ) {
+                $hide_zero_price = nbdesigner_get_option('nbdesigner_hide_zero_price');
+                $num_decimals = absint( wc_get_price_decimals() );
                 if( nbdesigner_get_option('nbdesigner_hide_options_in_cart') != 'yes' ){
                     $hide_option_price = nbdesigner_get_option('nbdesigner_hide_option_price_in_cart');
                     foreach ($cart_item['nbo_meta']['option_price']['fields'] as $field) {
                         $price = floatval($field['price']) >= 0 ? '+' . wc_price($field['price']) : wc_price($field['price']);
+                        if( $hide_zero_price == 'yes' && round($field['price'], $num_decimals) == 0 ) $price = '';
                         $item_data[] = array(
                             'name' => $field['name'],
                             'display' => $hide_option_price == 'yes' ? $field['value_name'] : $field['value_name']. '&nbsp;&nbsp;' .$price,
@@ -435,11 +438,11 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             return $cart_item_data;
         }
         public function format_price( $price ){
-            $decimal_separator = stripslashes( wc_get_price_decimal_separator() );
-            $thousand_separator = stripslashes( wc_get_price_thousand_separator() );
+            //$decimal_separator = stripslashes( wc_get_price_decimal_separator() );
+            //$thousand_separator = stripslashes( wc_get_price_thousand_separator() );
             $num_decimals = wc_get_price_decimals();
-            $price = str_replace($decimal_separator, '.', $price);
-            $price = str_replace($thousand_separator, '', $price);
+            //$price = str_replace($decimal_separator, '.', $price);
+            //$price = str_replace($thousand_separator, '', $price);
             $price = round($price, $num_decimals);
             return $price;
         }
@@ -725,6 +728,14 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                                 }
                             }
                         }
+                        if( isset($field['nbd_type']) && $field['nbd_type'] == 'builder' ){
+                            foreach ($field['general']['attributes']['options'] as $op_index => $option ){
+                                foreach( $option['pb_image'] as $pb_image_index => $pb_image ){
+                                    $pbi_obj = wp_get_attachment_url( absint($pb_image) );
+                                    $options['fields'][$key]['general']['attributes']['options'][$op_index]['pb_image_url'][$pb_image_index] = $pbi_obj ? $pbi_obj : NBDESIGNER_ASSETS_URL . 'images/placeholder.png';
+                                }
+                            }
+                        }
                         if( isset($field['general']['attributes']['bg_type']) && $field['general']['attributes']['bg_type'] == 'i' ){
                             foreach ($field['general']['attributes']['options'] as $op_index => $option ){
                                 foreach( $option['bg_image'] as $bg_index => $bg ){
@@ -779,7 +790,8 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
                         'form_values'  => $form_values,
                         'cart_item_key'  => $cart_item_key,
                         'change_base'  => nbdesigner_get_option('nbdesigner_change_base_price_html'),
-                        'tooltip_position'  => nbdesigner_get_option('nbdesigner_tooltip_position')
+                        'tooltip_position'  => nbdesigner_get_option('nbdesigner_tooltip_position'),
+                        'hide_zero_price'  => nbdesigner_get_option('nbdesigner_hide_zero_price')
                     ));
                     $options_form = ob_get_clean();
                     echo $options_form;

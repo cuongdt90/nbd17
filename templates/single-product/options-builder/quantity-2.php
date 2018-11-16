@@ -10,7 +10,7 @@
         <?php elseif($options['quantity_type'] == 'd'): ?>
         <select name="nbo-quantity" convert-to-number class="nbo-dropdown" ng-change="change_quantity()" ng-model="quantity">
             <?php 
-                $discount_type = $options['quantity_discount_type'] == 'p' ? '%' : '';
+                $discount_type = $options['quantity_discount_type'] == 'p' ? '%' : '/' . __('1 item', 'web-to-print-online-designer');
                 foreach($options['quantity_breaks'] as $break): 
                 $discount = '';
                 if($break['dis'] != ''){

@@ -61,9 +61,20 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                         )                      
                     ),   
                     array(
-                        'title' => __( 'Change base price', 'web-to-print-online-designer'),
+                        'title' => __( 'Change original product price', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_change_base_price_html',
-                        'description' 	=> __('Change base price html on product detail.', 'web-to-print-online-designer'),
+                        'description' 	=> __('Overwrite the original product price when options are changing.', 'web-to-print-online-designer'),
+                        'default'	=> 'no',
+                        'type' 		=> 'radio',
+                        'options'   => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer')
+                        )                      
+                    ),
+                    array(
+                        'title' => __( 'Auto hide price if zero', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_hide_zero_price',
+                        'description' 	=> __('Hide the option price display if it is zero.', 'web-to-print-online-designer'),
                         'default'	=> 'no',
                         'type' 		=> 'radio',
                         'options'   => array(

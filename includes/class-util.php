@@ -682,6 +682,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_hide_table_pricing' => 'no',
         'nbdesigner_hide_option_swatch_label' => 'yes',
         'nbdesigner_change_base_price_html' => 'no',
+        'nbdesigner_hide_zero_price' => 'no',
         'nbdesigner_tooltip_position' => 'top',
         'nbdesigner_hide_summary_options' => 'no',
         'nbdesigner_hide_options_in_cart' => 'no',

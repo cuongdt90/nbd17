@@ -75,7 +75,9 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
         public function meta_box(){
             $post_id = get_the_ID();
             $enable = get_post_meta($post_id, '_nbo_enable', true);
-            $option_id = get_transient( 'nbo_product_'.$post_id );
+            if( $enable  ){
+                $option_id = $this->get_product_option( $post_id );
+            }
             $option_id = $option_id ? $option_id : 0;
             $link_edit_option = add_query_arg(array(
                     'product_id' => $post_id, 
@@ -101,6 +103,65 @@ if(!class_exists('NBD_ADMIN_PRINTING_OPTIONS')){
                 </div>
             </div>
             <?php
+        }
+        public function get_product_option($product_id){
+            $enable = get_post_meta($product_id, '_nbo_enable', true);
+            if( !$enable ) return false;
+            $option_id = get_transient( 'nbo_product_'.$product_id );
+            if( false === $option_id ){
+                global $wpdb;
+                $sql = "SELECT id, priority, apply_for, product_ids, product_cats, date_from, date_to FROM {$wpdb->prefix}nbdesigner_options WHERE published = 1";
+                $options = $wpdb->get_results($sql, 'ARRAY_A');
+                if($options){
+                    $_options = array();
+                    foreach( $options as $option ){
+                        $execute_option = true;
+                        $from_date = false;
+                        if( isset($option['date_from']) ){
+                            $from_date = empty( $option['date_from'] ) ? false : strtotime( date_i18n( 'Y-m-d 00:00:00', strtotime( $option['date_from'] ), false ) );
+                        }
+                        $to_date = false;
+                        if( isset($option['date_to']) ){
+                            $to_date = empty( $option['date_to'] ) ? false : strtotime( date_i18n( 'Y-m-d 00:00:00', strtotime( $option['date_to'] ), false ) );
+                        }
+                        $now  = current_time( 'timestamp' );
+			if ( $from_date && $to_date && !( $now >= $from_date && $now <= $to_date ) ) {
+                            $execute_option = false;
+			} elseif ( $from_date && !$to_date && !( $now >= $from_date ) ) {
+                            $execute_option = false;
+			} elseif ( $to_date && !$from_date && !( $now <= $to_date ) ) {
+                            $execute_option = false;
+			}
+                        if( $execute_option ){
+                            if( $option['apply_for'] == 'p' ){
+                                $products = unserialize($option['product_ids']);
+                                $execute_option = in_array($product_id, $products) ? true : false;
+                            }else {
+                                $categories = $option['product_cats'] ? unserialize($option['product_cats']) : array();
+                                $product = wc_get_product($product_id);
+                                $product_categories = $product->get_category_ids();
+                                $intersect = array_intersect($product_categories, $categories);
+                                $execute_option = ( count($intersect) > 0 ) ? true : false;
+                            }
+                        }
+                        if( $execute_option ){
+                            $_options[] = $option;
+                        }
+                    }
+                    $_options = array_reverse( $_options );
+                    $option_priority = 0;
+                    foreach( $_options as $_option ){
+                        if( $_option['priority'] > $option_priority ){
+                            $option_priority = $_option['priority'];
+                            $option_id = $_option['id'];
+                        }
+                    }
+                    if( $option_id ){
+                        set_transient( 'nbo_product_'.$product_id , $option_id );
+                    }
+                }
+            } 
+            return $option_id;
         }
         public function tab_menu(){
             if(current_user_can('manage_nbd_tool')){  
@@ -682,6 +743,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                         $options[$key]['bg_image_url'] = array();
                     }
                 }
+                if( isset($option['pb_image']) ){
+                    foreach( $option['pb_image'] as $k => $i ){
+                        $options[$key]['pb_image_url'][$k] = nbd_get_image_thumbnail( $i );
+                    }
+                }
             }
             $same_size = isset($attributes['same_size']) ? $attributes['same_size'] : 'y';
             $bg_type = isset($attributes['bg_type']) ? $attributes['bg_type'] : 'i';
@@ -801,6 +867,7 @@ function nbd_option_i18n(){
         'area'  =>  __('Area design shape', 'web-to-print-online-designer'),
         'orientation'  =>  __('Orientation', 'web-to-print-online-designer'),
         'dimension'  =>  __('Custom dimension', 'web-to-print-online-designer'),
+        'builder'  =>  __('Product builder option', 'web-to-print-online-designer'),
         'dpi_description'  =>  __('DPI is used to describe the resolution number of dots per inch in a digital print and the printing resolution of a hard copy print dot gain, which is the increase in the size of the halftone dots during printing.', 'web-to-print-online-designer'),
         'vertical'  =>  __('Vertical', 'web-to-print-online-designer'),
         'horizontal'  =>  __('Horizontal', 'web-to-print-online-designer'),

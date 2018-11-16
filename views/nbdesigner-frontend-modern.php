@@ -5,7 +5,8 @@
     $lang_code = str_replace('-', '_', get_locale());
     $locale = substr($lang_code, 0, 2);
     $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
-    $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
+    //$variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
+    $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : 0; 
     $default_font = nbd_get_default_font();
     $_default_font = str_replace(" ", "+", json_decode($default_font)->alias);
     $_product = wc_get_product( $product_id );

@@ -2280,19 +2280,22 @@ class Nbdesigner_Plugin {
             /* Multi language with WPML */
             if( count($_REQUEST) ){
                 $attributes = array();
-                foreach ($_REQUEST as $key => $value){
-                    if (strpos($key, 'attribute_') === 0) {
-                        $attributes[$key] = $value;
+                $layout = nbdesigner_get_option('nbdesigner_design_layout');
+                if($layout == "c"){
+                    foreach ($_REQUEST as $key => $value){
+                        if (strpos($key, 'attribute_') === 0) {
+                            $attributes[$key] = $value;
+                        }
                     }
+                    if( count($attributes) ){
+                        if (class_exists('WC_Data_Store')) {
+                            $data_store = WC_Data_Store::load('product');
+                            $variation_id = $data_store->find_matching_product_variation($product, $attributes);
+                        }else{
+                            $variation_id = $product->get_matching_variation($attributes);
+                        }
+                    }    
                 }
-                if( count($attributes) ){
-                    if (class_exists('WC_Data_Store')) {
-                        $data_store = WC_Data_Store::load('product');
-                        $variation_id = $data_store->find_matching_product_variation($product, $attributes);
-                    }else{
-                        $variation_id = $product->get_matching_variation($attributes);
-                    }
-                }                
             }           
             $site_url = site_url();
             if ( class_exists('SitePress') ) {

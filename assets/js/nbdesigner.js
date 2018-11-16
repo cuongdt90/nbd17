@@ -185,6 +185,9 @@ jQuery(document).ready(function () {
                 alert('Exceed number of upload files!');
                 return;                  
             }
+            if( type == '' ){
+                type = file.name.substring(file.name.lastIndexOf('.')+1).toLowerCase();
+            }
             type = type == 'image/jpeg' ? 'image/jpg' : type;
             if( nbd_disallow_type != '' ){
                 var nbd_disallow_type_arr = nbd_disallow_type.toLowerCase().split(',');
