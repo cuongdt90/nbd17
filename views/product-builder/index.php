@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="design-sidebar">
-                        <div ng-class="(!resource.showValue) ? 'nbdpb-show' : ''" class="sidebar-item sidebar-attribute nbdpb-full-contain">
+                        <div ng-class="(!resource.showValue) ? 'nbdpb-show' : ''" class="sidebar-item sidebar-attribute nbdpb-full-contain nbdpbSlide">
                             <div class="attribute-main nbdpb-full-contain">
                                 <div class="nbdpb-scroll">
                                     <div class="product-attr">
@@ -67,7 +67,7 @@
                                 <span>Done</span>
                             </div>
                         </div>
-                        <div ng-class="(resource.showValue) ? 'nbdpb-show' : ''" class="sidebar-item sidebar-value nbdpb-full-contain">
+                        <div ng-class="(resource.showValue) ? 'nbdpb-show' : ''" class="sidebar-item sidebar-value nbdpb-full-contain nbdpbSlide">
                             <div class="product-value nbdpb-full-contain">
                                 <div class="attr-name">
                                     <span>{{resource.proAttrs[resource.proAttrActive].name}}</span>

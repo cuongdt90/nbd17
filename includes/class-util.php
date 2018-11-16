@@ -1096,7 +1096,9 @@ function nbd_get_product_builder_info($product_id,$variation_id,$nbd_item_key = 
     /* Path not exist in case add to cart before design, session has been init */
     if ( !isset($product_builder_key) || !file_exists($path)) {
         // TODO : set data when init product buider
-        $data['config'] = null;
+        $data['config'] = [
+            'viewport' => []
+        ];
         $data['design'] = null;
     }else{
         $data['config'] = nbd_get_data_from_json($path . '/config.json');
@@ -1105,9 +1107,7 @@ function nbd_get_product_builder_info($product_id,$variation_id,$nbd_item_key = 
         }
         $data['design'] = nbd_get_data_from_json($path . '/design.json');
     }
-
     $data = apply_filters('nbd_product_info', $data);
-
     return $data;
 }
 function nbd_get_media_for_data_product( $data_product ){

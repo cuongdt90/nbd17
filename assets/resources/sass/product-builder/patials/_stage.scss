@@ -4,11 +4,12 @@
   background: #f7f7f7;
   .stage-main {
     width: 100%;
-    height: calc(100% - 52px);
+    //height: calc(100% - 52px);
+    height: 100%;
     position: relative;
-    @media screen and (max-width: 991px){
-       height: calc(100% - 30px);
-    }
+    //@media screen and (max-width: 991px) {
+    //  height: calc(100% - 30px);
+    //}
   }
 
   .design-zone {

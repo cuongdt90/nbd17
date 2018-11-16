@@ -5,6 +5,7 @@
 
 .design-layer {
   width: 75%;
+  height: 100%;
   position: relative;
   @media screen and (max-width: 991px) {
     width: 100%;
@@ -24,6 +25,7 @@
 
 .design-sidebar {
   width: 25%;
+  height: 100%;
   .design-finish {
     display: none;
   }

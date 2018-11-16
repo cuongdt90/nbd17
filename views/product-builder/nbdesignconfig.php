@@ -14,10 +14,8 @@ $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: st
 $redirect_url = (isset($_GET['rd']) &&  $_GET['rd'] != '') ? $_GET['rd'] : (($task == 'new' && $ui_mode == 2) ? wc_get_cart_url() : '');
 $_product = wc_get_product( $product_id );
 $product_type = $_product->get_type();
-$show_variation = ( (!isset($_GET['variation_id']) || $_GET['variation_id'] == '') && $product_type == 'variable' && $ui_mode == 2 && $task == 'new' ) ? 1 : 0;
 $variation_id = 0;
 $home_url = $icl_home_url = untrailingslashit(get_option('home'));
-$is_wpml = 0;
 $font_url = NBDESIGNER_FONT_URL;
 if ( function_exists( 'icl_get_home_url' ) ) {
     $icl_home_url = untrailingslashit(icl_get_home_url());
@@ -25,7 +23,7 @@ if ( function_exists( 'icl_get_home_url' ) ) {
     $font_url = str_replace(untrailingslashit(get_option('home')), untrailingslashit(icl_get_home_url()), $font_url);
 }
 
-$is_edit_pb = ($task == 'create') ? '1' : '0';
+$is_edit_pb = ($task == 'create') ? 1 : 0;
 
 ?>
 
@@ -53,12 +51,8 @@ $is_edit_pb = ($task == 'create') ? '1' : '0';
         home_url    :   "<?php echo $home_url; ?>",
         icl_home_url    :   "<?php echo $icl_home_url; ?>",
         is_logged    :   <?php echo nbd_user_logged_in(); ?>,
-        is_wpml	:	<?php echo $is_wpml; ?>,
         login_url   :   "<?php echo esc_url( wp_login_url( getUrlPageNBD('redirect') ) ); ?>",
         product_data : <?php echo json_encode(nbd_get_product_builder_info( $product_id, $variation_id, $nbd_item_key, $task)); ?>,
-        nbdlangs: {
-            alert_upload_term: "<?php _e('Please accept the upload term conditions', 'web-to-print-online-designer'); ?>"
-        }
     };
     <?php if($ui_mode == 1): ?>
     nbd_window = window.parent;

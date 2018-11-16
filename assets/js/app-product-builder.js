@@ -10495,16 +10495,12 @@ var appConfig = {
 };
 var nbdpbApp = angular.module('nbdpb-app', []);
 nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '$window', '$timeout', '$http', '$document', '$interval', function ($scope, FabricWindow, NBDDataFactory, $window, $timeout, $http, $document, $interval) {
-    // debugger;
 
     // init
     $scope.isStartDesign = false;
     $scope.showAdminTool = false;
     $scope.onloadTemplate = false;
-    $scope.side = [0, 1];
     $scope.init = function () {
-        // if ($scope.isStartDesign) $scope.initSettings();
-        // console.log(NBDESIGNCONFIG);
         $scope.initSettings();
     };
     $scope.defaultStageStates = {};
@@ -10521,7 +10517,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         };
         angular.copy(NBDESIGNCONFIG, $scope.settings);
         angular.extend($scope.settings, {});
-        $scope.rateConvertCm2Px96dpi = 37.795275591;
         $scope.currentStage = 0;
         $scope.tempStageDesign = null;
         $scope.includeExport = ['itemId', 'opIndex', 'lockMovementX', 'lockMovementY', 'lockScalingX', 'lockScalingY', 'evented'];
@@ -10535,13 +10530,10 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     config: {
                         top: 0,
                         left: 0,
-                        width: '100%',
-                        height: '100%'
+                        width: 0,
+                        height: 0
                     },
                     states: {},
-                    undos: [],
-                    redos: [],
-                    layers: [],
                     canvas: {}
                 };
                 var _state = $scope.stages[indexSide].states;
@@ -10556,9 +10548,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                 $scope.stages[index] = {
                     config: {},
                     states: {},
-                    undos: [],
-                    redos: [],
-                    layers: [],
                     canvas: {}
                 };
                 var _state = $scope.stages[index].states;
@@ -10574,49 +10563,49 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-zipper-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-zipper-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['//dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/hoodie-with-zipper-2-324x324.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-2.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
@@ -10640,37 +10629,37 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-1.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-1.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-1.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-1.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-1.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01-1.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
@@ -10705,37 +10694,37 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/01.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
@@ -10770,37 +10759,37 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/02.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/02.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/02.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://www.italiaveloce.it/png/gomma_anteriore/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/02.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/02.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
@@ -10835,55 +10824,55 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/03.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
@@ -10900,61 +10889,61 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                     alias: 'black-suede',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Summit White Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Pale Grey Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Trooper Suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'Light Armor blue suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'plum fog suede',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'white perforated leather',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'black canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/04.png', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }, {
                     name: 'white canvas',
                     alias: '',
                     img: 'http://www.italiaveloce.it/png/telaio_magnifica/01.png',
                     color: '#000',
-                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
+                    src: ['http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-with-logo-1.jpg', 'http://dev.cmsmart.net:3001/online-design/wp-content/uploads/2018/04/beanie-2.jpg']
                 }]
             }, {
                 name: 'Sidewall',
@@ -11143,13 +11132,23 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         id = angular.isDefined(id) ? id : $scope.currentStage;
         var _stage = $scope.stages[id];
         $timeout(function () {
-            var currentWidth = $('#stage-' + id + ' .stage-main').outerWidth(),
-                currentHeight = $('#stage-' + id + ' .stage-main').outerHeight();
-            $scope.stages[id]['canvas'].setDimensions({ 'width': currentWidth, 'height': currentHeight });
+            var viewPort = $scope.calcViewport();
+            if (angular.isUndefined($scope.settings.product_data.config) || Array.isArray($scope.settings.product_data.config.viewport)) {
+                $scope.settings.product_data.config.viewport = viewPort;
+            }
+            var initWidth = $scope.settings.product_data.config.viewport.width,
+                initHeight = $scope.settings.product_data.config.viewport.height;
+            // set config view port
+            var designViewPort = $scope.fitRectangle(viewPort.width, viewPort.height, initWidth, initHeight, true);
 
-            // set config with, height
-            $scope.stages[id].config.width = currentWidth;
-            $scope.stages[id].config.height = currentHeight;
+            _stage['canvas'].setDimensions({ 'width': designViewPort.width, 'height': designViewPort.height });
+            _stage.config.width = designViewPort.width;
+            _stage.config.height = designViewPort.height;
+            _stage.config.top = designViewPort.top;
+            _stage.config.left = designViewPort.left;
+
+            // set resize viewport
+            $scope.settings.product_data.config.resizeViewport = viewPort;
         });
     };
     $scope.showValue = function (index) {
@@ -11274,8 +11273,11 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         $scope.renderStage();
     };
     $scope.calcViewport = function () {
-        var _offsetWidth = checkMobileDevice() ? 20 : 100,
-            _offsetHeight = checkMobileDevice() ? 70 : 100,
+        // var _offsetWidth = checkMobileDevice() ? 20 : 100,
+        var _offsetWidth = checkMobileDevice() ? 0 : 0,
+
+        // _offsetHeight = checkMobileDevice() ? 70 : 100,
+        _offsetHeight = checkMobileDevice() ? 0 : 0,
             _width = $('.design-stages').width() - _offsetWidth,
             _height = $('.design-stages').height() - _offsetHeight;
 
@@ -11304,11 +11306,9 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
     };
     $scope.saveData = function () {
         // show loading
+        $scope.toggleAppLoading();
 
-        $('.nbdpb-load-page').addClass('nbdpb-show');
         $('.nbdpb-custom-design').empty().hide();
-
-        $('body').addClass('nbdpb-no-overflow');
         $scope.saveDesign();
         $scope.resource.config.viewport = $scope.calcViewport();
         $scope.resource.config.product = $scope.settings.product_data.product;
@@ -11327,9 +11327,7 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         dataObj.config = new Blob([JSON.stringify($scope.resource.config)], { type: "application/json" });
         var action = 'nbd_save_product_builder_design';
         NBDDataFactory.get(action, dataObj, function (data) {
-            $('.nbdpb-load-page').removeClass('nbdpb-show');
-            console.log(data);
-            // debugger;
+            $scope.toggleAppLoading();
             data = JSON.parse(data);
             if (data.flag == 'success') {
                 $('.nbdpb-custom-design').show();
@@ -11365,7 +11363,10 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
             d = new Date(),
             itemId = d.getTime() + Math.floor(Math.random() * 1000);
 
-        item.set({ "itemId": itemId });
+        item.set({ "itemId": itemId, "selectable": false });
+        if ($scope.settings.is_edit_pb == 1) {
+            item.set({ "selectable": true });
+        }
         _canvas.viewportCenterObject(item);
 
         var top = item.get('top'),
@@ -11421,6 +11422,8 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                 $scope.resource.proAttrActive = _.keys(proAttr)[0];
                 $scope.updateApp();
             }
+        } else {
+            $scope.saveLayer();
         }
     };
     $scope.onSelectionCreated = function (id, options) {
@@ -11434,6 +11437,52 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         $scope.updateApp();
     };
 
+    var _window = angular.element($window);
+    _window.bind('resize', function () {
+        /* to do: resize design */
+        $scope.reCalcViewPort();
+    });
+
+    $scope.reCalcViewPort = function () {
+        var _stages = $scope.stages;
+        $('.nbdpb-carousel').nbdpbCarousel();
+        _.each(_stages, function (stage, index) {
+            $scope.setStageDimension(index);
+        });
+        var config = $scope.settings.product_data.config,
+            resizeViewport = config.resizeViewport;
+        $scope.resizeStages(resizeViewport);
+    };
+    $scope.resizeStages = function (viewport) {
+        _.each($scope.stages, function (stage, index) {
+            var currentViewport = $scope.calcViewport();
+            var newFitRec = $scope.fitRectangle(viewport.width, viewport.height, stage.config.width, stage.config.height, true);
+            var oldFitRec = $scope.fitRectangle(currentViewport.width, currentViewport.height, stage.config.width, stage.config.height, true);
+            var factor = oldFitRec.width / newFitRec.width;
+            if (factor != 1) {
+                stage.canvas.forEachObject(function (obj) {
+                    var scaleX = obj.scaleX,
+                        scaleY = obj.scaleY,
+                        left = obj.left,
+                        top = obj.top,
+                        tempScaleX = scaleX * factor,
+                        tempScaleY = scaleY * factor,
+                        tempLeft = left * factor,
+                        tempTop = top * factor;
+                    obj.scaleX = tempScaleX;
+                    obj.scaleY = tempScaleY;
+                    obj.left = tempLeft;
+                    obj.top = tempTop;
+                    obj.setCoords();
+                });
+                stage.canvas.calcOffset();
+                $scope.renderStage(index);
+            }
+            if (index == $scope.stages.length - 1) {
+                $scope.toggleStageLoading();
+            }
+        });
+    };
     /*
      * Deactive all layer if click outer canvas
      * Hide context menu
@@ -11466,11 +11515,8 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         });
         /* Load template after render canvas */
         if (last == '1') {
-            // console.log(appConfig.ready);
-            // if (!appConfig.ready) $scope.loadTemplateAfterRenderCanvas();
             appConfig.ready = true;
             $scope.loadTemplateAfterRenderCanvas();
-            // alert('aa');
         }
     });
     $scope.loadTemplateAfterRenderCanvas = function () {
@@ -11562,8 +11608,11 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
                             type = item.type;
                         if (type == 'image' || type == 'custom-image') {
                             fabric.Image.fromObject(item, function (_image) {
-                                //check task
-                                // _image.selectable = false;
+                                if ($scope.settings.is_edit_pb == 1) {
+                                    _image.selectable = true;
+                                } else {
+                                    _image.selectable = false;
+                                }
                                 _canvas.add(_image);
                                 continueLoadLayer();
                             });
@@ -11579,38 +11628,6 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         if (local) {
             loadDesign(temp.design, temp.viewport);
         }
-    };
-    $scope.resizeStages = function (viewport) {
-        _.each($scope.stages, function (stage, index) {
-            // console.log(stage.config);
-            var currentViewport = $scope.calcViewport();
-            var newFitRec = $scope.fitRectangle(viewport.width, viewport.height, stage.config._width, stage.config._height, true);
-            // console.log(newFitRec);
-            var oldFitRec = $scope.fitRectangle(currentViewport.width, currentViewport.height, stage.config._width, stage.config._height, true);
-            var factor = oldFitRec.width / newFitRec.width;
-            if (factor != 1) {
-                stage.canvas.forEachObject(function (obj) {
-                    var scaleX = obj.scaleX,
-                        scaleY = obj.scaleY,
-                        left = obj.left,
-                        top = obj.top,
-                        tempScaleX = scaleX * factor,
-                        tempScaleY = scaleY * factor,
-                        tempLeft = left * factor,
-                        tempTop = top * factor;
-                    obj.scaleX = tempScaleX;
-                    obj.scaleY = tempScaleY;
-                    obj.left = tempLeft;
-                    obj.top = tempTop;
-                    obj.setCoords();
-                });
-                stage.canvas.calcOffset();
-                $scope.renderStage(index);
-            }
-            if (index == $scope.stages.length - 1) {
-                $scope.toggleStageLoading();
-            }
-        });
     };
     $scope.fitRectangle = function (x1, y1, x2, y2, fill) {
         var rec = {};
@@ -11646,8 +11663,16 @@ nbdpbApp.controller('designCtrl', ['$scope', 'FabricWindow', 'NBDDataFactory', '
         }
         return rec;
     };
-    $scope.toggleStageLoading = function () {
-        // alert('toogleStageLoading');
+    $scope.toggleStageLoading = function () {};
+    $scope.toggleAppLoading = function () {
+        var $loading = $('.nbdpb-load-page');
+        if ($loading.hasClass('nbdpb-show')) {
+            $loading.removeClass('nbdpb-show');
+            $('body, html').removeClass('nbdpb-no-overflow');
+        } else {
+            $loading.addClass('nbdpb-show');
+            $('body, html').addClass('nbdpb-no-overflow');
+        }
     };
     $scope.$watch('isStartDesign', function () {
         var _stages = $scope.stages;
@@ -11672,30 +11697,10 @@ nbdpbApp.factory('FabricWindow', ['$window', function ($window) {
         fill: NBDESIGNCONFIG.nbdesigner_default_color,
         hoverCursor: 'pointer',
         borderOpacityWhenMoving: 0,
-        selectable: false
+        selectable: true
     });
     if (checkMobileDevice()) $window.fabric.Object.prototype.set({ cornerSize: 17 });
-    $window.fabric.IText.prototype.set({
-        cursorWidth: 1,
-        cursorColor: '#000',
-        selectionColor: "rgba(19, 147, 255, 0.3)",
-        cursorDuration: 500
-    });
-    if (NBDESIGNCONFIG.nbdesigner_enable_text_free_transform == 'no') {
-        $window.fabric.IText.prototype.set({
-            _controlsVisibility: {
-                tl: true,
-                tr: true,
-                br: true,
-                bl: true,
-                ml: false,
-                mt: false,
-                mr: false,
-                mb: false,
-                mtr: true
-            }
-        });
-    }
+
     $window.fabric.Canvas.prototype.set({
         preserveObjectStacking: true,
         controlsAboveOverlay: true,
@@ -11704,19 +11709,6 @@ nbdpbApp.factory('FabricWindow', ['$window', function ($window) {
         selectionLineWidth: 0.5,
         centeredKey: "shiftKey",
         uniScaleKey: "altKey"
-    });
-    $window.fabric.Textbox.prototype.set({
-        _controlsVisibility: {
-            tl: false,
-            tr: false,
-            br: false,
-            bl: false,
-            ml: true,
-            mt: false,
-            mr: true,
-            mb: false,
-            mtr: true
-        }
     });
     return $window.fabric;
 }]);
@@ -11787,7 +11779,7 @@ $.fn.nbShowPopup = function () {
         }
         $close.on('click', function () {
             $(sefl).removeClass('nbdpb-show');
-            $('body').removeClass('nbdpb-no-overflow');
+            $('body, html').removeClass('nbdpb-no-overflow');
             var $scope = angular.element(document.getElementById("design-container")).scope();
             $scope.isStartDesign = false;
             $scope.updateApp();
@@ -11823,30 +11815,38 @@ $.fn.nbdpbCarousel = function () {
         var $sefl = $(this),
             $items = $(this).find('.nbdpb-carousel-item'),
             $outerCarousel = $(this).closest('.nbdpb-carousel-outer');
-        // $nav = $outerCarousel.find('.js-nav-item');
+
         var cWith = 0,
             total = $items.length,
             dots = '<div class="nbdpb-owl-dots"></div>';
         var nav = '<div class="nbdpb-owl-nav"></div>',
             navPrev = '<button type="button" role="presentation" class="nbdpb-owl-prev js-nav-item">' + '<i aria-label="Previous" class="icon-nbd icon-nbd-chevron-right rotate180"></i>' + '</button>',
             navNext = '<button type="button" role="presentation" class="nbdpb-owl-next js-nav-item">' + '<i aria-label="Next" class="icon-nbd icon-nbd-chevron-right"></i>' + '</button>';
-
         var $dots = $(dots),
             $nav = $(nav),
             $navPrev = $(navPrev),
             $navNext = $(navNext);
 
-        // init with carousel
+        // remove all dot and nav
+        $outerCarousel.find('.nbdpb-owl-nav').remove();
+        $outerCarousel.find('.nbdpb-owl-dots').remove();
+
+        // append dot and nav
         $outerCarousel.append($dots);
         $outerCarousel.append($nav);
         $nav.append($navPrev);
         $nav.append($navNext);
 
+        // calculator width carousel
         $items.each(function (i) {
             var dot = '<button role="button" class="nbdpb-owl-dot"><span></span></button>';
-            cWith += $(this).outerWidth();
+            // cWith += $(this).outerWidth();
+            // $(this).css({
+            //     width: $(this).outerWidth()
+            // });
+            cWith += $outerCarousel.outerWidth();
             $(this).css({
-                width: $(this).outerWidth()
+                width: $outerCarousel.outerWidth()
             });
             $dots.append(dot);
         });
@@ -11902,30 +11902,26 @@ function getTransform(el) {
 }
 $(document).ready(function ($) {
     $('#nbdpb-start-design').on('click', function () {
-        // console.log(angular);
         var $scope = angular.element(document.getElementById("design-container")).scope();
         $scope.isStartDesign = true;
         $scope.updateApp();
 
-        // console.log($('#stage-0 .stage-main').outerWidth());
-
-        $('body').addClass('nbdpb-no-overflow');
+        $('body, html').addClass('nbdpb-no-overflow');
         $('.nbdpb-popup.popup-design').nbShowPopup().addClass('nbdpb-no-overflow');
         $('.nbdpb-carousel').nbdpbCarousel();
     });
 
     // swipe
     if (checkMobileDevice()) {
-        if (NBDESIGNCONFIG.is_edit_pb) {
+        if (NBDESIGNCONFIG.is_edit_pb !== 1) {
             $("#nbdpb-app .stage").swipe({
                 //Generic swipe handler for all directions
                 swipe: function swipe(event, direction, distance, duration, fingerCount, fingerData) {
-                    // console.log(duration);
                     if (direction == 'left') $('.nbdpb-carousel-outer .nbdpb-owl-prev').triggerHandler('click');
                     if (direction == 'right') $('.nbdpb-carousel-outer .nbdpb-owl-next').triggerHandler('click');
-                },
+                }
                 // Default is 75px, set to 0 for demo so any distance triggers swipe
-                threshold: 0
+                // threshold: 0
             });
         }
     }

@@ -3452,17 +3452,6 @@ Copyright (c) 2015 Daniel Eden
 /*--------------------------------------------------------------
 # Global
 --------------------------------------------------------------*/
-a, span, div, p {
-  font-size: 14px !important;
-  color: #666;
-}
-
-@media screen and (max-width: 991px) {
-  a, span, div, p {
-    font-size: 12px !important;
-  }
-}
-
 .nbdpb-no-overflow {
   overflow: hidden !important;
 }
@@ -3629,10 +3618,17 @@ img {
           animation-fill-mode: forwards;
   -webkit-animation-duration: 800ms;
           animation-duration: 800ms;
-  -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s;
   -webkit-animation-name: slideInKeyframes;
           animation-name: slideInKeyframes;
+}
+
+.nbdpbFadeIn {
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
 }
 
 @-webkit-keyframes slideInKeyframes {
@@ -3642,12 +3638,12 @@ img {
     opacity: 0;
   }
   55% {
-    -webkit-transform: translateX(-28px);
-            transform: translateX(-28px);
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
   }
   60% {
-    -webkit-transform: translateX(-28px);
-            transform: translateX(-28px);
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
   }
   100% {
     -webkit-transform: translateX(0);
@@ -3663,16 +3659,25 @@ img {
     opacity: 0;
   }
   55% {
-    -webkit-transform: translateX(-28px);
-            transform: translateX(-28px);
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
   }
   60% {
-    -webkit-transform: translateX(-28px);
-            transform: translateX(-28px);
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
   }
   100% {
     -webkit-transform: translateX(0);
             transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }
@@ -3695,7 +3700,7 @@ img {
 .nbdpb-popup.nbdpb-show {
   opacity: 1;
   visibility: visible;
-  z-index: 99999;
+  z-index: 999999999;
 }
 
 .nbdpb-popup .close-popup {
@@ -3792,6 +3797,21 @@ img {
 .nbdpb-product-builder table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+.nbdpb-product-builder a, .nbdpb-product-builder span, .nbdpb-product-builder div, .nbdpb-product-builder p {
+  font-size: 14px !important;
+  color: #666;
+}
+
+@media screen and (max-width: 991px) {
+  .nbdpb-product-builder a, .nbdpb-product-builder span, .nbdpb-product-builder div, .nbdpb-product-builder p {
+    font-size: 12px !important;
+  }
+}
+
+.nbdpb-product-builder a:active, .nbdpb-product-builder a:focus, .nbdpb-product-builder a:visited, .nbdpb-product-builder a:hover, .nbdpb-product-builder button:active, .nbdpb-product-builder button:focus, .nbdpb-product-builder button:visited, .nbdpb-product-builder button:hover {
+  outline: none;
 }
 
 .nbdpb-product-builder .nbdpb-btn {
@@ -3940,6 +3960,7 @@ img {
 
 .nbdpb-product-builder .design-layer {
   width: 75%;
+  height: 100%;
   position: relative;
 }
 
@@ -3966,6 +3987,7 @@ img {
 
 .nbdpb-product-builder .design-sidebar {
   width: 25%;
+  height: 100%;
 }
 
 .nbdpb-product-builder .design-sidebar .design-finish {
@@ -4057,14 +4079,8 @@ img {
 
 .nbdpb-product-builder .stage .stage-main {
   width: 100%;
-  height: calc(100% - 52px);
+  height: 100%;
   position: relative;
-}
-
-@media screen and (max-width: 991px) {
-  .nbdpb-product-builder .stage .stage-main {
-    height: calc(100% - 30px);
-  }
 }
 
 .nbdpb-product-builder .stage .design-zone {
@@ -4258,6 +4274,12 @@ img {
   cursor: pointer;
   min-width: 140px;
   min-height: 120px;
+}
+
+@media screen and (max-width: 1199px) {
+  .nbdpb-product-builder .product-value .value-item {
+    width: 100%;
+  }
 }
 
 .nbdpb-product-builder .product-value .value-item.active {
@@ -4480,4 +4502,18 @@ img {
   80%, 90% {
     stroke: #ffa700;
   }
+}
+
+.rtl .nbdpb-popup .close-popup {
+  right: 10px;
+  left: auto;
+}
+
+.rtl .nbdpb-product-builder .design-stages {
+  direction: ltr;
+}
+
+.rtl .nbdpb-product-builder .sidebar-item {
+  -webkit-animation: none;
+          animation: none;
 }

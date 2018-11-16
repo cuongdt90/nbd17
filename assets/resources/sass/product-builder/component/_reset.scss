@@ -50,3 +50,19 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+a, span, div, p {
+  font-size: 14px !important;
+  color: #666;
+}
+@media screen and (max-width: 991px){
+  a, span, div, p{
+    font-size: 12px !important;
+  }
+}
+
+a, button {
+  &:active, &:focus, &:visited, &:hover{
+    outline: none;
+  }
+}
