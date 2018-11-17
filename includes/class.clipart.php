@@ -19,63 +19,40 @@ if(!class_exists('NBD_CLIPART')){
 //            add_action('init', array($this, 'create_categories_tax'));
             add_action('init', array($this, 'create_nbdclipart_category_tax'));
             // add meta box
-            add_action('add_meta_boxes', array($this, 'add_meta_box'));
+            add_action('add_meta_boxes', array($this, 'add_nbdclipart_meta_box'));
             // save metabox
             add_action('save_post_nbdclipart', array($this,'nbdclipart_save_post'));
-            // add post_enctype
-            add_action('post_edit_form_tag', array($this,'add_post_enctype'));
 
-            // custom category tree
-            add_action('wp_terms_checklist_args', array($this,'custom_category_tree'));
+            // add post_enctype
+//            add_action('post_edit_form_tag', array($this,'add_post_enctype'));
+
             // custom category post
+
+            // Filter arguments for registering a taxonomy
+//            add_filter('register_taxonomy_args',array($this,'show_nbdclipart_categories', 10, 3));
+
+            // Add custom metabox for clipart post
+//            add_action('load-post.php', array($this, 'custom_load_clipart_post'));
+//            add_action('load-post-new.php', array($this, 'custom_load_clipart_post'));
 
             $this->ajax();
         }
 
-        public function custom_category_tree( $post_id,$args)
+        public function custom_load_clipart_post()
         {
-//            echo '<pre>'; print_r('aaa'); echo '</pre>'; echo __FILE__; die();
-//            echo '<pre>'; print_r($args); echo '</pre>'; echo __FILE__;
-//            die();
+//            remove_meta_box('categorydiv', 'nbdclipart', 'side');
+//            remove_meta_box('clipart_categorydiv', 'nbdclipart', 'side');
         }
-
         public function add_post_enctype()
         {
-            echo ' enctype="multipart/form-data" autocomplete="off" encoding="multipart/form-data"';
+            echo 'enctype="multipart/form-data" autocomplete="off" encoding="multipart/form-data"';
         }
         public function nbdclipart_save_post()
         {
-            if (empty($_POST)) return;
-            $nbdesigner_plugin = new Nbdesigner_Plugin();
-            $helper = new Nbdesigner_IO();
-
-            $update = false;
-            $art_id = 0;
-            $cats = array('0');
-//            $list = $helper(NBDESIGNER_DATA_DIR . '/arts.json');
-            $list = $helper->read_json_setting(NBDESIGNER_DATA_DIR . '/arts.json');
-
-            if (isset($_GET['id'])) {
-                $art_id = $_GET['id'];
-                $update = true;
-                if (isset($list[$art_id])) {
-                    $art_data = $list[$art_id];
-                    $cats = $art_data->cat;
-                }
-            }
-
-            $art = array();
-            $art['id'] = $_POST['nbdesigner_art_id'];
-            $art['cat'] = $cats;
-
-            if (isset($_GET['art_id'])) {
-                $update = true;
-                $art_id = $_GET['art_id'];
-            }
+            $post_id = $_POST['post_ID'];
             if (isset($_FILES['svg'])) {
                 $files = $_FILES['svg'];
                 foreach ($files['name'] as $key => $value) {
-
                     $file = array(
                         'name' => $files['name'][$key],
                         'type' => $files['type'][$key],
@@ -83,13 +60,12 @@ if(!class_exists('NBD_CLIPART')){
                         'error' => $files['error'][$key],
                         'size' => $files['size'][$key]
                     );
-
                     $uploaded_file_name = basename($file['name']);
                     $allowed_file_types = array('svg', 'png', 'jpg', 'jpeg');
-
                     if (Nbdesigner_IO::checkFileType($uploaded_file_name, $allowed_file_types)) {
                         $upload_overrides = array('test_form' => false);
                         $uploaded_file = wp_handle_upload($file, $upload_overrides);
+
                         if (isset($uploaded_file['url'])) {
                             $new_path_art = Nbdesigner_IO::create_file_path(NBDESIGNER_ART_DIR, $uploaded_file_name);
                             $art['file'] = $uploaded_file['file'];
@@ -100,13 +76,9 @@ if(!class_exists('NBD_CLIPART')){
                             } else {
                                 $art['file'] = $new_path_art['date_path'];
                                 $art['url'] = $new_path_art['date_path'];
-                                //$art['url'] = NBDESIGNER_ART_URL . $new_path_art['date_path'];
                             }
-                            if ($update) {
-                                $nbdesigner_plugin->nbdesigner_update_list_arts($art, $art_id);
-                            } else {
-                                $nbdesigner_plugin->nbdesigner_update_list_arts($art);
-                            }
+                            delete_post_meta($post_id,'nbdclipart');
+                            add_post_meta($post_id, 'nbdclipart', $art['url']);
                             $notice = apply_filters('nbdesigner_notices', nbd_custom_notices('success', __('Your art has been saved.', 'web-to-print-online-designer')));
                         } else {
                             $notice = apply_filters('nbdesigner_notices', nbd_custom_notices('error', __('Error while upload art, please try again!', 'web-to-print-online-designer')));
@@ -114,33 +86,76 @@ if(!class_exists('NBD_CLIPART')){
 
                     }
                 }
+
+//                set_transient('nbd_clipart_' . $post_id, $post_id);
+
             }
 //            global $post;
 //            update_post_meta($post->ID, "function", $_POST["function"]);
 
-
         }
-        public function add_meta_box()
+        public function add_nbdclipart_meta_box()
         {
-            add_meta_box("wp_custom_attachment", "upload file", array($this, 'meta_options'), "nbdclipart", "normal", "high");
+            add_meta_box("wp_custom_attachment", "chose / upload file", array($this, 'nbdclipart_meta_options'), "nbdclipart", "normal", "high");
         }
-
-        public function meta_options()
+        public function nbdclipart_meta_options()
         {
             global $post;
+//            $cliparts = get_post_meta($post->ID,'nbdclipart');
 
             $theFILE=  get_post_meta($post->ID,'wp_custom_attachment',true);
             wp_nonce_field(plugin_basename(__FILE__), 'wp_custom_attachment_nonce');
-            $html = '<p class="description">';
-            $html .= 'Upload the File.';
-            if(count($theFILE)>0 && is_array($theFILE)){ $html.=" Uploaded File:".$theFILE[0]['url']; }
-            $html .= '</p>';
-            $html .= '<input id="wp_custom_attachment" title="select file" multiple="multiple" name="svg[]" size="25" type="file" value="" />';
+            $html = '';
+//            $html = '<p class="description">';
+//            $html .= 'Chose / Upload the File.';
+//            if(count($theFILE)>0 && is_array($theFILE)){ $html.=" Uploaded File:".$theFILE[0]['url']; }
+//            $html .= '</p>';
+            $html .= '<p class="add_clipart_images hide-if-no-js">
+                        <a href="#" id="set-nbdclipart">Add clipart</a>
+                        <input type="hidden" id="nbdclipart-selected" name="nbdclipart[]">
+		              </p>';
 
+            $html .= '<div id="nbdclipart-gallery"></div>';
+
+//            $html .= '<input id="wp_custom_attachment" title="select file" multiple="multiple" name="svg[]" size="25" type="file" value="" />';
+//            $html .= '<div class="nbdclipart-thumb" style="margin-top: 20px">';
+//
             echo $html;
+            ?>
+            <script type="text/javascript">
+                jQuery('#set-nbdclipart').on('click', function (e) {
+                    e.preventDefault();
+                    var sefl = this;
+                    var clipartUploader = wp.media.frames.file_frame = wp.media({
+                        title: 'Choose Clipart',
+                        button: {
+                            text: 'Choose clipart'
+                        },
+                        multiple: true
+                    });
 
+                    //When a file is selected, grab the URL and set it as the text field's value
+                    clipartUploader.on('select', function() {
+                        var attachment = clipartUploader.state().get('selection').toJSON();
+//                        $upload_button.siblings('input[type="text"]').val(attachment.url);
+                        jQuery('#nbdclipart-gallery').empty();
+                        jQuery.each(attachment, function (key, val) {
+                            var item = '<div class="nbdesigner_art_link"><img src="' + val.url + '" /></div>'
+                            jQuery('#nbdclipart-gallery').append(item);
+                        });
+
+                        
+//                        console.log(attachment);
+//                        debugger;
+//                        jQuery('#nbdclipart-selected').val()
+                    });
+
+                    //Open the uploader dialog
+                    clipartUploader.open();
+                });
+            </script>
+            <?php
         }
-
         public function admin_enqueue_scripts($hook){
             if( $hook == 'nbdesigner_page_manage_color' ){
                 wp_enqueue_style('nbdesigner_sweetalert_css', NBDESIGNER_CSS_URL . 'sweetalert.css');
@@ -173,52 +188,49 @@ if(!class_exists('NBD_CLIPART')){
         public function manage_clipart(){
             include_once(NBDESIGNER_PLUGIN_DIR . 'views/manage-clipart.php');
         }
-
         function create_nbdclipart_cpt() {
-
-            $labels = array(
-                'name' => __( 'NBD Clipart', 'Post Type General Name', 'web-to-print-online-designer' ),
-                'singular_name' => __( 'nbd-clipart', 'Post Type Singular Name', 'web-to-print-online-designer' ),
-                'menu_name' => __( 'NBD Clipart', 'web-to-print-online-designer' ),
-                'name_admin_bar' => __( 'nbd-clipart', 'web-to-print-online-designer' ),
-                'archives' => __( 'nbd-clipart Archives', 'web-to-print-online-designer' ),
-                'attributes' => __( 'nbd-clipart Attributes', 'web-to-print-online-designer' ),
-                'parent_item_colon' => __( 'Parent nbd-clipart:', 'web-to-print-online-designer' ),
-                'all_items' => __( 'All Nbd Clipart', 'web-to-print-online-designer' ),
-                'add_new_item' => __( 'Add New nbd-clipart', 'web-to-print-online-designer' ),
-                'add_new' => __( 'Add New', 'web-to-print-online-designer' ),
-                'new_item' => __( 'New nbd-clipart', 'web-to-print-online-designer' ),
-                'edit_item' => __( 'Edit nbd-clipart', 'web-to-print-online-designer' ),
-                'update_item' => __( 'Update nbd-clipart', 'web-to-print-online-designer' ),
-                'view_item' => __( 'View nbd-clipart', 'web-to-print-online-designer' ),
-                'view_items' => __( 'View Nbd Clipart', 'web-to-print-online-designer' ),
-                'search_items' => __( 'Search nbd-clipart', 'web-to-print-online-designer' ),
-                'not_found' => __( 'Not found', 'web-to-print-online-designer' ),
-                'not_found_in_trash' => __( 'Not found in Trash', 'web-to-print-online-designer' ),
-                'featured_image' => __( 'Featured Image', 'web-to-print-online-designer' ),
-                'set_featured_image' => __( 'Set featured image', 'web-to-print-online-designer' ),
-                'remove_featured_image' => __( 'Remove featured image', 'web-to-print-online-designer' ),
-                'use_featured_image' => __( 'Use as featured image', 'web-to-print-online-designer' ),
-                'insert_into_item' => __( 'Insert into nbd-clipart', 'web-to-print-online-designer' ),
-                'uploaded_to_this_item' => __( 'Uploaded to this nbd-clipart', 'web-to-print-online-designer' ),
-                'items_list' => __( 'Nbd Clipart list', 'web-to-print-online-designer' ),
-                'items_list_navigation' => __( 'Nbd Clipart list navigation', 'web-to-print-online-designer' ),
-                'filter_items_list' => __( 'Filter Nbd Clipart list', 'web-to-print-online-designer' ),
-            );
             $args = array(
+                'labels' => array(
+                    'name'                  => __( 'NBD Clipart', 'web-to-print-online-designer' ),
+                    'singular_name'         => __( 'nbd-clipart', 'web-to-print-online-designer' ),
+                    'menu_name'             => __( 'NBD Clipart', 'web-to-print-online-designer' ),
+                    'name_admin_bar'        => __( 'nbd-clipart', 'web-to-print-online-designer' ),
+                    'archives'              => __( 'Clipart Archives', 'web-to-print-online-designer' ),
+                    'attributes'            => __( 'Clipart Attributes', 'web-to-print-online-designer' ),
+                    'parent_item_colon'     => __( 'Parent clipart:', 'web-to-print-online-designer' ),
+                    'all_items'             => __( 'All clipart', 'web-to-print-online-designer' ),
+                    'add_new_item'          => __( 'Add New Clipart', 'web-to-print-online-designer' ),
+                    'add_new'               => __( 'Add New', 'web-to-print-online-designer' ),
+                    'new_item'              => __( 'New clipart', 'web-to-print-online-designer' ),
+                    'edit_item'             => __( 'Edit clipart', 'web-to-print-online-designer' ),
+                    'update_item'           => __( 'Update clipart', 'web-to-print-online-designer' ),
+                    'view_item'             => __( 'View clipart', 'web-to-print-online-designer' ),
+                    'view_items'            => __( 'View Nbd Clipart', 'web-to-print-online-designer' ),
+                    'search_items'          => __( 'Search clipart', 'web-to-print-online-designer' ),
+                    'not_found'             => __( 'No clipart found', 'web-to-print-online-designer' ),
+                    'not_found_in_trash'    => __( 'No clipart found in Trash', 'web-to-print-online-designer' ),
+                    'featured_image'        => __( 'Clipart Image', 'web-to-print-online-designer' ),
+                    'set_featured_image'    => __( 'Set clipart image', 'web-to-print-online-designer' ),
+                    'remove_featured_image' => __( 'Remove featured image', 'web-to-print-online-designer' ),
+                    'use_featured_image'    => __( 'Use as featured image', 'web-to-print-online-designer' ),
+                    'insert_into_item'      => __( 'Insert into clipart', 'web-to-print-online-designer' ),
+                    'uploaded_to_this_item' => __( 'Uploaded to this clipart', 'web-to-print-online-designer' ),
+                    'items_list'            => __( 'Nbd Clipart list', 'web-to-print-online-designer' ),
+                    'items_list_navigation' => __( 'Nbd Clipart list navigation', 'web-to-print-online-designer' ),
+                    'filter_items_list'     => __( 'Filter Nbd Clipart list', 'web-to-print-online-designer' ),
+                ),
                 'label' => __( 'nbd-clipart', 'web-to-print-online-designer' ),
                 'description' => __( 'manage clipart of Nbdesigner ', 'web-to-print-online-designer' ),
-                'labels' => $labels,
                 'menu_icon' => 'dashicons-analytics',
 //                'supports' => array('custom-fields','author'),
-                'supports' => array(''),
-                'taxonomies' => array('clipart_category', ),
+                'supports' => array('title','thumbnail'),
+                'taxonomies' => array('clipart_category'),
                 'public' => true,
                 'show_ui' => true,
-                'show_in_menu' => true,
-                'menu_position' => 5,
+                'show_in_menu' => false,
+                'menu_position' => 1,
                 'show_in_admin_bar' => true,
-                'show_in_nav_menus' => true,
+                'show_in_nav_menus' => false,
                 'can_export' => true,
                 'has_archive' => true,
                 'hierarchical' => true,
@@ -230,43 +242,46 @@ if(!class_exists('NBD_CLIPART')){
             register_post_type( 'nbdclipart', $args );
 
         }
-
         function create_nbdclipart_category_tax() {
 
-            $labels = array(
-                'name'              => _x( 'Category', 'taxonomy general name', 'web-to-print-online-designer' ),
-                'singular_name'     => _x( 'clipart category', 'taxonomy singular name', 'web-to-print-online-designer' ),
-                'search_items'      => __( 'Search Custom Taxonomies', 'web-to-print-online-designer' ),
-                'all_items'         => __( 'All Custom Taxonomies', 'web-to-print-online-designer' ),
-                'parent_item'       => __( 'Parent clipart category', 'web-to-print-online-designer' ),
-                'parent_item_colon' => __( 'Parent clipart category:', 'web-to-print-online-designer' ),
-                'edit_item'         => __( 'Edit clipart category', 'web-to-print-online-designer' ),
-                'update_item'       => __( 'Update clipart category', 'web-to-print-online-designer' ),
-                'add_new_item'      => __( 'Add New clipart category', 'web-to-print-online-designer' ),
-                'new_item_name'     => __( 'New clipart category Name', 'web-to-print-online-designer' ),
-                'menu_name'         => __( 'Category', 'web-to-print-online-designer' ),
-            );
             $args = array(
-                'labels' => $labels,
+                'label' => __( 'Categories', 'web-to-print-online-designer' ),
+                'labels' => array(
+                    'name'              => __( 'Clipart categories', 'web-to-print-online-designer' ),
+                    'singular_name'     => __( 'Category', 'web-to-print-online-designer' ),
+                    'search_items'      => __('Search categories', 'web-to-print-online-designer'),
+                    'all_items'         => __('All categories', 'web-to-print-online-designer'),
+                    'parent_item'       => __('Parent category:', 'web-to-print-online-designer'),
+                    'parent_item_colon' => __('Parent category:', 'web-to-print-online-designer'),
+                    'edit_item'         => __('Edit category', 'web-to-print-online-designer'),
+                    'update_item'       => __('Update category', 'web-to-print-online-designer'),
+                    'add_new_item'      => __('Add new category', 'web-to-print-online-designer'),
+                    'new_item_name'     => __('New category name', 'web-to-print-online-designer'),
+                    'not_found'         => __( 'No categories found', 'woocommerce' ),
+                    'menu_name'         => __('Category', 'web-to-print-online-designer'),
+                ),
                 'description' => __( 'custom taxonomy for clipart', 'web-to-print-online-designer' ),
-                'hierarchical' => false,
+                'hierarchical' => true,
                 'public' => true,
                 'publicly_queryable' => true,
                 'show_ui' => true,
-                'show_in_menu' => true,
+                'query_var' => true,
+                'show_in_menu' => false,
                 'show_in_nav_menus' => true,
                 'show_in_rest' => false,
                 'show_tagcloud' => true,
                 'show_in_quick_edit' => true,
                 'show_admin_column' => false,
+                'rewrite'          => array(
+                    'slug'         => 'clipart_category',
+                    'with_front'   => false,
+                    'hierarchical' => true,
+                ),
             );
 
             register_taxonomy( 'clipart_category', array('nbdclipart'), $args );
 
         }
-
-
-
     }
 }
 $nbd_clipart = NBD_CLIPART::instance();

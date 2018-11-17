@@ -852,6 +852,12 @@ class Nbdesigner_Plugin {
             );
             add_action('load-'.$nbdesigner_manage, array('Nbdesigner_Helper', 'settings_helper'));
         }
+        add_submenu_page(
+            'nbdesigner', __('Cliparts', 'web-to-print-online-designer'), __('Cliparts', 'web-to-print-online-designer'), 'manage_nbd_setting', 'edit.php?post_type=nbdclipart'
+        );
+        add_submenu_page(
+            'nbdesigner', __('Clipart categories', 'web-to-print-online-designer'), __('Clipart categories', 'web-to-print-online-designer'), 'manage_nbd_setting', 'edit-tags.php?taxonomy=clipart_category'
+        );
         if(current_user_can('manage_nbd_product')){
             $product_hook = add_submenu_page(
                     'nbdesigner', __('Manager Products', 'web-to-print-online-designer'), __('Products', 'web-to-print-online-designer'), 'manage_nbd_product', 'nbdesigner_manager_product', array($this, 'nbdesigner_manager_product')
