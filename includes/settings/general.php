@@ -351,6 +351,17 @@ if( !class_exists('Nbdesigner_Settings_General') ) {
                         )
                     ),
                     array(
+                        'title' => __( 'Fix image URLs after change domain', 'web-to-print-online-designer'),
+                        'description'   => sprintf(__( 'Fix image url after change domain or setup SSL.'), esc_url(admin_url('admin.php?page=nbdesigner_tools#nbd-logs'))),
+                        'id' 		=> 'nbdesigner_fix_domain_changed',
+                        'default' => 'no',
+                        'type' => 'radio',
+                        'options' => array(
+                            'yes' => __('Yes', 'web-to-print-online-designer'),
+                            'no' => __('No', 'web-to-print-online-designer'),
+                        )
+                    ),                    
+                    array(
                         'title' => __( 'Cron job flush W3 Total cache', 'web-to-print-online-designer'),
                         'description'   => '',
                         'id' 		=> 'nbdesigner_cron_job_clear_w3_cache',

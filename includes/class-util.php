@@ -695,6 +695,7 @@ function nbdesigner_get_default_setting($key = false){
 }
 function default_frontend_setting(){
     return apply_filters('nbdesigner_default_frontend_settings', array(
+        'nbdesigner_fix_domain_changed' => 'no',
         'nbdesigner_enable_text' => 'yes',
         'nbdesigner_text_change_font' => 1,
         'nbdesigner_text_italic' => 1,
@@ -821,6 +822,7 @@ function default_frontend_setting(){
         'nbdesigner_show_grid' => 'no',
         'nbdesigner_show_ruler' => 'no',
         'nbdesigner_show_bleed' => 'no',
+        'nbdesigner_show_layer_size' => 'no',
         'nbdesigner_show_warning_oos' => 'no',
         'nbdesigner_show_warning_ilr' => 'no'
     ));
@@ -2458,6 +2460,41 @@ function nbd_get_truetype_fonts(){
     }
     return array_merge($true_type, $true_type_setting);
 }
+function nbd_admin_pages(){
+    return array(
+        'toplevel_page_nbdesigner', 
+        'nbdesigner_page_nbdesigner_manager_product', 
+        'toplevel_page_nbdesigner_shoper',
+        'nbdesigner_page_nbdesigner_frontend_translate',
+        'nbdesigner_page_nbdesigner_tools',
+        'nbdesigner_page_nbdesigner_manager_arts',
+        'nbdesigner_page_nbdesigner_manager_fonts',
+        'admin_page_nbdesigner_detail_order',
+        'nbdesigner_page_nbd_support',
+        'nbdesigner_page_nbd_printing_options'
+    );
+}
+function nbd_convert_svg_url($path, $file){
+    $svg_path = $path . '/svgpath';
+    if( !file_exists($svg_path) ) wp_mkdir_p($svg_path);
+    $new_svg_path = $svg_path.'/'.$file;
+    $xdoc = new DomDocument;
+    $xdoc->Load($path.$file);
+    $images = $xdoc->getElementsByTagName('image');
+    for ($i = 0; $i < $images->length; $i++) {
+        $tagName = $xdoc->getElementsByTagName('image')->item($i);
+        $attribNode = $tagName->getAttributeNode('xlink:href');
+        $img_src = $attribNode->value;
+        if(strpos($img_src, "data:image")!==FALSE)
+        continue;
+        $type = pathinfo($img_src, PATHINFO_EXTENSION);
+        $type = ($type =='svg' ) ? 'svg+xml' : $type;
+        $path_image = Nbdesigner_IO::convert_url_to_path($img_src);
+        $tagName->setAttribute('xlink:href', $path_image);
+    }
+    $new_svg = $xdoc->saveXML();
+    file_put_contents($new_svg_path, $new_svg); 
+}
 function nbd_get_user_information( $id = false ){
     $infos = array();
     $current_user = wp_get_current_user();
@@ -2556,27 +2593,27 @@ function nbd_get_user_information( $id = false ){
     }
     return $infos;
 }
-
-function nbd_convert_svg_url($path, $file){
-    $svg_path = $path . '/svgpath';
-    if( !file_exists($svg_path) ) wp_mkdir_p($svg_path);
-    $new_svg_path = $svg_path.'/'.$file;
-    $xdoc = new DomDocument;
-    $xdoc->Load($path.$file);
-    $images = $xdoc->getElementsByTagName('image');
-    for ($i = 0; $i < $images->length; $i++) {
-        $tagName = $xdoc->getElementsByTagName('image')->item($i);
-        $attribNode = $tagName->getAttributeNode('xlink:href');
-        $img_src = $attribNode->value;
-        if(strpos($img_src, "data:image")!==FALSE)
-        continue;
-        $type = pathinfo($img_src, PATHINFO_EXTENSION);
-        $type = ($type =='svg' ) ? 'svg+xml' : $type;
-        $path_image = Nbdesigner_IO::convert_url_to_path($img_src);
-        $tagName->setAttribute('xlink:href', $path_image);
+function nbd_get_users_by_country_code( $country_code ){
+    $all_users = get_users(array( 'fields' => array( 'ID' ) ));
+    $users = array();
+    foreach($all_users as $user){
+        $cid = $user->ID;
+        $customer = new WC_Customer( $cid );
+        $cc = $customer->get_billing_country();
+        if(strtolower($cc) == strtolower($country_code) ){
+            $contact_infos = nbd_get_user_information($cid);
+            $contact_acf_fields = get_field_objects('user_' . $cid);
+            $users[] = array(
+                'c_full_name' =>  $contact_infos['full_name']['value'],
+                'c_title' =>  (isset( $contact_acf_fields['user_title'] ) && $contact_acf_fields['user_title']['value'] != '') ? $contact_acf_fields['user_title']['value'] : __('Title', 'web-to-print-online-designer'),
+//                    'c_mobile' =>  isset( $contact_acf_fields['user_mobile'] ) ? 'Mob ' . $contact_acf_fields['user_mobile']['value'] : 'Mob ' . __('0123456789', 'web-to-print-online-designer'),
+                'c_phone' => 'Tel ' . $contact_infos['phone']['value'],
+                'c_email' =>  $contact_infos['email']['value'],
+                'c_avatar'    =>  nbd_convert_tif_to_png($contact_infos['email']['value'] . '.tif', 'small')
+            );
+        }
     }
-    $new_svg = $xdoc->saveXML();
-    file_put_contents($new_svg_path, $new_svg); 
+    return $users;
 }
 function nbd_get_user_contact_sheet( $id = false ){
     $current_user = wp_get_current_user();
@@ -2594,7 +2631,7 @@ function nbd_get_user_contact_sheet( $id = false ){
         'avatar'    =>  nbd_convert_tif_to_png($user_infos['email']['value'] . '.tif')
     );
     $contactsheet = isset( $acf_fields['contactsheet'] ) ? $acf_fields['contactsheet']['value'] : array();
-    $infos['first_con'] = 'sv';
+    $infos['first_con'] = 'se';
     $infos['contactsheet'] = $contactsheet;
     foreach($contactsheet as $con){
         $infos['contact'][$con] = array();
@@ -2640,18 +2677,4 @@ function nbd_convert_tif_to_png( $file, $type = 'big' ){
         return $png_url;
     }
     return WP_CONTENT_URL . '/images/personalbilder/default_avatar.png';
-}
-function nbd_admin_pages(){
-    return array(
-        'toplevel_page_nbdesigner', 
-        'nbdesigner_page_nbdesigner_manager_product', 
-        'toplevel_page_nbdesigner_shoper',
-        'nbdesigner_page_nbdesigner_frontend_translate',
-        'nbdesigner_page_nbdesigner_tools',
-        'nbdesigner_page_nbdesigner_manager_arts',
-        'nbdesigner_page_nbdesigner_manager_fonts',
-        'admin_page_nbdesigner_detail_order',
-        'nbdesigner_page_nbd_support',
-        'nbdesigner_page_nbd_printing_options'
-    );
 }

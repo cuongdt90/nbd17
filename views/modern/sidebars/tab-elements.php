@@ -1,6 +1,6 @@
 <div class="tab" id="tab-element" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
     <div class="nbd-search">
-        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="text" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
+        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="text" name="search" placeholder="<?php _e('Search element', 'web-to-print-online-designer'); ?>" ng-model="resource.element.contentSearch"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>     
     <div class="tab-main tab-scroll" style="margin-top: 70px;height: calc(100% - 70px);">
@@ -43,7 +43,7 @@
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-qrcode"></i></div>
                             <div class="item-info">
-                                <span class="item-name"><?php _e('QR-Code','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('Bar/QR-Code','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
@@ -140,10 +140,11 @@
                                 <input ng-model="resource.qrText" type="text" class="nbd-input input-qrcode" name="qr-code" placeholder="https://yourcompany.com">
                             </div>
                             <button ng-class="resource.qrText != '' ? '' : 'nbd-disabled'" class="nbd-button" ng-click="addQrCode()"><?php _e('Create QRCode','web-to-print-online-designer'); ?></button>
+                            <button ng-class="resource.qrText != '' ? '' : 'nbd-disabled'" class="nbd-button" ng-click="addBarCode()"><?php _e('Create BarCode','web-to-print-online-designer'); ?></button>
                             <div class="main-qrcode">
                                 
                             </div>
-
+                            <svg id="barcode"></svg>
                         </div>
                     </div>
                 </div>

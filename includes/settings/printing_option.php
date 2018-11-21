@@ -83,7 +83,7 @@ if( !class_exists('Nbdesigner_Printing_Options') ) {
                         )                      
                     ),
                     array(
-                        'title' => __( 'Tooltip position', 'web-to-print-online-designer'),
+                        'title' => __( 'Option description tooltip position', 'web-to-print-online-designer'),
                         'id' 		=> 'nbdesigner_tooltip_position',
                         'description' 	=> '',
                         'default'	=> 'top',

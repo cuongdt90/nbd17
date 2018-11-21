@@ -37,7 +37,7 @@ jQuery(document).ready(function () {
     };
     jQuery('#triggerDesign').on('click', function () {
         if(jQuery(this).hasClass('nbdesigner_disable')){
-            jQuery('.single_add_to_cart_button').trigger('click');
+            alert(nbds_frontend.check_invalid_fields);
         }else{
             showDesignFrame();
             var frame = document.getElementById('onlinedesigner-designer');

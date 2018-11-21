@@ -23,7 +23,7 @@
                 }
             ?> />
         <label class="nbd-swatch" style="<?php if( $attr['preview_type'] == 'i' ){echo 'background: url('.$image_url . ') 0% 0% / cover';}else{ echo 'background: '.$attr['color']; }; ?>" 
-            title="<?php echo $attr['name']; ?>" for='nbd-field-<?php echo $field['id'].'-'.$key; ?>'>
+            title="<?php echo $attr['name']; ?>" for='nbd-field-<?php echo $field['id'].'-'.$key; ?>'><span class="nbd-swatch-tooltip"><?php echo $attr['name']; ?></span>
         </label>
         <?php endforeach; ?>
     </td>

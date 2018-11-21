@@ -1,0 +1,16 @@
+.v-dropdown {
+  position: relative;
+  .v-dropdown-menu {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 9999;
+  }
+
+  &.active{
+    .v-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}

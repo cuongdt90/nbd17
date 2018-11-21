@@ -11,9 +11,9 @@
             <input ng-hide="true" ng-model="field.id" name="options[fields][{{fieldIndex}}][id]"/>
             <span class="nbd-field-name" ng-class="field.isExpand ? '' : 'left'">
                 <span>{{field.general.title.value}}</span>
-                <span class="nbo-type-label" ng-class="get_field_class(field.nbd_type)">{{get_field_type(field.nbd_type)}}</span>
             </span>
             <span class="nbdesigner-right field-action">
+                <span class="nbo-type-label-wrap"><span class="nbo-type-label" ng-class="get_field_class(field.nbd_type)">{{get_field_type(field.nbd_type)}}</span></span>
                 <span class="nbo-sort-group">
                     <span ng-click="sort_field($index, 'up')" class="dashicons dashicons-arrow-up nbo-sort-up nbo-sort" title="<?php _e('Up', 'web-to-print-online-designer') ?>"></span>
                     <span ng-click="sort_field($index, 'down')" class="dashicons dashicons-arrow-down nbo-sort-down nbo-sort" title="<?php _e('Down', 'web-to-print-online-designer') ?>"></span>

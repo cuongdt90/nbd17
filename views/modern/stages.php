@@ -2,10 +2,10 @@
     <div class="stages-inner">
         <div class="stage" ng-repeat="stage in stages" id='stage-container-{{$index}}' ng-mousedown="onClickStage($event)" ng-class="{'hidden':$index > 0}" >
             <div ng-click="addRulerGuideLine( $event, 'hors' );$event.stopPropagation();" ng-style="{'padding-left': calcRulerPaddingLeft(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio)}" ng-class="settings.showRuler ? '' : 'nbd-hide'" class="nbd-hoz-ruler">
-                <svg ng-style="{'width': calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 30)}" id="hoz-ruler-{{$index}}" xmlns="http://www.w3.org/2000/svg"></svg>
+                <svg class="nbd-prevent-select" ng-style="{'width': calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 30)}" id="hoz-ruler-{{$index}}" xmlns="http://www.w3.org/2000/svg"></svg>
             </div>
             <div ng-click="addRulerGuideLine( $event, 'vers' ); $event.stopPropagation()" ng-style="{'padding-top': calcRulerPaddingTop(stage.config)}" ng-class="settings.showRuler ? '' : 'nbd-hide'" class="nbd-ver-ruler">
-                <svg ng-style="{'height': calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 30)}" id="ver-ruler-{{$index}}" xmlns="http://www.w3.org/2000/svg"></svg>
+                <svg class="nbd-prevent-select" ng-style="{'height': calcStyle(stage.config.cheight * stage.states.scaleRange[stage.states.currentScaleIndex].ratio + 30)}" id="ver-ruler-{{$index}}" xmlns="http://www.w3.org/2000/svg"></svg>
             </div>
             <div style="display: inline-block;position: relative;">
                 <div class="stage-main" ng-class="stage.config.bgType == 'image' ? 'nbd-without-shadow' : ''" ng-style="{'width' : calcStyle(stage.config.cwidth * stage.states.scaleRange[stage.states.currentScaleIndex].ratio),
@@ -36,7 +36,9 @@
                         </div>
                         <div class="bounding-layers">
                             <div class="bounding-layers-inner">
-                                <div class="bounding-rect" ng-style="stages[currentStage].states.boundingObject"></div>
+                                <div class="bounding-rect" ng-style="stages[currentStage].states.boundingObject">
+                                    <span ng-if="settings.nbdesigner_show_layer_size == 'yes'" class="bounding-rect-real-size" ng-style="{'transform': stages[currentStage].states.boundingRealSize.transform}">{{stages[currentStage].states.boundingRealSize.size}}</span>
+                                </div>
                                 <div class="bounding-rect" ng-style="stages[currentStage].states.uploadZone" style="background: rgba(255,255,255,0.85); overflow: hidden;display: flex; justify-content: center; align-items: center;flex-direction: column;position: relative;">
                                     <i style="color: rgb(194, 194, 194); position: absolute; font-size: 70px;z-index: 0;" ng-style="{transform: 'rotate(-'+stages[currentStage].states.rotate.angle+'deg)'}" class="icon-nbd icon-nbd-replace-image"></i>
                                     <span style="font-weight: bold; z-index: 1;" ng-style="{transform: 'rotate(-'+stages[currentStage].states.rotate.angle+'deg)'}"><?php _e('Drop to replace'); ?></span>
@@ -103,7 +105,7 @@
                 <ul class="nbd-main-menu">
                     <li class="menu-item zoomer-item zoomer-fullscreen" ng-click="exitFullscreenMode()"><i class="icon-nbd icon-nbd-fullscreen"></i></li>
                     <li class="menu-item" ng-click="switchStage(currentStage, 'prev')" ng-class="currentStage > 0 ? '' : 'nbd-disabled'"><i class="icon-nbd icon-nbd-arrow-upward rotate-90"></i></li>
-                    <li class="menu-item zoomer-item zoomer-level">{{currentStage+1}}/{{stages.length}}</li>
+                    <li class="menu-item zoomer-item zoomer-level nbd-prevent-select">{{currentStage+1}}/{{stages.length}}</li>
                     <li class="menu-item" ng-click="switchStage(currentStage, 'next')" ng-class="currentStage < (stages.length - 1) ? '' : 'nbd-disabled'"><i class="icon-nbd icon-nbd-arrow-upward rotate90"></i></li>
                 </ul>
             </div>

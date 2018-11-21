@@ -256,6 +256,7 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
         border-radius: 50%; 
         cursor: pointer;
         border: 2px solid #ddd;
+        position: relative;
     }
     .nbo-checkbox {
         width: 36px;
@@ -587,7 +588,50 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
         vertical-align: top;
         height: 100%;
     }
+    .nbd-swatch-tooltip {
+        background: #404762;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        position:  absolute;
+        bottom: 50%;
+        left: 50%;
+        pointer-events: none;
+        padding: 5px 7px;
+        visibility: hidden;
+        opacity: 0;
+        -webkit-transform: translate3d(-50%,0%,0);
+        -moz-transform: translate3d(-50%,0%,0);
+        transform: translate3d(-50%,0%,0);
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        max-width: 200px;      
+        z-index: 99;
+        -webkit-transition: all .4s;
+        -moz-transition: all .4s;
+        transition: all .4s; 
+    }
+    .nbd-swatch-tooltip:before {
+        content: '';
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #404762;
+        position: absolute;
+        bottom: -5px;
+        margin-left: -3px;
+        left: 50%;
+    }
+    .nbd-swatch:hover .nbd-swatch-tooltip {
+        bottom: 40px;
+        visibility: visible;
+        opacity: 1; 
+    }
     @media (max-width:768px){
+        .nbd-swatch-tooltip {
+            display: none;
+        }
         .nbd-tb-options td {
             display: inline-block !important;
             width: 100%;
@@ -960,6 +1004,7 @@ if( $cart_item_key != ''){
         $scope.product_img = [];
         $scope.price_table = [];
         $scope.has_price_matrix = false;
+        $scope.can_start_design = true;
         $scope.check_valid = function( calculate_pm ){
             $timeout(function(){
                 var check = {}, total_check = true;
@@ -982,6 +1027,9 @@ if( $cart_item_key != ''){
                             angular.forEach(field.values, function(val, index){
                                 field.value_name += (index == 0 ? '' : ', ') + origin_field.general.attributes.options[val].name;
                             });
+                            if( origin_field.nbd_type == "page" ){
+                                $scope.can_start_design = field.values.length == 0 ? false: true;
+                            }
                         }else{
                             field.value_name = origin_field.general.attributes.options[field.value].name;
                         }
@@ -1005,7 +1053,11 @@ if( $cart_item_key != ''){
                     $scope.calculate_price_table();
                     $scope.valid_form = true;
                     jQuery('.single_add_to_cart_button').removeClass( "nbo-disabled nbo-hidden");
-                    jQuery('#triggerDesign').removeClass('nbdesigner_disable');
+                    if($scope.can_start_design){
+                        jQuery('#triggerDesign').removeClass('nbdesigner_disable');
+                    }else{
+                        jQuery('#triggerDesign').addClass('nbdesigner_disable');
+                    }
                 }else{
                     jQuery(document).triggerHandler( 'invalid_nbo_options' );
                     jQuery('.single_add_to_cart_button').addClass( "nbo-disabled");
@@ -1046,7 +1098,7 @@ if( $cart_item_key != ''){
                                     page_display: origin_field.general.page_display,
                                     exclude_page: origin_field.general.exclude_page
                                 };
-                                if( origin_field.general.data_type == 'm' ){
+                                if( origin_field.general.data_type == 'm' && field.values.length > 0 ){
                                     nbOption.odOption.page.list_page = field.values;
                                 }                                
                                 break;
@@ -1260,6 +1312,9 @@ if( $cart_item_key != ''){
         };
         $scope.init = function(){
             nbOption.status = true;
+            /* Compare with other color swatches plugins */
+            jQuery('.variation-selector').removeClass('hidden').show();
+            jQuery('.nbtcs-swatches').addClass('hidden');  
             <?php if($options['display_type'] == 3 && count($options['bulk_fields'])): ?>
             jQuery('input[name="add-to-cart"]').remove();
             jQuery('button[name="add-to-cart"]').attr('name', 'nbo-add-to-cart');
@@ -1454,13 +1509,15 @@ if( $cart_item_key != ''){
                             }
                         }else{
                             var option = origin_field.general.attributes.options[field.value];
-                            if(origin_field.general.depend_quantity == 'n'){
-                                factor = option.price[0];
-                            }else{
-                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
-                                    factor = '';
+                            if(option){
+                                if(origin_field.general.depend_quantity == 'n'){
+                                    factor = option.price[0];
                                 }else{
-                                    factor = option.price[quantity_break.index];
+                                    if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                        factor = '';
+                                    }else{
+                                        factor = option.price[quantity_break.index];
+                                    }
                                 }
                             }
                         }
@@ -1682,13 +1739,15 @@ if( $cart_item_key != ''){
                         }
                     }else{
                         var option = origin_field.general.attributes.options[field.value];
-                        if(origin_field.general.depend_quantity == 'n'){
-                            factor = option.price[0];
-                        }else{
-                            if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
-                                factor = '';
+                        if(option){
+                            if(origin_field.general.depend_quantity == 'n'){
+                                factor = option.price[0];
                             }else{
-                                factor = option.price[quantity_break.index];
+                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                    factor = '';
+                                }else{
+                                    factor = option.price[quantity_break.index];
+                                }
                             }
                         }
                     }
@@ -1834,13 +1893,15 @@ if( $cart_item_key != ''){
                             }
                         }else{
                             var option = origin_field.general.attributes.options[field.value];
-                            if(origin_field.general.depend_quantity == 'n'){
-                                factor = option.price[0];
-                            }else{
-                                if( pt.quantity_break.index == 0 && pt.quantity_break.oparator == 'lt' ){
-                                    factor = '';
+                            if(option){
+                                if(origin_field.general.depend_quantity == 'n'){
+                                    factor = option.price[0];
                                 }else{
-                                    factor = option.price[pt.quantity_break.index];
+                                    if( pt.quantity_break.index == 0 && pt.quantity_break.oparator == 'lt' ){
+                                        factor = '';
+                                    }else{
+                                        factor = option.price[pt.quantity_break.index];
+                                    }
                                 }
                             }
                         }

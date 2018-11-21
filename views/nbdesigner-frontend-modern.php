@@ -1,5 +1,13 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <!DOCTYPE html>
+<?php 
+    global $is_IE;
+    if($is_IE){
+        echo "We have detected that you are using Internet Explorer which isn't compatible with design editor. Please use one of the modern web browsers: Chrome, Firefox, Microsoft Edge, Safari...";
+        die();
+    }
+    include 'signature.php';
+?>
 <?php
     $hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
     $lang_code = str_replace('-', '_', get_locale());
@@ -28,7 +36,7 @@
     nbdesigner_get_template('permission.php');    
     else:    
     $option_id = get_transient( 'nbo_product_'.$product_id );
-    $show_nbo_option =  (($option_id || $product_type == 'variable') && $ui_mode == 2 && $task == 'new' ) ? true : false;
+    $show_nbo_option =  (($option_id || $product_type == 'variable') && $ui_mode == 2 && $task == 'new' && $task2 == '' ) ? true : false;
     $valid_license = nbd_check_license();
 ?>
 <html lang="<?php echo $lang_code; ?>">
@@ -86,11 +94,7 @@
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php if(is_rtl()): ?>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/modern-rtl.css'; ?>" rel="stylesheet" media="all">
-        <?php endif; ?>
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->	
+        <?php endif; ?>	
         <style type="text/css">
             .nbd-pro-mark-wrap {
                 position: absolute;
@@ -496,6 +500,7 @@
                 background: #d0d6dd;
                 width: 100%;
                 min-height: 30px;
+                border-radius: 4px;
             }
             .mansory-wrap .mansory-item.in-view,
             .clipart-wrap .clipart-item.in-view {
@@ -581,7 +586,7 @@
                 display: none;
             }
             .nbd-sidebar .tabs-content .nbd-search input {
-                border: 1px solid #404762;
+                border-radius: 4px;
             }
             .type-instagram.button-login {
                 display: flex;
@@ -760,7 +765,12 @@
                 vertical-align: top;
                 -webkit-transition: all 0.4s;
                 -moz-transition: all 0.4s;
-                transition: all 0.4s;                
+                transition: all 0.4s;   
+                border-radius: 4px;
+            }
+            .nbd-sidebar #tab-element .nbd-items-dropdown .main-items .items .item .main-item .item-icon, 
+            .nbd-sidebar #tab-photo .nbd-items-dropdown .main-items .items .item .main-item .item-icon {
+                border-radius: 4px; 
             }
             .nbd-templates .items .item .main-item {
                 cursor: pointer;
@@ -969,6 +979,14 @@
                 -moz-transition: all 0.4s;
                 -webkit-transition: all 0.4s;
                 transition: all 0.4s;
+                border-radius: 4px;
+            }
+            .nbd-sidebar .nbd-items-dropdown .result-loaded .nbdesigner-gallery .nbdesigner-item img {
+                border-radius: 4px;
+            }
+            .nbd-sidebar .tabs-content .nbd-search input {
+                -webkit-box-shadow: 1px 0 21px rgba(0,0,0,.15);
+                box-shadow: 1px 0 21px rgba(0,0,0,.15);
             }
             @media screen and (min-width: 768px) {
                 .nbd-stages .stage .page-toolbar {
@@ -985,6 +1003,56 @@
                 justify-content: center;
                 align-items: center;
             }*/
+            #selectedTab span {
+                position: absolute;
+                right: 0;
+                top: -7px;
+                width: 7px;
+                height: 7px;
+                background-color: #d0d6dd;
+            }
+            #selectedTab span:last-child {
+                top: auto;
+                bottom: -7px;
+            }
+            #selectedTab span:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 14px;
+                height: 14px;
+                border-radius: 7px;
+                background-color: #404762;
+            }
+            #selectedTab span:last-child:after {
+                top: 0;
+                bottom: auto;
+            }
+            .nbd-button {
+                border-radius: 4px;
+            }
+            .bounding-rect-real-size {
+                position: absolute;
+                top: -15px;
+                width: 100%;
+                left: 0;
+                color: #404762;
+                height: 15px;
+                line-height: 15px;
+                font-size: 9px;
+                font-family: monospace;
+            }
+            .nbd-prevent-select{
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+            .nbd-context-menu {
+                z-index: 100;
+            }
             @media screen and (max-width: 767px) {
                 .safari .nbd-workspace .main {
                     height: -webkit-calc(100vh - 164px);
@@ -1084,6 +1152,7 @@
                 overflow: auto;
                 width: 56%;
                 float: right;
+                overflow: unset;
             }
             .post-type-archive-product .pp_woocommerce_quick_view .pp_description,
             .tax-product_cat .pp_woocommerce_quick_view .pp_description,
@@ -1377,6 +1446,46 @@
                 line-height: inherit;
                 display: inline-block;                
             }
+            .blockUI::before{
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                display: inline-block;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                vertical-align: -.125em;
+                font-family: online-design!important;
+                vertical-align: baseline;
+                content: "\e954";
+                -webkit-animation: fa-spin 0.75s linear infinite;
+                animation: fa-spin 0.75s linear infinite;
+                height: 30px;
+                width: 30px;
+                line-height: 30px;
+                font-size: 30px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -15px;
+                margin-top: -15px;
+                color: #404762;
+            }
+            @-webkit-keyframes fa-spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg); }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg); } 
+            }
+            @keyframes fa-spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg); }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg); }
+            }
             @media only screen and (max-width: 768px) {
                 div.quick-view div.quick-view-image,
                 div.quick-view div.quick-view-content {
@@ -1386,6 +1495,12 @@
                 }
                 div.quick-view h1.product_title {
                     margin-top: 15px;
+                }
+                .popup-nbo-options .footer .nbd-invalid-form {
+                    line-height: unset !important;
+                }
+                .popup-nbo-options .footer .nbo-apply.nbd-disabled {
+                    display: none;
                 }
             }            
         </style>
@@ -1442,7 +1557,7 @@
                 foreach ($_REQUEST as $key => $value){
                     if (strpos($key, 'attribute_') === 0) {
                         $link_get_options .= '&'.$key.'='.$value;
-                    }		
+                    }
                 }
             }
             $link_edit_option = '';
@@ -1456,7 +1571,7 @@
                        wc_get_product( $variation_id > 0 ? $variation_id : $product_id )->get_permalink()     
                     );
                     $link_edit_option = wp_nonce_url( $link_edit_option, 'nbo-edit' );
-                }                
+                }
             };
         ?>
         <script type="text/javascript">
@@ -1509,8 +1624,8 @@
                 valid_license: "<?php echo $valid_license ? 1 : 0; ?>",
                 enable_dropbox: false,
                 /* customize */
-                user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
-                contact_sheets: <?php echo json_encode(nbd_get_user_contact_sheet()); ?>,
+                //user_infos: <?php //echo json_encode(nbd_get_user_information()); ?>,
+                //contact_sheets: <?php //echo json_encode(nbd_get_user_contact_sheet()); ?>,
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {

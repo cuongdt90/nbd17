@@ -676,6 +676,7 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             $args['currency_format'] = esc_attr( str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), get_woocommerce_price_format()) );
             $args['nbdesigner_hide_add_cart_until_form_filled'] = nbdesigner_get_option('nbdesigner_hide_add_cart_until_form_filled');
             $args['total'] = __('Total', 'web-to-print-online-designer');
+            $args['check_invalid_fields'] = __('Please check invalid fields and quantity input!', 'web-to-print-online-designer');
             return $args;
         }
         public function wp_enqueue_scripts(){

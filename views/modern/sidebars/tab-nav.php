@@ -1,6 +1,6 @@
 <div class="tabs-nav">
     <ul class="main-tabs" data-tab="tab-1">
-        <div id="selectedTab"></div>
+        <div id="selectedTab"><span></span><span></span></div>
         <li class="tab layerTab active animated slideInLeft animate300" id="design-tab"><i class="icon-nbd icon-nbd-baseline-palette"></i><span><?php _e('Design','web-to-print-online-designer'); ?></span></li>
         <?php if( $product_data["option"]['admindesign'] != "0" ): ?>
         <li ng-click="disableDrawMode();getProduct()" class="tab tab-first active animated slideInLeft animate400"><i class="icon-nbd icon-nbd-package"></i><span><?php _e('Templates','web-to-print-online-designer'); ?></span></li>

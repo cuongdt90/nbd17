@@ -202,7 +202,7 @@
                             </div>
                         </div>
                         <div class="postbox">
-                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing options buider', 'web-to-print-online-designer'); ?></h2>
+                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing options', 'web-to-print-online-designer'); ?></h2>
                             <div class="inside">
                                 <div class="nbd-fields-builder">
                                     <?php include_once('quantity.php'); ?>

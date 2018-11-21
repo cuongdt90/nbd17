@@ -84,7 +84,9 @@ class Nbdesigner_Plugin {
             'nbd_get_product_config'  =>  true,
             'nbd_delete_order_design'  =>  false,
             'nbd_check_use_logged_in'  =>  true,
-            'nbd_crop_image'  =>  true
+            'nbd_crop_image'  =>  true,
+            /* cuz */
+            'nbd_get_users_by_country_code'  =>  true
         );
 	foreach ($ajax_events as $ajax_event => $nopriv) {
             add_action('wp_ajax_' . $ajax_event, array($this, $ajax_event));
@@ -5719,5 +5721,10 @@ class Nbdesigner_Plugin {
                 }
             }
         }
+    }
+    public function nbd_get_users_by_country_code(){
+        $country_code = $_REQUEST['country_code'];
+        $users = nbd_get_users_by_country_code($country_code);
+        wp_send_json($users);
     }
 }
