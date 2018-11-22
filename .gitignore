@@ -1,1 +1,5 @@
 /includes/_tcpdf/nbproject/private/
+/assets/node_modules/
+/assets/mix-manifest.json
+/assets/js/app-product-builder.js
+.gitignore
