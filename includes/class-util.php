@@ -108,7 +108,7 @@ class Nbdesigner_IO {
             fclose($f);
         }        
     }
-    public static function create_file_path($upload_path, $filename, $ext=''){
+    public static function create_file_path($upload_path, $filename, $ext='', $force_override = false){
 	$date_path = '';
         if (!file_exists($upload_path))
             mkdir($upload_path);
@@ -127,10 +127,14 @@ class Nbdesigner_IO {
         $file_path = $upload_path . $date_path . $filename;
         $file_counter = 1;
         $real_filename = $filename;
-        while (file_exists($file_path . '.' . $ext)) {
-            $real_filename = $file_counter . '-' . $filename;
-            $file_path = $upload_path . $date_path . $real_filename;
-            $file_counter++;
+        if($force_override){
+            if(file_exists($file_path . '.' . $ext) ) unlink($file_path . '.' . $ext);
+        }else{
+            while (file_exists($file_path . '.' . $ext)) {
+                $real_filename = $file_counter . '-' . $filename;
+                $file_path = $upload_path . $date_path . $real_filename;
+                $file_counter++;
+            }
         }
         return array(
             'full_path' => $file_path,
@@ -638,6 +642,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_google_api_key' => '',   
         'nbdesigner_google_client_id' => '',   
         'nbdesigner_enable_log' => 'no',
+        'nbdesigner_cron_job_clear_w3_cache' => 'no',
         'nbdesigner_page_design_tool' => 1,
         'nbdesigner_upload_term' => __('Your term', 'web-to-print-online-designer'),
         'nbdesigner_create_your_own_page_id'	=>	nbd_get_page_id( 'create_your_own' ),
@@ -662,6 +667,7 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_enable_pdf_watermark' => 'yes',   
         'nbdesigner_pdf_watermark_type' => 1,
         'nbdesigner_pdf_watermark_image' => '',
+        'nbdesigner_truetype_fonts' => '',
         'nbdesigner_pdf_watermark_text' => get_bloginfo('name'),
         
         'nbdesigner_enable_perfect_scrollbar_js'    =>  'yes',
@@ -675,6 +681,9 @@ function nbdesigner_get_default_setting($key = false){
         'nbdesigner_force_select_options' => 'no',
         'nbdesigner_hide_table_pricing' => 'no',
         'nbdesigner_hide_option_swatch_label' => 'yes',
+        'nbdesigner_change_base_price_html' => 'no',
+        'nbdesigner_hide_zero_price' => 'no',
+        'nbdesigner_tooltip_position' => 'top',
         'nbdesigner_hide_summary_options' => 'no',
         'nbdesigner_hide_options_in_cart' => 'no',
         'nbdesigner_hide_option_price_in_cart' => 'no',
@@ -686,6 +695,7 @@ function nbdesigner_get_default_setting($key = false){
 }
 function default_frontend_setting(){
     return apply_filters('nbdesigner_default_frontend_settings', array(
+        'nbdesigner_fix_domain_changed' => 'no',
         'nbdesigner_enable_text' => 'yes',
         'nbdesigner_text_change_font' => 1,
         'nbdesigner_text_italic' => 1,
@@ -810,7 +820,9 @@ function default_frontend_setting(){
         'nbdesigner_enable_unsplash' => 'yes',
         
         'nbdesigner_show_grid' => 'no',
+        'nbdesigner_show_ruler' => 'no',
         'nbdesigner_show_bleed' => 'no',
+        'nbdesigner_show_layer_size' => 'no',
         'nbdesigner_show_warning_oos' => 'no',
         'nbdesigner_show_warning_ilr' => 'no'
     ));
@@ -1005,7 +1017,8 @@ function nbd_get_resource_templates($product_id, $variation_id, $limit = 20, $st
             if( isset($tem['thumbnail']) ){
                 $_temp['thumbnail'] = wp_get_attachment_url( $tem['thumbnail'] );
             }else{
-                $_temp['thumbnail'] = $_temp['src'][0];
+                $_temp['thumbnail'] = end($_temp['src']);
+                //$_temp['thumbnail'] = $_temp['src'][0];
             }
             $data[] = $_temp;
         }                
@@ -1693,7 +1706,7 @@ function nbd_zip_files_and_download($file_names, $archive_file_name, $nameZip, $
     if(file_exists($archive_file_name)){
         unlink($archive_file_name);
     }        
-    if (!class_exists('ZipArchive')) {
+    if (class_exists('ZipArchive')) {
         $zip = new ZipArchive();
         if ($zip->open($archive_file_name, ZIPARCHIVE::CREATE )!==TRUE) {
           exit("cannot open <$archive_file_name>\n");
@@ -2389,7 +2402,7 @@ function nbd_get_default_font(){
         if( $f->name == $font ) return json_encode($f);
     }
 }
-function nbd_get_fonts(){
+function nbd_get_fonts( $return = false ){
     $gg_fonts = array();
     $custom_fonts = array();
     if(file_exists(NBDESIGNER_DATA_DIR . '/googlefonts.json')) {
@@ -2399,6 +2412,7 @@ function nbd_get_fonts(){
         $custom_fonts = json_decode( file_get_contents(NBDESIGNER_DATA_DIR . '/fonts.json') );
     }
     $fonts = array_merge($gg_fonts,$custom_fonts);
+    if( $return ) return $fonts;
     echo json_encode($fonts);
 }
 function nbd_get_order_object() {
@@ -2437,13 +2451,54 @@ function nbd_get_image_thumbnail( $id ){
     return $image_url;
 }
 function nbd_get_truetype_fonts(){
-    $true_type = array('DIN Next LT Pro Light', 'DIN Next LT Pro Medium', 'DIN Next LT Pro Regular', 'Gudea', 'Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail');                
-    return $true_type;
+    $true_type = array('Bruum FY', 'CitadelScriptStd', 'DIN Next LT Pro Light', 'DIN Next LT Pro Medium', 'DIN Next LT Pro Regular', 'Gudea', 'Abel', 'Abril Fatface', 'Acme', 'Advent Pro', 'Aguafina Script', 'Aladin', 'Allura', 'Almendra', 'Almendra Display', 'Almendra SC', 'Amiri', 'Antic', 'Antic Didone', 'Anonymous Pro', 'Antic Slab', 'Arbutus', 'Architects Daughter', 'Aref Ruqaa', 'Arizonia', 'Asset', 'Asul', 'Average', 'Average Sans', 'Averia Gruesa Libre', 'Averia Libre', 'Averia Sans Libre', 'Averia Serif Libre', 'Bad Script', 'Balthazar', 'Belgrano', 'Bilbo', 'Bilbo Swash', 'Boogaloo', 'Bowlby One', 'Bree Serif', 'Bubblegum Sans', 'Bubbler One', 'Buenard', 'Butcherman', 'Cagliostro', 'Cambo', 'Cantarell', 'Cardo', 'Caudex', 'Ceviche One', 'Changa One', 'Chango', 'Chau Philomene One', 'Chela One', 'Cherry Swash', 'Chicle', 'Cinzel', 'Cinzel Decorative', 'Coiny', 'Condiment', 'Contrail One', 'Convergence', 'Cookie', 'Corben', 'Covered By Your Grace', 'Creepster', 'Crete Round', 'Croissant One', 'Damion', 'Dawning of a New Day', 'Days One', 'Delius', 'Delius Swash Caps', 'Delius Unicase', 'Della Respira', 'Devonshire', 'Diplomata', 'Diplomata SC', 'Dorsa', 'Dr Sugiyama', 'Economica', 'Enriqueta', 'Erica One', 'Esteban', 'Euphoria Script', 'Ewert', 'Exo', 'Fanwood Text', 'Farsan', 'Faster One', 'Fauna One', 'Fenix', 'Felipa', 'Fjord One', 'Flamenco', 'Fredericka the Great', 'Fredoka One', 'Fresca', 'Fugaz One', 'Gafata', 'Galdeano', 'Geostar', 'Geostar Fill', 'Germania One', 'Glass Antiqua', 'Goblin One', 'Graduate', 'Gravitas One', 'Great Vibes', 'Handlee', 'Harmattan', 'Herr Von Muellerhoff', 'Holtwood One SC', 'IM Fell DW Pica', 'IM Fell DW Pica SC', 'IM Fell Double Pica', 'IM Fell Double Pica SC', 'IM Fell English', 'IM Fell English SC', 'IM Fell French Canon', 'IM Fell French Canon SC', 'IM Fell Great Primer', 'IM Fell Great Primer SC', 'Imprima', 'Inika', 'Italiana', 'Italianno', 'Jockey One', 'omhuria', 'Joti One', 'Jomhuria', 'Julee', 'Just Me Again Down Here', 'Katibeh', 'Kavivanar', 'Keania One', 'Kelly Slab', 'Kite One', 'Knewave', 'Kotta One', 'Kreon', 'Krona One', 'Leckerli One', 'Ledger', 'Lekton', 'Lemon', 'Lilita One', 'Lily Script One', 'Linden Hill', 'Love Ya Like A Sister ', 'Lovers Quarrel', 'Lusitana', 'Lustria', 'Macondo', 'Macondo Swash Caps', 'Magra', 'Marck Script', 'Marko One', 'Marvel', 'Mate', 'Mate SC', 'Medula One', 'Meera Inimai', 'Merienda', 'Merienda One', 'Mina', 'Mirza', 'Miss Fajardose', 'Modern Antiqua', 'Monofett', 'Monoton', 'Monsieur La Doulaise', 'Montaga', 'Montserrat', 'Montserrat Subrayada', 'Mountains of Christmas', 'Mr Bedfort', 'Mr Dafoe', 'Mr De Haviland', 'Mrs Saint Delafield', 'Mrs Sheppards', 'Niconne', 'Nixie One', 'Nobile', 'Norican', 'Nosifer', 'Offside', 'Oldenburg', 'Oleo Script', 'Oleo Script Swash Caps', 'Orbitron', 'Overlock', 'Overlock SC', 'Ovo', 'Paprika', 'Passero One', 'Passion One', 'Pathway Gothic One', 'Piedra', 'Pinyon Script', 'Pirata One', 'Playball', 'Poiret One', 'Poller One', 'Poly', 'Pompiere', 'Poppins', 'Port Lligat Sans', 'Port Lligat Slab', 'Preahvihear', 'Qwigley', 'Rambla', 'Ranga', 'Reem Kufi', 'Rammetto One', 'Ribeye Marrow', 'Righteous', 'Rochester', 'Rosarivo', 'Rouge Script', 'Ruda', 'Rufina', 'Ruge Boogie', 'Ruluko', 'Ruslan Display', 'Russo One', 'Ruthie', 'Sail A', 'Salsa', 'Sanchez', 'Sancreek', 'Sarina', 'Shadows Into Light Two', 'Short Stack', 'Signika Negative', 'Sintony', 'Smokum', 'Snippet', 'Sofia', 'Sonsie One', 'Sorts Mill Goudy', 'Spirax', 'Squada One', 'Strait', 'Sunflower', 'Swanky and Moo Moo', 'Text Me One', 'Tinyhust', 'The Girl Next Door', 'Titan One', 'Trochut', 'Trykker', 'Tulpen One', 'Unica One', 'Unlock', 'Vast Shadow', 'Viga', 'Voltaire', 'Wellfleet', 'Wendy One', 'Zeyada', 'Yellowtail');
+    $true_type_setting = nbdesigner_get_option('nbdesigner_truetype_fonts');
+    if( $true_type_setting != '' ){
+        $true_type_setting = preg_split('/\r\n|[\r\n]/', $true_type_setting);
+    }else{
+        $true_type_setting = array();
+    }
+    return array_merge($true_type, $true_type_setting);
 }
-function nbd_get_user_information(){
+function nbd_admin_pages(){
+    return array(
+        'toplevel_page_nbdesigner', 
+        'nbdesigner_page_nbdesigner_manager_product', 
+        'toplevel_page_nbdesigner_shoper',
+        'nbdesigner_page_nbdesigner_frontend_translate',
+        'nbdesigner_page_nbdesigner_tools',
+        'nbdesigner_page_nbdesigner_manager_arts',
+        'nbdesigner_page_nbdesigner_manager_fonts',
+        'admin_page_nbdesigner_detail_order',
+        'nbdesigner_page_nbd_support',
+        'nbdesigner_page_nbd_printing_options'
+    );
+}
+function nbd_convert_svg_url($path, $file){
+    $svg_path = $path . '/svgpath';
+    if( !file_exists($svg_path) ) wp_mkdir_p($svg_path);
+    $new_svg_path = $svg_path.'/'.$file;
+    $xdoc = new DomDocument;
+    $xdoc->Load($path.$file);
+    $images = $xdoc->getElementsByTagName('image');
+    for ($i = 0; $i < $images->length; $i++) {
+        $tagName = $xdoc->getElementsByTagName('image')->item($i);
+        $attribNode = $tagName->getAttributeNode('xlink:href');
+        $img_src = $attribNode->value;
+        if(strpos($img_src, "data:image")!==FALSE)
+        continue;
+        $type = pathinfo($img_src, PATHINFO_EXTENSION);
+        $type = ($type =='svg' ) ? 'svg+xml' : $type;
+        $path_image = Nbdesigner_IO::convert_url_to_path($img_src);
+        $tagName->setAttribute('xlink:href', $path_image);
+    }
+    $new_svg = $xdoc->saveXML();
+    file_put_contents($new_svg_path, $new_svg); 
+}
+function nbd_get_user_information( $id = false ){
     $infos = array();
     $current_user = wp_get_current_user();
-    $id = $current_user->ID;
+    $id = $id ? $id : $current_user->ID;
     if( 0 != $id ){
         $customer = new WC_Customer( $id );
         $customer_data = array(
@@ -2537,4 +2592,89 @@ function nbd_get_user_information(){
         $infos = apply_filters('nbd_customer_infos', $infos);        
     }
     return $infos;
+}
+function nbd_get_users_by_country_code( $country_code ){
+    $all_users = get_users(array( 'fields' => array( 'ID' ) ));
+    $users = array();
+    foreach($all_users as $user){
+        $cid = $user->ID;
+        $customer = new WC_Customer( $cid );
+        $cc = $customer->get_billing_country();
+        if(strtolower($cc) == strtolower($country_code) ){
+            $contact_infos = nbd_get_user_information($cid);
+            $contact_acf_fields = get_field_objects('user_' . $cid);
+            $users[] = array(
+                'c_full_name' =>  $contact_infos['full_name']['value'],
+                'c_title' =>  (isset( $contact_acf_fields['user_title'] ) && $contact_acf_fields['user_title']['value'] != '') ? $contact_acf_fields['user_title']['value'] : __('Title', 'web-to-print-online-designer'),
+//                    'c_mobile' =>  isset( $contact_acf_fields['user_mobile'] ) ? 'Mob ' . $contact_acf_fields['user_mobile']['value'] : 'Mob ' . __('0123456789', 'web-to-print-online-designer'),
+                'c_phone' => 'Tel ' . $contact_infos['phone']['value'],
+                'c_email' =>  $contact_infos['email']['value'],
+                'c_avatar'    =>  nbd_convert_tif_to_png($contact_infos['email']['value'] . '.tif', 'small')
+            );
+        }
+    }
+    return $users;
+}
+function nbd_get_user_contact_sheet( $id = false ){
+    $current_user = wp_get_current_user();
+    $id = $id ? $id : $current_user->ID;
+    $acf_fields = get_field_objects('user_' . $id);
+    $user_infos = nbd_get_user_information($id);
+    $infos = array(
+        'full_name' =>  $user_infos['full_name']['value'],
+        'title' =>  isset( $acf_fields['user_title'] ) ? $acf_fields['user_title']['value'] : __('Title', 'web-to-print-online-designer'),
+        'mobile' =>  isset( $acf_fields['user_mobile'] ) ? $acf_fields['user_mobile']['value'] : __('0123456789', 'web-to-print-online-designer'),
+        'phone' =>  $user_infos['phone']['value'],
+        'email' =>  $user_infos['email']['value'],
+        'date'  =>  date("Y-m-d"),
+        'contact'   =>  array(),
+        'avatar'    =>  nbd_convert_tif_to_png($user_infos['email']['value'] . '.tif')
+    );
+    $contactsheet = isset( $acf_fields['contactsheet'] ) ? $acf_fields['contactsheet']['value'] : array();
+    $infos['first_con'] = 'se';
+    $infos['contactsheet'] = $contactsheet;
+    foreach($contactsheet as $con){
+        $infos['contact'][$con] = array();
+        if( isset( $acf_fields[$con . '_contact'] ) && count($acf_fields[$con . '_contact']['value']) ){
+            foreach ($acf_fields[$con . '_contact']['value'] as $key => $cid){
+                $contact_infos = nbd_get_user_information($cid);
+                $contact_acf_fields = get_field_objects('user_' . $cid);
+                $infos['contact'][$con][$key] = array(
+                    'c_full_name' =>  $contact_infos['full_name']['value'],
+                    'c_title' =>  (isset( $contact_acf_fields['user_title'] ) && $contact_acf_fields['user_title']['value'] != '') ? $contact_acf_fields['user_title']['value'] : __('Title', 'web-to-print-online-designer'),
+                    'c_mobile' =>  isset( $contact_acf_fields['user_mobile'] ) ? 'Mob ' . $contact_acf_fields['user_mobile']['value'] : 'Mob ' . __('0123456789', 'web-to-print-online-designer'),
+//                    'c_phone' => 'Tel ' . $contact_infos['phone']['value'],
+                    'c_email' =>  $contact_infos['email']['value'],
+                    'c_avatar'    =>  nbd_convert_tif_to_png($contact_infos['email']['value'] . '.tif', 'small')
+                );
+            }
+        }
+    }
+    if( count($contactsheet) ){
+        $infos['first_con'] = $contactsheet[0];
+    }else{
+        $infos['contact'][$infos['first_con']] = array();
+    }
+    $infos['avatar'] = nbd_convert_tif_to_png($user_infos['email']['value'] . '.tif');
+    return $infos;
+}
+function nbd_convert_tif_to_png( $file, $type = 'big' ){
+    $mini = $type == 'small' ? 'minibilder/' : '';
+    $path = WP_CONTENT_DIR . '/images/personalbilder/' .$mini;
+    $url = WP_CONTENT_URL . '/images/personalbilder/' .$mini;
+    $origin_path = $path . $file;
+    if( file_exists($origin_path) ){
+        $filename = pathinfo($file,  PATHINFO_FILENAME );
+        $png_path = $path . $filename . '.png';
+        $png_url = $url . $filename . '.png';
+        if( !file_exists($png_path) ){
+            $image = new Imagick($origin_path);
+            $image->setImageFormat('png');
+            //$image->setImageAlphaChannel(Imagick::ALPHACHANNEL_REMOVE);
+            $image->mergeImageLayers(Imagick::LAYERMETHOD_FLATTEN);
+            $image->writeImage($png_path);
+        }
+        return $png_url;
+    }
+    return WP_CONTENT_URL . '/images/personalbilder/default_avatar.png';
 }

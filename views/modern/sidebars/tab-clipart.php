@@ -1,6 +1,6 @@
 <div class="tab nbd-onload" ng-if="settings['nbdesigner_enable_clipart'] == 'yes'" id="tab-svg" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-svg" data-type="clipart" data-offset="20">
     <div class="nbd-search">
-        <input type="text" name="search" placeholder="search" ng-model="resource.clipart.filter.search"/>
+        <input type="text" name="search" placeholder="<?php _e('Search clipart', 'web-to-print-online-designer'); ?>" ng-model="resource.clipart.filter.search"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>
     <div class="cliparts-category" ng-class="resource.clipart.data.cat.length > 0 ? '' : 'nbd-hiden'">
@@ -26,6 +26,9 @@
                     <svg class="circular" viewBox="25 25 50 50">
                         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
                     </svg>
+                </div>
+                <div class="tab-load-more" style="display: none;" ng-show="!resource.clipart.onload && resource.clipart.filteredArts.length && resource.clipart.filter.currentPage * resource.clipart.filter.perPage < resource.clipart.filter.total">
+                    <a class="nbd-button" ng-click="scrollLoadMore('#tab-svg', 'clipart')"><?php _e('Load more','web-to-print-online-designer'); ?></a>
                 </div>
             </div>
         </div>

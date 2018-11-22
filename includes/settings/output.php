@@ -41,7 +41,17 @@ if( !class_exists('Nbdesigner_Settings_Output') ) {
                         'class'         => 'regular-text',
                         'default'	=> get_bloginfo('name'),
                         'type' 		=> 'text'
-                    ),                      
+                    ), 
+                    array(
+                        'title' => __( 'Truetype fonts', 'web-to-print-online-designer'),
+                        'description' 		=> __( 'Each font in a separate line', 'web-to-print-online-designer'),
+                        'id' 		=> 'nbdesigner_truetype_fonts',
+                        'class'         => 'regular-text',
+                        'placeholder'         => 'Abel&#x0a;Abril Fatface&#x0a;Aguafina Script',
+                        'css'         =>  'height: 10em;',
+                        'default'	=> '',
+                        'type' 		=> 'textarea'
+                    )
                 )
             ));
         }

@@ -37,7 +37,7 @@ jQuery(document).ready(function () {
     };
     jQuery('#triggerDesign').on('click', function () {
         if(jQuery(this).hasClass('nbdesigner_disable')){
-            jQuery('.single_add_to_cart_button').trigger('click');
+            alert(nbds_frontend.check_invalid_fields);
         }else{
             showDesignFrame();
             var frame = document.getElementById('onlinedesigner-designer');
@@ -185,6 +185,9 @@ jQuery(document).ready(function () {
                 alert('Exceed number of upload files!');
                 return;                  
             }
+            if( type == '' ){
+                type = file.name.substring(file.name.lastIndexOf('.')+1).toLowerCase();
+            }
             type = type == 'image/jpeg' ? 'image/jpg' : type;
             if( nbd_disallow_type != '' ){
                 var nbd_disallow_type_arr = nbd_disallow_type.toLowerCase().split(',');
@@ -292,6 +295,10 @@ jQuery(document).ready(function () {
 });
 var share_image_url = '';
 var NBDESIGNERPRODUCT = {
+    copy_source: function( e ){
+        jQuery(e).prev('.nbd-cart-design-url').select();
+        document.execCommand("copy");
+    },
     hide_loading_iframe: function(){
         jQuery("#nbd_processing").hide();
     },
@@ -410,7 +417,7 @@ var NBDESIGNERPRODUCT = {
             opacity: 0
         }, 500);
     },
-    show_design_thumbnail: function (arr, task) {
+    show_design_thumbnail: function (arr, task, config) {
         if( jQuery('#triggerDesign').length > 0 ){
             jQuery('button[type="submit"].single_add_to_cart_button').show();
         };
@@ -423,10 +430,20 @@ var NBDESIGNERPRODUCT = {
         var html = '';
         var d = new Date();
         var count = 1;
+        var has_config = false;
+        var product = [];
+        if( config ){
+            has_config = true;
+            product = config.product;
+        }
         jQuery.each(arr, function (key, val) {
             if(count == 1) share_image_url = val;
             count++;
-            html += '<div class="img-con"><img src="' + val + '?t=' + d.getTime() +'" /></div>'
+            var p_index = key.slice(6);
+            var data_width = has_config ? product[p_index].img_src_width : '500',
+                data_height = has_config ? product[p_index].img_src_height : '500',
+                data_title = has_config ? product[p_index].orientation_name : 'Side ' + p_index;
+            html += '<div class="img-con" style="cursor: pointer;" onclick="NBDESIGNERPRODUCT.show_lightbox( this )"><img data-title="'+data_title+'" data-width="'+data_width+'" data-height="'+data_height+'" src="' + val + '?t=' + d.getTime() +'" /></div>'
         });
         jQuery.each( jQuery('#nbd-share-group a'), function(){
             var d = new Date();
@@ -628,6 +645,39 @@ var NBDESIGNERPRODUCT = {
             flipcon.flipBook(options);
         }
         
+    },
+    get_gallery_items: function(){
+        var $slides = jQuery('.img-con'),
+                items   = [];
+        if ($slides.length > 0) {
+            $slides.each(function (i, el) {
+                var img = jQuery(el).find('img');
+                if (img.length) {
+                    var item = {
+                        src: img.attr('src'),
+                        w: parseInt( img.attr('data-width') ) * 2,
+                        h: parseInt( img.attr('data-height') ) * 2,
+                        title: img.attr('data-title')
+                    };
+                    items.push(item);
+                }
+            });
+        }
+        return items;        
+    },
+    show_lightbox: function( e ){
+        var pswpElement = jQuery( '.pswp' )[0],
+            items       = this.get_gallery_items(),
+            eventTarget = jQuery( e.target ),
+            clicked;
+        clicked = eventTarget.closest( '.img-con' );
+        var options = jQuery.extend( {
+                index: jQuery( clicked ).index()
+        }, wc_single_product_params.photoswipe_options );
+
+        // Initializes and opens PhotoSwipe.
+        var photoswipe = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options );
+        photoswipe.init();        
     },
     nbdesigner_ready: function(){
         if(jQuery('input[name="variation_id"]').length > 0){

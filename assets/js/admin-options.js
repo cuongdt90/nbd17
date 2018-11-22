@@ -206,7 +206,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         field['id'] = 'f' + d.getTime();
         field.isExpand = true;
         if( angular.isDefined( type ) ){
-            if( angular.isDefined($scope.nbd_options[type]) && $scope.nbd_options[type] == 1 ){
+            if( angular.isDefined($scope.nbd_options[type]) && type != 'builder' && $scope.nbd_options[type] == 1 ){
                 alert(nbd_options.nbd_options_lang.option_exist);
                 return;
             }else{
@@ -287,6 +287,15 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     field.general.mesure = 'n';
                     field.general.mesure_range = [];
                     break;
+                case 'builder':
+                    field.general.data_type.value = 'm';
+                    field.general.data_type.hidden = true;
+                    field.general.attributes.number_of_sides = 4;
+                    angular.forEach(field.general.attributes.options, function(op){
+                        op.pb_image = [];
+                        op.pb_image_url = [];
+                    });
+                    break;
             }
         }
         $scope.options.fields.push( field );
@@ -296,6 +305,61 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
             }, 'slow');            
         });
         $scope.initfieldValue();
+    };
+    $scope.get_field_class = function(type){
+        var klass = 'default';
+        switch(type){
+            case 'page':
+            case 'color':
+            case 'size':
+            case 'dimension':
+            case 'dpi':
+            case 'area':
+            case 'orientation':
+                klass = 'wod';
+                break;
+            case 'builder':
+                klass = 'wpo';
+                break;
+            default:
+                klass = 'default';
+                break
+        }
+        return klass;
+    };
+    $scope.get_field_type = function(type){
+        type = angular.isDefined(type) ? type : '';
+        var type_number;
+        switch(type){
+            case 'page':
+                type_number = 2;
+                break;
+            case 'color':
+                type_number = 3;
+                break;
+            case 'size':
+                type_number = 4;
+                break;
+            case 'dimension':
+                type_number = 5;
+                break;
+            case 'dpi':
+                type_number = 6;
+                break;
+            case 'area':
+                type_number = 7;
+                break;
+            case 'orientation':
+                type_number = 8;
+                break;
+            case 'builder':
+                type_number = 9;
+                break;
+            default:
+                type_number = 1;
+                break
+        }
+        return type_number;
     };
     $scope.add_measurement_range = function(fieldIndex){
         $scope.options['fields'][fieldIndex].general.mesure_range.push([]);
@@ -324,7 +388,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
         }
     };
     $scope.copy_field = function( index ){
-        if(angular.isDefined($scope.options.fields[index].nbd_type)){
+        if(angular.isDefined($scope.options.fields[index].nbd_type) && $scope.options.fields[index].nbd_type != 'builder'){
             alert(nbd_options.nbd_options_lang.can_not_copy);
             return;
         }
@@ -395,7 +459,7 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                         field.general.price_type.hidden = true;
                         if( field.general.data_type.value == 'i' ){
                             field.general.attributes.options[1] = {};
-                            field.general.attributes.options[2] = {};
+                            //field.general.attributes.options[2] = {};
                             angular.copy(field.general.attributes.options[0], field.general.attributes.options[1]); 
                             //angular.copy(field.general.attributes.options[0], field.general.attributes.options[2]); 
                             field.general.attributes.options[0].name = nbd_options.nbd_options_lang.front;
@@ -430,6 +494,10 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     case 'dimension':
                         field.general.data_type.hidden = true;
                         field.general.input_type.hidden = true;
+                        break;
+                    case 'builder':
+                        field.general.data_type.value = 'm';
+                        field.general.data_type.hidden = true;
                         break;
                 }
             }
@@ -575,7 +643,9 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                 image_url:  '',
                 color:  '#ffffff',
                 bg_image: [],
-                bg_image_url: []
+                bg_image_url: [],
+                pb_image: [],
+                pb_image_url: []
             }
         );
     };
@@ -825,7 +895,7 @@ jQuery( document ).ready(function($){
                     instance.settings.dateFormat ||
                     $.datepicker._defaults.dateFormat,
                     selectedDate, instance.settings);
-            var dates = $(this).parents('.pricing-rule-date-fields').find('input');
+            var dates = $(this).parents('.nbo-dates').find('input');
             dates.not(this).datepicker("option", option, date);
         }
    });

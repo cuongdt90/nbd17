@@ -45,8 +45,8 @@
         <tfoot>
             <tr>
                 <th colspan="<?php echo count($options["bulk_fields"]) + 2; ?>" style="text-align: left;">
-                    <button ng-click="add_vairaion($event)" type="button" class="button button-primary nbd-setting-table-add-rule"><?php _e( 'Add Variation', 'web-to-print-online-designer' ); ?></button>
-                    <button ng-click="delete_vairaions($event)" type="button" class="button button-secondary nbd-setting-table-delete-rules"><?php _e( 'Delete Selected', 'web-to-print-online-designer' ); ?></button>
+                    <button ng-click="add_variaion($event)" type="button" class="button button-primary nbd-setting-table-add-rule"><?php _e( 'Add Variation', 'web-to-print-online-designer' ); ?></button>
+                    <button ng-click="delete_variaions($event)" type="button" class="button button-secondary nbd-setting-table-delete-rules"><?php _e( 'Delete Selected', 'web-to-print-online-designer' ); ?></button>
                 </th>
             </tr>            
         </tfoot>        

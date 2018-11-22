@@ -8,7 +8,7 @@
             <?php endif; ?>            
         </label> 
         <?php if( $field['general']['description'] != '' ): ?>
-        <span data-tip="<?php echo $field['general']['description']; ?>" class="nbd-help-tip"></span>
+        <span data-position="<?php echo $tooltip_position; ?>" data-tip="<?php echo $field['general']['description']; ?>" class="nbd-help-tip"></span>
         <?php endif; ?>
     </div>
     <div class="nbd-field-content">

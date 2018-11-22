@@ -83,7 +83,7 @@
                         <?php foreach( $resources as $resource ): ?>
                             <?php 
                                 foreach( $resource->objects as $layer ): 
-                                if( $layer->type == 'text' || $layer->type == 'i-text' || $layer->type == 'curvedText' ){ 
+                                if( $layer->type == 'text' || $layer->type == 'i-text' || $layer->type == 'curvedText' || $layer->type == 'textbox' ){ 
                                     $alias = $fontname = $layer->fontFamily;
                                     $fonturl = 'https://fonts.google.com/specimen/'.$fontname;
                                     $is_google_font = true;
@@ -410,7 +410,7 @@
                 var ajaxurl = "<?php echo admin_url('admin-ajax.php');  ?>"
                 jQuery('#create_pdf').on('click', function(e){
                     e.preventDefault();
-                    <?php if(0): ?>
+                    <?php $valid_license = nbd_check_license();if(!$valid_license): ?>
                     swal({
                       title: "Oops!",
                       text: "This feature only available in PRO version.",

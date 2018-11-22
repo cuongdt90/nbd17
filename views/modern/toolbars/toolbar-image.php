@@ -1,6 +1,6 @@
 <div class="toolbar-image" ng-show="stages[currentStage].states.isImage">
     <ul class="nbd-main-menu">
-        <li class="menu-item menu-filter">
+        <!--<li class="menu-item menu-filter">
             <i class="icon-nbd icon-nbd-baseline-tune"></i>
             <span>Filter</span>
             <div class="sub-menu" data-pos="left">
@@ -35,8 +35,8 @@
                     </ul>
                 </div>
             </div>
-        </li>
-        <li class="menu-item menu-crop">
+        </li>-->
+        <li class="menu-item menu-crop" ng-click="initCrop()">
             <i class="icon-nbd icon-nbd-round-crop"></i>
             <span>Crop</span>
         </li>

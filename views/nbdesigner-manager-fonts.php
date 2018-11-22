@@ -212,6 +212,7 @@
                 <div class="nbd-pagesize-wrap">
                     <b><?php _e('Total', 'web-to-print-online-designer');?> {{fonts.length}} <?php _e('fonts', 'web-to-print-online-designer');?></b>
                     <a class="button button-primary" ng-click="selectAll()"><?php _e('Select All', 'web-to-print-online-designer');?></a>
+                    <a class="button button-primary" ng-click="unselectAll()"><?php _e('Unselect All', 'web-to-print-online-designer');?></a>
                     <div style="display: inline-block; float: right;">
                         <label for='nbd-selected'><?php _e('Display ', 'web-to-print-online-designer');?></label>
                         <select id='nbd-selected' ng-model="filterFont.select" ng-change="resetCurentPage()">
@@ -290,6 +291,9 @@
         $scope.$watchCollection('filterFont', function(newVal, oldVal){
             $scope.fonts = filterFontFilter($scope.allFonts, $scope.filterFont);
         }, true);   
+        $scope.$watchCollection('selectedFonts', function(newVal, oldVal){
+            $scope.fonts = filterFontFilter($scope.allFonts, $scope.filterFont);
+        }, true); 
         $scope.resetCurentPage = function(){
             $scope.filterFont.currentPage = 0;
         };
@@ -306,6 +310,11 @@
             angular.forEach($scope.allFonts, function(font, key) {     
                 $scope.selectedFonts.push({name: font.family});
             });            
+            $scope.updateSelectedFont();
+        };
+        $scope.unselectAll = function(){
+            $scope.selectedFonts = [];   
+            $scope.updateSelectedFont();
         };
         $scope.selectFont = function( font, $event ){
             if( !font.selected ){

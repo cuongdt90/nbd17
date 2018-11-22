@@ -9,6 +9,7 @@ if( (isset($_REQUEST['wc-api']) && $_REQUEST['wc-api'] == 'WC_Quick_View') || (i
 $appid = "nbo-app-" . time().rand(1,100);
 $display_type = nbdesigner_get_option('nbdesigner_option_display');
 $prefix = $display_type == 2 ? '-2' : '';
+$style_class = $display_type == 2 ? 'nbo-style-2' : 'nbo-style-1';
 $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label');
 ?>
 <div class="nbo-wrapper <?php if($is_wqv) echo 'nbd-option-in-wqv'; ?>">
@@ -108,6 +109,10 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
         #tiptip_holder.tip_top #tiptip_arrow_inner { 
             border-top-color: rgba(20,20,20,0.92);
         }
+    }
+    .nbo-disabled {
+        opacity: 0.3;
+        pointer-events: none;
     }
     .nbd-help-tip {
         vertical-align: middle;
@@ -242,7 +247,7 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
     .nbd-option-wrapper label {
         cursor: pointer;
         margin: 0 !important;
-        margin-right: 5px !important;
+        margin: 0px 4px 2px!important;
     }
     .nbd-swatch {
         width: 36px;
@@ -251,6 +256,7 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
         border-radius: 50%; 
         cursor: pointer;
         border: 2px solid #ddd;
+        position: relative;
     }
     .nbo-checkbox {
         width: 36px;
@@ -550,7 +556,82 @@ $hide_swatch_label = nbdesigner_get_option('nbdesigner_hide_option_swatch_label'
         font-size: 14px;
         margin-left: 10px;        
     }
+    .nbo-clear-option-wrap {
+        text-align: right;
+        margin-bottom: 1em;
+    }
+    .nbo-style-1 {
+        border: 1px solid #f8f8f8;
+        margin-bottom: 1em;
+    }
+    .nbo-style-1 .nbo-summary-title,
+    .nbo-style-1 .nbo-table-pricing-title{
+        padding: 10px;
+        background: #f8f8f8;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    .nbo-style-1 .nbo-summary-title:after {
+        clear: both;
+    }
+    .nbo-style-1 .nbo-summary-table ,
+    .nbo-style-1 .nbo-table-pricing {
+        margin: 0;
+        padding: 3px;
+    }
+    .nbo-toggle {
+        text-align: center;
+        cursor: pointer;
+    }
+    .nbo-toggle svg {
+        vertical-align: top;
+        height: 100%;
+    }
+    .nbd-swatch-tooltip {
+        background: #404762;
+        color: #fff;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: bold;
+        position:  absolute;
+        bottom: 50%;
+        left: 50%;
+        pointer-events: none;
+        padding: 5px 7px;
+        visibility: hidden;
+        opacity: 0;
+        -webkit-transform: translate3d(-50%,0%,0);
+        -moz-transform: translate3d(-50%,0%,0);
+        transform: translate3d(-50%,0%,0);
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        max-width: 200px;      
+        z-index: 99;
+        -webkit-transition: all .4s;
+        -moz-transition: all .4s;
+        transition: all .4s; 
+    }
+    .nbd-swatch-tooltip:before {
+        content: '';
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid #404762;
+        position: absolute;
+        bottom: -5px;
+        margin-left: -3px;
+        left: 50%;
+    }
+    .nbd-swatch:hover .nbd-swatch-tooltip {
+        bottom: 40px;
+        visibility: visible;
+        opacity: 1; 
+    }
     @media (max-width:768px){
+        .nbd-swatch-tooltip {
+            display: none;
+        }
         .nbd-tb-options td {
             display: inline-block !important;
             width: 100%;
@@ -605,6 +686,11 @@ foreach($options["fields"] as $key => $field){
     }
     if( $field['general']['enabled'] == 'y' && $need_show ) include($tempalte);
 }
+    $disable_quantity_input = false;
+    if( $options['quantity_enable'] == 'y' && !$is_sold_individually ){
+        $disable_quantity_input = true;
+        include(NBDESIGNER_PLUGIN_DIR .'templates/single-product/options-builder/quantity'.$prefix.'.php');
+    }
     if( $display_type == 2 ): ?>
             </tbody>
         </table> 
@@ -620,14 +706,25 @@ if( $cart_item_key != ''){
     <?php    
 }
 ?>
+        <div ng-if="fields.length" class="nbo-clear-option-wrap"><a class="button nbd-button" ng-click="reset_options()"><?php _e('Clear selection', 'web-to-print-online-designer'); ?></a></div>
         <input type="hidden" value="<?php echo $product_id; ?>" name="nbo-add-to-cart"/>
         <p ng-if="!valid_form" class="nbd-invalid-form"><?php _e('Please check invalid fields and quantity input!', 'web-to-print-online-designer'); ?></p>
         <?php if( nbdesigner_get_option('nbdesigner_hide_summary_options') != 'yes' && $options['display_type'] != 3): ?>
-        <div ng-if="valid_form">
-            <p class="nbo-summary-title"><b><?php _e('Summary options:', 'web-to-print-online-designer'); ?></b></p>
-            <table class="nbo-summary-table">
+        <div ng-if="valid_form" class="<?php echo $style_class; ?>">
+            <p class="nbo-summary-title" ng-init="showNboSummary = true">
+                <b><?php _e('Summary options', 'web-to-print-online-designer'); ?></b>
+                <?php if( $display_type == 1 ): ?>
+                <span class="nbo-minus nbo-toggle" ng-show="showNboSummary" ng-click="showNboSummary = !showNboSummary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <span class="nbo-plus nbo-toggle" ng-show="!showNboSummary" ng-click="showNboSummary = !showNboSummary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <?php endif; ?>
+            </p>
+            <table class="nbo-summary-table" ng-show="showNboSummary">
                 <tbody>
-                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td>{{field.price}}</td></tr>
+                    <tr ng-repeat="(key, field) in nbd_fields" ng-show="field.enable"><td>{{field.title}} : <b>{{field.value_name}}</b></td><td ng-bind-html="field.price | to_trusted"></td></tr>
                 </tbody>
                 <tfoot style="border-top: 1px solid #404762;">
                     <tr>
@@ -647,9 +744,19 @@ if( $cart_item_key != ''){
         </div>
         <?php endif; ?>
         <?php if( nbdesigner_get_option('nbdesigner_hide_table_pricing') == 'no' && $options['display_type'] != 3 ): ?>
-        <div ng-if="valid_form && price_table.length > 1">
-            <p class="nbo-table-pricing-title"><b><?php _e('Table pricing', 'web-to-print-online-designer'); ?></b></p>
-            <table>
+        <div ng-if="valid_form && price_table.length > 1" class="<?php echo $style_class; ?>">
+            <p class="nbo-table-pricing-title" ng-init="showNboTablePricing = true">
+                <b><?php _e('Table pricing', 'web-to-print-online-designer'); ?></b>
+                <?php if( $display_type == 1 ): ?>
+                <span class="nbo-minus nbo-toggle" ng-show="showNboTablePricing" ng-click="showNboTablePricing = !showNboTablePricing">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13H5v-2h14v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <span class="nbo-plus nbo-toggle" ng-show="!showNboTablePricing" ng-click="showNboTablePricing = !showNboTablePricing">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+                </span>
+                <?php endif; ?>
+            </p>
+            <table class="nbo-table-pricing" ng-show="showNboTablePricing">
                 <thead>
                     <tr>
                         <th><?php _e('From', 'web-to-print-online-designer'); ?></th>
@@ -851,11 +958,13 @@ if( $cart_item_key != ''){
         status: false,
         odOption: {}
     };
-    jQuery('.variations_form').on('woocommerce_variation_has_changed', function(){
+    jQuery('.variations_form').on('woocommerce_variation_has_changed wc_variation_form', function(){
         startApp();
     });
-    jQuery('.variations_form').on('wc_variation_form', function(){
-        startApp();
+    jQuery('.variations_form').on('found_variation', function(){
+        setTimeout(function(){
+            startApp();
+        }, 100);
     });
     jQuery(document).ready(function(){
         jQuery('input[name="quantity"]').on('input change change.nbo', function(){
@@ -895,6 +1004,7 @@ if( $cart_item_key != ''){
         $scope.product_img = [];
         $scope.price_table = [];
         $scope.has_price_matrix = false;
+        $scope.can_start_design = true;
         $scope.check_valid = function( calculate_pm ){
             $timeout(function(){
                 var check = {}, total_check = true;
@@ -917,10 +1027,14 @@ if( $cart_item_key != ''){
                             angular.forEach(field.values, function(val, index){
                                 field.value_name += (index == 0 ? '' : ', ') + origin_field.general.attributes.options[val].name;
                             });
+                            if( origin_field.nbd_type == "page" ){
+                                $scope.can_start_design = field.values.length == 0 ? false: true;
+                            }
                         }else{
                             field.value_name = origin_field.general.attributes.options[field.value].name;
                         }
                     }
+                    if( !field.enable ) check[field_id] = true;
                 });
                 angular.forEach(check, function(c){
                     total_check = total_check && c;
@@ -939,7 +1053,11 @@ if( $cart_item_key != ''){
                     $scope.calculate_price_table();
                     $scope.valid_form = true;
                     jQuery('.single_add_to_cart_button').removeClass( "nbo-disabled nbo-hidden");
-                    jQuery('#triggerDesign').removeClass('nbdesigner_disable');
+                    if($scope.can_start_design){
+                        jQuery('#triggerDesign').removeClass('nbdesigner_disable');
+                    }else{
+                        jQuery('#triggerDesign').addClass('nbdesigner_disable');
+                    }
                 }else{
                     jQuery(document).triggerHandler( 'invalid_nbo_options' );
                     jQuery('.single_add_to_cart_button').addClass( "nbo-disabled");
@@ -956,6 +1074,7 @@ if( $cart_item_key != ''){
             });
         };
         $scope.postOptionsToEditor = function(){
+            nbOption.odOption = {};
             angular.forEach($scope.nbd_fields, function(field, field_id){
                 if(field.enable){
                     var origin_field = $scope.get_field(field_id);
@@ -979,7 +1098,7 @@ if( $cart_item_key != ''){
                                     page_display: origin_field.general.page_display,
                                     exclude_page: origin_field.general.exclude_page
                                 };
-                                if( origin_field.general.data_type == 'm' ){
+                                if( origin_field.general.data_type == 'm' && field.values.length > 0 ){
                                     nbOption.odOption.page.list_page = field.values;
                                 }                                
                                 break;
@@ -987,12 +1106,12 @@ if( $cart_item_key != ''){
                                 if(origin_field.general.attributes.same_size == 'n'){
                                     var option_size = origin_field.general.attributes.options[field.value];
                                     nbOption.odOption.size = {
-                                        product_width: option_size.product_width,
-                                        product_height: option_size.product_height,
-                                        real_width: option_size.real_width,
-                                        real_height: option_size.real_height,
-                                        real_top: option_size.real_top,
-                                        real_left: option_size.real_left
+                                        product_width: $scope.validate_float( option_size.product_width ),
+                                        product_height: $scope.validate_float( option_size.product_height ),
+                                        real_width: $scope.validate_float( option_size.real_width ),
+                                        real_height: $scope.validate_float( option_size.real_height ),
+                                        real_top: $scope.validate_float( option_size.real_top ),
+                                        real_left: $scope.validate_float( option_size.real_left )
                                     };
                                 }
                                 break;
@@ -1163,19 +1282,23 @@ if( $cart_item_key != ''){
             total_check = logic == 'a' ? true : false;
             angular.forEach(field.conditional.depend, function(con, key){
                 if( con.id != '' ){
-                    switch(con.operator){
-                        case 'i':
-                            check[key] = $scope.nbd_fields[con.id].value == con.val ? true : false;
-                            break;
-                        case 'n':
-                            check[key] = $scope.nbd_fields[con.id].value != con.val ? true : false;
-                            break;  
-                        case 'e':
-                            check[key] = $scope.nbd_fields[con.id].value == '' ? true : false;
-                            break;
-                        case 'ne':
-                            check[key] = $scope.nbd_fields[con.id].value != '' ? true : false;
-                            break;                         
+                    if( !$scope.nbd_fields[con.id].enable ){
+                        check[key] = false;
+                    }else{
+                        switch(con.operator){
+                            case 'i':
+                                check[key] = $scope.nbd_fields[con.id].value == con.val ? true : false;
+                                break;
+                            case 'n':
+                                check[key] = $scope.nbd_fields[con.id].value != con.val ? true : false;
+                                break;  
+                            case 'e':
+                                check[key] = $scope.nbd_fields[con.id].value == '' ? true : false;
+                                break;
+                            case 'ne':
+                                check[key] = $scope.nbd_fields[con.id].value != '' ? true : false;
+                                break;                         
+                        }
                     }
                 }else{
                     check[key] = true;
@@ -1189,10 +1312,17 @@ if( $cart_item_key != ''){
         };
         $scope.init = function(){
             nbOption.status = true;
+            /* Compare with other color swatches plugins */
+            jQuery('.variation-selector').removeClass('hidden').show();
+            jQuery('.nbtcs-swatches').addClass('hidden');  
             <?php if($options['display_type'] == 3 && count($options['bulk_fields'])): ?>
             jQuery('input[name="add-to-cart"]').remove();
             jQuery('button[name="add-to-cart"]').attr('name', 'nbo-add-to-cart');
             jQuery('input[name="quantity"], .quantity .screen-reader-text').remove();
+            <?php endif; ?>
+            <?php if($disable_quantity_input): ?>
+                $scope.quantity = $scope.validate_int("<?php echo $quantity; ?>");
+                jQuery(qty_selector + ', input[name="quantity"]').addClass('nbo-disabled');
             <?php endif; ?>
             $scope.nbd_fields = {};
             $scope.basePrice = $scope.convert_wc_price_to_float( $scope.price );
@@ -1254,6 +1384,12 @@ if( $cart_item_key != ''){
             }
             $scope.check_valid();
         };
+        $scope.reset_options = function(){
+            $scope.init();
+        };
+        $scope.change_quantity = function(){
+            jQuery('input[name="quantity"]').val($scope.quantity).trigger( 'change.nbo' );
+        };
         $scope.select_all_variation = function( $event ){
             var el = angular.element($event.target),
             list = el.parents('table.nbo-bulk-variation').find('tbody input.nbo-bulk-checkbox'),
@@ -1262,13 +1398,13 @@ if( $cart_item_key != ''){
                 jQuery(this).prop('checked', check);
             });
         };
-        $scope.add_vairaion = function( $event ){
+        $scope.add_variaion = function( $event ){
             var el = angular.element($event.target),
             tb = el.parents('table.nbo-bulk-variation').find('tbody'),
             row = tb.find('tr').last().clone();
             tb.append(row);
         };
-        $scope.delete_vairaions = function( $event ){
+        $scope.delete_variaions = function( $event ){
             var el = angular.element($event.target),
             tb = el.parents('table.nbo-bulk-variation').find('tbody');
             jQuery.each(tb.find('input.nbo-bulk-checkbox:checked'), function(){
@@ -1373,13 +1509,15 @@ if( $cart_item_key != ''){
                             }
                         }else{
                             var option = origin_field.general.attributes.options[field.value];
-                            if(origin_field.general.depend_quantity == 'n'){
-                                factor = option.price[0];
-                            }else{
-                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
-                                    factor = '';
+                            if(option){
+                                if(origin_field.general.depend_quantity == 'n'){
+                                    factor = option.price[0];
                                 }else{
-                                    factor = option.price[quantity_break.index];
+                                    if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                        factor = '';
+                                    }else{
+                                        factor = option.price[quantity_break.index];
+                                    }
                                 }
                             }
                         }
@@ -1510,7 +1648,11 @@ if( $cart_item_key != ''){
             angular.copy($scope.options.price_matrix[_i][_j].fields, $scope.nbd_fields);
             $scope.check_valid( false );
         };        
-        $scope.convert_to_wc_price = function(price){
+        $scope.convert_to_wc_price = function(price, required){
+            <?php if( $hide_zero_price == 'yes' ): ?> 
+            var precision = parseInt(nbds_frontend.currency_format_num_decimals);
+            if( price.toFixed(precision) == 0 && angular.isUndefined(required) ) return '';
+            <?php endif; ?>
             return accounting.formatMoney( price, {
                 symbol: nbds_frontend.currency_format_symbol,
                 decimal: nbds_frontend.currency_format_decimal_sep,
@@ -1597,13 +1739,15 @@ if( $cart_item_key != ''){
                         }
                     }else{
                         var option = origin_field.general.attributes.options[field.value];
-                        if(origin_field.general.depend_quantity == 'n'){
-                            factor = option.price[0];
-                        }else{
-                            if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
-                                factor = '';
+                        if(option){
+                            if(origin_field.general.depend_quantity == 'n'){
+                                factor = option.price[0];
                             }else{
-                                factor = option.price[quantity_break.index];
+                                if( quantity_break.index == 0 && quantity_break.oparator == 'lt' ){
+                                    factor = '';
+                                }else{
+                                    factor = option.price[quantity_break.index];
+                                }
                             }
                         }
                     }
@@ -1671,9 +1815,15 @@ if( $cart_item_key != ''){
             $scope.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + $scope.total_price ) * qty_factor / 100;
             $scope.final_price = $scope.total_price + $scope.basePrice - $scope.discount_by_qty;
             $scope.final_price = $scope.final_price > 0 ? $scope.final_price : 0;
-            $scope.final_price = $scope.convert_to_wc_price( $scope.final_price );
-            $scope.total_price = $scope.convert_to_wc_price( $scope.total_price );
-            $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty );
+            <?php if($change_base == 'yes'): ?>
+            $scope.total_cart_price = $scope.final_price * qty;
+            $scope.total_cart_price = $scope.convert_to_wc_price( $scope.total_cart_price );
+            jQuery('.woocommerce-Price-amount').html($scope.total_cart_price);
+            jQuery('.nbo-base-price-html').html(nbds_frontend.total);
+            <?php endif; ?>
+            $scope.final_price = $scope.convert_to_wc_price( $scope.final_price, true );
+            $scope.total_price = $scope.convert_to_wc_price( $scope.total_price, true );
+            $scope.discount_by_qty = $scope.convert_to_wc_price( $scope.discount_by_qty, true );
         };
         $scope.calculate_price_table = function(){
             $scope.price_table = [];
@@ -1743,13 +1893,15 @@ if( $cart_item_key != ''){
                             }
                         }else{
                             var option = origin_field.general.attributes.options[field.value];
-                            if(origin_field.general.depend_quantity == 'n'){
-                                factor = option.price[0];
-                            }else{
-                                if( pt.quantity_break.index == 0 && pt.quantity_break.oparator == 'lt' ){
-                                    factor = '';
+                            if(option){
+                                if(origin_field.general.depend_quantity == 'n'){
+                                    factor = option.price[0];
                                 }else{
-                                    factor = option.price[pt.quantity_break.index];
+                                    if( pt.quantity_break.index == 0 && pt.quantity_break.oparator == 'lt' ){
+                                        factor = '';
+                                    }else{
+                                        factor = option.price[pt.quantity_break.index];
+                                    }
                                 }
                             }
                         }
@@ -1817,9 +1969,9 @@ if( $cart_item_key != ''){
                 pt.discount_by_qty = $scope.options.quantity_discount_type == 'f' ? qty_factor : ($scope.basePrice + pt.total_price ) * qty_factor / 100;
                 pt.final_price = pt.total_price + $scope.basePrice - pt.discount_by_qty;
                 pt.final_price = pt.final_price > 0 ? pt.final_price : 0;
-                pt.final_price = $scope.convert_to_wc_price( pt.final_price );
-                pt.total_price = $scope.convert_to_wc_price( pt.total_price );
-                pt.discount_by_qty = $scope.convert_to_wc_price( pt.discount_by_qty );
+                pt.final_price = $scope.convert_to_wc_price( pt.final_price, true );
+                pt.total_price = $scope.convert_to_wc_price( pt.total_price, true );
+                pt.discount_by_qty = $scope.convert_to_wc_price( pt.discount_by_qty, true );
             });
         };
         $scope.isMultipleSelectPage = function(field){
@@ -1860,16 +2012,31 @@ if( $cart_item_key != ''){
                 });
             }
         };
+    }).directive('convertToNumber', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, element, attrs, ngModel) {
+                ngModel.$parsers.push(function(val) {
+                    return val != null ? parseInt(val, 10) : null;
+                });
+                ngModel.$formatters.push(function(val) {
+                    return val != null ? '' + val : null;
+                });
+            }
+        };
     }).directive( 'nbdHelpTip', function($timeout) {
         return {
             restrict: 'C',
+            scope: {
+                position: '@position'
+            },
             link: function( scope, element, attrs ) {
                 var tiptip_args = {
                     'attribute': 'data-tip',
                     'fadeIn': 50,
                     'fadeOut': 50,
                     'delay': 200,
-                    defaultPosition: "top"
+                    defaultPosition: scope.position ? scope.position : "top"
                 };
                 $timeout(function() {
                     jQuery(element).tipTip( tiptip_args );
@@ -1878,6 +2045,7 @@ if( $cart_item_key != ''){
         };
     }).filter('to_trusted', ['$sce', function($sce){
         return function(text) {
+            text += '';
             return $sce.trustAsHtml(text);
         };            
     }]);

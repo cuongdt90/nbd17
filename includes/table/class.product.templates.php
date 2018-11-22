@@ -187,7 +187,13 @@ class Product_Template_List_Table extends WP_List_Table {
     }
     function column_default($item, $column_name){
         return $item[$column_name];
-    }    
+    }
+    function column_created_date( $item ){
+        $_nonce = wp_create_nonce('nbdesigner_template_nonce');
+        $html = '<input type="text" placeholder="YYYY-MM-DD" style="width: 100%;" class="nbd-temp-date" value="'.$item['created_date'].'" />';
+        $html .= sprintf('<a style="display: none;" class="nbd-temp-date-update" href="?page=%s&action=%s&template=%s&_wpnonce=%s&pid=%s&paged=%s&view=templates&created_date=%s">'.__('Update', 'web-to-print-online-designer').'</a>', esc_attr($_REQUEST['page']), 'update', absint($item['id']), $_nonce, esc_attr($_REQUEST['pid']), $this->get_pagenum(), $item['created_date']);
+        return $html;
+    }
     /**
      * Render the bulk edit checkbox
      *
@@ -230,8 +236,8 @@ class Product_Template_List_Table extends WP_List_Table {
             'folder' => __('Preview', 'web-to-print-online-designer'),
             'priority' => __('Primary', 'web-to-print-online-designer'),
             'product_id' => __('Variation', 'web-to-print-online-designer'),
-            'user_id' => __('Created By', 'web-to-print-online-designer'),
-            'created_date' => __('Created', 'web-to-print-online-designer')
+//            'user_id' => __('Created By', 'web-to-print-online-designer'),
+            'created_date' => __('Date', 'web-to-print-online-designer')
         );
         return $columns;
     }
@@ -313,7 +319,7 @@ class Product_Template_List_Table extends WP_List_Table {
             $nonce = esc_attr($_REQUEST['_wpnonce']);
             if (!wp_verify_nonce($nonce, 'nbdesigner_template_nonce')) {
                 die('Go get a life script kiddies');
-            }            
+            }
             self::delete_template(absint($_GET['template']));
             wp_redirect(esc_url_raw(add_query_arg(array('pid' => $_REQUEST['pid'], 'paged' => $this->get_pagenum(), 'view'  => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'))));
             exit;
@@ -326,7 +332,19 @@ class Product_Template_List_Table extends WP_List_Table {
             self::make_primary_template(absint($_GET['template']), absint($_GET['pid']));
             wp_redirect(esc_url_raw(add_query_arg(array('pid' => $_REQUEST['pid'], 'paged' => $this->get_pagenum(), 'view'  => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'))));
             exit;
-        }     
+        }
+        if ('update' === $this->current_action()) {
+            $nonce = esc_attr($_REQUEST['_wpnonce']);
+            if (!wp_verify_nonce($nonce, 'nbdesigner_template_nonce')) {
+                die('Go get a life script kiddies');
+            }  
+            if( isset($_GET['created_date']) && $_GET['created_date'] != '' ){
+                $id = absint($_GET['template']);
+                $created_date = rawurldecode($_GET['created_date']);
+                self::update_template($id, array('created_date' => $created_date));
+            }
+            wp_redirect(esc_url_raw(add_query_arg(array('pid' => $_REQUEST['pid'], 'paged' => $this->get_pagenum(), 'view'  => 'templates'), admin_url('admin.php?page=nbdesigner_manager_product'))));
+        }
         if ('duplicate' === $this->current_action()) {    
             $nonce = esc_attr($_REQUEST['_wpnonce']);
             if (!wp_verify_nonce($nonce, 'nbdesigner_template_nonce')) {

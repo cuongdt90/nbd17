@@ -872,3 +872,28 @@
 .nbo_color_pomegranate {
     color: #c0392b;
 }
+.nbo-type-label {
+    font-size: 10px;
+    height: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+    line-height: 14px;
+    text-align: center;
+    display: inline-block;
+    width: 14px;
+    color: #fff; 
+}
+.nbo-type-label-wrap{
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 15px;
+}
+.nbo-type-label.default {
+    background: #04a287;
+}
+.nbo-type-label.wod {
+    background: #0085ba;
+}
+.nbo-type-label.wpo {
+    background: #5A6E79;
+}

@@ -6,11 +6,14 @@
                 <li class="nbd-field-tab active" data-target="tab-general"><?php _e('General', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-conditional"><?php _e('Conditinal', 'web-to-print-online-designer') ?></li>
                 <li class="nbd-field-tab" data-target="tab-appearance"><?php _e('Appearance', 'web-to-print-online-designer') ?></li>
-                <li ng-if="field.nbd_type" class="nbd-field-tab" data-target="tab-online-design"><?php _e('Online design', 'web-to-print-online-designer') ?></li>
+                <li ng-if="field.nbd_type" class="nbd-field-tab" data-target="tab-online-design">{{ field.nbd_type != 'builder' ? "<?php _e('Online design', 'web-to-print-online-designer'); ?>" : "<?php _e('Product builder', 'web-to-print-online-designer'); ?>" }}</li>
             </ul>
             <input ng-hide="true" ng-model="field.id" name="options[fields][{{fieldIndex}}][id]"/>
-            <span class="nbd-field-name" ng-class="field.isExpand ? '' : 'left'"><span>{{field.general.title.value}}</span></span>
+            <span class="nbd-field-name" ng-class="field.isExpand ? '' : 'left'">
+                <span>{{field.general.title.value}}</span>
+            </span>
             <span class="nbdesigner-right field-action">
+                <span class="nbo-type-label-wrap"><span class="nbo-type-label" ng-class="get_field_class(field.nbd_type)">{{get_field_type(field.nbd_type)}}</span></span>
                 <span class="nbo-sort-group">
                     <span ng-click="sort_field($index, 'up')" class="dashicons dashicons-arrow-up nbo-sort-up nbo-sort" title="<?php _e('Up', 'web-to-print-online-designer') ?>"></span>
                     <span ng-click="sort_field($index, 'down')" class="dashicons dashicons-arrow-down nbo-sort-down nbo-sort" title="<?php _e('Down', 'web-to-print-online-designer') ?>"></span>
@@ -579,6 +582,36 @@
                 <option value="y"><?php _e('Yes', 'web-to-print-online-designer'); ?></option>
                 <option value="n"><?php _e('No', 'web-to-print-online-designer'); ?></option>
             </select>
+        </div>
+    </div>
+<?php echo '</script>'; ?>
+<?php echo '<script type="text/ng-template" id="nbd.builder">'; ?>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Number of sides', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <input class="nbd-short-ip" name="options[fields][{{fieldIndex}}][general][attributes][number_of_sides]" string-to-number type="number" min="1" step="1" ng-model="field.general.attributes.number_of_sides" />
+        </div>
+    </div>
+    <div class="nbd-field-info">
+        <div class="nbd-field-info-1">
+            <div><b><?php _e('Option images', 'web-to-print-online-designer'); ?></b></div>
+        </div>
+        <div class="nbd-field-info-2">
+            <div class="nbd-table-wrap">
+                <table class="nbd-table" style="text-align: center;">
+                    <tbody>
+                        <tr ng-repeat="(opIndex, op) in field.general.attributes.options">
+                            <th>{{op.name}}</th>
+                            <td ng-repeat="n in [] | range:field.general.attributes.number_of_sides">
+                                <input ng-hide="true" ng-model="op.pb_image[n]" name="options[fields][{{fieldIndex}}][general][attributes][options][{{opIndex}}][pb_image][{{n}}]"/>
+                                <img class="bg_od_preview" title="<?php _e('Click to change image', 'web-to-print-online-designer'); ?>" ng-click="set_attribute_image(fieldIndex, opIndex, 'pb_image', 'pb_image_url', n)" ng-src="{{op.pb_image[n] != undefined ? op.pb_image_url[n] : '<?php echo NBDESIGNER_ASSETS_URL . 'images/placeholder.png' ?>'}}" />  
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 <?php echo '</script>';

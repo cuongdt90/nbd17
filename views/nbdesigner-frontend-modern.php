@@ -1,17 +1,26 @@
 <?php if (!defined('ABSPATH')) exit; // Exit if accessed directly  ?>
 <!DOCTYPE html>
+<?php 
+    global $is_IE;
+    if($is_IE){
+        echo "We have detected that you are using Internet Explorer which isn't compatible with design editor. Please use one of the modern web browsers: Chrome, Firefox, Microsoft Edge, Safari...";
+        die();
+    }
+    include 'signature.php';
+?>
 <?php
     $hide_on_mobile = nbdesigner_get_option('nbdesigner_disable_on_smartphones');
     $lang_code = str_replace('-', '_', get_locale());
     $locale = substr($lang_code, 0, 2);
     $product_id = (isset($_GET['product_id']) &&  $_GET['product_id'] != '') ? absint($_GET['product_id']) : 0;
-    $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
+    //$variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : nbd_get_default_variation_id( $product_id ); 
+    $variation_id = (isset($_GET['variation_id']) &&  $_GET['variation_id'] != '') ? absint($_GET['variation_id']) : 0; 
     $default_font = nbd_get_default_font();
     $_default_font = str_replace(" ", "+", json_decode($default_font)->alias);
     $_product = wc_get_product( $product_id );
     $product_type = $_product->get_type();  
     $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
-    $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';    
+    $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
     $ui_mode = is_nbd_design_page() ? 2 : 1;/*1: iframe popup, 2: custom page, 3: studio*/
     if( !nbd_is_product($product_id) ){
         echo sprintf('<p>%s, <a href="%s">%s</a></p>', 
@@ -27,7 +36,7 @@
     nbdesigner_get_template('permission.php');    
     else:    
     $option_id = get_transient( 'nbo_product_'.$product_id );
-    $show_nbo_option =  (($option_id || $product_type == 'variable') && $ui_mode == 2 && $task == 'new' ) ? true : false;
+    $show_nbo_option =  (($option_id || $product_type == 'variable') && $ui_mode == 2 && $task == 'new' && $task2 == '' ) ? true : false;
     $valid_license = nbd_check_license();
 ?>
 <html lang="<?php echo $lang_code; ?>">
@@ -85,12 +94,98 @@
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/spectrum.css'; ?>" rel="stylesheet" media="all">
         <?php if(is_rtl()): ?>
         <link type="text/css" href="<?php echo NBDESIGNER_PLUGIN_URL .'assets/css/modern-rtl.css'; ?>" rel="stylesheet" media="all">
-        <?php endif; ?>
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->	
+        <?php endif; ?>	
         <style type="text/css">
+            .nbd-pro-mark-wrap {
+                position: absolute;
+                bottom: 5px;
+                right: 5px;
+                display: inline-block;
+                background: #15171b;
+                height: 15px;
+                border-radius: 3px;
+                color: #fff !important;
+                text-transform: uppercase;
+                line-height: 15px;
+                font-size: 10px !important;
+                padding: 0 2px;
+            }
+            .nbd-pro-mark {
+                height: 12px;
+                width: 13px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .nbd-hoz-ruler {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 40px;
+                text-align: left;
+                cursor: pointer;
+            }
+            .nbd-button:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+            .nbd-ver-ruler {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 40px;
+                text-align: left;
+                margin-left: 5px;
+                cursor: pointer;
+            } 
+            .nbd-hoz-ruler svg{
+                height: 100%;
+                pointer-events: none;
+            }
+            .nbd-ver-ruler svg {
+                width: 100%;
+                pointer-events: none;
+            }
+            .rulez-text {
+                font-size: 10px;
+                fill: #888;
+            }
+            .rulez-rect{
+                fill:grey
+            }
+            .ruler-guideline-hor {
+                border-bottom: 1px solid #3BB7C7;
+                z-index: 99;
+                height: 3px;
+                background: transparent;
+                position: absolute;
+                left: 0;
+                cursor: ns-resize;
+            }
+            .ruler-guideline-ver {
+                border-right: 1px solid #3BB7C7;
+                z-index: 99;
+                width: 3px;
+                position: absolute;
+                top: 0;
+                cursor: ew-resize;
+            }
+            .guide-backdrop {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .nbd-prevent-event {
+                pointer-events: none;
+                z-index: 98;
+            }
+            .nbd-disable-event {
+                pointer-events: none;
+            }
+            .nbd-hide {
+                opacity: 0;
+            }
             .stage-background, .design-zone, .stage-grid, .bounding-layers, .stage-snapLines, .stage-overlay, .stage-guideline {
                 position: absolute;
                 top: 0;
@@ -405,6 +500,7 @@
                 background: #d0d6dd;
                 width: 100%;
                 min-height: 30px;
+                border-radius: 4px;
             }
             .mansory-wrap .mansory-item.in-view,
             .clipart-wrap .clipart-item.in-view {
@@ -490,7 +586,7 @@
                 display: none;
             }
             .nbd-sidebar .tabs-content .nbd-search input {
-                border: 1px solid #404762;
+                border-radius: 4px;
             }
             .type-instagram.button-login {
                 display: flex;
@@ -669,7 +765,12 @@
                 vertical-align: top;
                 -webkit-transition: all 0.4s;
                 -moz-transition: all 0.4s;
-                transition: all 0.4s;                
+                transition: all 0.4s;   
+                border-radius: 4px;
+            }
+            .nbd-sidebar #tab-element .nbd-items-dropdown .main-items .items .item .main-item .item-icon, 
+            .nbd-sidebar #tab-photo .nbd-items-dropdown .main-items .items .item .main-item .item-icon {
+                border-radius: 4px; 
             }
             .nbd-templates .items .item .main-item {
                 cursor: pointer;
@@ -873,6 +974,20 @@
                 border-radius: 4px;
                 padding: 5px;
             }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item {
+                border: 2px solid #fff;
+                -moz-transition: all 0.4s;
+                -webkit-transition: all 0.4s;
+                transition: all 0.4s;
+                border-radius: 4px;
+            }
+            .nbd-sidebar .nbd-items-dropdown .result-loaded .nbdesigner-gallery .nbdesigner-item img {
+                border-radius: 4px;
+            }
+            .nbd-sidebar .tabs-content .nbd-search input {
+                -webkit-box-shadow: 1px 0 21px rgba(0,0,0,.15);
+                box-shadow: 1px 0 21px rgba(0,0,0,.15);
+            }
             @media screen and (min-width: 768px) {
                 .nbd-stages .stage .page-toolbar {
                     top: 50%;                
@@ -888,6 +1003,56 @@
                 justify-content: center;
                 align-items: center;
             }*/
+            #selectedTab span {
+                position: absolute;
+                right: 0;
+                top: -7px;
+                width: 7px;
+                height: 7px;
+                background-color: #d0d6dd;
+            }
+            #selectedTab span:last-child {
+                top: auto;
+                bottom: -7px;
+            }
+            #selectedTab span:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 14px;
+                height: 14px;
+                border-radius: 7px;
+                background-color: #404762;
+            }
+            #selectedTab span:last-child:after {
+                top: 0;
+                bottom: auto;
+            }
+            .nbd-button {
+                border-radius: 4px;
+            }
+            .bounding-rect-real-size {
+                position: absolute;
+                top: -15px;
+                width: 100%;
+                left: 0;
+                color: #404762;
+                height: 15px;
+                line-height: 15px;
+                font-size: 9px;
+                font-family: monospace;
+            }
+            .nbd-prevent-select{
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+            .nbd-context-menu {
+                z-index: 100;
+            }
             @media screen and (max-width: 767px) {
                 .safari .nbd-workspace .main {
                     height: -webkit-calc(100vh - 164px);
@@ -987,6 +1152,7 @@
                 overflow: auto;
                 width: 56%;
                 float: right;
+                overflow: unset;
             }
             .post-type-archive-product .pp_woocommerce_quick_view .pp_description,
             .tax-product_cat .pp_woocommerce_quick_view .pp_description,
@@ -1280,6 +1446,46 @@
                 line-height: inherit;
                 display: inline-block;                
             }
+            .blockUI::before{
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                display: inline-block;
+                font-style: normal;
+                font-weight: normal;
+                line-height: 1;
+                vertical-align: -.125em;
+                font-family: online-design!important;
+                vertical-align: baseline;
+                content: "\e954";
+                -webkit-animation: fa-spin 0.75s linear infinite;
+                animation: fa-spin 0.75s linear infinite;
+                height: 30px;
+                width: 30px;
+                line-height: 30px;
+                font-size: 30px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -15px;
+                margin-top: -15px;
+                color: #404762;
+            }
+            @-webkit-keyframes fa-spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg); }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg); } 
+            }
+            @keyframes fa-spin {
+                0% {
+                    -webkit-transform: rotate(0deg);
+                    transform: rotate(0deg); }
+                100% {
+                    -webkit-transform: rotate(360deg);
+                    transform: rotate(360deg); }
+            }
             @media only screen and (max-width: 768px) {
                 div.quick-view div.quick-view-image,
                 div.quick-view div.quick-view-content {
@@ -1289,6 +1495,12 @@
                 }
                 div.quick-view h1.product_title {
                     margin-top: 15px;
+                }
+                .popup-nbo-options .footer .nbd-invalid-form {
+                    line-height: unset !important;
+                }
+                .popup-nbo-options .footer .nbo-apply.nbd-disabled {
+                    display: none;
                 }
             }            
         </style>
@@ -1330,7 +1542,7 @@
                 }
             };
             $fbID = nbdesigner_get_option('nbdesigner_facebook_app_id');
-            $templates = nbd_get_resource_templates($product_id, $variation_id);
+            $templates = nbd_get_resource_templates($product_id, $variation_id, 100);
             $total_template = nbd_count_total_template( $product_id, $variation_id );
             $product_data = nbd_get_product_info( $product_id, $variation_id, $nbd_item_key, $task, $task2, $reference, false, $cart_item_key );
             
@@ -1345,9 +1557,10 @@
                 foreach ($_REQUEST as $key => $value){
                     if (strpos($key, 'attribute_') === 0) {
                         $link_get_options .= '&'.$key.'='.$value;
-                    }		
+                    }
                 }
             }
+            $link_edit_option = '';
             if( isset($_GET['cik']) && $_GET['cik'] != '' ){
                 $link_get_options .= '&nbo_cart_item_key=' . $_GET['cik'];
                 if( $task2 != '' ){
@@ -1358,8 +1571,8 @@
                        wc_get_product( $variation_id > 0 ? $variation_id : $product_id )->get_permalink()     
                     );
                     $link_edit_option = wp_nonce_url( $link_edit_option, 'nbo-edit' );
-                }                
-            }
+                }
+            };
         ?>
         <script type="text/javascript">
             var NBDESIGNCONFIG = {
@@ -1408,8 +1621,11 @@
                 fbID: "<?php echo $fbID; ?>",
                 nbd_create_own_page: "<?php echo getUrlPageNBD('create'); ?>",
                 link_get_options: "<?php echo $link_get_options; ?>",
+                valid_license: "<?php echo $valid_license ? 1 : 0; ?>",
                 enable_dropbox: false,
-                user_infos: <?php echo json_encode(nbd_get_user_information()); ?>,
+                /* customize */
+                //user_infos: <?php //echo json_encode(nbd_get_user_information()); ?>,
+                //contact_sheets: <?php //echo json_encode(nbd_get_user_contact_sheet()); ?>,
                 default_font: <?php echo $default_font; ?>,
                 templates: <?php echo json_encode($templates); ?>,
                 nbdlangs: {
@@ -1423,7 +1639,8 @@
                         polygon: "<?php _e('Polygon', 'web-to-print-online-designer'); ?>",
                         circle: "<?php _e('Circle', 'web-to-print-online-designer'); ?>",
                         ellipse: "<?php _e('Ellipse', 'web-to-print-online-designer'); ?>",
-                        group: "<?php _e('Group', 'web-to-print-online-designer'); ?>"
+                        group: "<?php _e('Group', 'web-to-print-online-designer'); ?>",
+                        pro_license_alert: "<?php _e('This item is not available in Lite version!', 'web-to-print-online-designer'); ?>"
                     }
             };
             NBDESIGNCONFIG['default_variation_id'] = NBDESIGNCONFIG['variation_id'];
@@ -1588,12 +1805,18 @@
             });            
         </script>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/accounting/accounting.min.js'; ?>"></script>
+        <?php if($product_type == 'variable'): ?>
+        <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/jquery-blockui/jquery.blockUI.min.js'; ?>"></script>
+        <?php endif; ?>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/frontend/add-to-cart.min.js'; ?>"></script>
+        <?php if($product_type == 'variable'): ?>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/frontend/add-to-cart-variation.min.js'; ?>"></script>
         <?php endif; ?>
+        <?php endif; ?>
         <!-- End. NBO  -->
+        <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/curved-text.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/designer-modern.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo NBDESIGNER_PLUGIN_URL .'assets/js/app-modern.min.js'; ?>"></script>
     </body>
 </html>
-<?php endif; endif;?>
+<?php endif; endif;

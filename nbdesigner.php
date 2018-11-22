@@ -6,14 +6,14 @@
 Plugin Name: NBDesigner
 Plugin URI: https://cmsmart.net/wordpress-plugins/woocommerce-online-product-designer-plugin
 Description: A Woocommerce printing ecosystem.
-Version: 2.1.0
+Version: 2.2.0
 Author: Netbaseteam
 Author URI: http://netbaseteam.com/
 License: GPLv2 or later
 Text Domain: web-to-print-online-designer
 Domain Path: /langs
 WC requires at least: 3.0.0
-WC tested up to: 3.4.4
+WC tested up to: 3.5.1
 */
 
 if ( !function_exists( 'add_action' ) ) {
@@ -47,10 +47,11 @@ if ( function_exists( 'icl_get_home_url' ) ) {
         }
     }
 }
-nbd_define('NBDESIGNER_VERSION', '2.1.0');
-nbd_define('NBDESIGNER_NUMBER_VERSION', 210);
+nbd_define('NBDESIGNER_VERSION', '2.2.0');
+nbd_define('NBDESIGNER_NUMBER_VERSION', 220);
 nbd_define('NBDESIGNER_MINIMUM_WP_VERSION', '4.1.1');
-nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.4');
+nbd_define('NBDESIGNER_MINIMUM_PHP_VERSION', '5.6.0');
+nbd_define('NBDESIGNER_MINIMUM_WC_VERSION', '3.0.0');
 nbd_define('NBDESIGNER_PLUGIN_URL', $nbd_plugin_dir_url);
 nbd_define('NBDESIGNER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 nbd_define('NBDESIGNER_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -114,10 +115,14 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-cal
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-updates.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-shortcodes.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-setup-wizard.php');
+if ( ! empty( $_GET['page'] ) ) {
+    if ( $_GET['page'] == 'nbd-setup' ) {
+        require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-setup-wizard.php');
+    }
+}
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/admin-options.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/options/frontend-options.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.cuz.php');
+//require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.cuz.php');
 
 register_activation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Nbdesigner_Plugin', 'plugin_deactivation' ) );

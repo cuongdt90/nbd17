@@ -124,6 +124,13 @@
     </div>
 </div>
 <div class="nbdesigner-opt-inner">
+    <div><?php $allow_upload = isset($option['allow_upload']) ? $option['allow_upload'] : 0; ?>
+        <label for="nbdesigner_allow_upload" class="nbdesigner-option-label"><?php _e('Allow upload images', 'web-to-print-online-designer'); ?></label>
+        <input type="hidden" name="_nbdesigner_option[allow_upload]" value="0" type="checkbox" />
+        <input name="_nbdesigner_option[allow_upload]" value="1" type="checkbox" <?php checked( $allow_upload, 1); ?> />
+    </div>
+</div>
+<div class="nbdesigner-opt-inner">
     <div>
         <label for="nbdesigner_use_all_color" class="nbdesigner-option-label"><?php _e('Colors can use', 'web-to-print-online-designer'); ?></label>
         <input name="_nbdesigner_option[use_all_color]" value="1" type="radio" <?php checked( $option['use_all_color'], 1); ?> /><?php _e('Use all colors', 'web-to-print-online-designer'); ?>   

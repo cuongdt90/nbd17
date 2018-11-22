@@ -1,6 +1,6 @@
 <div class="tab" id="tab-element" nbd-scroll="scrollLoadMore(container, type)" data-container="#tab-element" data-type="element" data-offset="20">
     <div class="nbd-search">
-        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="text" name="search" placeholder="search" ng-model="resource.element.contentSearch"/>
+        <input ng-class="(resource.element.type != 'icon' || !resource.element.onclick) ? 'nbd-disabled' : ''" ng-keyup="$event.keyCode == 13 && getMedia(resource.element.type, 'search')" type="text" name="search" placeholder="<?php _e('Search element', 'web-to-print-online-designer'); ?>" ng-model="resource.element.contentSearch"/>
         <i class="icon-nbd icon-nbd-fomat-search"></i>
     </div>     
     <div class="tab-main tab-scroll" style="margin-top: 70px;height: calc(100% - 70px);">
@@ -23,7 +23,6 @@
                             </div>
                         </div>
                     </div>
-                    <?php if( $valid_license ): ?>
                     <div ng-if="settings['nbdesigner_enable_clipart'] == 'yes'" class="item" data-type="icons" data-api="false" ng-click="onClickTab('icon', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-diamond"></i></div>
@@ -32,7 +31,6 @@
                             </div>
                         </div>
                     </div>
-                    <?php endif; ?>
 <!--                    <div class="item" data-type="lines" data-api="false" ng-click="onClickTab('line', 'element')">
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-line"></i></div>
@@ -45,7 +43,7 @@
                         <div class="main-item">
                             <div class="item-icon"><i class="icon-nbd icon-nbd-qrcode"></i></div>
                             <div class="item-info">
-                                <span class="item-name"><?php _e('QR-Code','web-to-print-online-designer'); ?></span>
+                                <span class="item-name"><?php _e('Bar/QR-Code','web-to-print-online-designer'); ?></span>
                             </div>
                         </div>
                     </div>
@@ -118,7 +116,17 @@
                     </div>
                     <div class="content-item type-icons" data-type="icons" id="nbd-icon-wrap">
                         <div class="mansory-wrap">
-                            <div nbd-drag="art.url" extenal="true" type="svg" class="mansory-item" ng-click="addSvgFromMedia(art)" ng-repeat="art in resource.icon.data" repeat-end="onEndRepeat('icon')"><img ng-src="{{art.url}}"><span class="photo-desc">{{art.name}}</span></div>
+                            <div nbd-drag="art.url" extenal="true" type="svg" class="mansory-item" ng-click="addSvgFromMedia(art, $index)" ng-repeat="art in resource.icon.data" repeat-end="onEndRepeat('icon')">
+                                <div style="position: relative;">
+                                    <img ng-src="{{art.url}}" /><span class="photo-desc">{{art.name}}</span>
+                                    <?php if(!$valid_license): ?>
+                                    <span class="nbd-pro-mark-wrap" ng-if="$index > 20">
+                                        <svg class="nbd-pro-mark" fill="#F3B600" xmlns="http://www.w3.org/2000/svg" viewBox="-505 380 12 10"><path d="M-503 388h8v1h-8zM-494 382.2c-.4 0-.8.3-.8.8 0 .1 0 .2.1.3l-2.3.7-1.5-2.2c.3-.2.5-.5.5-.8 0-.6-.4-1-1-1s-1 .4-1 1c0 .3.2.6.5.8l-1.5 2.2-2.3-.8c0-.1.1-.2.1-.3 0-.4-.3-.8-.8-.8s-.8.4-.8.8.3.8.8.8h.2l.8 3.3h8l.8-3.3h.2c.4 0 .8-.3.8-.8 0-.4-.4-.7-.8-.7z"></path></svg>
+                                        <?php _e('Pro','web-to-print-online-designer'); ?>
+                                    </span>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>                          
                     </div>
                     <div class="content-item type-lines" data-type="lines" id="nbd-line-wrap">
@@ -132,10 +140,11 @@
                                 <input ng-model="resource.qrText" type="text" class="nbd-input input-qrcode" name="qr-code" placeholder="https://yourcompany.com">
                             </div>
                             <button ng-class="resource.qrText != '' ? '' : 'nbd-disabled'" class="nbd-button" ng-click="addQrCode()"><?php _e('Create QRCode','web-to-print-online-designer'); ?></button>
+                            <button ng-class="resource.qrText != '' ? '' : 'nbd-disabled'" class="nbd-button" ng-click="addBarCode()"><?php _e('Create BarCode','web-to-print-online-designer'); ?></button>
                             <div class="main-qrcode">
                                 
                             </div>
-
+                            <svg id="barcode"></svg>
                         </div>
                     </div>
                 </div>

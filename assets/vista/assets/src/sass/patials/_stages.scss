@@ -1,0 +1,132 @@
+.nbd-stages {
+  width: 100%;
+  height: 100%;
+  .stages-inner {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+
+    .stage {
+      overflow: hidden;
+      background-color: #fafafa;
+      height: 100%;
+      width: 100%;
+      display: block;
+      text-align: center;
+      padding: 40px 50px 40px 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      &.nbd-active{
+        z-index: 9;
+      }
+      &.hidden {
+        opacity: 0;
+        z-index: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+      }
+      .stage-main {
+        //box-shadow: 1px 0 10px rgba(0, 0, 0, .08);
+        position: relative;
+        background-color: #fff;
+        margin: auto 0;
+        .stage-background {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #ebebeb;
+        }
+        .design-wrap {
+          position: absolute;
+          .design-zone, .stage-grid, .bounding-layers, .stage-snapLines, .stage-overlay, .stage-guideline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+          .stage-grid, .bounding-layers, .stage-snapLines, .stage-overlay, .stage-guideline {
+            pointer-events: none;
+          }
+          .bounding-layers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            .bounding-layers-inner {
+              position: relative;
+              width: 100%;
+              height: 100%;
+              .bounding-rect {
+                position: absolute;
+                display: inline-block;
+                visibility: hidden;
+                top: -20px;
+                left: -20px;
+                width: 10px;
+                height: 10px;
+                border: 1px dashed #ddd;
+                transform-origin: 0% 0%;
+              }
+              .layer-coordinates {
+                position: absolute;
+                display: inline-block;
+                font-size: 9px;
+                font-family: monospace;
+                color: #404762;
+                visibility: hidden;
+                transform: translate(calc(-100% - 10px), calc(-100% + 5px));
+                text-shadow: 1px 1px #fff;
+              }
+              .layer-angle {
+                position: absolute;
+                display: inline-block;
+                font-family: monospace;
+                color: #404762;
+                visibility: hidden;
+                text-shadow: 1px 1px #fff;
+              }
+            }
+          }
+          .stage-snapLines {
+            .stage-snapLines-inner {
+              position: relative;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  @import "page-toolbar";
+
+  .snapline {
+    position: absolute;
+  }
+  .h-snapline {
+    top: -9999px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: 3px !important;
+    background-image: linear-gradient(to right,rgba(214,96,96,.95) 1px,transparent 1px);
+    background-size: 2px 1px;
+    background-repeat: repeat-x;
+  }
+  .v-snapline {
+    left: -9999px;
+    top: -20px;
+    height: calc(100% + 40px);
+    width: 3px!important;
+    background-image: linear-gradient(to bottom,rgba(214,96,96,.95) 1px,transparent 1px);
+    background-size: 1px 2px;
+    background-repeat: repeat-y;
+  }
+
+}

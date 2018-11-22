@@ -58,7 +58,7 @@
                                         <div id="misc-publishing-actions">
                                             <div class="misc-pub-section misc-pub-priority" id="priority">
                                                 <?php _e('Priority', 'web-to-print-online-designer'); ?>
-                                                <input type="number" value="<?php echo $options['priority']; ?>" maxlength="3"
+                                                <input type="number" value="<?php echo $options['priority']; ?>" maxlength="3" max="127"
                                                     id="nbo_meta_priority" name="priority" class="meta-priority" min="1"
                                                     step="1"/>                                    
                                             </div>
@@ -162,28 +162,47 @@
                             <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing fields', 'web-to-print-online-designer'); ?></h2>
                             <div class="inside">
                                 <div>
-                                    <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Default fields', 'web-to-print-online-designer'); ?>" readonly=""></p>
+                                    <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Default field', 'web-to-print-online-designer'); ?>" readonly=""></p>
                                     <div class="nbd-section-wrap">
-                                        <a title="<?php _e('Add field', 'web-to-print-online-designer'); ?>" class="nbd-field-btn button-primary" ng-click="add_field()"><?php _e('Default field', 'web-to-print-online-designer'); ?></a>
+                                        <a title="<?php _e('Add field', 'web-to-print-online-designer'); ?>" class="nbd-field-btn button" ng-click="add_field()"><?php _e('Default field', 'web-to-print-online-designer'); ?> <span class="nbo-type-label default">1</span></a>
                                     </div>
                                 </div>
                                 <div style="margin-top: 10px;">
                                     <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Online design fields', 'web-to-print-online-designer'); ?>" readonly=""></p>
                                     <div class="nbd-section-wrap">
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('page')"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?></a>
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('color')"><?php _e('Color', 'web-to-print-online-designer'); ?></a>
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('size')"><?php _e('Size', 'web-to-print-online-designer'); ?></a>
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('dimension')"><?php _e('Custom dimension', 'web-to-print-online-designer'); ?></a>
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('dpi')"><?php _e('DPI', 'web-to-print-online-designer'); ?></a>
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('area')"><?php _e('Area design shape', 'web-to-print-online-designer'); ?></a>
-                                        <a class="nbd-field-btn button-primary" ng-click="add_field('orientation')"><?php _e('Orientation', 'web-to-print-online-designer'); ?></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('page')"><?php _e('Sides/Pages', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">2</span></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('color')"><?php _e('Color/Material', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">3</span></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('size')"><?php _e('Size', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">4</span></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('dimension')"><?php _e('Custom dimension', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">5</span></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('dpi')"><?php _e('DPI', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">6</span></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('area')"><?php _e('Area design shape', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">7</span></a>
+                                        <a class="nbd-field-btn button" ng-click="add_field('orientation')"><?php _e('Orientation', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wod">8</span></a>
                                     </div>
-                                    <p><?php _e('Online design fields which effect custom design configuaration.', 'web-to-print-online-designer'); ?></p>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <p class="section-title"><input class="nbd-ip-readonly" value="<?php _e('Product builder field', 'web-to-print-online-designer'); ?>" readonly=""></p>
+                                    <div class="nbd-section-wrap">
+                                        <a class="nbd-field-btn button" ng-click="add_field('builder')"><?php _e('Builder field', 'web-to-print-online-designer'); ?> <span class="nbo-type-label wpo">9</span></a>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p><span class="nbo-type-label default">1</span> <?php _e('Default fields', 'web-to-print-online-designer'); ?></p>
+                                    <p>
+                                        <span class="nbo-type-label wod">2</span>
+                                        <span class="nbo-type-label wod">3</span>
+                                        <span class="nbo-type-label wod">4</span>
+                                        <span class="nbo-type-label wod">5</span>
+                                        <span class="nbo-type-label wod">6</span>
+                                        <span class="nbo-type-label wod">7</span>
+                                        <span class="nbo-type-label wod">8</span> 
+                                        <?php _e('Online design fields which effect custom design configuaration.', 'web-to-print-online-designer'); ?>
+                                    </p>
+                                    <p><span class="nbo-type-label wpo">9</span> <?php _e('Product builder fields', 'web-to-print-online-designer'); ?></p>
                                 </div>
                             </div>
                         </div>
                         <div class="postbox">
-                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing options buider', 'web-to-print-online-designer'); ?></h2>
+                            <h2 style="border-bottom: 1px solid #ddd;"><?php _e('Printing options', 'web-to-print-online-designer'); ?></h2>
                             <div class="inside">
                                 <div class="nbd-fields-builder">
                                     <?php include_once('quantity.php'); ?>

@@ -35,10 +35,16 @@
                         </div>
                         <?php if( $task != 'create_template' ): ?>
                         <hr ng-hide="resource.templates.length == 0" />
-                        <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id)">
+                        <div class="item" ng-repeat="temp in resource.globalTemplate.data" ng-click="insertGlobalTemplate(temp.id, $index)">
                             <div class="main-item" image-on-load="temp.thumbnail">
-                                <div class="item-img">
+                                <div class="item-img" style="position: relative;">
                                     <img ng-src="{{temp.thumbnail}}" alt="{{temp.name}}">
+                                    <?php if(!$valid_license): ?>
+                                    <span class="nbd-pro-mark-wrap" ng-if="$index > 4">
+                                        <svg class="nbd-pro-mark" fill="#F3B600" xmlns="http://www.w3.org/2000/svg" viewBox="-505 380 12 10"><path d="M-503 388h8v1h-8zM-494 382.2c-.4 0-.8.3-.8.8 0 .1 0 .2.1.3l-2.3.7-1.5-2.2c.3-.2.5-.5.5-.8 0-.6-.4-1-1-1s-1 .4-1 1c0 .3.2.6.5.8l-1.5 2.2-2.3-.8c0-.1.1-.2.1-.3 0-.4-.3-.8-.8-.8s-.8.4-.8.8.3.8.8.8h.2l.8 3.3h8l.8-3.3h.2c.4 0 .8-.3.8-.8 0-.4-.4-.7-.8-.7z"></path></svg>
+                                        <?php _e('Pro','web-to-print-online-designer'); ?>
+                                    </span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>  

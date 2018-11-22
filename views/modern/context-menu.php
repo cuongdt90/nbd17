@@ -23,12 +23,12 @@
             <li class="context-item" ng-click="alignLayer('dis-vertical')" ng-show="stages[currentStage].states.isGroup"><i class="icon-nbd icon-nbd-dis-vertical"></i> <?php _e('Distribute Vertical','web-to-print-online-designer'); ?></li>
             <!--  Template Mode  -->
             <li ng-class="stages[currentStage].states.elementUpload ? 'active' : ''" ng-click="setLayerAttribute('elementUpload', !stages[currentStage].states.elementUpload)" class="context-item" ng-show="stages[currentStage].states.isImage && isTemplateMode"><i class="icon-nbd icon-nbd-replace-image"></i> <?php _e('Replace Image','web-to-print-online-designer'); ?></li>
-            <li ng-class="stages[currentStage].states.selectable ? '' : 'active'" class="context-item" ng-click="setLayerAttribute('selectable', !stages[currentStage].states.selectable)" ng-show="stages[currentStage].states.isLayer && isTemplateMode">
+            <li ng-class="!stages[currentStage].states.forceLock ? '' : 'active'" class="context-item" ng-click="setLayerAttribute('forceLock', !stages[currentStage].states.forceLock)" ng-show="stages[currentStage].states.isLayer && isTemplateMode">
                 <i style="padding-left: 3px;" class="icon-nbd icon-nbd-lock"></i> <?php _e('Lock all adjustment','web-to-print-online-designer'); ?>
             </li>
-<!--            <li ng-class="!stages[currentStage].states.fixedWidth ? '' : 'active'" class="context-item" ng-click="setLayerAttribute('fixedWidth', !stages[currentStage].states.fixedWidth)" ng-show="stages[currentStage].states.isText && isTemplateMode">
-                <i style="padding-left: 3px;" class="icon-nbd icon-nbd-lock"></i> <?php _e('Edit only','web-to-print-online-designer'); ?>
-            </li>            -->
+            <li ng-class="stages[currentStage].states.text.editable ? '' : 'active'" class="context-item" ng-click="setTextAttribute('editable', !stages[currentStage].states.text.editable)" ng-show="stages[currentStage].states.isText && isTemplateMode">
+                <i style="padding-left: 3px;" class="icon-nbd icon-nbd-lock"></i> <?php _e('Lock edit','web-to-print-online-designer'); ?>
+            </li>
             <li ng-class="!stages[currentStage].states.lockMovementX ? '' : 'active'" class="context-item" ng-click="setLayerAttribute('lockMovementX', !stages[currentStage].states.lockMovementX)" ng-show="stages[currentStage].states.isLayer && isTemplateMode">
                 <i style="font-size: 18px;" class="icon-nbd icon-nbd-arrows-h"></i> <?php _e('Lock horizontal movement','web-to-print-online-designer'); ?>
             </li>       

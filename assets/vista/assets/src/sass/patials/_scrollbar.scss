@@ -1,0 +1,10 @@
+.tab-scroll{
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  //width: 100%;
+  > .main-scrollbar{
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+}

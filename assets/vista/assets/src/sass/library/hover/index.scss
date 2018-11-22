@@ -1,0 +1,22 @@
+/*!
+ * Hover.css (http://ianlunn.github.io/Hover/)
+ * Version: 2.2.1
+ * Author: Ian Lunn @IanLunn
+ * Author URL: http://ianlunn.co.uk/
+ * Github: https://github.com/IanLunn/Hover
+
+ * Hover.css Copyright Ian Lunn 2017. Generated with Sass.
+ */
+
+@import "options";
+@import "mixins";
+@import "hacks";
+
+/* shadow-and-glow-transitions */
+@import "effects/shadow-and-glow-transitions/float-shadow";
+@if $includeClasses {
+  .#{$nameSpace}-float-shadow {
+    @include float-shadow();
+  }
+}
+
