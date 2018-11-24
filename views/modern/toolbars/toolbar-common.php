@@ -7,7 +7,8 @@
         <li ng-if="settings.is_mobile" class="menu-item item-opacity" ng-click="deleteLayers()">
             <i class="icon-nbd icon-nbd-delete nbd-tooltip-hover" title="<?php _e('Delete','web-to-print-online-designer'); ?>"></i>
         </li>         
-        <li class="menu-item item-opacity" data-range="true">
+        <li class="menu-item item-opacity" data-range="true"
+            ng-hide="stages[currentStage].states.isText && settings.nbdesigner_text_opacity == 0">
             <i class="icon-nbd icon-nbd-opacity nbd-tooltip-hover" title="<?php _e('Opacity','web-to-print-online-designer'); ?>"></i>
             <div class="sub-menu" data-pos="center">
                 <div class="main-ranges" style="padding: 30px 15px 10px;">

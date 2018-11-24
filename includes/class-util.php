@@ -711,6 +711,7 @@ function default_frontend_setting(){
         'nbdesigner_text_background' => 1,
         'nbdesigner_text_shadow' => 0,
         'nbdesigner_text_line_height' => 1,
+        'nbdesigner_text_spacing' => 1,
         'nbdesigner_text_font_size' => 1,
         'nbdesigner_text_opacity' => 1,
         'nbdesigner_text_outline' => 1,

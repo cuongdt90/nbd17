@@ -90,11 +90,12 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                                 'nbdesigner_text_background' => 1,
                                 'nbdesigner_text_shadow' => 0,
                                 'nbdesigner_text_line_height' => 1,
+                                'nbdesigner_text_spacing' => 1,
                                 'nbdesigner_text_font_size' => 1,
                                 'nbdesigner_text_opacity' => 1,
                                 'nbdesigner_text_outline' => 1,
                                 'nbdesigner_text_proportion' => 1,
-                                'nbdesigner_text_rotate' => 1                           
+                                'nbdesigner_text_rotate' => 1                        
                             )),
                         'description' 	=> __( 'Show/hide features in frontend', 'web-to-print-online-designer'),
                         'type' 		=> 'multicheckbox',
@@ -115,6 +116,7 @@ if(!class_exists('Nbdesigner_Settings_Frontend')){
                             'nbdesigner_text_background' => __('Text background', 'web-to-print-online-designer'),
                             'nbdesigner_text_shadow' => __('Text shadow', 'web-to-print-online-designer'),
                             'nbdesigner_text_line_height' => __('Line height', 'web-to-print-online-designer'),
+                            'nbdesigner_text_spacing' => __('Spacing', 'web-to-print-online-designer'),
                             'nbdesigner_text_font_size' => __('Font size', 'web-to-print-online-designer'),
                             'nbdesigner_text_opacity' => __('Opacity', 'web-to-print-online-designer'),
                             'nbdesigner_text_outline' => __('Outline', 'web-to-print-online-designer'),

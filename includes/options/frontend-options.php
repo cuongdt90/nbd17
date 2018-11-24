@@ -98,6 +98,12 @@ if(!class_exists('NBD_FRONTEND_PRINTING_OPTIONS')){
             if( nbdesigner_get_option('nbdesigner_change_base_price_html') == 'yes' ){
                 add_filter( 'woocommerce_get_price_html', array( $this, 'change_product_price_display'), 10, 2 );
             }
+            /* Compatible Autoptimize */
+            add_filter( 'option_autoptimize_js_exclude', array( $this, 'autoptimize_js_exclude') );
+        }
+        public function autoptimize_js_exclude( $js ){
+            if( false === strpos($js, 'angular') ) $js .= ', angular';
+            return $js;
         }
         public function change_product_price_display( $price, $product ){
             $price = '<span class="nbo-base-price-html">'. __('From', 'web-to-print-online-designer') .'</span> ' . $price;

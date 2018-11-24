@@ -568,6 +568,11 @@ CREATE TABLE {$wpdb->prefix}nbdesigner_options (
                 'type' 		=> 'table',
                 'depend'    =>  array(
                     array(
+                        'field' =>  'data_type',
+                        'operator' =>  '=',
+                        'value' =>  'i'
+                    ), 
+                    array(
                         'field' =>  'input_type',
                         'operator' =>  '#',
                         'value' =>  't'

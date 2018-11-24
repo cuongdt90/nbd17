@@ -23,6 +23,8 @@ do_action('nbo_quick_view_before_single_product');
             <?php woocommerce_template_single_price(); ?>
             <?php woocommerce_template_single_excerpt(); ?>
             <?php woocommerce_template_single_add_to_cart(); ?>
+            <hr />
+            <?php woocommerce_template_single_meta(); ?>
         </div>
     </div>
 </div>

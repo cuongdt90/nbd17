@@ -132,7 +132,7 @@ class Nbdesigner_Plugin {
     }
     public function w3tc_cache_flush(){
 	if ( ! wp_next_scheduled( 'nbd_w3_flush_cache' ) ) {
-            wp_schedule_event( current_time( 'timestamp' ), 'daily', 'nbd_w3_flush_cache' );
+            wp_schedule_event( current_time( 'timestamp' ), 'twicedaily', 'nbd_w3_flush_cache' );
 	}
     }
     public function forcelogin_rest_access( $result ){
