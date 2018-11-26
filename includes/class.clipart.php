@@ -239,17 +239,11 @@ if(!class_exists('NBD_CLIPART')){
         public function nbdclipart_meta_options()
         {
             global $post;
-//            $cliparts = get_post_meta($post->ID,'nbdclipart');
 
-            $theFILE = get_post_meta($post->ID, 'wp_custom_attachment', true);
             $nbdclipart_id = get_post_meta($post->ID, 'nbdclipart_id');
             $src = (isset($nbdclipart_id) && $nbdclipart_id !== '') ? wp_get_attachment_image_src($nbdclipart_id[0], 'medium') : '';
             wp_nonce_field(plugin_basename(__FILE__), 'wp_custom_attachment_nonce');
             $html = '';
-//            $html = '<p class="description">';
-//            $html .= 'Chose / Upload the File.';
-//            if(count($theFILE)>0 && is_array($theFILE)){ $html.=" Uploaded File:".$theFILE[0]['url']; }
-//            $html .= '</p>';
             $html .= '<p class="add_clipart_images hide-if-no-js">
                         <a href="#" id="set-nbdclipart">Add clipart</a>
                         <input type="hidden" id="nbdclipart-selected" name="nbdclipart">
@@ -263,10 +257,8 @@ if(!class_exists('NBD_CLIPART')){
 
             $html .= '</div>';
 
-//            $html .= '<input id="wp_custom_attachment" title="select file" multiple="multiple" name="svg[]" size="25" type="file" value="" />';
-//            $html .= '<div class="nbdclipart-thumb" style="margin-top: 20px">';
-//
             echo $html;
+            wp_enqueue_media();
             ?>
             <script type="text/javascript">
                 jQuery('#set-nbdclipart').on('click', function (e) {
