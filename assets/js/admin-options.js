@@ -232,6 +232,8 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     field.general.input_type.hidden = true;
                     field.general.price_type.value = 'c';
                     field.general.price_type.hidden = true;
+                    field.general.required.value = 'y';
+                    field.general.required.hidden = true;                    
                     field.general.page_display = '1';
                     field.general.exclude_page = '0';
                     field.general.attributes.options[1] = {};
@@ -457,6 +459,8 @@ angular.module('optionApp', []).controller('optionCtrl', function( $scope, $time
                     case 'page': 
                         field.general.input_type.hidden = true;
                         field.general.price_type.hidden = true;
+                        field.general.required.value = 'y';
+                        field.general.required.hidden = true; 
                         if( field.general.data_type.value == 'i' ){
                             field.general.attributes.options[1] = {};
                             //field.general.attributes.options[2] = {};

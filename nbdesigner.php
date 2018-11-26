@@ -108,11 +108,12 @@ require_once(NBDESIGNER_PLUGIN_DIR . 'includes/table/class.product.templates.php
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-install.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.nbdesigner.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.my.design.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
+//require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.studio.php');
+require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.vista.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.resource.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-compatibility.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');
-require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
+//require_once(NBDESIGNER_PLUGIN_DIR . 'includes/price/class.measurement-price-calculator.php');
+//require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class.printing-tab.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-updates.php');
 require_once(NBDESIGNER_PLUGIN_DIR . 'includes/class-shortcodes.php');
 if ( ! empty( $_GET['page'] ) ) {
@@ -136,8 +137,8 @@ $nb_designer = new Nbdesigner_Plugin();
 $nb_designer->init();
 $nb_design_endpoint = new My_Design_Endpoint();
 $nb_design_endpoint->init();
-$nbd_studio = new Nbdesigner_Studio();
-$nbd_studio->init();
+//$nbd_studio = new Nbdesigner_Studio();
+//$nbd_studio->init();
 $nb_compatibility = new Nbdesigner_Compatibility();
 $nb_compatibility->init();
 

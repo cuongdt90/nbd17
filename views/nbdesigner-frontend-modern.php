@@ -3,7 +3,8 @@
 <?php 
     global $is_IE;
     if($is_IE){
-        echo "We have detected that you are using Internet Explorer which isn't compatible with design editor. Please use one of the modern web browsers: Chrome, Firefox, Microsoft Edge, Safari...";
+        echo "<p style='width: 50%;float: left;padding: 30px;border: 3px double #ddd;margin-top: 50px;top: 50%;'>We have detected that you are using Internet Explorer which isn't compatible with design editor. Please use one of the modern web browsers: Chrome, Firefox, Microsoft Edge, Safari...</p>";
+        echo "<img style='margin-left: 15px; float: left;' src='".NBDESIGNER_ASSETS_URL."images/robot.png' />";
         die();
     }
     include 'signature.php';
@@ -18,6 +19,10 @@
     $default_font = nbd_get_default_font();
     $_default_font = str_replace(" ", "+", json_decode($default_font)->alias);
     $_product = wc_get_product( $product_id );
+    if( !is_object($_product) ){
+        wp_redirect( untrailingslashit(get_option('home')) );
+        exit;
+    }
     $product_type = $_product->get_type();  
     $task = (isset($_GET['task']) &&  $_GET['task'] != '') ? $_GET['task'] : 'new';
     $task2 = (isset($_GET['task2']) &&  $_GET['task2'] != '') ? $_GET['task2'] : '';
@@ -1042,6 +1047,7 @@
                 line-height: 15px;
                 font-size: 9px;
                 font-family: monospace;
+                text-shadow: 1px 1px #fff;
             }
             .nbd-prevent-select{
                 -webkit-user-select: none;
@@ -1053,6 +1059,23 @@
             .nbd-context-menu {
                 z-index: 100;
             }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i{
+                opacity: 0.7;
+            }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i.icon-visibility,
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i.icon-lock,
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i.icon-close {
+                color: #888;
+            }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i.icon-visibility:hover {
+                color: #06d79c;
+            }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i.icon-lock:hover {
+                color: #ffb22b;
+            }
+            .nbd-sidebar #tab-layer .inner-tab-layer .menu-layer .menu-item .item-right i.icon-close:hover {
+                color: #ef5350;
+            }            
             @media screen and (max-width: 767px) {
                 .safari .nbd-workspace .main {
                     height: -webkit-calc(100vh - 164px);
@@ -1486,6 +1509,9 @@
                     -webkit-transform: rotate(360deg);
                     transform: rotate(360deg); }
             }
+            .quick-view .sku_wrapper, .quick-view  .posted_in {
+                display: block;
+            }
             @media only screen and (max-width: 768px) {
                 div.quick-view div.quick-view-image,
                 div.quick-view div.quick-view-content {
@@ -1788,21 +1814,7 @@
                 );
             ?>
             var wc_add_to_cart_variation_params = <?php echo json_encode($wc_add_to_cart_params); ?>;
-            var nbds_frontend = <?php echo json_encode($nbds_frontend); ?>;
-            window.wp = window.wp || {};
-            wp.template = _.memoize(function ( id ) {
-                var compiled,
-                options = {
-                    evaluate:    /<#([\s\S]+?)#>/g,
-                    interpolate: /\{\{\{([\s\S]+?)\}\}\}/g,
-                    escape:      /\{\{([^\}]+?)\}\}(?!\})/g,
-                    variable:    'data'
-                };
-                return function ( data ) {
-                    compiled = compiled || _.template( $( '#tmpl-' + id ).html(),  options );
-                    return compiled( data );
-                };
-            });            
+            var nbds_frontend = <?php echo json_encode($nbds_frontend); ?>;           
         </script>
         <script type='text/javascript' src="<?php echo WC()->plugin_url().'/assets/js/accounting/accounting.min.js'; ?>"></script>
         <?php if($product_type == 'variable'): ?>

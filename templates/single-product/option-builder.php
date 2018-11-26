@@ -1010,7 +1010,7 @@ if( $cart_item_key != ''){
                 var check = {}, total_check = true;
                 angular.forEach($scope.nbd_fields, function(field, field_id){
                     $scope.check_depend(field_id);
-                    check[field_id] = ( field.enable && field.required == 'y' && field.value == '' ) ? false : true;
+                    check[field_id] = ( field.enable && field.required == 'y' && field.value === '' ) ? false : true;
                     var origin_field = $scope.get_field(field_id);
                     if( origin_field.general.data_type == 'i' ){
                         if( origin_field.general.input_type != 't' ){
@@ -1311,10 +1311,7 @@ if( $cart_item_key != ''){
             return $scope.nbd_fields[field_id].enable;
         };
         $scope.init = function(){
-            nbOption.status = true;
-            /* Compare with other color swatches plugins */
-            jQuery('.variation-selector').removeClass('hidden').show();
-            jQuery('.nbtcs-swatches').addClass('hidden');  
+            nbOption.status = true; 
             <?php if($options['display_type'] == 3 && count($options['bulk_fields'])): ?>
             jQuery('input[name="add-to-cart"]').remove();
             jQuery('button[name="add-to-cart"]').attr('name', 'nbo-add-to-cart');
