@@ -197,9 +197,7 @@ if(!class_exists('NBD_CLIPART')){
                 foreach ($arrCliparts as $key => $clipart) {
 
                     if ($key == 0) {
-                        $src = wp_get_attachment_image_src($clipart, 'medium');
                         update_post_meta($post_id, 'nbdclipart_id', $clipart);
-                        update_post_meta($post_id, 'nbdclipart_src', $src[0]);
                     } else {
                         $new_post = array(
                             'post_author' => $_POST['post_author'],
@@ -212,9 +210,7 @@ if(!class_exists('NBD_CLIPART')){
                         );
                         $new_clipart = wp_insert_post($new_post, false);
                         if ($new_clipart) {
-                            $src = wp_get_attachment_image_src($clipart, 'medium');
                             update_post_meta($new_clipart, 'nbdclipart_id', $clipart);
-                            update_post_meta($new_clipart, 'nbdclipart_src', $src[0]);
                         }
                     }
                 }
