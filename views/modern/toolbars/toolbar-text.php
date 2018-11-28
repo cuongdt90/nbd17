@@ -69,13 +69,23 @@
                     <li ng-click="setTextAttribute('textAlign', 'left')" class="sub-menu-item"
                         ng-class="stages[currentStage].states.text.textAlign == 'left' ? 'selected' : ''"
                         ng-if="settings['nbdesigner_text_align_left'] == '1'"><i class="icon-nbd icon-nbd-format-align-left nbd-tooltip-hover" title="<?php _e('Text align left','web-to-print-online-designer'); ?>"></i></li>
-                    <li ng-click="setTextAttribute('textAlign', 'center')" class="sub-menu-item" 
+                    <li ng-click="setTextAttribute('textAlign', 'center')" class="sub-menu-item"
                         ng-class="stages[currentStage].states.text.textAlign == 'center' ? 'selected' : ''"
                         ng-if="settings['nbdesigner_text_align_center'] == '1'"><i class="icon-nbd icon-nbd-format-align-center nbd-tooltip-hover" title="<?php _e('Text align center','web-to-print-online-designer'); ?>"></i></li>
                     <li ng-click="setTextAttribute('textAlign', 'right')" class="sub-menu-item"
                         ng-class="stages[currentStage].states.text.textAlign == 'right' ? 'selected' : ''"
                         ng-if="settings['nbdesigner_text_align_right'] == '1'"><i class="icon-nbd icon-nbd-format-align-right nbd-tooltip-hover" title="<?php _e('Text align right','web-to-print-online-designer'); ?>"></i></li>
                 </ul>
+            </div>
+        </li>
+
+        <li class="menu-item item-align item-edit-text">
+            <i class="icon-nbd icon-nbd-text-fields nbd-tooltip-hover" title="Edit Text"></i>
+            <div class="sub-menu" data-pos="center" style="min-width: 250px; padding: 30px 10px 15px">
+<!--                <i class="icon-nbd icon-nbd-clear close-submenu" ng-click="curvedText.active = !curvedText.active; $event.stopPropagation();"></i>-->
+                <div class="box-curved" style="margin-bottom: 20px">
+                    <textarea ng-change="setTextAttribute('text', stages[currentStage].states.text.text)" ng-model="stages[currentStage].states.text.text" style="width: 100%; font-size: 12px; padding: 5px; border-radius: 2px" placeholder="Enter your text"></textarea>
+                </div>
             </div>
         </li>
         <li ng-click="setTextAttribute('is_uppercase', stages[currentStage].states.text.is_uppercase ? false : true)"

@@ -440,19 +440,19 @@ $show_button_use_our_template = 1;
         pointer-events: none;
     }
     #container-online-designer {
-        position: fixed; 
-        top: 0; 
-        left: 0; 
+        position: fixed;
+        top: 0;
+        left: 0;
         bottom: 0;
         left: 0;
-        width: 100vw; 
-        height: 100vh; 
-        z-index: -1; 
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
         opacity: 0;
         visibility: hidden;
         -webkit-transition: opacity 400ms 0ms, visibility 0ms 0ms, z-index 0ms 0ms;
         -moz-transition: opacity 400ms 0ms, visibility 0ms 0ms, z-index 0ms 0ms;
-        transition: opacity 400ms 0ms, visibility 0ms 0ms, z-index 0ms 0ms;        
+        transition: opacity 400ms 0ms, visibility 0ms 0ms, z-index 0ms 0ms;
     }
     #container-online-designer.is-visible {
         opacity: 1;
@@ -478,7 +478,12 @@ $show_button_use_our_template = 1;
         .content__header {
             position: unset;
         }
-    }    
+    }
+    @media screen and (max-width: 768px){
+        #container-online-designer {
+            height: 100%;
+        }
+    }
 </style>
 <script type="text/javascript">
     var nbd_layout = '<?php echo $layout; ?>';

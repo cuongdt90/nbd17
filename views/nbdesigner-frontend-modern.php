@@ -53,6 +53,7 @@
         <meta content="Online Designer - HTML5 Designer - Online Print Solution" name="description" />
         <meta content="Online Designer" name="keywords" />
         <meta content="Netbaseteam" name="author">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         
         <?php
             if( nbdesigner_get_option('nbdesigner_share_design') == 'yes' && isset( $_GET['nbd_share_id'] ) && $_GET['nbd_share_id'] != '' ):
@@ -1077,10 +1078,6 @@
                 color: #ef5350;
             }            
             @media screen and (max-width: 767px) {
-                .safari .nbd-workspace .main {
-                    height: -webkit-calc(100vh - 164px);
-                    height: calc(100vh - 164px);
-                } 
                 .nbd-global-color-palette {
                     margin-left: 0;
                 }
@@ -1114,10 +1111,6 @@
                 .nbd-popup.nb-show {
                     z-index: 999999999999;
                 }
-                .android .nbd-workspace .main {
-                    height: -webkit-calc(100vh - 192px);
-                    height: calc(100vh - 192px);                    
-                }
                 .nbd-mode-1 .nbd-main-bar .menu-mobile.icon-nbd-clear {
                     padding-left: 45px;
                 }   
@@ -1128,7 +1121,29 @@
                     position: fixed;
                     z-index: 100000004;
                 }
+
+                /*fix bug*/
+                html, body,#design-container, #designer-controller{
+                    min-height: 100% !important;
+                    height: 100%;
+                }
+                .nbd-workspace {
+                    height: 100% !important;
+                }
+                .nbd-workspace .main {
+                    height: calc(100% - 114px) !important;
+                }
+                /*page category*/
+                .nbd-mode-2.safari .nbd-sidebar .tabs-content {
+                    height: calc(100vh - 190px);
+                }
+                .nbd-mode-2.android .nbd-sidebar .tabs-content {
+                    height: calc(100vh - 170px);
+                }
+
             }
+
+
         </style>  
         <?php if( $show_nbo_option ): ?>
         <style>

@@ -65,6 +65,43 @@
       float: left;
       display: flex;
       flex-direction: column;
+      .tab {
+        float: left;
+        padding: 15px 0;
+        width: 100%;
+        box-sizing: border-box;
+        cursor: pointer;
+        transition: background 250ms ease;
+        text-transform: uppercase;
+        margin: 0;
+        height: 75px;
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+        text-align: center;
+        @media screen and (max-width: 767px) {
+          &.active {
+            background-color: $tab-active;
+          }
+        }
+        span,i{
+          color: #fff;
+        }
+
+        i {
+          display: block;
+          font-size: 24px;
+          margin-bottom: 5px;
+          transition: transform .7s ease-out, color .6s ease-out;
+        }
+        span {
+          font-size: 11px;
+          font-weight: 500;
+          display: block;
+          word-break: break-all;
+          text-transform: capitalize;
+          transition: transform .7s ease-out, color .6s ease-out;
+        }
+      }
       @media screen and (max-width: 767px) {
         flex-direction: row;
         overflow-x: auto;
@@ -102,50 +139,11 @@
           }
         }
       }
-
       .layerTab {
         display: none;
         @media screen and (max-width: 767px) {
           display: block;
 
-        }
-      }
-
-      .tab {
-        float: left;
-        padding: 15px 0;
-        width: 100%;
-        box-sizing: border-box;
-        cursor: pointer;
-        transition: background 250ms ease;
-        text-transform: uppercase;
-        margin: 0;
-        height: 75px;
-        position: relative;
-        -webkit-font-smoothing: antialiased;
-        text-align: center;
-        @media screen and (max-width: 767px) {
-          &.active {
-            background-color: $tab-active;
-          }
-        }
-        span,i{
-          color: #fff;
-        }
-
-        i {
-          display: block;
-          font-size: 24px;
-          margin-bottom: 5px;
-          transition: transform .7s ease-out, color .6s ease-out;
-        }
-        span {
-          font-size: 11px;
-          font-weight: 500;
-          display: block;
-          word-break: break-all;
-          text-transform: capitalize;
-          transition: transform .7s ease-out, color .6s ease-out;
         }
       }
       li.active {
@@ -1153,16 +1151,6 @@
         font-size: 25px;
         padding: 0 2px;
         cursor: pointer;
-      }
-    }
-  }
-}
-
-.safari {
-  .nbd-sidebar {
-    .tabs-content {
-      @media screen and (max-width: 767px){
-        height: calc(100vh - 204px);
       }
     }
   }

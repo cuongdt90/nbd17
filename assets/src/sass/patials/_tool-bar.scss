@@ -277,6 +277,12 @@
     #toolbar-font-size-dropdown {
       margin: 10px 0;
     }
+    .item-edit-text{
+      display: none;
+      @media screen and (max-width: 768px){
+        display: block;
+      }
+    }
   }
   .toolbar-menu-header {
     display: flex;
@@ -415,4 +421,20 @@
       box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);
     }
   }
+}
+
+//curved text
+.box-curved-reverse {
+  display: flex;
+}
+.box-curved-reverse span{
+  margin-right: 10px;
+}
+
+.close-submenu {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  font-size: 21px !important;
+  cursor: pointer;
 }
